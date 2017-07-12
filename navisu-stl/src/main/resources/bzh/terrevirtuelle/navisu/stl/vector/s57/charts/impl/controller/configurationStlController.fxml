@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -42,8 +43,8 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                      <children>
-                        <Button fx:id="interactiveButton" mnemonicParsing="false" text="Mode libre interactif" GridPane.halignment="CENTER" />
-                        <Button fx:id="squareTilesButton" mnemonicParsing="false" text="Définition par tuiles carrées" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <ToggleButton fx:id="interactiveTB" mnemonicParsing="false" text="Mode libre interactif" GridPane.halignment="CENTER" />
+                        <ToggleButton fx:id="squareTilesTB" mnemonicParsing="false" text="Définition par tuiles carrées" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                      </children>
                         </GridPane>
                         <GridPane fx:id="squareTilesGP" prefHeight="200.0" prefWidth="519.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -96,9 +97,10 @@
                         <CheckBox fx:id="baseCB" mnemonicParsing="false" selected="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
                         <TextField fx:id="exagerationTF" text="10" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="countTF" text="200" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="baseTF" text="200" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="sideXTF" text="200" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="Nom(s) fichier de sortie" GridPane.rowIndex="4" />
                         <TextField fx:id="nameTF" text="out" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="sideYTF" text="200" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                             </children>
                         </GridPane>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="111.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" translateX="3.0" width="598.0" GridPane.rowIndex="2" />

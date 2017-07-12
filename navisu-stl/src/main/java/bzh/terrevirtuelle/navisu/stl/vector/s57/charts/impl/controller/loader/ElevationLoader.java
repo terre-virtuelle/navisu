@@ -147,7 +147,7 @@ public class ElevationLoader {
                 lat > positions.get(1).getLatitude().getDegrees();
                 lat -= latRange) {
             double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon0));
-            el /= 10;
+            el /= magnification;
             topPositions.add(new Point3D(0.0, el, pos));
             bottomPositions.add(new Point3D(0.0, bottom, pos));
             pos += spaceY;
@@ -166,7 +166,7 @@ public class ElevationLoader {
                 lat > positions.get(1).getLatitude().getDegrees();
                 lat -= latRange) {
             double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon0));
-            el /= 10;
+            el /= magnification;
             topPositions.add(new Point3D(-tileSideX, el, pos));
             bottomPositions.add(new Point3D(-tileSideX, bottom, pos));
             pos += spaceY;

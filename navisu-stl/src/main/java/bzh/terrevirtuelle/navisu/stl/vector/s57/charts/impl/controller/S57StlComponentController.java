@@ -45,6 +45,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -91,9 +92,11 @@ public class S57StlComponentController
     protected double scaleLonFactor;
     // Les parametres a initialiser via l'interface
     // Taille de la dalle en mm
-    protected double tileSideX = 200;
-    protected double tileSideY = 200;
+    protected double DEFAULT_SIDE = 200.0;
+    protected double tileSideX = DEFAULT_SIDE;
+    protected double tileSideY = DEFAULT_SIDE;
     // Resolution du MNT
+
     protected int ptsCountX = 200;
     protected int ptsCountY = 200;
     // Position du socle
@@ -102,8 +105,7 @@ public class S57StlComponentController
     protected double magnification = 10;
     protected int line;
     protected int column;
-    
-    
+
     protected double lonRange;
     protected double latRange;
     protected List<Position> squareEnvelopeList;
@@ -129,9 +131,9 @@ public class S57StlComponentController
     @FXML
     public ImageView quit;
     @FXML
-    public Button interactiveButton;
+    public ToggleButton interactiveTB;
     @FXML
-    public Button squareTilesButton;
+    public ToggleButton squareTilesTB;
     @FXML
     public GridPane squareTilesGP;
     @FXML
@@ -154,10 +156,15 @@ public class S57StlComponentController
     public ChoiceBox<String> tileCB;
     @FXML
     public TextField nameTF;
+    @FXML
+    public TextField sideXTF;
+    @FXML
+    public TextField sideYTF;
 
     final ToggleGroup latLonGroup = new ToggleGroup();
     final ToggleGroup eastWestGroup = new ToggleGroup();
     final ToggleGroup northSouthGroup = new ToggleGroup();
+    final ToggleGroup interactiveSquareGroup = new ToggleGroup();
 
     public S57StlComponentController(GuiAgentServices guiAgentServices,
             LayerTreeServices layerTreeServices,
@@ -216,17 +223,28 @@ public class S57StlComponentController
             setVisible(false);
         });
 
-        interactiveButton.setOnMouseClicked((MouseEvent event) -> {
+        interactiveTB.setToggleGroup(interactiveSquareGroup);
+        squareTilesTB.setToggleGroup(interactiveSquareGroup);
+
+        interactiveTB.setOnMouseClicked((MouseEvent event) -> {
             squareTilesGP.setDisable(true);
         });
-        squareTilesButton.setOnMouseClicked((MouseEvent event) -> {
+        squareTilesTB.setOnMouseClicked((MouseEvent event) -> {
             squareTilesGP.setDisable(false);
         });
+        squareTilesTB.setSelected(true);
 
         latLonAllRB.setToggleGroup(latLonGroup);
-        latLonAllRB.setSelected(true);
+        latLonAllRB.setSelected(false);
         latRB.setToggleGroup(latLonGroup);
-        latRB.setSelected(false);
+        latRB.setSelected(true);
+        /*
+        if (eastRB.isSelected()) {
+            squareLatEast();
+        } else {
+            squareLatWest();
+        }
+         */
         lonRB.setToggleGroup(latLonGroup);
         lonRB.setSelected(false);
         eastRB.setToggleGroup(eastWestGroup);
@@ -274,6 +292,33 @@ public class S57StlComponentController
                 squareLonSouth();
             }
         });
+
+        sideXTF.setOnAction((ActionEvent event) -> {
+            if (squareTilesTB.isSelected()) {
+                try {
+                    tileSideX = Double.parseDouble(sideXTF.getText());
+                    sideXTF.setText(Double.toString(tileSideX));
+                    tileSideY = tileSideX;
+                    sideYTF.setText(Double.toString(tileSideY));
+                } catch (NumberFormatException e) {
+                    tileSideX = DEFAULT_SIDE;
+                    sideXTF.setText(Double.toString(tileSideX));
+                }
+            }
+        });
+        sideYTF.setOnAction((ActionEvent event) -> {
+            if (squareTilesTB.isSelected()) {
+                try {
+                    tileSideY = Double.parseDouble(sideYTF.getText());
+                    sideYTF.setText(Double.toString(tileSideY));
+                    tileSideX = tileSideY;
+                    sideXTF.setText(Double.toString(tileSideX));
+                } catch (NumberFormatException e) {
+                    tileSideY = DEFAULT_SIDE;
+                    sideYTF.setText(Double.toString(tileSideY));
+                }
+            }
+        });
         computeButton.setOnMouseClicked((MouseEvent event) -> {
             int tiles = Integer.parseInt(tileCB.getValue());
             line = column = (int) Math.sqrt(tiles);
@@ -281,7 +326,7 @@ public class S57StlComponentController
             guiAgentServices.getJobsManager().newJob(OUT_PATH, (progressHandle) -> {
                 // forEach dalle
                 displayTiles(squarePolygonEnvelope, line, column);
-                initParameters();          
+                initParameters();
                 s57StlChartComponentController.compute(OUT_DIR, OUT_FILE,
                         scaleLatFactor, scaleLonFactor, magnification,
                         tileSideX, tileSideY,
