@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Immersive' version='3.0'  xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation =' http://www.web3d.org/specifications/x3d-3.0.xsd '> 
+<head>
+<meta name='Title' content='NaVisu S57'/> 
+<meta name='Author' content='serge'/>
+<meta name='Created' content='13/07/2017-09:17:15'/>
+<meta name='Generator' content='NaVisu'/>
+<meta name='Site' content='http://www.navisu.org/'/>
+<meta name='Github' content='https://github.com/terre-virtuelle/navisu'/>
+<meta name='Pos0' content='Lat=48.24402° Lon=-4.615010000000005°'/>
+<meta name='Pos1' content='Lat=48.24402° Lon=-4.448100000000011°'/>
+<meta name='Pos2' content='Lat=48.35550528648251° Lon=-4.448100000000011°'/>
+<meta name='Pos3' content='Lat=48.35550528648251° Lon=-4.615010000000005°'/>
+</head>
+<NavigationInfo type='"EXAMINE"'/>
+<Scene>
+<Transform rotation='0 1 0 1.57058' translation='200.0 0.0 200.0'  scale='1.000900 1.000900 1.000900'> 
+<Viewpoint  position='100.0 400.0 -100'  orientation='1 0 0 -1.57'  fieldOfView='.5'
+/>
