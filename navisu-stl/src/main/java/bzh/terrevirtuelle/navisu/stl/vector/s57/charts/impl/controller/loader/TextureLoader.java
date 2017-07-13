@@ -31,11 +31,13 @@ public class TextureLoader {
 
     protected Polygon polygon;
     protected String outDir;
+    protected int index;
     protected Sector selectedSector = null;
     protected WorldWindow wwd;
 
-    public TextureLoader(String outFilename, Polygon polygon) {
+    public TextureLoader(String outFilename, int index, Polygon polygon) {
         this.polygon = polygon;
+        this.index = index;
         this.outDir = outFilename;
         List<? extends Position> positions = polygon.getBoundaries().get(0);
         selectedSector = new Sector(positions.get(0).getLatitude(), positions.get(3).getLatitude(),
@@ -129,7 +131,7 @@ public class TextureLoader {
     }
 
     private void writeImageToFile(Sector sector, BufferedImage image, String outDir) {
-        File myNewJPegFile = new File(outDir + "/image.jpg");
+        File myNewJPegFile = new File(outDir + "/image_" + index + ".jpg");
         try {
             ImageIO.write(image, "jpg", myNewJPegFile);
         } catch (IOException ex) {

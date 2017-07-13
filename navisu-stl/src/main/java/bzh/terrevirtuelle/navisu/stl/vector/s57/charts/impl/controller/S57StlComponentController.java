@@ -77,7 +77,7 @@ public class S57StlComponentController
     // Le dir navisu-launcher est dans le PATH
     protected String OUT_DIR = "privateData/x3d/";
     // Pour le moment ce nomm est fixe, on ne fait qu'une dalle
-    protected String OUT_FILE = "out.x3d";
+    protected String outFile = "out";
     protected String OUT_PATH;
 
     // Pour récupérer le .css
@@ -105,6 +105,7 @@ public class S57StlComponentController
     protected double magnification = 10;
     protected int line;
     protected int column;
+    int tilesCount;
 
     protected double lonRange;
     protected double latRange;
@@ -153,7 +154,7 @@ public class S57StlComponentController
     @FXML
     public Button computeButton;
     @FXML
-    public ChoiceBox<String> tileCB;
+    public ChoiceBox<Integer> tileCB;
     @FXML
     public TextField nameTF;
     @FXML
@@ -209,20 +210,25 @@ public class S57StlComponentController
             });
         }
         displayChartBoundaries(polygon);
-
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        tileCB.setItems(FXCollections.observableArrayList("1", "4", "9", "16", "25"));
-        tileCB.setValue("1");
+        tileCB.setItems(FXCollections.observableArrayList(1, 4, 9, 16, 25));
+        tileCB.setValue(1);
 
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
             guiAgentServices.getRoot().getChildren().remove(this);
             setVisible(false);
         });
-
+        nameTF.setText("out");
+        nameTF.setOnAction((ActionEvent event) -> {
+            outFile = nameTF.getText();
+            String[] outTab = outFile.split("\\.");
+            outFile = outTab[0];
+            nameTF.setText(outTab[0]);
+        });
         interactiveTB.setToggleGroup(interactiveSquareGroup);
         squareTilesTB.setToggleGroup(interactiveSquareGroup);
 
@@ -320,22 +326,32 @@ public class S57StlComponentController
             }
         });
         computeButton.setOnMouseClicked((MouseEvent event) -> {
-            int tiles = Integer.parseInt(tileCB.getValue());
-            line = column = (int) Math.sqrt(tiles);
-            OUT_PATH = OUT_DIR + OUT_FILE;
+            tilesCount = tileCB.getValue();
+            line = column = (int) Math.sqrt(tilesCount);
+
             guiAgentServices.getJobsManager().newJob(OUT_PATH, (progressHandle) -> {
+                List<Polygon> wwjTiles = displayTiles(squarePolygonEnvelope, line, column);
+                List<Geometry> JtsTiles;
                 // forEach dalle
-                displayTiles(squarePolygonEnvelope, line, column);
-                initParameters();
-                s57StlChartComponentController.compute(OUT_DIR, OUT_FILE,
-                        scaleLatFactor, scaleLonFactor, magnification,
-                        tileSideX, tileSideY,
-                        ptsCountX, ptsCountY,
-                        bottom,
-                        squarePolygonEnvelope, // dalle en WWJ
-                        geometryEnvelope);     // dalle en JTS
-                instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
-                // endEach
+                for (int i = 0; i < tilesCount; i++) {
+                    String outTile = outFile + "_" + i + ".x3d";
+                    //  OUT_PATH = OUT_DIR + outFile + ".x3d";
+                    Geometry geom = initParameters(wwjTiles.get(i).getBoundaries());
+                    wwjTiles.get(i).setHighlightAttributes(makeHighlightAttributes(wwjTiles.get(i).getAttributes()));
+                    wwd.redrawNow();
+                    s57StlChartComponentController.compute(
+                            OUT_DIR,
+                            outTile,
+                            i,
+                            scaleLatFactor, scaleLonFactor, magnification,
+                            tileSideX, tileSideY,
+                            ptsCountX, ptsCountY,
+                            bottom,
+                            wwjTiles.get(i), // dalle en WWJ
+                            geom);     // dalle en JTS
+                    instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
+                    // endEach
+                }
             });
         });
     }
@@ -360,6 +376,7 @@ public class S57StlComponentController
                 squareEnvelopeList.add(p);
             });
         }
+        squareLatEast();
     }
 
     private void squareLatEast() {
@@ -443,14 +460,23 @@ public class S57StlComponentController
         return normalAttributes;
     }
 
-    private void displayTiles(Polygon polyEnveloppe, int line, int col) {
+    private ShapeAttributes makeHighlightAttributes(ShapeAttributes normalAttributes) {
+        ShapeAttributes highlightAttributes = new BasicShapeAttributes(normalAttributes);
+        highlightAttributes.setOutlineMaterial(Material.RED);
+        highlightAttributes.setOutlineOpacity(1);
+        highlightAttributes.setInteriorMaterial(Material.RED);
+        highlightAttributes.setInteriorOpacity(1);
+        return highlightAttributes;
+    }
+
+    private List<Polygon> displayTiles(Polygon polyEnveloppe, int line, int col) {
         Iterable<? extends LatLon> bounds = polyEnveloppe.getOuterBoundary();
         List<LatLon> listLatLon = new ArrayList<>();
         for (LatLon s : bounds) {
             listLatLon.add(s);
         }
-        double latRange = listLatLon.get(0).getLatitude().getDegrees() - listLatLon.get(2).getLatitude().getDegrees();
-        double lonRange = listLatLon.get(2).getLongitude().getDegrees() - listLatLon.get(0).getLongitude().getDegrees();
+        latRange = listLatLon.get(0).getLatitude().getDegrees() - listLatLon.get(2).getLatitude().getDegrees();
+        lonRange = listLatLon.get(2).getLongitude().getDegrees() - listLatLon.get(0).getLongitude().getDegrees();
 
         latRange /= line;
         lonRange /= col;
@@ -487,15 +513,18 @@ public class S57StlComponentController
                 polygon1.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
                 polygon1.setAttributes(normalAttributes);
                 polygon1.setHighlightAttributes(highlightAttributes);
+                tiles.add(polygon1);
 
                 layer.addRenderable(polygon1);
                 wwd.redrawNow();
             }
         }
+        return tiles;
     }
 
-    private void initParameters() {
-        positions = squareEnvelopeList;
+    private Geometry initParameters(List<List<? extends Position>> pos) {
+        Geometry geometry1 = null;
+        positions = pos.get(0);
         latRangeMetric = WwjGeodesy.getDistanceM(positions.get(0),
                 new Position(Angle.fromDegrees(positions.get(3).getLatitude().getDegrees()),
                         Angle.fromDegrees(positions.get(3).getLongitude().getDegrees()), 100));
@@ -503,14 +532,14 @@ public class S57StlComponentController
                 new Position(Angle.fromDegrees(positions.get(1).getLatitude().getDegrees()),
                         Angle.fromDegrees(positions.get(1).getLongitude().getDegrees()), 100));
 
-        scaleLatFactor = tileSideY / latRangeMetric;
-        scaleLonFactor = tileSideX / lonRangeMetric;
+        scaleLatFactor = (tileSideY / line) / latRangeMetric;
+        scaleLonFactor = (tileSideX / line) / lonRangeMetric;
         String wkt = WwjJTS.toPolygonWkt(positions);
         WKTReader wktReader0 = new WKTReader();
 
         if (wkt != null) {
             try {
-                geometryEnvelope = wktReader0.read(wkt);// l'enveloppe au sens de JTS, pour ne faire clacul q'une fois
+                geometry1 = wktReader0.read(wkt);// l'enveloppe au sens de JTS, pour ne faire clacul q'une fois
                 /*
                 Geometry geometry = wktReader0.read(wkt);
                 CoordinateList list = new CoordinateList(geometry.getCoordinates());
@@ -525,5 +554,6 @@ public class S57StlComponentController
                         .getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return geometry1;
     }
 }

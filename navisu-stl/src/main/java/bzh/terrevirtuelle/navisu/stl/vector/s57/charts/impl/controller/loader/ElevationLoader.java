@@ -42,8 +42,9 @@ public class ElevationLoader {
     protected double spaceLon;
     protected double scaleLatFactor;
     protected double scaleLonFactor;
-
+protected int index;
     public ElevationLoader(Polygon polygon,
+            int index,
             double tileSideX, double tileSideY,
             int ptsCountsX, int ptsCountsY,
             double bottom,
@@ -51,6 +52,7 @@ public class ElevationLoader {
             double scaleLatFactor,
             double scaleLonFactor) {
         this.polygon = polygon;
+        this.index = index;
         this.tileSideX = tileSideX;
         this.tileSideY = tileSideY;
         this.ptsCountsX = ptsCountsX;
@@ -93,7 +95,7 @@ public class ElevationLoader {
             }
             longitude -= lonRange;
         }
-        result += createDEM(elevationsStr, "<ImageTexture DEF='Ortho' url='\"image.jpg\"'/> \n"
+        result += createDEM(elevationsStr, "<ImageTexture DEF='Ortho' url='\"image_"+index+".jpg\"'/> \n"
                 + "<TextureTransform  rotation='-1.57' />\n", "Digital elevation model");
 
         result += createDEM(bottomStr, "\n", "Sea level");

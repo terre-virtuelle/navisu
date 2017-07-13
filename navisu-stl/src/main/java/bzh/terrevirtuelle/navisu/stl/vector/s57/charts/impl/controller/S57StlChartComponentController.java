@@ -54,12 +54,13 @@ public class S57StlChartComponentController
     protected Polygon polyEnveloppe;
     List<? extends Position> positions;
     protected Geometry geometryEnveloppe;
-
+protected int index;
     public S57StlChartComponentController() {
 
     }
 
     public void compute(String outDirname, String outFilename,
+            int index,
             double scaleLatFactor, double scaleLonFactor,
             double magnification, 
             double tileSideX,double tileSideY,
@@ -81,11 +82,12 @@ public class S57StlChartComponentController
         this.polyEnveloppe = polyEnveloppe;
         this.geometryEnveloppe = geometryEnveloppe;
         positions = polyEnveloppe.getBoundaries().get(0);
+        System.out.println("outPathname : " + outPathname);
         writeInitOutFile(outPathname);
       //  writeRef(outPathname, polyEnveloppe);// repere XYZ
         writePositionOrientation(outPathname);
-        writeTexture(outDirname, polyEnveloppe);
-        writeElevation(outPathname, polyEnveloppe);
+        writeTexture(outDirname, index, polyEnveloppe);
+        writeElevation(outPathname, index, polyEnveloppe);
         writeS57Charts();
         writeBase(outPathname);
         writeEndOutFile(outPathname);
@@ -126,8 +128,9 @@ public class S57StlChartComponentController
         }
     }
 
-    private void writeElevation(String outFilename, Polygon polygon) {
+    private void writeElevation(String outFilename, int index, Polygon polygon) {
         ElevationLoader elevationLoader = new ElevationLoader(polygon,
+                index,
                 tileSideX, tileSideY,
                 ptsCountsX,  ptsCountsY,
                 bottom,
@@ -136,8 +139,8 @@ public class S57StlChartComponentController
 
     }
 
-    private void writeTexture(String outDir, Polygon polygon) {
-        TextureLoader exportImageOrElevations = new TextureLoader(outDir, polygon);
+    private void writeTexture(String outDir, int index, Polygon polygon) {
+        TextureLoader exportImageOrElevations = new TextureLoader(outDir, index, polygon);
         exportImageOrElevations.doSaveImage();
     }
 
