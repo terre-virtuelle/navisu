@@ -207,7 +207,7 @@ protected int index;
                 + "<Appearance>\n"
                 + "<Material "
                 + "diffuseColor='.38 .42 .44' />\n"
-                + "<ImageTexture DEF='Dem Side' url='\"metal.jpg\"'/> \n"
+                + "<ImageTexture DEF='Dem Side' url='\"common/metal.jpg\"'/> \n"
                 + "</Appearance>\n"
                 + "<IndexedFaceSet colorPerVertex='false' ";
 

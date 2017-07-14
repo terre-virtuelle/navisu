@@ -18,7 +18,7 @@ public class BaseLoader {
             + "<Group DEF=\"group_ME_Shape_Box\">\n"
             + "<Shape>\n"
             + "<Appearance>\n"
-            + "<ImageTexture DEF='Sea' url='\"mer.jpg\"'/> \n"
+            + "<ImageTexture DEF='Sea' url='\"common/mer.jpg\"'/> \n"
             + "<Material\n"
             + "diffuseColor=\"0.0600 0.1200 0.2200\">\n"
             + "</Material> \n"

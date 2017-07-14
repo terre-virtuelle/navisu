@@ -84,7 +84,7 @@ public class S57StlChartComponentController
         this.geometryEnveloppe = geometryEnveloppe;
         positions = polyEnveloppe.getBoundaries().get(0);
         writeInitOutFile(outPathname);
-        //  writeRef(outPathname, polyEnveloppe);// repere XYZ
+        //writeRef(outPathname, polyEnveloppe);// repere XYZ
         writePositionOrientation(outPathname);
         writeTexture(outDirname, index, polyEnveloppe);
         writeElevation(outPathname, index, polyEnveloppe);
@@ -118,7 +118,7 @@ public class S57StlChartComponentController
                 + "<meta name='Pos3' content='Lat=" + positions.get(3).getLatitude()
                 + " Lon=" + positions.get(3).getLongitude() + "'/>\n"
                 + "</head>\n"
-                + "<NavigationInfo type='\"EXAMINE\"'/>\n"
+                + "<NavigationInfo type='FLY'/>\n"
                 + "<Scene>\n";
         try {
             Files.write(Paths.get(filename), txt.getBytes(), StandardOpenOption.CREATE,
