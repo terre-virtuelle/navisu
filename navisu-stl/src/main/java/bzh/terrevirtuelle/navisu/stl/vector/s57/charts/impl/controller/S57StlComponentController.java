@@ -335,10 +335,7 @@ public class S57StlComponentController
                 // forEach dalle
                 for (int i = 0; i < tilesCount; i++) {
                     String outTile = outFile + "_" + i + ".x3d";
-                    //  OUT_PATH = OUT_DIR + outFile + ".x3d";
                     Geometry geom = initParameters(wwjTiles.get(i).getBoundaries());
-                    wwjTiles.get(i).setHighlightAttributes(makeHighlightAttributes(wwjTiles.get(i).getAttributes()));
-                    wwd.redrawNow();
                     s57StlChartComponentController.compute(
                             OUT_DIR,
                             outTile,
@@ -350,7 +347,8 @@ public class S57StlComponentController
                             wwjTiles.get(i), // dalle en WWJ
                             geom);     // dalle en JTS
                     instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
-                    // endEach
+                    wwjTiles.get(i).setAttributes(makeHighlightAttributes());
+                    wwd.redrawNow();
                 }
             });
         });
@@ -460,8 +458,8 @@ public class S57StlComponentController
         return normalAttributes;
     }
 
-    private ShapeAttributes makeHighlightAttributes(ShapeAttributes normalAttributes) {
-        ShapeAttributes highlightAttributes = new BasicShapeAttributes(normalAttributes);
+    private ShapeAttributes makeHighlightAttributes() {
+        ShapeAttributes highlightAttributes = new BasicShapeAttributes();
         highlightAttributes.setOutlineMaterial(Material.RED);
         highlightAttributes.setOutlineOpacity(1);
         highlightAttributes.setInteriorMaterial(Material.RED);
@@ -532,8 +530,8 @@ public class S57StlComponentController
                 new Position(Angle.fromDegrees(positions.get(1).getLatitude().getDegrees()),
                         Angle.fromDegrees(positions.get(1).getLongitude().getDegrees()), 100));
 
-        scaleLatFactor = (tileSideY / line) / latRangeMetric;
-        scaleLonFactor = (tileSideX / line) / lonRangeMetric;
+        scaleLatFactor = (tileSideY ) / latRangeMetric;
+        scaleLonFactor = (tileSideX ) / lonRangeMetric;
         String wkt = WwjJTS.toPolygonWkt(positions);
         WKTReader wktReader0 = new WKTReader();
 
@@ -551,7 +549,7 @@ public class S57StlComponentController
 
             } catch (com.vividsolutions.jts.io.ParseException ex) {
                 Logger.getLogger(S57StlComponentController.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                        .getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
         return geometry1;

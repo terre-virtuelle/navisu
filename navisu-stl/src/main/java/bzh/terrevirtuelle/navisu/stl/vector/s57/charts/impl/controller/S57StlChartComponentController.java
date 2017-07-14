@@ -54,7 +54,8 @@ public class S57StlChartComponentController
     protected Polygon polyEnveloppe;
     List<? extends Position> positions;
     protected Geometry geometryEnveloppe;
-protected int index;
+    protected int index;
+
     public S57StlChartComponentController() {
 
     }
@@ -62,11 +63,11 @@ protected int index;
     public void compute(String outDirname, String outFilename,
             int index,
             double scaleLatFactor, double scaleLonFactor,
-            double magnification, 
-            double tileSideX,double tileSideY,
+            double magnification,
+            double tileSideX, double tileSideY,
             int ptsCountsX, int ptsCountsY,
             double bottom,
-            Polygon polyEnveloppe, 
+            Polygon polyEnveloppe,
             Geometry geometryEnveloppe) {
         this.outDirname = outDirname;
         this.outFilename = outFilename;
@@ -82,13 +83,12 @@ protected int index;
         this.polyEnveloppe = polyEnveloppe;
         this.geometryEnveloppe = geometryEnveloppe;
         positions = polyEnveloppe.getBoundaries().get(0);
-        System.out.println("outPathname : " + outPathname);
         writeInitOutFile(outPathname);
-      //  writeRef(outPathname, polyEnveloppe);// repere XYZ
+        //  writeRef(outPathname, polyEnveloppe);// repere XYZ
         writePositionOrientation(outPathname);
         writeTexture(outDirname, index, polyEnveloppe);
         writeElevation(outPathname, index, polyEnveloppe);
-        writeS57Charts();
+        writeS57Charts(polyEnveloppe, geometryEnveloppe);
         writeBase(outPathname);
         writeEndOutFile(outPathname);
     }
@@ -132,7 +132,7 @@ protected int index;
         ElevationLoader elevationLoader = new ElevationLoader(polygon,
                 index,
                 tileSideX, tileSideY,
-                ptsCountsX,  ptsCountsY,
+                ptsCountsX, ptsCountsY,
                 bottom,
                 magnification, scaleLatFactor, scaleLonFactor);
         write(outFilename, elevationLoader.compute());
@@ -186,7 +186,7 @@ protected int index;
         }
     }
 
-    protected void writeS57Charts() {
+    protected void writeS57Charts(Polygon polyEnveloppe, Geometry geometryEnveloppe) {
         geos = new HashMap<>();
         File[] listOfFiles;
         if (file != null && file.isDirectory()) {
@@ -211,9 +211,9 @@ protected int index;
                         //   load(new DEPARE_Stl_ShapefileLoader(OUT_FILE, polyEnveloppe), "DEPARE", "DEPARE", "/");
                         break;
                     case "PONTON.shp":
-                       PONTON_Stl_ShapefileLoader ponton_Stl_ShapefileLoader = 
-                                new PONTON_Stl_ShapefileLoader(outPathname, polyEnveloppe,
-                        scaleLatFactor,scaleLonFactor, tileSideX);
+                        PONTON_Stl_ShapefileLoader ponton_Stl_ShapefileLoader
+                                = new PONTON_Stl_ShapefileLoader(outPathname, polyEnveloppe,
+                                        scaleLatFactor, scaleLonFactor, tileSideX);
                         load(ponton_Stl_ShapefileLoader, "HARBOUR", "PONTON", "/");
                         String resultPonton = ponton_Stl_ShapefileLoader.compute();
                         if (resultPonton != null) {
@@ -221,9 +221,9 @@ protected int index;
                         }
                         break;
                     case "SLCONS.shp":
-                        SLCONS_Stl_ShapefileLoader slConsStlShapefileLoader = 
-                                new SLCONS_Stl_ShapefileLoader(outPathname, polyEnveloppe,
-                        scaleLatFactor,scaleLonFactor, tileSideX);
+                        SLCONS_Stl_ShapefileLoader slConsStlShapefileLoader
+                                = new SLCONS_Stl_ShapefileLoader(outPathname, polyEnveloppe,
+                                        scaleLatFactor, scaleLonFactor, tileSideX);
                         load(slConsStlShapefileLoader, "HARBOUR", "SLCONS", "/");
                         String resultSl = slConsStlShapefileLoader.compute();
                         if (resultSl != null) {
@@ -233,8 +233,8 @@ protected int index;
                     case "BCNCAR.shp":
                         BUOYAGE_Stl_ShapefileLoader buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, 
-                                        tileSideX,tileSideY,
+                                        scaleLatFactor, scaleLonFactor,
+                                        tileSideX, tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BCNCAR", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BCNCAR", "/");
                         String resultCar = buoyageStlShapefileLoader.compute();
@@ -245,8 +245,8 @@ protected int index;
                     case "BOYCAR.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, 
-                                        tileSideX,tileSideY,
+                                        scaleLatFactor, scaleLonFactor,
+                                        tileSideX, tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BOYCAR", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BOYCAR", "/");
                         resultCar = buoyageStlShapefileLoader.compute();
@@ -257,8 +257,8 @@ protected int index;
                     case "BCNLAT.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, 
-                                        tileSideX,tileSideY,
+                                        scaleLatFactor, scaleLonFactor,
+                                        tileSideX, tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BCNLAT", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BCNLAT", "/");
                         String resultLat = buoyageStlShapefileLoader.compute();
@@ -269,8 +269,8 @@ protected int index;
                     case "BOYLAT.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, 
-                                        tileSideX,tileSideY,
+                                        scaleLatFactor, scaleLonFactor,
+                                        tileSideX, tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BOYLAT", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BOYLAT", "/");
                         resultLat = buoyageStlShapefileLoader.compute();
@@ -281,8 +281,8 @@ protected int index;
                     case "BCNSPP.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, 
-                                        tileSideX,tileSideY,
+                                        scaleLatFactor, scaleLonFactor,
+                                        tileSideX, tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BCNSPP", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BCNSPP", "/");
                         resultLat = buoyageStlShapefileLoader.compute();
@@ -293,8 +293,8 @@ protected int index;
                     case "BOYSPP.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, 
-                                        tileSideX,tileSideY,
+                                        scaleLatFactor, scaleLonFactor,
+                                        tileSideX, tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BOYSPP", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BOYSPP", "/");
                         resultLat = buoyageStlShapefileLoader.compute();
@@ -305,8 +305,8 @@ protected int index;
                     case "BCNISD.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, 
-                                        tileSideX,tileSideY,
+                                        scaleLatFactor, scaleLonFactor,
+                                        tileSideX, tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BCNISD", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BCNISD", "/");
                         resultLat = buoyageStlShapefileLoader.compute();
@@ -317,8 +317,8 @@ protected int index;
                     case "BOYISD.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, 
-                                        tileSideX,tileSideY,
+                                        scaleLatFactor, scaleLonFactor,
+                                        tileSideX, tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BOYISD", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BOYISD", "/");
                         resultLat = buoyageStlShapefileLoader.compute();

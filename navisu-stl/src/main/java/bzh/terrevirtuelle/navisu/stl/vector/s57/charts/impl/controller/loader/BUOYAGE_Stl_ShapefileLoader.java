@@ -32,7 +32,7 @@ import java.util.Set;
 public class BUOYAGE_Stl_ShapefileLoader
         extends BUOYAGE_ShapefileLoader {
 
-    static String result = "";
+    String result;
     double latRangeMetric;
     double lonRangeMetric;
     double scaleLatFactor;
@@ -57,6 +57,7 @@ public class BUOYAGE_Stl_ShapefileLoader
         this.sideX = sideX;
         this.sideY = sideY;
         geometryFactory = new GeometryFactory();
+        result="";
     }
 
     @SuppressWarnings("unchecked")
