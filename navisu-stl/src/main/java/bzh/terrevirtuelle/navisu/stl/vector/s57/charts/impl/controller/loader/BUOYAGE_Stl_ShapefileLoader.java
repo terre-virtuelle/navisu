@@ -37,6 +37,7 @@ public class BUOYAGE_Stl_ShapefileLoader
     double lonRangeMetric;
     double scaleLatFactor;
     double scaleLonFactor;
+    double buoyageScale;
     double sideX;
     double sideY;
     double latMetric;
@@ -46,18 +47,20 @@ public class BUOYAGE_Stl_ShapefileLoader
     GeometryFactory geometryFactory;
 
     public BUOYAGE_Stl_ShapefileLoader(Geometry geometryEnveloppe, Polygon polygon,
-            double scaleLatFactor, double scaleLonFactor, 
-            double sideX,double sideY,
+            double scaleLatFactor, double scaleLonFactor,
+            double buoyageScale,
+            double sideX, double sideY,
             boolean dev, String path, Map<Pair<Double, Double>, String> topMarks, String marsys, String acronym, Set<S57Controller> s57Controllers) {
         super(dev, path, topMarks, marsys, acronym, s57Controllers);
         this.geometryEnveloppe = geometryEnveloppe;
         positions = polygon.getBoundaries().get(0);
         this.scaleLatFactor = scaleLatFactor;
         this.scaleLonFactor = scaleLonFactor;
+        this.buoyageScale = buoyageScale;
         this.sideX = sideX;
         this.sideY = sideY;
         geometryFactory = new GeometryFactory();
-        result="";
+        result = "";
     }
 
     @SuppressWarnings("unchecked")
@@ -128,7 +131,7 @@ public class BUOYAGE_Stl_ShapefileLoader
         String str = " <!--" + "Lateral red cylinder buoy" + "-->\n"
                 + "<Transform \n"
                 + "   translation=\"" + lat + " 0.00000 " + lon + "\"\n"
-                + "    scale=\"1.00000 1.00000 1.00000\"\n"
+                + "    scale=\"" + buoyageScale + " " + buoyageScale + " " + buoyageScale + "\"\n"
                 + "    rotation=\"1 0 0 1.57058\">\n"
                 + "<Shape>\n"
                 + "<Appearance>\n"
@@ -145,7 +148,7 @@ public class BUOYAGE_Stl_ShapefileLoader
         String str = " <!--" + "Lateral green cone buoy" + "-->\n"
                 + "<Transform "
                 + "    translation=\"" + lat + " -0.500000 " + lon + "\"\n"
-                + "    scale=\"1.00000 1.00000 1.00000\"\n"
+                + "    scale=\"" + buoyageScale + " " + buoyageScale + " " + buoyageScale + "\"\n"
                 + "    rotation=\"0 1 0 3.14116\">\n"
                 + "    <Shape DEF='Extrusion1'>\n"
                 + "    <Appearance>\n"
@@ -172,7 +175,8 @@ public class BUOYAGE_Stl_ShapefileLoader
     private String writeNorthBuoy(double lat, double lon) {
         String str = " <!--" + "Cardinal south buoy" + "-->\n"
                 + "<Group DEF='SouthBuoy'>\n"
-                + "<Transform translation=\"" + lat + " 0.00000 " + lon + "\">\n"
+                + "<Transform translation=\"" + lat + " 0.00000 " + lon + "\"\n"
+                + "    scale=\"" + buoyageScale + " " + buoyageScale + " " + buoyageScale + "\">\n"
                 + "<Transform DEF='dad_Group1'\n"
                 + " translation='0 0 -.73213'>\n"
                 + " <Transform DEF='dad_Extrusion2'\n"
@@ -230,7 +234,8 @@ public class BUOYAGE_Stl_ShapefileLoader
 
         String str = " <!--" + "Cardinal north buoy" + "-->\n"
                 + "<Group DEF='NorthBuoy'>\n"
-                + "<Transform translation=\"" + lat + " 0.00000 " + lon + "\">\n"
+                + "<Transform translation=\"" + lat + " 0.00000 " + lon + "\"\n"
+                + "    scale=\"" + buoyageScale + " " + buoyageScale + " " + buoyageScale + "\">\n"
                 + "<Transform DEF='dad_Group1'\n"
                 + " translation='0 0 -.73213'>\n"
                 + " <Transform DEF='dad_Extrusion2'\n"
@@ -287,7 +292,8 @@ public class BUOYAGE_Stl_ShapefileLoader
 
         String str = " <!--" + "Cardinal east buoy" + "-->\n"
                 + "<Group DEF='EastBuoy'>\n"
-                + "<Transform translation=\"" + lat + " 0.00000 " + lon + "\">\n"
+                + "<Transform translation=\"" + lat + " 0.00000 " + lon + "\"\n"
+                + "    scale=\"" + buoyageScale + " " + buoyageScale + " " + buoyageScale + "\">\n"
                 + "<Transform DEF='dad_Group1'\n"
                 + " translation='0 0 -.73213'>\n"
                 + " <Transform DEF='dad_Extrusion1'\n"
@@ -343,7 +349,8 @@ public class BUOYAGE_Stl_ShapefileLoader
 
         String str = " <!--" + "Cardinal west buoy" + "-->\n"
                 + "<Group DEF='WestBuoy'>\n"
-                + "<Transform translation=\"" + lat + " 0.00000 " + lon + "\">\n"
+                + "<Transform translation=\"" + lat + " 0.00000 " + lon + "\"\n"
+                + "    scale=\"" + buoyageScale + " " + buoyageScale + " " + buoyageScale + "\">\n"
                 + "<Transform DEF='dad_Extrusion2'\n"
                 + "translation='0 0 1.86606'>\n"
                 + "<Shape DEF='Extrusion2'>\n"
@@ -399,7 +406,8 @@ public class BUOYAGE_Stl_ShapefileLoader
         String str = " <!--" + "Special purpose buoy" + "-->\n"
                 + "<Transform \n"
                 + "   translation=\"" + lat + " 0.00000 " + lon + "\"\n"
-                + "    scale=\"0.200000 0.200000 0.20000\"\n"
+                + "    scale=\"" + 0.2 * buoyageScale + " " + 0.2 * buoyageScale + " " + 0.2 * buoyageScale + "\"\n"
+                //   + "    scale=\"0.200000 0.200000 0.20000\"\n"
                 + "    rotation=\"0 0 1 3.14116\">\n"
                 + "<Transform DEF='dad_Box1'\n"
                 + " rotation='0 1 0 .785'>\n"
@@ -446,7 +454,7 @@ public class BUOYAGE_Stl_ShapefileLoader
         String str = " <!--" + "Isolated danger buoy" + "-->\n"
                 + "<Transform \n"
                 + "   translation=\"" + lat + " 0.00000 " + lon + "\"\n"
-                + "    scale=\"1.00000 1.00000 1.00000\"\n"
+                + "    scale=\"" + buoyageScale + " " + buoyageScale + " " + buoyageScale + "\"\n"
                 + "    rotation=\"0 0 0 0.0\">\n"
                 + "<Transform DEF='dad_Cylinder1'\n"
                 + " translation='0 0 -1'>\n"
@@ -491,7 +499,8 @@ public class BUOYAGE_Stl_ShapefileLoader
         String str = " <!--" + "Morfac buoy" + "-->\n"
                 + "<Transform \n"
                 + "   translation=\"" + lat + " -0.200000 " + lon + "\"\n"
-                + "    scale=\".6 .6 .6\"\n"
+                                + "    scale=\"" + 0.6*buoyageScale + " " + 0.6*buoyageScale + " " + 0.6*buoyageScale + "\"\n"
+           //    + "    scale=\".6 .6 .6\"\n"
                 + "    rotation=\"0 0 0 0.0\">\n"
                 + "<Shape>\n"
                 + "      <Appearance>\n"

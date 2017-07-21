@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -119,11 +120,11 @@ public class S57StlComponentController
     protected KMLSurfacePolygonImpl kmlPolygon;
     protected Polygon polygonEnvelope;
     protected Polygon squarePolygonEnvelope;
-
     protected String GROUP;
     protected String NAME;
     protected RenderableLayer layer;
     protected WorldWindow wwd;
+    protected double buoyageScale;
 
     @FXML
     public Group configGroup;
@@ -161,6 +162,8 @@ public class S57StlComponentController
     public TextField sideXTF;
     @FXML
     public TextField sideYTF;
+    @FXML
+    public TextField buoyScaleTF;
 
     final ToggleGroup latLonGroup = new ToggleGroup();
     final ToggleGroup eastWestGroup = new ToggleGroup();
@@ -216,7 +219,13 @@ public class S57StlComponentController
     public void initialize(URL location, ResourceBundle resources) {
         tileCB.setItems(FXCollections.observableArrayList(1, 4, 9, 16, 25));
         tileCB.setValue(1);
-
+        /*
+        tileCB.setOnAction((ActionEvent event) -> {
+            tilesCount = tileCB.getValue();
+            line = column = (int) Math.sqrt(tilesCount);
+            displayTiles(squarePolygonEnvelope, line, column);
+        });
+         */
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
             guiAgentServices.getRoot().getChildren().remove(this);
@@ -244,13 +253,6 @@ public class S57StlComponentController
         latLonAllRB.setSelected(false);
         latRB.setToggleGroup(latLonGroup);
         latRB.setSelected(true);
-        /*
-        if (eastRB.isSelected()) {
-            squareLatEast();
-        } else {
-            squareLatWest();
-        }
-         */
         lonRB.setToggleGroup(latLonGroup);
         lonRB.setSelected(false);
         eastRB.setToggleGroup(eastWestGroup);
@@ -325,22 +327,29 @@ public class S57StlComponentController
                 }
             }
         });
+
         computeButton.setOnMouseClicked((MouseEvent event) -> {
             tilesCount = tileCB.getValue();
             line = column = (int) Math.sqrt(tilesCount);
-
+            try {
+                buoyageScale = Double.valueOf(buoyScaleTF.getText());
+            } catch (NumberFormatException e) {
+                buoyageScale = 1.0;
+            }
             guiAgentServices.getJobsManager().newJob(OUT_PATH, (progressHandle) -> {
                 List<Polygon> wwjTiles = displayTiles(squarePolygonEnvelope, line, column);
                 List<Geometry> JtsTiles;
                 // forEach dalle
                 for (int i = 0; i < tilesCount; i++) {
-                    String outTile = outFile + "_" + i + ".x3d";
+                    String outTile = nameTF.getText() + "_" + i + ".x3d";
                     Geometry geom = initParameters(wwjTiles.get(i).getBoundaries());
                     s57StlChartComponentController.compute(
                             OUT_DIR,
                             outTile,
                             i,
-                            scaleLatFactor, scaleLonFactor, magnification,
+                            scaleLatFactor, scaleLonFactor,
+                            buoyageScale,
+                            magnification,
                             tileSideX, tileSideY,
                             ptsCountX, ptsCountY,
                             bottom,
@@ -530,8 +539,8 @@ public class S57StlComponentController
                 new Position(Angle.fromDegrees(positions.get(1).getLatitude().getDegrees()),
                         Angle.fromDegrees(positions.get(1).getLongitude().getDegrees()), 100));
 
-        scaleLatFactor = (tileSideY ) / latRangeMetric;
-        scaleLonFactor = (tileSideX ) / lonRangeMetric;
+        scaleLatFactor = (tileSideY) / latRangeMetric;
+        scaleLonFactor = (tileSideX) / lonRangeMetric;
         String wkt = WwjJTS.toPolygonWkt(positions);
         WKTReader wktReader0 = new WKTReader();
 
