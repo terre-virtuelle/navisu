@@ -45,6 +45,7 @@ public class S57StlChartComponentController
     protected String outDirname;
     protected String outFilename;
     protected String outPathname;
+    protected String chartName;
     protected double tileSideX;
     protected double tileSideY;
     protected int ptsCountsX;
@@ -65,6 +66,11 @@ public class S57StlChartComponentController
 
     }
 
+    public void init(String path, String chartPath) {
+        init(path);
+        chartName = new File(chartPath).getName();
+    }
+
     public void compute(String outDirname, String outFilename,
             int index,
             double scaleLatFactor, double scaleLonFactor,
@@ -78,7 +84,7 @@ public class S57StlChartComponentController
         this.outDirname = outDirname;
         this.outFilename = outFilename;
         this.outPathname = outDirname + outFilename;
-        this.buoyageScale=buoyageScale;
+        this.buoyageScale = buoyageScale;
         this.scaleLatFactor = scaleLatFactor;
         this.scaleLonFactor = scaleLonFactor;
         this.magnification = magnification;
@@ -90,7 +96,8 @@ public class S57StlChartComponentController
         this.polyEnveloppe = polyEnveloppe;
         this.geometryEnveloppe = geometryEnveloppe;
         positions = polyEnveloppe.getBoundaries().get(0);
-        writeInitOutFile(outPathname);
+        
+        writeInitOutFile(outPathname, chartName);
         //writeRef(outPathname, polyEnveloppe);// repere XYZ
         writePositionOrientation(outPathname);
         writeTexture(outDirname, index, polyEnveloppe);
@@ -100,7 +107,7 @@ public class S57StlChartComponentController
         writeEndOutFile(outPathname);
     }
 
-    private void writeInitOutFile(String filename) {
+    private void writeInitOutFile(String filename, String chartName) {
         String txt;
         lines = new ArrayList<>();
         txt = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
@@ -112,6 +119,7 @@ public class S57StlChartComponentController
                 + "http://www.web3d.org/specifications/x3d-3.0.xsd '> \n"
                 + "<head>\n"
                 + "<meta name='Title' content='NaVisu S57'/> \n"
+                + "<meta name='Chart' content='" + chartName + "'/>\n"
                 + "<meta name='Author' content='" + System.getProperty("user.name") + "'/>\n"
                 + "<meta name='Created' content='" + new SimpleDateFormat("dd/MM/yyyy-hh:mm:ss").format(new Date()) + "'/>\n"
                 + "<meta name='Generator' content='NaVisu'/>\n"
@@ -354,7 +362,7 @@ public class S57StlChartComponentController
                     case "MORFAC.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, 
+                                        scaleLatFactor, scaleLonFactor,
                                         buoyageScale,
                                         tileSideX, tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "MORFAC", null);

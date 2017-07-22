@@ -37,7 +37,6 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -125,7 +124,6 @@ public class S57StlComponentController
     protected RenderableLayer layer;
     protected WorldWindow wwd;
     protected double buoyageScale;
-
     @FXML
     public Group configGroup;
     @FXML
@@ -195,6 +193,7 @@ public class S57StlComponentController
     }
 
     public void showGUI(KMLSurfacePolygonImpl polygon) {
+        
         if (firstShow == true) {
             this.kmlPolygon = polygon;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
