@@ -223,7 +223,7 @@ public class DarkSkyViewController
     public void showData(ForecastIO fio) {
         this.fio = fio;
         FIOCurrently currently = new FIOCurrently(fio);
-        this.windSpeedData.setText(Double.toString(currently.get().windSpeed()));
+        this.windSpeedData.setText(Double.toString(currently.get().windSpeed()*2));
         this.windBearingData.setText(Double.toString(currently.get().windBearing()));
         this.visibilityData.setText(Double.toString(currently.get().visibility()));
         this.humidityData.setText(Double.toString(currently.get().humidity()));
@@ -268,7 +268,7 @@ public class DarkSkyViewController
         if (hourly.hours() > 0) {
             for (int i = 0; i < hourly.hours(); i++) {
                 XYChart.Data<String, Double> data
-                        = new XYChart.Data<>("H+" + Integer.toString(i), hourly.getHour(i).windSpeed());
+                        = new XYChart.Data<>("H+" + Integer.toString(i), hourly.getHour(i).windSpeed()*2);
                 String windBearing = hourly.getHour(i).windBearing().toString();
                 dataSeries1.getData().add(data);
                 data.nodeProperty().addListener(observable -> {
