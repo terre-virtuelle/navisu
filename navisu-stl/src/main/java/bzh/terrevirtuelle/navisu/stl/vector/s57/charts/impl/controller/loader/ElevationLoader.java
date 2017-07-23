@@ -42,7 +42,9 @@ public class ElevationLoader {
     protected double spaceLon;
     protected double scaleLatFactor;
     protected double scaleLonFactor;
-protected int index;
+    protected int index;
+    protected String TEXTURE = "common/metal.jpg";
+
     public ElevationLoader(Polygon polygon,
             int index,
             double tileSideX, double tileSideY,
@@ -95,7 +97,7 @@ protected int index;
             }
             longitude -= lonRange;
         }
-        result += createDEM(elevationsStr, "<ImageTexture DEF='Ortho' url='\"image_"+index+".jpg\"'/> \n"
+        result += createDEM(elevationsStr, "<ImageTexture DEF='Ortho' url='\"image_" + index + ".jpg\"'/> \n"
                 + "<TextureTransform  rotation='-1.57' />\n", "Digital elevation model");
 
         result += createDEM(bottomStr, "\n", "Sea level");
@@ -207,7 +209,7 @@ protected int index;
                 + "<Appearance>\n"
                 + "<Material "
                 + "diffuseColor='.38 .42 .44' />\n"
-                + "<ImageTexture DEF='Dem Side' url='\"common/metal.jpg\"'/> \n"
+                + "<ImageTexture DEF='Dem Side' url='" + TEXTURE + "'/> \n"
                 + "</Appearance>\n"
                 + "<IndexedFaceSet colorPerVertex='false' ";
 

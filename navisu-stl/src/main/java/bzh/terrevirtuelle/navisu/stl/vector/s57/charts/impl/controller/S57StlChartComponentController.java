@@ -59,6 +59,7 @@ public class S57StlChartComponentController
     protected List<? extends Position> positions;
     protected Geometry geometryEnveloppe;
     protected int index;
+    protected boolean base;
     protected Charset charset = Charset.forName("UTF-8");
     protected ArrayList<String> lines;
 
@@ -79,6 +80,7 @@ public class S57StlChartComponentController
             double tileSideX, double tileSideY,
             int ptsCountsX, int ptsCountsY,
             double bottom,
+            boolean base,
             Polygon polyEnveloppe,
             Geometry geometryEnveloppe) {
         this.outDirname = outDirname;
@@ -93,17 +95,18 @@ public class S57StlChartComponentController
         this.ptsCountsX = ptsCountsX;
         this.ptsCountsY = ptsCountsY;
         this.bottom = bottom;
+        this.base = base;
         this.polyEnveloppe = polyEnveloppe;
         this.geometryEnveloppe = geometryEnveloppe;
         positions = polyEnveloppe.getBoundaries().get(0);
-        
+
         writeInitOutFile(outPathname, chartName);
         //writeRef(outPathname, polyEnveloppe);// repere XYZ
         writePositionOrientation(outPathname);
         writeTexture(outDirname, index, polyEnveloppe);
         writeElevation(outPathname, index, polyEnveloppe);
         writeS57Charts(polyEnveloppe, geometryEnveloppe, buoyageScale);
-        writeBase(outPathname);
+        writeBase(outPathname, base);
         writeEndOutFile(outPathname);
     }
 
@@ -164,9 +167,9 @@ public class S57StlChartComponentController
         exportImageOrElevations.doSaveImage();
     }
 
-    private void writeBase(String outFilename) {
+    private void writeBase(String outFilename, boolean base) {
         BaseLoader l = new BaseLoader();
-        write(outFilename, l.compute());
+        write(outFilename, l.compute(base));
     }
 
     private void writeRef(String outFilename, Polygon polygon) {
@@ -200,6 +203,7 @@ public class S57StlChartComponentController
     }
 
     private void writeEndOutFile(String filename) {
+        lines = new ArrayList<>();
         String txt = "</Transform>\n"
                 + " </Scene>\n"
                 + "</X3D> ";

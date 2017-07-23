@@ -42,6 +42,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -162,6 +163,8 @@ public class S57StlComponentController
     public TextField sideYTF;
     @FXML
     public TextField buoyScaleTF;
+    @FXML
+    public CheckBox baseCB;
 
     final ToggleGroup latLonGroup = new ToggleGroup();
     final ToggleGroup eastWestGroup = new ToggleGroup();
@@ -193,7 +196,7 @@ public class S57StlComponentController
     }
 
     public void showGUI(KMLSurfacePolygonImpl polygon) {
-        
+
         if (firstShow == true) {
             this.kmlPolygon = polygon;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -335,6 +338,8 @@ public class S57StlComponentController
             } catch (NumberFormatException e) {
                 buoyageScale = 1.0;
             }
+            boolean base=baseCB.isSelected();
+            
             guiAgentServices.getJobsManager().newJob(OUT_PATH, (progressHandle) -> {
                 List<Polygon> wwjTiles = displayTiles(squarePolygonEnvelope, line, column);
                 List<Geometry> JtsTiles;
@@ -352,6 +357,7 @@ public class S57StlComponentController
                             tileSideX, tileSideY,
                             ptsCountX, ptsCountY,
                             bottom,
+                            base,
                             wwjTiles.get(i), // dalle en WWJ
                             geom);     // dalle en JTS
                     instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
