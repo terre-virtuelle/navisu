@@ -12,7 +12,7 @@ package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
  */
 public class BaseLoader {
 
-    String TEXTURE = "common/rusty.jpg";
+    String TEXTURE = "common/metal.jpg";
     String TEXTURE_1 = "common/metal.jpg";
     
     String txt = " <!--" + "Sea" + "-->\n"
