@@ -350,6 +350,7 @@ public class S57StlComponentController
                     s57StlChartComponentController.compute(
                             OUT_DIR,
                             outTile,
+                            tilesCount,
                             i,
                             scaleLatFactor, scaleLonFactor,
                             buoyageScale,

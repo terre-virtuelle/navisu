@@ -461,13 +461,13 @@ public class AppMain extends Application {
         // Neo4J serveur externe
         // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
         // System.out.println("con : " + con);
-     //    bathymetryDBServices.connect("bathy", "localhost", "jdbc:postgresql://", 
-      //           "5432",  "org.postgresql.Driver", "serge", "lithops",
-         //        "/home/serge/Data/bathymetry/data/shom/MNT/MNT_FACADE_ATLANTIQUE_HOMONIM_NM/DONNEES/MNT_ATL100m_HOMONIM_GEO_refNM_ZNEG.glz");
-      //  "/home/serge/Data/bathymetry/data/shom/MNT/MNT100M_ATL/splited/Atlantique_100ag");
-         //                "/home/serge/Data/bathymetry/data/shom/MNT/MNT_FACADE_ATLANTIQUE_HOMONIM_NM/DONNEES/test.glz");
         
-        
+        /*
+         bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
+                 "5432",  "org.postgresql.Driver", "admin", "admin",
+                 "/home/serge/Data/Data.shom/MNT100M_ATL/splited/bathy65.glz");
+               //  "/home/serge/Data/bathymetry/data/shom/MNT/MNT_FACADE_ATLANTIQUE_HOMONIM_NM/DONNEES/MNT_ATL100m_HOMONIM_GEO_refNM_ZNEG.glz");
+     */
         
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut

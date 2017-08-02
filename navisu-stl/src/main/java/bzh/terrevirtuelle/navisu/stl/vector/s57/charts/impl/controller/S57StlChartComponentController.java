@@ -46,6 +46,8 @@ public class S57StlChartComponentController
     protected String outFilename;
     protected String outPathname;
     protected String chartName;
+    protected int tilesCount;
+    protected int index;
     protected double tileSideX;
     protected double tileSideY;
     protected int ptsCountsX;
@@ -58,7 +60,6 @@ public class S57StlChartComponentController
     protected Polygon polyEnveloppe;
     protected List<? extends Position> positions;
     protected Geometry geometryEnveloppe;
-    protected int index;
     protected boolean base;
     protected Charset charset = Charset.forName("UTF-8");
     protected ArrayList<String> lines;
@@ -73,6 +74,7 @@ public class S57StlChartComponentController
     }
 
     public void compute(String outDirname, String outFilename,
+            int tilesCount,
             int index,
             double scaleLatFactor, double scaleLonFactor,
             double buoyageScale,
@@ -83,6 +85,8 @@ public class S57StlChartComponentController
             boolean base,
             Polygon polyEnveloppe,
             Geometry geometryEnveloppe) {
+        this.index = index;
+        this.tilesCount = tilesCount;
         this.outDirname = outDirname;
         this.outFilename = outFilename;
         this.outPathname = outDirname + outFilename;
@@ -123,6 +127,8 @@ public class S57StlChartComponentController
                 + "<head>\n"
                 + "<meta name='Title' content='NaVisu S57'/> \n"
                 + "<meta name='Chart' content='" + chartName + "'/>\n"
+                + "<meta name='TilesCount' content='" + tilesCount + "'/>\n"
+                + "<meta name='Index' content='" + index + "'/>\n"
                 + "<meta name='Author' content='" + System.getProperty("user.name") + "'/>\n"
                 + "<meta name='Created' content='" + new SimpleDateFormat("dd/MM/yyyy-hh:mm:ss").format(new Date()) + "'/>\n"
                 + "<meta name='Generator' content='NaVisu'/>\n"

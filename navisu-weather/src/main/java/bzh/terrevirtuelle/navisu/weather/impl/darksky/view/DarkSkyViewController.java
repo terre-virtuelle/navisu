@@ -357,7 +357,7 @@ public class DarkSkyViewController
         if (daily.days() > 0) {
             for (int i = 0; i < daily.days(); i++) {
                 XYChart.Data<String, Double> data
-                        = new XYChart.Data<>("D+" + Integer.toString(i), daily.getDay(i).windSpeed());
+                        = new XYChart.Data<>("D+" + Integer.toString(i), daily.getDay(i).windSpeed()*2);
                 String windBearing = daily.getDay(i).windBearing().toString();
                 String summary = daily.getDay(i).summary();
                 dataSeries1.getData().add(data);

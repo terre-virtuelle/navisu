@@ -63,9 +63,9 @@ public class DockManagerImpl<TrackTool>
     private final String PORT = "5432";
     private final String DRIVER_NAME = "org.postgresql.Driver";
     private final String JDBC_PROTOCOL = "jdbc:postgresql://";
-    private final String DB_NAME = "bathy";
-    private final String USER_NAME = "serge";
-    private final String PASSWD = "lithops";
+    private final String DB_NAME = "BathyShomDB";
+    private final String USER_NAME = "admin";
+    private final String PASSWD = "admin";
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
     protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
     protected final String GEBCO = "http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?";
