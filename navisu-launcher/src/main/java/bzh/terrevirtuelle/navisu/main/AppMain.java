@@ -472,8 +472,8 @@ public class AppMain extends Application {
        // bathymetryDBServices.displayAllSounding();
         
         /* Test speech */
-        //speakerServices.read("data/text", "installation.txt", null);// local par defaut
-        // speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
+       // speakerServices.read("data/text", "installation.txt", null);// local par defaut
+       //  speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
         // speakerServices.read("naVisu est un logiciel de visualisation et de simulation de données maritimes.");//OK
         /* Test  ontology  DataAccess */
         //dataAccessServices.test();//OK
