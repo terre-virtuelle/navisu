@@ -16,34 +16,21 @@ import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.impl.controller.BathymetryDBController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
-import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
-import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.PointPlacemark;
-import gov.nasa.worldwind.render.PointPlacemarkAttributes;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
+import javafx.stage.Stage;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
-import org.postgis.PGgeometry;
 
 /**
  * @date 13 mars 2015
@@ -87,16 +74,15 @@ public class BathymetryDBImpl
     @SuppressWarnings("unchecked")
     @Override
     public void componentInitiated() {
-
         points3df = new ArrayList<>();
         points3d = new ArrayList<>();
-        bathymetryDBController = BathymetryDBController.getInstance(this,
-                databaseServices, guiAgentServices, bathymetryEventProducerServices,
-                LIMIT);
         wwd = GeoWorldWindViewImpl.getWW();
         layer = layersManagerServices.getLayer(GROUP, LAYER_NAME);
         //   layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
-
+        bathymetryDBController = BathymetryDBController.getInstance(this,
+                databaseServices, guiAgentServices, bathymetryEventProducerServices,
+                LIMIT, layer);
+        
     }
 
     @Override
@@ -124,8 +110,53 @@ public class BathymetryDBImpl
     }
 
     @Override
-    public void create() {
-        bathymetryDBController.create();
+    public void create(String filename) {
+        bathymetryDBController.create(filename);
+    }
+
+    @Override
+    public List<Point3Df> readFromFile(String filename) {
+        return bathymetryDBController.readFromFile(filename);
+    }
+
+    @Override
+    public void insert(List<Point3Df> points) {
+        bathymetryDBController.insert(points);
+    }
+
+    @Override
+    public void createIndex() {
+        bathymetryDBController.createIndex();
+    }
+
+    @Override
+    public List<Point3D> retrieveAll() {
+        return bathymetryDBController.retrieveAll();
+    }
+
+    @Override
+    public List<Point3D> retrieveAround(double lat, double lon) {
+        return bathymetryDBController.retrieveAround(lat, lon);
+    }
+
+    @Override
+    public List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
+        return bathymetryDBController.retrieveIn(latMin, lonMin, latMax, lonMax);
+    }
+
+    @Override
+    public void displaySounding(List<Point3D> points) {
+        bathymetryDBController.displaySounding(points);
+    }
+
+    @Override
+    public void displayAllSounding() {
+        bathymetryDBController.displayAllSounding();
+    }
+
+    @Override
+    public List<Point3D> retrieveBoundaries(List<Point3D> pts) {
+        return bathymetryDBController.retrieveBoundaries(pts);
     }
 
     @Override
@@ -146,4 +177,5 @@ public class BathymetryDBImpl
     public DatabaseDriver getDriver() {
         return this;
     }
+
 }

@@ -6,7 +6,10 @@
 package bzh.terrevirtuelle.navisu.bathymetry.db;
 
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriver;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
 import java.sql.Connection;
+import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -26,7 +29,25 @@ public interface BathymetryDBServices
 
     void close();
 
-    void create();
+    void create(String filename);
+
+    List<Point3Df> readFromFile(String filename);
+
+    void createIndex();
+
+    void insert(List<Point3Df> points);
+
+    List<Point3D> retrieveAll();
+
+    List<Point3D> retrieveBoundaries(List<Point3D> pts);
+
+    List<Point3D> retrieveAround(double lat, double lon);
+
+    List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax);
+
+    void displaySounding(List<Point3D> points);
+
+    void displayAllSounding();
 
     DatabaseDriver getDriver();
 }

@@ -12,7 +12,6 @@ import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
-import javafx.scene.PointLight;
 import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
@@ -76,15 +75,16 @@ public class Points3D extends Group {
         camera = new PerspectiveCamera(true);
         camera.setNearClip(0.0001);//0.1
         camera.setFarClip(10000.0);//10000.0
-        //   camera.setTranslateZ(-70);//-1000
+        camera.setTranslateZ(-1000);//-1000
         scene.setCamera(camera);
+        
         AmbientLight light = new AmbientLight();
         light.setColor(Color.WHITE);
-        // Group pointsGroup = buildPoints(points);//100,100
+       // Group pointsGroup = buildPoints(points);//100,100
         Group pointsGroup = buildDelaunay(delaunay(points));
 
-        pointsGroup.setTranslateX(-7+centerY);
-        pointsGroup.setTranslateY(-centerX/10);//-4
+        pointsGroup.setTranslateX(centerY);
+        pointsGroup.setTranslateY(-4-centerX/10);//-4
         pointsGroup.setRotationAxis(new Point3D(1.0, 0.0, 0.0));
         pointsGroup.setRotate(100.0);
 
@@ -154,6 +154,7 @@ public class Points3D extends Group {
             sphere.setTranslateX((p.getY() - minLon) * 1000);
             sphere.setTranslateY((p.getX() - minLat) * 1000);
             sphere.setTranslateZ(p.getZ());
+            
             sphere.setMaterial(new PhongMaterial(SHOM_BATHYMETRY_CLUT_JAVA_FX.getColor(p.getZ(), false)));
 
             Tooltip t = new Tooltip(Double.toString(p.getZ()));
@@ -173,6 +174,7 @@ public class Points3D extends Group {
                 mesh.getPoints().addAll((float) (p.getY() - minLon) * 1000,
                         (float) (p.getX() - minLat) * 1000,
                         (float) p.getZ());
+                
             });
         });
 
@@ -185,10 +187,10 @@ public class Points3D extends Group {
             }
             k += 2;
         }
-
         MeshView meshView = new MeshView(mesh);
         meshView.setDrawMode(DrawMode.FILL);
         meshView.setCullFace(CullFace.NONE);
+       
         meshView.setMaterial(new PhongMaterial(SHOM_BATHYMETRY_CLUT_JAVA_FX.getColor(centerZ, false)));
         group.getChildren().add(meshView);
         return group;
@@ -226,7 +228,7 @@ public class Points3D extends Group {
             System.out.println(centerX + " " + centerY + "  " + centerZ);
 
         } catch (DelaunayError ex) {
-            Logger.getLogger(Points3D.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Points3D.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
 
         return list;

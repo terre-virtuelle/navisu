@@ -45,7 +45,7 @@ public class DarkSkyViewController
         implements Initializable {
 
     public String viewgroupstyle = "weatherpanel.css";
-    
+
     @FXML
     public Group weatherViewPanel;
     @FXML
@@ -130,19 +130,18 @@ public class DarkSkyViewController
     NumberAxis dyAxis;
     @FXML
     StackPane iconId;
-    
-    
+
     String FXML = "weatherViewPanel.fxml";
     private ForecastIO fio;
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     public String iconadress = "";
     public String forecasticon = "";
-    
+
     /*
     String FXML = "weatherViewPanel.fxml";
     private ForecastIO fio;
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
-    */
+     */
     public DarkSkyViewController() {
         setMouseTransparent(false);
         load();
@@ -214,43 +213,41 @@ public class DarkSkyViewController
                 Insets.EMPTY)));
         SVGContent content = SVGLoader.load(getClass().getResource("meteoicones/Cloud-Download.svg").toString());
         iconId.getChildren().add(content);
-        */
-        
-        
-   
+         */
+
     }
 
     public void showData(ForecastIO fio) {
         this.fio = fio;
-        FIOCurrently currently = new FIOCurrently(fio);
-        this.windSpeedData.setText(Double.toString(currently.get().windSpeed()*2));
-        this.windBearingData.setText(Double.toString(currently.get().windBearing()));
-        this.visibilityData.setText(Double.toString(currently.get().visibility()));
-        this.humidityData.setText(Double.toString(currently.get().humidity()));
-        this.temperatureData.setText(Double.toString(currently.get().temperature()));
-        this.apparentTemperatureData.setText(Double.toString(currently.get().apparentTemperature()));
-        this.pressureData.setText(Double.toString(currently.get().pressure()));
-        this.dewPointData.setText(Double.toString(currently.get().dewPoint()));
-        this.precipProbabilityData.setText(Double.toString(currently.get().precipProbability()));
-        this.precipTypeData.setText(currently.get().precipType());
-        this.precipIntensityData.setText(Double.toString(currently.get().precipIntensity()));
-        this.cloudCoverData.setText(Double.toString(currently.get().cloudCover()));
-        this.summaryData.setText(currently.get().summary());
-        this.timeData.setText(currently.get().time());
-        //  print(fio);
-        //  printIcon(fio);
-        showHoursWindData(fio);
-        showDaysWindData(fio);
-        
-        forecasticon = currently.get().icon();
-        forecasticon = deleteCharAt(forecasticon, 0);
-        forecasticon = removeLastChar(forecasticon);
-        iconadress = "meteoicons/" + forecasticon + ".svg";
-        //System.out.println("adresse fichier svg : " + iconadress);
-        SVGContent content = SVGLoader.load(getClass().getResource(iconadress).toString());
-        iconId.getChildren().add(content);
-        
 
+        FIOCurrently currently = new FIOCurrently(fio);
+        if ( currently.get() != null) {
+            this.windSpeedData.setText(currently.get().windSpeed() != null ? Double.toString(currently.get().windSpeed() * 2) : "NC");
+            this.windBearingData.setText(currently.get().windBearing() != null ? Double.toString(currently.get().windBearing()) : "NC");
+            this.visibilityData.setText(currently.get().visibility() != null ? Double.toString(currently.get().visibility()) : "NC");
+            this.humidityData.setText(currently.get().humidity() != null ? Double.toString(currently.get().humidity()) : "NC");
+            this.temperatureData.setText(currently.get().temperature() != null ? Double.toString(currently.get().temperature()) : "NC");
+            this.apparentTemperatureData.setText(currently.get().apparentTemperature() != null ? Double.toString(currently.get().apparentTemperature()) : "NC");
+            this.pressureData.setText(currently.get().pressure() != null ? Double.toString(currently.get().pressure()) : "NC");
+            this.dewPointData.setText(currently.get().dewPoint() != null ? Double.toString(currently.get().dewPoint()) : "NC");
+            this.precipProbabilityData.setText(currently.get().precipProbability() != null ? Double.toString(currently.get().precipProbability()) : "NC");
+            this.precipTypeData.setText(currently.get().precipType() != null ? currently.get().precipType() : "NC");
+            this.precipIntensityData.setText(currently.get().precipIntensity() != null ? Double.toString(currently.get().precipIntensity()) : "NC");
+            this.cloudCoverData.setText(currently.get().cloudCover() != null ? Double.toString(currently.get().cloudCover()) : "NC");
+            this.summaryData.setText(currently.get().summary() != null ? currently.get().summary() : "NC");
+            this.timeData.setText(currently.get().time() != null ? currently.get().time() : "NC");
+            showHoursWindData(fio);
+            showDaysWindData(fio);
+
+            forecasticon = currently.get().icon();
+            forecasticon = deleteCharAt(forecasticon, 0);
+            forecasticon = removeLastChar(forecasticon);
+            iconadress = "meteoicons/" + forecasticon + ".svg";
+            SVGContent content = SVGLoader.load(getClass().getResource(iconadress).toString());
+            iconId.getChildren().add(content);
+        }else{
+            System.out.println("Données non transmises");
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -268,7 +265,7 @@ public class DarkSkyViewController
         if (hourly.hours() > 0) {
             for (int i = 0; i < hourly.hours(); i++) {
                 XYChart.Data<String, Double> data
-                        = new XYChart.Data<>("H+" + Integer.toString(i), hourly.getHour(i).windSpeed()*2);
+                        = new XYChart.Data<>("H+" + Integer.toString(i), hourly.getHour(i).windSpeed() * 2);
                 String windBearing = hourly.getHour(i).windBearing().toString();
                 dataSeries1.getData().add(data);
                 data.nodeProperty().addListener(observable -> {
@@ -357,7 +354,7 @@ public class DarkSkyViewController
         if (daily.days() > 0) {
             for (int i = 0; i < daily.days(); i++) {
                 XYChart.Data<String, Double> data
-                        = new XYChart.Data<>("D+" + Integer.toString(i), daily.getDay(i).windSpeed()*2);
+                        = new XYChart.Data<>("D+" + Integer.toString(i), daily.getDay(i).windSpeed() * 2);
                 String windBearing = daily.getDay(i).windBearing().toString();
                 String summary = daily.getDay(i).summary();
                 dataSeries1.getData().add(data);
@@ -439,7 +436,7 @@ public class DarkSkyViewController
         FIOCurrently currently = new FIOCurrently(fio);
         System.out.println(currently.get().icon());
     }
-  
+
     public String adressIcon(ForecastIO fio) {
         FIOCurrently currently = new FIOCurrently(fio);
         forecasticon = currently.get().icon();
@@ -458,7 +455,7 @@ public class DarkSkyViewController
     private static String removeLastChar(String str) {
         return str.substring(0, str.length() - 1);
     }
-    
+
     public void print(ForecastIO fio) {
         //Response Headers info
         System.out.println("Response Headers:");

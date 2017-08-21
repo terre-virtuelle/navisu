@@ -51,18 +51,19 @@ public class SHOM_BATHYMETRY_CLUT_JAVA_FX {
             put(2, Color.rgb(255, 133, 0));
             put(3, Color.rgb(255, 233, 0));
             put(4, Color.rgb(209, 255, 0));
-          //  put(5, Color.rgb(92, 255, 0));
+            //  put(5, Color.rgb(92, 255, 0));
             put(5, Color.rgb(0, 255, 32));
-          //  put(7, Color.rgb(0, 255, 223));
+            //  put(7, Color.rgb(0, 255, 223));
             put(6, Color.rgb(0, 11, 255));
             put(7, Color.rgb(0, 255, 255));
             put(8, Color.rgb(0, 0, 102));
-            put(9, Color.rgb(0, 0,200));
-             put(10, Color.rgb(0, 0,255));
-              put(11, Color.rgb(0, 0,0));
+            put(9, Color.rgb(0, 0, 200));
+            put(10, Color.rgb(0, 0, 255));
+            put(11, Color.rgb(0, 0, 0));
         }
     });
-@SuppressWarnings("unchecked")
+
+    @SuppressWarnings("unchecked")
     public static Color getColor(double data, boolean large) {
         if (large == true) {
             for (int i = 0; i < largeRanges.size(); i++) {

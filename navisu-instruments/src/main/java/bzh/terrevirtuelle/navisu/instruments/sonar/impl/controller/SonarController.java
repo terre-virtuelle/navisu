@@ -87,15 +87,11 @@ public class SonarController {
                     for (Point3D p : points) {
                         list.add(new javafx.geometry.Point3D(p.getLat(), p.getLon(), p.getElevation()));
                     }
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            new Points3D(stage, list,
-                                    minLat, maxLat,
-                                    minLon, maxLon,
-                                    minElevation, maxElevation);
-                        }
-
+                    Platform.runLater(() -> {
+                        new Points3D(stage, list,
+                                minLat, maxLat,
+                                minLon, maxLon,
+                                minElevation, maxElevation);
                     });
                 }
             }

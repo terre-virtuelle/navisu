@@ -77,9 +77,9 @@ public class PressureNetCDFViewer
         }
         average = average / z;
         System.out.println("average : " + average);
-       /* 
+        
         String file = "data.txt";
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(file))) {
+      //  try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(file))) {
             for (int h = 0; h < latDimension; h += 10) {
                 for (int w = 0; w < lonDimension; w += 10) {
                     if ((!Double.isNaN(values[h + l + w]))) {
@@ -89,13 +89,13 @@ public class PressureNetCDFViewer
                         dt.insertPoint(new Point_dt(latTab[h], lonTab[w], average));
                     }
                 }
-                writer.write("\n");
+              //  writer.write("\n");
                 l += lonDimension;
             }
-        } catch (Exception e) {
-            System.out.println("e " + e);
-        }
-*/
+      //  } catch (Exception e) {
+       //     System.out.println("e " + e);
+       // }
+
         Path triangle;
         int i = 0;
         double h = 0;

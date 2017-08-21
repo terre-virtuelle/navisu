@@ -462,12 +462,14 @@ public class AppMain extends Application {
         // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
         // System.out.println("con : " + con);
         
-        /*
+        
          bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
-                 "5432",  "org.postgresql.Driver", "admin", "admin",
-                 "/home/serge/Data/Data.shom/MNT100M_ATL/splited/bathy65.glz");
+                 "5432",  "org.postgresql.Driver", "admin", "admin");
+                // "/home/serge/Data/Data.shom/MNT100M_ATL/splited/bathy89.glz");
                //  "/home/serge/Data/bathymetry/data/shom/MNT/MNT_FACADE_ATLANTIQUE_HOMONIM_NM/DONNEES/MNT_ATL100m_HOMONIM_GEO_refNM_ZNEG.glz");
-     */
+       // bathymetryDBServices.create("/home/serge/Data/Data.shom/MNT100M_ATL/splited/bathy12.glz");//12
+       // bathymetryDBServices.createIndex();
+        bathymetryDBServices.displayAllSounding();
         
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
