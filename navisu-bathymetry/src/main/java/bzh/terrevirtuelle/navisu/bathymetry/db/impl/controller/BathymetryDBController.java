@@ -29,6 +29,7 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceSquare;
 import java.io.File;
@@ -304,15 +305,6 @@ public class BathymetryDBController {
                         + "ST_SetSRID(ST_MakePoint(" + Double.toString(lon)
                         + ", " + Double.toString(lat) + "), 4326)::geography"
                         + ");");
-                /*
-                while (r1.next()) {
-                    if ((Double) r1.getObject(1) < 900.0) {
-                        points3d.add(new Point3D(latitude, longitude, r0.getDouble(2)));
-                        PointPlacemark pointPlacemark = displaySounding(latitude, longitude, r0.getDouble(2));
-                        layer.addRenderable(pointPlacemark);
-                    }
-                }
-                 */
             }
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
@@ -326,12 +318,12 @@ public class BathymetryDBController {
         guiAgentServices.getJobsManager().newJob("displayAllSounding", (progressHandle) -> {
 
             // points3d = retrieveAll();
-            points3d = retrieveIn(-4.550, 48.25, -4.3, 48.70);
+            points3d = retrieveIn(-4.55, 48.25, -4.245, 48.45);
             System.out.println("points3df : " + points3d.size());
         } // plusieurs jobs
                 , (progressHandle) -> {
                     // displaySounding(points3d);
-                   // sonarSounding(points3d);
+                    // sonarSounding(points3d);
                     testDisplay(points3d);
                 }
         );
@@ -361,78 +353,44 @@ public class BathymetryDBController {
     }
 
     public void testDisplay(List<Point3D> points) {
-        /*
-        ShapeAttributes attrs = new BasicShapeAttributes();
-        attrs.setOutlineOpacity(1.0);
-        attrs.setOutlineWidth(1d);
-        int a = latDimension * lonDimension;
-        final Delaunay_Triangulation dt = new Delaunay_Triangulation();
-        int l = 0;
-        
-            for (int h = 0; h < latDimension; h += 10) {
-                for (int w = 0; w < lonDimension; w += 10) {
-                    if ((!Double.isNaN(values[h + l + w]))) {
-                        dt.insertPoint(new Point_dt(latTab[h], lonTab[w], values[l + h + w]));
-                        //writer.write(String.valueOf(values[l + h + w]) + " ");
-                    } else {
-                        dt.insertPoint(new Point_dt(latTab[h], lonTab[w], average));
-                    }
-                }
-                l += lonDimension;
-            }
-        Path triangle;
-        int i = 0;
-        double h = 0;
-        System.out.println("dt.get_triangles() : " + dt.get_triangles().size());
-        for (Triangle_dt t : dt.get_triangles()) {
-            if (t.A != null && t.B != null && t.C != null) {
-                
-                h += t.B.z;
-                Path path;//Polygon
-                ArrayList<Position> pathPositions = new ArrayList<>();
-                pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, 300000+(-average + t.A.z) * 200));
-                pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, 300000+(-average + t.B.z) * 200));
-                pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, 300000+(-average + t.C.z) * 200));
-                pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, 300000+(-average + t.A.z) * 200));
-                path = new Path(pathPositions);
-                path.setAttributes(attrs);
-                path.setValue(AVKey.DISPLAY_NAME, (int)t.B.z);
-                layer.addRenderable(path);
-                i++;
-            }
-        };
-         */
 
         //Rechercher le max de bathy, z = max - elevation
         maxElevation = 0.0;
         points.stream().filter((pt) -> (maxElevation < pt.getElevation())).forEach((pt) -> {
             maxElevation = pt.getElevation();
         });
+        System.out.println("maxElevation : " + maxElevation);
         Delaunay_Triangulation dt = new Delaunay_Triangulation();
-        for (Point3D pt : points) {
+        points.stream().forEach((pt) -> {
             dt.insertPoint(new Point_dt(pt.getLat(), pt.getLon(), maxElevation - pt.getElevation()));
-        }
-        ShapeAttributes attrs = new BasicShapeAttributes();
-        attrs.setOutlineOpacity(1.0);
-        attrs.setOutlineWidth(1d);
-        attrs.setOutlineMaterial(Material.WHITE);
-        Path triangle;
-        int i = 0;
-        //  double h = 0;
-        System.out.println("dt.get_triangles() : " + dt.get_triangles().size());
-        for (Triangle_dt t : dt.get_triangles()) {
-            if (t.A != null && t.B != null && t.C != null) {
+        });
 
-                Path path;//Polygon
+        ArrayList<Triangle_dt> triangles = dt.get_triangles();
+        //Suppression des grands triangles
+        List<Triangle_dt> triangles1 = new ArrayList<>();
+        triangles.stream().filter((t) -> (t.getBoundingBox().getWidth() < 0.0015)).forEach((t) -> {
+            triangles1.add(t);
+        });
+
+        for (Triangle_dt t : triangles1) {
+            if (t.A != null && t.B != null && t.C != null) {
                 ArrayList<Position> pathPositions = new ArrayList<>();
-                pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, t.A.z * 10));
-                pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, t.B.z * 10));
-                pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, t.C.z * 10));
-                pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, t.A.z * 10));
-                path = new Path(pathPositions);
-                path.setAttributes(attrs);
-                path.setValue(AVKey.DISPLAY_NAME, (int) t.B.z);
-                layer.addRenderable(path);
+                pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10)));
+                pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, (t.B.z * 10)));
+                pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, (t.C.z * 10)));
+                pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10)));
+
+                Path p = new Path(pathPositions);
+
+                // Polygon p = new Polygon(pathPositions);
+                double z = maxElevation - t.B.z;
+                ShapeAttributes attrs = new BasicShapeAttributes();
+                attrs.setOutlineOpacity(1.0);
+                attrs.setOutlineWidth(1d);
+                attrs.setOutlineMaterial(Material.WHITE);
+                p.setAttributes(attrs);
+                p.setValue(AVKey.DISPLAY_NAME, (int) (maxElevation - t.B.z));
+                layer.addRenderable(p);
                 i++;
             }
         };

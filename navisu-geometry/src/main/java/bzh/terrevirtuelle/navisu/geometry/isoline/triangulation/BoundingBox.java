@@ -1,15 +1,13 @@
 package bzh.terrevirtuelle.navisu.geometry.isoline.triangulation;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Aviad Segev
- * Date: 22/11/2009
- * Time: 20:29:56
- * BoundingBox represents A horizontal bounding rectangle defined by its lower left
- * and upper right point. This is usually used as A rough approximation of the
- * bounded geometry
+ * Created by IntelliJ IDEA. User: Aviad Segev Date: 22/11/2009 Time: 20:29:56
+ * BoundingBox represents A horizontal bounding rectangle defined by its lower
+ * left and upper right point. This is usually used as A rough approximation of
+ * the bounded geometry
  */
 public class BoundingBox {
+
     /**
      * the minimum x-coordinate
      */
@@ -31,7 +29,7 @@ public class BoundingBox {
     private double maxy;
 
     /**
-     * Creates an empty  bounding box
+     * Creates an empty bounding box
      */
     public BoundingBox() {
         setToNull();
@@ -43,10 +41,11 @@ public class BoundingBox {
      * @param other the copied bounding box
      */
     public BoundingBox(BoundingBox other) {
-        if (other.isNull())
+        if (other.isNull()) {
             setToNull();
-        else
+        } else {
             init(other.minx, other.maxx, other.miny, other.maxy);
+        }
     }
 
     /**
@@ -64,15 +63,18 @@ public class BoundingBox {
     /**
      * Create A bounding box between lowerLeft and upperRight
      *
-     * @param lowerLeft  lower left point of the box
+     * @param lowerLeft lower left point of the box
      * @param upperRight upper left point of the box
      */
     public BoundingBox(Point_dt lowerLeft, Point_dt upperRight) {
-        init(lowerLeft.x, upperRight.x, lowerLeft.y, upperRight.y);
+        if (lowerLeft != null && upperRight != null) {
+            init(lowerLeft.x, upperRight.x, lowerLeft.y, upperRight.y);
+        }
     }
 
     /**
-     * Initialize A BoundingBox for A region defined by maximum and minimum values.
+     * Initialize A BoundingBox for A region defined by maximum and minimum
+     * values.
      *
      * @param x1 the first x-value
      * @param x2 the second x-value
@@ -97,8 +99,8 @@ public class BoundingBox {
     }
 
     /**
-     * Makes this BoundingBox A "null" envelope, that is, the envelope
-     * of the empty geometry.
+     * Makes this BoundingBox A "null" envelope, that is, the envelope of the
+     * empty geometry.
      */
     private void setToNull() {
         minx = 0;
@@ -108,11 +110,10 @@ public class BoundingBox {
     }
 
     /**
-     * Returns true if this BoundingBox is A "null"
-     * envelope.
+     * Returns true if this BoundingBox is A "null" envelope.
      *
-     * @return true if this BoundingBox is uninitialized
-     * or is the envelope of the empty geometry.
+     * @return true if this BoundingBox is uninitialized or is the envelope of
+     * the empty geometry.
      */
     public boolean isNull() {
         return maxx < minx;
@@ -125,27 +126,27 @@ public class BoundingBox {
      * @return true if this BoundingBox contains the other BoundingBox
      */
     public boolean contains(BoundingBox other) {
-        return !(isNull() || other.isNull()) &&
-                other.minx >= minx &&
-                other.maxy <= maxx &&
-                other.miny >= miny &&
-                other.maxy <= maxy;
+        return !(isNull() || other.isNull())
+                && other.minx >= minx
+                && other.maxy <= maxx
+                && other.miny >= miny
+                && other.maxy <= maxy;
     }
 
     public boolean outside(BoundingBox other) {
-        return !(isNull() || other.isNull()) &&
-                other.minx > minx &&
-                other.maxy < maxx &&
-                other.miny > miny &&
-                other.maxy < maxy;
+        return !(isNull() || other.isNull())
+                && other.minx > minx
+                && other.maxy < maxx
+                && other.miny > miny
+                && other.maxy < maxy;
     }
 
     public boolean inside(BoundingBox other) {
-        return !(isNull() || other.isNull()) &&
-                other.minx < minx &&
-                other.maxy > maxx &&
-                other.miny < miny &&
-                other.maxy > maxy;
+        return !(isNull() || other.isNull())
+                && other.minx < minx
+                && other.maxy > maxx
+                && other.miny < miny
+                && other.maxy > maxy;
     }
 
     /**
@@ -224,7 +225,6 @@ public class BoundingBox {
     public Point_dt getMaxPoint() {
         return new Point_dt(maxx, maxy);
     }
-
 
     public Point_dt center() {
         return new Point_dt((maxX() + minX()) / 2, (maxY() + minY()) / 2);

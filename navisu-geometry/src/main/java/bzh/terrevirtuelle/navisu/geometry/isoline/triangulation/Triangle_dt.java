@@ -79,9 +79,11 @@ public class Triangle_dt {
      * of the triangle
      */
     public BoundingBox getBoundingBox() {
-        Point_dt lowerLeft, upperRight;
+        Point_dt lowerLeft=null, upperRight=null;
+        if(A!=null && B !=null && C !=null){
         lowerLeft = new Point_dt(Math.min(A.x, Math.min(B.x, C.x)), Math.min(A.y, Math.min(B.y, C.y)));
         upperRight = new Point_dt(Math.max(A.x, Math.max(B.x, C.x)), Math.max(A.y, Math.max(B.y, C.y)));
+        }
         return new BoundingBox(lowerLeft, upperRight);
     }
 
