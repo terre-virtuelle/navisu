@@ -467,7 +467,7 @@ public class AppMain extends Application {
                  "5432",  "org.postgresql.Driver", "admin", "admin");
                 // "/home/serge/Data/Data.shom/MNT100M_ATL/splited/bathy89.glz");
                //  "/home/serge/Data/bathymetry/data/shom/MNT/MNT_FACADE_ATLANTIQUE_HOMONIM_NM/DONNEES/MNT_ATL100m_HOMONIM_GEO_refNM_ZNEG.glz");
-        //bathymetryDBServices.create("/home/serge/Data/Data.shom/MNT100M_ATL/splited/bathy04.glz");//5
+        //bathymetryDBServices.create("/home/serge/Data/bathymetry/data/shom/MNT100M_ATL/splited/bathy04.glz");
        // bathymetryDBServices.createIndex();
         bathymetryDBServices.displayAllSounding();
         
