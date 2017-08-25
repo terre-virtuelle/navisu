@@ -3,18 +3,18 @@
 <X3D profile='Immersive' version='3.0'  xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation =' http://www.web3d.org/specifications/x3d-3.0.xsd '> 
 <head>
 <meta name='Title' content='NaVisu S57'/> 
-<meta name='Chart' content='FR574010.000'/>
-<meta name='TilesCount' content='4'/>
+<meta name='Chart' content='FR570940.000'/>
+<meta name='TilesCount' content='1'/>
 <meta name='Index' content='0'/>
 <meta name='Author' content='serge'/>
-<meta name='Created' content='02/08/2017-11:27:05'/>
+<meta name='Created' content='25/08/2017-12:46:33'/>
 <meta name='Generator' content='NaVisu'/>
 <meta name='Site' content='http://www.navisu.org/'/>
 <meta name='Github' content='https://github.com/terre-virtuelle/navisu'/>
-<meta name='Pos0' content='Lat=48.243795854365146° Lon=-4.675140275521613°'/>
-<meta name='Pos1' content='Lat=48.243795854365146° Lon=-4.561620137760807°'/>
-<meta name='Pos2' content='Lat=48.31973292718257° Lon=-4.561620137760807°'/>
-<meta name='Pos3' content='Lat=48.31973292718257° Lon=-4.675140275521613°'/>
+<meta name='Pos0' content='Lat=48.52156472978359° Lon=-4.730738569377223°'/>
+<meta name='Pos1' content='Lat=48.52156472978359° Lon=-4.4931°'/>
+<meta name='Pos2' content='Lat=48.67967° Lon=-4.4931°'/>
+<meta name='Pos3' content='Lat=48.67967° Lon=-4.730738569377223°'/>
 </head>
 <NavigationInfo type='FLY'/>
 <Scene>

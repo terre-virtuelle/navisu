@@ -206,7 +206,7 @@ public class S57StlComponentImpl
     /* Lors de l'init du composant on instancie les deux controlleurs
        s57StlChartComponentController il permet de générer le x3D
        s57StlComponentController c'est le composant d'IHM qui permet
-       de sélectionner les zones à générer et définit l'ensemble des
+       de sélectionner les zones à générer et défini l'ensemble des
        parametres nécessaires. Ce composant est un widget.
      */
     @Override

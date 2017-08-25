@@ -26,6 +26,8 @@ import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwindx.examples.util.SectorSelector;
+import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -49,6 +51,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -170,6 +173,8 @@ public class S57StlComponentController
     final ToggleGroup eastWestGroup = new ToggleGroup();
     final ToggleGroup northSouthGroup = new ToggleGroup();
     final ToggleGroup interactiveSquareGroup = new ToggleGroup();
+    protected KeyCode keyCode;
+    protected SectorSelector selector;
 
     public S57StlComponentController(GuiAgentServices guiAgentServices,
             LayerTreeServices layerTreeServices,
@@ -188,7 +193,11 @@ public class S57StlComponentController
         this.NAME = NAME;
         this.wwd = wwd;
         layer = layersManagerServices.getLayer(GROUP, NAME);
-
+        
+        this.selector = new SectorSelector(wwd);
+        this.selector.setInteriorColor(new Color(1f, 1f, 1f, 0.1f));
+        this.selector.setBorderColor(new Color(1f, 0f, 0f, 0.5f));
+        this.selector.setBorderWidth(3);
         //  Pour le futur, la couche OSM
         // Layer buildings = new OSMBuildingsStlLayer();
         //  layerTreeServices.addGeoLayer("Buildings", buildings);
@@ -215,6 +224,9 @@ public class S57StlComponentController
             });
         }
         displayChartBoundaries(polygon);
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            keyCode = event.getCode();
+        });
     }
 
     @Override
@@ -244,10 +256,12 @@ public class S57StlComponentController
         squareTilesTB.setToggleGroup(interactiveSquareGroup);
 
         interactiveTB.setOnMouseClicked((MouseEvent event) -> {
-            squareTilesGP.setDisable(true);
+          // squareTilesGP.setDisable(true);
+            selector.enable();
         });
         squareTilesTB.setOnMouseClicked((MouseEvent event) -> {
             squareTilesGP.setDisable(false);
+            selector.disable();
         });
         squareTilesTB.setSelected(true);
 
@@ -338,8 +352,8 @@ public class S57StlComponentController
             } catch (NumberFormatException e) {
                 buoyageScale = 1.0;
             }
-            boolean base=baseCB.isSelected();
-            
+            boolean base = baseCB.isSelected();
+
             guiAgentServices.getJobsManager().newJob(OUT_PATH, (progressHandle) -> {
                 List<Polygon> wwjTiles = displayTiles(squarePolygonEnvelope, line, column);
                 List<Geometry> JtsTiles;

@@ -320,7 +320,7 @@ public class BathymetryDBController {
                 ,
                  (progressHandle) -> {
                     // displaySounding(points3d);
-                    testDisplay(points3d);
+                   // testDisplay(points3d);
                 }
         );
     }
