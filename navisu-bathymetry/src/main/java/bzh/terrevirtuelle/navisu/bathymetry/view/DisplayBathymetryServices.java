@@ -5,7 +5,12 @@
  */
 package bzh.terrevirtuelle.navisu.bathymetry.view;
 
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Delaunay_Triangulation;
+import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Triangle_dt;
+import com.vividsolutions.jts.geom.Geometry;
+import java.util.ArrayList;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
@@ -16,6 +21,16 @@ import org.capcaval.c3.component.ComponentService;
 public interface DisplayBathymetryServices
         extends ComponentService {
 
+    InstrumentDriver getDriver();
+
+    Geometry getConcaveHull(List<Point3D> points, double threshold);
+
+    Delaunay_Triangulation getTriangulation(List<Point3D> points);
+
+    List<Triangle_dt> filterLargeEdges(ArrayList<Triangle_dt> triangles);
+
     void displaySounding(List<Point3D> points);
+
+    void displayAllSounding();
 
 }

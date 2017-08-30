@@ -28,7 +28,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import javafx.stage.Stage;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -144,20 +143,9 @@ public class BathymetryDBImpl
         return bathymetryDBController.retrieveIn(latMin, lonMin, latMax, lonMax);
     }
 
-    @Override
-    public void displaySounding(List<Point3D> points) {
-        bathymetryDBController.displaySounding(points);
-    }
+    
 
-    @Override
-    public void displayAllSounding() {
-        bathymetryDBController.displayAllSounding();
-    }
-
-    @Override
-    public List<Point3D> retrieveBoundaries(List<Point3D> pts) {
-        return bathymetryDBController.retrieveBoundaries(pts);
-    }
+    
 
     @Override
     public void close() {

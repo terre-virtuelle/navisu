@@ -39,15 +39,9 @@ public interface BathymetryDBServices
 
     List<Point3D> retrieveAll();
 
-    List<Point3D> retrieveBoundaries(List<Point3D> pts);
-
     List<Point3D> retrieveAround(double lat, double lon);
 
     List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax);
-
-    void displaySounding(List<Point3D> points);
-
-    void displayAllSounding();
 
     DatabaseDriver getDriver();
 }

@@ -91,5 +91,36 @@ public class Point3D {
     @Override
     public String toString() {
         return "{" + lat + ", " + lon + ", " + elevation + "}";
-    }  
+    } 
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Point3D other = (Point3D) obj;
+        if (Double.doubleToLongBits(this.lon) != Double.doubleToLongBits(other.lon)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.lat) != Double.doubleToLongBits(other.lat)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.elevation) != Double.doubleToLongBits(other.elevation)) {
+            return false;
+        }
+        return true;
+    }
+    
 }

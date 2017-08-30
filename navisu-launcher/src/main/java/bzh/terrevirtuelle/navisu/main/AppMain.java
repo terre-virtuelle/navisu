@@ -124,6 +124,8 @@ import bzh.terrevirtuelle.navisu.extensions.camera.impl.CameraComponentImpl;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.extensions.commands.impl.NavigationCmdComponentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.server.ServerOptionsComponentServices;
+import bzh.terrevirtuelle.navisu.bathymetry.view.DisplayBathymetryServices;
+import bzh.terrevirtuelle.navisu.bathymetry.view.impl.DisplayBathymetryImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
@@ -134,6 +136,8 @@ import bzh.terrevirtuelle.navisu.leapmotion.impl.LeapMotionComponentImpl;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
 import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
+import bzh.terrevirtuelle.navisu.stl.bathy.BathyStlComponentServices;
+import bzh.terrevirtuelle.navisu.stl.bathy.impl.BathyStlComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.S57StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.S57StlComponentImpl;
 import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
@@ -181,6 +185,7 @@ public class AppMain extends Application {
                         BathymetryEventProducerImpl.class,
                         BathymetryImpl.class,
                         BathymetryLocalCatalogImpl.class,
+                        BathyStlComponentImpl.class,
                         Bezier2DImpl.class,
                         CameraComponentImpl.class,
                         ClocksImpl.class,
@@ -193,6 +198,7 @@ public class AppMain extends Application {
                         DirectoryDriverManagerImpl.class,
                         DpAgentImpl.class,
                         DriverManagerImpl.class,
+                        DisplayBathymetryImpl.class,
                         ExifComponentImpl.class,
                         FilesImpl.class,
                         GazetteerComponentImpl.class,
@@ -246,6 +252,8 @@ public class AppMain extends Application {
         BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
         BathymetryDBServices bathymetryDBServices = componentManager.getComponentService(BathymetryDBServices.class);
         BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
+        BathyStlComponentServices bathyStlComponentServices=componentManager.getComponentService(BathyStlComponentServices.class);
+        
         Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
 
         CameraComponentServices cameraComponentServices = componentManager.getComponentService(CameraComponentServices.class);
@@ -257,7 +265,8 @@ public class AppMain extends Application {
 
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
-
+        DisplayBathymetryServices displayBathymetryServices=componentManager.getComponentService(DisplayBathymetryServices.class);
+       
         ExifComponentServices exifComponentServices = componentManager.getComponentService(ExifComponentServices.class);
 
         FilesServices filesServices = componentManager.getComponentService(FilesServices.class);
@@ -344,10 +353,12 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(bathyStlComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(cameraComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(configurationComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(clocksServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(displayBathymetryServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterWithRouteServices.getDriver());
@@ -465,11 +476,11 @@ public class AppMain extends Application {
         
          bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
                  "5432",  "org.postgresql.Driver", "admin", "admin");
-                // "/home/serge/Data/Data.shom/MNT100M_ATL/splited/bathy89.glz");
-               //  "/home/serge/Data/bathymetry/data/shom/MNT/MNT_FACADE_ATLANTIQUE_HOMONIM_NM/DONNEES/MNT_ATL100m_HOMONIM_GEO_refNM_ZNEG.glz");
+                
         //bathymetryDBServices.create("/home/serge/Data/bathymetry/data/shom/MNT100M_ATL/splited/bathy04.glz");
        // bathymetryDBServices.createIndex();
-        bathymetryDBServices.displayAllSounding();
+ 
+      displayBathymetryServices.displayAllSounding();
         
         /* Test speech */
        // speakerServices.read("data/text", "installation.txt", null);// local par defaut

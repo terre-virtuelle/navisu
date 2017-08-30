@@ -17,6 +17,12 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
 import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Delaunay_Triangulation;
 import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Point_dt;
 import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Triangle_dt;
+import bzh.terrevirtuelle.navisu.geometry.utils.NaVisuToJTS;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.MultiPoint;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.PositionEvent;
@@ -40,11 +46,14 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.stage.Stage;
+import org.opensphere.geometry.algorithm.ConcaveHull;
 import org.postgis.PGgeometry;
 
 /**
@@ -77,13 +86,25 @@ public class BathymetryDBController {
     NumberFormat nf1 = new DecimalFormat("0.0");
     int i = 0;
     Stage stage;
-    
+    double MIN_DEPTH = 0.0;
+
     double MIN_LAT = 48.25;
     double MIN_LON = -4.55;
     double MAX_LAT = 48.45;
     double MAX_LON = -4.245;
+     
+    /*
+    //Ouessant
+    double MIN_LAT = 48.4;
+    double MIN_LON = -5.20;
+    double MAX_LAT = 48.50;
+    double MAX_LON = -5;
+     */
+    
     double maxElevation = -20.0;
+    final double THRESHOLD = 0.0015;
     double tmp;
+    Geometry concaveHull;
 
     private BathymetryDBController(BathymetryDBImpl component,
             DatabaseServices databaseServices, GuiAgentServices guiAgentServices,
@@ -184,8 +205,8 @@ public class BathymetryDBController {
                     // .map(line -> line.split("\t"))
                     .map(line -> line.split(" "))
                     .map(tab -> new Point3Df(Float.parseFloat(tab[0]),
-                    Float.parseFloat(tab[1]),
-                    Float.parseFloat(tab[2])))
+                            Float.parseFloat(tab[1]),
+                            Float.parseFloat(tab[2])))
                     .collect(Collectors.toList());
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
@@ -226,7 +247,7 @@ public class BathymetryDBController {
             while (r.next()) {
                 geom = (PGgeometry) r.getObject(1);
                 depth = r.getFloat(2);
-                if (depth >= 0.0) {
+                if (depth >= MIN_DEPTH) {
                     Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
                             geom.getGeometry().getFirstPoint().getY(),
                             depth);
@@ -258,7 +279,7 @@ public class BathymetryDBController {
             while (r.next()) {
                 geom = (PGgeometry) r.getObject(2);
                 depth = r.getFloat(3);
-                if (depth > 0.0) {
+                if (depth > MIN_DEPTH) {
                     Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
                             geom.getGeometry().getFirstPoint().getY(),
                             depth);
@@ -268,11 +289,6 @@ public class BathymetryDBController {
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-        return tmp;
-    }
-
-    public List<Point3D> retrieveBoundaries(List<Point3D> pts) {
-        List<Point3D> tmp = new ArrayList<>();
         return tmp;
     }
 
@@ -307,7 +323,7 @@ public class BathymetryDBController {
         bathymetryEventProducerServices.setBathymetry(new Bathymetry(points3d));
         return points3d;
     }
-
+/*
     public void displayAllSounding() {
 
         guiAgentServices.getJobsManager().newJob("displayAllSounding", (progressHandle) -> {
@@ -318,9 +334,9 @@ public class BathymetryDBController {
 
         } // plusieurs jobs
                 ,
-                 (progressHandle) -> {
+                (progressHandle) -> {
                     // displaySounding(points3d);
-                   // testDisplay(points3d);
+                    testDisplay(points3d);
                 }
         );
     }
@@ -347,7 +363,8 @@ public class BathymetryDBController {
                     pt.getElevation());
         });
     }
-
+*/
+    /*
     public void testDisplay(List<Point3D> points) {
 
         //Rechercher le max de bathy, z = max - elevation
@@ -355,35 +372,52 @@ public class BathymetryDBController {
         points.stream().filter((pt) -> (maxElevation < pt.getElevation())).forEach((pt) -> {
             maxElevation = pt.getElevation();
         });
-        System.out.println("maxElevation : " + maxElevation);
-
+        //  System.out.println("maxElevation : " + maxElevation);
+        //  System.out.println("points : " + points.size());
         Delaunay_Triangulation dt = new Delaunay_Triangulation();
+
         points.stream().forEach((pt) -> {
             dt.insertPoint(new Point_dt(pt.getLat(), pt.getLon(), maxElevation - pt.getElevation()));
         });
+        // System.out.println("dt.avgEdgeLength() " + dt.avgEdgeLength());
 
         ArrayList<Triangle_dt> triangles = dt.get_triangles();
         //Suppression des grands triangles
-        List<Triangle_dt> triangles1 = new ArrayList<>();
-        triangles.stream().filter((t) -> (t.getBoundingBox().getWidth() < 0.0015)).forEach((t) -> {
-            triangles1.add(t);
-        });
+        List<Triangle_dt> triangles1 = filterLargeEdges(dt.get_triangles());
+
+        //  List<Coordinate> coordinatesJTS = NaVisuToJTS.toJTS(points);
+        concaveHull = getConcaveHull(points, THRESHOLD);
+
+    //    Set<Position> seaPts=WwjGeodesy.toGrid(MIN_LAT,MIN_LON,MAX_LAT,MAX_LON,100.0,100.0);
+            
+        
+        Coordinate[] concaveHullCoordinates = concaveHull.getCoordinates();
+        ArrayList<Position> pathPositions1 = new ArrayList<>();
+        for (Coordinate concaveHullCoordinate : concaveHullCoordinates) {
+            pathPositions1.add(Position.fromDegrees(concaveHullCoordinate.y,
+                    concaveHullCoordinate.x,
+                    (maxElevation - concaveHullCoordinate.z) * 10));
+        }
+        layer.addRenderable(createPath(pathPositions1, Material.RED));
 
         ArrayList<Position> pathPositions0 = new ArrayList<>();
-        pathPositions0.add(Position.fromDegrees(48.25, -4.55, maxElevation));
-        pathPositions0.add(Position.fromDegrees(48.45, -4.55, maxElevation));
-        pathPositions0.add(Position.fromDegrees(48.45, -4.245, maxElevation));
-        pathPositions0.add(Position.fromDegrees(48.25, -4.245, maxElevation));
-        pathPositions0.add(Position.fromDegrees(48.25, -4.55, maxElevation));
-        Path p0 = new Path(pathPositions0);
-        ShapeAttributes attrs0 = new BasicShapeAttributes();
-        attrs0.setOutlineOpacity(1.0);
-        attrs0.setOutlineWidth(1d);
-        attrs0.setOutlineMaterial(Material.WHITE);
-        p0.setAttributes(attrs0);
-        layer.addRenderable(p0);
+        pathPositions0.add(Position.fromDegrees(MIN_LAT, MIN_LON, 100));
+        pathPositions0.add(Position.fromDegrees(MAX_LAT, MIN_LON, 100));
+        pathPositions0.add(Position.fromDegrees(MAX_LAT, MAX_LON, 100));
+        pathPositions0.add(Position.fromDegrees(MIN_LAT, MAX_LON, 100));
+        pathPositions0.add(Position.fromDegrees(MIN_LAT, MIN_LON, 100));
+        layer.addRenderable(createPath(pathPositions0, Material.BLUE));
 
-        triangles1.stream().filter((t) -> (t.A != null && t.B != null && t.C != null)).map((t) -> {
+        ArrayList<Position> pathPositions2 = new ArrayList<>();
+        pathPositions2.add(Position.fromDegrees(MIN_LAT, MIN_LON, maxElevation * 10));
+        pathPositions2.add(Position.fromDegrees(MAX_LAT, MIN_LON, maxElevation * 10));
+        pathPositions2.add(Position.fromDegrees(MAX_LAT, MAX_LON, maxElevation * 10));
+        pathPositions2.add(Position.fromDegrees(MIN_LAT, MAX_LON, maxElevation * 10));
+        pathPositions2.add(Position.fromDegrees(MIN_LAT, MIN_LON, maxElevation * 10));
+        layer.addRenderable(createPath(pathPositions2, Material.GREEN));
+
+        triangles1.stream()
+                .filter((t) -> (t.A != null && t.B != null && t.C != null)).map((t) -> {
             ArrayList<Position> pathPositions = new ArrayList<>();
             pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10)));
             pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, (t.B.z * 10)));
@@ -396,17 +430,70 @@ public class BathymetryDBController {
             attrs.setOutlineWidth(1d);
             attrs.setOutlineMaterial(Material.WHITE);
             p.setAttributes(attrs);
-            p.setValue(AVKey.DISPLAY_NAME, (int) (maxElevation - t.B.z));
+            p.setValue(AVKey.DISPLAY_NAME, (int) (maxElevation - t.A.z) + ", "
+                    + (int) (maxElevation - t.B.z) + ", "
+                    + (int) (maxElevation - t.C.z));
             return p;
-        }).map((p) -> {
-            layer.addRenderable(p);
-            return p;
-        }).forEachOrdered((_item) -> {
-            i++;
-        });
+        }
+        ).map(
+                (p) -> {
+                    layer.addRenderable(p);
+                    return p;
+                }
+        ).forEachOrdered(
+                (_item) -> {
+                    i++;
+                }
+        );
     }
+*/
+    /*
+    public List<Triangle_dt> filterLargeEdges(ArrayList<Triangle_dt> triangles) {
+        List<Triangle_dt> tmp1 = new ArrayList<>();
+        triangles.stream().filter((t) -> (t.getBoundingBox().getWidth() < THRESHOLD)).forEach((t) -> {
+            tmp1.add(t);
+
+        });
+        return tmp1;
+    }
+
+    public Geometry getConcaveHull(List<Point3D> points, double threshold) {
+        List<Coordinate> coordinatesJTS = NaVisuToJTS.toJTS(points);
+        Coordinate[] coord = new Coordinate[coordinatesJTS.size()];
+        for (int c = 0; c < coord.length; c++) {
+            coord[c] = coordinatesJTS.get(c);
+        }
+        MultiPoint geom = new GeometryFactory().createMultiPoint(coord);
+        ConcaveHull ch = new ConcaveHull(geom, threshold);
+        Geometry concaveHullTmp = ch.getConcaveHull();
+
+        return concaveHullTmp;
+    }
+
+    public Geometry getLineString(List<Point3D> points) {
+        List<Coordinate> coordinatesJTS = NaVisuToJTS.toJTS(points);
+        Coordinate[] coord = new Coordinate[coordinatesJTS.size()];
+        for (int c = 0; c < coord.length; c++) {
+            coord[c] = coordinatesJTS.get(c);
+        }
+        LineString geom = new GeometryFactory().createLineString(coord);
+        return geom;
+    }
+*/
+    
 
     public Connection getConnection() {
         return connection;
     }
+/*
+    public Path createPath(ArrayList<Position> pathPositions, Material material) {
+        Path p = new Path(pathPositions);
+        ShapeAttributes attrs0 = new BasicShapeAttributes();
+        attrs0.setOutlineOpacity(1.0);
+        attrs0.setOutlineWidth(1d);
+        attrs0.setOutlineMaterial(material);
+        p.setAttributes(attrs0);
+        return p;
+    }
+*/
 }

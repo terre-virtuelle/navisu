@@ -8,6 +8,8 @@ package bzh.terrevirtuelle.navisu.charts.util;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
+import java.util.HashSet;
+import java.util.Set;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
 import org.gavaghan.geodesy.GlobalCoordinates;
@@ -49,5 +51,23 @@ public class WwjGeodesy {
                 locA, bearing, distance, endBearing);
         return new Position(Angle.fromDegrees(coordinates.getLatitude()),
                 Angle.fromDegrees(coordinates.getLongitude()), 100);
+    }
+
+    public static Set<Position> toGrid(double latMin, double lonMin,
+            double latMax, double lonMax,
+            double y, double x) {
+
+        double latRange = getDistanceM(Position.fromDegrees(latMin, lonMax), Position.fromDegrees(latMax, lonMax));
+        double lonRange = getDistanceM(Position.fromDegrees(latMin, lonMin), Position.fromDegrees(latMin, lonMax));
+        int nbLat = (int) (latRange / y);
+        int nbLon = (int) (lonRange / x);
+        Set<Position> tmp = new HashSet<>();
+        for (int i = 0; i < nbLat; i++) {
+            Position p = getPosition(Position.fromDegrees(latMin, lonMin), 0.0, i * latRange);
+            for (int j = 0; j < nbLon; j++) {
+                tmp.add(getPosition(p, 90.0, j * lonRange));
+            }
+        }
+        return tmp;
     }
 }
