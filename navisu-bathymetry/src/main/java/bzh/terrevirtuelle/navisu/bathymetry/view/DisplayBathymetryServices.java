@@ -27,7 +27,7 @@ public interface DisplayBathymetryServices
 
     Delaunay_Triangulation getTriangulation(List<Point3D> points);
 
-    List<Triangle_dt> filterLargeEdges(ArrayList<Triangle_dt> triangles);
+    List<Triangle_dt> filterLargeEdges(ArrayList<Triangle_dt> triangles, double threshold);
 
     void displaySounding(List<Point3D> points);
 

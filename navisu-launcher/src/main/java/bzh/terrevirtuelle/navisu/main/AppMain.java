@@ -480,7 +480,7 @@ public class AppMain extends Application {
         //bathymetryDBServices.create("/home/serge/Data/bathymetry/data/shom/MNT100M_ATL/splited/bathy04.glz");
        // bathymetryDBServices.createIndex();
  
-      //displayBathymetryServices.displayAllSounding();
+      displayBathymetryServices.displayAllSounding();
         
         /* Test speech */
        // speakerServices.read("data/text", "installation.txt", null);// local par defaut

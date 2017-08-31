@@ -112,8 +112,8 @@ public class DisplayBathymetryImpl
     }
 
     @Override
-    public List<Triangle_dt> filterLargeEdges(ArrayList<Triangle_dt> triangles) {
-        return controller.filterLargeEdges(triangles);
+    public List<Triangle_dt> filterLargeEdges(ArrayList<Triangle_dt> triangles, double threshold) {
+        return controller.filterLargeEdges(triangles, threshold);
     }
 
     @Override
