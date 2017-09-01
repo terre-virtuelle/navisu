@@ -58,7 +58,7 @@ public class DisplayBathymetryController {
     protected RenderableLayer layer;
     protected DisplayBathymetryImpl component;
     protected String LIMIT = "100";
-    protected double maxElevation = -20.0;
+    protected static double maxElevation = -20.0;
     protected final double THRESHOLD = 0.0015;
     protected Geometry concaveHull;
     protected double MIN_DEPTH = 0.0;
@@ -129,7 +129,7 @@ public class DisplayBathymetryController {
 
                     //Suppress large edges
                     List<Triangle_dt> triangles1 = filterLargeEdges(triangles, 0.0015);
-                      displayDelaunay(triangles1);
+                      displayDelaunay(triangles1, Material.GREEN,0.0);
 
                     //Create concaveHull from points with bathy information
                     concaveHull = getConcaveHull(points3d, THRESHOLD);
@@ -141,15 +141,13 @@ public class DisplayBathymetryController {
                    // displayDelaunay(triangles2);
                     // displaySounding(seaPts);
                     List<Point3D> seaPts=new ArrayList<>();
-                    for(Point3D p : seaPlane){
-                        if(contains(concaveHull, p)==true){
-                            seaPts.add(p);
-                        }
-                    }
+                    seaPlane.stream().filter((p) -> (contains(concaveHull, p)==true)).forEachOrdered((p) -> {
+                        seaPts.add(p);
+            });
                     
                     List<Triangle_dt> triangles2 = createDelaunay(seaPts);
                     List<Triangle_dt> triangles3 = filterLargeEdges(triangles2, 0.001);
-                    displayDelaunay(triangles3);
+                    displayDelaunay(triangles3, Material.YELLOW,maxElevation*10);
                 }
         );
     }
@@ -158,7 +156,6 @@ public class DisplayBathymetryController {
         //  System.out.println(lat +" "+ lon +" "+ depth);
         BasicShapeAttributes basicShapeAttributes = new BasicShapeAttributes();
         basicShapeAttributes.setOutlineOpacity(1.0);
-        // basicShapeAttributes.setInteriorMaterial(new Material(SHOM_LOW_BATHYMETRY_CLUT.getColor(depth)));
         SurfaceSquare surface
                 = new SurfaceSquare(new LatLon(Angle.fromDegrees(lat), Angle.fromDegrees(lon)), 100);
         surface.setAttributes(basicShapeAttributes);
@@ -187,25 +184,26 @@ public class DisplayBathymetryController {
         });
         Delaunay_Triangulation dt = new Delaunay_Triangulation();
         points.stream().forEach((pt) -> {
-            dt.insertPoint(new Point_dt(pt.getLat(), pt.getLon(), 100));//maxElevation - pt.getElevation()));
+            dt.insertPoint(new Point_dt(pt.getLat(), pt.getLon(), maxElevation - pt.getElevation()));
         });
+        System.out.println("maxElevation : " + maxElevation);
         return dt.get_triangles();
     }
 
-    public void displayDelaunay(List<Triangle_dt> triangles) {
+    public void displayDelaunay(List<Triangle_dt> triangles, Material material, double high) {
         triangles.stream()
                 .filter((t) -> (t.A != null && t.B != null && t.C != null)).map((t) -> {
             ArrayList<Position> pathPositions = new ArrayList<>();
-            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10)));
-            pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, (t.B.z * 10)));
-            pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, (t.C.z * 10)));
-            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10)));
+            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10)+high));
+            pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, (t.B.z * 10)+high));
+            pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, (t.C.z * 10)+high));
+            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10)+high));
             Path p = new Path(pathPositions);
-            double z = maxElevation - t.B.z;
+         //   double z = maxElevation - t.B.z;
             ShapeAttributes attrs = new BasicShapeAttributes();
             attrs.setOutlineOpacity(1.0);
             attrs.setOutlineWidth(1d);
-            attrs.setOutlineMaterial(Material.WHITE);
+            attrs.setOutlineMaterial(material);
             p.setAttributes(attrs);
             p.setValue(AVKey.DISPLAY_NAME, (int) (maxElevation - t.A.z) + ", "
                     + (int) (maxElevation - t.B.z) + ", "
@@ -312,7 +310,7 @@ public class DisplayBathymetryController {
         }
         List<Point3D> l = new ArrayList<>();
         tmp.stream().forEach((p) -> {
-            l.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), 100));
+            l.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), maxElevation));
         });
 
         return l;
