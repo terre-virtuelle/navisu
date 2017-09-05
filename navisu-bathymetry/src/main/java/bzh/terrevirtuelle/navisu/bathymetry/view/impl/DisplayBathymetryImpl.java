@@ -19,6 +19,7 @@ import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Delaunay_Triangulation;
 import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Triangle_dt;
+import bzh.terrevirtuelle.navisu.geometry.utils.NaVisuToJTS;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -108,7 +109,7 @@ public class DisplayBathymetryImpl
 
     @Override
     public Geometry getConcaveHull(List<Point3D> points, double threshold) {
-        return controller.getConcaveHull(points, threshold);
+        return NaVisuToJTS.getConcaveHull(points, threshold);
     }
 
     @Override

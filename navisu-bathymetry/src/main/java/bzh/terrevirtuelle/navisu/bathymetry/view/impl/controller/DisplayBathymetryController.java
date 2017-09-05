@@ -105,7 +105,7 @@ public class DisplayBathymetryController {
 
         } // plusieurs jobs
                 ,
-                (progressHandle) -> {
+                 (progressHandle) -> {
 
                     List<Triangle_dt> triangles = createDelaunay(points3d);
 
@@ -132,7 +132,7 @@ public class DisplayBathymetryController {
                     displayDelaunay(triangles1, Material.GREEN, 0.0);
 
                     //Create concaveHull from points with bathy information
-                    concaveHull = getConcaveHull(points3d, THRESHOLD);
+                    concaveHull = NaVisuToJTS.getConcaveHull(points3d, THRESHOLD);
                     displayConcaveHull(concaveHull);
 
                     //Create a grid of points for triangulate elevation level plane and bathy
@@ -142,16 +142,16 @@ public class DisplayBathymetryController {
 
                     List<Point3D> seaPts = new ArrayList<>();
                     seaPlane.stream().filter((p) -> (contains(concaveHull, p) == true)).forEachOrdered((p) -> {
-                seaPts.add(p);
-            });
-                    List<Triangle_dt> triangles2 = createDelaunay(seaPts);
-                    List<Triangle_dt> triangles3 = filterLargeEdges(triangles2, 0.001);
-                    displayDelaunay(triangles3, Material.YELLOW, maxElevation * 10);
-                    /*
+                        seaPts.add(p);
+                    });
+                  //  List<Triangle_dt> triangles2 = createDelaunay(seaPts);
+                 //   List<Triangle_dt> triangles3 = filterLargeEdges(triangles2, 0.001);
+                  //  displayDelaunay(triangles3, Material.YELLOW, maxElevation * 10);
+                    
                     List<Point3D> mnt = merge(points3d, seaPts);
                     List<Triangle_dt> triangles2 = createDelaunay(mnt);
                     displayDelaunay(triangles2, Material.YELLOW, maxElevation * 10);
-                     */
+                     
                 });
 
     }
@@ -257,29 +257,7 @@ public class DisplayBathymetryController {
         return dt;
     }
 
-    public Geometry getConcaveHull(List<Point3D> points, double threshold) {
-        List<Coordinate> coordinatesJTS = NaVisuToJTS.toJTS(points);
-        Coordinate[] coord = new Coordinate[coordinatesJTS.size()];
-        for (int c = 0; c < coord.length; c++) {
-            coord[c] = coordinatesJTS.get(c);
-        }
-        MultiPoint geom = new GeometryFactory().createMultiPoint(coord);
-        ConcaveHull ch = new ConcaveHull(geom, threshold);
-        Geometry concaveHullTmp = ch.getConcaveHull();
-
-        return concaveHullTmp;
-    }
-
-    public Geometry getLineString(List<Point3D> points) {
-        List<Coordinate> coordinatesJTS = NaVisuToJTS.toJTS(points);
-        Coordinate[] coord = new Coordinate[coordinatesJTS.size()];
-        for (int c = 0; c < coord.length; c++) {
-            coord[c] = coordinatesJTS.get(c);
-        }
-        LineString geom = new GeometryFactory().createLineString(coord);
-        return geom;
-    }
-
+    
     public Path createPath(List<Position> pathPositions, Material material) {
         Path p = new Path(pathPositions);
         ShapeAttributes attrs0 = new BasicShapeAttributes();
@@ -344,14 +322,24 @@ public class DisplayBathymetryController {
     }
 
     public List<Point3D> merge(List<Point3D> pts0, List<Point3D> pts1) {
+
         System.out.println("pts0 : " + pts0.size());
         System.out.println("pts1 : " + pts1.size());
         List<Point3D> tmp = new ArrayList<>();
-        //  Set<Point3D> set = new HashSet<>();
-        tmp.addAll(pts0);
-        tmp.addAll(pts1);
-        //  tmp.addAll(set);
-        System.out.println("set : " + tmp.size());
+        Coordinate[] tab0 = NaVisuToJTS.toTabCoordinates(pts0);
+        Coordinate[] tab1 = NaVisuToJTS.toTabCoordinates(pts1);
+        GeometryFactory geomFactory = new GeometryFactory();
+        MultiPoint multiPoint0 = geomFactory.createMultiPoint(tab0);
+        multiPoint0.setSRID(4326);
+        MultiPoint multiPoint1 = geomFactory.createMultiPoint(tab1);
+        multiPoint1.setSRID(4326);
+        Geometry geom = multiPoint0.union(multiPoint1);
+        Coordinate[] tab3 = geom.getCoordinates();
+        Set<Point3D> set= new HashSet<>();
+        for(Coordinate c : tab3){ 
+            set.add(new Point3D(c.y, c.x,c.z));
+        }
+        tmp.addAll(set);
         return tmp;
     }
 }
