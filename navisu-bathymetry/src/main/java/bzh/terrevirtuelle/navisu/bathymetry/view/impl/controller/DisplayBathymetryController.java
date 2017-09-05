@@ -129,7 +129,7 @@ public class DisplayBathymetryController {
 
                     //Suppress large edges
                     List<Triangle_dt> triangles1 = filterLargeEdges(triangles, 0.0015);
-                      displayDelaunay(triangles1, Material.GREEN,0.0);
+                    displayDelaunay(triangles1, Material.GREEN, 0.0);
 
                     //Create concaveHull from points with bathy information
                     concaveHull = getConcaveHull(points3d, THRESHOLD);
@@ -137,19 +137,23 @@ public class DisplayBathymetryController {
 
                     //Create a grid of points for triangulate elevation level plane and bathy
                     List<Point3D> seaPlane = toGrid(MIN_LAT, MIN_LON, MAX_LAT, MAX_LON, 100.0, 100.0);
-                   // List<Triangle_dt> triangles2 = createDelaunay(seaPts);
-                   // displayDelaunay(triangles2);
-                    // displaySounding(seaPts);
-                    List<Point3D> seaPts=new ArrayList<>();
-                    seaPlane.stream().filter((p) -> (contains(concaveHull, p)==true)).forEachOrdered((p) -> {
-                        seaPts.add(p);
+                    //  List<Triangle_dt> triangles2 = createDelaunay(seaPlane);
+                    //  displayDelaunay(triangles2, Material.MAGENTA, MIN_LAT);
+
+                    List<Point3D> seaPts = new ArrayList<>();
+                    seaPlane.stream().filter((p) -> (contains(concaveHull, p) == true)).forEachOrdered((p) -> {
+                seaPts.add(p);
             });
-                    
                     List<Triangle_dt> triangles2 = createDelaunay(seaPts);
                     List<Triangle_dt> triangles3 = filterLargeEdges(triangles2, 0.001);
-                    displayDelaunay(triangles3, Material.YELLOW,maxElevation*10);
-                }
-        );
+                    displayDelaunay(triangles3, Material.YELLOW, maxElevation * 10);
+                    /*
+                    List<Point3D> mnt = merge(points3d, seaPts);
+                    List<Triangle_dt> triangles2 = createDelaunay(mnt);
+                    displayDelaunay(triangles2, Material.YELLOW, maxElevation * 10);
+                     */
+                });
+
     }
 
     public void displaySounding(double lat, double lon, double depth) {
@@ -194,12 +198,12 @@ public class DisplayBathymetryController {
         triangles.stream()
                 .filter((t) -> (t.A != null && t.B != null && t.C != null)).map((t) -> {
             ArrayList<Position> pathPositions = new ArrayList<>();
-            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10)+high));
-            pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, (t.B.z * 10)+high));
-            pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, (t.C.z * 10)+high));
-            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10)+high));
+            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10) + high));
+            pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, (t.B.z * 10) + high));
+            pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, (t.C.z * 10) + high));
+            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10) + high));
             Path p = new Path(pathPositions);
-         //   double z = maxElevation - t.B.z;
+            //   double z = maxElevation - t.B.z;
             ShapeAttributes attrs = new BasicShapeAttributes();
             attrs.setOutlineOpacity(1.0);
             attrs.setOutlineWidth(1d);
@@ -220,6 +224,7 @@ public class DisplayBathymetryController {
                     i++;
                 }
         );
+        wwd.redrawNow();
     }
 
     public void displayConcaveHull(Geometry concaveHull) {
@@ -231,6 +236,7 @@ public class DisplayBathymetryController {
                     (maxElevation - concaveHullCoordinate.z) * 10));
         }
         layer.addRenderable(createPath(pathPositions1, Material.RED));
+        wwd.redrawNow();
     }
 
     public List<Triangle_dt> filterLargeEdges(List<Triangle_dt> triangles, double threshold) {
@@ -274,7 +280,7 @@ public class DisplayBathymetryController {
         return geom;
     }
 
-    public Path createPath(ArrayList<Position> pathPositions, Material material) {
+    public Path createPath(List<Position> pathPositions, Material material) {
         Path p = new Path(pathPositions);
         ShapeAttributes attrs0 = new BasicShapeAttributes();
         attrs0.setOutlineOpacity(1.0);
@@ -329,11 +335,23 @@ public class DisplayBathymetryController {
     }
 
     public boolean contains(Geometry geom, Point3D pt3D) {
-        boolean result = false;
+        boolean result;
         Coordinate coord = new Coordinate(pt3D.getLon(), pt3D.getLat(), 100);
         GeometryFactory geometryFactory = new GeometryFactory();
         Point pt = geometryFactory.createPoint(coord);
         result = !geom.contains(pt);
         return result;
+    }
+
+    public List<Point3D> merge(List<Point3D> pts0, List<Point3D> pts1) {
+        System.out.println("pts0 : " + pts0.size());
+        System.out.println("pts1 : " + pts1.size());
+        List<Point3D> tmp = new ArrayList<>();
+        //  Set<Point3D> set = new HashSet<>();
+        tmp.addAll(pts0);
+        tmp.addAll(pts1);
+        //  tmp.addAll(set);
+        System.out.println("set : " + tmp.size());
+        return tmp;
     }
 }
