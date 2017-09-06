@@ -17,10 +17,6 @@ import bzh.terrevirtuelle.navisu.geometry.utils.NaVisuToJTS;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.Point;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
@@ -42,7 +38,6 @@ import java.util.logging.Logger;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
 import org.gavaghan.geodesy.GlobalCoordinates;
-import org.opensphere.geometry.algorithm.ConcaveHull;
 
 /**
  *
@@ -59,7 +54,7 @@ public class DisplayBathymetryController {
     protected DisplayBathymetryImpl component;
     protected String LIMIT = "100";
     protected static double maxElevation = -20.0;
-    protected final double THRESHOLD = 0.0015;
+    protected final double THRESHOLD = 0.008;//0.0015
     protected Geometry concaveHull;
     protected double MIN_DEPTH = 0.0;
     protected double MIN_LAT = 48.25;
@@ -137,21 +132,22 @@ public class DisplayBathymetryController {
 
                     //Create a grid of points for triangulate elevation level plane and bathy
                     List<Point3D> seaPlane = toGrid(MIN_LAT, MIN_LON, MAX_LAT, MAX_LON, 100.0, 100.0);
-                    //  List<Triangle_dt> triangles2 = createDelaunay(seaPlane);
-                    //  displayDelaunay(triangles2, Material.MAGENTA, MIN_LAT);
-
+                     System.out.println("seaPlane : " +seaPlane.size());
+                    //Filtrage des points à l'intérieur de l'enveloppe concave
                     List<Point3D> seaPts = new ArrayList<>();
-                    seaPlane.stream().filter((p) -> (contains(concaveHull, p) == true)).forEachOrdered((p) -> {
+                    seaPlane.stream().filter((p) -> (NaVisuToJTS.contains(concaveHull, p) == true)).forEachOrdered((p) -> {
                         seaPts.add(p);
                     });
-                  //  List<Triangle_dt> triangles2 = createDelaunay(seaPts);
-                 //   List<Triangle_dt> triangles3 = filterLargeEdges(triangles2, 0.001);
-                  //  displayDelaunay(triangles3, Material.YELLOW, maxElevation * 10);
+                     System.out.println("seaPts : "+seaPts.size());
+                    List<Triangle_dt> triangles2 = createDelaunay(seaPts);
+                    List<Triangle_dt> triangles3 = filterLargeEdges(triangles2, 0.001);
+                 //   displayDelaunay(triangles3, Material.YELLOW, maxElevation * 10);
                     
-                    List<Point3D> mnt = merge(points3d, seaPts);
+                    /*
+                    List<Point3D> mnt = NaVisuToJTS.merge(points3d, seaPts);
                     List<Triangle_dt> triangles2 = createDelaunay(mnt);
                     displayDelaunay(triangles2, Material.YELLOW, maxElevation * 10);
-                     
+                     */
                 });
 
     }
@@ -312,34 +308,4 @@ public class DisplayBathymetryController {
         return p;
     }
 
-    public boolean contains(Geometry geom, Point3D pt3D) {
-        boolean result;
-        Coordinate coord = new Coordinate(pt3D.getLon(), pt3D.getLat(), 100);
-        GeometryFactory geometryFactory = new GeometryFactory();
-        Point pt = geometryFactory.createPoint(coord);
-        result = !geom.contains(pt);
-        return result;
-    }
-
-    public List<Point3D> merge(List<Point3D> pts0, List<Point3D> pts1) {
-
-        System.out.println("pts0 : " + pts0.size());
-        System.out.println("pts1 : " + pts1.size());
-        List<Point3D> tmp = new ArrayList<>();
-        Coordinate[] tab0 = NaVisuToJTS.toTabCoordinates(pts0);
-        Coordinate[] tab1 = NaVisuToJTS.toTabCoordinates(pts1);
-        GeometryFactory geomFactory = new GeometryFactory();
-        MultiPoint multiPoint0 = geomFactory.createMultiPoint(tab0);
-        multiPoint0.setSRID(4326);
-        MultiPoint multiPoint1 = geomFactory.createMultiPoint(tab1);
-        multiPoint1.setSRID(4326);
-        Geometry geom = multiPoint0.union(multiPoint1);
-        Coordinate[] tab3 = geom.getCoordinates();
-        Set<Point3D> set= new HashSet<>();
-        for(Coordinate c : tab3){ 
-            set.add(new Point3D(c.y, c.x,c.z));
-        }
-        tmp.addAll(set);
-        return tmp;
-    }
 }
