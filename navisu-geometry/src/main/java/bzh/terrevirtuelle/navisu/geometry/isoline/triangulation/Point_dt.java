@@ -48,6 +48,22 @@ public class Point_dt {
         return false;
     }
 
+    public boolean fuzzyEquals(Object o, double tolerance) {
+        if (o == this) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+
+        if (o instanceof Point_dt) {
+            Point_dt other = (Point_dt) o;
+          //  System.out.println("x : "+ x +" "+other.x);
+            return other.fuzzyEquals(x, tolerance) && other.fuzzyEquals(y, tolerance);
+        }
+        return false;
+    }
+
     private boolean equals3D(Object o) {
         if (equals2D(o)) {
             return ((Point_dt) o).z == z;
@@ -350,6 +366,7 @@ class Compare implements Comparator {
         return ans;
     }
 
+    @Override
     public boolean equals(Object ob) {
         return false;
     }

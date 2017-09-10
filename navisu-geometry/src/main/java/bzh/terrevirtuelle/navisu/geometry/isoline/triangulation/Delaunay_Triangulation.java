@@ -2,7 +2,6 @@ package bzh.terrevirtuelle.navisu.geometry.isoline.triangulation;
 
 import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.util.UtPoint;
 
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -11,21 +10,24 @@ import java.util.*;
 
 /**
  * This class represents A Delaunay Triangulation. The class was written for A
- * large scale triangulation (1000 - 200,000 vertices). The application main use is 3D surface (terrain) presentation.
+ * large scale triangulation (1000 - 200,000 vertices). The application main use
+ * is 3D surface (terrain) presentation.
  * <br>
  * The class main properties are the following:<br>
  * - fast point location. (O(n^0.5)), practical runtime is often very fast. <br>
- * - handles degenerate cases and none general position input (ignores duplicate points). <br>
+ * - handles degenerate cases and none general position input (ignores duplicate
+ * points). <br>
  * - save & load from\to text file in TSIN format. <br>
  * - 3D support: including z value approximation. <br>
  * - standard java (1.5 generic) iterators for the vertices and triangles. <br>
- * - smart iterator to only the updated triangles - for terrain simplification <br>
+ * - smart iterator to only the updated triangles - for terrain simplification
+ * <br>
  * <br>
  * <p/>
- * Testing (done in early 2005): Platform java 1.5.02 windows XP (SP2), AMD laptop 1.6G sempron CPU
- * 512MB RAM. Constructing A triangulation of 100,000 vertices takes ~ 10
- * seconds. point location of 100,000 points on A triangulation of 100,000
- * vertices takes ~ 5 seconds.
+ * Testing (done in early 2005): Platform java 1.5.02 windows XP (SP2), AMD
+ * laptop 1.6G sempron CPU 512MB RAM. Constructing A triangulation of 100,000
+ * vertices takes ~ 10 seconds. point location of 100,000 points on A
+ * triangulation of 100,000 vertices takes ~ 5 seconds.
  * <p/>
  * Note: constructing A triangulation with 200,000 vertices and more requires
  * extending java heap size (otherwise an exception will be thrown).<br>
@@ -34,10 +36,10 @@ import java.util.*;
  * please send me an email to: benmo@ariel.ac.il
  *
  * @author Boaz Ben Moshe 5/11/05 <br>
- *         The project uses some ideas presented in the VoroGuide project, written by Klasse f?r Kreise (1996-1997),
- *         For the original applet see: http://www.pi6.fernuni-hagen.de/GeomLab/VoroGlide/ . <br>
+ * The project uses some ideas presented in the VoroGuide project, written by
+ * Klasse f?r Kreise (1996-1997), For the original applet see:
+ * http://www.pi6.fernuni-hagen.de/GeomLab/VoroGlide/ . <br>
  */
-
 public class Delaunay_Triangulation {
 
     // the first and last points (used only for first step construction)
@@ -170,34 +172,39 @@ public class Delaunay_Triangulation {
      * @param p new vertex to be inserted the triangulation.
      */
     public void insertPoint(Point_dt p) {
-        if (this._vertices.contains(p))
+        if (this._vertices.contains(p)) {
             return;
+        }
         _modCount++;
         updateBoundingBox(p);
         this._vertices.add(p);
         Triangle_dt t = insertPointSimple(p);
         if (t == null) //
+        {
             return;
+        }
         Triangle_dt tt = t;
         currT = t; // recall the last point for - fast (last) update iterator.
         do {
             flip(tt, _modCount);
             tt = tt.canext;
         } while (tt != t && !tt.halfplane);
-
+      
         // Update index with changed triangles
-        if (gridIndex != null)
+        if (gridIndex != null) {
             gridIndex.updateIndex(getLastUpdatedTriangles());
+            
+        }
     }
 
     /**
      * Deletes the given point from this.
      *
      * @param pointToDelete The given point to delete.
-     *                      <p/>
-     *                      Implementation of the Mostafavia, Gold & Dakowicz algorithm (2002).
-     *                      <p/>
-     *                      By Eyal Roth & Doron Ganel (2009).
+     * <p/>
+     * Implementation of the Mostafavia, Gold & Dakowicz algorithm (2002).
+     * <p/>
+     * By Eyal Roth & Doron Ganel (2009).
      */
     public void deletePoint(Point_dt pointToDelete) {
 
@@ -242,8 +249,8 @@ public class Delaunay_Triangulation {
      * return A point from the trangulation that is close to pointToDelete
      *
      * @param pointToDelete the point that the user wants to delete
-     * @return A point from the trangulation that is close to pointToDelete
-     * By Eyal Roth & Doron Ganel (2009).
+     * @return A point from the trangulation that is close to pointToDelete By
+     * Eyal Roth & Doron Ganel (2009).
      */
     public Point_dt findClosePoint(Point_dt pointToDelete) {
         Triangle_dt triangle = find(pointToDelete);
@@ -294,8 +301,9 @@ public class Delaunay_Triangulation {
         }
 
         // Update index with changed triangles
-        if (gridIndex != null)
+        if (gridIndex != null) {
             gridIndex.updateIndex(addedTriangles.iterator());
+        }
 
     }
 
@@ -358,12 +366,10 @@ public class Delaunay_Triangulation {
             //AB-BC || BA-BC
             if ((addA.equals(delB) && addB.equals(delC)) || (addB.equals(delB) && addA.equals(delC))) {
                 addedTriangle.abnext = deletedTriangle.abnext;
-            }
-            //AC-BC || CA-BC
+            } //AC-BC || CA-BC
             else if ((addA.equals(delB) && addC.equals(delC)) || (addC.equals(delB) && addA.equals(delC))) {
                 addedTriangle.canext = deletedTriangle.abnext;
-            }
-            //BC-BC || CB-BC
+            } //BC-BC || CB-BC
             else {
                 addedTriangle.bcnext = deletedTriangle.abnext;
             }
@@ -372,28 +378,23 @@ public class Delaunay_Triangulation {
             //AB-AC || BA-AC
             if ((addA.equals(delA) && addB.equals(delC)) || (addB.equals(delA) && addA.equals(delC))) {
                 addedTriangle.abnext = deletedTriangle.canext;
-            }
-            //AC-AC || CA-AC
+            } //AC-AC || CA-AC
             else if ((addA.equals(delA) && addC.equals(delC)) || (addC.equals(delA) && addA.equals(delC))) {
                 addedTriangle.canext = deletedTriangle.canext;
-            }
-            //BC-AC || CB-AC
+            } //BC-AC || CB-AC
             else {
                 addedTriangle.bcnext = deletedTriangle.canext;
             }
-        }
-        //equals C
+        } //equals C
         else {
             deletedTriangle.bcnext.switchneighbors(deletedTriangle, addedTriangle);
             //AB-AB || BA-AB
             if ((addA.equals(delA) && addB.equals(delB)) || (addB.equals(delA) && addA.equals(delB))) {
                 addedTriangle.abnext = deletedTriangle.bcnext;
-            }
-            //AC-AB || CA-AB
+            } //AC-AB || CA-AB
             else if ((addA.equals(delA) && addC.equals(delB)) || (addC.equals(delA) && addA.equals(delB))) {
                 addedTriangle.canext = deletedTriangle.bcnext;
-            }
-            //BC-AB || CB-AB
+            } //BC-AB || CB-AB
             else {
                 addedTriangle.bcnext = deletedTriangle.bcnext;
             }
@@ -417,47 +418,39 @@ public class Delaunay_Triangulation {
             if (B1.equals(B2)) {
                 addedTriangle1.abnext = addedTriangle2;
                 addedTriangle2.abnext = addedTriangle1;
-            }
-            //A1B1-A2C2
+            } //A1B1-A2C2
             else if (B1.equals(C2)) {
                 addedTriangle1.abnext = addedTriangle2;
                 addedTriangle2.canext = addedTriangle1;
-            }
-            //A1C1-A2B2
+            } //A1C1-A2B2
             else if (C1.equals(B2)) {
                 addedTriangle1.canext = addedTriangle2;
                 addedTriangle2.abnext = addedTriangle1;
-            }
-            //A1C1-A2C2
+            } //A1C1-A2C2
             else {
                 addedTriangle1.canext = addedTriangle2;
                 addedTriangle2.canext = addedTriangle1;
             }
-        }
-        //A1-B2
+        } //A1-B2
         else if (A1.equals(B2)) {
             //A1B1-B2A2
             if (B1.equals(A2)) {
                 addedTriangle1.abnext = addedTriangle2;
                 addedTriangle2.abnext = addedTriangle1;
-            }
-            //A1B1-B2C2
+            } //A1B1-B2C2
             else if (B1.equals(C2)) {
                 addedTriangle1.abnext = addedTriangle2;
                 addedTriangle2.bcnext = addedTriangle1;
-            }
-            //A1C1-B2A2
+            } //A1C1-B2A2
             else if (C1.equals(A2)) {
                 addedTriangle1.canext = addedTriangle2;
                 addedTriangle2.abnext = addedTriangle1;
-            }
-            //A1C1-B2C2
+            } //A1C1-B2C2
             else {
                 addedTriangle1.canext = addedTriangle2;
                 addedTriangle2.bcnext = addedTriangle1;
             }
-        }
-        //A1-C2
+        } //A1-C2
         else if (A1.equals(C2)) {
             //A1B1-C2A2
             if (B1.equals(A2)) {
@@ -473,60 +466,50 @@ public class Delaunay_Triangulation {
             if (C1.equals(A2)) {
                 addedTriangle1.canext = addedTriangle2;
                 addedTriangle2.canext = addedTriangle1;
-            }
-            //A1C1-C2B2
+            } //A1C1-C2B2
             else {
                 addedTriangle1.canext = addedTriangle2;
                 addedTriangle2.bcnext = addedTriangle1;
             }
-        }
-        //B1-A2
+        } //B1-A2
         else if (B1.equals(A2)) {
             //B1A1-A2B2
             if (A1.equals(B2)) {
                 addedTriangle1.abnext = addedTriangle2;
                 addedTriangle2.abnext = addedTriangle1;
-            }
-            //B1A1-A2C2
+            } //B1A1-A2C2
             else if (A1.equals(C2)) {
                 addedTriangle1.abnext = addedTriangle2;
                 addedTriangle2.canext = addedTriangle1;
-            }
-            //B1C1-A2B2
+            } //B1C1-A2B2
             else if (C1.equals(B2)) {
                 addedTriangle1.bcnext = addedTriangle2;
                 addedTriangle2.abnext = addedTriangle1;
-            }
-            //B1C1-A2C2
+            } //B1C1-A2C2
             else {
                 addedTriangle1.bcnext = addedTriangle2;
                 addedTriangle2.canext = addedTriangle1;
             }
-        }
-        //B1-B2
+        } //B1-B2
         else if (B1.equals(B2)) {
             //B1A1-B2A2
             if (A1.equals(A2)) {
                 addedTriangle1.abnext = addedTriangle2;
                 addedTriangle2.abnext = addedTriangle1;
-            }
-            //B1A1-B2C2
+            } //B1A1-B2C2
             else if (A1.equals(C2)) {
                 addedTriangle1.abnext = addedTriangle2;
                 addedTriangle2.bcnext = addedTriangle1;
-            }
-            //B1C1-B2A2
+            } //B1C1-B2A2
             else if (C1.equals(A2)) {
                 addedTriangle1.bcnext = addedTriangle2;
                 addedTriangle2.abnext = addedTriangle1;
-            }
-            //B1C1-B2C2
+            } //B1C1-B2C2
             else {
                 addedTriangle1.bcnext = addedTriangle2;
                 addedTriangle2.bcnext = addedTriangle1;
             }
-        }
-        //B1-C2
+        } //B1-C2
         else if (B1.equals(C2)) {
             //B1A1-C2A2
             if (A1.equals(A2)) {
@@ -542,60 +525,50 @@ public class Delaunay_Triangulation {
             if (C1.equals(A2)) {
                 addedTriangle1.bcnext = addedTriangle2;
                 addedTriangle2.canext = addedTriangle1;
-            }
-            //B1C1-C2B2
+            } //B1C1-C2B2
             else {
                 addedTriangle1.bcnext = addedTriangle2;
                 addedTriangle2.bcnext = addedTriangle1;
             }
-        }
-        //C1-A2
+        } //C1-A2
         else if (C1.equals(A2)) {
             //C1A1-A2B2
             if (A1.equals(B2)) {
                 addedTriangle1.canext = addedTriangle2;
                 addedTriangle2.abnext = addedTriangle1;
-            }
-            //C1A1-A2C2
+            } //C1A1-A2C2
             else if (A1.equals(C2)) {
                 addedTriangle1.canext = addedTriangle2;
                 addedTriangle2.canext = addedTriangle1;
-            }
-            //C1B1-A2B2
+            } //C1B1-A2B2
             else if (B1.equals(B2)) {
                 addedTriangle1.bcnext = addedTriangle2;
                 addedTriangle2.abnext = addedTriangle1;
-            }
-            //C1B1-A2C2
+            } //C1B1-A2C2
             else {
                 addedTriangle1.bcnext = addedTriangle2;
                 addedTriangle2.canext = addedTriangle1;
             }
-        }
-        //C1-B2
+        } //C1-B2
         else if (C1.equals(B2)) {
             //C1A1-B2A2
             if (A1.equals(A2)) {
                 addedTriangle1.canext = addedTriangle2;
                 addedTriangle2.abnext = addedTriangle1;
-            }
-            //C1A1-B2C2
+            } //C1A1-B2C2
             else if (A1.equals(C2)) {
                 addedTriangle1.canext = addedTriangle2;
                 addedTriangle2.bcnext = addedTriangle1;
-            }
-            //C1B1-B2A2
+            } //C1B1-B2A2
             else if (B1.equals(A2)) {
                 addedTriangle1.bcnext = addedTriangle2;
                 addedTriangle2.abnext = addedTriangle1;
-            }
-            //C1B1-B2C2
+            } //C1B1-B2C2
             else {
                 addedTriangle1.bcnext = addedTriangle2;
                 addedTriangle2.bcnext = addedTriangle1;
             }
-        }
-        //C1-C2
+        } //C1-C2
         else if (C1.equals(C2)) {
             //C1A1-C2A2
             if (A1.equals(A2)) {
@@ -611,8 +584,7 @@ public class Delaunay_Triangulation {
             if (B1.equals(A2)) {
                 addedTriangle1.bcnext = addedTriangle2;
                 addedTriangle2.canext = addedTriangle1;
-            }
-            //C1B1-C2B2
+            } //C1B1-C2B2
             else {
                 addedTriangle1.bcnext = addedTriangle2;
                 addedTriangle2.bcnext = addedTriangle1;
@@ -628,27 +600,29 @@ public class Delaunay_Triangulation {
         Point_dt p2 = triangle.B;
         Point_dt p3 = triangle.C;
 
-        if ((p1.pointLineTest(point, p3) == Point_dt.LEFT) &&
-                (p2.pointLineTest(point, p3) == Point_dt.RIGHT))
+        if ((p1.pointLineTest(point, p3) == Point_dt.LEFT)
+                && (p2.pointLineTest(point, p3) == Point_dt.RIGHT)) {
             return p3;
-        if ((p3.pointLineTest(point, p2) == Point_dt.LEFT) &&
-                (p1.pointLineTest(point, p2) == Point_dt.RIGHT))
+        }
+        if ((p3.pointLineTest(point, p2) == Point_dt.LEFT)
+                && (p1.pointLineTest(point, p2) == Point_dt.RIGHT)) {
             return p2;
-        if ((p2.pointLineTest(point, p1) == Point_dt.LEFT) &&
-                (p3.pointLineTest(point, p1) == Point_dt.RIGHT))
+        }
+        if ((p2.pointLineTest(point, p1) == Point_dt.LEFT)
+                && (p3.pointLineTest(point, p1) == Point_dt.RIGHT)) {
             return p1;
+        }
         return null;
     }
 
     /**
-     * Calculates A Voronoi cell for A given neighborhood
-     * in this triangulation. A neighborhood is defined by A triangle
-     * and one of its corner points.
+     * Calculates A Voronoi cell for A given neighborhood in this triangulation.
+     * A neighborhood is defined by A triangle and one of its corner points.
      * <p/>
      * By Udi Schneider
      *
      * @param triangle A triangle in the neighborhood
-     * @param p        corner point whose surrounding neighbors will be checked
+     * @param p corner point whose surrounding neighbors will be checked
      * @return set of Points representing the cell polygon
      */
     public Point_dt[] calcVoronoiCell(Triangle_dt triangle, Point_dt p) {
@@ -670,9 +644,7 @@ public class Delaunay_Triangulation {
             }
 
             return vertices;
-        }
-
-        // handle half plane
+        } // handle half plane
         // in this case, the cell is A single line
         // which is the perpendicular bisector of the half plane line
         else {
@@ -696,16 +668,19 @@ public class Delaunay_Triangulation {
             // find third point of neighbor triangle
             // (the one which is not shared with current half plane)
             // this is used in determining half plane orientation
-            if (!neighbor.A.equals(halfplane.A) && !neighbor.A.equals(halfplane.B))
+            if (!neighbor.A.equals(halfplane.A) && !neighbor.A.equals(halfplane.B)) {
                 third = neighbor.A;
-            if (!neighbor.B.equals(halfplane.A) && !neighbor.B.equals(halfplane.B))
+            }
+            if (!neighbor.B.equals(halfplane.A) && !neighbor.B.equals(halfplane.B)) {
                 third = neighbor.B;
-            if (!neighbor.C.equals(halfplane.A) && !neighbor.C.equals(halfplane.B))
+            }
+            if (!neighbor.C.equals(halfplane.A) && !neighbor.C.equals(halfplane.B)) {
                 third = neighbor.C;
+            }
 
             // delta (slope) of half plane edge
-            double halfplane_delta = (halfplane.A.y - halfplane.B.y) /
-                    (halfplane.A.x - halfplane.B.x);
+            double halfplane_delta = (halfplane.A.y - halfplane.B.y)
+                    / (halfplane.A.x - halfplane.B.x);
 
             // delta of line perpendicular to current half plane edge
             double perp_delta = (1.0 / halfplane_delta) * (-1.0);
@@ -716,14 +691,16 @@ public class Delaunay_Triangulation {
             // for the same x value as the third point
             double y_orient = halfplane_delta * (third.x - halfplane.A.x) + halfplane.A.y;
             boolean above = true;
-            if (y_orient > third.y)
+            if (y_orient > third.y) {
                 above = false;
+            }
 
             // based on orientation, determine cell line direction
             // (towards right or left side of window)
             double sign = 1.0;
-            if ((perp_delta < 0 && !above) || (perp_delta > 0 && above))
+            if ((perp_delta < 0 && !above) || (perp_delta > 0 && above)) {
                 sign = -1.0;
+            }
 
             // the cell line is A line originating from the circumcircle to infinity
             // x = 500.0 is used as A large enough value
@@ -743,8 +720,8 @@ public class Delaunay_Triangulation {
      * returns an iterator object involved in the last update.
      *
      * @return iterator to all triangles involved in the last update of the
-     * triangulation NOTE: works ONLY if the are triangles (it there is
-     * only A half plane - returns an empty iterator
+     * triangulation NOTE: works ONLY if the are triangles (it there is only A
+     * half plane - returns an empty iterator
      */
     public Iterator<Triangle_dt> getLastUpdatedTriangles() {
         ArrayList<Triangle_dt> tmp = new ArrayList<Triangle_dt>();
@@ -768,10 +745,11 @@ public class Delaunay_Triangulation {
         nPoints++;
         if (!allCollinear) {
             Triangle_dt t = find(startTriangle, p);
-            if (t.halfplane)
+            if (t.halfplane) {
                 startTriangle = extendOutside(t, p);
-            else
+            } else {
                 startTriangle = extendInside(t, p);
+            }
             return startTriangle;
         }
 
@@ -841,8 +819,9 @@ public class Delaunay_Triangulation {
                 break;
             case Point_dt.ONSEGMENT:
                 u = firstT;
-                while (p.isGreater(u.A))
+                while (p.isGreater(u.A)) {
                     u = u.canext;
+                }
                 t = new Triangle_dt(p, u.B);
                 tp = new Triangle_dt(u.B, p);
                 u.B = p;
@@ -891,8 +870,9 @@ public class Delaunay_Triangulation {
 
         Triangle_dt h1, h2;
         h1 = treatDegeneracyInside(t, p);
-        if (h1 != null)
+        if (h1 != null) {
             return h1;
+        }
 
         h1 = new Triangle_dt(t.C, t.A, p);
         h2 = new Triangle_dt(t.B, t.C, p);
@@ -914,14 +894,17 @@ public class Delaunay_Triangulation {
     private Triangle_dt treatDegeneracyInside(Triangle_dt t, Point_dt p) {
 
         if (t.abnext.halfplane
-                && p.pointLineTest(t.B, t.A) == Point_dt.ONSEGMENT)
+                && p.pointLineTest(t.B, t.A) == Point_dt.ONSEGMENT) {
             return extendOutside(t.abnext, p);
+        }
         if (t.bcnext.halfplane
-                && p.pointLineTest(t.C, t.B) == Point_dt.ONSEGMENT)
+                && p.pointLineTest(t.C, t.B) == Point_dt.ONSEGMENT) {
             return extendOutside(t.bcnext, p);
+        }
         if (t.canext.halfplane
-                && p.pointLineTest(t.A, t.C) == Point_dt.ONSEGMENT)
+                && p.pointLineTest(t.A, t.C) == Point_dt.ONSEGMENT) {
             return extendOutside(t.canext, p);
+        }
         return null;
     }
 
@@ -993,8 +976,9 @@ public class Delaunay_Triangulation {
 
         Triangle_dt u = t.abnext, v;
         t._mc = mc;
-        if (u.halfplane || !u.circumcircle_contains(t.C))
+        if (u.halfplane || !u.circumcircle_contains(t.C)) {
             return;
+        }
 
         if (t.A == u.A) {
             v = new Triangle_dt(u.B, t.B, t.C);
@@ -1073,16 +1057,17 @@ public class Delaunay_Triangulation {
             os.println("v " + ans[i].toFile());
         }
         int t = 0, i1 = -1, i2 = -1, i3 = -1;
-        for (Iterator<Triangle_dt> dt = this.trianglesIterator(); dt.hasNext(); ) {
+        for (Iterator<Triangle_dt> dt = this.trianglesIterator(); dt.hasNext();) {
             Triangle_dt curr = dt.next();
             t++;
             if (!curr.halfplane) {
                 i1 = Arrays.binarySearch(ans, curr.A, comp);
                 i2 = Arrays.binarySearch(ans, curr.B, comp);
                 i3 = Arrays.binarySearch(ans, curr.C, comp);
-                if (i1 < 0 | i2 < 0 | i3 < 0)
+                if (i1 < 0 | i2 < 0 | i3 < 0) {
                     throw new RuntimeException(
                             "wrong triangulation inner bug - cant write as an SMF file!");
+                }
                 os.println("f " + (i1 + 1) + " " + (i2 + 1) + " " + (i3 + 1));
             }
         }
@@ -1094,8 +1079,8 @@ public class Delaunay_Triangulation {
     /**
      * compute the number of vertices in the convex hull. <br />
      * NOTE: has A 'bug-like' behavor: <br />
-     * in cases of colinear - not on A asix parallel rectangle,
-     * colinear points are reported
+     * in cases of colinear - not on A asix parallel rectangle, colinear points
+     * are reported
      *
      * @return the number of vertices in the convex hull.
      */
@@ -1124,10 +1109,11 @@ public class Delaunay_Triangulation {
 
     private static Point_dt[] read_file(String file) throws Exception {
         if (file.substring(file.length() - 4).equals(".smf")
-                | file.substring(file.length() - 4).equals(".SMF"))
+                | file.substring(file.length() - 4).equals(".SMF")) {
             return read_smf(file);
-        else
+        } else {
             return read_tsin(file);
+        }
     }
 
     private static Point_dt[] read_tsin(String tsinFile) throws Exception {
@@ -1135,8 +1121,9 @@ public class Delaunay_Triangulation {
         BufferedReader is = new BufferedReader(fr);
         String s = is.readLine();
 
-        while (s.charAt(0) == '/')
+        while (s.charAt(0) == '/') {
             s = is.readLine();
+        }
         StringTokenizer st = new StringTokenizer(s);
         int numOfVer = new Integer(s);
 
@@ -1155,28 +1142,22 @@ public class Delaunay_Triangulation {
 
     /**
      * SMF file has an OFF like format (A face (f) is presented by the indexes
-     * of its points - starting from 1, and not from 0):
-     * begin
-     * v x1 y1 z1
-     * ...
-     * v xn yn zn
-     * f i11 i12 i13
-     * ...
-     * f im1 im2 im3
-     * end
+     * of its points - starting from 1, and not from 0): begin v x1 y1 z1 ... v
+     * xn yn zn f i11 i12 i13 ... f im1 im2 im3 end
      */
     private static Point_dt[] read_smf(String smfFile) throws Exception {
         return read_smf(smfFile, 1, 1, 1, 0, 0, 0);
     }
 
     private static Point_dt[] read_smf(String smfFile, double dx, double dy,
-                                       double dz, double minX, double minY, double minZ) throws Exception {
+            double dz, double minX, double minY, double minZ) throws Exception {
         FileReader fr = new FileReader(smfFile);
         BufferedReader is = new BufferedReader(fr);
         String s = is.readLine();
 
-        while (s.charAt(0) != 'v')
+        while (s.charAt(0) != 'v') {
             s = is.readLine();
+        }
 
         ArrayList<Point_dt> vec = new ArrayList<Point_dt>();
         Point_dt[] ans = null; //
@@ -1190,8 +1171,9 @@ public class Delaunay_Triangulation {
             s = is.readLine();
         }
         ans = new Point_dt[vec.size()];
-        for (int i = 0; i < vec.size(); i++)
+        for (int i = 0; i < vec.size(); i++) {
             ans[i] = vec.get(i);
+        }
         return ans;
     }
 
@@ -1210,8 +1192,9 @@ public class Delaunay_Triangulation {
         Triangle_dt searchTriangle = startTriangle;
         if (gridIndex != null) {
             Triangle_dt indexTriangle = gridIndex.findCellTriangleOf(p);
-            if (indexTriangle != null)
+            if (indexTriangle != null) {
                 searchTriangle = indexTriangle;
+            }
         }
 
         // Search for the point's triangle starting from searchTriangle
@@ -1223,34 +1206,38 @@ public class Delaunay_Triangulation {
      * triangulation A half plane triangle will be returned (see contains). the
      * search starts from the the start triangle
      *
-     * @param p     query point
+     * @param p query point
      * @param start the triangle the search starts at.
      * @return the triangle that point p is in..
      */
     public Triangle_dt find(Point_dt p, Triangle_dt start) {
-        if (start == null)
+        if (start == null) {
             start = this.startTriangle;
+        }
         Triangle_dt T = find(start, p);
         return T;
     }
 
-
     private static Triangle_dt find(Triangle_dt curr, Point_dt p) {
-        if (p == null)
+        if (p == null) {
             return null;
+        }
         Triangle_dt next_t;
         if (curr.halfplane) {
             next_t = findnext2(p, curr);
-            if (next_t == null || next_t.halfplane)
+            if (next_t == null || next_t.halfplane) {
                 return curr;
+            }
             curr = next_t;
         }
         while (true) {
             next_t = findnext1(p, curr);
-            if (next_t == null)
+            if (next_t == null) {
                 return curr;
-            if (next_t.halfplane)
+            }
+            if (next_t.halfplane) {
                 return next_t;
+            }
             curr = next_t;
         }
     }
@@ -1260,18 +1247,24 @@ public class Delaunay_Triangulation {
      * returns the next triangle for find.
      */
     private static Triangle_dt findnext1(Point_dt p, Triangle_dt v) {
-        if (p.pointLineTest(v.A, v.B) == Point_dt.RIGHT && !v.abnext.halfplane)
+        if (p.pointLineTest(v.A, v.B) == Point_dt.RIGHT && !v.abnext.halfplane) {
             return v.abnext;
-        if (p.pointLineTest(v.B, v.C) == Point_dt.RIGHT && !v.bcnext.halfplane)
+        }
+        if (p.pointLineTest(v.B, v.C) == Point_dt.RIGHT && !v.bcnext.halfplane) {
             return v.bcnext;
-        if (p.pointLineTest(v.C, v.A) == Point_dt.RIGHT && !v.canext.halfplane)
+        }
+        if (p.pointLineTest(v.C, v.A) == Point_dt.RIGHT && !v.canext.halfplane) {
             return v.canext;
-        if (p.pointLineTest(v.A, v.B) == Point_dt.RIGHT)
+        }
+        if (p.pointLineTest(v.A, v.B) == Point_dt.RIGHT) {
             return v.abnext;
-        if (p.pointLineTest(v.B, v.C) == Point_dt.RIGHT)
+        }
+        if (p.pointLineTest(v.B, v.C) == Point_dt.RIGHT) {
             return v.bcnext;
-        if (p.pointLineTest(v.C, v.A) == Point_dt.RIGHT)
+        }
+        if (p.pointLineTest(v.C, v.A) == Point_dt.RIGHT) {
             return v.canext;
+        }
         return null;
     }
 
@@ -1279,12 +1272,15 @@ public class Delaunay_Triangulation {
      * assumes v is an halfplane! - returns another (none halfplane) triangle
      */
     private static Triangle_dt findnext2(Point_dt p, Triangle_dt v) {
-        if (v.abnext != null && !v.abnext.halfplane)
+        if (v.abnext != null && !v.abnext.halfplane) {
             return v.abnext;
-        if (v.bcnext != null && !v.bcnext.halfplane)
+        }
+        if (v.bcnext != null && !v.bcnext.halfplane) {
             return v.bcnext;
-        if (v.canext != null && !v.canext.halfplane)
+        }
+        if (v.canext != null && !v.canext.halfplane) {
             return v.canext;
+        }
         return null;
     }
 
@@ -1315,8 +1311,8 @@ public class Delaunay_Triangulation {
 
         // Validating find result.
         if (!triangle.isCorner(point)) {
-            System.err.println("findConnectedVertices: Could not find connected vertices since the first found triangle doesn't" +
-                    " share the given point.");
+            System.err.println("findConnectedVertices: Could not find connected vertices since the first found triangle doesn't"
+                    + " share the given point.");
             return null;
         }
 
@@ -1355,8 +1351,9 @@ public class Delaunay_Triangulation {
 
     private boolean onPerimeter(ArrayList<Triangle_dt> triangles) {
         for (Triangle_dt t : triangles) {
-            if (t.isHalfplane())
+            if (t.isHalfplane()) {
                 return true;
+            }
         }
         return false;
     }
@@ -1399,8 +1396,7 @@ public class Delaunay_Triangulation {
         int size = arrayPoints.length;
         if (size < 3) {
             return null;
-        }
-        // if we left with 3 points we return the triangle
+        } // if we left with 3 points we return the triangle
         else if (size == 3) {
             return new Triangle_dt(arrayPoints[0], arrayPoints[1], arrayPoints[2]);
         } else {
@@ -1411,23 +1407,25 @@ public class Delaunay_Triangulation {
                 if (j >= size) {
                     j = 0;
                     k = 1;
-                }
-                //check IndexOutOfBound
-                else if (k >= size)
+                } //check IndexOutOfBound
+                else if (k >= size) {
                     k = 0;
+                }
                 Point_dt p2 = arrayPoints[j];
                 Point_dt p3 = arrayPoints[k];
                 //check if the triangle is not re-entrant and not encloses p
                 Triangle_dt t = new Triangle_dt(p1, p2, p3);
                 if ((calcDet(p1, p2, p3) >= 0) && !t.contains(p)) {
-                    if (!t.fallInsideCircumcircle(arrayPoints))
+                    if (!t.fallInsideCircumcircle(arrayPoints)) {
                         return t;
+                    }
                 }
                 //if there are only 4 points use contains that refers to point
                 //on boundary as outside
                 if (size == 4 && (calcDet(p1, p2, p3) >= 0) && !t.contains_BoundaryIsOutside(p)) {
-                    if (!t.fallInsideCircumcircle(arrayPoints))
+                    if (!t.fallInsideCircumcircle(arrayPoints)) {
                         return t;
+                    }
                 }
             }
         }
@@ -1440,12 +1438,10 @@ public class Delaunay_Triangulation {
         return (A.x * (B.y - P.y)) - (A.y * (B.x - P.x)) + (B.x * P.y - B.y * P.x);
     }
 
-
     /**
      * @param p query point
      * @return true iff p is within this triangulation (in its 2D convex hull).
      */
-
     public boolean contains(Point_dt p) {
         Triangle_dt tt = find(p);
         return !tt.halfplane;
@@ -1489,18 +1485,21 @@ public class Delaunay_Triangulation {
             _bb_min = new Point_dt(p);
             _bb_max = new Point_dt(p);
         } else {
-            if (x < _bb_min.x)
+            if (x < _bb_min.x) {
                 _bb_min.x = x;
-            else if (x > _bb_max.x)
+            } else if (x > _bb_max.x) {
                 _bb_max.x = x;
-            if (y < _bb_min.y)
+            }
+            if (y < _bb_min.y) {
                 _bb_min.y = y;
-            else if (y > _bb_max.y)
+            } else if (y > _bb_max.y) {
                 _bb_max.y = y;
-            if (z < _bb_min.z)
+            }
+            if (z < _bb_min.z) {
                 _bb_min.z = z;
-            else if (z > _bb_max.z)
+            } else if (z > _bb_max.z) {
                 _bb_max.z = z;
+            }
         }
     }
 
@@ -1528,14 +1527,15 @@ public class Delaunay_Triangulation {
     }
 
     /**
-     * computes the current set (ArrayList) of all triangles and
-     * return an iterator to them.
+     * computes the current set (ArrayList) of all triangles and return an
+     * iterator to them.
      *
      * @return an iterator to the current set of all triangles.
      */
     public Iterator<Triangle_dt> trianglesIterator() {
-        if (this.size() <= 2)
+        if (this.size() <= 2) {
             _triangles = new ArrayList<Triangle_dt>();
+        }
         initTriangles();
         return _triangles.iterator();
     }
@@ -1558,10 +1558,12 @@ public class Delaunay_Triangulation {
             if ((sx & sy) | (!sx & !sy)) {
                 ans.add(curr.A);
             }
-            if (curr.bcnext != null && curr.bcnext.halfplane)
+            if (curr.bcnext != null && curr.bcnext.halfplane) {
                 curr = curr.bcnext;
-            if (curr == this.startTriangleHull)
+            }
+            if (curr == this.startTriangleHull) {
                 cont = false;
+            }
         }
         return ans.iterator();
     }
@@ -1572,10 +1574,12 @@ public class Delaunay_Triangulation {
         boolean cont = true;
         while (cont) {
             ans.add(curr.A);
-            if (curr.bcnext != null && curr.bcnext.halfplane)
+            if (curr.bcnext != null && curr.bcnext.halfplane) {
                 curr = curr.bcnext;
-            if (curr == this.startTriangleHull)
+            }
+            if (curr == this.startTriangleHull) {
                 cont = false;
+            }
         }
         return ans;
     }
@@ -1590,8 +1594,9 @@ public class Delaunay_Triangulation {
     }
 
     private void initTriangles() {
-        if (_modCount == _modCount2)
+        if (_modCount == _modCount2) {
             return;
+        }
         if (this.size() > 2) {
             _modCount2 = _modCount;
             ArrayList<Triangle_dt> front = new ArrayList<Triangle_dt>();
@@ -1637,10 +1642,12 @@ public class Delaunay_Triangulation {
         gridIndex = null;
     }
 
-
     /**
-     * divides triangulation triangles to small triangles, by recursively dividing its edges
-     * <p>to two same length edges if it is longer than <code>elevatedStep</code></p>
+     * divides triangulation triangles to small triangles, by recursively
+     * dividing its edges
+     * <p>
+     * to two same length edges if it is longer than
+     * <code>elevatedStep</code></p>
      *
      * @param maxLength how much small must be edges length
      */
@@ -1655,13 +1662,15 @@ public class Delaunay_Triangulation {
             Iterator<Triangle_dt> itr = trianglesIterator();
             while (itr.hasNext()) {
                 Triangle_dt t = itr.next();
-                if (t == null || t.isHalfplane()) continue;
+                if (t == null || t.isHalfplane()) {
+                    continue;
+                }
                 double distanceAB = t.A.distance(t.B);
                 double distanceBC = t.B.distance(t.C);
                 double distanceCA = t.C.distance(t.A);
-                if (finished && (
-                        maxLength <= distanceAB || maxLength <= distanceBC || maxLength <= distanceCA
-                )) finished = false;
+                if (finished && (maxLength <= distanceAB || maxLength <= distanceBC || maxLength <= distanceCA)) {
+                    finished = false;
+                }
 
                 if (maxLength < distanceAB) {
                     Point_dt p = UtPoint.segmentByOrder(t.A, t.B, 1, 2);
@@ -1683,7 +1692,6 @@ public class Delaunay_Triangulation {
         } while (!finished);
         //endregion
     }
-
 
     public ArrayList<Triangle_dt> convexHull() {
         Iterator<Triangle_dt> itr = trianglesIterator();
@@ -1711,7 +1719,9 @@ public class Delaunay_Triangulation {
         Iterator<Triangle_dt> itr = trianglesIterator();
         while (itr.hasNext()) {
             Triangle_dt t = itr.next();
-            if (t == null || t.isHalfplane()) continue;
+            if (t == null || t.isHalfplane()) {
+                continue;
+            }
             double distanceAB = t.A.distance(t.B);
             double distanceBC = t.B.distance(t.C);
             double distanceCA = t.C.distance(t.A);

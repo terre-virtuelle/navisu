@@ -41,7 +41,7 @@ public class BathymetryDBImpl
     protected static final Logger LOGGER = Logger.getLogger(BathymetryDBImpl.class.getName());
     final String NAME = "Bathy";
     final String LAYER_NAME = "BathyShom";
-    final String LIMIT = "100";
+    final double LIMIT = 100.0;
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
@@ -135,7 +135,7 @@ public class BathymetryDBImpl
 
     @Override
     public List<Point3D> retrieveAround(double lat, double lon) {
-        return bathymetryDBController.retrieveAround(lat, lon);
+        return bathymetryDBController.retrieveAround(lat, lon, LIMIT);
     }
 
     @Override
