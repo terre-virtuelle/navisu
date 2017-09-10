@@ -144,19 +144,8 @@ public class DisplayBathymetryController {
 
                     //Create a grid of points for triangulate sea level plane 
                     Point3D[][] seaPlane = toGrid(MIN_LAT, MIN_LON, 100.0, 100.0, 220, 220);
-                    //  List<Triangle_dt> triangles2 = createDelaunay(seaPlane, 220, 220);
-                    //  displayDelaunay(triangles2, Material.YELLOW, maxElevation * 10);
-/*
-                    for (Triangle_dt t : triangles2) {
-                        for (Triangle_dt tt : triangles1) {
-                            if (tt.circumcircle_contains(t.A) && tt.circumcircle_contains(t.B)
-                                    || tt.circumcircle_contains(t.A) && tt.circumcircle_contains(t.C)
-                                    || tt.circumcircle_contains(t.B) && tt.circumcircle_contains(t.C)) {
-                                displayTriangle(tt, Material.RED, maxElevation * 10);
-                            }
-                        }
-                    }
-                     */
+                    seaPlane = mergeData(seaPlane, 220, 220, triangles1);
+                    /*
                     for (int k = 0; k < 220 - 1; k++) {
                         for (int l = 0; l < 220 - 1; l++) {
                             Point3D p = seaPlane[k][l];
@@ -164,17 +153,51 @@ public class DisplayBathymetryController {
                             for (Triangle_dt tt : triangles1) {
                                 if (tt.contains(pp)) {
                                     // displayTriangle(tt, Material.RED, maxElevation * 10);
-                                    double el = (tt.A.z+tt.B.z+tt.C.z)/3.0;
+                                    double el = (tt.A.z + tt.B.z + tt.C.z) / 3.0;
                                     seaPlane[k][l].setElevation(el);
                                 }
                             }
                         }
                     }
+                     */
                     List<Triangle_dt> triangles2 = createDelaunay(seaPlane, 220, 220);
-                    displayDelaunay(triangles2, Material.YELLOW, maxElevation * 10);
+                    displayDelaunay(triangles2, Material.WHITE, maxElevation * 10);
                     wwd.redrawNow();
                 });
 
+    }
+
+    public Point3D[][] mergeData(Point3D[][] orgData, int lat, int lon, List<Triangle_dt> triangles) {
+        Point3D[][] tmp = new Point3D[lat][lon];
+        for (int k = 0; k < lat; k++) {
+            System.arraycopy(orgData[k], 0, tmp[k], 0, lon);
+        }
+        for (int k = 0;
+                k < lat - 1; k++) {
+            for (int l = 0; l < lon - 1; l++) {
+                Point3D p = tmp[k][l];
+                Point_dt pp = new Point_dt(p.getLat(), p.getLon(), p.getElevation());
+                double max =0.0;
+                for (Triangle_dt tt : triangles) {
+                    if (tt.contains(pp)) {
+                      //  displayTriangle(tt, Material.RED, maxElevation * 10);
+                      
+                      if(max < tt.A.z){
+                          max = tt.A.z;
+                      }
+                      if(max < tt.B.z){
+                          max = tt.B.z;
+                      }
+                      if(max < tt.B.z){
+                          max = tt.B.z;
+                      }
+                        //double el = (tt.A.z + tt.B.z + tt.C.z) / 3.0;
+                        tmp[k][l].setElevation(max);
+                    }
+                }
+            }
+        }
+        return tmp;
     }
 
     public void displaySounding(double lat, double lon, double depth) {
@@ -256,7 +279,6 @@ public class DisplayBathymetryController {
                     + (int) (maxElevation - t.B.z) + ", "
                     + (int) (maxElevation - t.C.z));
             layer.addRenderable(p);
-            // wwd.redrawNow();
         }
     }
 
@@ -273,7 +295,7 @@ public class DisplayBathymetryController {
             //   double z = maxElevation - t.B.z;
             ShapeAttributes attrs = new BasicShapeAttributes();
             attrs.setOutlineOpacity(1.0);
-            attrs.setOutlineWidth(1d);
+            attrs.setOutlineWidth(0.5);
             attrs.setOutlineMaterial(material);
             p.setAttributes(attrs);
             p.setValue(AVKey.DISPLAY_NAME, i + " : " + (int) (maxElevation - t.A.z) + ", "
@@ -300,8 +322,8 @@ public class DisplayBathymetryController {
         for (Coordinate concaveHullCoordinate : concaveHullCoordinates) {
             pathPositions1.add(Position.fromDegrees(concaveHullCoordinate.y,
                     concaveHullCoordinate.x,
-                    (maxElevation - concaveHullCoordinate.z)*10));//*10
-                  
+                    (maxElevation - concaveHullCoordinate.z) * 10));//*10
+
         }
         layer.addRenderable(createPath(pathPositions1, Material.RED));
         wwd.redrawNow();
