@@ -17,10 +17,6 @@ import bzh.terrevirtuelle.navisu.geometry.utils.NaVisuToJTS;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.Point;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
@@ -42,7 +38,6 @@ import java.util.logging.Logger;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
 import org.gavaghan.geodesy.GlobalCoordinates;
-import org.opensphere.geometry.algorithm.ConcaveHull;
 
 /**
  *
@@ -59,7 +54,7 @@ public class DisplayBathymetryController {
     protected DisplayBathymetryImpl component;
     protected String LIMIT = "100";
     protected static double maxElevation = -20.0;
-    protected final double THRESHOLD = 0.0015;
+    protected final double THRESHOLD = 0.008;//0.0015
     protected Geometry concaveHull;
     protected double MIN_DEPTH = 0.0;
     protected double MIN_LAT = 48.25;
@@ -105,7 +100,7 @@ public class DisplayBathymetryController {
 
         } // plusieurs jobs
                 ,
-                (progressHandle) -> {
+                 (progressHandle) -> {
 
                     List<Triangle_dt> triangles = createDelaunay(points3d);
 
@@ -129,27 +124,32 @@ public class DisplayBathymetryController {
 
                     //Suppress large edges
                     List<Triangle_dt> triangles1 = filterLargeEdges(triangles, 0.0015);
-                      displayDelaunay(triangles1, Material.GREEN,0.0);
+                    displayDelaunay(triangles1, Material.GREEN, 0.0);
 
                     //Create concaveHull from points with bathy information
-                    concaveHull = getConcaveHull(points3d, THRESHOLD);
+                    concaveHull = NaVisuToJTS.getConcaveHull(points3d, THRESHOLD);
                     displayConcaveHull(concaveHull);
 
                     //Create a grid of points for triangulate elevation level plane and bathy
                     List<Point3D> seaPlane = toGrid(MIN_LAT, MIN_LON, MAX_LAT, MAX_LON, 100.0, 100.0);
-                   // List<Triangle_dt> triangles2 = createDelaunay(seaPts);
-                   // displayDelaunay(triangles2);
-                    // displaySounding(seaPts);
-                    List<Point3D> seaPts=new ArrayList<>();
-                    seaPlane.stream().filter((p) -> (contains(concaveHull, p)==true)).forEachOrdered((p) -> {
+                     System.out.println("seaPlane : " +seaPlane.size());
+                    //Filtrage des points à l'intérieur de l'enveloppe concave
+                    List<Point3D> seaPts = new ArrayList<>();
+                    seaPlane.stream().filter((p) -> (NaVisuToJTS.contains(concaveHull, p) == true)).forEachOrdered((p) -> {
                         seaPts.add(p);
-            });
-                    
+                    });
+                     System.out.println("seaPts : "+seaPts.size());
                     List<Triangle_dt> triangles2 = createDelaunay(seaPts);
                     List<Triangle_dt> triangles3 = filterLargeEdges(triangles2, 0.001);
-                    displayDelaunay(triangles3, Material.YELLOW,maxElevation*10);
-                }
-        );
+                 //   displayDelaunay(triangles3, Material.YELLOW, maxElevation * 10);
+                    
+                    /*
+                    List<Point3D> mnt = NaVisuToJTS.merge(points3d, seaPts);
+                    List<Triangle_dt> triangles2 = createDelaunay(mnt);
+                    displayDelaunay(triangles2, Material.YELLOW, maxElevation * 10);
+                     */
+                });
+
     }
 
     public void displaySounding(double lat, double lon, double depth) {
@@ -194,12 +194,12 @@ public class DisplayBathymetryController {
         triangles.stream()
                 .filter((t) -> (t.A != null && t.B != null && t.C != null)).map((t) -> {
             ArrayList<Position> pathPositions = new ArrayList<>();
-            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10)+high));
-            pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, (t.B.z * 10)+high));
-            pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, (t.C.z * 10)+high));
-            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10)+high));
+            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10) + high));
+            pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, (t.B.z * 10) + high));
+            pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, (t.C.z * 10) + high));
+            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10) + high));
             Path p = new Path(pathPositions);
-         //   double z = maxElevation - t.B.z;
+            //   double z = maxElevation - t.B.z;
             ShapeAttributes attrs = new BasicShapeAttributes();
             attrs.setOutlineOpacity(1.0);
             attrs.setOutlineWidth(1d);
@@ -220,6 +220,7 @@ public class DisplayBathymetryController {
                     i++;
                 }
         );
+        wwd.redrawNow();
     }
 
     public void displayConcaveHull(Geometry concaveHull) {
@@ -231,6 +232,7 @@ public class DisplayBathymetryController {
                     (maxElevation - concaveHullCoordinate.z) * 10));
         }
         layer.addRenderable(createPath(pathPositions1, Material.RED));
+        wwd.redrawNow();
     }
 
     public List<Triangle_dt> filterLargeEdges(List<Triangle_dt> triangles, double threshold) {
@@ -251,30 +253,8 @@ public class DisplayBathymetryController {
         return dt;
     }
 
-    public Geometry getConcaveHull(List<Point3D> points, double threshold) {
-        List<Coordinate> coordinatesJTS = NaVisuToJTS.toJTS(points);
-        Coordinate[] coord = new Coordinate[coordinatesJTS.size()];
-        for (int c = 0; c < coord.length; c++) {
-            coord[c] = coordinatesJTS.get(c);
-        }
-        MultiPoint geom = new GeometryFactory().createMultiPoint(coord);
-        ConcaveHull ch = new ConcaveHull(geom, threshold);
-        Geometry concaveHullTmp = ch.getConcaveHull();
-
-        return concaveHullTmp;
-    }
-
-    public Geometry getLineString(List<Point3D> points) {
-        List<Coordinate> coordinatesJTS = NaVisuToJTS.toJTS(points);
-        Coordinate[] coord = new Coordinate[coordinatesJTS.size()];
-        for (int c = 0; c < coord.length; c++) {
-            coord[c] = coordinatesJTS.get(c);
-        }
-        LineString geom = new GeometryFactory().createLineString(coord);
-        return geom;
-    }
-
-    public Path createPath(ArrayList<Position> pathPositions, Material material) {
+    
+    public Path createPath(List<Position> pathPositions, Material material) {
         Path p = new Path(pathPositions);
         ShapeAttributes attrs0 = new BasicShapeAttributes();
         attrs0.setOutlineOpacity(1.0);
@@ -328,12 +308,4 @@ public class DisplayBathymetryController {
         return p;
     }
 
-    public boolean contains(Geometry geom, Point3D pt3D) {
-        boolean result = false;
-        Coordinate coord = new Coordinate(pt3D.getLon(), pt3D.getLat(), 100);
-        GeometryFactory geometryFactory = new GeometryFactory();
-        Point pt = geometryFactory.createPoint(coord);
-        result = !geom.contains(pt);
-        return result;
-    }
 }

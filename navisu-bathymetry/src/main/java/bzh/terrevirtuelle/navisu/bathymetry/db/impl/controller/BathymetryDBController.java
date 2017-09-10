@@ -217,7 +217,7 @@ public class BathymetryDBController {
     }
 
     public List<Point3D> retrieveAll() {
-        List<Point3D> tmp = new ArrayList<>();
+        List<Point3D> tmp1 = new ArrayList<>();
         //  guiAgentServices.getJobsManager().newJob("retrieveAll", (progressHandle) -> {
         PGgeometry geom;
         double depth;
@@ -230,18 +230,18 @@ public class BathymetryDBController {
                     Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
                             geom.getGeometry().getFirstPoint().getY(),
                             depth);
-                    tmp.add(pt);
+                    tmp1.add(pt);
                 }
             }
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         // });
-        return tmp;
+        return tmp1;
     }
 
     public List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
-        List<Point3D> tmp = new ArrayList<>();
+        List<Point3D> tmp1 = new ArrayList<>();
         PGgeometry geom;
         double depth;
         ResultSet r;
@@ -262,13 +262,13 @@ public class BathymetryDBController {
                     Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
                             geom.getGeometry().getFirstPoint().getY(),
                             depth);
-                    tmp.add(pt);
+                    tmp1.add(pt);
                 }
             }
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-        return tmp;
+        return tmp1;
     }
 
     public final List<Point3D> retrieveAround(double lat, double lon) {

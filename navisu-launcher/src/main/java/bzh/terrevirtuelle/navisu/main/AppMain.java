@@ -474,16 +474,16 @@ public class AppMain extends Application {
         // System.out.println("con : " + con);
         
         
-     //    bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
-     //            "5432",  "org.postgresql.Driver", "admin", "admin");
+      //   bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
+      //           "5432",  "org.postgresql.Driver", "admin", "admin");
                 
         //bathymetryDBServices.create("/home/serge/Data/bathymetry/data/shom/MNT100M_ATL/splited/bathy04.glz");
        // bathymetryDBServices.createIndex();
  
-     //   displayBathymetryServices.displayAllSounding();
+     //  displayBathymetryServices.displayAllSounding();
         
         /* Test speech */
-       // speakerServices.read("data/text", "installation.txt", null);// local par defaut
+        //speakerServices.read("data/text", "installation.txt", null);// local par defaut
        //  speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
         // speakerServices.read("naVisu est un logiciel de visualisation et de simulation de données maritimes.");//OK
         /* Test  ontology  DataAccess */
