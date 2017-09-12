@@ -106,54 +106,18 @@ public class DisplayBathymetryImpl
     }
 
     @Override
-    public Delaunay_Triangulation getTriangulation(List<Point3D> points) {
-        return controller.getTriangulation(points);
-    }
-
-    @Override
     public Point3D[][] mergeData(Point3D[][] orgData, int nbLat, int nbLon, List<Triangle_dt> triangles) {
  return controller.mergeData(orgData, nbLat, nbLon, triangles);
     }
 
-    @Override
-    public ArrayList<Triangle_dt> createDelaunay(List<Point3D> points, double elevation) {
-        return controller.createDelaunay(points, elevation);
-           }
-
-    @Override
-    public List<Triangle_dt> createDelaunay(Point3D[][] points, int nbLat, int nbLon,double elevation) {
-        return controller.createDelaunay(points, nbLat, nbLon,elevation);
-     }
+    
 
     @Override
     public Geometry createConcaveHull(List<Point3D> points3d, double threshold) {
        return controller.createConcaveHull(points3d, threshold);
     }
 
-    @Override
-    public List<Triangle_dt> filterLargeEdges(List<Triangle_dt> triangles, double threshold) {
-        return controller.filterLargeEdges(triangles, threshold);
-    }
-
-    @Override
-    public double getDistanceM(Position posA, Position posB) {
-        return controller.getDistanceM(posA, posB);
-    }
-
-    @Override
-    public List<Point3D> toGrid(double latMin, double lonMin, double latMax, double lonMax, double y, double x) {
-        return controller.toGrid(latMin, lonMin, latMax, lonMax, y, x);
-    }
-
-    @Override
-    public Point3D[][] toGrid(double orgLat, double orgLon, double dy, double dx, int nbLat, int nbLon) {
-        return toGrid(orgLat, orgLon, dy, dx, nbLat, nbLon);
-    }
-
-    @Override
-    public Position getPosition(Position posA, double bearing, double distance) {
-   return controller.getPosition(posA, bearing, distance);
-    }
+    
 
     @Override
     public void displaySounding(double lat, double lon, double depth, RenderableLayer l) {

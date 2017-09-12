@@ -16,26 +16,27 @@ public class SHOM_LOW_BATHYMETRY_CLUT {
 
     static {
         ranges = new ArrayList<>();
-        ranges.add(Range.closedOpen(0.0,16.0));
-        ranges.add(Range.closedOpen(16.0,19.0));
-        ranges.add(Range.closedOpen(19.0,23.0));
-        ranges.add(Range.closedOpen(23.0,27.0));
-        ranges.add(Range.closedOpen(27.0,29.0));
-        ranges.add(Range.closedOpen(29.0,33.0));
-        ranges.add(Range.closedOpen(33.0,43.0));
-        ranges.add(Range.closed(43.0, MAX));
+        ranges.add(Range.closedOpen(0.0, 2.5));
+        ranges.add(Range.closedOpen(2.5, 5.0));
+        ranges.add(Range.closedOpen(5.0, 7.5));
+        ranges.add(Range.closedOpen(7.5, 10.0));
+        ranges.add(Range.closedOpen(10.0, 20.0));
+        ranges.add(Range.closedOpen(20.0, 30.0));
+        ranges.add(Range.closedOpen(30.0, 40.0));
+        ranges.add(Range.closed(40.0, 50.0));
+        ranges.add(Range.closed(50.0, MAX));
     }
     private static final Map<Integer, Color> ATT = Collections.unmodifiableMap(new HashMap<Integer, Color>() {
         {
-            put(0, new Color(25,255,20));
-            put(1, new Color(130,255,16));
-            put(2, new Color(239,24,0));
-            put(3, new Color(20,170,255));
-            put(4, new Color(16,235,61));
-            put(5, new Color(53,255,194));
-            put(6, new Color(0,24,255));
-            put(7, new Color(0,24,255));
-          
+            put(0, new Color(238, 105, 112));
+            put(1, new Color(242, 84, 104));
+            put(2, new Color(238, 52, 83));
+            put(3, new Color(236, 21, 58));
+            put(4, new Color(211, 51, 67));
+            put(5, new Color(244, 42, 55));
+            put(6, new Color(206, 138, 72));
+            put(7, new Color(209, 184, 69));
+            put(8, new Color(248, 255, 25));
         }
     });
 

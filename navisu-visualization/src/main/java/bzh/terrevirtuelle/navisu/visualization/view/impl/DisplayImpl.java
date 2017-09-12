@@ -94,7 +94,6 @@ public class DisplayImpl
     public void displayDelaunay(List<Triangle_dt> triangles,
             double height, double verticalExaggeration,
             Material material, RenderableLayer l) {
-        //  System.out.println("displayDelaunay : " +height+" " + verticalExaggeration);
         triangles.stream()
                 .filter((t) -> (t.A != null && t.B != null && t.C != null)).map((t) -> {
             ArrayList<Position> pathPositions = new ArrayList<>();
@@ -105,7 +104,12 @@ public class DisplayImpl
             Path p = new Path(pathPositions);
             ShapeAttributes attrs = new BasicShapeAttributes();
             attrs.setOutlineOpacity(1.0);
-            attrs.setOutlineWidth(0.5);
+            attrs.setOutlineWidth(1.0);
+            /*
+            double h = (t.A.z+t.B.z+t.C.z)/3.0;
+            Color color = SHOM_LOW_BATHYMETRY_CLUT.getColor(h);
+            attrs.setOutlineMaterial(new Material(color));
+             */
             attrs.setOutlineMaterial(material);
             p.setAttributes(attrs);
             p.setValue(AVKey.DISPLAY_NAME, (int) (height - t.A.z) + ", "
@@ -152,5 +156,13 @@ public class DisplayImpl
         p.setAttributes(attrs0);
         return p;
     }
+@Override
+    public List<Triangle_dt> filterLargeEdges(List<Triangle_dt> triangles, double threshold) {
+        List<Triangle_dt> tmp1 = new ArrayList<>();
+        triangles.stream().filter((t) -> (t.getBoundingBox().getWidth() < threshold)).forEach((t) -> {
+            tmp1.add(t);
 
+        });
+        return tmp1;
+    }
 }

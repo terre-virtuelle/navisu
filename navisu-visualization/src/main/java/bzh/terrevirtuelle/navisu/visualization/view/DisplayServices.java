@@ -23,8 +23,7 @@ import org.capcaval.c3.component.ComponentService;
 public interface DisplayServices
         extends ComponentService {
 
-   // InstrumentDriver getDriver();
-
+    // InstrumentDriver getDriver();
     void displayPoints3D(List<Point3D> points, RenderableLayer layer);
 
     void displayPlane(double minLat, double minLon, double maxLat, double maxLon, double height,
@@ -42,4 +41,7 @@ public interface DisplayServices
             Material material, RenderableLayer l);
 
     Path createPath(List<Position> pathPositions, Material material);
+
+    List<Triangle_dt> filterLargeEdges(List<Triangle_dt> triangles, double threshold);
+
 }
