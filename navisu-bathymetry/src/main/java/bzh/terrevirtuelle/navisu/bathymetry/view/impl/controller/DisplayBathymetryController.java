@@ -31,6 +31,7 @@ import gov.nasa.worldwind.render.SurfaceSquare;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,11 +55,11 @@ public class DisplayBathymetryController {
     protected DisplayBathymetryImpl component;
     protected String LIMIT = "100";
     protected static double maxElevation = -20.0;
-    protected final double THRESHOLD = 0.008;//0.0015
+    protected final double THRESHOLD = 0.008;//0.1;//0.008;//0.0015
     protected Geometry concaveHull;
     protected double MIN_DEPTH = 0.0;
-    protected double MIN_LAT = 48.25;
-    protected double MIN_LON = -4.55;
+    protected double MIN_LAT = 48.255496978759766;//48.25549;
+    protected double MIN_LON = -4.549251079559326;
     protected double MAX_LAT = 48.45;
     protected double MAX_LON = -4.245;
     protected List<Point3D> points3d;
@@ -97,14 +98,25 @@ public class DisplayBathymetryController {
             // points3d = retrieveAll();
             points3d = bathymetryDBServices.retrieveIn(MIN_LAT, MIN_LON, MAX_LAT, MAX_LON);
             System.out.println("points3df : " + points3d.size());
-
+            double latM = 90.0;
+            double lonM = 0.0;
+            for (Point3D p : points3d) {
+                if (latM >= p.getLat()) {
+                    latM = p.getLat();
+                }
+                if (lonM >= p.getLon()) {
+                    lonM = p.getLon();
+                }
+            }
+            System.out.println("latM : " + latM + "lonM : " + lonM);
+            System.out.println("compare " + Double.compare(latM, MIN_LAT));
         } // plusieurs jobs
                 ,
                  (progressHandle) -> {
 
                     List<Triangle_dt> triangles = createDelaunay(points3d);
 
-                    //Display plane 100m over sea
+                    //Display plane 50m over sea
                     ArrayList<Position> pathPositions0 = new ArrayList<>();
                     pathPositions0.add(Position.fromDegrees(MIN_LAT, MIN_LON, 100));
                     pathPositions0.add(Position.fromDegrees(MAX_LAT, MIN_LON, 100));
@@ -124,32 +136,68 @@ public class DisplayBathymetryController {
 
                     //Suppress large edges
                     List<Triangle_dt> triangles1 = filterLargeEdges(triangles, 0.0015);
-                    displayDelaunay(triangles1, Material.GREEN, 0.0);
+                    //   displayDelaunay(triangles1, Material.GREEN, 0.0);
 
                     //Create concaveHull from points with bathy information
                     concaveHull = NaVisuToJTS.getConcaveHull(points3d, THRESHOLD);
                     displayConcaveHull(concaveHull);
 
-                    //Create a grid of points for triangulate elevation level plane and bathy
-                    List<Point3D> seaPlane = toGrid(MIN_LAT, MIN_LON, MAX_LAT, MAX_LON, 100.0, 100.0);
-                     System.out.println("seaPlane : " +seaPlane.size());
-                    //Filtrage des points à l'intérieur de l'enveloppe concave
-                    List<Point3D> seaPts = new ArrayList<>();
-                    seaPlane.stream().filter((p) -> (NaVisuToJTS.contains(concaveHull, p) == true)).forEachOrdered((p) -> {
-                        seaPts.add(p);
-                    });
-                     System.out.println("seaPts : "+seaPts.size());
-                    List<Triangle_dt> triangles2 = createDelaunay(seaPts);
-                    List<Triangle_dt> triangles3 = filterLargeEdges(triangles2, 0.001);
-                 //   displayDelaunay(triangles3, Material.YELLOW, maxElevation * 10);
-                    
+                    //Create a grid of points for triangulate sea level plane 
+                    Point3D[][] seaPlane = toGrid(MIN_LAT, MIN_LON, 100.0, 100.0, 220, 220);
+                    seaPlane = mergeData(seaPlane, 220, 220, triangles1);
                     /*
-                    List<Point3D> mnt = NaVisuToJTS.merge(points3d, seaPts);
-                    List<Triangle_dt> triangles2 = createDelaunay(mnt);
-                    displayDelaunay(triangles2, Material.YELLOW, maxElevation * 10);
+                    for (int k = 0; k < 220 - 1; k++) {
+                        for (int l = 0; l < 220 - 1; l++) {
+                            Point3D p = seaPlane[k][l];
+                            Point_dt pp = new Point_dt(p.getLat(), p.getLon(), p.getElevation());
+                            for (Triangle_dt tt : triangles1) {
+                                if (tt.contains(pp)) {
+                                    // displayTriangle(tt, Material.RED, maxElevation * 10);
+                                    double el = (tt.A.z + tt.B.z + tt.C.z) / 3.0;
+                                    seaPlane[k][l].setElevation(el);
+                                }
+                            }
+                        }
+                    }
                      */
+                    List<Triangle_dt> triangles2 = createDelaunay(seaPlane, 220, 220);
+                    displayDelaunay(triangles2, Material.WHITE, maxElevation * 10);
+                    wwd.redrawNow();
                 });
 
+    }
+
+    public Point3D[][] mergeData(Point3D[][] orgData, int lat, int lon, List<Triangle_dt> triangles) {
+        Point3D[][] tmp = new Point3D[lat][lon];
+        for (int k = 0; k < lat; k++) {
+            System.arraycopy(orgData[k], 0, tmp[k], 0, lon);
+        }
+        for (int k = 0;
+                k < lat - 1; k++) {
+            for (int l = 0; l < lon - 1; l++) {
+                Point3D p = tmp[k][l];
+                Point_dt pp = new Point_dt(p.getLat(), p.getLon(), p.getElevation());
+                double max =0.0;
+                for (Triangle_dt tt : triangles) {
+                    if (tt.contains(pp)) {
+                      //  displayTriangle(tt, Material.RED, maxElevation * 10);
+                      
+                      if(max < tt.A.z){
+                          max = tt.A.z;
+                      }
+                      if(max < tt.B.z){
+                          max = tt.B.z;
+                      }
+                      if(max < tt.B.z){
+                          max = tt.B.z;
+                      }
+                        //double el = (tt.A.z + tt.B.z + tt.C.z) / 3.0;
+                        tmp[k][l].setElevation(max);
+                    }
+                }
+            }
+        }
+        return tmp;
     }
 
     public void displaySounding(double lat, double lon, double depth) {
@@ -186,11 +234,56 @@ public class DisplayBathymetryController {
         points.stream().forEach((pt) -> {
             dt.insertPoint(new Point_dt(pt.getLat(), pt.getLon(), maxElevation - pt.getElevation()));
         });
-        System.out.println("maxElevation : " + maxElevation);
         return dt.get_triangles();
     }
 
+    public List<Triangle_dt> createDelaunay(Point3D[][] points, int nbLat, int nbLon) {
+        List<Triangle_dt> triangles = new ArrayList<>();
+        for (int k = 0; k < nbLat - 1; k++) {
+            for (int l = 0; l < nbLon - 1; l++) {
+                Point3D pt0 = points[k][l];
+                Point3D pt1 = points[k + 1][l];
+                Point3D pt2 = points[k][l + 1];
+                Point3D pt3 = points[k + 1][l + 1];
+                triangles.add(new Triangle_dt(
+                        new Point_dt(pt0.getLat(), pt0.getLon(), pt0.getElevation()),
+                        new Point_dt(pt1.getLat(), pt1.getLon(), pt1.getElevation()),
+                        new Point_dt(pt3.getLat(), pt3.getLon(), pt3.getElevation())));
+                triangles.add(new Triangle_dt(
+                        new Point_dt(pt0.getLat(), pt0.getLon(), pt0.getElevation()),
+                        new Point_dt(pt3.getLat(), pt3.getLon(), pt3.getElevation()),
+                        new Point_dt(pt2.getLat(), pt2.getLon(), pt2.getElevation())));
+            }
+
+        }
+
+        return triangles;
+    }
+
+    public void displayTriangle(Triangle_dt t, Material material, double high) {
+        if (t.A != null && t.B != null && t.C != null) {
+            ArrayList<Position> pathPositions = new ArrayList<>();
+            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10) + high));
+            pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, (t.B.z * 10) + high));
+            pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, (t.C.z * 10) + high));
+            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * 10) + high));
+            Path p = new Path(pathPositions);
+            ShapeAttributes attrs = new BasicShapeAttributes();
+            attrs.setInteriorMaterial(material);
+            attrs.setDrawInterior(true);
+            attrs.setOutlineOpacity(1.0);
+            attrs.setOutlineWidth(0.6);
+            attrs.setOutlineMaterial(material);
+            p.setAttributes(attrs);
+            p.setValue(AVKey.DISPLAY_NAME, i + " : " + (int) (maxElevation - t.A.z) + ", "
+                    + (int) (maxElevation - t.B.z) + ", "
+                    + (int) (maxElevation - t.C.z));
+            layer.addRenderable(p);
+        }
+    }
+
     public void displayDelaunay(List<Triangle_dt> triangles, Material material, double high) {
+        i = 0;
         triangles.stream()
                 .filter((t) -> (t.A != null && t.B != null && t.C != null)).map((t) -> {
             ArrayList<Position> pathPositions = new ArrayList<>();
@@ -202,10 +295,10 @@ public class DisplayBathymetryController {
             //   double z = maxElevation - t.B.z;
             ShapeAttributes attrs = new BasicShapeAttributes();
             attrs.setOutlineOpacity(1.0);
-            attrs.setOutlineWidth(1d);
+            attrs.setOutlineWidth(0.5);
             attrs.setOutlineMaterial(material);
             p.setAttributes(attrs);
-            p.setValue(AVKey.DISPLAY_NAME, (int) (maxElevation - t.A.z) + ", "
+            p.setValue(AVKey.DISPLAY_NAME, i + " : " + (int) (maxElevation - t.A.z) + ", "
                     + (int) (maxElevation - t.B.z) + ", "
                     + (int) (maxElevation - t.C.z));
             return p;
@@ -229,7 +322,8 @@ public class DisplayBathymetryController {
         for (Coordinate concaveHullCoordinate : concaveHullCoordinates) {
             pathPositions1.add(Position.fromDegrees(concaveHullCoordinate.y,
                     concaveHullCoordinate.x,
-                    (maxElevation - concaveHullCoordinate.z) * 10));
+                    (maxElevation - concaveHullCoordinate.z) * 10));//*10
+
         }
         layer.addRenderable(createPath(pathPositions1, Material.RED));
         wwd.redrawNow();
@@ -253,7 +347,6 @@ public class DisplayBathymetryController {
         return dt;
     }
 
-    
     public Path createPath(List<Position> pathPositions, Material material) {
         Path p = new Path(pathPositions);
         ShapeAttributes attrs0 = new BasicShapeAttributes();
@@ -296,6 +389,22 @@ public class DisplayBathymetryController {
         return l;
     }
 
+    public Point3D[][] toGrid(double orgLat, double orgLon,
+            double dy, double dx,
+            int nbLat, int nbLon) {
+
+        Point3D[][] tab = new Point3D[nbLat][nbLon];
+        for (int v = 0; v < nbLat; v++) {
+            Position p = getPosition(Position.fromDegrees(orgLat, orgLon), 0.0, v * dy);
+            for (int u = 0; u < nbLon; u++) {
+                Position pp = getPosition(p, 90.0, u * dx);
+                tab[v][u] = new Point3D(pp.getLatitude().getDegrees(), pp.getLongitude().getDegrees(), maxElevation);
+            }
+        }
+
+        return tab;
+    }
+
     public static Position getPosition(Position posA, double bearing, double distance) {
         double[] endBearing = new double[1];
         GeodeticCalculator geoCalc = new GeodeticCalculator();
@@ -304,7 +413,7 @@ public class DisplayBathymetryController {
                 locA, bearing, distance, endBearing);
 
         Position p = new Position(Angle.fromDegrees(coordinates.getLatitude()),
-                Angle.fromDegrees(coordinates.getLongitude()), 100);
+                Angle.fromDegrees(coordinates.getLongitude()), 0);
         return p;
     }
 

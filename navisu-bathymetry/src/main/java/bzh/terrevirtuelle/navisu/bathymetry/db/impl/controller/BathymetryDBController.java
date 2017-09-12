@@ -49,7 +49,7 @@ public class BathymetryDBController {
     GuiAgentServices guiAgentServices;
     BathymetryEventProducerServices bathymetryEventProducerServices;
     protected WorldWindow wwd;
-    final String LIMIT;
+    final double LIMIT;
 
     List<Point3D> points;
     private Connection connection;
@@ -88,7 +88,7 @@ public class BathymetryDBController {
     private BathymetryDBController(BathymetryDBImpl component,
             DatabaseServices databaseServices, GuiAgentServices guiAgentServices,
             BathymetryEventProducerServices bathymetryEventProducerServices,
-            String limit, RenderableLayer layer) {
+            double limit, RenderableLayer layer) {
         this.component = component;
         this.databaseServices = databaseServices;
         this.guiAgentServices = guiAgentServices;
@@ -112,7 +112,7 @@ public class BathymetryDBController {
     public static BathymetryDBController getInstance(BathymetryDBImpl component,
             DatabaseServices databaseServices, GuiAgentServices guiAgentServices,
             BathymetryEventProducerServices bathymetryEventProducerServices,
-            String limit, RenderableLayer layer) {
+            double limit, RenderableLayer layer) {
         if (INSTANCE == null) {
             INSTANCE = new BathymetryDBController(component,
                     databaseServices, guiAgentServices, bathymetryEventProducerServices,
@@ -271,7 +271,7 @@ public class BathymetryDBController {
         return tmp1;
     }
 
-    public final List<Point3D> retrieveAround(double lat, double lon) {
+    public final List<Point3D> retrieveAround(double lat, double lon, double limit) {
         PGgeometry geom;
         ResultSet r0;
         ResultSet r1;
@@ -283,7 +283,7 @@ public class BathymetryDBController {
                     + "FROM bathy "
                     + "ORDER BY coord <-> ST_SetSRID("
                     + "ST_MakePoint(" + Double.toString(lon) + ", " + Double.toString(lat) + "), 4326) "
-                    + "LIMIT " + LIMIT);
+                    + "LIMIT " + limit);
             while (r0.next()) {
                 geom = (PGgeometry) r0.getObject(1);
                 longitude = geom.getGeometry().getFirstPoint().getX();
