@@ -140,6 +140,8 @@ import bzh.terrevirtuelle.navisu.stl.bathy.BathyStlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.bathy.impl.BathyStlComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.S57StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.S57StlComponentImpl;
+import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
+import bzh.terrevirtuelle.navisu.visualization.view.impl.DisplayImpl;
 import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
 import gov.nasa.worldwind.WorldWindow;
@@ -198,6 +200,7 @@ public class AppMain extends Application {
                         DirectoryDriverManagerImpl.class,
                         DpAgentImpl.class,
                         DriverManagerImpl.class,
+                        DisplayImpl.class,
                         DisplayBathymetryImpl.class,
                         ExifComponentImpl.class,
                         FilesImpl.class,
@@ -265,6 +268,7 @@ public class AppMain extends Application {
 
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
+        DisplayServices displayServices=componentManager.getComponentService(DisplayServices.class);
         DisplayBathymetryServices displayBathymetryServices=componentManager.getComponentService(DisplayBathymetryServices.class);
        
         ExifComponentServices exifComponentServices = componentManager.getComponentService(ExifComponentServices.class);
@@ -358,6 +362,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(configurationComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(clocksServices.getDriver());
+       // instrumentDriverManagerServices.registerNewDriver(displayServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(displayBathymetryServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
@@ -474,13 +479,13 @@ public class AppMain extends Application {
         // System.out.println("con : " + con);
         
         
-        // bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
-        //         "5432",  "org.postgresql.Driver", "admin", "admin");
+         bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
+                 "5432",  "org.postgresql.Driver", "admin", "admin");
                 
         //bathymetryDBServices.create("/home/serge/Data/bathymetry/data/shom/MNT100M_ATL/splited/bathy04.glz");
        // bathymetryDBServices.createIndex();
  
-      // displayBathymetryServices.displayAllSounding();
+       displayBathymetryServices.displayAllSounding();
         
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
