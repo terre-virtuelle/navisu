@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.visualization.view.impl;
 
-import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Triangle_dt;
@@ -33,7 +32,7 @@ import org.capcaval.c3.component.ComponentState;
 public class DisplayImpl
         implements Display, DisplayServices, ComponentState {
 
-    protected WorldWindow wwd= GeoWorldWindViewImpl.getWW();
+    protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected RenderableLayer layer;
     protected DisplayController displayController;
 
@@ -84,9 +83,9 @@ public class DisplayImpl
             attrs.setOutlineWidth(0.6);
             attrs.setOutlineMaterial(material);
             p.setAttributes(attrs);
-            p.setValue(AVKey.DISPLAY_NAME, (int) -t.A.z + ", "
-                    + (int) -t.B.z + ", "
-                    + (int) -t.C.z);
+            p.setValue(AVKey.DISPLAY_NAME, (int) (height - t.A.z) + ", "
+                    + (int) (height - t.B.z) + ", "
+                    + (int) (height - t.C.z));
             l.addRenderable(p);
         }
     }
@@ -95,7 +94,7 @@ public class DisplayImpl
     public void displayDelaunay(List<Triangle_dt> triangles,
             double height, double verticalExaggeration,
             Material material, RenderableLayer l) {
-      //  System.out.println("displayDelaunay : " +height+" " + verticalExaggeration);
+        //  System.out.println("displayDelaunay : " +height+" " + verticalExaggeration);
         triangles.stream()
                 .filter((t) -> (t.A != null && t.B != null && t.C != null)).map((t) -> {
             ArrayList<Position> pathPositions = new ArrayList<>();
@@ -109,9 +108,9 @@ public class DisplayImpl
             attrs.setOutlineWidth(0.5);
             attrs.setOutlineMaterial(material);
             p.setAttributes(attrs);
-            p.setValue(AVKey.DISPLAY_NAME, (int) -t.A.z + ", "
-                    + (int)  -t.B.z + ", "
-                    + (int) -t.C.z);
+            p.setValue(AVKey.DISPLAY_NAME, (int) (height - t.A.z) + ", "
+                    + (int) (height - t.B.z) + ", "
+                    + (int) (height - t.C.z));
             return p;
         }
         ).map(
@@ -121,7 +120,7 @@ public class DisplayImpl
                 }
         ).forEachOrdered(
                 (_item) -> {
-                    
+
                 }
         );
         wwd.redrawNow();

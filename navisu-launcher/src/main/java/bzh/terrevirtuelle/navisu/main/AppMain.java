@@ -479,8 +479,8 @@ public class AppMain extends Application {
         // System.out.println("con : " + con);
         
         
-      //   bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
-      //           "5432",  "org.postgresql.Driver", "admin", "admin");
+       //  bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
+       //          "5432",  "org.postgresql.Driver", "admin", "admin");
                 
         //bathymetryDBServices.create("/home/serge/Data/bathymetry/data/shom/MNT100M_ATL/splited/bathy04.glz");
        // bathymetryDBServices.createIndex();
