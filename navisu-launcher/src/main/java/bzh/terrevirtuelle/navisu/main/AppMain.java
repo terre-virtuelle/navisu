@@ -131,6 +131,12 @@ import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.gazetteer.impl.GazetteerComponentImpl;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.impl.DelaunayImpl;
+import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import bzh.terrevirtuelle.navisu.geometry.geodesy.impl.GeodesyImpl;
+import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
+import bzh.terrevirtuelle.navisu.geometry.jts.impl.JTSImpl;
 import bzh.terrevirtuelle.navisu.leapmotion.LeapMotionComponentServices;
 import bzh.terrevirtuelle.navisu.leapmotion.impl.LeapMotionComponentImpl;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
@@ -198,6 +204,7 @@ public class AppMain extends Application {
                         DataServerImpl.class,
                         DatabaseImpl.class,
                         DatabaseDriverManagerImpl.class,
+                        DelaunayImpl.class,
                         DirectoryDriverManagerImpl.class,
                         DpAgentImpl.class,
                         DriverManagerImpl.class,
@@ -206,6 +213,7 @@ public class AppMain extends Application {
                         ExifComponentImpl.class,
                         FilesImpl.class,
                         GazetteerComponentImpl.class,
+                        GeodesyImpl.class,
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
                         GpsTrackImpl.class,
@@ -214,6 +222,7 @@ public class AppMain extends Application {
                         GpxObjectImpl.class,
                         InstrumentDriverManagerImpl.class,
                         InstrumentTemplateImpl.class,
+                        JTSImpl.class,
                         KapChartImpl.class,
                         KmlComponentImpl.class,
                         LayersManagerImpl.class,
@@ -256,8 +265,8 @@ public class AppMain extends Application {
         BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
         BathymetryDBServices bathymetryDBServices = componentManager.getComponentService(BathymetryDBServices.class);
         BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
-        BathyStlComponentServices bathyStlComponentServices=componentManager.getComponentService(BathyStlComponentServices.class);
-        
+        BathyStlComponentServices bathyStlComponentServices = componentManager.getComponentService(BathyStlComponentServices.class);
+
         Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
 
         CameraComponentServices cameraComponentServices = componentManager.getComponentService(CameraComponentServices.class);
@@ -269,14 +278,16 @@ public class AppMain extends Application {
 
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
-        DisplayServices displayServices=componentManager.getComponentService(DisplayServices.class);
-        DisplayBathymetryServices displayBathymetryServices=componentManager.getComponentService(DisplayBathymetryServices.class);
-       
+        DisplayServices displayServices = componentManager.getComponentService(DisplayServices.class);
+        DelaunayServices delaunayServices = componentManager.getComponentService(DelaunayServices.class);
+        DisplayBathymetryServices displayBathymetryServices = componentManager.getComponentService(DisplayBathymetryServices.class);
+
         ExifComponentServices exifComponentServices = componentManager.getComponentService(ExifComponentServices.class);
 
         FilesServices filesServices = componentManager.getComponentService(FilesServices.class);
 
         GazetteerComponentServices gazetteerComponentServices = componentManager.getComponentService(GazetteerComponentServices.class);
+        GeodesyServices geodesyServices = componentManager.getComponentService(GeodesyServices.class);
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
         GpsTrackServices gpsTrackServices = componentManager.getComponentService(GpsTrackServices.class);
@@ -288,6 +299,8 @@ public class AppMain extends Application {
         guiAgentServices.showGui(stage, 1080, 700);
 
         InstrumentTemplateServices instrumentTemplateServices = componentManager.getComponentService(InstrumentTemplateServices.class);
+
+        JTSServices jtsServices = componentManager.getComponentService(JTSServices.class);
 
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         KmlComponentServices kmlObjectServices = componentManager.getComponentService(KmlComponentServices.class);
@@ -349,7 +362,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver((Driver) meteoNetCdfServices.getDriver());
         driverServices.registerNewDriver(sedimentologyServices.getDriver());
         driverServices.registerNewDriver(shapefileObjectServices.getDriver());
-        
+
         driverServices.registerNewDriver(s57GlobalCatalogServices.getDriver());
         driverServices.registerNewDriver(filesServices.getDriver());
 
@@ -363,7 +376,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(configurationComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(clocksServices.getDriver());
-       // instrumentDriverManagerServices.registerNewDriver(displayServices.getDriver());
+        // instrumentDriverManagerServices.registerNewDriver(displayServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(displayBathymetryServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
@@ -404,11 +417,11 @@ public class AppMain extends Application {
         /* Instanciation d'un client */
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
         nmeaClientServices.request(500); // periode
-        
+
         /* Test connexion GPS / AIS */
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
-       //   dataServerServices.openSerialPort("/dev/ttyUSB0", 4800, 8, 1, 0);
+        //   dataServerServices.openSerialPort("/dev/ttyUSB0", 4800, 8, 1, 0);
         //dataServerServices.openSerialPort("/dev/ttyACM1", 38400, 8, 1, 0);
         /* Test connexion Gpsd */
  /*
@@ -428,19 +441,16 @@ public class AppMain extends Application {
 
         /* Test serveur Web Http */
         // dataServerServices.openHttpServer("localhost", 8181);
-        
-        
-
         /* Test clients à l'écoute des événements Nmea */
-       // aisServices.on();
+        // aisServices.on();
         //  aisLoggerServices.on();
-       // aisPlotterServices.on();
+        // aisPlotterServices.on();
         //aisRadarServices.on();
         //gpsLoggerServices.on("data/nmea/test2.txt");
         //gpsPlotterServices.on();
 
         /* Test Bezier, approximation trajectoire */
-        /*List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
+ /*List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
          bezier2DServices.toKML("path.kml", data);
 
          List<Pair<Double, Double>> bezSi = bezier2DServices.leastSquare(data, 8);
@@ -490,7 +500,7 @@ public class AppMain extends Application {
         
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
-       //  speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
+        //  speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
         // speakerServices.read("naVisu est un logiciel de visualisation et de simulation de données maritimes.");//OK
         /* Test  ontology  DataAccess */
         //dataAccessServices.test();//OK
@@ -506,8 +516,6 @@ public class AppMain extends Application {
          Logger.getLogger(AppMain.class.getName()).log(Level.SEVERE, null, ex);
          }
          */
-       
-        
         // Load from a xml file
         /*
          Exif exif1 = new Exif();
@@ -519,8 +527,7 @@ public class AppMain extends Application {
          System.out.println(exif1);
          */
         // Test Navigation RA Communication with external client 
-       // navigationServerServices.init(8787);
-
+        // navigationServerServices.init(8787);
         // Start Leap Motion 
         // leapMotionComponentServices.on();
         // Test Gazeteer services

@@ -214,13 +214,14 @@ public class DarkSkyController
 
         /* Request forecast */
         requestButton.setOnAction(a -> {
-            DarkSkyViewController darkSkyViewController = new DarkSkyViewController();
-
             town = townTF.getText().trim();
             country = countryMB.getText().trim();
             unit = unitMB.getText().trim();
             language = languageMB.getText().trim();
             countryCode = Abbreviations.CODE.get(country);
+
+            DarkSkyViewController darkSkyViewController
+                    = new DarkSkyViewController(town, country, unit);
 
             try (OutputStream output = new FileOutputStream(darkSkyComponentController.getCACHE_FILE_NAME())) {
                 properties.setProperty("town", town);
