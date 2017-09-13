@@ -130,6 +130,9 @@ public class DarkSkyViewController
     NumberAxis dyAxis;
     @FXML
     StackPane iconId;
+    private String town;
+    private String country;
+    private String unit;
 
     String FXML = "weatherViewPanel.fxml";
     private ForecastIO fio;
@@ -137,12 +140,15 @@ public class DarkSkyViewController
     public String iconadress = "";
     public String forecasticon = "";
 
-    /*
-    String FXML = "weatherViewPanel.fxml";
-    private ForecastIO fio;
-    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
-     */
     public DarkSkyViewController() {
+        setMouseTransparent(false);
+        load();
+    }
+
+    public DarkSkyViewController(String town, String country, String unit) {
+        this.town = town;
+        this.country = country;
+        this.unit = unit;
         setMouseTransparent(false);
         load();
     }
@@ -221,7 +227,7 @@ public class DarkSkyViewController
         this.fio = fio;
 
         FIOCurrently currently = new FIOCurrently(fio);
-        if ( currently.get() != null) {
+        if (currently.get() != null) {
             this.windSpeedData.setText(currently.get().windSpeed() != null ? Double.toString(currently.get().windSpeed() * 2) : "NC");
             this.windBearingData.setText(currently.get().windBearing() != null ? Double.toString(currently.get().windBearing()) : "NC");
             this.visibilityData.setText(currently.get().visibility() != null ? Double.toString(currently.get().visibility()) : "NC");
@@ -245,7 +251,7 @@ public class DarkSkyViewController
             iconadress = "meteoicons/" + forecasticon + ".svg";
             SVGContent content = SVGLoader.load(getClass().getResource(iconadress).toString());
             iconId.getChildren().add(content);
-        }else{
+        } else {
             System.out.println("Données non transmises");
         }
     }
