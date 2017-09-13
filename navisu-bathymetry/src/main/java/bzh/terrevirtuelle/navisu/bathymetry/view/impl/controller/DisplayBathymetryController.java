@@ -10,10 +10,11 @@ import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.bathymetry.view.impl.DisplayBathymetryImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
-import bzh.terrevirtuelle.navisu.geometry.delaunay.Delaunay;
-import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Point_dt;
-import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Triangle_dt;
-import bzh.terrevirtuelle.navisu.geometry.utils.NaVisuToJTS;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Point_dt;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
+import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
+import bzh.terrevirtuelle.navisu.geometry.jts.impl.JTSImpl;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -42,6 +43,8 @@ public class DisplayBathymetryController {
     protected BathymetryDBServices bathymetryDBServices;
     protected GuiAgentServices guiAgentServices;
     protected DisplayServices displayServices;
+    protected DelaunayServices delaunayServices;
+    protected JTSServices jtsServices;
     protected WorldWindow wwd;
     protected RenderableLayer layer;
     protected DisplayBathymetryImpl component;
@@ -71,11 +74,15 @@ public class DisplayBathymetryController {
             BathymetryDBServices bathymetryDBServices,
             GuiAgentServices guiAgentServices,
             DisplayServices displayServices,
+            DelaunayServices delaunayServices,
+            JTSServices jtsServices,
             String limit, RenderableLayer layer) {
         this.component = component;
         this.bathymetryDBServices = bathymetryDBServices;
         this.guiAgentServices = guiAgentServices;
         this.displayServices = displayServices;
+        this.delaunayServices = delaunayServices;
+        this.jtsServices = jtsServices;
         this.LIMIT = limit;
         this.layer = layer;
         wwd = GeoWorldWindViewImpl.getWW();
@@ -84,10 +91,14 @@ public class DisplayBathymetryController {
     public static DisplayBathymetryController getInstance(DisplayBathymetryImpl component,
             BathymetryDBServices bathymetryDBServices, GuiAgentServices guiAgentServices,
             DisplayServices displayServices,
+            DelaunayServices delaunayServices,
+            JTSServices jtsServices,
             String limit, RenderableLayer layer) {
         if (INSTANCE == null) {
             INSTANCE = new DisplayBathymetryController(component,
-                    bathymetryDBServices, guiAgentServices, displayServices,
+                    bathymetryDBServices, guiAgentServices,
+                    displayServices, delaunayServices,
+                    jtsServices,
                     limit, layer);
         }
         return INSTANCE;
@@ -123,9 +134,9 @@ public class DisplayBathymetryController {
 
                     //Create Delaunay triangulation with bathymetry data
                     //  List<Triangle_dt> triangles = createDelaunay(points3d, maxElevation);
-                    List<Triangle_dt> triangles = Delaunay.createDelaunay(points3d, maxElevation);
+                    List<Triangle_dt> triangles = delaunayServices.createDelaunay(points3d, maxElevation);
                     //Suppress large edges
-                    List<Triangle_dt> triangles1 = displayServices.filterLargeEdges(triangles, THRESHOLD);
+                    List<Triangle_dt> triangles1 = delaunayServices.filterLargeEdges(triangles, THRESHOLD);
                     displayServices.displayDelaunay(triangles1, maxElevation, 10.0, Material.GREEN, layer);
 
                     //Create concaveHull from points with bathy information
@@ -133,11 +144,11 @@ public class DisplayBathymetryController {
                     displayServices.displayConcaveHull(concaveHull, maxElevation, 10.0, Material.RED, layer);
 
                     //Create a grid of points for triangulate sea level plane 
-                    Point3D[][] seaPlane = Delaunay.toGrid(MIN_LAT, MIN_LON, 100.0, 100.0, NB_LAT, NB_LON, maxElevation);
+                    Point3D[][] seaPlane = delaunayServices.toGrid(MIN_LAT, MIN_LON, 100.0, 100.0, NB_LAT, NB_LON, maxElevation);
                     //Modifie the fid whith bathyletry data
                     seaPlane = mergeData(seaPlane, NB_LAT, NB_LON, triangles1);
                     // List<Triangle_dt> triangles2 = createDelaunay(seaPlane, NB_LAT, NB_LON,0.0);
-                    List<Triangle_dt> triangles2 = Delaunay.createDelaunay(seaPlane, NB_LAT, NB_LON, 0.0);
+                    List<Triangle_dt> triangles2 = delaunayServices.createDelaunay(seaPlane, NB_LAT, NB_LON, 0.0);
 
                     //   displayServices.displayDelaunay(triangles2, maxElevation , 10.0, Material.YELLOW, layer);
                     wwd.redrawNow();
@@ -191,7 +202,7 @@ public class DisplayBathymetryController {
     }
 
     public Geometry createConcaveHull(List<Point3D> points3d, double threshold) {
-        return NaVisuToJTS.getConcaveHull(points3d, threshold);
+        return jtsServices.getConcaveHull(points3d, threshold);
     }
 
     public void displaySounding(double lat, double lon, double depth, RenderableLayer l) {

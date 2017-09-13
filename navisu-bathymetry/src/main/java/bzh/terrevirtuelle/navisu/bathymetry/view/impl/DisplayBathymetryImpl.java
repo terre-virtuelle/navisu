@@ -17,14 +17,13 @@ import bzh.terrevirtuelle.navisu.bathymetry.view.impl.controller.DisplayBathymet
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
-import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Delaunay_Triangulation;
-import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Triangle_dt;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
+import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentState;
@@ -56,6 +55,10 @@ public class DisplayBathymetryImpl
     BathymetryDBServices bathymetryDBServices;
     @UsedService
     DisplayServices displayServices;
+    @UsedService
+    DelaunayServices delaunayServices;
+    @UsedService
+    JTSServices jtsServices;
 
     protected static final String GROUP = "Bathymetry data";
     protected RenderableLayer layer;
@@ -72,7 +75,8 @@ public class DisplayBathymetryImpl
     public void componentInitiated() {
         layer = layersManagerServices.getLayer(GROUP, LAYER_NAME);
         controller = DisplayBathymetryController.getInstance(this,
-                bathymetryDBServices, guiAgentServices, displayServices,
+                bathymetryDBServices, guiAgentServices, 
+                displayServices,delaunayServices,jtsServices,
                 LIMIT, layer);
     }
 

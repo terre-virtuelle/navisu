@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.visualization.view.impl;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
-import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Triangle_dt;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.visualization.view.Display;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.controller.DisplayController;
@@ -156,13 +156,5 @@ public class DisplayImpl
         p.setAttributes(attrs0);
         return p;
     }
-@Override
-    public List<Triangle_dt> filterLargeEdges(List<Triangle_dt> triangles, double threshold) {
-        List<Triangle_dt> tmp1 = new ArrayList<>();
-        triangles.stream().filter((t) -> (t.getBoundingBox().getWidth() < threshold)).forEach((t) -> {
-            tmp1.add(t);
 
-        });
-        return tmp1;
-    }
 }
