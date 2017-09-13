@@ -143,9 +143,6 @@ public class BathymetryDBController {
             String driverName, String userName, String passwd) {
         System.out.println(dbName + " " + hostName + " " + protocol + " " + port + " " + driverName + " " + userName + " " + passwd);
         this.connection = databaseServices.connect(dbName, hostName, protocol, port, driverName, userName, passwd);
-        // stage = guiAgentServices.getStage();
-        // stage.setOpacity(.75);
-        // testDisplay();
         return connection;
     }
 
