@@ -32,6 +32,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -52,6 +53,8 @@ public class DarkSkyViewController
     public Pane quit;
     @FXML
     Label title;
+    @FXML
+    Label resultsTitle;
     @FXML
     Label windSpeedLabel;
     @FXML
@@ -192,6 +195,7 @@ public class DarkSkyViewController
         cloudCoverLabel.setText(tr("wheater.darsky.cloudCover"));
         summaryLabel.setText(tr("wheater.darsky.summary"));
         timeLabel.setText(tr("wheater.darsky.time"));
+        resultsTitle.setText("Results request forecast for " + town);
         quit.setOnMouseClicked((MouseEvent event) -> {
             setVisible(false);
         });
