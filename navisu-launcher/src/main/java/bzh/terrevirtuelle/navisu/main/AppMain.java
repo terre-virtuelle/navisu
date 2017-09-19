@@ -144,13 +144,13 @@ import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.bathy.BathyStlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.bathy.impl.BathyStlComponentImpl;
-import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.S57StlComponentServices;
-import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.S57StlComponentImpl;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.DisplayImpl;
 import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
 import gov.nasa.worldwind.WorldWindow;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.StlComponentServices;
 
 
 /**
@@ -246,7 +246,7 @@ public class AppMain extends Application {
                         SpeakerImpl.class,
                         S57ChartComponentImpl.class,
                         S57GlobalCatalogImpl.class,
-                        S57StlComponentImpl.class,
+                        StlComponentImpl.class,
                         TestDBImpl.class,
                         TransponderImpl.class,
                         WeatherComponentImpl.class,
@@ -333,7 +333,7 @@ public class AppMain extends Application {
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
         S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
         S57ChartComponentServices chartS57ComponentServices = componentManager.getComponentService(S57ChartComponentServices.class);
-        S57StlComponentServices s57StlComponentServices = componentManager.getComponentService(S57StlComponentServices.class);
+        StlComponentServices s57StlComponentServices = componentManager.getComponentService(StlComponentServices.class);
 
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
         TransponderServices transponderServices = componentManager.getComponentService(TransponderServices.class);

@@ -13,6 +13,8 @@ import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Point_dt;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
@@ -67,19 +69,16 @@ public class BathymetryDBController {
     int i = 0;
     Stage stage;
     double MIN_DEPTH = 0.0;
-
+    double distA;
+    double distB;
+    double distC;
+    double distMin;
+    Point_dt pMin;
     double MIN_LAT = 48.25;
     double MIN_LON = -4.55;
     double MAX_LAT = 48.45;
     double MAX_LON = -4.245;
 
-    /*
-    //Ouessant
-    double MIN_LAT = 48.4;
-    double MIN_LON = -5.20;
-    double MAX_LAT = 48.50;
-    double MAX_LON = -5;
-     */
     double maxElevation = -20.0;
     final double THRESHOLD = 0.0015;
     double tmp;
@@ -181,8 +180,8 @@ public class BathymetryDBController {
                     // .map(line -> line.split("\t"))
                     .map(line -> line.split(" "))
                     .map(tab -> new Point3Df(Float.parseFloat(tab[0]),
-                            Float.parseFloat(tab[1]),
-                            Float.parseFloat(tab[2])))
+                    Float.parseFloat(tab[1]),
+                    Float.parseFloat(tab[2])))
                     .collect(Collectors.toList());
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
@@ -298,6 +297,51 @@ public class BathymetryDBController {
         }
         bathymetryEventProducerServices.setBathymetry(new Bathymetry(points3d));
         return points3d;
+    }
+
+    /**
+     * @param orgData a simple grid of point3D, with z =0.0
+     * @param nbLat nb of lines
+     * @param nbLon nb of columns
+     * @param triangles Delaunay tiangulation with elevation value
+     * @return the initial grid whith elevation value
+     *
+     */
+    public Point3D[][] mergeData(Point3D[][] orgData,
+            int nbLat, int nbLon,
+            List<Triangle_dt> triangles) {
+        Point3D[][] tmp = new Point3D[nbLat][nbLon];
+        for (int k = 0; k < nbLat; k++) {
+            System.arraycopy(orgData[k], 0, tmp[k], 0, nbLon);
+        }
+        for (int k = 0; k < nbLat - 1; k++) {
+            for (int l = 0; l < nbLon - 1; l++) {
+                //Select one point
+                Point3D p = tmp[k][l];
+                Point_dt pp = new Point_dt(p.getLat(), p.getLon(), p.getElevation());
+                for (Triangle_dt tt : triangles) {
+                    // Research  the nearest point of this triangle
+                    if (tt.contains(pp)) {
+                        distA = tt.A.distance(pp);
+                        distB = tt.B.distance(pp);
+                        distC = tt.C.distance(pp);
+                        distMin = distA;
+                        pMin = tt.A;
+                        if (distMin > distB) {
+                            distMin = distB;
+                            pMin = tt.B;
+                        }
+                        if (distMin > distC) {
+                            distMin = distC;
+                            pMin = tt.C;
+                        }
+                        tmp[k][l].setElevation(pMin.z);
+                    }
+                }
+            }
+
+        }
+        return tmp;
     }
 
     public Connection getConnection() {

@@ -30,6 +30,7 @@ import gov.nasa.worldwindx.examples.util.SectorSelector;
 import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,14 +49,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 
 /**
  *
@@ -65,7 +63,7 @@ import javafx.scene.layout.Pane;
 /*
 Le controller est un widget
  */
-public class S57StlComponentController
+public class StlComponentController
         extends Widget2DController
         implements Initializable {
 
@@ -74,7 +72,7 @@ public class S57StlComponentController
     protected LayersManagerServices layersManagerServices;
     protected GuiAgentServices guiAgentServices;
 
-    protected S57StlChartComponentController s57StlChartComponentController;
+    protected StlChartComponentController s57StlChartComponentController;
 
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
@@ -82,7 +80,8 @@ public class S57StlComponentController
     protected String OUT_DIR = "privateData/x3d/";
     // Pour le moment ce nomm est fixe, on ne fait qu'une dalle
     protected String outFile = "out";
-    protected String OUT_PATH;
+
+    protected Path outPathname;
 
     // Pour récupérer le .css
     protected final String FXML = "configurationStlController.fxml";
@@ -99,6 +98,8 @@ public class S57StlComponentController
     protected double DEFAULT_SIDE = 200.0;
     protected double tileSideX = DEFAULT_SIDE;
     protected double tileSideY = DEFAULT_SIDE;
+    protected double spaceX = DEFAULT_SIDE / 2;
+    protected double spaceY = DEFAULT_SIDE / 2;
     // Resolution du MNT
 
     protected int ptsCountX = 200;
@@ -113,11 +114,12 @@ public class S57StlComponentController
 
     protected double lonRange;
     protected double latRange;
+    protected double SPACE_X = 220;//TODO from gui
+    protected double SPACE_Y = 220;
     protected List<Position> squareEnvelopeList;
     protected List<? extends Position> envelopeList;
     protected Geometry geometryEnvelope;
     protected boolean firstShow = true;
-
     protected WKTReader wktReader;
     protected Geometry geometry;
     protected KMLSurfacePolygonImpl kmlPolygon;
@@ -128,18 +130,17 @@ public class S57StlComponentController
     protected RenderableLayer layer;
     protected WorldWindow wwd;
     protected double buoyageScale;
+    protected String title;
     @FXML
     public Group configGroup;
     @FXML
-    public Pane view;
-    @FXML
     public ImageView quit;
     @FXML
-    public ToggleButton interactiveTB;
+    public ChoiceBox<String> choiceCB;
     @FXML
-    public ToggleButton squareTilesTB;
+    public RadioButton miRB;
     @FXML
-    public GridPane squareTilesGP;
+    public RadioButton tilesRB;
     @FXML
     public RadioButton latLonAllRB;
     @FXML
@@ -155,11 +156,17 @@ public class S57StlComponentController
     @FXML
     public RadioButton southRB;
     @FXML
-    public Button computeButton;
+    public Button generationButton;
     @FXML
-    public ChoiceBox<Integer> tileCB;
+    public Button previewButton;
+    @FXML
+    public ChoiceBox<Integer> countTilesCB;
     @FXML
     public TextField nameTF;
+    @FXML
+    public TextField spaceXTF;
+    @FXML
+    public TextField spaceYTF;
     @FXML
     public TextField sideXTF;
     @FXML
@@ -168,6 +175,8 @@ public class S57StlComponentController
     public TextField buoyScaleTF;
     @FXML
     public CheckBox baseCB;
+    @FXML
+    public TextField titleTF;
 
     final ToggleGroup latLonGroup = new ToggleGroup();
     final ToggleGroup eastWestGroup = new ToggleGroup();
@@ -176,11 +185,11 @@ public class S57StlComponentController
     protected KeyCode keyCode;
     protected SectorSelector selector;
 
-    public S57StlComponentController(GuiAgentServices guiAgentServices,
+    public StlComponentController(GuiAgentServices guiAgentServices,
             LayerTreeServices layerTreeServices,
             LayersManagerServices layersManagerServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
-            S57StlChartComponentController s57StlChartComponentController,
+            StlChartComponentController s57StlChartComponentController,
             String GROUP,
             String NAME,
             WorldWindow wwd) {
@@ -193,7 +202,7 @@ public class S57StlComponentController
         this.NAME = NAME;
         this.wwd = wwd;
         layer = layersManagerServices.getLayer(GROUP, NAME);
-        
+
         this.selector = new SectorSelector(wwd);
         this.selector.setInteriorColor(new Color(1f, 1f, 1f, 0.1f));
         this.selector.setBorderColor(new Color(1f, 0f, 0f, 0.5f));
@@ -214,7 +223,7 @@ public class S57StlComponentController
             try {
                 fxmlLoader.load();
             } catch (IOException ex) {
-                Logger.getLogger(S57StlComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                Logger.getLogger(StlComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
             configGroup.getStylesheets().add(CSS_STYLE_PATH + VIEW_GROUP_STYLE);
             Platform.runLater(() -> {
@@ -231,8 +240,10 @@ public class S57StlComponentController
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        tileCB.setItems(FXCollections.observableArrayList(1, 4, 9, 16, 25));
-        tileCB.setValue(1);
+        countTilesCB.setItems(FXCollections.observableArrayList(1, 4, 9, 16, 25));
+        countTilesCB.setValue(1);
+        choiceCB.setItems(FXCollections.observableArrayList("MNT&Carto", "MNT", "Carto", "Bathy"));
+        choiceCB.setValue("MNT&Carto");
         /*
         tileCB.setOnAction((ActionEvent event) -> {
             tilesCount = tileCB.getValue();
@@ -240,6 +251,7 @@ public class S57StlComponentController
             displayTiles(squarePolygonEnvelope, line, column);
         });
          */
+
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
             guiAgentServices.getRoot().getChildren().remove(this);
@@ -252,19 +264,8 @@ public class S57StlComponentController
             outFile = outTab[0];
             nameTF.setText(outTab[0]);
         });
-        interactiveTB.setToggleGroup(interactiveSquareGroup);
-        squareTilesTB.setToggleGroup(interactiveSquareGroup);
-
-        interactiveTB.setOnMouseClicked((MouseEvent event) -> {
-          // squareTilesGP.setDisable(true);
-            selector.enable();
-        });
-        squareTilesTB.setOnMouseClicked((MouseEvent event) -> {
-            squareTilesGP.setDisable(false);
-            selector.disable();
-        });
-        squareTilesTB.setSelected(true);
-
+        miRB.setToggleGroup(interactiveSquareGroup);
+        tilesRB.setToggleGroup(interactiveSquareGroup);
         latLonAllRB.setToggleGroup(latLonGroup);
         latLonAllRB.setSelected(false);
         latRB.setToggleGroup(latLonGroup);
@@ -317,35 +318,60 @@ public class S57StlComponentController
             }
         });
 
-        sideXTF.setOnAction((ActionEvent event) -> {
-            if (squareTilesTB.isSelected()) {
-                try {
-                    tileSideX = Double.parseDouble(sideXTF.getText());
-                    sideXTF.setText(Double.toString(tileSideX));
-                    tileSideY = tileSideX;
-                    sideYTF.setText(Double.toString(tileSideY));
-                } catch (NumberFormatException e) {
-                    tileSideX = DEFAULT_SIDE;
-                    sideXTF.setText(Double.toString(tileSideX));
-                }
+        spaceXTF.setOnAction((ActionEvent event) -> {
+            /*
+            spaceX = tileSideX / (ptsCountsX - 1);
+        //  spaceY = tileSideY / (ptsCountsY - 1);
+             */
+            try {
+                spaceX = Double.parseDouble(spaceXTF.getText());
+                spaceXTF.setText(Double.toString(spaceX));
+
+            } catch (NumberFormatException e) {
+                spaceX = DEFAULT_SIDE / 2;
+                spaceXTF.setText(Double.toString(spaceX));
             }
+
+        });
+        spaceYTF.setOnAction((ActionEvent event) -> {
+
+            try {
+                spaceY = Double.parseDouble(spaceYTF.getText());
+                spaceYTF.setText(Double.toString(spaceY));
+
+            } catch (NumberFormatException e) {
+                spaceY = DEFAULT_SIDE / 2;
+                spaceYTF.setText(Double.toString(spaceY));
+            }
+
+        });
+        sideXTF.setOnAction((ActionEvent event) -> {
+
+            try {
+                tileSideX = Double.parseDouble(sideXTF.getText());
+                sideXTF.setText(Double.toString(tileSideX));
+
+            } catch (NumberFormatException e) {
+                tileSideX = DEFAULT_SIDE;
+                sideXTF.setText(Double.toString(tileSideX));
+            }
+
         });
         sideYTF.setOnAction((ActionEvent event) -> {
-            if (squareTilesTB.isSelected()) {
-                try {
-                    tileSideY = Double.parseDouble(sideYTF.getText());
-                    sideYTF.setText(Double.toString(tileSideY));
-                    tileSideX = tileSideY;
-                    sideXTF.setText(Double.toString(tileSideX));
-                } catch (NumberFormatException e) {
-                    tileSideY = DEFAULT_SIDE;
-                    sideYTF.setText(Double.toString(tileSideY));
-                }
-            }
-        });
 
-        computeButton.setOnMouseClicked((MouseEvent event) -> {
-            tilesCount = tileCB.getValue();
+            try {
+                tileSideY = Double.parseDouble(sideYTF.getText());
+                sideYTF.setText(Double.toString(tileSideY));
+
+            } catch (NumberFormatException e) {
+                tileSideY = DEFAULT_SIDE;
+                sideYTF.setText(Double.toString(tileSideY));
+            }
+
+        });
+        generationButton.setOnMouseClicked((MouseEvent event) -> {
+            title = titleTF.getText();
+            tilesCount = countTilesCB.getValue();
             line = column = (int) Math.sqrt(tilesCount);
             try {
                 buoyageScale = Double.valueOf(buoyScaleTF.getText());
@@ -354,27 +380,60 @@ public class S57StlComponentController
             }
             boolean base = baseCB.isSelected();
 
-            guiAgentServices.getJobsManager().newJob(OUT_PATH, (progressHandle) -> {
+            guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
                 List<Polygon> wwjTiles = displayTiles(squarePolygonEnvelope, line, column);
-                List<Geometry> JtsTiles;
-                // forEach dalle
+                //  List<Geometry> JtsTiles;
+                // forEach tile
                 for (int i = 0; i < tilesCount; i++) {
                     String outTile = nameTF.getText() + "_" + i + ".x3d";
+                    outPathname = Paths.get(OUT_DIR, outTile);
                     Geometry geom = initParameters(wwjTiles.get(i).getBoundaries());
-                    s57StlChartComponentController.compute(
-                            OUT_DIR,
+                    //if sur bathy ou mnt
+                    /*
+                    s57StlChartComponentController.compute(OUT_DIR,
                             outTile,
+                            wwd.getModel().getGlobe().getElevationModel(),
                             tilesCount,
                             i,
                             scaleLatFactor, scaleLonFactor,
                             buoyageScale,
                             magnification,
-                            tileSideX, tileSideY,
-                            ptsCountX, ptsCountY,
+                            spaceX, spaceY,
+                            (int) (tileSideX / spaceX) + 1, (int) (tileSideY / spaceY) + 1,
                             bottom,
                             base,
                             wwjTiles.get(i), // dalle en WWJ
                             geom);     // dalle en JTS
+                     */
+                    //switch
+                    /*
+                    Path outPathname, String title,
+            int tilesCount, int index,
+            List<? extends Position> positions,
+            double tileSideX, double tileSideY,
+            double spaceX, double spaceY,
+            double bottom,
+            double magnification
+                     */
+                    new StlPreWriterController(outPathname, title,
+                            tilesCount, i,
+                            positions,
+                            tileSideX, tileSideY,
+                            spaceX, spaceY,
+                            bottom, magnification
+                    ).compute();
+
+                    new ElevationStlController(outPathname, title,
+                            tilesCount, i,
+                            positions,
+                            tileSideX, tileSideY,
+                            spaceX, spaceY,
+                            bottom, magnification,
+                            wwd.getModel().getGlobe().getElevationModel()
+                    ).compute();
+                    
+                    new StlPostWriterController(outPathname).compute();
+                    
                     instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
                     wwjTiles.get(i).setAttributes(makeHighlightAttributes());
                     wwd.redrawNow();
@@ -390,7 +449,7 @@ public class S57StlComponentController
         try {
             geom = wkt.read(result);
         } catch (ParseException ex) {
-            Logger.getLogger(S57StlComponentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StlComponentController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (geom != null) {
@@ -559,8 +618,8 @@ public class S57StlComponentController
                 new Position(Angle.fromDegrees(positions.get(1).getLatitude().getDegrees()),
                         Angle.fromDegrees(positions.get(1).getLongitude().getDegrees()), 100));
 
-        scaleLatFactor = (tileSideY) / latRangeMetric;
-        scaleLonFactor = (tileSideX) / lonRangeMetric;
+        scaleLatFactor = (spaceY) / latRangeMetric;
+        scaleLonFactor = (spaceX) / lonRangeMetric;
         String wkt = WwjJTS.toPolygonWkt(positions);
         WKTReader wktReader0 = new WKTReader();
 
@@ -577,7 +636,7 @@ public class S57StlComponentController
                  */
 
             } catch (com.vividsolutions.jts.io.ParseException ex) {
-                Logger.getLogger(S57StlComponentController.class
+                Logger.getLogger(StlComponentController.class
                         .getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }

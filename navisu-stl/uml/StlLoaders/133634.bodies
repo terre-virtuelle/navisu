@@ -1,54 +1,14 @@
-/*
- * Copyright (C) 2012 United States Government as represented by the Administrator of the
- * National Aeronautics and Space Administration.
- * All Rights Reserved.
- */
-package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
-
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.LatLon;
-import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.geom.Sector;
-import gov.nasa.worldwind.layers.LayerList;
-import gov.nasa.worldwind.layers.TiledImageLayer;
-import gov.nasa.worldwind.render.DrawContext;
-import gov.nasa.worldwind.render.Polygon;
-import java.awt.Graphics;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-
-public class TextureLoader {
-
-    protected Polygon polygon;
-    protected String outDir;
-    protected int index;
-    protected Sector selectedSector = null;
-    protected WorldWindow wwd;
-    Path outPathname;
-
-    public TextureLoader(Path outPathname, List<? extends Position> positions) {
-
-        this.outPathname = outPathname;
-        System.out.println("outPathname.getRoot() : "+outPathname.getRoot());
-        // List<? extends Position> positions = polygon.getBoundaries().get(0);
+class TextureLoader
+!!!144258.java!!!	TextureLoader(in outFilename : String, in index : int, inout polygon : Polygon)
+        this.polygon = polygon;
+        this.index = index;
+        this.outDir = outFilename;
+        List<? extends Position> positions = polygon.getBoundaries().get(0);
         selectedSector = new Sector(positions.get(0).getLatitude(), positions.get(3).getLatitude(),
                 positions.get(0).getLongitude(), positions.get(1).getLongitude());
         wwd = GeoWorldWindViewImpl.getWW();
 
-    }
-
-    public final void doSaveImage() {
+!!!144386.java!!!	doSaveImage() : void
         TiledImageLayer currentLayer = null;
 
         LayerList list = wwd.getModel().getLayers();
@@ -76,10 +36,7 @@ public class TextureLoader {
         } catch (Exception ex) {
             Logger.getLogger(TextureLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-    }
-
-    private BufferedImage captureImage(TiledImageLayer layer, Sector sector, int minSize)
-            throws Exception {
+!!!144514.java!!!	captureImage(inout layer : TiledImageLayer, inout sector : Sector, in minSize : int) : BufferedImage
         int[] size = this.adjustSize(sector, minSize);
         int width = size[0], height = size[1];
 
@@ -90,9 +47,7 @@ public class TextureLoader {
             mimeType = "image/jpg";
         }
         return layer.composeImageForSector(this.selectedSector, width, height, 1d, -1, mimeType, true, null, 30000);
-    }
-
-    private int[] adjustSize(Sector sector, int desiredSize) {
+!!!144642.java!!!	adjustSize(inout sector : Sector, in desiredSize : int) : int
         int[] size = new int[]{desiredSize, desiredSize};
 
         if (null != sector && desiredSize > 0) {
@@ -116,9 +71,7 @@ public class TextureLoader {
             }
         }
         return size;
-    }
-
-    private BufferedImage flip(BufferedImage in) {
+!!!144770.java!!!	flip(inout in : BufferedImage) : BufferedImage
         BufferedImage out = new BufferedImage(in.getWidth(null),
                 in.getHeight(null), BufferedImage.TYPE_INT_RGB);
         Graphics gb = out.getGraphics();
@@ -130,18 +83,10 @@ public class TextureLoader {
                 AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
         out = op.filter(out, null);
         return out;
-    }
-// privateData/x3d/out_0.x3d/image_0.jpg (Not a directory)
-
-    private void writeImageToFile(Sector sector, BufferedImage image, String outDir) {
-        outDir = outPathname.toString();
-        //   File myNewJPegFile = new File(outDir + "/image_" + index + ".jpg");
-        File myNewJPegFile = new File("privateData/x3d" + "/image_" + index + ".jpg");
+!!!144898.java!!!	writeImageToFile(inout sector : Sector, inout image : BufferedImage, in outDir : String) : void
+        File myNewJPegFile = new File(outDir + "/image_" + index + ".jpg");
         try {
             ImageIO.write(image, "jpg", myNewJPegFile);
         } catch (IOException ex) {
             Logger.getLogger(TextureLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-}

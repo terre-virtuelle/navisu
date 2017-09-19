@@ -1,0 +1,18 @@
+class BathyStlComponentImpl
+!!!128130.java!!!	getDriver() : InstrumentDriver
+        return this;
+!!!128258.java!!!	componentInitiated() : void
+        layer = layersManagerServices.getLayer(GROUP, LAYER_NAME);
+        bathyStlComponentController = BathyStlComponentController.getInstance(this,
+                databaseServices, guiAgentServices,
+                LIMIT, layer);
+!!!128642.java!!!	canOpen(in category : String) : boolean
+        boolean canOpen = false;
+        if (!category.equals(NAME)) {
+        } else {
+            canOpen = true;
+        }
+        return canOpen;
+!!!128770.java!!!	on(inout  : String...files) : void
+        String[] tab = files;
+

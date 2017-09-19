@@ -1,59 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
+class ElevationLoader
+!!!140802.java!!!	ElevationLoader(inout model : ElevationModel, inout polygon : Polygon, in index : int, in tileSideX : double, in tileSideY : double, in ptsCountsX : int, in ptsCountsY : int, in bottom : double, in magnification : double, in scaleLatFactor : double, in scaleLonFactor : double)
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
-import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.globes.ElevationModel;
-import gov.nasa.worldwind.render.Polygon;
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- *
- * @author serge
- * @date Mar 4, 2017
- */
-public class ElevationLoader {
-
-    protected Polygon polygon;
-    // protected WorldWindow wwd;
-    protected ElevationModel model;
-    protected String elevationsStr = "";
-    protected String bottomStr = "";
-    protected double tileSideX;
-    protected double tileSideY;
-    protected int ptsCountsX;
-    protected int ptsCountsY;
-    protected String BOTTOM_STR;
-    protected double bottom;
-    protected double magnification;
-    protected List<Point3D> bottomPositions;
-    protected List<Point3D> topPositions;
-    protected double spaceX;
-    protected double spaceY;
-    protected double spaceLat;
-    protected double spaceLon;
-    List<? extends Position> positions;
-    //  protected double scaleLatFactor;
-    //  protected double scaleLonFactor;
-    protected int index;
-    protected String TEXTURE = "common/metal.jpg";
-
-    public ElevationLoader(
-            ElevationModel model,
-            List<? extends Position> positions,
-            int index,
-            double tileSideX, double tileSideY,
-            double spaceX, double spaceY,
-            double bottom,
-            double magnification) {
         this.model = model;
-        this.positions=positions;
+        this.polygon = polygon;
+        this.index = index;
+        this.tileSideX = tileSideX;
+        this.tileSideY = tileSideY;
+     //   this.ptsCountsX = ptsCountsX;
+      //  this.ptsCountsY = ptsCountsY;
+        this.bottom = bottom;
+        this.magnification = magnification;
+        this.scaleLatFactor = scaleLatFactor;
+        this.scaleLonFactor = scaleLonFactor;
+
+        // BOTTOM_STR = Double.toString(bottom);
+        // bottomPositions = new ArrayList<>();
+        // topPositions = new ArrayList<>();
+        //  spaceX = tileSideX / (ptsCountsX - 1);
+        //  spaceY = tileSideY / (ptsCountsY - 1);
+!!!141058.java!!!	ElevationLoader(inout pts : Point3D, inout polygon : Polygon, in index : int, in tileSideX : double, in tileSideY : double, in spaceX : double, in spaceY : double, in bottom : double, in magnification : double, in scaleLatFactor : double, in scaleLonFactor : double)
+        this.polygon = polygon;
         this.index = index;
         this.tileSideX = tileSideX;
         this.tileSideY = tileSideY;
@@ -61,40 +27,20 @@ public class ElevationLoader {
         this.spaceY=spaceY;
         this.bottom = bottom;
         this.magnification = magnification;
-        // this.scaleLatFactor = scaleLatFactor;
-        //this.scaleLonFactor = scaleLonFactor;
-
-        // BOTTOM_STR = Double.toString(bottom);
-        // bottomPositions = new ArrayList<>();
-        // topPositions = new ArrayList<>();
-        //  spaceX = tileSideX / (ptsCountsX - 1);
-        //  spaceY = tileSideY / (ptsCountsY - 1);
-    }
-
-   
-    public String computeDEM(){
-        /*
-    }
-            ElevationModel model,
-            Polygon polygon,
-            int index,
-            double tileSideX, double tileSideY,
-            double spaceX, double spaceY,
-            double bottom,
-            double magnification) {
-*/
+        this.scaleLatFactor = scaleLatFactor;
+        this.scaleLonFactor = scaleLonFactor;
         BOTTOM_STR = Double.toString(bottom);
         bottomPositions = new ArrayList<>();
         topPositions = new ArrayList<>();
-        //  spaceX = tileSideX / (ptsCountsX - 1);
-        //  spaceY = tileSideY / (ptsCountsY - 1);
-
-        ptsCountsX = ((int) (tileSideX / spaceX) + 1)*100;
-        ptsCountsY = ((int) (tileSideY / spaceY) + 1)*100;
-        System.out.println("ptsCountsX : " + ptsCountsX);
-        System.out.println("ptsCountsY : " + ptsCountsY);
+        
+!!!141186.java!!!	computeDEM(inout model : ElevationModel, inout polygon : Polygon, in index : int, in tileSideX : double, in tileSideY : double, in ptsCountsX : int, in ptsCountsY : int, in bottom : double, in magnification : double, in scaleLatFactor : double, in scaleLonFactor : double) : String
+        BOTTOM_STR = Double.toString(bottom);
+        bottomPositions = new ArrayList<>();
+        topPositions = new ArrayList<>();
+      //  spaceX = tileSideX / (ptsCountsX - 1);
+      //  spaceY = tileSideY / (ptsCountsY - 1);
         String result = "";
-       // List<? extends Position> positions = polygon.getBoundaries().get(0);
+        List<? extends Position> positions = polygon.getBoundaries().get(0);
 
         double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / (ptsCountsY - 1);
         double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / (ptsCountsX - 1);
@@ -199,31 +145,20 @@ public class ElevationLoader {
                 bottomPositions, topPositions, TEXTURE, "West face");
 
         return result;
-    }
-
-    public String computeDEM(Point3D[][] pts,
-            Polygon polygon,
-            int index,
-            double tileSideX, double tileSideY,
-            double spaceX, double spaceY,
-            double bottom,
-            double maxElevation,
-            double magnification,
-            double scaleLatFactor,
-            double scaleLonFactor) {
+!!!141314.java!!!	computeDEM(inout pts : Point3D, inout polygon : Polygon, in index : int, in tileSideX : double, in tileSideY : double, in spaceX : double, in spaceY : double, in bottom : double, in maxElevation : double, in magnification : double, in scaleLatFactor : double, in scaleLonFactor : double) : String
         BOTTOM_STR = Double.toString(bottom);
         bottomPositions = new ArrayList<>();
         topPositions = new ArrayList<>();
         spaceX = tileSideX / (ptsCountsX - 1);
         spaceY = tileSideY / (ptsCountsY - 1);
         String result = "";
-        double elevationMax = 0.0;
+        double elevationMax=0.0;
         //for(int i = 0; i < pts{
-        //     if(elevationMax<p.getElevation()){
-        ///         elevationMax=p.getElevation();
-        //     }
-        // }
-     //   List<? extends Position> positions = polygon.getBoundaries().get(0);
+       //     if(elevationMax<p.getElevation()){
+       ///         elevationMax=p.getElevation();
+       //     }
+       // }
+        List<? extends Position> positions = polygon.getBoundaries().get(0);
 
         double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / (ptsCountsY - 1);
         double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / (ptsCountsX - 1);
@@ -235,9 +170,9 @@ public class ElevationLoader {
         for (int i = 0; i < ptsCountsY; i++) {
             latitude = positions.get(3).getLatitude().getDegrees();
             for (int j = 0; j < ptsCountsX; j++) {
-                //  double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
-                double el = pts[i][j].getElevation();
-                if (el < 0) {
+              //  double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
+               double el = pts[i][j].getElevation();
+              if (el < 0) {
                     el = 0;
                 }
                 el /= magnification;
@@ -329,11 +264,7 @@ public class ElevationLoader {
                 bottomPositions, topPositions, TEXTURE, "West face");
 
         return result;
-    }
-
-    public String createDEM(String height, int xDimension, double xSpacing,
-            int zDimension, double zSpacing,
-            String texture, String comment) {
+!!!141442.java!!!	createDEM(in height : String, in xDimension : int, in xSpacing : double, in zDimension : int, in zSpacing : double, in texture : String, in comment : String) : String
         String txt = " <!--" + comment + "-->\n"
                 + "<Transform rotation='0 1 0 1.57058' translation='0.0 -0.1 0.0'>\n"
                 + "<Shape>\n"
@@ -351,10 +282,7 @@ public class ElevationLoader {
                 + "</Shape> \n"
                 + "</Transform> \n";
         return txt;
-    }
-
-    public String createBoundaryFace(String transform, List<Point3D> bottom,
-            List<Point3D> height, String texture, String comment) {
+!!!141570.java!!!	createBoundaryFace(in transform : String, inout bottom : List<Point3D>, inout height : List<Point3D>, in texture : String, in comment : String) : String
         String txt = " <!--" + comment + "-->\n"
                 + transform + "\n"
                 + "<Shape>\n"
@@ -405,6 +333,3 @@ public class ElevationLoader {
             txt += "</Transform> \n";
         }
         return txt;
-    }
-
-}

@@ -23,14 +23,12 @@ public interface DisplayBathymetryServices
 
     InstrumentDriver getDriver();
 
-    Point3D[][] mergeData(Point3D[][] orgData, int nbLat, int nbLon, List<Triangle_dt> triangles);
-
-    Geometry createConcaveHull(List<Point3D> points3d, double threshold);
+  //  Geometry createConcaveHull(List<Point3D> points3d, double threshold);
 
     void displaySounding(double lat, double lon, double depth, RenderableLayer l);
 
     void displaySounding(List<Point3D> points, RenderableLayer l);
 
     public void displayAllSounding();
-    
+
 }

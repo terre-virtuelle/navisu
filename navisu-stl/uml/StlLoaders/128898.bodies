@@ -1,0 +1,15 @@
+class BathyStlComponentController
+!!!128898.java!!!	BathyStlComponentController(inout component : BathyStlComponentImpl, inout databaseServices : DatabaseServices, inout guiAgentServices : GuiAgentServices, in limit : String, inout layer : RenderableLayer)
+        this.component = component;
+        this.databaseServices = databaseServices;
+        this.guiAgentServices = guiAgentServices;
+        this.LIMIT = limit;
+        this.layer = layer;
+        wwd = GeoWorldWindViewImpl.getWW();
+!!!129026.java!!!	getInstance(inout component : BathyStlComponentImpl, inout databaseServices : DatabaseServices, inout guiAgentServices : GuiAgentServices, in limit : String, inout layer : RenderableLayer) : BathyStlComponentController
+        if (INSTANCE == null) {
+            INSTANCE = new BathyStlComponentController(component,
+                    databaseServices, guiAgentServices,
+                    limit, layer);
+        }
+        return INSTANCE;

@@ -18,10 +18,8 @@ import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.S57StlComponent;
-import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.S57StlComponentServices;
-import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.S57StlChartComponentController;
-import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.S57StlComponentController;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.StlChartComponentController;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.StlComponentController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.ogc.kml.impl.KMLSurfacePolygonImpl;
@@ -38,14 +36,16 @@ import java.util.logging.Logger;
 import javafx.scene.control.CheckBoxTreeItem;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.StlComponentServices;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.StlComponent;
 
 /**
  *
  * @author serge
  * @date Feb 25, 2017
  */
-public class S57StlComponentImpl
-        implements S57StlComponent, S57StlComponentServices,
+public class StlComponentImpl
+        implements StlComponent, StlComponentServices,
         InstrumentDriver, ComponentState {
 
     @UsedService
@@ -73,14 +73,14 @@ public class S57StlComponentImpl
     protected List<GeoLayer<Layer>> geoLayerList;
     protected List<String> groupNames = new ArrayList<>();
 
-    protected S57StlComponentController s57StlComponentController;
-    protected S57StlChartComponentController s57StlChartComponentController;
+    protected StlComponentController s57StlComponentController;
+    protected StlChartComponentController s57StlChartComponentController;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
     static private int i = 0;
     private boolean first = true;
 
-    protected static final Logger LOGGER = Logger.getLogger(S57StlComponentImpl.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(StlComponentImpl.class.getName());
 
     /* 
     Après appui sur F1 est clic droit sur une carte du catalogue 
@@ -212,8 +212,8 @@ public class S57StlComponentImpl
     @Override
     public void componentInitiated() {
 
-        s57StlChartComponentController = new S57StlChartComponentController();
-        s57StlComponentController = new S57StlComponentController(
+        s57StlChartComponentController = new StlChartComponentController();
+        s57StlComponentController = new StlComponentController(
                 guiAgentServices, // pour afficher le widget
                 layerTreeServices, // pour indiquer dans l'arbre à gauche ou est la couche
                 layersManagerServices, // pour afficher la couche

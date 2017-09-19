@@ -9,7 +9,7 @@ import org.capcaval.c3.component.ComponentService;
  * @author Serge Morvan
  * @date 25/2/2017
  */
-public interface S57StlComponentServices
+public interface StlComponentServices
         extends ComponentService {
 
     void openChart(String file);

@@ -1,0 +1,487 @@
+format 76
+"render" // bzh::terrevirtuelle::navisu::stl::osm::render
+  revision 1
+  modified_by 2 "serge"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  java_dir "Z:/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-stl/src/main/java/bzh/terrevirtuelle/navisu/stl/osm/render/"
+  java_package "bzh.terrevirtuelle.navisu.stl.osm.render"
+  classview 128642 "render"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 130178 "OSMBuildingsStlRenderable"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "The renderable of the GeoJSONDoc for OSM Buildings
+
+@author sbodmer"
+      classrelation 130178 // <generalisation>
+	relation 130178 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130178 // <generalisation>
+	  b parent class_ref 130306 // OSMBuildingsRenderable
+      end
+
+      classrelation 130306 // <realization>
+	relation 130306 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130306 // <realization>
+	  b parent class_ref 130434 // Renderable
+      end
+
+      classrelation 130434 // <realization>
+	relation 130434 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130434 // <realization>
+	  b parent class_ref 130562 // PreRenderable
+      end
+
+      classrelation 130562 // <realization>
+	relation 130562 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130562 // <realization>
+	  b parent class_ref 130690 // Disposable
+      end
+
+      attribute 135426 "COLORS"
+	class_attribute const_attribute private explicit_type "String, String"
+	init_value " new HashMap<String, String>()"
+	stereotype "Map"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 135554 "doc"
+	private explicit_type "GeoJSONDoc"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 135682 "defaultHeight"
+	private explicit_type "double"
+	init_value " 10"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "Default height of buildings
+"
+      end
+
+      attribute 135810 "renderables"
+	private explicit_type "Renderable"
+	init_value " new ArrayList<Renderable>()"
+	stereotype "List"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "The list of renderable for this GeoJSON object (PointPlacemarks, ExtrudePolygon, ...)
+"
+      end
+
+      extra_member 128002 "initialization"
+	
+	cpp "" ""
+	java "  static {
+        COLORS.put(\"lightbrown\", \"#ac6b25\");
+        COLORS.put(\"yellowbrown\", \"#bb9613\");
+        COLORS.put(\"darkbrown\", \"#654321\");
+        COLORS.put(\"redbrown\", \"#a52a2a\");
+        COLORS.put(\"cream\", \"#ffffcc\");
+        COLORS.put(\"brickred\", \"#cb4154\");
+        COLORS.put(\"bluegreen\", \"#0d98ba\");
+    }"
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 131330 "OSMBuildingsStlRenderable"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "doc" explicit_type "GeoJSONDoc"
+	  param in name "defaultHeight" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "If the height is 0, then no building are extruded
+
+@param doc
+@param defaultHeight"
+      end
+
+      operation 131458 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 131586 "clear"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment " **************************************************************************
+ *** API
+ **************************************************************************"
+      end
+
+      operation 131714 "render"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "dc" explicit_type "DrawContext"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment " **************************************************************************
+ *** Renderable
+ **************************************************************************"
+      end
+
+      operation 131842 "preRender"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "dc" explicit_type "DrawContext"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 131970 "dispose"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment " **************************************************************************
+ *** Disposable
+ **************************************************************************"
+      end
+
+      operation 132098 "prepare"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "object" explicit_type "GeoJSONObject"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment " **************************************************************************
+ *** Private
+ **************************************************************************
+
+Create the basic shape for the rendering
+
+@param object"
+      end
+
+      operation 132226 "fill"
+	protected explicit_return_type "void"
+	nparams 2
+	  param inout name "geom" explicit_type "GeoJSONGeometry"
+	  param inout name "properties" explicit_type "AVList"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132354 "fillRenderablePoint"
+	protected explicit_return_type "void"
+	nparams 4
+	  param inout name "owner" explicit_type "GeoJSONPoint"
+	  param inout name "pos" explicit_type "Position"
+	  param inout name "attrs" explicit_type "PointPlacemarkAttributes"
+	  param inout name "properties" explicit_type "AVList"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Create a PointPlacemark
+
+@param properties"
+      end
+
+      operation 132482 "fillRenderablePolygon"
+	protected explicit_return_type "void"
+	nparams 5
+	  param inout name "owner" explicit_type "GeoJSONPolygon"
+	  param inout name "outerBoundary" explicit_type "Iterable<? extends Position>"
+	  param inout name "innerBoundaries" explicit_type "Iterable<? extends Position>"
+	  param inout name "attrs" explicit_type "ShapeAttributes"
+	  param inout name "properties" explicit_type "AVList"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2}[] ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Prepare the polygon with color if present, the points are always on the same plane
+<p>
+If the polygon has an altitude, do not extrude it
+<p>
+<p>
+If the polygon properties has a height use it for extrude
+<p>
+<p>
+If the the default height > 0 , then extrude the polygon if no other height is found
+<p>
+
+@param owner
+@param outerBoundary
+@param innerBoundaries
+@param attrs
+@param properties"
+      end
+
+      operation 132610 "fillRenderablePolyline"
+	protected explicit_return_type "void"
+	nparams 4
+	  param inout name "owner" explicit_type "GeoJSONGeometry"
+	  param inout name "positions" explicit_type "Iterable<? extends Position>"
+	  param inout name "attrs" explicit_type "ShapeAttributes"
+	  param inout name "properties" explicit_type "AVList"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132738 "hasNonzeroAltitude"
+	class_operation protected explicit_return_type "boolean"
+	nparams 1
+	  param inout name "positions" explicit_type "Iterable<? extends Position>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Check if a position has an altitude (!= 0)
+<p>
+
+@param positions
+
+@return"
+      end
+
+      operation 132866 "dumpAVList"
+	protected explicit_return_type "void"
+	nparams 1
+	  param inout name "av" explicit_type "AVList"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132994 "fillShapeAttribute"
+	private explicit_return_type "void"
+	nparams 2
+	  param inout name "sa" explicit_type "ShapeAttributes"
+	  param inout name "properties" explicit_type "AVList"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Will fill the passed shape attribute with the properties
+
+<PRE>
+\"color\" will be processed (if none found, WHITE is used)
+</PRE>
+
+@param sa
+@param properties"
+      end
+
+      operation 133122 "stringToColor"
+	private explicit_return_type "Color"
+	nparams 1
+	  param in name "value" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+  end
+
+  deploymentview 128514 "render"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 128770 "OSMBuildingsStlRenderable"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import gov.nasa.worldwind.Disposable;
+import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.avlist.AVList;
+import gov.nasa.worldwind.formats.geojson.GeoJSONDoc;
+import gov.nasa.worldwind.formats.geojson.GeoJSONFeature;
+import gov.nasa.worldwind.formats.geojson.GeoJSONFeatureCollection;
+import gov.nasa.worldwind.formats.geojson.GeoJSONGeometry;
+import gov.nasa.worldwind.formats.geojson.GeoJSONGeometryCollection;
+import gov.nasa.worldwind.formats.geojson.GeoJSONMultiLineString;
+import gov.nasa.worldwind.formats.geojson.GeoJSONMultiPoint;
+import gov.nasa.worldwind.formats.geojson.GeoJSONMultiPolygon;
+import gov.nasa.worldwind.formats.geojson.GeoJSONObject;
+import gov.nasa.worldwind.formats.geojson.GeoJSONPoint;
+import gov.nasa.worldwind.formats.geojson.GeoJSONPolygon;
+import gov.nasa.worldwind.formats.geojson.GeoJSONPositionArray;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.DrawContext;
+import gov.nasa.worldwind.render.ExtrudedPolygon;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.OSMBuildingsRenderable;
+import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.PointPlacemarkAttributes;
+import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.PreRenderable;
+import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfacePolygon;
+import gov.nasa.worldwind.render.SurfacePolyline;
+import gov.nasa.worldwind.util.Logging;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+${definition}"
+      associated_classes
+	class_ref 130178 // OSMBuildingsStlRenderable
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+  end
+end

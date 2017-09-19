@@ -1,0 +1,16 @@
+window_sizes 1200 896 431 763 682 82
+diagrams
+  active  classdiagram_ref 128002 // Stl
+    711 716 100 4 36 0
+end
+show_stereotypes
+selected class_ref 133378 // SLCONS_Stl_ShapefileLoader
+open
+  classview_ref 128770 // charts
+  deploymentview_ref 128642 // charts
+  classview_ref 128898 // impl
+  classview_ref 129026 // controller
+  classview_ref 129154 // loader
+  classview_ref 129282 // Stl
+end
+end

@@ -18,6 +18,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.sql.Connection;
@@ -81,7 +82,7 @@ public class BathymetryDBImpl
         bathymetryDBController = BathymetryDBController.getInstance(this,
                 databaseServices, guiAgentServices, bathymetryEventProducerServices,
                 LIMIT, layer);
-        
+
     }
 
     @Override
@@ -143,9 +144,10 @@ public class BathymetryDBImpl
         return bathymetryDBController.retrieveIn(latMin, lonMin, latMax, lonMax);
     }
 
-    
-
-    
+    public Point3D[][] mergeData(Point3D[][] orgData, int nbLat, int nbLon,
+            List<Triangle_dt> triangles) {
+        return bathymetryDBController.mergeData(orgData, nbLat, nbLon, triangles);
+    }
 
     @Override
     public void close() {

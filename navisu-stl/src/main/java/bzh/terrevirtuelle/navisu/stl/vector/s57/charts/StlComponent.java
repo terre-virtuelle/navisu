@@ -8,5 +8,5 @@ import org.capcaval.c3.component.Component;
  * @author serge
  * @date 25/2/2017
  */
-public interface S57StlComponent extends Component {
+public interface StlComponent extends Component {
 }

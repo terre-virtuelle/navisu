@@ -13,8 +13,7 @@ package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
 public class BaseLoader {
 
     String TEXTURE = "common/metal.jpg";
-    String TEXTURE_1 = "common/metal.jpg";
-    
+/*
     String txt = " <!--" + "Sea" + "-->\n"
             + "<Transform DEF=\"Shape_Box_TRANSFORM\" \n"
             + "translation=\"100.000000 -0.0000 -100.000000\" "
@@ -42,8 +41,8 @@ public class BaseLoader {
             + "</Shape>\n"
             + "</Group>\n"
             + "</Transform>\n";
-
-    String txt1 = " <!--" + "Base for charts" + "-->\n"
+*/
+    String txt = " <!--" + "Base for charts" + "-->\n"
             + "<Transform \n"
             + "translation='100 -3 -100'>\n"
             + "<Transform DEF='Rectangle001'\n"
@@ -1869,7 +1868,7 @@ public class BaseLoader {
             + "    ambientIntensity='.2'\n"
             + "    shininess='.2'\n"
             + "    diffuseColor='1 1 1'/>\n"
-            + "<ImageTexture DEF='Dem Side' url='" + TEXTURE_1 + "'/> \n"
+            + "<ImageTexture DEF='Dem Side' url='" + TEXTURE + "'/> \n"
             + "  </Appearance>\n"
             + "  <Box DEF='GeoBox1'\n"
             + "   containerField='geometry'\n"
@@ -1881,11 +1880,7 @@ public class BaseLoader {
     public BaseLoader() {
     }
 
-    public String compute(boolean base) {
-        if (base == true) {
-            return txt + txt1;
-        } else {
-            return txt;
-        }
+    public String compute() {
+        return txt;
     }
 }

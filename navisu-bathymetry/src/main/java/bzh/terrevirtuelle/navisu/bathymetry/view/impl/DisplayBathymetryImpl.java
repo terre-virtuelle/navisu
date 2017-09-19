@@ -109,18 +109,12 @@ public class DisplayBathymetryImpl
         controller.displayAllSounding();
     }
 
-    @Override
-    public Point3D[][] mergeData(Point3D[][] orgData, int nbLat, int nbLon, List<Triangle_dt> triangles) {
- return controller.mergeData(orgData, nbLat, nbLon, triangles);
-    }
-
-    
-
+/*
     @Override
     public Geometry createConcaveHull(List<Point3D> points3d, double threshold) {
        return controller.createConcaveHull(points3d, threshold);
     }
-
+*/
     
 
     @Override

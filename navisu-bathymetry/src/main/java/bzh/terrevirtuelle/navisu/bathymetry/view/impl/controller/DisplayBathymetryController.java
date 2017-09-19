@@ -14,7 +14,6 @@ import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Point_dt;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
-import bzh.terrevirtuelle.navisu.geometry.jts.impl.JTSImpl;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -53,10 +52,19 @@ public class DisplayBathymetryController {
     protected final double THRESHOLD = 0.0015;
     protected Geometry concaveHull;
     protected double MIN_DEPTH = 0.0;
+
     protected double MIN_LAT = 48.255496978759766;
     protected double MIN_LON = -4.549251079559326;
     protected double MAX_LAT = 48.45;
     protected double MAX_LON = -4.245;
+
+    /*
+    //Ouessant
+    protected double MIN_LAT = 48.255496978759766;
+    protected double MIN_LON = -4.549251079559326;
+    protected double MAX_LAT = 48.50;
+    protected double MAX_LON = -5.166;
+     */
     double distA;
     double distB;
     double distC;
@@ -105,9 +113,13 @@ public class DisplayBathymetryController {
     }
 
     public void displayAllSounding() {
+        displayAllSounding(MIN_LAT, MIN_LON, MAX_LAT, MAX_LON, NB_LAT, NB_LON);
+    }
+
+    public void displayAllSounding(double minLat, double minLon, double maxLat, double maxLon, int nbLat, int nbLon) {
 
         guiAgentServices.getJobsManager().newJob("displayAllSounding", (progressHandle) -> {
-            points3d = bathymetryDBServices.retrieveIn(MIN_LAT, MIN_LON, MAX_LAT, MAX_LON);
+            points3d = bathymetryDBServices.retrieveIn(minLat, minLon, maxLat, maxLon);
             double latM = 90.0;
             double lonM = 0.0;
             for (Point3D p : points3d) {
@@ -128,81 +140,30 @@ public class DisplayBathymetryController {
                         maxElevation = pt.getElevation();
                     });
                     //Display plane 0m over sea
-                    displayServices.displayPlane(MIN_LAT, MIN_LON, MAX_LAT, MAX_LON, 100, Material.BLUE, layer);
+                    displayServices.displayPlane(minLat, minLon, maxLat, maxLon, 100, Material.BLUE, layer);
                     //Display plane maxElevation*10 over sea
-                    displayServices.displayPlane(MIN_LAT, MIN_LON, MAX_LAT, MAX_LON, maxElevation * 10, Material.GREEN, layer);
+                    displayServices.displayPlane(minLat, minLon, maxLat, maxLon, maxElevation * 10, Material.GREEN, layer);
 
                     //Create Delaunay triangulation with bathymetry data
-                    //  List<Triangle_dt> triangles = createDelaunay(points3d, maxElevation);
                     List<Triangle_dt> triangles = delaunayServices.createDelaunay(points3d, maxElevation);
                     //Suppress large edges
                     List<Triangle_dt> triangles1 = delaunayServices.filterLargeEdges(triangles, THRESHOLD);
                     displayServices.displayDelaunay(triangles1, maxElevation, 10.0, Material.GREEN, layer);
 
                     //Create concaveHull from points with bathy information
-                    concaveHull = createConcaveHull(points3d, THRESHOLD);
+                    concaveHull = jtsServices.getConcaveHull(points3d, THRESHOLD);
                     displayServices.displayConcaveHull(concaveHull, maxElevation, 10.0, Material.RED, layer);
 
                     //Create a grid of points for triangulate sea level plane 
-                    Point3D[][] seaPlane = delaunayServices.toGrid(MIN_LAT, MIN_LON, 100.0, 100.0, NB_LAT, NB_LON, maxElevation);
-                    //Modifie the fid whith bathyletry data
-                    seaPlane = mergeData(seaPlane, NB_LAT, NB_LON, triangles1);
-                    // List<Triangle_dt> triangles2 = createDelaunay(seaPlane, NB_LAT, NB_LON,0.0);
-                    List<Triangle_dt> triangles2 = delaunayServices.createDelaunay(seaPlane, NB_LAT, NB_LON, 0.0);
-
-                    //   displayServices.displayDelaunay(triangles2, maxElevation , 10.0, Material.YELLOW, layer);
+                    Point3D[][] seaPlane = delaunayServices.toGrid(minLat, minLon, 100.0, 100.0, nbLat, nbLon, maxElevation);
+                    //Modifie the z whith bathyletry data
+                    seaPlane = bathymetryDBServices.mergeData(seaPlane, nbLat, nbLon, triangles1);
+                    List<Triangle_dt> triangles2 = delaunayServices.createDelaunay(seaPlane, nbLat, nbLon, 0.0);
+                    displayServices.displayDelaunay(triangles2, maxElevation, 10.0, Material.YELLOW, layer);
+                   
                     wwd.redrawNow();
                 });
 
-    }
-
-    /**
-     * @param orgData a simple grid of point3D, with z =0.0
-     * @param nbLat nb of lines
-     * @param nbLon nb of columns
-     * @param triangles Delaunay tiangulation with elevation value
-     * @return the initial grid whith elevation value
-     *
-     */
-    public Point3D[][] mergeData(Point3D[][] orgData,
-            int nbLat, int nbLon,
-            List<Triangle_dt> triangles) {
-        Point3D[][] tmp = new Point3D[nbLat][nbLon];
-        for (int k = 0; k < nbLat; k++) {
-            System.arraycopy(orgData[k], 0, tmp[k], 0, nbLon);
-        }
-        for (int k = 0; k < nbLat - 1; k++) {
-            for (int l = 0; l < nbLon - 1; l++) {
-                //Select one point
-                Point3D p = tmp[k][l];
-                Point_dt pp = new Point_dt(p.getLat(), p.getLon(), p.getElevation());
-                for (Triangle_dt tt : triangles) {
-                    // Research  the nearest point of this triangle
-                    if (tt.contains(pp)) {
-                        distA = tt.A.distance(pp);
-                        distB = tt.B.distance(pp);
-                        distC = tt.C.distance(pp);
-                        distMin = distA;
-                        pMin = tt.A;
-                        if (distMin > distB) {
-                            distMin = distB;
-                            pMin = tt.B;
-                        }
-                        if (distMin > distC) {
-                            distMin = distC;
-                            pMin = tt.C;
-                        }
-                        tmp[k][l].setElevation(pMin.z);
-                    }
-                }
-            }
-
-        }
-        return tmp;
-    }
-
-    public Geometry createConcaveHull(List<Point3D> points3d, double threshold) {
-        return jtsServices.getConcaveHull(points3d, threshold);
     }
 
     public void displaySounding(double lat, double lon, double depth, RenderableLayer l) {
