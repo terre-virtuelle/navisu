@@ -12,6 +12,7 @@ import java.util.*;
  * Util for Delaunay Triangulation
  */
 public final class DT {
+
     private DT() {
     }
 
@@ -22,16 +23,18 @@ public final class DT {
         Point_dt[] divideCA = UtPoint.divide(t.C, t.A, elevatedStep);
         for (Point_dt pAB : divideAB) {
             for (Point_dt pBC : divideBC) {
-                if (pAB.z < pBC.z) break;//already ordered
-
+                if (pAB.z < pBC.z) {
+                    break;//already ordered
+                }
                 if (pAB.z == pBC.z && !pAB.equals(pBC)) {
                     Izoline line = new Izoline(pAB, pBC, (int) pBC.z);
                     lines.add(line);
                 }
             }
             for (Point_dt pCA : divideCA) {
-                if (pAB.z < pCA.z) break;//already ordered
-
+                if (pAB.z < pCA.z) {
+                    break;//already ordered
+                }
                 if (pAB.z == pCA.z && !pAB.equals(pCA)) {
                     Izoline line = new Izoline(pAB, pCA, (int) pCA.z);
                     lines.add(line);
@@ -40,7 +43,9 @@ public final class DT {
         }
         for (Point_dt pBC : divideBC) {
             for (Point_dt pCA : divideCA) {
-                if (pBC.z < pCA.z) break;
+                if (pBC.z < pCA.z) {
+                    break;
+                }
 
                 if (pBC.z == pCA.z && !pBC.equals(pCA)) {
                     Izoline line = new Izoline(pBC, pCA, (int) pCA.z);
@@ -55,7 +60,7 @@ public final class DT {
     /**
      * <img src="./../doc_files/subCont.png"/>
      *
-     * @param dt           triangulation to get isoLines
+     * @param dt triangulation to get isoLines
      * @param elevatedStep step of isoLine
      * @return closed isoLines
      */
@@ -100,7 +105,6 @@ public final class DT {
             pOrderSet.add(t.B);
         }
 
-
         Point_dt[] pArray = new Point_dt[pOrderSet.size()];
         Map<Point_dt, Integer> pIndex = new HashMap<Point_dt, Integer>(pOrderSet.size());
         int index = 0;
@@ -132,8 +136,9 @@ public final class DT {
         int middleIndex = -1;
         for (int i = 0; i < pArray.length; i++) {
             Point_dt pI = pArray[i];
-            if (!contourEnds.containsKey(pI)) continue;//ignore
-
+            if (!contourEnds.containsKey(pI)) {
+                continue;//ignore
+            }
             Contour openC = new Contour(contourEnds.get(pI));
             Collections.reverse(openC.points);
             openC.level = openC.level + elevatedStep;
@@ -170,7 +175,9 @@ public final class DT {
         //region grab all lines
         for (int i = 0; i < pArray.length; i++) {
             Point_dt pI = pArray[i];
-            if (!contourEnds.containsKey(pI)) continue;//ignore
+            if (!contourEnds.containsKey(pI)) {
+                continue;//ignore
+            }
             Contour openC = contourEnds.get(pI);
             openC.right = (middleIndex > i);
 
@@ -208,17 +215,19 @@ public final class DT {
         long start = System.currentTimeMillis();
 
         //to avert vertices connection as isoline
-        for (Iterator<Point_dt> verticesIterator = dt.verticesIterator(); verticesIterator.hasNext(); ) {
+        for (Iterator<Point_dt> verticesIterator = dt.verticesIterator(); verticesIterator.hasNext();) {
             Point_dt next = verticesIterator.next();
             next.z = ((int) next.z) % elevatedStep == 0 ? next.z + 1 : next.z;
         }
 
         //elevation, point, lines at this point
-        HashMap<Integer, HashMap<Point_dt, Set<Izoline>>> lineContainer =
-                new HashMap<Integer, HashMap<Point_dt, Set<Izoline>>>();
+        HashMap<Integer, HashMap<Point_dt, Set<Izoline>>> lineContainer
+                = new HashMap<Integer, HashMap<Point_dt, Set<Izoline>>>();
 
         for (Triangle_dt t : dt.get_triangles()) {
-            if (t == null || t.isHalfplane()) continue;
+            if (t == null || t.isHalfplane()) {
+                continue;
+            }
             Set<Izoline> lines = getIzolines(t, elevatedStep);
             for (Izoline line : lines) {
                 int elevation = line.elevation;
@@ -250,9 +259,13 @@ public final class DT {
                     Izoline l = lines.iterator().next();
 
                     pointMap.get(l.A).remove(l);
-                    if (pointMap.get(l.A).size() == 0) pointMap.remove(l.A);
+                    if (pointMap.get(l.A).size() == 0) {
+                        pointMap.remove(l.A);
+                    }
                     pointMap.get(l.B).remove(l);
-                    if (pointMap.get(l.B).size() == 0) pointMap.remove(l.B);
+                    if (pointMap.get(l.B).size() == 0) {
+                        pointMap.remove(l.B);
+                    }
 
                     Contour c = new Contour(l.elevation);
                     c.points.addFirst(l.A);
@@ -265,18 +278,26 @@ public final class DT {
                             c.extendTo(l);
 
                             pointMap.get(l.A).remove(l);
-                            if (pointMap.get(l.A).size() == 0) pointMap.remove(l.A);
+                            if (pointMap.get(l.A).size() == 0) {
+                                pointMap.remove(l.A);
+                            }
                             pointMap.get(l.B).remove(l);
-                            if (pointMap.get(l.B).size() == 0) pointMap.remove(l.B);
+                            if (pointMap.get(l.B).size() == 0) {
+                                pointMap.remove(l.B);
+                            }
 
                         } else if (pointMap.containsKey(c.getB())) {
                             l = pointMap.get(c.getB()).iterator().next();
                             c.extendTo(l);
 
                             pointMap.get(l.A).remove(l);
-                            if (pointMap.get(l.A).size() == 0) pointMap.remove(l.A);
+                            if (pointMap.get(l.A).size() == 0) {
+                                pointMap.remove(l.A);
+                            }
                             pointMap.get(l.B).remove(l);
-                            if (pointMap.get(l.B).size() == 0) pointMap.remove(l.B);
+                            if (pointMap.get(l.B).size() == 0) {
+                                pointMap.remove(l.B);
+                            }
                         } else {
                             finished = true;
                         }
@@ -301,8 +322,12 @@ public final class DT {
             public int compare(Contour ca, Contour cb) {
                 double caPolygonArea = ca.getArea();
                 double cbPolygonArea = cb.getArea();
-                if (caPolygonArea > cbPolygonArea) return 1;
-                if (caPolygonArea < cbPolygonArea) return -1;
+                if (caPolygonArea > cbPolygonArea) {
+                    return 1;
+                }
+                if (caPolygonArea < cbPolygonArea) {
+                    return -1;
+                }
                 return 0;
             }
         });
@@ -318,8 +343,12 @@ public final class DT {
             public int compare(Contour ca, Contour cb) {
                 double caPolygonArea = ca.getArea();
                 double cbPolygonArea = cb.getArea();
-                if (caPolygonArea > cbPolygonArea) return -1;
-                if (caPolygonArea < cbPolygonArea) return 1;
+                if (caPolygonArea > cbPolygonArea) {
+                    return -1;
+                }
+                if (caPolygonArea < cbPolygonArea) {
+                    return 1;
+                }
                 return 0;
             }
         });
@@ -327,10 +356,11 @@ public final class DT {
 
     /**
      * smoothing polyline edges with cutting its edges by constant -20%
-     * <p>and connecting them with new line for <code>loop</code> times</p>
+     * <p>
+     * and connecting them with new line for <code>loop</code> times</p>
      *
      * @param contours polyline to smooth
-     * @param loop     for times, cutting for 5 times is good for now
+     * @param loop for times, cutting for 5 times is good for now
      */
     public static void smooth(ArrayList<Contour> contours, int loop) {
         for (int k = 0; k < loop; k++) {
@@ -355,7 +385,9 @@ public final class DT {
     public static void smoothAngle(ArrayList<Contour> contours, int from, int to, int perCent) {
         int HUNDRED_PERCENT = 100;
         for (Contour c : contours) {
-            if (c.points.size() < 3) continue;
+            if (c.points.size() < 3) {
+                continue;
+            }
             ListIterator<Point_dt> itr = c.points.listIterator();
             Point_dt prev = itr.next();
             Point_dt curr = itr.next();
@@ -419,7 +451,9 @@ public final class DT {
         //next large contour stands for parent, if that contains this
         for (int i = 0; i < contours.size() - 1; i++) {
             Contour small = contours.get(i);
-            if (!small.inside) break;
+            if (!small.inside) {
+                break;
+            }
 
             for (int j = i + 1; j < contours.size(); j++) {
                 Contour large = contours.get(j);
@@ -450,12 +484,20 @@ public final class DT {
     public static void sort(ArrayList<Contour> contours) {
         Collections.sort(contours, new Comparator<Contour>() {
             public int compare(Contour ca, Contour cb) {
-                if (ca.inside && !cb.inside) return -1;
-                if (!ca.inside && cb.inside) return 1;
+                if (ca.inside && !cb.inside) {
+                    return -1;
+                }
+                if (!ca.inside && cb.inside) {
+                    return 1;
+                }
                 double caPolygonArea = ca.getArea();
                 double cbPolygonArea = cb.getArea();
-                if (caPolygonArea < cbPolygonArea) return -1;
-                if (caPolygonArea > cbPolygonArea) return 1;
+                if (caPolygonArea < cbPolygonArea) {
+                    return -1;
+                }
+                if (caPolygonArea > cbPolygonArea) {
+                    return 1;
+                }
                 return 0;
             }
         });
@@ -469,12 +511,20 @@ public final class DT {
     public static void desc(ArrayList<Contour> contours) {
         Collections.sort(contours, new Comparator<Contour>() {
             public int compare(Contour ca, Contour cb) {
-                if (!ca.inside && cb.inside) return -1;
-                if (ca.inside && !cb.inside) return 1;
+                if (!ca.inside && cb.inside) {
+                    return -1;
+                }
+                if (ca.inside && !cb.inside) {
+                    return 1;
+                }
                 double caPolygonArea = ca.getArea();
                 double cbPolygonArea = cb.getArea();
-                if (caPolygonArea > cbPolygonArea) return -1;
-                if (caPolygonArea < cbPolygonArea) return 1;
+                if (caPolygonArea > cbPolygonArea) {
+                    return -1;
+                }
+                if (caPolygonArea < cbPolygonArea) {
+                    return 1;
+                }
                 return 0;
             }
         });

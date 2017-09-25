@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.util.WwjGeodesy;
 import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
+import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
@@ -67,55 +68,47 @@ public class StlComponentController
         extends Widget2DController
         implements Initializable {
 
+    // Services
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected LayerTreeServices layerTreeServices;
     protected LayersManagerServices layersManagerServices;
     protected GuiAgentServices guiAgentServices;
-
+    protected GeodesyServices geodesyServices;
     protected StlChartComponentController s57StlChartComponentController;
 
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
-    // Le dir navisu-launcher est dans le PATH
-    protected String OUT_DIR = "privateData/x3d/";
-    // Pour le moment ce nomm est fixe, on ne fait qu'une dalle
-    protected String outFile = "out";
-
-    protected Path outPathname;
-
     // Pour récupérer le .css
     protected final String FXML = "configurationStlController.fxml";
     protected String VIEW_GROUP_STYLE = "configuration.css";
     protected static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    // Le dir navisu-launcher est dans le PATH
+    protected String OUT_DIR = "privateData/x3d/";
+    protected String OUT_FILE = "out";
+    protected String outFile = OUT_FILE;
+    protected Path outPathname;
 
-    protected List<? extends Position> positions;
-    protected double latRangeMetric;
-    protected double lonRangeMetric;
-    protected double scaleLatFactor;
-    protected double scaleLonFactor;
+    
     // Les parametres a initialiser via l'interface
     // Taille de la dalle en mm
+    protected List<? extends Position> positions;
+    protected double latRangeMetric;
     protected double DEFAULT_SIDE = 200.0;
     protected double tileSideX = DEFAULT_SIDE;
     protected double tileSideY = DEFAULT_SIDE;
-    protected double spaceX = DEFAULT_SIDE / 2;
-    protected double spaceY = DEFAULT_SIDE / 2;
-    // Resolution du MNT
-
-    protected int ptsCountX = 200;
-    protected int ptsCountY = 200;
+    protected double earthSpaceX;
+    protected double earthSpaceY;
+    protected double lonRangeMetric;
     // Position du socle
     protected double bottom = 0.0;
     // exagération en vertical du MNT
     protected double magnification = 10;
     protected int line;
     protected int column;
-    int tilesCount;
-
+    protected int tilesCount;
     protected double lonRange;
     protected double latRange;
-    protected double SPACE_X = 220;//TODO from gui
-    protected double SPACE_Y = 220;
+    
     protected List<Position> squareEnvelopeList;
     protected List<? extends Position> envelopeList;
     protected Geometry geometryEnvelope;
@@ -125,12 +118,12 @@ public class StlComponentController
     protected KMLSurfacePolygonImpl kmlPolygon;
     protected Polygon polygonEnvelope;
     protected Polygon squarePolygonEnvelope;
-    protected String GROUP;
-    protected String NAME;
+    
     protected RenderableLayer layer;
     protected WorldWindow wwd;
     protected double buoyageScale;
     protected String title;
+
     @FXML
     public Group configGroup;
     @FXML
@@ -189,6 +182,7 @@ public class StlComponentController
             LayerTreeServices layerTreeServices,
             LayersManagerServices layersManagerServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
+            GeodesyServices geodesyServices,
             StlChartComponentController s57StlChartComponentController,
             String GROUP,
             String NAME,
@@ -198,9 +192,7 @@ public class StlComponentController
         this.layerTreeServices = layerTreeServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.s57StlChartComponentController = s57StlChartComponentController;
-        this.GROUP = GROUP;
-        this.NAME = NAME;
-        this.wwd = wwd;
+              this.wwd = wwd;
         layer = layersManagerServices.getLayer(GROUP, NAME);
 
         this.selector = new SectorSelector(wwd);
@@ -257,7 +249,7 @@ public class StlComponentController
             guiAgentServices.getRoot().getChildren().remove(this);
             setVisible(false);
         });
-        nameTF.setText("out");
+        nameTF.setText(OUT_FILE);
         nameTF.setOnAction((ActionEvent event) -> {
             outFile = nameTF.getText();
             String[] outTab = outFile.split("\\.");
@@ -324,24 +316,24 @@ public class StlComponentController
         //  spaceY = tileSideY / (ptsCountsY - 1);
              */
             try {
-                spaceX = Double.parseDouble(spaceXTF.getText());
-                spaceXTF.setText(Double.toString(spaceX));
+                earthSpaceX = Double.parseDouble(spaceXTF.getText());
+                spaceXTF.setText(Double.toString(earthSpaceX));
 
             } catch (NumberFormatException e) {
-                spaceX = DEFAULT_SIDE / 2;
-                spaceXTF.setText(Double.toString(spaceX));
+                earthSpaceX = DEFAULT_SIDE / 2;
+                spaceXTF.setText(Double.toString(earthSpaceX));
             }
 
         });
         spaceYTF.setOnAction((ActionEvent event) -> {
 
             try {
-                spaceY = Double.parseDouble(spaceYTF.getText());
-                spaceYTF.setText(Double.toString(spaceY));
+                earthSpaceY = Double.parseDouble(spaceYTF.getText());
+                spaceYTF.setText(Double.toString(earthSpaceY));
 
             } catch (NumberFormatException e) {
-                spaceY = DEFAULT_SIDE / 2;
-                spaceYTF.setText(Double.toString(spaceY));
+                earthSpaceY = DEFAULT_SIDE / 2;
+                spaceYTF.setText(Double.toString(earthSpaceY));
             }
 
         });
@@ -419,7 +411,7 @@ public class StlComponentController
                             tilesCount, i,
                             positions,
                             tileSideX, tileSideY,
-                            spaceX, spaceY,
+                            earthSpaceX, earthSpaceY,
                             bottom, magnification
                     ).compute();
 
@@ -427,13 +419,13 @@ public class StlComponentController
                             tilesCount, i,
                             positions,
                             tileSideX, tileSideY,
-                            spaceX, spaceY,
+                            earthSpaceX, earthSpaceY,
                             bottom, magnification,
                             wwd.getModel().getGlobe().getElevationModel()
                     ).compute();
-                    
+
                     new StlPostWriterController(outPathname).compute();
-                    
+
                     instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
                     wwjTiles.get(i).setAttributes(makeHighlightAttributes());
                     wwd.redrawNow();
@@ -455,8 +447,8 @@ public class StlComponentController
         if (geom != null) {
             polygonEnvelope = WwjJTS.wktPolygonToPolygon(geom.getEnvelope());
             envelopeList = polygonEnvelope.getBoundaries().get(0);
-            lonRange = WwjGeodesy.getDistanceM(envelopeList.get(1), envelopeList.get(0));
-            latRange = WwjGeodesy.getDistanceM(envelopeList.get(2), envelopeList.get(1));
+            lonRange = geodesyServices.getDistanceM(envelopeList.get(1), envelopeList.get(0));
+            latRange = geodesyServices.getDistanceM(envelopeList.get(2), envelopeList.get(1));
             squareEnvelopeList = new ArrayList<>();
             envelopeList.forEach((p) -> {
                 squareEnvelopeList.add(p);
@@ -467,7 +459,7 @@ public class StlComponentController
 
     private void squareLatEast() {
         preNewPolygon();
-        Position newPosition = WwjGeodesy.getPosition(envelopeList.get(1), 270, latRange * 1000);//270=West
+        Position newPosition = geodesyServices.getPosition(envelopeList.get(1), 270, latRange * 1000);//270=West
         squareEnvelopeList.remove(0);
         squareEnvelopeList.add(0, newPosition);
         Position newP3 = new Position(squareEnvelopeList.get(3).getLatitude(),
@@ -481,7 +473,7 @@ public class StlComponentController
 
     private void squareLatWest() {
         preNewPolygon();
-        Position newPosition = WwjGeodesy.getPosition(envelopeList.get(0), 90, latRange * 1000);//90=East
+        Position newPosition = geodesyServices.getPosition(envelopeList.get(0), 90, latRange * 1000);//90=East
         squareEnvelopeList.remove(1);
         squareEnvelopeList.add(1, newPosition);
         Position newP = new Position(squareEnvelopeList.get(3).getLatitude(),
@@ -493,7 +485,7 @@ public class StlComponentController
 
     private void squareLonNorth() {
         preNewPolygon();
-        Position newPosition = WwjGeodesy.getPosition(envelopeList.get(1), 360, lonRange * 1000);//0=North
+        Position newPosition = geodesyServices.getPosition(envelopeList.get(1), 360, lonRange * 1000);//0=North
         squareEnvelopeList.remove(2);
         squareEnvelopeList.add(2, newPosition);
         Position newP3 = new Position(newPosition.getLatitude(),
@@ -505,7 +497,7 @@ public class StlComponentController
 
     private void squareLonSouth() {
         preNewPolygon();
-        Position newPosition = WwjGeodesy.getPosition(envelopeList.get(2), 180, lonRange * 1000);//180=south
+        Position newPosition = geodesyServices.getPosition(envelopeList.get(2), 180, lonRange * 1000);//180=south
         squareEnvelopeList.remove(1);
         squareEnvelopeList.add(1, newPosition);
         Position newP = new Position(newPosition.getLatitude(),
@@ -611,15 +603,15 @@ public class StlComponentController
     private Geometry initParameters(List<List<? extends Position>> pos) {
         Geometry geometry1 = null;
         positions = pos.get(0);
-        latRangeMetric = WwjGeodesy.getDistanceM(positions.get(0),
+        latRangeMetric = geodesyServices.getDistanceM(positions.get(0),
                 new Position(Angle.fromDegrees(positions.get(3).getLatitude().getDegrees()),
                         Angle.fromDegrees(positions.get(3).getLongitude().getDegrees()), 100));
-        lonRangeMetric = WwjGeodesy.getDistanceM(positions.get(0),
+        lonRangeMetric = geodesyServices.getDistanceM(positions.get(0),
                 new Position(Angle.fromDegrees(positions.get(1).getLatitude().getDegrees()),
                         Angle.fromDegrees(positions.get(1).getLongitude().getDegrees()), 100));
 
-        scaleLatFactor = (spaceY) / latRangeMetric;
-        scaleLonFactor = (spaceX) / lonRangeMetric;
+        //   scaleLatFactor = (earthSpaceY) / latRangeMetric;
+        //   scaleLonFactor = (earthSpaceX) / lonRangeMetric;
         String wkt = WwjJTS.toPolygonWkt(positions);
         WKTReader wktReader0 = new WKTReader();
 

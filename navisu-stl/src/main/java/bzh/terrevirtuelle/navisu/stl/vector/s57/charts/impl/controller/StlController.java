@@ -31,8 +31,8 @@ public class StlController {
     protected List<? extends Position> positions;
     protected double tileSideX;
     protected double tileSideY;
-    protected double spaceX;
-    protected double spaceY;
+    protected double earthSpaceX;
+    protected double earthSpaceY;
     protected double bottom;
     protected double magnification;
 
@@ -40,7 +40,7 @@ public class StlController {
             int tilesCount, int index, 
             List<? extends Position> positions, 
             double tileSideX, double tileSideY, 
-            double spaceX, double spaceY, 
+            double earthSpaceX, double earthSpaceY, 
             double bottom, 
             double magnification) {
         this.outPathname = outPathname;
@@ -49,8 +49,8 @@ public class StlController {
         this.positions = positions;
         this.tileSideX = tileSideX;
         this.tileSideY = tileSideY;
-        this.spaceX = spaceX;
-        this.spaceY = spaceY;
+        this.earthSpaceX = earthSpaceX;
+        this.earthSpaceY = earthSpaceY;
         this.bottom = bottom;
         this.magnification = magnification;
     }

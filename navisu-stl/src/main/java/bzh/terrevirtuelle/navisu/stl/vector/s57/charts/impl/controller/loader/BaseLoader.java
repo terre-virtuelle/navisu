@@ -13,6 +13,7 @@ package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
 public class BaseLoader {
 
     String TEXTURE = "common/metal.jpg";
+   // String TEXTURE = "common/mer.jpg";
 /*
     String txt = " <!--" + "Sea" + "-->\n"
             + "<Transform DEF=\"Shape_Box_TRANSFORM\" \n"
@@ -42,7 +43,7 @@ public class BaseLoader {
             + "</Group>\n"
             + "</Transform>\n";
 */
-    String txt = " <!--" + "Base for charts" + "-->\n"
+    String txt1 = " <!--" + "Base for charts" + "-->\n"
             + "<Transform \n"
             + "translation='100 -3 -100'>\n"
             + "<Transform DEF='Rectangle001'\n"
@@ -1881,6 +1882,6 @@ public class BaseLoader {
     }
 
     public String compute() {
-        return txt;
+        return txt1;
     }
 }

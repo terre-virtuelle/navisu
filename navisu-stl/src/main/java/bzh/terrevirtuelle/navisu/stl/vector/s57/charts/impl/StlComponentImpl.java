@@ -18,6 +18,7 @@ import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.StlChartComponentController;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.StlComponentController;
 import gov.nasa.worldwind.WorldWindow;
@@ -62,6 +63,8 @@ public class StlComponentImpl
     S57GlobalCatalogServices s57GlobalCatalogServices;
     @UsedService
     S57ChartComponentServices s57ChartComponentServices;
+    @UsedService
+    GeodesyServices geodesyServices;
 
     private static final String NAME = "S57Stl";
     protected static final String GROUP = "S57 charts";
@@ -90,7 +93,6 @@ public class StlComponentImpl
     @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
 
-        
         try {
             if (first == true) {
                 first = false;
@@ -218,6 +220,7 @@ public class StlComponentImpl
                 layerTreeServices, // pour indiquer dans l'arbre à gauche ou est la couche
                 layersManagerServices, // pour afficher la couche
                 instrumentDriverManagerServices, // pour envoyer un signal sonore en fin de génération
+                geodesyServices,
                 s57StlChartComponentController, // la composant de génération x3D
                 GROUP, NAME, // pour se positionner dans l'arborescence des couches
                 wwd);                            // le lien avec WordlWind

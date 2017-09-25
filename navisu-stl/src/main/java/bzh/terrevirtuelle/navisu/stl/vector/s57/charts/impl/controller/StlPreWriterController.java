@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.Re
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Polygon;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -105,10 +104,12 @@ public class StlPreWriterController
         String txt = "<Transform rotation='0 1 0 1.57058' "
                 + "translation='200.0 0.0 200.0' "
                 + " scale='1.000900 1.000900 1.000900'> \n"
-                + "<Viewpoint  position='-100.0 400.0 100'  "
+                + "<Viewpoint  position='-100.0 1000.0 100'  "
                 + "orientation='1 0 0 -1.57'  "
                 + "fieldOfView='.5'/>\n"
                 + "<Transform rotation='0 1 0 -3.14'>\n";
+        
+       
         lines.add(txt);
         try {
             Files.write(outPathname, lines, charset, StandardOpenOption.APPEND);

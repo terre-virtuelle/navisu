@@ -21,7 +21,6 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.logging.Level;
@@ -35,17 +34,13 @@ public class TextureLoader {
     protected int index;
     protected Sector selectedSector = null;
     protected WorldWindow wwd;
-    Path outPathname;
+    protected String OUT_DIR = "privateData/x3d/";
 
-    public TextureLoader(Path outPathname, List<? extends Position> positions) {
+    public TextureLoader(List<? extends Position> positions) {
 
-        this.outPathname = outPathname;
-        System.out.println("outPathname.getRoot() : "+outPathname.getRoot());
-        // List<? extends Position> positions = polygon.getBoundaries().get(0);
         selectedSector = new Sector(positions.get(0).getLatitude(), positions.get(3).getLatitude(),
                 positions.get(0).getLongitude(), positions.get(1).getLongitude());
         wwd = GeoWorldWindViewImpl.getWW();
-
     }
 
     public final void doSaveImage() {
@@ -131,17 +126,13 @@ public class TextureLoader {
         out = op.filter(out, null);
         return out;
     }
-// privateData/x3d/out_0.x3d/image_0.jpg (Not a directory)
 
     private void writeImageToFile(Sector sector, BufferedImage image, String outDir) {
-        outDir = outPathname.toString();
-        //   File myNewJPegFile = new File(outDir + "/image_" + index + ".jpg");
-        File myNewJPegFile = new File("privateData/x3d" + "/image_" + index + ".jpg");
+        File myNewJPegFile = new File(OUT_DIR + "/image_" + index + ".jpg");
         try {
             ImageIO.write(image, "jpg", myNewJPegFile);
         } catch (IOException ex) {
             Logger.getLogger(TextureLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

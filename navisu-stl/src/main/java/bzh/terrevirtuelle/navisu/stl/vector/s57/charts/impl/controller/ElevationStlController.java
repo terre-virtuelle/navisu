@@ -5,12 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.ElevationLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.TextureLoader;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.globes.ElevationModel;
-import gov.nasa.worldwind.render.Polygon;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class ElevationStlController
             int tilesCount, int index,
             List<? extends Position> positions,
             double tileSideX, double tileSideY,
-            double spaceX, double spaceY,
+            double earthSpaceX, double earthSpaceY,
             double bottom,
             double magnification,
             ElevationModel model) {
@@ -36,7 +34,7 @@ public class ElevationStlController
                 tilesCount, index,
                 positions,
                 tileSideX, tileSideY,
-                spaceX, spaceY,
+                earthSpaceX, earthSpaceY,
                 bottom,
                 magnification);
         this.model = model;
@@ -52,7 +50,7 @@ public class ElevationStlController
                 positions,
                 index,
                 tileSideX, tileSideY,
-                spaceX, spaceY,
+                earthSpaceX, earthSpaceY,
                 bottom,
                 magnification);
         write(elevationLoader.computeDEM());
@@ -79,7 +77,7 @@ public class ElevationStlController
     }
      */
     private void writeTexture() {
-        TextureLoader exportImageOrElevations = new TextureLoader(outPathname, positions);
+        TextureLoader exportImageOrElevations = new TextureLoader(positions);
         exportImageOrElevations.doSaveImage();
     }
 

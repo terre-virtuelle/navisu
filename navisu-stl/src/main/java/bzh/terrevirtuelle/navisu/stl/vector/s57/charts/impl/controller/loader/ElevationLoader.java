@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.globes.ElevationModel;
@@ -19,14 +20,21 @@ import java.util.List;
  * @date Mar 4, 2017
  */
 public class ElevationLoader {
-
+protected GeodesyServices geodesyServices;
     protected Polygon polygon;
     // protected WorldWindow wwd;
     protected ElevationModel model;
     protected String elevationsStr = "";
     protected String bottomStr = "";
+    protected double earthSpaceX;
+    protected double earthSpaceY;
+    protected double spaceLat;
+    protected double spaceLon;
+    List<? extends Position> positions;
     protected double tileSideX;
     protected double tileSideY;
+    protected double tileSpaceX;
+    protected double tileSpaceY;
     protected int ptsCountsX;
     protected int ptsCountsY;
     protected String BOTTOM_STR;
@@ -34,11 +42,7 @@ public class ElevationLoader {
     protected double magnification;
     protected List<Point3D> bottomPositions;
     protected List<Point3D> topPositions;
-    protected double spaceX;
-    protected double spaceY;
-    protected double spaceLat;
-    protected double spaceLon;
-    List<? extends Position> positions;
+    
     //  protected double scaleLatFactor;
     //  protected double scaleLonFactor;
     protected int index;
@@ -49,52 +53,33 @@ public class ElevationLoader {
             List<? extends Position> positions,
             int index,
             double tileSideX, double tileSideY,
-            double spaceX, double spaceY,
+            double earthSpaceX, double earthSpaceY,
             double bottom,
             double magnification) {
         this.model = model;
-        this.positions=positions;
+        this.positions = positions;
         this.index = index;
         this.tileSideX = tileSideX;
         this.tileSideY = tileSideY;
-        this.spaceX=spaceX;
-        this.spaceY=spaceY;
+        this.earthSpaceX = earthSpaceX;
+        this.earthSpaceY = earthSpaceY;
         this.bottom = bottom;
         this.magnification = magnification;
-        // this.scaleLatFactor = scaleLatFactor;
-        //this.scaleLonFactor = scaleLonFactor;
-
-        // BOTTOM_STR = Double.toString(bottom);
-        // bottomPositions = new ArrayList<>();
-        // topPositions = new ArrayList<>();
-        //  spaceX = tileSideX / (ptsCountsX - 1);
-        //  spaceY = tileSideY / (ptsCountsY - 1);
     }
 
-   
-    public String computeDEM(){
-        /*
-    }
-            ElevationModel model,
-            Polygon polygon,
-            int index,
-            double tileSideX, double tileSideY,
-            double spaceX, double spaceY,
-            double bottom,
-            double magnification) {
-*/
+    public String computeDEM() {
+      
         BOTTOM_STR = Double.toString(bottom);
         bottomPositions = new ArrayList<>();
         topPositions = new ArrayList<>();
-        //  spaceX = tileSideX / (ptsCountsX - 1);
-        //  spaceY = tileSideY / (ptsCountsY - 1);
+        ptsCountsX = 200; //confusion entre pas du MNT et pas sur la tuile generee
+        ptsCountsY = 200;
+        earthSpaceX = tileSideX / (ptsCountsX - 1);
+        earthSpaceY = tileSideY / (ptsCountsY - 1);
 
-        ptsCountsX = ((int) (tileSideX / spaceX) + 1)*100;
-        ptsCountsY = ((int) (tileSideY / spaceY) + 1)*100;
-        System.out.println("ptsCountsX : " + ptsCountsX);
-        System.out.println("ptsCountsY : " + ptsCountsY);
+        //  ptsCountsX = ((int) (tileSideX / spaceX) + 1) * 100;
+        //  ptsCountsY = ((int) (tileSideY / spaceY) + 1) * 100;
         String result = "";
-       // List<? extends Position> positions = polygon.getBoundaries().get(0);
 
         double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / (ptsCountsY - 1);
         double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / (ptsCountsX - 1);
@@ -118,15 +103,15 @@ public class ElevationLoader {
             longitude -= lonRange;
         }
         result += createDEM(elevationsStr,
-                ptsCountsX, spaceX,
-                ptsCountsY, spaceY,
+                ptsCountsX, earthSpaceX,
+                ptsCountsY, earthSpaceY,
                 "<ImageTexture DEF='Ortho' url='\"image_" + index + ".jpg\"'/> \n"
                 + "<TextureTransform  rotation='-1.57' />\n",
                 "Digital elevation model");
 
         result += createDEM(bottomStr,
-                ptsCountsX, spaceX,
-                ptsCountsY, spaceY,
+                ptsCountsX, earthSpaceX,
+                ptsCountsY, earthSpaceY,
                 "\n",
                 "Sea level");
 
@@ -142,7 +127,7 @@ public class ElevationLoader {
             el /= magnification;
             topPositions.add(new Point3D(pos, el, 0.0));
             bottomPositions.add(new Point3D(pos, bottom, 0.0));
-            pos += spaceX;
+            pos += earthSpaceX;
             longitude -= lonRange;
         }
         result += createBoundaryFace("", bottomPositions, topPositions, TEXTURE, "North face");
@@ -158,7 +143,7 @@ public class ElevationLoader {
             el /= magnification;
             topPositions.add(new Point3D(pos, el, -tileSideX));
             bottomPositions.add(new Point3D(pos, bottom, -tileSideX));
-            pos += spaceX;
+            pos += earthSpaceX;
             longitude -= lonRange;
         }
 
@@ -176,7 +161,7 @@ public class ElevationLoader {
             el /= magnification;
             topPositions.add(new Point3D(0.0, el, pos));
             bottomPositions.add(new Point3D(0.0, bottom, pos));
-            pos += spaceY;
+            pos += earthSpaceY;
         }
         result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n",
                 bottomPositions, topPositions, TEXTURE, "East face");
@@ -193,7 +178,7 @@ public class ElevationLoader {
             el /= magnification;
             topPositions.add(new Point3D(-tileSideX, el, pos));
             bottomPositions.add(new Point3D(-tileSideX, bottom, pos));
-            pos += spaceY;
+            pos += earthSpaceY;
         }
         result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n",
                 bottomPositions, topPositions, TEXTURE, "West face");
@@ -223,7 +208,7 @@ public class ElevationLoader {
         ///         elevationMax=p.getElevation();
         //     }
         // }
-     //   List<? extends Position> positions = polygon.getBoundaries().get(0);
+        //   List<? extends Position> positions = polygon.getBoundaries().get(0);
 
         double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / (ptsCountsY - 1);
         double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / (ptsCountsX - 1);
@@ -240,7 +225,7 @@ public class ElevationLoader {
                 if (el < 0) {
                     el = 0;
                 }
-                el /= magnification;
+                el *= magnification;
                 elevationsStr += el + " ";
                 bottomStr += BOTTOM_STR + " ";
                 latitude -= latRange;

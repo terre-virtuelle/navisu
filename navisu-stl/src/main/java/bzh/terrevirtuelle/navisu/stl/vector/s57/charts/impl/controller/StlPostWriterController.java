@@ -6,14 +6,11 @@
 package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller;
 
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.BaseLoader;
-import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.SeaLoader;
-import gov.nasa.worldwind.geom.Position;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

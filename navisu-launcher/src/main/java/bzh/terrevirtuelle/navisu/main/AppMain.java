@@ -409,7 +409,7 @@ public class AppMain extends Application {
                 DATA_S57_CATALOG_6);
 
         //First position
-        wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
+        wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 120000));
 
         // Initialisation du serveur
         dataServerServices.init("localhost", 8585);

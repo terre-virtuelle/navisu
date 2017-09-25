@@ -31,7 +31,7 @@ public class InterpolateAndContour_Frame {
             dt.insertPoint(new Point_dt(x, y, z));
         }
 
-        final ArrayList<Contour> contours = DT.contours(dt, 5);
+        final ArrayList<Contour> contours = DT.contours(dt, 2);
 
         class MyPanel extends JPanel {
             @Override
