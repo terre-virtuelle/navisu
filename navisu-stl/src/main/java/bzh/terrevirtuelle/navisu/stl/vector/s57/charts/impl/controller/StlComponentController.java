@@ -88,7 +88,6 @@ public class StlComponentController
     protected String outFile = OUT_FILE;
     protected Path outPathname;
 
-    
     // Les parametres a initialiser via l'interface
     // Taille de la dalle en mm
     protected List<? extends Position> positions;
@@ -106,9 +105,10 @@ public class StlComponentController
     protected int line;
     protected int column;
     protected int tilesCount;
+    protected List<Polygon> tiles;
     protected double lonRange;
     protected double latRange;
-    
+    List<Polygon> wwjTiles;
     protected List<Position> squareEnvelopeList;
     protected List<? extends Position> envelopeList;
     protected Geometry geometryEnvelope;
@@ -118,7 +118,7 @@ public class StlComponentController
     protected KMLSurfacePolygonImpl kmlPolygon;
     protected Polygon polygonEnvelope;
     protected Polygon squarePolygonEnvelope;
-    
+
     protected RenderableLayer layer;
     protected WorldWindow wwd;
     protected double buoyageScale;
@@ -191,8 +191,9 @@ public class StlComponentController
         this.layersManagerServices = layersManagerServices;
         this.layerTreeServices = layerTreeServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
+        this.geodesyServices = geodesyServices;
         this.s57StlChartComponentController = s57StlChartComponentController;
-              this.wwd = wwd;
+        this.wwd = wwd;
         layer = layersManagerServices.getLayer(GROUP, NAME);
 
         this.selector = new SectorSelector(wwd);
@@ -236,13 +237,6 @@ public class StlComponentController
         countTilesCB.setValue(1);
         choiceCB.setItems(FXCollections.observableArrayList("MNT&Carto", "MNT", "Carto", "Bathy"));
         choiceCB.setValue("MNT&Carto");
-        /*
-        tileCB.setOnAction((ActionEvent event) -> {
-            tilesCount = tileCB.getValue();
-            line = column = (int) Math.sqrt(tilesCount);
-            displayTiles(squarePolygonEnvelope, line, column);
-        });
-         */
 
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
@@ -272,8 +266,13 @@ public class StlComponentController
         northRB.setSelected(true);
         southRB.setToggleGroup(northSouthGroup);
         southRB.setSelected(false);
+        countTilesCB.setOnAction((ActionEvent event) -> {
+            tilesCount = countTilesCB.getValue();
+            line = column = (int) Math.sqrt(tilesCount);
+            wwjTiles = displayTiles(squarePolygonEnvelope, line, column);
+        });
         latLonAllRB.setOnAction((ActionEvent event) -> {
-            System.out.println("setOnAction ");
+            System.out.println("Not yet implemented ");
         });
         latRB.setOnAction((ActionEvent event) -> {
             if (eastRB.isSelected()) {
@@ -311,10 +310,6 @@ public class StlComponentController
         });
 
         spaceXTF.setOnAction((ActionEvent event) -> {
-            /*
-            spaceX = tileSideX / (ptsCountsX - 1);
-        //  spaceY = tileSideY / (ptsCountsY - 1);
-             */
             try {
                 earthSpaceX = Double.parseDouble(spaceXTF.getText());
                 spaceXTF.setText(Double.toString(earthSpaceX));
@@ -365,65 +360,42 @@ public class StlComponentController
             title = titleTF.getText();
             tilesCount = countTilesCB.getValue();
             line = column = (int) Math.sqrt(tilesCount);
+            earthSpaceX = Double.parseDouble(spaceXTF.getText());
+            spaceXTF.setText(Double.toString(earthSpaceX));
+            earthSpaceY = Double.parseDouble(spaceYTF.getText());
+            spaceYTF.setText(Double.toString(earthSpaceY));
+
             try {
                 buoyageScale = Double.valueOf(buoyScaleTF.getText());
             } catch (NumberFormatException e) {
                 buoyageScale = 1.0;
             }
             boolean base = baseCB.isSelected();
-
+            wwjTiles = displayTiles(squarePolygonEnvelope, line, column);
             guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
-                List<Polygon> wwjTiles = displayTiles(squarePolygonEnvelope, line, column);
-                //  List<Geometry> JtsTiles;
+                wwjTiles = displayTiles(squarePolygonEnvelope, line, column);
                 // forEach tile
                 for (int i = 0; i < tilesCount; i++) {
                     String outTile = nameTF.getText() + "_" + i + ".x3d";
                     outPathname = Paths.get(OUT_DIR, outTile);
+
                     Geometry geom = initParameters(wwjTiles.get(i).getBoundaries());
                     //if sur bathy ou mnt
-                    /*
-                    s57StlChartComponentController.compute(OUT_DIR,
-                            outTile,
-                            wwd.getModel().getGlobe().getElevationModel(),
-                            tilesCount,
-                            i,
-                            scaleLatFactor, scaleLonFactor,
-                            buoyageScale,
-                            magnification,
-                            spaceX, spaceY,
-                            (int) (tileSideX / spaceX) + 1, (int) (tileSideY / spaceY) + 1,
-                            bottom,
-                            base,
-                            wwjTiles.get(i), // dalle en WWJ
-                            geom);     // dalle en JTS
-                     */
-                    //switch
-                    /*
-                    Path outPathname, String title,
-            int tilesCount, int index,
-            List<? extends Position> positions,
-            double tileSideX, double tileSideY,
-            double spaceX, double spaceY,
-            double bottom,
-            double magnification
-                     */
+
                     new StlPreWriterController(outPathname, title,
                             tilesCount, i,
                             positions,
                             tileSideX, tileSideY,
                             earthSpaceX, earthSpaceY,
-                            bottom, magnification
-                    ).compute();
-
+                            bottom, magnification).compute();
                     new ElevationStlController(outPathname, title,
                             tilesCount, i,
+                            geodesyServices,
                             positions,
                             tileSideX, tileSideY,
                             earthSpaceX, earthSpaceY,
                             bottom, magnification,
-                            wwd.getModel().getGlobe().getElevationModel()
-                    ).compute();
-
+                            wwd.getModel().getGlobe().getElevationModel()).compute();
                     new StlPostWriterController(outPathname).compute();
 
                     instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
@@ -459,7 +431,7 @@ public class StlComponentController
 
     private void squareLatEast() {
         preNewPolygon();
-        Position newPosition = geodesyServices.getPosition(envelopeList.get(1), 270, latRange * 1000);//270=West
+        Position newPosition = geodesyServices.getPosition(envelopeList.get(1), 270, latRange);//270=West
         squareEnvelopeList.remove(0);
         squareEnvelopeList.add(0, newPosition);
         Position newP3 = new Position(squareEnvelopeList.get(3).getLatitude(),
@@ -473,7 +445,7 @@ public class StlComponentController
 
     private void squareLatWest() {
         preNewPolygon();
-        Position newPosition = geodesyServices.getPosition(envelopeList.get(0), 90, latRange * 1000);//90=East
+        Position newPosition = geodesyServices.getPosition(envelopeList.get(0), 90, latRange);//90=East
         squareEnvelopeList.remove(1);
         squareEnvelopeList.add(1, newPosition);
         Position newP = new Position(squareEnvelopeList.get(3).getLatitude(),
@@ -485,7 +457,7 @@ public class StlComponentController
 
     private void squareLonNorth() {
         preNewPolygon();
-        Position newPosition = geodesyServices.getPosition(envelopeList.get(1), 360, lonRange * 1000);//0=North
+        Position newPosition = geodesyServices.getPosition(envelopeList.get(1), 360, lonRange);//0=North
         squareEnvelopeList.remove(2);
         squareEnvelopeList.add(2, newPosition);
         Position newP3 = new Position(newPosition.getLatitude(),
@@ -497,7 +469,7 @@ public class StlComponentController
 
     private void squareLonSouth() {
         preNewPolygon();
-        Position newPosition = geodesyServices.getPosition(envelopeList.get(2), 180, lonRange * 1000);//180=south
+        Position newPosition = geodesyServices.getPosition(envelopeList.get(2), 180, lonRange);//180=south
         squareEnvelopeList.remove(1);
         squareEnvelopeList.add(1, newPosition);
         Position newP = new Position(newPosition.getLatitude(),
@@ -548,6 +520,7 @@ public class StlComponentController
     }
 
     private List<Polygon> displayTiles(Polygon polyEnveloppe, int line, int col) {
+        layer.removeAllRenderables();
         Iterable<? extends LatLon> bounds = polyEnveloppe.getOuterBoundary();
         List<LatLon> listLatLon = new ArrayList<>();
         for (LatLon s : bounds) {
@@ -561,7 +534,7 @@ public class StlComponentController
         double orgLat = listLatLon.get(0).getLatitude().getDegrees();
         double orgLon = listLatLon.get(0).getLongitude().getDegrees();
 
-        List<Polygon> tiles = new ArrayList<>();
+        tiles = new ArrayList<>();
         for (int i = 0; i < line; i++) {
             for (int j = 0; j < col; j++) {
                 List<Position> positions0 = new ArrayList<>();
@@ -592,10 +565,9 @@ public class StlComponentController
                 polygon1.setAttributes(normalAttributes);
                 polygon1.setHighlightAttributes(highlightAttributes);
                 tiles.add(polygon1);
-
-                layer.addRenderable(polygon1);
-                wwd.redrawNow();
             }
+            layer.addRenderables(tiles);
+            wwd.redrawNow();
         }
         return tiles;
     }

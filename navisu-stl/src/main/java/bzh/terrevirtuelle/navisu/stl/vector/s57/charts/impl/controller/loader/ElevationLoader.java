@@ -20,7 +20,8 @@ import java.util.List;
  * @date Mar 4, 2017
  */
 public class ElevationLoader {
-protected GeodesyServices geodesyServices;
+
+    protected GeodesyServices geodesyServices;
     protected Polygon polygon;
     // protected WorldWindow wwd;
     protected ElevationModel model;
@@ -42,13 +43,11 @@ protected GeodesyServices geodesyServices;
     protected double magnification;
     protected List<Point3D> bottomPositions;
     protected List<Point3D> topPositions;
-    
-    //  protected double scaleLatFactor;
-    //  protected double scaleLonFactor;
     protected int index;
     protected String TEXTURE = "common/metal.jpg";
 
     public ElevationLoader(
+            GeodesyServices geodesyServices,
             ElevationModel model,
             List<? extends Position> positions,
             int index,
@@ -56,6 +55,7 @@ protected GeodesyServices geodesyServices;
             double earthSpaceX, double earthSpaceY,
             double bottom,
             double magnification) {
+        this.geodesyServices = geodesyServices;
         this.model = model;
         this.positions = positions;
         this.index = index;
@@ -68,24 +68,26 @@ protected GeodesyServices geodesyServices;
     }
 
     public String computeDEM() {
-      
+
         BOTTOM_STR = Double.toString(bottom);
         bottomPositions = new ArrayList<>();
         topPositions = new ArrayList<>();
-        ptsCountsX = 200; //confusion entre pas du MNT et pas sur la tuile generee
-        ptsCountsY = 200;
-        earthSpaceX = tileSideX / (ptsCountsX - 1);
-        earthSpaceY = tileSideY / (ptsCountsY - 1);
+            ptsCountsX = 200; //confusion entre pas du MNT et pas sur la tuile generee
+            ptsCountsY = 200;
+            earthSpaceX = tileSideX / (ptsCountsX - 1);
+            earthSpaceY = tileSideY / (ptsCountsY - 1);
 
-        //  ptsCountsX = ((int) (tileSideX / spaceX) + 1) * 100;
-        //  ptsCountsY = ((int) (tileSideY / spaceY) + 1) * 100;
+        double latRangeMetric = geodesyServices.getDistanceM(positions.get(3), positions.get(0));
+        double lonRangeMetric = geodesyServices.getDistanceM(positions.get(0), positions.get(1));
+
         String result = "";
 
-        double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / (ptsCountsY - 1);
-        double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / (ptsCountsX - 1);
+        double latInc = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / (ptsCountsY - 1);
+        double lonInc = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / (ptsCountsX - 1);
 
-        latRange = Math.abs(latRange);
-        lonRange = Math.abs(lonRange);
+        latInc = Math.abs(latInc);
+        lonInc = Math.abs(lonInc);
+
         double longitude = positions.get(1).getLongitude().getDegrees();
         double latitude;
         for (int i = 0; i < ptsCountsY; i++) {
@@ -98,9 +100,9 @@ protected GeodesyServices geodesyServices;
                 el /= magnification;
                 elevationsStr += el + " ";
                 bottomStr += BOTTOM_STR + " ";
-                latitude -= latRange;
+                latitude -= latInc;
             }
-            longitude -= lonRange;
+            longitude -= lonInc;
         }
         result += createDEM(elevationsStr,
                 ptsCountsX, earthSpaceX,
@@ -128,7 +130,7 @@ protected GeodesyServices geodesyServices;
             topPositions.add(new Point3D(pos, el, 0.0));
             bottomPositions.add(new Point3D(pos, bottom, 0.0));
             pos += earthSpaceX;
-            longitude -= lonRange;
+            longitude -= lonInc;
         }
         result += createBoundaryFace("", bottomPositions, topPositions, TEXTURE, "North face");
 
@@ -144,7 +146,7 @@ protected GeodesyServices geodesyServices;
             topPositions.add(new Point3D(pos, el, -tileSideX));
             bottomPositions.add(new Point3D(pos, bottom, -tileSideX));
             pos += earthSpaceX;
-            longitude -= lonRange;
+            longitude -= lonInc;
         }
 
         result += createBoundaryFace("", bottomPositions, topPositions, TEXTURE, "South face");
@@ -156,7 +158,7 @@ protected GeodesyServices geodesyServices;
         bottomPositions.clear();
         for (double lat = positions.get(2).getLatitude().getDegrees();
                 lat > positions.get(1).getLatitude().getDegrees();
-                lat -= latRange) {
+                lat -= latInc) {
             double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon0));
             el /= magnification;
             topPositions.add(new Point3D(0.0, el, pos));
@@ -173,7 +175,7 @@ protected GeodesyServices geodesyServices;
         bottomPositions.clear();
         for (double lat = positions.get(2).getLatitude().getDegrees();
                 lat > positions.get(1).getLatitude().getDegrees();
-                lat -= latRange) {
+                lat -= latInc) {
             double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon0));
             el /= magnification;
             topPositions.add(new Point3D(-tileSideX, el, pos));

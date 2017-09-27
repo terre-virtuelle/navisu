@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller;
 
+import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.ElevationLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.TextureLoader;
 import gov.nasa.worldwind.geom.Position;
@@ -21,9 +22,11 @@ public class ElevationStlController
         extends StlController {
 
     protected ElevationModel model;
+    protected GeodesyServices geodesyServices;
 
     public ElevationStlController(Path outPathname, String title,
             int tilesCount, int index,
+            GeodesyServices geodesyServices,
             List<? extends Position> positions,
             double tileSideX, double tileSideY,
             double earthSpaceX, double earthSpaceY,
@@ -37,6 +40,7 @@ public class ElevationStlController
                 earthSpaceX, earthSpaceY,
                 bottom,
                 magnification);
+        this.geodesyServices = geodesyServices;
         this.model = model;
     }
 
@@ -45,8 +49,14 @@ public class ElevationStlController
         writeElevation();
     }
 
+    private void writeTexture() {
+        TextureLoader exportImageOrElevations = new TextureLoader(positions);
+        exportImageOrElevations.doSaveImage();
+    }
+
     private void writeElevation() {
-        ElevationLoader elevationLoader = new ElevationLoader(model,
+        ElevationLoader elevationLoader = new ElevationLoader(geodesyServices,
+                model,
                 positions,
                 index,
                 tileSideX, tileSideY,
@@ -76,9 +86,4 @@ public class ElevationStlController
 
     }
      */
-    private void writeTexture() {
-        TextureLoader exportImageOrElevations = new TextureLoader(positions);
-        exportImageOrElevations.doSaveImage();
-    }
-
 }

@@ -19,21 +19,22 @@ import org.gavaghan.geodesy.GlobalCoordinates;
  * @author serge
  * @date Sep 12, 2017
  */
-public class GeodesyImpl 
-implements Geodesy, GeodesyServices, ComponentState {
+public class GeodesyImpl
+        implements Geodesy, GeodesyServices, ComponentState {
 
-    private final  Ellipsoid REFERENCE = Ellipsoid.WGS84;//default
+    private final Ellipsoid REFERENCE = Ellipsoid.WGS84;//default
 
     @Override
-    public  double getDistanceM(Position posA, Position posB) {
+    public double getDistanceM(Position posA, Position posB) {
         GeodeticCalculator geoCalc = new GeodeticCalculator();
+      
         GlobalCoordinates wpA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
         GlobalCoordinates wpB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
         return geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpB).getEllipsoidalDistance();
     }
 
     @Override
-    public  Position getPosition(Position posA, double bearing, double distance) {
+    public Position getPosition(Position posA, double bearing, double distance) {
         double[] endBearing = new double[1];
         GeodeticCalculator geoCalc = new GeodeticCalculator();
         GlobalCoordinates locA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
@@ -47,7 +48,7 @@ implements Geodesy, GeodesyServices, ComponentState {
 
     @Override
     public void componentInitiated() {
-     }
+    }
 
     @Override
     public void componentStarted() {
@@ -57,5 +58,4 @@ implements Geodesy, GeodesyServices, ComponentState {
     public void componentStopped() {
     }
 
-    
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Immersive' version='3.0'  xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation =' http://www.web3d.org/specifications/x3d-3.0.xsd '> 
+<head>
+<meta name='Title' content=''/> 
+<meta name='TilesCount' content='4'/>
+<meta name='Index' content='3'/>
+<meta name='Author' content='serge'/>
+<meta name='Created' content='26/09/2017-10:33:09'/>
+<meta name='Generator' content='NaVisu'/>
+<meta name='Site' content='http://www.navisu.org/'/>
+<meta name='Github' content='https://github.com/terre-virtuelle/navisu'/>
+<meta name='Pos0' content='Lat=3.6180030035717294° Lon=-74.92732937471995°'/>
+<meta name='Pos1' content='Lat=3.6180030035717294° Lon=-4.448100000000011°'/>
+<meta name='Pos2' content='Lat=48.395669999999996° Lon=-4.448100000000011°'/>
+<meta name='Pos3' content='Lat=48.395669999999996° Lon=-74.92732937471995°'/>
+</head>
+<NavigationInfo type='FLY'/>
+<Scene>
+
+<Transform rotation='0 1 0 1.57058' translation='200.0 0.0 200.0'  scale='1.000900 1.000900 1.000900'> 
+<Viewpoint  position='-100.0 1000.0 100'  orientation='1 0 0 -1.57'  fieldOfView='.5'/>
+<Transform rotation='0 1 0 -3.14'>
+
