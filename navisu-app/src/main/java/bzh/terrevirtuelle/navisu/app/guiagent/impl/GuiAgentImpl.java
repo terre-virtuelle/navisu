@@ -155,7 +155,7 @@ public class GuiAgentImpl
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();
-
+        
         wwd.addPositionListener((PositionEvent event) -> {
             pos = wwd.getView().getCurrentEyePosition();
             double a = pos.getAltitude();
@@ -169,7 +169,7 @@ public class GuiAgentImpl
                 label.setText(
                         "        Altitude : " + aText
                         + "        Latitude : " + pos.getLatitude().toFormattedDMSString()
-                        + "        Longitude : " + pos.getLongitude().toFormattedDMSString());
+                        + "        Longitude : " + pos.getLongitude().toFormattedDMSString());        
             });
             wwd.redrawNow();
         });
@@ -266,5 +266,5 @@ public class GuiAgentImpl
     public BorderPane getStatusBorderPane() {
         return ctrl.getStatusBorderPane();
     }
-    
+
 }

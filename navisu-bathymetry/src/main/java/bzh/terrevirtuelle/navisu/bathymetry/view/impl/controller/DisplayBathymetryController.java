@@ -25,9 +25,15 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.SurfaceSquare;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.gavaghan.geodesy.Ellipsoid;
 
@@ -57,7 +63,8 @@ public class DisplayBathymetryController {
     protected double MIN_LON = -4.549251079559326;
     protected double MAX_LAT = 48.45;
     protected double MAX_LON = -4.245;
-
+    protected Charset charset = Charset.forName("UTF-8");
+    NumberFormat formatter = new DecimalFormat("#0.00");
     /*
     //Ouessant
     protected double MIN_LAT = 48.255496978759766;
@@ -139,6 +146,13 @@ public class DisplayBathymetryController {
                     points3d.stream().filter((pt) -> (maxElevation < pt.getElevation())).forEach((pt) -> {
                         maxElevation = pt.getElevation();
                     });
+                     System.out.println("maxElevation : " + maxElevation);
+                  //  points3d.forEach((p) -> {
+                  //      System.out.printf("%f%s%f%s%.2f\n", p.getLat(), " ", p.getLon(), " ", p.getElevation());
+                   // });
+
+                    
+
                     //Display plane 0m over sea
                     displayServices.displayPlane(minLat, minLon, maxLat, maxLon, 100, Material.BLUE, layer);
                     //Display plane maxElevation*10 over sea
@@ -151,16 +165,15 @@ public class DisplayBathymetryController {
                     displayServices.displayDelaunay(triangles1, maxElevation, 10.0, Material.GREEN, layer);
 
                     //Create concaveHull from points with bathy information
-                    concaveHull = jtsServices.getConcaveHull(points3d, THRESHOLD);
-                    displayServices.displayConcaveHull(concaveHull, maxElevation, 10.0, Material.RED, layer);
-
+                    //  concaveHull = jtsServices.getConcaveHull(points3d, THRESHOLD);
+                    // displayServices.displayConcaveHull(concaveHull, maxElevation, 10.0, Material.RED, layer);
                     //Create a grid of points for triangulate sea level plane 
                     Point3D[][] seaPlane = delaunayServices.toGrid(minLat, minLon, 100.0, 100.0, nbLat, nbLon, maxElevation);
                     //Modifie the z whith bathyletry data
-                    seaPlane = bathymetryDBServices.mergeData(seaPlane, nbLat, nbLon, triangles1);
-                    List<Triangle_dt> triangles2 = delaunayServices.createDelaunay(seaPlane, nbLat, nbLon, 0.0);
-                    displayServices.displayDelaunay(triangles2, maxElevation, 10.0, Material.YELLOW, layer);
-                   
+                    //  seaPlane = bathymetryDBServices.mergeData(seaPlane, nbLat, nbLon, triangles1);
+                    //  List<Triangle_dt> triangles2 = delaunayServices.createDelaunay(seaPlane, nbLat, nbLon, 0.0);
+                    //  displayServices.displayDelaunay(triangles2, maxElevation, 10.0, Material.YELLOW, layer);
+
                     wwd.redrawNow();
                 });
 

@@ -144,13 +144,13 @@ import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.bathy.BathyStlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.bathy.impl.BathyStlComponentImpl;
-import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.StlComponentImpl;
+import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.DisplayImpl;
 import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
 import gov.nasa.worldwind.WorldWindow;
-import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.StlComponentServices;
+import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 
 
 /**
@@ -490,13 +490,13 @@ public class AppMain extends Application {
         // System.out.println("con : " + con);
         
         
-      //bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
-       //        "5432",  "org.postgresql.Driver", "admin", "admin");
+    // bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
+    //           "5432",  "org.postgresql.Driver", "admin", "admin");
                
        //bathymetryDBServices.create("C:\\Users\\Dom\\Documents\\Navisu\\shom-data\\bathy\\MNT100M_ATL\\splited\\bathy04.glz");
       //bathymetryDBServices.createIndex();
  
-       //displayBathymetryServices.displayAllSounding();
+     //  displayBathymetryServices.displayAllSounding();
         
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut

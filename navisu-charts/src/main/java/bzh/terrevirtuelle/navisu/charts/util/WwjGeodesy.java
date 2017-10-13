@@ -26,10 +26,10 @@ public class WwjGeodesy {
 
     public static double getDistanceM(Position posA, Position posB) {
         GeodeticCalculator geoCalc = new GeodeticCalculator();
+      
         GlobalCoordinates wpA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
         GlobalCoordinates wpB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
-        //  geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpB).getAzimuth();
-        return geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpB).getEllipsoidalDistance() / KM_TO_METER;
+        return geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpB).getEllipsoidalDistance();
     }
 
     public static Pair<Double, Double> getXYM(Position posA, Position posB) {

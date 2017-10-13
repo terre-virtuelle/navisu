@@ -122,6 +122,7 @@ public class S57GlobalCatalogController
                             if (component.getFiles() != null) {
                                 Path filepath = component.getFiles().get(filename);
                                 if (filepath != null) {
+                                    // Génération du MNT et de la carto
                                     if (keyCode == KeyCode.F1) {
                                         InstrumentDriver instrument = component.openFile("S57Stl", filepath.toString());
                                         keyCode = null;
@@ -129,7 +130,15 @@ public class S57GlobalCatalogController
                                             instrument.showGUI(polygon);
                                         }
                                     } else {
-                                        component.loadFile(filepath.toString());
+                                        if (keyCode == KeyCode.F2) {
+                                            InstrumentDriver instrument = component.openFile("S57Stl", null);
+                                            keyCode = null;
+                                            if (instrument != null) {
+                                                instrument.showGUI(polygon);
+                                            }
+                                        } else {
+                                            component.loadFile(filepath.toString());
+                                        }
                                     }
                                     s57Chart = new S57Chart();
                                     String number = filepathToNumber(filepath.toString());
