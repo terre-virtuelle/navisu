@@ -28,6 +28,8 @@ import gov.nasa.worldwind.render.SurfaceSquare;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -58,20 +60,44 @@ public class DisplayBathymetryController {
     protected final double THRESHOLD = 0.0015;
     protected Geometry concaveHull;
     protected double MIN_DEPTH = 0.0;
-
-    protected double MIN_LAT = 48.255496978759766;
-    protected double MIN_LON = -4.549251079559326;
-    protected double MAX_LAT = 48.45;
-    protected double MAX_LON = -4.245;
+    List<String> lines = new ArrayList<>();
+    protected Path outPathname;
+    protected String OUT_DIR = "privateData/x3d/";
+    
+ /*
+    protected double MIN_LAT = 48.42254051549229;
+    protected double MIN_LON = -5.085612948242527;
+    protected double MAX_LAT = 48.54667;
+    protected double MAX_LON = -4.900021474121264;
+    
+    48.42254051549229°, -4.900021474121264°, 100.0),
+ (48.42254051549229°, -4.71443°, 100.0), 
+(48.54667°, -4.71443°, 100.0), 
+(48.54667°, -4.900021474121264°, 100.0),
+ (48.42254051549229°, -4.900021474121264°, 100.0)]
+    */
+/*
+    48.29841103098457°, -5.085612948242527°, 100.0), 
+(48.29841103098457°, -4.900021474121264°, 100.0), 
+(48.42254051549229°, -4.900021474121264°, 100.0), 
+(48.42254051549229°, -5.085612948242527°, 100.0), 
+(48.29841103098457°, -5.085612948242527°, 100.0)]
+    */
+    /*
+    48.29841103098457°, -4.900021474121264°, 100.0),
+ (48.29841103098457°, -4.71443°, 100.0), 
+(48.42254051549229°, -4.71443°, 100.0), 
+(48.42254051549229°, -4.900021474121264°, 100.0),
+ (48.29841103098457°, -4.900021474121264°, 100.0)
+    */
+    protected double MIN_LAT = 48.29841103098457;
+    protected double MIN_LON = -5.085612948242527;
+    protected double MAX_LAT = 48.42254051549229;
+    protected double MAX_LON = -4.900021474121264;
+    
     protected Charset charset = Charset.forName("UTF-8");
     NumberFormat formatter = new DecimalFormat("#0.00");
-    /*
-    //Ouessant
-    protected double MIN_LAT = 48.255496978759766;
-    protected double MIN_LON = -4.549251079559326;
-    protected double MAX_LAT = 48.50;
-    protected double MAX_LON = -5.166;
-     */
+
     double distA;
     double distB;
     double distC;
@@ -140,18 +166,23 @@ public class DisplayBathymetryController {
 
         } // plusieurs jobs
                 ,
-                 (progressHandle) -> {
+                (progressHandle) -> {
                     //Rechercher le max de bathy, z = max - elevation, pour le positionnement
                     maxElevation = 0.0;
                     points3d.stream().filter((pt) -> (maxElevation < pt.getElevation())).forEach((pt) -> {
-                        maxElevation = pt.getElevation();
-                    });
-                     System.out.println("maxElevation : " + maxElevation);
-                  //  points3d.forEach((p) -> {
-                  //      System.out.printf("%f%s%f%s%.2f\n", p.getLat(), " ", p.getLon(), " ", p.getElevation());
-                   // });
+                maxElevation = pt.getElevation();
+            });
+                    System.out.println("maxElevation : " + maxElevation);
 
-                    
+                    points3d.forEach((p) -> {
+                        lines.add(p.getLon() + " " + p.getLat() + " " + p.getElevation());
+                    });
+                    outPathname = Paths.get(OUT_DIR, "/hackathonBathy.csv");
+                    try {
+                        Files.write(outPathname, lines, charset, StandardOpenOption.CREATE);
+                    } catch (IOException ex) {
+                        Logger.getLogger(DisplayBathymetryController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                    }
 
                     //Display plane 0m over sea
                     displayServices.displayPlane(minLat, minLon, maxLat, maxLon, 100, Material.BLUE, layer);

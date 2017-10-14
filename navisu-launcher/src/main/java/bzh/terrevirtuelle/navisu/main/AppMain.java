@@ -490,13 +490,13 @@ public class AppMain extends Application {
         // System.out.println("con : " + con);
         
         
-    // bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
-    //           "5432",  "org.postgresql.Driver", "admin", "admin");
+     bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
+               "5432",  "org.postgresql.Driver", "admin", "admin");
                
        //bathymetryDBServices.create("C:\\Users\\Dom\\Documents\\Navisu\\shom-data\\bathy\\MNT100M_ATL\\splited\\bathy04.glz");
       //bathymetryDBServices.createIndex();
  
-     //  displayBathymetryServices.displayAllSounding();
+       displayBathymetryServices.displayAllSounding();
         
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut

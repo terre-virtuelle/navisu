@@ -212,6 +212,7 @@ public class DockManagerImpl<TrackTool>
                 .createNode(1, "bathy.png", 1, "data.png", 1, "dbshomon.png", (e) -> openDB(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD))
                 .createNode(1, "bathy.png", 1, "data.png", 2, "dbshomoff.png", (e) -> closeDB(DB_NAME))
                 .createNode(1, "bathy.png", 1, "data.png", 3, "gebco.png", (e) -> open("Bathy", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2"))
+                .createNode(1, "bathy.png", 1, "data.png", 4, "bathySounds.png", (e) -> open("BathySounds", ".shp", ".SHP"))
                 .createNode(2, "sediment.png", 0, "data.png", 0, "shom.png", (e) -> open("sedimentology", ".shp", ".SHP"))
                 .createNode(3, "magnetism.png", 0, "data.png", 0, "noaa.png", (e) -> open("Magnetic", ".shp", ".SHP"))
                 .build();

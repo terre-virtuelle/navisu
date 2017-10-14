@@ -35,7 +35,8 @@ public class BathymetryImpl
     @UsedService
     LayerTreeServices layerTreeServices;
 
-    private static final String NAME = "Bathymetry";
+   // private static final String NAME = "Bathymetry";
+    private static final String NAME = "TOTO";
     private static final String EXTENSION_0 = ".glz";
     protected static final String GROUP = "Bathymetry";
 
@@ -60,6 +61,7 @@ public class BathymetryImpl
         if (category.contains(NAME) && file.toLowerCase().endsWith(EXTENSION_0)) {
             canOpen = true;
         }
+        System.out.println("OK ");
         return canOpen;
     }
 
