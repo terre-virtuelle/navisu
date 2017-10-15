@@ -90,10 +90,12 @@ public class DisplayBathymetryController {
 (48.42254051549229°, -4.900021474121264°, 100.0),
  (48.29841103098457°, -4.900021474121264°, 100.0)
      */
-    protected double MIN_LAT = 48.29841103098457;
-    protected double MIN_LON = -5.085612948242527;
-    protected double MAX_LAT = 48.42254051549229;
-    protected double MAX_LON = -4.900021474121264;
+    
+    
+    protected double MIN_LAT = 48.255496978759766;
+    protected double MIN_LON = -4.549251079559326;
+    protected double MAX_LAT = 48.45;
+    protected double MAX_LON = -4.245;
 
     protected Charset charset = Charset.forName("UTF-8");
     protected NumberFormat formatter = new DecimalFormat("#0.00");
@@ -193,9 +195,9 @@ public class DisplayBathymetryController {
                     Point3D[][] seaPlane = delaunayServices.toGrid(minLat, minLon, 100.0, 100.0, nbLat, nbLon, maxElevation);
                     //Modifie the z whith bathyletry data
                     
-                    //  seaPlane = bathymetryDBServices.mergeData(seaPlane, nbLat, nbLon, triangles1);
-                    //  List<Triangle_dt> triangles2 = delaunayServices.createDelaunay(seaPlane, nbLat, nbLon, 0.0);
-                    //  displayServices.displayDelaunay(triangles2, maxElevation, 10.0, Material.YELLOW, layer);
+                      seaPlane = bathymetryDBServices.mergeData(seaPlane, nbLat, nbLon, triangles1);
+                     List<Triangle_dt> triangles2 = delaunayServices.createDelaunay(seaPlane, nbLat, nbLon, 0.0);
+                      displayServices.displayDelaunay(triangles2, maxElevation, 10.0, Material.YELLOW, layer);
 
                     wwd.redrawNow();
                 });
