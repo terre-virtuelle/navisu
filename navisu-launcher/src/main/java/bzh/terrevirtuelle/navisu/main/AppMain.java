@@ -496,7 +496,7 @@ public class AppMain extends Application {
 
         //bathymetryDBServices.create("C:\\Users\\Dom\\Documents\\Navisu\\shom-data\\bathy\\MNT100M_ATL\\splited\\bathy04.glz");
         //bathymetryDBServices.createIndex();
-        displayBathymetryServices.displayAllSounding();
+       // displayBathymetryServices.displayAllSounding();
 
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
