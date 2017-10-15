@@ -401,7 +401,6 @@ public class StlComponentController
 
                     Geometry geom = initParameters(wwjTiles.get(i).getBoundaries());
                     //if sur bathy ou mnt
-System.out.println("positions : "+positions);
                     new StlPreWriterController(outPathname, title,
                             tilesCount, i,
                             positions,

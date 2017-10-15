@@ -7,10 +7,9 @@ package bzh.terrevirtuelle.navisu.bathymetry.view;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
-import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
-import com.vividsolutions.jts.geom.Geometry;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
@@ -23,12 +22,12 @@ public interface DisplayBathymetryServices
 
     InstrumentDriver getDriver();
 
-  //  Geometry createConcaveHull(List<Point3D> points3d, double threshold);
-
     void displaySounding(double lat, double lon, double depth, RenderableLayer l);
 
     void displaySounding(List<Point3D> points, RenderableLayer l);
 
-    public void displayAllSounding();
+     void displayAllSounding();
+
+     void getFileGrid(Path pathname,List<Point3D> points3d,  boolean latLon);
 
 }

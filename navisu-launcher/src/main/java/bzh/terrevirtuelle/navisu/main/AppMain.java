@@ -124,6 +124,8 @@ import bzh.terrevirtuelle.navisu.extensions.camera.impl.CameraComponentImpl;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.extensions.commands.impl.NavigationCmdComponentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.server.ServerOptionsComponentServices;
+import bzh.terrevirtuelle.navisu.bathymetry.sounds.BathySoundsServices;
+import bzh.terrevirtuelle.navisu.bathymetry.sounds.impl.BathySoundsImpl;
 import bzh.terrevirtuelle.navisu.bathymetry.view.DisplayBathymetryServices;
 import bzh.terrevirtuelle.navisu.bathymetry.view.impl.DisplayBathymetryImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
@@ -151,7 +153,6 @@ import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
 import gov.nasa.worldwind.WorldWindow;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
-
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -194,6 +195,7 @@ public class AppMain extends Application {
                         BathymetryEventProducerImpl.class,
                         BathymetryImpl.class,
                         BathymetryLocalCatalogImpl.class,
+                        BathySoundsImpl.class,
                         BathyStlComponentImpl.class,
                         Bezier2DImpl.class,
                         CameraComponentImpl.class,
@@ -266,7 +268,7 @@ public class AppMain extends Application {
         BathymetryDBServices bathymetryDBServices = componentManager.getComponentService(BathymetryDBServices.class);
         BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
         BathyStlComponentServices bathyStlComponentServices = componentManager.getComponentService(BathyStlComponentServices.class);
-
+        BathySoundsServices bathySoundsServices = componentManager.getComponentService(BathySoundsServices.class);
         Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
 
         CameraComponentServices cameraComponentServices = componentManager.getComponentService(CameraComponentServices.class);
@@ -372,6 +374,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(bathyStlComponentServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(bathySoundsServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(cameraComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(configurationComponentServices.getDriver());
@@ -488,16 +491,13 @@ public class AppMain extends Application {
         // Neo4J serveur externe
         // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
         // System.out.println("con : " + con);
-        
-        
-     bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://", 
-               "5432",  "org.postgresql.Driver", "admin", "admin");
-               
-       //bathymetryDBServices.create("C:\\Users\\Dom\\Documents\\Navisu\\shom-data\\bathy\\MNT100M_ATL\\splited\\bathy04.glz");
-      //bathymetryDBServices.createIndex();
- 
-       displayBathymetryServices.displayAllSounding();
-        
+        bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
+                "5432", "org.postgresql.Driver", "admin", "admin");
+
+        //bathymetryDBServices.create("C:\\Users\\Dom\\Documents\\Navisu\\shom-data\\bathy\\MNT100M_ATL\\splited\\bathy04.glz");
+        //bathymetryDBServices.createIndex();
+      //  displayBathymetryServices.displayAllSounding();
+
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
         //  speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US

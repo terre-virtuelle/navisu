@@ -11,13 +11,18 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.globes.ElevationModel;
+import gov.nasa.worldwind.globes.Globe;
 import gov.nasa.worldwind.render.Polygon;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -48,7 +53,7 @@ public class ElevationLoader {
     protected List<Point3D> topPositions;
     protected int index;
     protected String TEXTURE = "common/metal.jpg";
-
+int i=0;
     public ElevationLoader(
             GeodesyServices geodesyServices,
             List<? extends Position> positions,
@@ -69,6 +74,26 @@ public class ElevationLoader {
         wwd = GeoWorldWindViewImpl.getWW();
         model = wwd.getModel().getGlobe().getElevationModel();
 
+    }
+
+    public double[] getBestElevations(List<LatLon> locations) {
+        Globe globe = wwd.getModel().getGlobe();
+        Sector sector = Sector.boundingSector(locations);
+        double[] elevations = new double[locations.size()];
+
+        // Iterate until the best resolution is achieved. Use the elevation model to determine the best elevation.
+        double targetResolution = globe.getElevationModel().getBestResolution(sector);
+        double actualResolution = Double.MAX_VALUE;
+       // while (actualResolution > targetResolution) {
+            // try {
+            actualResolution = globe.getElevations(sector, locations, targetResolution, elevations);
+            // Thread.sleep(2); // give the system a chance to retrieve data from the disk cache or the server
+            //  } catch (InterruptedException ex) {
+            //      Logger.getLogger(ElevationLoader.class.getName()).log(Level.SEVERE, null, ex);
+            //  }
+            System.out.println(i++);
+      //  }
+        return elevations;
     }
 
     public String computeDEM() {
@@ -102,38 +127,14 @@ public class ElevationLoader {
         lonInc = Math.abs(lonInc);
 
         double longitude = positions.get(1).getLongitude().getDegrees();
-        double latitude = positions.get(3).getLatitude().getDegrees();
+        double latitude;// = positions.get(3).getLatitude().getDegrees();
 
         //To load best elevation model
-        double latView = geodesyServices.getPosition(positions.get(0), 0.0, latRangeMetric/2.0).getLatitude().getDegrees();
-        double lonView = geodesyServices.getPosition(positions.get(0), 90.0, lonRangeMetric/2.0).getLongitude().getDegrees();
-       
-        wwd.getView().setEyePosition(Position.fromDegrees(latView, lonView, 10000));
-        wwd.redrawNow();
-        /*
-        // A tester depuis examples
-        ArrayList<LatLon> latlons = new ArrayList<>();
-            latlons.add(LatLon.fromDegrees(45.50d, -123.3d));
-            latlons.add(LatLon.fromDegrees(45.52d, -123.3d));
-            latlons.add(LatLon.fromDegrees(45.54d, -123.3d));
-            latlons.add(LatLon.fromDegrees(45.56d, -123.3d));
-            latlons.add(LatLon.fromDegrees(45.58d, -123.3d));
-            latlons.add(LatLon.fromDegrees(45.60d, -123.3d));
-            Sector sector = Sector.fromDegrees(44d, 46d, -123d, -121d);
-            double[] elevations = new double[latlons.size()];
-            // request resolution of DTED2 (1degree / 3600 )
-            double targetResolution = Angle.fromDegrees(1d).radians / 3600;
-
-            double resolutionAchieved = this.wwd.getModel().getGlobe().getElevationModel().getElevations(
-                sector, latlons, targetResolution, elevations);
-            StringBuffer sb = new StringBuffer();
-            for (double e : elevations){
-                sb.append("\n").append(e);
-            }
-            sb.append("\nresolutionAchieved = ").append(resolutionAchieved);
-            sb.append(", requested resolution = ").append(targetResolution);
-            Logging.logger().info(sb.toString());
-        */
+        //    double latView = geodesyServices.getPosition(positions.get(0), 0.0, latRangeMetric / 2.0).getLatitude().getDegrees();
+        //   double lonView = geodesyServices.getPosition(positions.get(0), 90.0, lonRangeMetric / 2.0).getLongitude().getDegrees();
+        //   wwd.getView().setEyePosition(Position.fromDegrees(latView, lonView, 10000));
+        //   wwd.redrawNow();
+        /* 
 
         for (int i = 0; i < ptsCountX; i++) {
             latitude = positions.get(3).getLatitude().getDegrees();
@@ -150,7 +151,26 @@ public class ElevationLoader {
             elevationsStr += "\n ";
             longitude -= lonInc;
         }
-
+         */
+        List<LatLon> locations = new ArrayList<>();
+        for (int i = 0; i < ptsCountX; i++) {
+            latitude = positions.get(3).getLatitude().getDegrees();
+            for (int j = 0; j < ptsCountY; j++) {
+                latitude -= latInc;
+                locations.add(new LatLon(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude)));
+            }
+            elevationsStr += "\n ";
+            longitude -= lonInc;
+        }
+        double[] elevations = getBestElevations(locations);
+        for (double el : elevations) {
+            if (el < 0) {
+                el = 0;
+            }
+            el *= magnification;
+            elevationsStr += formatter.format(el) + " ";
+            bottomStr += BOTTOM_STR + " ";
+        }
         result += createDEM(elevationsStr,
                 ptsCountX, tileSpaceX,
                 ptsCountY, tileSpaceY,

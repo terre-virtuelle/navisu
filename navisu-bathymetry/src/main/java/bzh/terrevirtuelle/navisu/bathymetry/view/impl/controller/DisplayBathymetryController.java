@@ -63,8 +63,8 @@ public class DisplayBathymetryController {
     List<String> lines = new ArrayList<>();
     protected Path outPathname;
     protected String OUT_DIR = "privateData/x3d/";
-    
- /*
+
+    /*
     protected double MIN_LAT = 48.42254051549229;
     protected double MIN_LON = -5.085612948242527;
     protected double MAX_LAT = 48.54667;
@@ -75,28 +75,28 @@ public class DisplayBathymetryController {
 (48.54667°, -4.71443°, 100.0), 
 (48.54667°, -4.900021474121264°, 100.0),
  (48.42254051549229°, -4.900021474121264°, 100.0)]
-    */
-/*
+     */
+ /*
     48.29841103098457°, -5.085612948242527°, 100.0), 
 (48.29841103098457°, -4.900021474121264°, 100.0), 
 (48.42254051549229°, -4.900021474121264°, 100.0), 
 (48.42254051549229°, -5.085612948242527°, 100.0), 
 (48.29841103098457°, -5.085612948242527°, 100.0)]
-    */
-    /*
+     */
+ /*
     48.29841103098457°, -4.900021474121264°, 100.0),
  (48.29841103098457°, -4.71443°, 100.0), 
 (48.42254051549229°, -4.71443°, 100.0), 
 (48.42254051549229°, -4.900021474121264°, 100.0),
  (48.29841103098457°, -4.900021474121264°, 100.0)
-    */
+     */
     protected double MIN_LAT = 48.29841103098457;
     protected double MIN_LON = -5.085612948242527;
     protected double MAX_LAT = 48.42254051549229;
     protected double MAX_LON = -4.900021474121264;
-    
+
     protected Charset charset = Charset.forName("UTF-8");
-    NumberFormat formatter = new DecimalFormat("#0.00");
+    protected NumberFormat formatter = new DecimalFormat("#0.00");
 
     double distA;
     double distB;
@@ -166,24 +166,14 @@ public class DisplayBathymetryController {
 
         } // plusieurs jobs
                 ,
-                (progressHandle) -> {
+                 (progressHandle) -> {
                     //Rechercher le max de bathy, z = max - elevation, pour le positionnement
                     maxElevation = 0.0;
                     points3d.stream().filter((pt) -> (maxElevation < pt.getElevation())).forEach((pt) -> {
-                maxElevation = pt.getElevation();
-            });
-                    System.out.println("maxElevation : " + maxElevation);
-
-                    points3d.forEach((p) -> {
-                        lines.add(p.getLon() + " " + p.getLat() + " " + p.getElevation());
+                        maxElevation = pt.getElevation();
                     });
-                    outPathname = Paths.get(OUT_DIR, "/hackathonBathy.csv");
-                    try {
-                        Files.write(outPathname, lines, charset, StandardOpenOption.CREATE);
-                    } catch (IOException ex) {
-                        Logger.getLogger(DisplayBathymetryController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-                    }
-
+                    System.out.println("maxElevation : " + maxElevation);
+                    
                     //Display plane 0m over sea
                     displayServices.displayPlane(minLat, minLon, maxLat, maxLon, 100, Material.BLUE, layer);
                     //Display plane maxElevation*10 over sea
@@ -196,11 +186,13 @@ public class DisplayBathymetryController {
                     displayServices.displayDelaunay(triangles1, maxElevation, 10.0, Material.GREEN, layer);
 
                     //Create concaveHull from points with bathy information
+                    
                     //  concaveHull = jtsServices.getConcaveHull(points3d, THRESHOLD);
                     // displayServices.displayConcaveHull(concaveHull, maxElevation, 10.0, Material.RED, layer);
                     //Create a grid of points for triangulate sea level plane 
                     Point3D[][] seaPlane = delaunayServices.toGrid(minLat, minLon, 100.0, 100.0, nbLat, nbLon, maxElevation);
                     //Modifie the z whith bathyletry data
+                    
                     //  seaPlane = bathymetryDBServices.mergeData(seaPlane, nbLat, nbLon, triangles1);
                     //  List<Triangle_dt> triangles2 = delaunayServices.createDelaunay(seaPlane, nbLat, nbLon, 0.0);
                     //  displayServices.displayDelaunay(triangles2, maxElevation, 10.0, Material.YELLOW, layer);
@@ -232,4 +224,22 @@ public class DisplayBathymetryController {
         });
     }
 
+    public void getFileGrid(Path pathname, List<Point3D> points3d, boolean latLon) {
+        if (points3d != null) {
+            if (latLon == true) {
+                points3d.forEach((p) -> {
+                    lines.add(p.getLon() + " " + p.getLat() + " " + p.getElevation());
+                });
+            } else {
+                points3d.forEach((p) -> {
+                    lines.add(p.getLat() + " " + p.getLon() + " " + p.getElevation());
+                });
+            }
+            try {
+                Files.write(pathname, lines, charset, StandardOpenOption.CREATE);
+            } catch (IOException ex) {
+                Logger.getLogger(DisplayBathymetryController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+    }
 }

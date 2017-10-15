@@ -18,12 +18,12 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
-import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
-import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentState;
@@ -75,8 +75,8 @@ public class DisplayBathymetryImpl
     public void componentInitiated() {
         layer = layersManagerServices.getLayer(GROUP, LAYER_NAME);
         controller = DisplayBathymetryController.getInstance(this,
-                bathymetryDBServices, guiAgentServices, 
-                displayServices,delaunayServices,jtsServices,
+                bathymetryDBServices, guiAgentServices,
+                displayServices, delaunayServices, jtsServices,
                 LIMIT, layer);
     }
 
@@ -105,26 +105,23 @@ public class DisplayBathymetryImpl
     }
 
     @Override
-    public void displayAllSounding(){
+    public void displayAllSounding() {
         controller.displayAllSounding();
     }
 
-/*
     @Override
-    public Geometry createConcaveHull(List<Point3D> points3d, double threshold) {
-       return controller.createConcaveHull(points3d, threshold);
+    public void getFileGrid(Path pathname, List<Point3D> points3d, boolean latLon) {
+        controller.getFileGrid(pathname, points3d, latLon);
     }
-*/
-    
 
     @Override
     public void displaySounding(double lat, double lon, double depth, RenderableLayer l) {
-  controller.displaySounding(lat, lon, depth, l);
+        controller.displaySounding(lat, lon, depth, l);
     }
 
     @Override
     public void displaySounding(List<Point3D> points, RenderableLayer l) {
-  controller.displaySounding(points, l);
+        controller.displaySounding(points, l);
     }
 
 }

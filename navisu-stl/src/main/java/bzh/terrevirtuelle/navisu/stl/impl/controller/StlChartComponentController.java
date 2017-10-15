@@ -10,7 +10,6 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.TOPMAR_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.stl.charts.loader.BUOYAGE_Stl_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.stl.charts.loader.DEPARE_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.charts.loader.PONTON_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.charts.loader.SLCONS_Stl_ShapefileLoader;
 import com.vividsolutions.jts.geom.Geometry;
