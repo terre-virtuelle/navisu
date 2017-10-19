@@ -6,35 +6,25 @@
 package bzh.terrevirtuelle.navisu.stl.dem.loader;
 
 //import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
-import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.geom.Sector;
-import gov.nasa.worldwind.globes.ElevationModel;
-import gov.nasa.worldwind.globes.Globe;
 import gov.nasa.worldwind.render.Polygon;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author serge
  * @date Mar 4, 2017
  */
-public class ElevationLoader {
+public abstract class ElevationLoader {
 
     protected GeodesyServices geodesyServices;
     protected Polygon polygon;
-    protected WorldWindow wwd;
-    protected ElevationModel model;
+
     protected String elevationsStr = "";
     protected String bottomStr = "";
     protected double earthSpaceX;
@@ -53,7 +43,9 @@ public class ElevationLoader {
     protected List<Point3D> topPositions;
     protected int index;
     protected String TEXTURE = "common/metal.jpg";
-int i=0;
+    int i = 0;
+    protected double offset;
+
     public ElevationLoader(
             GeodesyServices geodesyServices,
             List<? extends Position> positions,
@@ -61,7 +53,8 @@ int i=0;
             double tileSideX, double tileSideY,
             double earthSpaceX, double earthSpaceY,
             double bottom,
-            double magnification) {
+            double magnification,
+            double offset) {
         this.geodesyServices = geodesyServices;
         this.positions = positions;
         this.index = index;
@@ -71,30 +64,12 @@ int i=0;
         this.earthSpaceY = earthSpaceY;
         this.bottom = bottom;
         this.magnification = magnification;
-        wwd = GeoWorldWindViewImpl.getWW();
-        model = wwd.getModel().getGlobe().getElevationModel();
-
+        this.offset = offset;
     }
 
-    public double[] getBestElevations(List<LatLon> locations) {
-        Globe globe = wwd.getModel().getGlobe();
-        Sector sector = Sector.boundingSector(locations);
-        double[] elevations = new double[locations.size()];
-
-        // Iterate until the best resolution is achieved. Use the elevation model to determine the best elevation.
-        double targetResolution = globe.getElevationModel().getBestResolution(sector);
-        double actualResolution = Double.MAX_VALUE;
-       // while (actualResolution > targetResolution) {
-            // try {
-            actualResolution = globe.getElevations(sector, locations, targetResolution, elevations);
-            // Thread.sleep(2); // give the system a chance to retrieve data from the disk cache or the server
-            //  } catch (InterruptedException ex) {
-            //      Logger.getLogger(ElevationLoader.class.getName()).log(Level.SEVERE, null, ex);
-            //  }
-            System.out.println(i++);
-      //  }
-        return elevations;
-    }
+    public abstract double[][] getElevations(List<? extends Position> positions,
+            int ptsCountX, int ptsCountY,
+            double latInc, double lonInc, double offset);
 
     public String computeDEM() {
 
@@ -126,51 +101,17 @@ int i=0;
         latInc = Math.abs(latInc);
         lonInc = Math.abs(lonInc);
 
-        double longitude = positions.get(1).getLongitude().getDegrees();
-        double latitude;// = positions.get(3).getLatitude().getDegrees();
-
-        //To load best elevation model
-        //    double latView = geodesyServices.getPosition(positions.get(0), 0.0, latRangeMetric / 2.0).getLatitude().getDegrees();
-        //   double lonView = geodesyServices.getPosition(positions.get(0), 90.0, lonRangeMetric / 2.0).getLongitude().getDegrees();
-        //   wwd.getView().setEyePosition(Position.fromDegrees(latView, lonView, 10000));
-        //   wwd.redrawNow();
-        /* 
+        double[][] elevations = getElevations(positions, ptsCountX, ptsCountY, latInc, lonInc, offset);
 
         for (int i = 0; i < ptsCountX; i++) {
-            latitude = positions.get(3).getLatitude().getDegrees();
             for (int j = 0; j < ptsCountY; j++) {
-                double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
-                if (el < 0) {
-                    el = 0;
-                }
-                el *= magnification;
+                double el = elevations[i][j] * magnification;
                 elevationsStr += formatter.format(el) + " ";
                 bottomStr += BOTTOM_STR + " ";
-                latitude -= latInc;
             }
             elevationsStr += "\n ";
-            longitude -= lonInc;
         }
-         */
-        List<LatLon> locations = new ArrayList<>();
-        for (int i = 0; i < ptsCountX; i++) {
-            latitude = positions.get(3).getLatitude().getDegrees();
-            for (int j = 0; j < ptsCountY; j++) {
-                latitude -= latInc;
-                locations.add(new LatLon(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude)));
-            }
-            elevationsStr += "\n ";
-            longitude -= lonInc;
-        }
-        double[] elevations = getBestElevations(locations);
-        for (double el : elevations) {
-            if (el < 0) {
-                el = 0;
-            }
-            el *= magnification;
-            elevationsStr += formatter.format(el) + " ";
-            bottomStr += BOTTOM_STR + " ";
-        }
+
         result += createDEM(elevationsStr,
                 ptsCountX, tileSpaceX,
                 ptsCountY, tileSpaceY,
@@ -185,47 +126,36 @@ int i=0;
                 "Sea level");
 
         //  North face
-        latitude = positions.get(3).getLatitude().getDegrees();
-        longitude = positions.get(1).getLongitude().getDegrees();
         double pos = 0.0;
         topPositions.clear();
         bottomPositions.clear();
-
-        for (int i = 0; i < ptsCountX; i++) {
-            double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
+        for (int u = 0; u < ptsCountX; u++) {
+            double el = elevations[u][0];
             el *= magnification;
             topPositions.add(new Point3D(pos, el, 0.0));
             bottomPositions.add(new Point3D(pos, bottom, 0.0));
             pos += tileSpaceX;
-            longitude -= lonInc;
         }
         result += createBoundaryFace("", bottomPositions, topPositions, TEXTURE, "North face");
 
-        // South face
-        latitude = positions.get(0).getLatitude().getDegrees();
-        longitude = positions.get(1).getLongitude().getDegrees();
         pos = 0.0;
         topPositions.clear();
         bottomPositions.clear();
-        for (int i = 0; i < ptsCountX; i++) {
-            double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
+        for (int u = 0; u < ptsCountX; u++) {
+            double el = elevations[u][ptsCountY - 1];
             el *= magnification;
             topPositions.add(new Point3D(pos, el, -tileSideX));
             bottomPositions.add(new Point3D(pos, bottom, -tileSideX));
             pos += tileSpaceX;
-            longitude -= lonInc;
         }
         result += createBoundaryFace("", bottomPositions, topPositions, TEXTURE, "South face");
 
         // East face
-        double lon0 = positions.get(1).getLongitude().getDegrees();
         pos = 0.0;
         topPositions.clear();
         bottomPositions.clear();
-        for (double lat = positions.get(2).getLatitude().getDegrees();
-                lat > positions.get(1).getLatitude().getDegrees();
-                lat -= latInc) {
-            double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon0));
+        for (int v = 0; v < ptsCountY; v++) {
+            double el = elevations[0][v];
             el *= magnification;
             topPositions.add(new Point3D(0.0, el, pos));
             bottomPositions.add(new Point3D(0.0, bottom, pos));
@@ -233,16 +163,12 @@ int i=0;
         }
         result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'>",
                 bottomPositions, topPositions, TEXTURE, "East face");
-
         // West face
-        lon0 = positions.get(0).getLongitude().getDegrees();
         pos = 0.0;
         topPositions.clear();
         bottomPositions.clear();
-        for (double lat = positions.get(2).getLatitude().getDegrees();
-                lat > positions.get(1).getLatitude().getDegrees();
-                lat -= latInc) {
-            double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon0));
+        for (int v = 0; v < ptsCountY; v++) {
+            double el = elevations[ptsCountY - 1][v];
             el *= magnification;
             topPositions.add(new Point3D(-tileSideX, el, pos));
             bottomPositions.add(new Point3D(-tileSideX, bottom, pos));
@@ -250,7 +176,6 @@ int i=0;
         }
         result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'>",
                 bottomPositions, topPositions, TEXTURE, "West face");
-
         return result;
     }
 
@@ -331,4 +256,5 @@ int i=0;
         }
         return txt;
     }
+
 }

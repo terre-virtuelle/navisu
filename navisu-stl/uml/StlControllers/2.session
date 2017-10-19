@@ -1,0 +1,19 @@
+window_sizes 1200 896 300 900 682 82
+diagrams
+  active  classdiagram_ref 128002 // StrlControllers
+    894 740 100 4 0 0
+end
+show_stereotypes
+selected class_ref 132354 // SeaLoader
+open
+  classview_ref 128002 // StrlControllers
+  classview_ref 128130 // stl
+  classview_ref 128386 // controller
+  classview_ref 128514 // controller
+  classview_ref 128642 // loader
+  classview_ref 128770 // loader
+  classview_ref 128898 // impl
+  classview_ref 129026 // controller
+  classview_ref 129154 // loader
+end
+end

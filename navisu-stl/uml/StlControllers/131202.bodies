@@ -1,0 +1,45 @@
+class ElevationStlController
+!!!138754.java!!!	ElevationStlController(inout outPathname : Path, in title : String, in tilesCount : int, in index : int, inout geodesyServices : GeodesyServices, inout positions : List<? extends Position>, in tileSideX : double, in tileSideY : double, in earthSpaceX : double, in earthSpaceY : double, in bottom : double, in magnification : double, in offset : double)
+        super(outPathname,
+                tilesCount, index,
+                positions,
+                tileSideX, tileSideY,
+                earthSpaceX, earthSpaceY,
+                bottom,
+                magnification,
+                offset);
+        this.geodesyServices = geodesyServices;
+!!!138882.java!!!	compute() : void
+        writeTexture();
+        writeDemElevation();
+        // writeSea();
+!!!139010.java!!!	writeTexture() : void
+        TextureLoader exportImageOrElevations = new TextureLoader(positions, index);
+        exportImageOrElevations.doSaveImage();
+!!!139138.java!!!	writeDemElevation() : void
+
+        ElevationLoader elevationLoader = new DemElevationLoader(geodesyServices,
+                positions,
+                index,
+                tileSideX, tileSideY,
+                earthSpaceX, earthSpaceY,
+                bottom,
+                magnification,
+                offset);
+        write(elevationLoader.computeDEM());
+
+!!!139266.java!!!	writeBathyElevation() : void
+
+        ElevationLoader elevationLoader = new BathyElevationLoader(geodesyServices,
+                positions,
+                index,
+                tileSideX, tileSideY,
+                earthSpaceX, earthSpaceY,
+                bottom,
+                magnification,
+                offset);
+        write(elevationLoader.computeDEM());
+
+!!!139394.java!!!	writeSea() : void
+        SeaLoader seaLoader = new SeaLoader();
+        write(seaLoader.compute());

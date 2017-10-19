@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriver;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
@@ -43,6 +44,8 @@ public interface BathymetryDBServices
     List<Point3D> retrieveAround(double lat, double lon);
 
     List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax);
+
+    void writePointList(List<Point3D> points, Path pathname, boolean latLon);
 
     Point3D[][] mergeData(Point3D[][] orgData, int nbLat, int nbLon, List<Triangle_dt> triangles);
 

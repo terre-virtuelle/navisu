@@ -8,7 +8,8 @@ import org.capcaval.c3.component.ComponentService;
  * @date 28 mars 2015
  * @author Serge Morvan
  */
-public interface InstrumentDriverManagerServices extends ComponentService {
+public interface InstrumentDriverManagerServices 
+        extends ComponentService {
 
     void init();
 

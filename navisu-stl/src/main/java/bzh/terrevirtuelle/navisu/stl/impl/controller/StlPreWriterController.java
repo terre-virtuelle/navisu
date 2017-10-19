@@ -35,20 +35,22 @@ public class StlPreWriterController
             double tileSideX, double tileSideY,
             double spaceX, double spaceY,
             double bottom,
-            double magnification) {
+            double magnification,
+            double offset) {
         super(outPathname,
                 tilesCount, index,
                 positions,
                 tileSideX, tileSideY,
                 spaceX, spaceY,
                 bottom,
-                magnification);
+                magnification,
+                offset);
         this.title = title;
     }
 
     public void compute() {
         writeInitOutFile();
-      //  writeRef(outPathname.toString(), positions, tileSideX, tileSideY);// repere XYZ
+        //  writeRef(outPathname.toString(), positions, tileSideX, tileSideY);// repere XYZ
         writePositionOrientation();
     }
 

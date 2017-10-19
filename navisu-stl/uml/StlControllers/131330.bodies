@@ -1,0 +1,47 @@
+class StlController
+!!!136706.java!!!	StlController(inout outPathname : Path, in tilesCount : int, in index : int, inout positions : List<? extends Position>, in tileSideX : double, in tileSideY : double, in earthSpaceX : double, in earthSpaceY : double, in bottom : double, in magnification : double, in offset : double)
+        this.outPathname = outPathname;
+        this.tilesCount = tilesCount;
+        this.index = index;
+        this.positions = positions;
+        this.tileSideX = tileSideX;
+        this.tileSideY = tileSideY;
+        this.earthSpaceX = earthSpaceX;
+        this.earthSpaceY = earthSpaceY;
+        this.bottom = bottom;
+        this.magnification = magnification;
+        this.offset = offset;
+!!!136834.java!!!	StlController(inout outPathname : Path)
+        this.outPathname = outPathname;
+!!!137090.java!!!	write(in str : String) : void
+        lines = new ArrayList<>();
+        lines.add(str);
+        try {
+            Files.write(outPathname, lines, charset, StandardOpenOption.APPEND);
+        } catch (IOException ex) {
+            Logger.getLogger(StlChartComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+!!!137218.java!!!	getOutPathname() : Path
+        return outPathname;
+!!!137346.java!!!	setOutPathname(inout outPathname : Path) : void
+        this.outPathname = outPathname;
+!!!137474.java!!!	getCharset() : Charset
+        return charset;
+!!!137602.java!!!	setCharset(inout charset : Charset) : void
+        this.charset = charset;
+!!!137730.java!!!	getLines() : ArrayList<String>
+        return lines;
+!!!137858.java!!!	setLines(inout lines : ArrayList<String>) : void
+        this.lines = lines;
+!!!137986.java!!!	getTilesCount() : int
+        return tilesCount;
+!!!138114.java!!!	setTilesCount(in tilesCount : int) : void
+        this.tilesCount = tilesCount;
+!!!138242.java!!!	getIndex() : int
+        return index;
+!!!138370.java!!!	setIndex(in index : int) : void
+        this.index = index;
+!!!138498.java!!!	getPositions() : List<? extends Position>
+        return positions;
+!!!138626.java!!!	setPositions(inout positions : List<? extends Position>) : void
+        this.positions = positions;

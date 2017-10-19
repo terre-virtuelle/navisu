@@ -1,0 +1,20 @@
+class StlPostWriterController
+!!!142082.java!!!	StlPostWriterController(inout outPathname : Path)
+        super(outPathname);
+!!!142210.java!!!	compute() : void
+        writeBase();
+        writeEndOutFile();
+!!!142338.java!!!	writeBase() : void
+        write(new BaseLoader().compute());
+!!!142466.java!!!	writeEndOutFile() : void
+        lines = new ArrayList<>();
+        String txt = "</Transform>\n"
+                + "</Transform>\n"
+                + "</Scene>\n"
+                + "</X3D> ";
+        lines.add(txt);
+        try {
+            Files.write(outPathname, lines, charset, StandardOpenOption.APPEND);
+        } catch (IOException ex) {
+            Logger.getLogger(StlPostWriterController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }

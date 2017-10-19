@@ -144,8 +144,6 @@ import bzh.terrevirtuelle.navisu.leapmotion.impl.LeapMotionComponentImpl;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
 import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
-import bzh.terrevirtuelle.navisu.stl.bathy.BathyStlComponentServices;
-import bzh.terrevirtuelle.navisu.stl.bathy.impl.BathyStlComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.DisplayImpl;
@@ -196,7 +194,6 @@ public class AppMain extends Application {
                         BathymetryImpl.class,
                         BathymetryLocalCatalogImpl.class,
                         BathySoundsImpl.class,
-                        BathyStlComponentImpl.class,
                         Bezier2DImpl.class,
                         CameraComponentImpl.class,
                         ClocksImpl.class,
@@ -267,7 +264,6 @@ public class AppMain extends Application {
         BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
         BathymetryDBServices bathymetryDBServices = componentManager.getComponentService(BathymetryDBServices.class);
         BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
-        BathyStlComponentServices bathyStlComponentServices = componentManager.getComponentService(BathyStlComponentServices.class);
         BathySoundsServices bathySoundsServices = componentManager.getComponentService(BathySoundsServices.class);
         Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
 
@@ -373,7 +369,6 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(bathyStlComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(bathySoundsServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(cameraComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
@@ -491,12 +486,12 @@ public class AppMain extends Application {
         // Neo4J serveur externe
         // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
         // System.out.println("con : " + con);
-        bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
+       bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
                 "5432", "org.postgresql.Driver", "admin", "admin");
 
-        //bathymetryDBServices.create("C:\\Users\\Dom\\Documents\\Navisu\\shom-data\\bathy\\MNT100M_ATL\\splited\\bathy04.glz");
+      //  bathymetryDBServices.create("C:\\Users\\Dom\\Documents\\Navisu\\shom-data\\bathy\\MNT100M_ATL\\splited\\bathy04.glz");
         //bathymetryDBServices.createIndex();
-       // displayBathymetryServices.displayAllSounding();
+        
 
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut

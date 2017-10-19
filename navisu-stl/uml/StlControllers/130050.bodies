@@ -1,0 +1,5 @@
+class BathyElevationLoader
+!!!134146.java!!!	BathyElevationLoader(inout geodesyServices : GeodesyServices, inout positions : List<? extends Position>, in index : int, in tileSideX : double, in tileSideY : double, in earthSpaceX : double, in earthSpaceY : double, in bottom : double, in magnification : double, in offset : double)
+        super(geodesyServices, positions, index, tileSideX, tileSideY, earthSpaceX, earthSpaceY, bottom, magnification, offset);
+!!!134274.java!!!	getElevations(inout positions : List<? extends Position>, in ptsCountX : int, in ptsCountY : int, in latInc : double, in lonInc : double, in offset : double) : double
+    return null;

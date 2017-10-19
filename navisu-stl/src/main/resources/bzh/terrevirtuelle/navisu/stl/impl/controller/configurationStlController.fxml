@@ -52,14 +52,15 @@
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="Choix objets à imprimer" />
-                              <ChoiceBox fx:id="choiceCB" prefWidth="150.0" GridPane.rowIndex="1" />
                               <RadioButton fx:id="miRB" mnemonicParsing="false" text="Mode interactif" GridPane.columnIndex="2" />
                               <RadioButton fx:id="tilesRB" mnemonicParsing="false" text="Tuiles" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <ChoiceBox fx:id="choiceCB" prefWidth="150.0" GridPane.rowIndex="1" />
+                              <RadioButton fx:id="previewRB" mnemonicParsing="false" text="PreviewBathy" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children>
@@ -116,7 +117,7 @@
                         <Label text="Socle intégré" GridPane.rowIndex="7" />
                         <CheckBox fx:id="baseCB" mnemonicParsing="false" selected="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7" />
                         <TextField fx:id="magnificationTF" text="10" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="spaceXTF" text="85" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="spaceXTF" text="100" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="sideXTF" text="200" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="Nom(s) fichier de sortie" GridPane.rowIndex="4" />
                         <TextField fx:id="nameTF" text="out" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -134,9 +135,8 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="spaceYTF" promptText="85" text="85" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="spaceYTF" promptText="100" text="100" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         <Button fx:id="browseButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Browse" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="6" />
-                        <Button fx:id="previewButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Preview" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                         <TextField fx:id="chartNameTF" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                             </children>
                         </GridPane>

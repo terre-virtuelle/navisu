@@ -35,14 +35,16 @@ public class StlController {
     protected double earthSpaceY;
     protected double bottom;
     protected double magnification;
+    protected double offset;
 
-    public StlController(Path outPathname, 
-            int tilesCount, int index, 
-            List<? extends Position> positions, 
-            double tileSideX, double tileSideY, 
-            double earthSpaceX, double earthSpaceY, 
-            double bottom, 
-            double magnification) {
+    public StlController(Path outPathname,
+            int tilesCount, int index,
+            List<? extends Position> positions,
+            double tileSideX, double tileSideY,
+            double earthSpaceX, double earthSpaceY,
+            double bottom,
+            double magnification,
+            double offset) {
         this.outPathname = outPathname;
         this.tilesCount = tilesCount;
         this.index = index;
@@ -53,6 +55,7 @@ public class StlController {
         this.earthSpaceY = earthSpaceY;
         this.bottom = bottom;
         this.magnification = magnification;
+        this.offset = offset;
     }
 
     public StlController(Path outPathname) {
@@ -61,8 +64,6 @@ public class StlController {
 
     public StlController() {
     }
-
-    
 
     protected void write(String str) {
         lines = new ArrayList<>();

@@ -94,6 +94,7 @@ public class DisplayImpl
     public void displayDelaunay(List<Triangle_dt> triangles,
             double height, double verticalExaggeration,
             Material material, RenderableLayer l) {
+        System.out.println("displayDelaunay : " + triangles.size());
         triangles.stream()
                 .filter((t) -> (t.A != null && t.B != null && t.C != null)).map((t) -> {
             ArrayList<Position> pathPositions = new ArrayList<>();
@@ -112,7 +113,10 @@ public class DisplayImpl
              */
             attrs.setOutlineMaterial(material);
             p.setAttributes(attrs);
-            p.setValue(AVKey.DISPLAY_NAME, (int) (height - t.A.z) + ", "
+            p.setValue(AVKey.DISPLAY_NAME, t.A.x + ", " + t.A.y + "\n"
+                    + t.B.x + ", " + t.B.y + "\n"
+                    + t.C.x + ", " + t.C.y + "\n"
+                    + (int) (height - t.A.z) + ", "
                     + (int) (height - t.B.z) + ", "
                     + (int) (height - t.C.z));
             return p;

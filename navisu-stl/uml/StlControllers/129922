@@ -1,0 +1,811 @@
+format 76
+"layers" // stl::osm::layers
+  revision 1
+  modified_by 2 "serge"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  java_dir "Z:/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-stl/src/main/java/bzh/terrevirtuelle/navisu/stl/osm/layers/"
+  java_package "bzh.terrevirtuelle.navisu.stl.osm.layers"
+  classview 129282 "layers"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 132482 "OSMBuildingsStlLayer"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "Always assume a zoom level of 15
+
+@author sbodmer"
+      classrelation 130946 // <generalisation>
+	relation 130946 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130946 // <generalisation>
+	  b parent class_ref 132610 // OSMBuildingsLayer
+      end
+
+      classrelation 131074 // <realization>
+	relation 131074 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131074 // <realization>
+	  b parent class_ref 132738 // OSMBuildingsTileListener
+      end
+
+      classrelation 131202 // <realization>
+	relation 131202 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131202 // <realization>
+	  b parent class_ref 132866 // ActionListener
+      end
+
+      classrelation 131330 // <realization>
+	relation 131330 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131330 // <realization>
+	  b parent class_ref 132994 // SelectListener
+      end
+
+      attribute 161154 "CACHE_FOLDER"
+	class_attribute const_attribute public explicit_type "String"
+	init_value " \"Earth\" + File.separatorChar + \"OSMBuildings\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 161282 "ZOOM"
+	class_attribute const_attribute public explicit_type "int"
+	init_value " 15"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 161410 "maxX"
+	class_attribute const_attribute public explicit_type "double"
+	init_value " Math.pow(2, ZOOM)"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 161538 "maxY"
+	class_attribute const_attribute public explicit_type "double"
+	init_value " Math.pow(2, ZOOM)"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 161666 "box"
+	package explicit_type "ExtrudedPolygon"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment " LatLon center = null;
+ SurfacePolygon carpet = null;"
+      end
+
+      attribute 161794 "center"
+	package explicit_type "Position"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "The last viewport center postion in world coordinates
+"
+      end
+
+      attribute 161922 "ww"
+	package explicit_type "WorldWindow"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "The worldwindow for this layer
+"
+      end
+
+      attribute 162050 "cursor"
+	package explicit_type "SurfaceCircle"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 131458 // buildings (<unidirectional association>)
+	relation 131458 --->
+	  stereotype "HashMap"
+	  a role_name "buildings" init_value " new HashMap<>()" package
+	    comment "The key is \"{level};{x};{y}\"
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<String, ${type}> ${name}${value};
+"
+	    classrelation_ref 131458 // buildings (<unidirectional association>)
+	  b parent class_ref 133122 // OSMBuildingsStlTile
+      end
+
+      attribute 162178 "cacheFolder"
+	package explicit_type "File"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 162306 "maxTiles"
+	package explicit_type "int"
+	init_value " 10"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 162434 "defaultHeight"
+	package explicit_type "double"
+	init_value " 10"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 144002 "OSMBuildingsStlLayer"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment " Cylinder c = null;"
+      end
+
+      operation 144130 "setDefaultBuildingHeight"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "defaultHeight" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "**************************************************************************
+*** API
+*************************************************************************"
+      end
+
+      operation 144258 "setMaxTiles"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "maxTiles" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 144386 "lon2x"
+	class_operation public explicit_return_type "int"
+	nparams 2
+	  param in name "lon" explicit_type "double"
+	  param in name "z" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 144514 "lat2y"
+	class_operation public explicit_return_type "int"
+	nparams 2
+	  param in name "lat" explicit_type "double"
+	  param in name "z" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 144642 "x2lon"
+	class_operation public explicit_return_type "double"
+	nparams 2
+	  param in name "x" explicit_type "int"
+	  param in name "z" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 144770 "y2lat"
+	class_operation public explicit_return_type "double"
+	nparams 2
+	  param in name "y" explicit_type "int"
+	  param in name "z" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 144898 "dispose"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "**************************************************************************
+*** AbstractLayer
+**************************************************************************"
+      end
+
+      operation 145026 "isLayerInView"
+	public explicit_return_type "boolean"
+	nparams 1
+	  param inout name "dc" explicit_type "DrawContext"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 145154 "doRender"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "dc" explicit_type "DrawContext"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Fetch the buldings data for the center of the viewport
+
+@param dc"
+      end
+
+      operation 145282 "doPreRender"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "dc" explicit_type "DrawContext"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 145410 "onMessage"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "msg" explicit_type "Message"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "**************************************************************************
+*** MessageListener
+**************************************************************************
+
+If view stopped,find the osmbuidling tile to fetch at the center of the
+viewport
+
+@param msg"
+      end
+
+      operation 145538 "actionPerformed"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "e" explicit_type "ActionEvent"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "**************************************************************************
+*** ActionListener
+**************************************************************************"
+      end
+
+      operation 145666 "selected"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "event" explicit_type "SelectEvent"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "**************************************************************************
+*** SelectListener
+**************************************************************************"
+      end
+
+      operation 145794 "main"
+	class_operation public explicit_return_type "void"
+	nparams 1
+	  param inout name "args" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "**************************************************************************
+*** Private
+**************************************************************************"
+      end
+    end
+
+    class 133122 "OSMBuildingsStlTile"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "Thread to download the gson data
+
+@author sbodmer"
+      classrelation 131586 // <generalisation>
+	relation 131586 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131586 // <generalisation>
+	  b parent class_ref 133250 // OSMBuildingsTile
+      end
+
+      classrelation 131714 // <realization>
+	relation 131714 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131714 // <realization>
+	  b parent class_ref 133378 // RetrievalPostProcessor
+      end
+
+      classrelation 131842 // <realization>
+	relation 131842 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131842 // <realization>
+	  b parent class_ref 133506 // Runnable
+      end
+
+      attribute 162562 "OSMBUILDINGS_URL"
+	class_attribute const_attribute package explicit_type "String"
+	init_value " \"http://[abcd].data.osmbuildings.org/0.2/sx3pxpz6/tile\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "Use the OSMBuildings key specified for WW
+"
+      end
+
+      attribute 162690 "current"
+	class_attribute package explicit_type "int"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment " 15/16942/11632.json\"
+
+The counter for the different servers
+"
+      end
+
+      attribute 162818 "x"
+	package explicit_type "int"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 162946 "y"
+	package explicit_type "int"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 163074 "level"
+	package explicit_type "int"
+	init_value " 15"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 163202 "defaultHeight"
+	package explicit_type "double"
+	init_value " 10"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 163330 "center"
+	package explicit_type "Position"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 163458 "store"
+	package explicit_type "FileStore"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 163586 "retrieveRemoteData"
+	package explicit_type "boolean"
+	init_value " true"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 163714 "expireDate"
+	package explicit_type "long"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 163842 "cachePath"
+	package explicit_type "String"
+	init_value " \"\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 163970 "ts"
+	package explicit_type "long"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "The loading timestamp
+"
+      end
+
+      attribute 164098 "listener"
+	package explicit_type "OSMBuildingsTileListener"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 164226 "renderable"
+	package explicit_type "OSMBuildingsRenderable"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "The loaded buildings
+"
+      end
+
+      attribute 164354 "bb"
+	package explicit_type "Extent"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "The tile bounding box
+"
+      end
+
+      attribute 164482 "tile"
+	package explicit_type "ExtrudedPolygon"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 145922 "OSMBuildingsStlTile"
+	public explicit_return_type ""
+	nparams 9
+	  param in name "level" explicit_type "int"
+	  param in name "x" explicit_type "int"
+	  param in name "y" explicit_type "int"
+	  param inout name "listener" explicit_type "OSMBuildingsTileListener"
+	  param inout name "center" explicit_type "Position"
+	  param inout name "store" explicit_type "FileStore"
+	  param inout name "retrieveRemoteData" explicit_type "boolean"
+	  param in name "expireDate" explicit_type "long"
+	  param in name "defaultHeight" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}, ${t5} ${p5}, ${t6} ${p6}, ${t7} ${p7}, ${t8} ${p8}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 146050 "run"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "**************************************************************************
+*** Runnable
+**************************************************************************
+
+Load local cached file"
+      end
+    end
+  end
+
+  deploymentview 129026 "layers"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 130946 "OSMBuildingsStlLayer"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import gov.nasa.worldwind.View;
+import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.event.Message;
+import gov.nasa.worldwind.event.SelectEvent;
+import gov.nasa.worldwind.event.SelectListener;
+import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.Earth.OSMBuildingsLayer;
+import gov.nasa.worldwind.layers.Earth.OSMBuildingsTileListener;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.DrawContext;
+import gov.nasa.worldwind.render.ExtrudedPolygon;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.ScreenCredit;
+import gov.nasa.worldwind.render.ScreenCreditImage;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfaceCircle;
+import gov.nasa.worldwind.util.Logging;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.logging.Level;
+${definition}"
+      associated_classes
+	class_ref 132482 // OSMBuildingsStlLayer
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 131074 "OSMBuildingsStlTile"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import gov.nasa.worldwind.cache.FileStore;
+import gov.nasa.worldwind.formats.geojson.GeoJSONDoc;
+import gov.nasa.worldwind.geom.Extent;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.Earth.OSMBuildingsTile;
+import gov.nasa.worldwind.layers.Earth.OSMBuildingsTileListener;
+import gov.nasa.worldwind.render.ExtrudedPolygon;
+import gov.nasa.worldwind.render.OSMBuildingsRenderable;
+import gov.nasa.worldwind.retrieve.RetrievalPostProcessor;
+import java.io.IOException;
+import java.net.URL;
+${definition}"
+      associated_classes
+	class_ref 133122 // OSMBuildingsStlTile
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+  end
+end
