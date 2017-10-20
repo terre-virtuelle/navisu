@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.stl.impl.controller;
 
+import bzh.terrevirtuelle.navisu.stl.impl.controller.charts.StlChartController;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
@@ -13,7 +14,7 @@ import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.bathymetry.view.DisplayBathymetryServices;
 import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
-import bzh.terrevirtuelle.navisu.stl.bathy.depare.controller.BathyDepareStlController;
+import bzh.terrevirtuelle.navisu.stl.impl.controller.bathy.depare.BathyDepareStlController;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.vividsolutions.jts.geom.CoordinateList;
@@ -90,7 +91,7 @@ public class StlComponentController
     protected BathymetryDBServices bathymetryDBServices;
     protected DisplayBathymetryServices displayBathymetryServices;
 
-    protected StlChartComponentController s57StlChartComponentController;
+    protected StlChartController s57StlChartComponentController;
 
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
@@ -205,7 +206,7 @@ public class StlComponentController
             GeodesyServices geodesyServices,
             BathymetryDBServices bathymetryDBServices,
             DisplayBathymetryServices displayBathymetryServices,
-            StlChartComponentController s57StlChartComponentController,
+            StlChartController s57StlChartComponentController,
             String GROUP,
             String NAME,
             WorldWindow wwd) {
@@ -425,17 +426,17 @@ public class StlComponentController
                     if (choiceCB.getSelectionModel().getSelectedItem().equals("BathyDEPARE")) {
                         outFile = nameTF.getText() + "_" + dateString + "_" + i + 1 + ":" + tilesCount + ".csv";
                         outPathname = Paths.get(OUT_DIR, outFile);
-                        BathyDepareStlController bathyDepareStlComponentController
+                        BathyDepareStlController bathyDepareStlController
                                 = new BathyDepareStlController(bathymetryDBServices,
                                         displayBathymetryServices,
                                         guiAgentServices,
                                         layer,
                                         squarePolygonEnvelope);
                         //Max de profondeur pour l'ensemble des tuiles
-                        double maxElevation = bathyDepareStlComponentController.getMaxElevation();
-                        bathyDepareStlComponentController.writePointList(positions, outPathname, false);
+                        double maxElevation = bathyDepareStlController.getMaxElevation();
+                        bathyDepareStlController.writePointList(positions, outPathname, false);
                         if (previewRB.isSelected()) {
-                            bathyDepareStlComponentController.displayDelaunaySounding(positions, layerBathy, maxElevation);
+                            bathyDepareStlController.displayDelaunaySounding(positions, layerBathy, maxElevation);
                         }
                     } else {
                         //if sur bathy ou mnt

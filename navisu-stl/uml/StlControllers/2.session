@@ -1,10 +1,10 @@
-window_sizes 1200 896 300 900 682 82
+window_sizes 1200 896 300 900 787 35
 diagrams
   active  classdiagram_ref 128002 // StrlControllers
     894 740 100 4 0 0
 end
 show_stereotypes
-selected class_ref 132354 // SeaLoader
+selected class_ref 131202 // ElevationStlController
 open
   classview_ref 128002 // StrlControllers
   classview_ref 128130 // stl

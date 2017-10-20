@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.stl.impl.controller;
 
-import bzh.terrevirtuelle.navisu.stl.impl.controller.loader.RefLoader;
+import bzh.terrevirtuelle.navisu.stl.impl.controller.writer.ref.RefWriter;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Polygon;
 import java.io.IOException;
@@ -97,7 +97,7 @@ public class StlPreWriterController
 
     private void writeRef(String outFilename, List<? extends Position> positions,
             double tileSideX, double tileSideY) {
-        RefLoader l = new RefLoader(positions, tileSideX, tileSideY);
+        RefWriter l = new RefWriter(positions, tileSideX, tileSideY);
         write(l.compute());
     }
 

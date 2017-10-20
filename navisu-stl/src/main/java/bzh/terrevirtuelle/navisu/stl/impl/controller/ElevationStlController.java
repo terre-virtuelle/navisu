@@ -6,11 +6,11 @@
 package bzh.terrevirtuelle.navisu.stl.impl.controller;
 
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
-import bzh.terrevirtuelle.navisu.stl.dem.loader.BathyElevationLoader;
-import bzh.terrevirtuelle.navisu.stl.dem.loader.DemElevationLoader;
-import bzh.terrevirtuelle.navisu.stl.dem.loader.ElevationLoader;
-import bzh.terrevirtuelle.navisu.stl.impl.controller.loader.SeaLoader;
-import bzh.terrevirtuelle.navisu.stl.dem.loader.TextureLoader;
+import bzh.terrevirtuelle.navisu.stl.impl.loader.bathy.BathyElevationLoader;
+import bzh.terrevirtuelle.navisu.stl.impl.loader.dem.DemElevationLoader;
+import bzh.terrevirtuelle.navisu.stl.impl.loader.ElevationLoader;
+import bzh.terrevirtuelle.navisu.stl.impl.controller.writer.sea.SeaWriter;
+import bzh.terrevirtuelle.navisu.stl.impl.loader.texture.TextureLoader;
 import gov.nasa.worldwind.geom.Position;
 import java.nio.file.Path;
 import java.util.List;
@@ -86,7 +86,7 @@ public class ElevationStlController
     }
 
     private void writeSea() {
-        SeaLoader seaLoader = new SeaLoader();
+        SeaWriter seaLoader = new SeaWriter();
         write(seaLoader.compute());
     }
 

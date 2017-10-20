@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.stl.impl.controller;
 
+import bzh.terrevirtuelle.navisu.stl.impl.controller.charts.StlChartController;
 import gov.nasa.worldwind.geom.Position;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -71,7 +72,7 @@ public class StlController {
         try {
             Files.write(outPathname, lines, charset, StandardOpenOption.APPEND);
         } catch (IOException ex) {
-            Logger.getLogger(StlChartComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(StlChartController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
