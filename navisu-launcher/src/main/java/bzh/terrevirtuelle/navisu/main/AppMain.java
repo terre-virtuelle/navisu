@@ -298,7 +298,11 @@ public class AppMain extends Application {
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
 
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
-        guiAgentServices.showGui(stage, 1080, 700);
+        
+// ***************** size of screen *********************************************        
+        //guiAgentServices.showGui(stage, 1080, 700);
+        guiAgentServices.showGui(stage, 1300, 845);
+//********************************************************************************
 
         InstrumentTemplateServices instrumentTemplateServices = componentManager.getComponentService(InstrumentTemplateServices.class);
 
