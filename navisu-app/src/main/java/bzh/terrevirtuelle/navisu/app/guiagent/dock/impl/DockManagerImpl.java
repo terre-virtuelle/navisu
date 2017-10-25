@@ -69,6 +69,8 @@ public class DockManagerImpl<TrackTool>
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
     protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
     protected final String GEBCO = "http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?";
+    
+    protected RadialMenu BathyStlRadialMenu;
     protected RadialMenu booksRadialMenu;
     protected RadialMenu instrumentsRadialMenu;
     protected RadialMenu meteoRadialMenu;
@@ -76,8 +78,9 @@ public class DockManagerImpl<TrackTool>
     protected RadialMenu chartsRadialMenu;
     protected RadialMenu toolsRadialMenu;
     protected RadialMenu navigationRadialMenu;
-    protected RadialMenu systemRadialMenu;
+    protected RadialMenu systemRadialMenu;    
     protected RadialMenu tracksRadialMenu;
+    
     protected ImageView centerImg;
     protected int width;
     protected int height;
@@ -127,6 +130,10 @@ public class DockManagerImpl<TrackTool>
         DockItemFactory.newImageItem("logbook", ICON_PATH + "dock_icons/book.png",
         (e) -> {
             booksRadialMenu.setVisible(!booksRadialMenu.isVisible());
+        }),
+        DockItemFactory.newImageItem("STL", ICON_PATH + "dock_icons/stl.png",
+        (e) -> {
+            BathyStlRadialMenu.setVisible(!BathyStlRadialMenu.isVisible());
         })
     };
     final Dock dock = new Dock(ICONS);
@@ -156,6 +163,7 @@ public class DockManagerImpl<TrackTool>
         createToolsRadialWidget();
         createNavigationRadialWidget();
         createSystemRadialWidget();
+        createBathyStlWidget();
     }
 
     private void createDockWidget(Scene scene) {
@@ -163,7 +171,8 @@ public class DockManagerImpl<TrackTool>
         groupDock = new Group();
         groupDock.getChildren().add(dock);
         root.getChildren().add(groupDock);
-        dock.setLayoutX(475.0);
+        //dock.setLayoutX(475.0);
+        dock.setLayoutX(425.0);
         dock.setLayoutY(40.0);
         dock.setOrientation(Orientation.HORIZONTAL);
         StackPane.setAlignment(groupDock, Pos.BOTTOM_CENTER);
@@ -178,7 +187,20 @@ public class DockManagerImpl<TrackTool>
             }
         });
     }
-
+//--------------STL------------------
+    private void createBathyStlWidget() {
+        BathyStlRadialMenu = RadialMenuBuilder.create()
+                .centralImage("STLradialmenu.png")
+                .createNode(0, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> open())
+                .createNode(0, "vide.png", 1, "vide.png", 0, "vide.png", (e) -> open())
+                .createNode(1, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> open())
+                .createNode(1, "vide.png", 1, "vide.png", 1, "vide.png", (e) -> open())
+                .build();
+        BathyStlRadialMenu.setLayoutX((width / 2) - 10);
+        BathyStlRadialMenu.setLayoutY(height / 2);
+        root.getChildren().add(BathyStlRadialMenu);
+        radialMenus.add(BathyStlRadialMenu);
+    }
     //--------------BOOKS------------------
     private void createBooksRadialWidget() {
         booksRadialMenu = RadialMenuBuilder.create()

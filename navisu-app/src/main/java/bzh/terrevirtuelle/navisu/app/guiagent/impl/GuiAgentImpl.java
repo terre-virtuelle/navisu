@@ -42,12 +42,14 @@ import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.geom.Position;
+import java.awt.Toolkit;
 import java.nio.file.Paths;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import ucar.units.Dimension;
 
 /**
  * NaVisu
@@ -110,6 +112,7 @@ public class GuiAgentImpl
     protected Position pos;
     protected Text label;
     protected String modstyle;
+    
 
     public GuiAgentImpl() {
         this.wwd = GeoWorldWindViewImpl.getWW();
@@ -118,18 +121,35 @@ public class GuiAgentImpl
 
     @Override
     public void showGui(Stage stage, int width, int height) {
-        this.width = width;
-        this.height = height;
+        //this.width = width;
+        //this.height = height;
         this.stage = stage;
+        //***********************************************
+        double screenwidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        System.out.println(" ********!!!!!!!!! largeur écran : " + screenwidth);
+        double screenheight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        System.out.println(" ********!!!!!!!!! hauteur écran : " + screenheight);
+        //****************************************************
+        double percentx = 1;
+        double percenty = 1;
+        width = (int) (screenwidth * percentx);
+        System.out.println(" !!!!!!******* largeur fenêtre : " + width);
+        height = (int) (screenheight * percenty);
+        System.out.println(" !!!!!!******* hauteur fenêtre : " + height);
         stage.setResizable(true);
+        //stage.setFullScreen(true);
         label = new Text();
-        label.getStyleClass().add(STATUS_INFO);
+
+        label.getStyleClass()
+                .add(STATUS_INFO);
         //label.setFill(Color.WHITESMOKE);        
-        label.setLayoutY(16);
+        label.setLayoutY(
+                16);
 
         this.jobsManager = JobsManager.create();
 
         final FXMLLoader loader = new FXMLLoader();
+
         try {
             root = loader.load(GuiAgentImpl.class.getResourceAsStream(GUI_AGENT_FXML));
 
@@ -140,47 +160,62 @@ public class GuiAgentImpl
         }
 
         scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
+
         this.loadCss(scene);
+
         dockManager.init(root, scene, height, width);
+
         dockManager.makeDock();
 
         createMOBWidget(scene);
 
         ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
-        ctrl.centerStackPane.getChildren().add(geoViewServices.getDisplayService().getDisplayable());
+        ctrl.centerStackPane.getChildren()
+                .add(geoViewServices.getDisplayService().getDisplayable());
         ctrl.statusBorderPane.setRight(jobsManager.getDisplay().getDisplayable());
         //ctrl.statusBorderPane.setStyle(SBPSTYLE);
-        ctrl.statusBorderPane.getChildren().add(label);
+        ctrl.statusBorderPane.getChildren()
+                .add(label);
 
         stage.setTitle(TITLE);
+
         stage.setScene(scene);
+
         stage.show();
-        
-        wwd.addPositionListener((PositionEvent event) -> {
-            pos = wwd.getView().getCurrentEyePosition();
-            double a = pos.getAltitude();
-            String aText;
-            if (a <= 1000) {
-                aText = (int) (pos.getAltitude()) + " m";
-            } else {
-                aText = (int) (pos.getAltitude() / 1000) + " Km";
-            }
-            Platform.runLater(() -> {
-                label.setText(
-                        "        Altitude : " + aText
-                        + "        Latitude : " + pos.getLatitude().toFormattedDMSString()
-                        + "        Longitude : " + pos.getLongitude().toFormattedDMSString());        
-            });
-            wwd.redrawNow();
-        });
+
+        wwd.addPositionListener(
+                (PositionEvent event) -> {
+                    pos = wwd.getView().getCurrentEyePosition();
+                    double a = pos.getAltitude();
+                    String aText;
+                    if (a <= 1000) {
+                        aText = (int) (pos.getAltitude()) + " m";
+                    } else {
+                        aText = (int) (pos.getAltitude() / 1000) + " Km";
+                    }
+                    Platform.runLater(() -> {
+                        label.setText(
+                                "        Altitude : " + aText
+                                + "        Latitude : " + pos.getLatitude().toFormattedDMSString()
+                                + "        Longitude : " + pos.getLongitude().toFormattedDMSString());
+                    });
+                    wwd.redrawNow();
+                }
+        );
 
 // Deuxieme stage pour le sonar, pour qu'il reste au dessus, bug sur l'api ?
         stage1 = new Stage();
-        stage1.setOpacity(.0);
-        stage1.setHeight(400);
-        stage1.setWidth(400);
-        stage1.setX(600);
-        stage1.setY(200);
+
+        stage1.setOpacity(
+                .0);
+        stage1.setHeight(
+                400);
+        stage1.setWidth(
+                400);
+        stage1.setX(
+                600);
+        stage1.setY(
+                200);
         stage1.initStyle(StageStyle.UNDECORATED);
     }
 
@@ -200,7 +235,8 @@ public class GuiAgentImpl
             }
         });
 
-        mob.setTranslateX(1075);
+        //mob.setTranslateX(1075);
+        mob.setTranslateX(1125);
         mob.setTranslateY(40.0);
         mob.setScale(.75);
         StackPane.setAlignment(mob, Pos.BOTTOM_CENTER);
