@@ -121,10 +121,10 @@ public class GuiAgentImpl
 
     @Override
     public void showGui(Stage stage, int width, int height) {
-        //this.width = width;
-        //this.height = height;
+        this.width = width;
+        this.height = height;
         this.stage = stage;
-        //***********************************************
+        /***********************************************
         double screenwidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         System.out.println(" ********!!!!!!!!! largeur écran : " + screenwidth);
         double screenheight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -136,6 +136,7 @@ public class GuiAgentImpl
         System.out.println(" !!!!!!******* largeur fenêtre : " + width);
         height = (int) (screenheight * percenty);
         System.out.println(" !!!!!!******* hauteur fenêtre : " + height);
+        */
         stage.setResizable(true);
         //stage.setFullScreen(true);
         label = new Text();
