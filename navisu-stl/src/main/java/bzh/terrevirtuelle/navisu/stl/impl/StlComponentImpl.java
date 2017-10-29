@@ -12,6 +12,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
+import bzh.terrevirtuelle.navisu.bathymetry.view.DisplayBathymetryServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.core.util.OS;
@@ -19,7 +21,7 @@ import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
-import bzh.terrevirtuelle.navisu.stl.impl.controller.StlChartComponentController;
+import bzh.terrevirtuelle.navisu.stl.impl.controller.charts.StlChartController;
 import bzh.terrevirtuelle.navisu.stl.impl.controller.StlComponentController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.Layer;
@@ -65,6 +67,10 @@ public class StlComponentImpl
     S57ChartComponentServices s57ChartComponentServices;
     @UsedService
     GeodesyServices geodesyServices;
+    @UsedService
+    BathymetryDBServices bathymetryDBServices;
+    @UsedService
+    DisplayBathymetryServices displayBathymetryServices;
 
     private static final String NAME = "S57Stl";
     protected static final String GROUP = "S57 charts";
@@ -77,13 +83,75 @@ public class StlComponentImpl
     protected List<String> groupNames = new ArrayList<>();
 
     protected StlComponentController s57StlComponentController;
-    protected StlChartComponentController s57StlChartComponentController;
+    protected StlChartController s57StlChartComponentController;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
     static private int i = 0;
     private boolean first = true;
 
     protected static final Logger LOGGER = Logger.getLogger(StlComponentImpl.class.getName());
+
+    @Override
+    public void openChart(String fileName) {
+        guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
+            handleOpenFile(progressHandle, fileName);
+        });
+    }
+
+    /* Lors de l'init du composant on instancie les deux controlleurs
+       s57StlChartComponentController il permet de générer le x3D
+       s57StlComponentController c'est le composant d'IHM qui permet
+       de sélectionner les zones à générer et défini l'ensemble des
+       parametres nécessaires. Ce composant est un widget.
+     */
+    @Override
+    public void componentInitiated() {
+
+        s57StlChartComponentController = new StlChartController(geodesyServices);
+        s57StlComponentController = new StlComponentController(this,
+                guiAgentServices, // pour afficher le widget
+                layerTreeServices, // pour indiquer dans l'arbre à gauche ou est la couche
+                layersManagerServices, // pour afficher la couche
+                instrumentDriverManagerServices, // pour envoyer un signal sonore en fin de génération
+                geodesyServices,
+                bathymetryDBServices,
+                displayBathymetryServices,
+                s57StlChartComponentController, // la composant de génération x3D
+                GROUP, NAME, // pour se positionner dans l'arborescence des couches
+                wwd);                            // le lien avec WordlWind
+    }
+
+    @Override
+    public void componentStarted() {
+    }
+
+    @Override
+    public void componentStopped() {
+    }
+
+    @Override
+    public boolean canOpen(String category) {
+        boolean canOpen = false;
+        if (!category.equals(NAME)) {
+        } else {
+            canOpen = true;
+        }
+        return canOpen;
+    }
+
+    @Override
+    public void on(String... files) {
+        String[] tab = files;
+        openChart(tab[0]);
+    }
+
+    @Override
+    public InstrumentDriver openFile(String category, String file) {
+        if (file != null) {
+            openChart(file);
+        }
+        return this;
+    }
 
     /* 
     Après appui sur F1 est clic droit sur une carte du catalogue 
@@ -181,13 +249,6 @@ public class StlComponentImpl
         }
     }
 
-    @Override
-    public void openChart(String fileName) {
-        guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
-            handleOpenFile(progressHandle, fileName);
-        });
-    }
-
     /**
      *
      * @param polygon
@@ -202,59 +263,6 @@ public class StlComponentImpl
 
     @Override
     public InstrumentDriver getDriver() {
-        return this;
-    }
-
-    /* Lors de l'init du composant on instancie les deux controlleurs
-       s57StlChartComponentController il permet de générer le x3D
-       s57StlComponentController c'est le composant d'IHM qui permet
-       de sélectionner les zones à générer et défini l'ensemble des
-       parametres nécessaires. Ce composant est un widget.
-     */
-    @Override
-    public void componentInitiated() {
-
-        s57StlChartComponentController = new StlChartComponentController(geodesyServices);
-        s57StlComponentController = new StlComponentController(this,
-                guiAgentServices, // pour afficher le widget
-                layerTreeServices, // pour indiquer dans l'arbre à gauche ou est la couche
-                layersManagerServices, // pour afficher la couche
-                instrumentDriverManagerServices, // pour envoyer un signal sonore en fin de génération
-                geodesyServices,
-                s57StlChartComponentController, // la composant de génération x3D
-                GROUP, NAME, // pour se positionner dans l'arborescence des couches
-                wwd);                            // le lien avec WordlWind
-    }
-
-    @Override
-    public void componentStarted() {
-    }
-
-    @Override
-    public void componentStopped() {
-    }
-
-    @Override
-    public boolean canOpen(String category) {
-        boolean canOpen = false;
-        if (!category.equals(NAME)) {
-        } else {
-            canOpen = true;
-        }
-        return canOpen;
-    }
-
-    @Override
-    public void on(String... files) {
-        String[] tab = files;
-        openChart(tab[0]);
-    }
-
-    @Override
-    public InstrumentDriver openFile(String category, String file) {
-        if (file != null) {
-            openChart(file);
-        }
         return this;
     }
 }

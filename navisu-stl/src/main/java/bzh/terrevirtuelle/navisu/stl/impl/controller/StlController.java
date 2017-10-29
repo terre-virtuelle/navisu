@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.stl.impl.controller;
 
+import bzh.terrevirtuelle.navisu.stl.impl.controller.charts.StlChartController;
 import gov.nasa.worldwind.geom.Position;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -35,14 +36,17 @@ public class StlController {
     protected double earthSpaceY;
     protected double bottom;
     protected double magnification;
+    protected double offset;
 
-    public StlController(Path outPathname, 
-            int tilesCount, int index, 
-            List<? extends Position> positions, 
-            double tileSideX, double tileSideY, 
-            double earthSpaceX, double earthSpaceY, 
-            double bottom, 
-            double magnification) {
+
+    public StlController(Path outPathname,
+            int tilesCount, int index,
+            List<? extends Position> positions,
+            double tileSideX, double tileSideY,
+            double earthSpaceX, double earthSpaceY,
+            double bottom,
+            double magnification,
+            double offset) {
         this.outPathname = outPathname;
         this.tilesCount = tilesCount;
         this.index = index;
@@ -53,6 +57,7 @@ public class StlController {
         this.earthSpaceY = earthSpaceY;
         this.bottom = bottom;
         this.magnification = magnification;
+        this.offset = offset;
     }
 
     public StlController(Path outPathname) {
@@ -62,15 +67,13 @@ public class StlController {
     public StlController() {
     }
 
-    
-
     protected void write(String str) {
         lines = new ArrayList<>();
         lines.add(str);
         try {
             Files.write(outPathname, lines, charset, StandardOpenOption.APPEND);
         } catch (IOException ex) {
-            Logger.getLogger(StlChartComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(StlChartController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 

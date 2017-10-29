@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.stl.impl.controller.loader;
+package bzh.terrevirtuelle.navisu.stl.impl.writer.ref;
 
 import bzh.terrevirtuelle.navisu.charts.util.WwjGeodesy;
 import gov.nasa.worldwind.geom.Angle;
@@ -16,7 +16,7 @@ import java.util.List;
  * @author serge
  * @date Mar 18, 2017
  */
-public class RefLoader {
+public class RefWriter {
 
     protected Polygon polygon;
     double latRangeMetric;
@@ -92,7 +92,7 @@ public class RefLoader {
             + "        </Group>"
             + "          </Transform>\n";
 
-    public RefLoader(List<? extends Position> positions, double tileSideX, double tileSideY) {
+    public RefWriter(List<? extends Position> positions, double tileSideX, double tileSideY) {
 
         this.positions = positions;
         this.tileSideX = tileSideX;

@@ -8,8 +8,6 @@ package bzh.terrevirtuelle.navisu.bathymetry.view;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import java.nio.charset.Charset;
-import java.nio.file.Path;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
@@ -26,8 +24,6 @@ public interface DisplayBathymetryServices
 
     void displaySounding(List<Point3D> points, RenderableLayer l);
 
-     void displayAllSounding();
-
-     void getFileGrid(Path pathname,List<Point3D> points3d,  boolean latLon);
+    void displayDelaunaySounding(List<Point3D> points, RenderableLayer l, double maxElevation);
 
 }

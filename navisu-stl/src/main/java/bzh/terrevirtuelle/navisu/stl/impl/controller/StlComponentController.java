@@ -5,12 +5,16 @@
  */
 package bzh.terrevirtuelle.navisu.stl.impl.controller;
 
+import bzh.terrevirtuelle.navisu.stl.impl.controller.charts.StlChartController;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
+import bzh.terrevirtuelle.navisu.bathymetry.view.DisplayBathymetryServices;
 import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import bzh.terrevirtuelle.navisu.stl.impl.controller.bathy.depare.BathyDepareStlController;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.vividsolutions.jts.geom.CoordinateList;
@@ -36,7 +40,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -65,7 +71,7 @@ import javafx.scene.input.MouseEvent;
  * @date Feb 26, 2017
  */
 /*
-Le controller est un widget
+Leader of controllers, via gui switch between different controllers
  */
 public class StlComponentController
         extends Widget2DController
@@ -79,7 +85,10 @@ public class StlComponentController
     protected LayersManagerServices layersManagerServices;
     protected GuiAgentServices guiAgentServices;
     protected GeodesyServices geodesyServices;
-    protected StlChartComponentController s57StlChartComponentController;
+    protected BathymetryDBServices bathymetryDBServices;
+    protected DisplayBathymetryServices displayBathymetryServices;
+
+    protected StlChartController s57StlChartComponentController;
 
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
@@ -125,6 +134,7 @@ public class StlComponentController
     protected Polygon squarePolygonEnvelope;
 
     protected RenderableLayer layer;
+    protected RenderableLayer layerBathy;
     protected WorldWindow wwd;
     protected double buoyageScale;
     protected String title;
@@ -137,6 +147,8 @@ public class StlComponentController
     public ChoiceBox<String> choiceCB;
     @FXML
     public RadioButton miRB;
+    @FXML
+    public RadioButton previewRB;
     @FXML
     public RadioButton tilesRB;
     @FXML
@@ -155,8 +167,6 @@ public class StlComponentController
     public RadioButton southRB;
     @FXML
     public Button generationButton;
-    @FXML
-    public Button previewButton;
     @FXML
     public ChoiceBox<Integer> countTilesCB;
     @FXML
@@ -191,7 +201,9 @@ public class StlComponentController
             LayersManagerServices layersManagerServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
             GeodesyServices geodesyServices,
-            StlChartComponentController s57StlChartComponentController,
+            BathymetryDBServices bathymetryDBServices,
+            DisplayBathymetryServices displayBathymetryServices,
+            StlChartController s57StlChartComponentController,
             String GROUP,
             String NAME,
             WorldWindow wwd) {
@@ -201,10 +213,12 @@ public class StlComponentController
         this.layerTreeServices = layerTreeServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.geodesyServices = geodesyServices;
+        this.bathymetryDBServices = bathymetryDBServices;
+        this.displayBathymetryServices = displayBathymetryServices;
         this.s57StlChartComponentController = s57StlChartComponentController;
         this.wwd = wwd;
         layer = layersManagerServices.getLayer(GROUP, NAME);
-
+        layerBathy = layersManagerServices.getLayer(GROUP, NAME + "Bathy");
         this.selector = new SectorSelector(wwd);
         this.selector.setInteriorColor(new Color(1f, 1f, 1f, 0.1f));
         this.selector.setBorderColor(new Color(1f, 0f, 0f, 0.5f));
@@ -244,9 +258,12 @@ public class StlComponentController
     public void initialize(URL location, ResourceBundle resources) {
         countTilesCB.setItems(FXCollections.observableArrayList(1, 4, 9, 16, 25));
         countTilesCB.setValue(1);
-        choiceCB.setItems(FXCollections.observableArrayList("MNT&Carto", "MNT", "Carto", "Bathy"));
-        choiceCB.setValue("MNT&Carto");
-
+        choiceCB.setItems(FXCollections.observableArrayList("MNTElevation&Carto",
+                "MNTElevation",
+                "Carto",
+                "BathyMNT",
+                "BathyDEPARE"));
+        choiceCB.setValue("MNTElevation&Carto");
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
             guiAgentServices.getRoot().getChildren().remove(this);
@@ -268,8 +285,11 @@ public class StlComponentController
         });
         miRB.setToggleGroup(interactiveSquareGroup);
         tilesRB.setToggleGroup(interactiveSquareGroup);
+        miRB.setDisable(true);
+        tilesRB.setSelected(true);
         latLonAllRB.setToggleGroup(latLonGroup);
         latLonAllRB.setSelected(false);
+        latLonAllRB.setDisable(true);
         latRB.setToggleGroup(latLonGroup);
         latRB.setSelected(true);
         lonRB.setToggleGroup(latLonGroup);
@@ -391,44 +411,70 @@ public class StlComponentController
                 buoyageScale = 1.0;
             }
             boolean base = baseCB.isSelected();
-            wwjTiles = displayTiles(squarePolygonEnvelope, line, column);
+            //  wwjTiles = displayTiles(squarePolygonEnvelope, line, column);
             guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
                 wwjTiles = displayTiles(squarePolygonEnvelope, line, column);
                 // forEach tile
+                Date date = new Date();
+                String dateString = new SimpleDateFormat("dd:MMM:yyyy").format(date);
+
                 for (int i = 0; i < tilesCount; i++) {
-                    String outTile = nameTF.getText() + "_" + i + ".x3d";
-                    outPathname = Paths.get(OUT_DIR, outTile);
-
                     Geometry geom = initParameters(wwjTiles.get(i).getBoundaries());
-                    //if sur bathy ou mnt
-                    new StlPreWriterController(outPathname, title,
-                            tilesCount, i,
-                            positions,
-                            tileSideX, tileSideY,
-                            earthSpaceX, earthSpaceY,
-                            bottom, magnification).compute();
+                    if (choiceCB.getSelectionModel().getSelectedItem().equals("BathyDEPARE")) {
+                        outFile = nameTF.getText() + "_" + dateString + "_" + i + 1 + ":" + tilesCount + ".csv";
+                        outPathname = Paths.get(OUT_DIR, outFile);
+                        BathyDepareStlController bathyDepareStlController
+                                = new BathyDepareStlController(bathymetryDBServices,
+                                        displayBathymetryServices,
+                                        guiAgentServices,
+                                        layer,
+                                        squarePolygonEnvelope);
+                        //Max de profondeur pour l'ensemble des tuiles
+                        double maxElevation = bathyDepareStlController.getMaxElevation();
+                        bathyDepareStlController.writePointList(positions, outPathname, false);
+                        if (previewRB.isSelected()) {
+                            bathyDepareStlController.displayDelaunaySounding(positions, layerBathy, maxElevation);
+                        }
+                    } else {
+                        //if sur bathy ou mnt
+                        outFile = nameTF.getText() + "_" + i + ".x3d";
+                        outPathname = Paths.get(OUT_DIR, outFile);
 
-                    new ElevationStlController(outPathname, title,
-                            tilesCount, i,
-                            geodesyServices,
-                            positions,
-                            tileSideX, tileSideY,
-                            earthSpaceX, earthSpaceY,
-                            bottom, magnification
-                    ).compute();
-                    /*
-                    s57StlChartComponentController.compute(outPathname,
-                            tilesCount,
-                            i,
-                            magnification,
-                            tileSideX, tileSideY,
-                            earthSpaceX, earthSpaceY,
-                            bottom,
-                            polygonEnvelope,
-                            geometryEnvelope);
-                     */
-                    new StlPostWriterController(outPathname).compute();
+                        new StlPreWriterController(outPathname, title,
+                                tilesCount, i,
+                                positions,
+                                tileSideX, tileSideY,
+                                earthSpaceX, earthSpaceY,
+                                bottom, magnification,0.0).compute();
+                        if (choiceCB.getSelectionModel().getSelectedItem().equals("MNTElevation")
+                                || choiceCB.getSelectionModel().getSelectedItem().equals("MNTElevation&Carto")) {
+                            new ElevationStlController(outPathname, title,
+                                    tilesCount, i,
+                                    geodesyServices,
+                                    positions,
+                                    tileSideX, tileSideY,
+                                    earthSpaceX, earthSpaceY,
+                                    bottom, magnification,0.0
+                            ).compute();
+                        }
+                        if (choiceCB.getSelectionModel().getSelectedItem().equals("Carto")
+                                || choiceCB.getSelectionModel().getSelectedItem().equals("MNTElevation&Carto")) {
+                            s57StlChartComponentController.compute(outPathname,
+                                    tilesCount,
+                                    i,
+                                    magnification,
+                                    tileSideX, tileSideY,
+                                    earthSpaceX, earthSpaceY,
+                                    bottom,
+                                    polygonEnvelope,
+                                    geometryEnvelope);
+                        }
+                        if (choiceCB.getSelectionModel().getSelectedItem().equals("BathyMNT")) {
 
+                        }
+
+                        new StlPostWriterController(outPathname).compute();
+                    }
                     instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
                     wwjTiles.get(i).setAttributes(makeHighlightAttributes());
                     wwd.redrawNow();

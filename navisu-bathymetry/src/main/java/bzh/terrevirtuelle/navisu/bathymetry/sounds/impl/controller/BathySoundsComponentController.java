@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
@@ -40,7 +41,7 @@ public class BathySoundsComponentController {
     protected RenderableLayer layer;
     protected Map<Point3D, String> soundMap;
     protected Map<Point3D, String> imageMap;
-    ClickAndSoundSelectListener clickAndSoundSelectListener;
+    SelectEventListener clickAndSoundSelectListener;
 
     protected static final String SOUND_DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String IMAGE_DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
@@ -53,11 +54,10 @@ public class BathySoundsComponentController {
         this.fileName = fileName;
         layer = layersManagerServices.getLayer(GROUP_NAME, LAYER_NAME);
         wwd = GeoWorldWindViewImpl.getWW();
-        clickAndSoundSelectListener
-                = new ClickAndSoundSelectListener(instrumentDriverManagerServices, wwd, PointPlacemark.class);
-        wwd.addSelectListener(clickAndSoundSelectListener);
+
         soundMap = new HashMap<>();
         imageMap = new HashMap<>();
+
     }
 
     public void on() {
@@ -70,9 +70,9 @@ public class BathySoundsComponentController {
                 String text = values[3];
                 String sound = "/data/sounds/bathy/sounds/" + values[4];
                 soundMap.put(new Point3D(lat, lon), SOUND_DATA_PATH + sound.trim());
-                
+
                 PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(lat, lon, 0));
-                PointPlacemarkAttributes attrs=new PointPlacemarkAttributes();
+                PointPlacemarkAttributes attrs = new PointPlacemarkAttributes();
                 attrs.setImageAddress(image);
                 placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
                 placemark.setLabelText(text);
@@ -81,7 +81,12 @@ public class BathySoundsComponentController {
             }).forEachOrdered((placemark) -> {
                 layer.addRenderable(placemark);
             });
-            clickAndSoundSelectListener.setSoundMap(soundMap);
+
+            wwd.addSelectListener(
+                    new SelectEventListener(SelectEvent.LEFT_CLICK,
+                            PointPlacemark.class,
+                            new SoundAction(instrumentDriverManagerServices, soundMap))
+            );
         } catch (IOException ex) {
             Logger.getLogger(BathySoundsComponentController.class.getName()).log(Level.SEVERE, null, ex);
         }

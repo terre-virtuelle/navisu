@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.stl.charts.loader;
+package bzh.terrevirtuelle.navisu.stl.impl.writer.charts;
 
 import bzh.terrevirtuelle.navisu.charts.util.WwjGeodesy;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.NAVLNE_ShapefileLoader;
@@ -21,14 +21,14 @@ import java.util.List;
  * @author serge
  * @date Apr 5, 2017
  */
-public class NAVLNE_Stl_ShapefileLoader
+public class NAVLNE_Stl_ShapefileWriter
         extends NAVLNE_ShapefileLoader {
 
     Geometry geometryEnveloppe;
     Polygon polygon;
     String result = "";
 
-    public NAVLNE_Stl_ShapefileLoader(Geometry geometryEnveloppe, Polygon polygon) {
+    public NAVLNE_Stl_ShapefileWriter(Geometry geometryEnveloppe, Polygon polygon) {
         super();
         this.geometryEnveloppe = geometryEnveloppe;
         this.polygon = polygon;

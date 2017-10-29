@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.stl.impl.controller;
+package bzh.terrevirtuelle.navisu.stl.impl.controller.charts;
 
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.M_NSYS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.TOPMAR_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
-import bzh.terrevirtuelle.navisu.stl.charts.loader.BUOYAGE_Stl_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.stl.charts.loader.PONTON_Stl_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.stl.charts.loader.SLCONS_Stl_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.stl.impl.writer.charts.BUOYAGE_Stl_ShapefileWriter;
+import bzh.terrevirtuelle.navisu.stl.impl.writer.charts.PONTON_Stl_ShapefileWriter;
+import bzh.terrevirtuelle.navisu.stl.impl.writer.charts.SLCONS_Stl_ShapefileWriter;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Polygon;
@@ -32,7 +32,7 @@ import java.util.logging.Logger;
  * @author serge
  * @date Apr 24, 2017
  */
-public class StlChartComponentController
+public class StlChartController
         extends S57ChartComponentController {
 
     protected static boolean created = false;
@@ -60,11 +60,11 @@ public class StlChartComponentController
     protected double spaceY;
     protected GeodesyServices geodesyServices;
 
-    public StlChartComponentController(GeodesyServices geodesyServices) {
+    public StlChartController(GeodesyServices geodesyServices) {
         this.geodesyServices = geodesyServices;
     }
 
-    public StlChartComponentController() {
+    public StlChartController() {
     }
 
     public void init(String path, String chartPath) {
@@ -111,7 +111,7 @@ public class StlChartComponentController
         try {
             Files.write(outFilename, lines, charset, StandardOpenOption.APPEND);
         } catch (IOException ex) {
-            Logger.getLogger(StlChartComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(StlChartController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
@@ -140,8 +140,8 @@ public class StlChartComponentController
                       //  load(new DEPARE_Stl_ShapefileLoader(outPathname.toString(), polyEnveloppe), "DEPARE", "DEPARE", "/");
                         break;
                     case "PONTON.shp":
-                        PONTON_Stl_ShapefileLoader ponton_Stl_ShapefileLoader
-                                = new PONTON_Stl_ShapefileLoader(outPathname.toString(), polyEnveloppe,
+                        PONTON_Stl_ShapefileWriter ponton_Stl_ShapefileLoader
+                                = new PONTON_Stl_ShapefileWriter(outPathname.toString(), polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor, tileSideX);
                         load(ponton_Stl_ShapefileLoader, "HARBOUR", "PONTON", "/");
                         String resultPonton = ponton_Stl_ShapefileLoader.compute();
@@ -150,8 +150,8 @@ public class StlChartComponentController
                         }
                         break;
                     case "SLCONS.shp":
-                        SLCONS_Stl_ShapefileLoader slConsStlShapefileLoader
-                                = new SLCONS_Stl_ShapefileLoader(outPathname.toString(), polyEnveloppe,
+                        SLCONS_Stl_ShapefileWriter slConsStlShapefileLoader
+                                = new SLCONS_Stl_ShapefileWriter(outPathname.toString(), polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor, tileSideX);
                         load(slConsStlShapefileLoader, "HARBOUR", "SLCONS", "/");
                         String resultSl = slConsStlShapefileLoader.compute();
@@ -160,8 +160,8 @@ public class StlChartComponentController
                         }
                         break;
                     case "BCNCAR.shp":
-                        BUOYAGE_Stl_ShapefileLoader buoyageStlShapefileLoader
-                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                        BUOYAGE_Stl_ShapefileWriter buoyageStlShapefileLoader
+                                = new BUOYAGE_Stl_ShapefileWriter(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor,
                                         buoyageScale,
                                         tileSideX, tileSideY,
@@ -174,7 +174,7 @@ public class StlChartComponentController
                         break;
                     case "BOYCAR.shp":
                         buoyageStlShapefileLoader
-                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                = new BUOYAGE_Stl_ShapefileWriter(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor,
                                         buoyageScale,
                                         tileSideX, tileSideY,
@@ -187,7 +187,7 @@ public class StlChartComponentController
                         break;
                     case "BCNLAT.shp":
                         buoyageStlShapefileLoader
-                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                = new BUOYAGE_Stl_ShapefileWriter(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor,
                                         buoyageScale,
                                         tileSideX, tileSideY,
@@ -200,7 +200,7 @@ public class StlChartComponentController
                         break;
                     case "BOYLAT.shp":
                         buoyageStlShapefileLoader
-                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                = new BUOYAGE_Stl_ShapefileWriter(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor,
                                         buoyageScale,
                                         tileSideX, tileSideY,
@@ -213,7 +213,7 @@ public class StlChartComponentController
                         break;
                     case "BCNSPP.shp":
                         buoyageStlShapefileLoader
-                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                = new BUOYAGE_Stl_ShapefileWriter(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor,
                                         buoyageScale,
                                         tileSideX, tileSideY,
@@ -226,7 +226,7 @@ public class StlChartComponentController
                         break;
                     case "BOYSPP.shp":
                         buoyageStlShapefileLoader
-                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                = new BUOYAGE_Stl_ShapefileWriter(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor,
                                         buoyageScale,
                                         tileSideX, tileSideY,
@@ -239,7 +239,7 @@ public class StlChartComponentController
                         break;
                     case "BCNISD.shp":
                         buoyageStlShapefileLoader
-                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                = new BUOYAGE_Stl_ShapefileWriter(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor,
                                         buoyageScale,
                                         tileSideX, tileSideY,
@@ -252,7 +252,7 @@ public class StlChartComponentController
                         break;
                     case "BOYISD.shp":
                         buoyageStlShapefileLoader
-                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                = new BUOYAGE_Stl_ShapefileWriter(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor,
                                         buoyageScale,
                                         tileSideX, tileSideY,
@@ -265,7 +265,7 @@ public class StlChartComponentController
                         break;
                     case "MORFAC.shp":
                         buoyageStlShapefileLoader
-                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                = new BUOYAGE_Stl_ShapefileWriter(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor,
                                         buoyageScale,
                                         tileSideX, tileSideY,

@@ -21,6 +21,7 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -144,6 +145,7 @@ public class BathymetryDBImpl
         return bathymetryDBController.retrieveIn(latMin, lonMin, latMax, lonMax);
     }
 
+    @Override
     public Point3D[][] mergeData(Point3D[][] orgData, int nbLat, int nbLon,
             List<Triangle_dt> triangles) {
         return bathymetryDBController.mergeData(orgData, nbLat, nbLon, triangles);
@@ -166,6 +168,11 @@ public class BathymetryDBImpl
     @Override
     public DatabaseDriver getDriver() {
         return this;
+    }
+
+    @Override
+    public void writePointList(List<Point3D> points, Path pathname, boolean latLon) {
+        bathymetryDBController.writePointList(points, pathname, latLon);
     }
 
 }

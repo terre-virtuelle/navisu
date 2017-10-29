@@ -25,17 +25,9 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.SurfaceSquare;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.gavaghan.geodesy.Ellipsoid;
 
@@ -55,58 +47,18 @@ public class DisplayBathymetryController {
     protected WorldWindow wwd;
     protected RenderableLayer layer;
     protected DisplayBathymetryImpl component;
-    protected String LIMIT = "100";
-    protected static double maxElevation = -20.0;
+    protected String limit = "100";
+    protected double maxElevation;
     protected final double THRESHOLD = 0.0015;
     protected Geometry concaveHull;
     protected double MIN_DEPTH = 0.0;
-    List<String> lines = new ArrayList<>();
-    protected Path outPathname;
-    protected String OUT_DIR = "privateData/x3d/";
-
-    
-    protected double MIN_LAT = 48.42254051549229;
-    protected double MIN_LON = -5.085612948242527;
-    protected double MAX_LAT = 48.54667;
-    protected double MAX_LON = -4.900021474121264;
-    /*
-    48.42254051549229°, -4.900021474121264°, 100.0),
- (48.42254051549229°, -4.71443°, 100.0), 
-(48.54667°, -4.71443°, 100.0), 
-(48.54667°, -4.900021474121264°, 100.0),
- (48.42254051549229°, -4.900021474121264°, 100.0)]
-     */
- /*
-    48.29841103098457°, -5.085612948242527°, 100.0), 
-(48.29841103098457°, -4.900021474121264°, 100.0), 
-(48.42254051549229°, -4.900021474121264°, 100.0), 
-(48.42254051549229°, -5.085612948242527°, 100.0), 
-(48.29841103098457°, -5.085612948242527°, 100.0)]
-     */
- /*
-    48.29841103098457°, -4.900021474121264°, 100.0),
- (48.29841103098457°, -4.71443°, 100.0), 
-(48.42254051549229°, -4.71443°, 100.0), 
-(48.42254051549229°, -4.900021474121264°, 100.0),
- (48.29841103098457°, -4.900021474121264°, 100.0)
-     */
-    
-    /*
-    protected double MIN_LAT = 48.255496978759766;
-    protected double MIN_LON = -4.549251079559326;
-    protected double MAX_LAT = 48.45;
-    protected double MAX_LON = -4.245;
-*/
-    protected Charset charset = Charset.forName("UTF-8");
     protected NumberFormat formatter = new DecimalFormat("#0.00");
-
     double distA;
     double distB;
     double distC;
     double distMin;
     Point_dt pMin;
-    int NB_LAT = 220;
-    int NB_LON = 220;
+
     protected List<Point3D> points3d;
     NumberFormat nf4 = new DecimalFormat("0.0000");
     NumberFormat nf1 = new DecimalFormat("0.0");
@@ -119,14 +71,13 @@ public class DisplayBathymetryController {
             DisplayServices displayServices,
             DelaunayServices delaunayServices,
             JTSServices jtsServices,
-            String limit, RenderableLayer layer) {
+            RenderableLayer layer) {
         this.component = component;
         this.bathymetryDBServices = bathymetryDBServices;
         this.guiAgentServices = guiAgentServices;
         this.displayServices = displayServices;
         this.delaunayServices = delaunayServices;
         this.jtsServices = jtsServices;
-        this.LIMIT = limit;
         this.layer = layer;
         wwd = GeoWorldWindViewImpl.getWW();
     }
@@ -136,19 +87,15 @@ public class DisplayBathymetryController {
             DisplayServices displayServices,
             DelaunayServices delaunayServices,
             JTSServices jtsServices,
-            String limit, RenderableLayer layer) {
+            RenderableLayer layer) {
         if (INSTANCE == null) {
             INSTANCE = new DisplayBathymetryController(component,
                     bathymetryDBServices, guiAgentServices,
                     displayServices, delaunayServices,
                     jtsServices,
-                    limit, layer);
+                    layer);
         }
         return INSTANCE;
-    }
-
-    public void displayAllSounding() {
-        displayAllSounding(MIN_LAT, MIN_LON, MAX_LAT, MAX_LON, NB_LAT, NB_LON);
     }
 
     public void displayAllSounding(double minLat, double minLon, double maxLat, double maxLon, int nbLat, int nbLon) {
@@ -175,12 +122,11 @@ public class DisplayBathymetryController {
                         maxElevation = pt.getElevation();
                     });
                     System.out.println("maxElevation : " + maxElevation);
-                    
-                    //Display plane 0m over sea
-                   // displayServices.displayPlane(minLat, minLon, maxLat, maxLon, 100, Material.BLUE, layer);
-                    //Display plane maxElevation*10 over sea
-                  //  displayServices.displayPlane(minLat, minLon, maxLat, maxLon, maxElevation * 10, Material.GREEN, layer);
 
+                    //Display plane 0m over sea
+                    // displayServices.displayPlane(minLat, minLon, maxLat, maxLon, 100, Material.BLUE, layer);
+                    //Display plane maxElevation*10 over sea
+                    //  displayServices.displayPlane(minLat, minLon, maxLat, maxLon, maxElevation * 10, Material.GREEN, layer);
                     //Create Delaunay triangulation with bathymetry data
                     List<Triangle_dt> triangles = delaunayServices.createDelaunay(points3d, maxElevation);
                     //Suppress large edges
@@ -188,17 +134,14 @@ public class DisplayBathymetryController {
                     displayServices.displayDelaunay(triangles1, maxElevation, 10.0, Material.GREEN, layer);
 
                     //Create concaveHull from points with bathy information
-                    
                     //  concaveHull = jtsServices.getConcaveHull(points3d, THRESHOLD);
                     // displayServices.displayConcaveHull(concaveHull, maxElevation, 10.0, Material.RED, layer);
                     //Create a grid of points for triangulate sea level plane 
-                    Point3D[][] seaPlane = delaunayServices.toGrid(minLat, minLon, 100.0, 100.0, nbLat, nbLon, maxElevation);
+                    // Point3D[][] seaPlane = delaunayServices.toGrid(minLat, minLon, 100.0, 100.0, nbLat, nbLon, maxElevation);
                     //Modifie the z whith bathyletry data
-                    
-                  //    seaPlane = bathymetryDBServices.mergeData(seaPlane, nbLat, nbLon, triangles1);
-                  //   List<Triangle_dt> triangles2 = delaunayServices.createDelaunay(seaPlane, nbLat, nbLon, 0.0);
-                 //     displayServices.displayDelaunay(triangles2, maxElevation, 10.0, Material.YELLOW, layer);
-
+                    //    seaPlane = bathymetryDBServices.mergeData(seaPlane, nbLat, nbLon, triangles1);
+                    //   List<Triangle_dt> triangles2 = delaunayServices.createDelaunay(seaPlane, nbLat, nbLon, 0.0);
+                    //     displayServices.displayDelaunay(triangles2, maxElevation, 10.0, Material.YELLOW, layer);
                     wwd.redrawNow();
                 });
 
@@ -219,29 +162,24 @@ public class DisplayBathymetryController {
     }
 
     public void displaySounding(List<Point3D> points, RenderableLayer l) {
+
         points.stream().forEach((pt) -> {
             displaySounding(pt.getLat(),
                     pt.getLon(),
                     pt.getElevation(), l);
         });
+
     }
 
-    public void getFileGrid(Path pathname, List<Point3D> points3d, boolean latLon) {
-        if (points3d != null) {
-            if (latLon == true) {
-                points3d.forEach((p) -> {
-                    lines.add(p.getLon() + " " + p.getLat() + " " + p.getElevation());
-                });
-            } else {
-                points3d.forEach((p) -> {
-                    lines.add(p.getLat() + " " + p.getLon() + " " + p.getElevation());
-                });
-            }
-            try {
-                Files.write(pathname, lines, charset, StandardOpenOption.CREATE);
-            } catch (IOException ex) {
-                Logger.getLogger(DisplayBathymetryController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
-        }
+    public void displayDelaunaySounding(List<Point3D> points, RenderableLayer layer, double maxElevation) {
+        guiAgentServices.getJobsManager().newJob("displayAllSounding", (progressHandle) -> {
+            //Create Delaunay triangulation with bathymetry data
+            List<Triangle_dt> triangles = delaunayServices.createDelaunay(points, maxElevation);
+            //Suppress large edges
+            List<Triangle_dt> triangles1 = delaunayServices.filterLargeEdges(triangles, THRESHOLD);
+            displayServices.displayDelaunay(triangles1, maxElevation, 10.0, Material.GREEN, layer);
+            wwd.redrawNow();
+        });
     }
+
 }

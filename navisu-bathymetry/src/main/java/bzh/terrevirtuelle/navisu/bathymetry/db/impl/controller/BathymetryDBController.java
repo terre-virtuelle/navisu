@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.bathymetry.db.impl.controller;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer.BathymetryEventProducerServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.impl.BathymetryDBImpl;
+import bzh.terrevirtuelle.navisu.bathymetry.view.impl.controller.DisplayBathymetryController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
@@ -22,7 +23,10 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,22 +71,18 @@ public class BathymetryDBController {
     NumberFormat nf4 = new DecimalFormat("0.0000");
     NumberFormat nf1 = new DecimalFormat("0.0");
     int i = 0;
-    Stage stage;
     double MIN_DEPTH = 0.0;
     double distA;
     double distB;
     double distC;
     double distMin;
     Point_dt pMin;
-    double MIN_LAT = 48.25;
-    double MIN_LON = -4.55;
-    double MAX_LAT = 48.45;
-    double MAX_LON = -4.245;
-
+   
     double maxElevation = -20.0;
     final double THRESHOLD = 0.0015;
     double tmp;
     Geometry concaveHull;
+    protected Charset charset = Charset.forName("UTF-8");
 
     private BathymetryDBController(BathymetryDBImpl component,
             DatabaseServices databaseServices, GuiAgentServices guiAgentServices,
@@ -254,7 +254,7 @@ public class BathymetryDBController {
             while (r.next()) {
                 geom = (PGgeometry) r.getObject(2);
                 depth = r.getFloat(3);
-                if (depth > MIN_DEPTH) {
+                if (depth >= MIN_DEPTH) {
                     Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
                             geom.getGeometry().getFirstPoint().getY(),
                             depth);
@@ -348,4 +348,23 @@ public class BathymetryDBController {
         return connection;
     }
 
+    public void writePointList(List<Point3D> points, Path pathname, boolean latLon) {
+        List<String> lines = new ArrayList<>();
+        if (points != null) {
+            if (latLon == true) {
+                points.forEach((p) -> {
+                    lines.add(p.getLon() + " " + p.getLat() + " " + p.getElevation());
+                });
+            } else {
+                points.forEach((p) -> {
+                    lines.add(p.getLat() + " " + p.getLon() + " " + p.getElevation());
+                });
+            }
+            try {
+                Files.write(pathname, lines, charset, StandardOpenOption.CREATE);
+            } catch (IOException ex) {
+                Logger.getLogger(DisplayBathymetryController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+    }
 }

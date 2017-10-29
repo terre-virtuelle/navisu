@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.stl.impl.controller.loader;
+package bzh.terrevirtuelle.navisu.stl.impl.writer.base;
 
 /**
  *
  * @author serge
  * @date Mar 18, 2017
  */
-public class BaseLoader {
+public class BaseWriter {
 
     String TEXTURE = "common/metal.jpg";
    
@@ -1849,7 +1849,7 @@ public class BaseLoader {
             + "</Transform> "
             + "</Transform>\n";
 
-    public BaseLoader() {
+    public BaseWriter() {
     }
 
     public String compute() {

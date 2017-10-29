@@ -22,8 +22,6 @@ import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import java.nio.charset.Charset;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentState;
@@ -77,7 +75,7 @@ public class DisplayBathymetryImpl
         controller = DisplayBathymetryController.getInstance(this,
                 bathymetryDBServices, guiAgentServices,
                 displayServices, delaunayServices, jtsServices,
-                LIMIT, layer);
+                layer);
     }
 
     @Override
@@ -105,16 +103,6 @@ public class DisplayBathymetryImpl
     }
 
     @Override
-    public void displayAllSounding() {
-        controller.displayAllSounding();
-    }
-
-    @Override
-    public void getFileGrid(Path pathname, List<Point3D> points3d, boolean latLon) {
-        controller.getFileGrid(pathname, points3d, latLon);
-    }
-
-    @Override
     public void displaySounding(double lat, double lon, double depth, RenderableLayer l) {
         controller.displaySounding(lat, lon, depth, l);
     }
@@ -124,4 +112,8 @@ public class DisplayBathymetryImpl
         controller.displaySounding(points, l);
     }
 
+    @Override
+    public void displayDelaunaySounding(List<Point3D> points, RenderableLayer layer, double maxElevation) {
+         controller.displayDelaunaySounding(points, layer, maxElevation);
+    }
 }

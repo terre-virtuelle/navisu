@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.stl.charts.loader;
+package bzh.terrevirtuelle.navisu.stl.impl.writer.charts;
 
 import bzh.terrevirtuelle.navisu.charts.util.WwjGeodesy;
 import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
@@ -36,7 +36,7 @@ import java.util.logging.Logger;
  * @author Serge Morvan
  * @date 26 fev 2017 NaVisu project
  */
-public class DEPARE_Stl_ShapefileLoader
+public class DEPARE_Stl_ShapefileWriter
         extends DEPARE_ShapefileLoader {
 
     protected String outFilename;
@@ -51,7 +51,7 @@ public class DEPARE_Stl_ShapefileLoader
     protected Geometry geometryEnveloppe;
     List<? extends Position> positions;
 
-    public DEPARE_Stl_ShapefileLoader(String filename, Polygon polyEnveloppe) {
+    public DEPARE_Stl_ShapefileWriter(String filename, Polygon polyEnveloppe) {
 
         this.outFilename = filename;
         this.polyEnveloppe = polyEnveloppe;
@@ -66,12 +66,12 @@ public class DEPARE_Stl_ShapefileLoader
             try {
                 geometryEnveloppe = wktReader.read(wkt);
             } catch (com.vividsolutions.jts.io.ParseException ex) {
-                Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DEPARE_Stl_ShapefileWriter.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-    public DEPARE_Stl_ShapefileLoader(Polygon polyEnveloppe) {
+    public DEPARE_Stl_ShapefileWriter(Polygon polyEnveloppe) {
         this.polyEnveloppe = polyEnveloppe;
         positions = polyEnveloppe.getBoundaries().get(0);
         latOrg = positions.get(0).getLatitude().getDegrees();
@@ -83,7 +83,7 @@ public class DEPARE_Stl_ShapefileLoader
             try {
                 geometryEnveloppe = wktReader.read(wkt);
             } catch (com.vividsolutions.jts.io.ParseException ex) {
-                Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DEPARE_Stl_ShapefileWriter.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -129,7 +129,7 @@ public class DEPARE_Stl_ShapefileLoader
                 try {
                     Files.write(Paths.get(outFilename), txt.getBytes(), APPEND);
                 } catch (IOException ex) {
-                    Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                    Logger.getLogger(DEPARE_Stl_ShapefileWriter.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                 }
             }
         }

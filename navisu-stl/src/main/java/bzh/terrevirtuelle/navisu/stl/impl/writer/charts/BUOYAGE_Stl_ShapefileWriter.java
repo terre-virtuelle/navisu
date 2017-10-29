@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.stl.charts.loader;
+package bzh.terrevirtuelle.navisu.stl.impl.writer.charts;
 
 import bzh.terrevirtuelle.navisu.charts.util.WwjGeodesy;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.BUOYAGE_ShapefileLoader;
@@ -29,7 +29,7 @@ import java.util.Set;
  * @author serge
  * @date Mar 21, 2017
  */
-public class BUOYAGE_Stl_ShapefileLoader
+public class BUOYAGE_Stl_ShapefileWriter
         extends BUOYAGE_ShapefileLoader {
 
     String result;
@@ -46,7 +46,7 @@ public class BUOYAGE_Stl_ShapefileLoader
     Geometry geometryEnveloppe;
     GeometryFactory geometryFactory;
 
-    public BUOYAGE_Stl_ShapefileLoader(Geometry geometryEnveloppe,
+    public BUOYAGE_Stl_ShapefileWriter(Geometry geometryEnveloppe,
             Polygon polygon,
             double scaleLatFactor, double scaleLonFactor,
             double buoyageScale,

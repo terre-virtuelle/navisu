@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.stl.impl.controller.loader;
+package bzh.terrevirtuelle.navisu.stl.impl.writer.sea;
 
 /**
  *
  * @author serge
  * @date Sep 18, 2017
  */
-public class SeaLoader {
+public class SeaWriter {
 
     String txt = " <!--" + "Sea" + "-->\n"
             + "<Transform DEF=\"Shape_Box_TRANSFORM\" \n"
@@ -40,7 +40,7 @@ public class SeaLoader {
             + "</Group>\n"
             + "</Transform>\n";
 
-    public SeaLoader() {
+    public SeaWriter() {
     }
 
     public String compute() {
