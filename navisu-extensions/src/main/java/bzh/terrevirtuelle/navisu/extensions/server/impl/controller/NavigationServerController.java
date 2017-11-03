@@ -13,7 +13,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
 import bzh.terrevirtuelle.navisu.extensions.client.Client;
-import bzh.terrevirtuelle.navisu.extensions.commands.ArCommand;
+import bzh.terrevirtuelle.navisu.extensions.commands.Command;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileInputStream;
@@ -61,7 +61,7 @@ public class NavigationServerController {
     private Vertx cmdVertx;
 
     private int port;
-    private ArCommand arCommand;
+    private Command command;
 
     private NavigationServerController(GuiAgentServices guiAgentServices,
             DriverManagerServices driverManagerServices,
@@ -120,10 +120,10 @@ public class NavigationServerController {
             cmdVertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
                 if (ws.path().equals(START_CMD)) {
                     ws.dataHandler((Buffer data) -> {
-                        arCommand = command(data.toString());
-                        if (arCommand != null) {
-                            if (arCommand.getNavigationData() != null) {
-                                navigationDataSet = navigationCmdComponentServices.doIt(arCommand.getCmd(), arCommand.getNavigationData());
+                        command = command(data.toString());
+                        if (command != null) {
+                            if (command.getNavigationData() != null) {
+                                navigationDataSet = navigationCmdComponentServices.doIt(command.getCmd(), command.getNavigationData());
                                 if (navigationDataSet != null) {
                                     if (navigationDataSet.size() > 0) {
                                         String r = response(navigationDataSet);
@@ -133,8 +133,8 @@ public class NavigationServerController {
                                     }
                                 }
                             }
-                            if (arCommand.getArg() != null) {
-                                navigationDataSet = navigationCmdComponentServices.doIt(arCommand.getCmd(), arCommand.getArg());
+                            if (command.getArg() != null) {
+                                navigationDataSet = navigationCmdComponentServices.doIt(command.getCmd(), command.getArg());
                                 if (navigationDataSet != null) {
                                     if (navigationDataSet.size() > 0) {
                                         String r = response(navigationDataSet);
@@ -161,10 +161,10 @@ public class NavigationServerController {
         }
     }
 
-    private ArCommand command(String data) {
-        ArCommand navCmd = null;
+    private Command command(String data) {
+        Command navCmd = null;
         try {
-            navCmd = new ArCommand();
+            navCmd = new Command();
             navCmd = ImportExportXML.imports(navCmd, new StringReader(data));
         } catch (JAXBException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);

@@ -29,7 +29,7 @@
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="220.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="230.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="300.0" minHeight="6.0" prefHeight="160.0" />
                         <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="300.0" />
                     </rowConstraints>
@@ -51,16 +51,18 @@
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" percentWidth="0.0" prefWidth="142.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="Choix objets à imprimer" />
                               <RadioButton fx:id="miRB" mnemonicParsing="false" text="Mode interactif" GridPane.columnIndex="2" />
                               <RadioButton fx:id="tilesRB" mnemonicParsing="false" text="Tuiles" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <ChoiceBox fx:id="choiceCB" prefWidth="150.0" GridPane.rowIndex="1" />
-                              <RadioButton fx:id="previewRB" mnemonicParsing="false" text="PreviewBathy" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <RadioButton fx:id="previewRB" mnemonicParsing="false" text="PreviewBathymetry" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <RadioButton fx:id="lonLatRB" mnemonicParsing="false" text="LonLat" GridPane.columnIndex="3" />
+                              <RadioButton fx:id="latLonRB" mnemonicParsing="false" text="LatLon" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children>
@@ -140,8 +142,8 @@
                         <TextField fx:id="chartNameTF" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                             </children>
                         </GridPane>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="321.0" layoutY="50.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" translateX="3.0" translateY="-30.0" width="598.0" GridPane.rowIndex="3" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="78.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" translateX="-28.0" translateY="28.0" width="598.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="301.0" layoutY="50.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" translateX="3.0" translateY="-30.0" width="598.0" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="93.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" translateX="-28.0" translateY="28.0" width="598.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     </children>
                 </GridPane>
             </children>

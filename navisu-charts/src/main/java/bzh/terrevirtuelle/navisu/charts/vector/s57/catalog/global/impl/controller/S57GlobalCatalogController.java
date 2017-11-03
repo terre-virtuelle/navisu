@@ -36,8 +36,11 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.geom.LatLon;
 import java.util.HashSet;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Text;
 
 /**
  * @author Serge Morvan
@@ -60,7 +63,7 @@ public class S57GlobalCatalogController
     protected Geometry geometry = null;
     protected GuiAgentServices guiAgentServices;
     protected LayersManagerServices layersManagerServices;
-
+    boolean first = true;
     protected KeyCode keyCode;
     protected KMLSurfacePolygonImpl polygon;
     protected RenderableLayer kmlLayer;
@@ -151,7 +154,7 @@ public class S57GlobalCatalogController
                                     }
                                     s57ChartSet.add(s57Chart);
                                 } else {
-                                    System.out.println("La carte: " + filename + " n'est pas dans votre catalogue");
+                                    alert(filename);
                                 }
                             } else {
                                 System.out.println(Translator.tr("chart.error"));
@@ -211,4 +214,19 @@ public class S57GlobalCatalogController
         return s57ChartSet;
     }
 
+    private void alert(String filename) {
+        if (first == true) {
+            Platform.runLater(() -> {
+                first = false;
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Catalog warning");
+                alert.setHeaderText("No chart " + filename);
+                Text s = new Text("   This chart is not in your catalogue, \n"
+                        + "    or verify your charts's path with the configuration menu\n");
+                s.setWrappingWidth(650);
+                alert.getDialogPane().setContent(s);
+                alert.show();
+            });
+        }
+    }
 }

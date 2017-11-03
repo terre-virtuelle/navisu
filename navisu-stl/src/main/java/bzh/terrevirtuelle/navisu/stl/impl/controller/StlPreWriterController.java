@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.stl.impl.controller;
 
+import bzh.terrevirtuelle.navisu.stl.impl.controller.charts.StlChartController;
 import bzh.terrevirtuelle.navisu.stl.impl.writer.ref.RefWriter;
 import gov.nasa.worldwind.geom.Position;
 import java.io.IOException;
@@ -53,6 +54,7 @@ public class StlPreWriterController
         writePositionOrientation();
     }
 
+    
     private void writeInitOutFile() {
         String txt;
         lines = new ArrayList<>();

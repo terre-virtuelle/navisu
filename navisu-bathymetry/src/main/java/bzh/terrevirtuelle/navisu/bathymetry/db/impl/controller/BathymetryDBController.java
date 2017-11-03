@@ -39,7 +39,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javafx.stage.Stage;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.text.Text;
 import org.postgis.PGgeometry;
 
 /**
@@ -56,7 +58,7 @@ public class BathymetryDBController {
     BathymetryEventProducerServices bathymetryEventProducerServices;
     protected WorldWindow wwd;
     final double LIMIT;
-
+    boolean first = true;
     List<Point3D> points;
     private Connection connection;
     private String dataFileName;
@@ -77,7 +79,7 @@ public class BathymetryDBController {
     double distC;
     double distMin;
     Point_dt pMin;
-   
+
     double maxElevation = -20.0;
     final double THRESHOLD = 0.0015;
     double tmp;
@@ -241,28 +243,32 @@ public class BathymetryDBController {
         PGgeometry geom;
         double depth;
         ResultSet r;
+        if (connection != null) {
+            try {
+                r = connection.createStatement().executeQuery(
+                        "SELECT *"
+                        + "FROM bathy "
+                        + "WHERE coord @ ST_MakeEnvelope ("
+                        + latMin + ", " + lonMin + ", "
+                        + latMax + ", " + lonMax
+                        + ", 4326) ");
 
-        try {
-            r = connection.createStatement().executeQuery(
-                    "SELECT *"
-                    + "FROM bathy "
-                    + "WHERE coord @ ST_MakeEnvelope ("
-                    + latMin + ", " + lonMin + ", "
-                    + latMax + ", " + lonMax
-                    + ", 4326) ");
-
-            while (r.next()) {
-                geom = (PGgeometry) r.getObject(2);
-                depth = r.getFloat(3);
-                if (depth >= MIN_DEPTH) {
-                    Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
-                            geom.getGeometry().getFirstPoint().getY(),
-                            depth);
-                    tmp1.add(pt);
+                while (r.next()) {
+                    geom = (PGgeometry) r.getObject(2);
+                    depth = r.getFloat(3);
+                    if (depth >= MIN_DEPTH) {
+                        Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
+                                geom.getGeometry().getFirstPoint().getY(),
+                                depth);
+                        tmp1.add(pt);
+                    }
                 }
+
+            } catch (SQLException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+        } else {
+            alert();
         }
         return tmp1;
     }
@@ -353,11 +359,11 @@ public class BathymetryDBController {
         if (points != null) {
             if (latLon == true) {
                 points.forEach((p) -> {
-                    lines.add(p.getLon() + " " + p.getLat() + " " + p.getElevation());
+                    lines.add(p.getLat() + " " + p.getLon() + " " + p.getElevation());
                 });
             } else {
                 points.forEach((p) -> {
-                    lines.add(p.getLat() + " " + p.getLon() + " " + p.getElevation());
+                    lines.add(p.getLon() + " " + p.getLat() + " " + p.getElevation());
                 });
             }
             try {
@@ -365,6 +371,21 @@ public class BathymetryDBController {
             } catch (IOException ex) {
                 Logger.getLogger(DisplayBathymetryController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
+        }
+    }
+
+    private void alert() {
+        if (first == true) {
+            Platform.runLater(() -> {
+                first = false;
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Database warning");
+                alert.setHeaderText("Database not connected");
+                Text s = new Text("    Verify PostGis NaVisuDB connection \n");
+                s.setWrappingWidth(650);
+                alert.getDialogPane().setContent(s);
+                alert.show();
+            });
         }
     }
 }

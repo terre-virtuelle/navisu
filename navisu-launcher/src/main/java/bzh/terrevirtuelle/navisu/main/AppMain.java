@@ -151,6 +151,7 @@ import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
 import gov.nasa.worldwind.WorldWindow;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
+import java.util.logging.FileHandler;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -182,6 +183,9 @@ public class AppMain extends Application {
 
         final ComponentManager componentManager = ComponentManager.componentManager;
 
+        FileHandler fh = new FileHandler("navisuDeployComponents.log");
+        LOGGER.addHandler(fh);
+        LOGGER.setUseParentHandlers(false);
         /* Deploy components */
         LOGGER.info("\n"
                 + componentManager.startApplication(GuiAgentImpl.class,//in first
@@ -486,13 +490,11 @@ public class AppMain extends Application {
         // Neo4J serveur externe
         // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
         // System.out.println("con : " + con);
-      // bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
-      //          "5432", "org.postgresql.Driver", "admin", "admin");
+    //    bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
+     //           "5432", "org.postgresql.Driver", "admin", "admin");
 
-      //  bathymetryDBServices.create("C:\\Users\\Dom\\Documents\\Navisu\\shom-data\\bathy\\MNT100M_ATL\\splited\\bathy04.glz");
+        //  bathymetryDBServices.create("C:\\Users\\Dom\\Documents\\Navisu\\shom-data\\bathy\\MNT100M_ATL\\splited\\bathy04.glz");
         //bathymetryDBServices.createIndex();
-        
-
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
         //  speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US

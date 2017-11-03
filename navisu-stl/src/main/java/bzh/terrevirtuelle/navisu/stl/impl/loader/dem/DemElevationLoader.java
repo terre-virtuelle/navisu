@@ -17,7 +17,7 @@ import java.util.List;
  * @author serge
  * @date Oct 19, 2017
  */
-public class DemElevationLoader{
+public class DemElevationLoader {
 
     protected WorldWindow wwd;
     protected ElevationModel model;
@@ -41,7 +41,7 @@ public class DemElevationLoader{
                 if (el < 0) {
                     el = 0;
                 }
-                elevations[u][v] = el+offset;
+                elevations[u][v] = el + offset;
                 latitude += latInc;
             }
             longitude += lonInc;

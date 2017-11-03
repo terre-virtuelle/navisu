@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.extensions.commands.app;
 
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
-import bzh.terrevirtuelle.navisu.extensions.commands.ArCommand;
+import bzh.terrevirtuelle.navisu.extensions.commands.Command;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
@@ -25,14 +25,14 @@ public class App {
     public App() {
         //Emission
         NavigationData camera = new Camera();
-        ArCommand cmd = new ArCommand("cmd", camera);
+        Command cmd = new Command("cmd", camera);
         try {
             ImportExportXML.exports(cmd, "cmd.xml");
         } catch (JAXBException | FileNotFoundException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Reception
-        cmd = new ArCommand();
+        cmd = new Command();
         try {
             cmd = ImportExportXML.imports(cmd, "cmd.xml");
         } catch (JAXBException | FileNotFoundException ex) {

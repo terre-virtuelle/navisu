@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.stl.impl.controller;
 
+import bzh.terrevirtuelle.navisu.stl.impl.controller.charts.StlChartController;
 import bzh.terrevirtuelle.navisu.stl.impl.writer.base.BaseWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,8 +27,6 @@ public class StlPostWriterController
         super(outPathname);
     }
 
-    
-
     public void compute() {
         writeBase();
         writeEndOutFile();
@@ -36,6 +35,7 @@ public class StlPostWriterController
     private void writeBase() {
         write(new BaseWriter().compute());
     }
+
 
     private void writeEndOutFile() {
         lines = new ArrayList<>();

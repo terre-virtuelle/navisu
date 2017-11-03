@@ -6,9 +6,9 @@
 package bzh.terrevirtuelle.navisu.stl.impl.controller;
 
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
-import bzh.terrevirtuelle.navisu.stl.impl.loader.dem.DemElevationLoader;
+import bzh.terrevirtuelle.navisu.stl.impl.loader.bathy.BathyElevationLoader;
 import bzh.terrevirtuelle.navisu.stl.impl.writer.sea.SeaWriter;
-import bzh.terrevirtuelle.navisu.stl.impl.loader.texture.TextureLoader;
+import bzh.terrevirtuelle.navisu.stl.impl.loader.texture.TextureElevationLoader;
 import gov.nasa.worldwind.geom.Position;
 import java.nio.file.Path;
 import java.util.List;
@@ -22,6 +22,8 @@ public class ElevationStlController
         extends StlController {
 
     protected GeodesyServices geodesyServices;
+    TextureElevationLoader textureLoader;
+    SeaWriter seaWriter;
 
     public ElevationStlController(Path outPathname, String title,
             int tilesCount, int index,
@@ -45,19 +47,25 @@ public class ElevationStlController
     }
 
     public void compute() {
-        writeTexture();
+        writeElevationTexture();
         writeElevation();
         // writeSea();
     }
 
-    private void writeTexture() {
-        TextureLoader exportImageOrElevations = new TextureLoader(positions, index);
-        exportImageOrElevations.doSaveImage();
+    public void computeBathy() {
+        //writeTexture();
+        writeBathyElevation();
+
+    }
+
+    private void writeElevationTexture() {
+        textureLoader = new TextureElevationLoader(positions, index);
+        textureLoader.doSaveImage();
     }
 
     private void writeElevation() {
-        
-/*
+
+        /*
         DemElevationLoader elevationLoader = new DemElevationLoader(geodesyServices,
                 positions,
                 index,
@@ -68,12 +76,13 @@ public class ElevationStlController
                 offset);
 
         write(elevationLoader.computeDEM());
-*/
+         */
     }
 
     private void writeBathyElevation() {
-/*
-        ElevationWriter elevationLoader = new BathyElevationLoader(geodesyServices,
+       /* 
+        BathyElevationLoader elevationLoader = new BathyElevationLoader(
+                geodesyServices,
                 positions,
                 index,
                 tileSideX, tileSideY,
@@ -81,13 +90,14 @@ public class ElevationStlController
                 bottom,
                 magnification,
                 offset);
-        write(elevationLoader.computeDEM());
 */
+      //  write(elevationLoader.computeDEM());
+         
     }
 
     private void writeSea() {
-        SeaWriter seaLoader = new SeaWriter();
-        write(seaLoader.compute());
+        seaWriter = new SeaWriter();
+        write(seaWriter.compute());
     }
 
 }

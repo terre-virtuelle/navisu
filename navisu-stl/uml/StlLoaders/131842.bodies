@@ -1,7 +1,0 @@
-class BaseLoader
-!!!138498.java!!!	compute(inout base : boolean) : String
-        if (base == true) {
-            return txt + txt1;
-        } else {
-            return txt;
-        }

@@ -16,6 +16,7 @@ import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.stl.impl.controller.bathy.depare.BathyDepareStlController;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
+import bzh.terrevirtuelle.navisu.stl.impl.loader.bathy.BathyElevationLoader;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.vividsolutions.jts.geom.CoordinateList;
 import com.vividsolutions.jts.geom.Geometry;
@@ -166,6 +167,10 @@ public class StlComponentController
     @FXML
     public RadioButton southRB;
     @FXML
+    public RadioButton latLonRB;
+    @FXML
+    public RadioButton lonLatRB;
+    @FXML
     public Button generationButton;
     @FXML
     public ChoiceBox<Integer> countTilesCB;
@@ -192,6 +197,7 @@ public class StlComponentController
     final ToggleGroup eastWestGroup = new ToggleGroup();
     final ToggleGroup northSouthGroup = new ToggleGroup();
     final ToggleGroup interactiveSquareGroup = new ToggleGroup();
+    final ToggleGroup latLonFileGroup = new ToggleGroup();
     protected KeyCode keyCode;
     protected SectorSelector selector;
 
@@ -302,6 +308,11 @@ public class StlComponentController
         northRB.setSelected(true);
         southRB.setToggleGroup(northSouthGroup);
         southRB.setSelected(false);
+        latLonRB.setToggleGroup(latLonFileGroup);
+        lonLatRB.setToggleGroup(latLonFileGroup);
+        lonLatRB.setSelected(true);
+        latLonRB.setDisable(true);
+        lonLatRB.setDisable(true);
         countTilesCB.setOnAction((ActionEvent event) -> {
             tilesCount = countTilesCB.getValue();
             line = column = (int) Math.sqrt(tilesCount);
@@ -392,6 +403,15 @@ public class StlComponentController
             }
 
         });
+        choiceCB.setOnAction((ActionEvent event) -> {
+            if (choiceCB.getSelectionModel().getSelectedItem().equals("BathyDEPARE")) {
+                latLonRB.setDisable(false);
+                lonLatRB.setDisable(false);
+            } else {
+                latLonRB.setDisable(true);
+                lonLatRB.setDisable(true);
+            }
+        });
         generationButton.setOnMouseClicked((MouseEvent event) -> {
             title = titleTF.getText();
             tilesCount = countTilesCB.getValue();
@@ -431,7 +451,8 @@ public class StlComponentController
                                         squarePolygonEnvelope);
                         //Max de profondeur pour l'ensemble des tuiles
                         double maxElevation = bathyDepareStlController.getMaxElevation();
-                        bathyDepareStlController.writePointList(positions, outPathname, false);
+
+                        bathyDepareStlController.writePointList(positions, outPathname, latLonRB.isSelected());
                         if (previewRB.isSelected()) {
                             bathyDepareStlController.displayDelaunaySounding(positions, layerBathy, maxElevation);
                         }
@@ -445,7 +466,7 @@ public class StlComponentController
                                 positions,
                                 tileSideX, tileSideY,
                                 earthSpaceX, earthSpaceY,
-                                bottom, magnification,0.0).compute();
+                                bottom, magnification, 0.0).compute();
                         if (choiceCB.getSelectionModel().getSelectedItem().equals("MNTElevation")
                                 || choiceCB.getSelectionModel().getSelectedItem().equals("MNTElevation&Carto")) {
                             new ElevationStlController(outPathname, title,
@@ -454,7 +475,7 @@ public class StlComponentController
                                     positions,
                                     tileSideX, tileSideY,
                                     earthSpaceX, earthSpaceY,
-                                    bottom, magnification,0.0
+                                    bottom, magnification, 0.0
                             ).compute();
                         }
                         if (choiceCB.getSelectionModel().getSelectedItem().equals("Carto")
@@ -470,7 +491,15 @@ public class StlComponentController
                                     geometryEnvelope);
                         }
                         if (choiceCB.getSelectionModel().getSelectedItem().equals("BathyMNT")) {
-
+                            new BathyElevationLoader(outPathname, 
+                                    title,
+                                    tilesCount, i,
+                                    geodesyServices,
+                                    positions,
+                                    tileSideX, tileSideY,
+                                    earthSpaceX, earthSpaceY,
+                                    bottom, magnification, 0.0
+                            ).compute();
                         }
 
                         new StlPostWriterController(outPathname).compute();
