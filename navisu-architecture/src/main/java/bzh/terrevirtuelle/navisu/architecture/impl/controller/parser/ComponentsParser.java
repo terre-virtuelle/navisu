@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-architecture/src/main/java/bzh/terrevirtuelle/navisu/architecture/impl/controller/parser/Components.g 2017-11-03 15:33:56
+// $ANTLR 3.5.1 /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-architecture/src/main/java/bzh/terrevirtuelle/navisu/architecture/impl/controller/parser/Components.g 2017-11-05 18:39:18
 
 package bzh.terrevirtuelle.navisu.architecture.impl.controller.parser;
 
@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class ComponentsParser extends Parser {
 	public static final String[] tokenNames = new String[] {
 		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "COMPONENT_ITEM", "CONSUMED_EVENT", 
-		"EVENT_PROVIDED", "IMPLEMENTATION", "LETTERS", "NAME", "NUMBER", "POST", 
+		"EVENT_PROVIDED", "IMPLEMENTATION", "LETTERS", "NAME", "NUMBERS", "POST", 
 		"PRE", "SEPARATOR", "SERVICE_PROVIDED", "STATE", "SUB_COMPONENT", "USED_EVENT_SUBSCRIBE", 
-		"USED_SERVICES", "WS"
+		"USED_SERVICES"
 	};
 	public static final int EOF=-1;
 	public static final int COMPONENT_ITEM=4;
@@ -25,7 +25,7 @@ public class ComponentsParser extends Parser {
 	public static final int IMPLEMENTATION=7;
 	public static final int LETTERS=8;
 	public static final int NAME=9;
-	public static final int NUMBER=10;
+	public static final int NUMBERS=10;
 	public static final int POST=11;
 	public static final int PRE=12;
 	public static final int SEPARATOR=13;
@@ -34,7 +34,6 @@ public class ComponentsParser extends Parser {
 	public static final int SUB_COMPONENT=16;
 	public static final int USED_EVENT_SUBSCRIBE=17;
 	public static final int USED_SERVICES=18;
-	public static final int WS=19;
 
 	// delegates
 	public Parser[] getDelegates() {

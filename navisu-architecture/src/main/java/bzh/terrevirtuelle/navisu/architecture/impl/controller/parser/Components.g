@@ -57,78 +57,76 @@ entry 	:    (PRE|NAME|IMPLEMENTATION|STATE|SERVICE_PROVIDED
 |CONSUMED_EVENT|USED_EVENT_SUBSCRIBE
 |SUB_COMPONENT|COMPONENT_ITEM|POST|SEPARATOR)+;
 
-PRE	: '<?xml ' (LETTERS|NUMBER) 
+PRE	: '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' (LETTERS|NUMBERS|'\n')* 
 {
+handler.doIt(getText());
 };
-SEPARATOR	:	('='|'-')* 
+SEPARATOR	:	('='|'-'|' ')* '\n'
 {
+handler.doIt(getText());
 };
-NAME    : 'COMPONENT NAME :' LETTERS 
+NAME    : 'COMPONENT NAME : ' (component=LETTERS|NUMBERS)* '\n'
         {
-        handler.doIt(getText());
-        // System.out.println("NAME : " + getText());
+       // handler.doIt(getText());
+       System.out.println("COMPONENT : " + component.getText());
         };
-IMPLEMENTATION    : 'IMPLEMENTATION :' LETTERS 
+IMPLEMENTATION    : 'IMPLEMENTATION : ' LETTERS* '\n'
         {
         handler.doIt(getText());
         // System.out.println("IMPLEMENTATION : " + getText());
         };
-STATE    : 'STATE :'LETTERS 
+STATE    : 'STATE :'LETTERS* '\n'
         {
         handler.doIt(getText());
         // System.out.println("STATE : " + getText());
         };
-SERVICE_PROVIDED    : 'SERVICE PROVIDED:'LETTERS 
+SERVICE_PROVIDED    : 'SERVICE PROVIDED:' (LETTERS |'\n')*
         {
         handler.doIt(getText());
         // System.out.println("SERVICE_PROVIDED : " + getText());
         };
-EVENT_PROVIDED    : 'EVENT PROVIDED:'LETTERS WS
+EVENT_PROVIDED    : 'EVENT PROVIDED:' LETTERS* '\n'
         {
         handler.doIt(getText());
         // System.out.println("EVENT_PROVIDED : " + getText());
         };
-USED_SERVICES   : 'USED SERVICES :'LETTERS WS
+USED_SERVICES   : 'USED SERVICES :'LETTERS '\n'
         {
         handler.doIt(getText());
         // System.out.println("USED_SERVICES : " + getText());
         };
-CONSUMED_EVENT    : 'CONSUMED EVENT:'LETTERS 
+CONSUMED_EVENT    : 'CONSUMED EVENT:'LETTERS '\n'
         {
         handler.doIt(getText());
         // System.out.println("CONSUMED_EVENT : " + getText());
         };
-USED_EVENT_SUBSCRIBE  : 'USED EVENT SUBSCRIBE:'LETTERS 
+USED_EVENT_SUBSCRIBE  : 'USED EVENT SUBSCRIBE:'LETTERS '\n'
         {
         handler.doIt(getText());
         // System.out.println("USED_EVENT_SUBSCRIBE : " + getText());
         };
-SUB_COMPONENT    : 'SUB COMPONENT:'LETTERS 
+SUB_COMPONENT    : 'SUB COMPONENT:'LETTERS '\n'
         {
         handler.doIt(getText());
         // System.out.println("SUB_COMPONENT : " + getText());
         };
-COMPONENT_ITEM    : 'COMPONENT ITEM:'LETTERS 
+COMPONENT_ITEM    : 'COMPONENT ITEM:'LETTERS '\n'
         {
         handler.doIt(getText());
         // System.out.println("COMPONENT_ITEM : " + getText());
         };
-POST	:	'</message>' (LETTERS|NUMBER)
+POST	:	'</message>' (LETTERS|NUMBERS|'\n')* 
 {
+handler.doIt(getText());
 };
 
-WS  :   ( ' '
-        | '\t'
-        | '\r'
-        | '\n'
-        ) {$channel=HIDDEN;}
-    ;
 
- LETTERS : (('A'..'Z')|('a'..'z')|'.'|':'|' '|'<'|'!'|'?'|'>'|'/'|'='|'"')+
+
+ LETTERS : (('A'..'Z')|('a'..'z')|'.'|':'|' '|'<'|'!'|'?'|'>'|'/'|'"'|'-'|'\t')+
  {
- //System.out.println(getText());};        
+ //System.out.println(getText());      
   };      
-NUMBER	:  
+NUMBERS	:  
     '0'..'9'+
     |
     ('0'..'9')+ '.' ('0'..'9')*
