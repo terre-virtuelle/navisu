@@ -10,9 +10,12 @@ import bzh.terrevirtuelle.navisu.domain.architecture.Component;
 /**
  *
  * @author serge
- * @date Nov 3, 2017
+ * @date Nov 6, 2017
  */
-public interface Handler {
+public class NullComponentHandler implements Handler {
 
-    public void doIt(Component data);
+    @Override
+    public void doIt(Component data) {
+       // System.out.println(data);
+    }
 }

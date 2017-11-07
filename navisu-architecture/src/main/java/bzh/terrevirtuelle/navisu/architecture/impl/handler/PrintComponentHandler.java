@@ -6,16 +6,18 @@
 
 package bzh.terrevirtuelle.navisu.architecture.impl.handler;
 
+import bzh.terrevirtuelle.navisu.domain.architecture.Component;
+
 /**
  *
  * @author serge
  * @date Nov 3, 2017
  */
-public class PrintHandler implements Handler{
+public class PrintComponentHandler implements Handler{
 
     @Override
-    public void doIt(String data) {
-        System.out.println(data);
+    public void doIt(Component component) {
+        System.out.println(component);
     }
 
 }

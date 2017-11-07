@@ -16,7 +16,7 @@
  * Software is Sun Microsystems, Inc. Portions Copyright 1997-2007 Sun
  * Microsystems, Inc. All Rights Reserved.
  */
-package test;
+package bzh.terrevirtuelle.navisu.architecture.impl.view;
 
 import org.netbeans.api.visual.widget.Scene;
 import org.openide.util.RequestProcessor;

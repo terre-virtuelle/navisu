@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.component;
+package bzh.terrevirtuelle.navisu.domain.architecture;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -30,13 +32,90 @@ public class Component {
 
     private List<String> usedEventsSubscribe;
 
-    private Component subComponent;
+    private Component root;
 
     private List<Component> subComponents;
 
     private String item;
 
-        private int level;
+    private int level;
+
+    public Component(String name, String implementation, String state, Component root, String item, int level) {
+        this.name = name;
+        this.implementation = implementation;
+        this.state = state;
+        this.root = root;
+        this.item = item;
+        this.level = level;
+        servicesProvided = new ArrayList<>();
+        eventsProvided = new ArrayList<>();
+        usedServices = new ArrayList<>();
+        usedEventsSubscribe = new ArrayList<>();
+        subComponents = new ArrayList<>();
+    }
+
+    public Component(String name, String implementation, String state, String item, int level) {
+        this(name, implementation, state, null, item, level);
+    }
+
+    public Component(String name, String implementation, String state, int level) {
+        this(name, implementation, state, null, null, level);
+    }
+
+    public Component(String name) {
+        this(name, null, null, null, null, 0);
+        
+    }
+    
+
+    public boolean isServiceProvider(String service) {
+        return servicesProvided.contains(service);
+    }
+
+    public boolean isServiceConsumer(String service) {
+        return usedServices.contains(service);
+    }
+
+    public boolean isEventProvider(String event) {
+        return eventsProvided.contains(event);
+    }
+
+    public boolean isEventConsumer(String event) {
+        return usedEventsSubscribe.contains(event);
+    }
+
+    public boolean isSubComponent(Component component) {
+        return root.equals(component);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 47 * hash + Objects.hashCode(this.name);
+        hash = 47 * hash + Objects.hashCode(this.implementation);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Component other = (Component) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.implementation, other.implementation)) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Get the value of level
@@ -55,9 +134,6 @@ public class Component {
     public void setLevel(int level) {
         this.level = level;
     }
-
-
-    
 
     /**
      * Get the value of item
@@ -104,10 +180,6 @@ public class Component {
         return usedEventsSubscribe;
     }
 
-    public void addUsedEventSubscribe(String eventSubscribe) {
-        usedEventsSubscribe.add(eventSubscribe);
-    }
-
     /**
      * Set the value of usedEventsSubscribe
      *
@@ -135,7 +207,7 @@ public class Component {
         this.consumedEvents = consumedEvents;
     }
 
-    public void addConsumedEvents(String consumedEvent) {
+    public void addConsumedEvent(String consumedEvent) {
         consumedEvents.add(consumedEvent);
     }
 
@@ -155,6 +227,10 @@ public class Component {
      */
     public void setUsedServices(List<String> usedServices) {
         this.usedServices = usedServices;
+    }
+
+    public void addUsedService(String service) {
+        usedServices.add(service);
     }
 
     /**
@@ -253,6 +329,11 @@ public class Component {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Component{" + "name=" + name + ", implementation=" + implementation + ", state=" + state + ", servicesProvided=" + servicesProvided + ", eventsProvided=" + eventsProvided + ", usedServices=" + usedServices + ", consumedEvents=" + consumedEvents + ", usedEventsSubscribe=" + usedEventsSubscribe + ", root=" + root + ", subComponents=" + subComponents + ", item=" + item + ", level=" + level + '}';
     }
 
 }

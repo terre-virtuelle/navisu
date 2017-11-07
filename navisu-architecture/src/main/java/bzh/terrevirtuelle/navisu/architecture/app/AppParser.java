@@ -17,7 +17,7 @@ import org.antlr.runtime.CommonTokenStream;
  * @author serge
  * @date Nov 3, 2017
  */
-public class App {
+public class AppParser {
 
     public static void main(String[] args) throws Exception {
         String content = new String(Files.readAllBytes(Paths.get("components.log")));
