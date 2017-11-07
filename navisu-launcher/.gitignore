@@ -1,2 +1,29 @@
+# Compiled source #
+###################
+*.class
+
+#Ignore all IntelliJ files
+###################
+*.iml
+.idea/
+
+#Ignore build directory
+##################
+build/
+dest/
+
+#Data produced
+##################
+/navisu-launcher/privateData/
+/navisu-launcher/private
+
+#Logs and errors
+##################
+*.txt
+*.log
+
+#Private
+##################
 /navisu-launcher/properties/caches.properties
 /navisu-launcher/properties/user.properties
+/navisu-launcher/private
