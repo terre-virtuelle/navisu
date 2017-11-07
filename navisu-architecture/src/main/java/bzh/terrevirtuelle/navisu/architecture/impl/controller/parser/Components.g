@@ -58,7 +58,7 @@ import java.util.regex.Pattern;
    
 }	
 entry 	:    (PRE|NAME|IMPLEMENTATION|STATE|SERVICE_PROVIDED
-|EVENT_PROVIDED|USED_SERVICES
+|EVENT_PROVIDED|USED_SERVICES|INTERFACE
 |CONSUMED_EVENT|USED_EVENT_SUBSCRIBE
 |SUB_COMPONENT|COMPONENT_ITEM|POST|SEPARATOR)+;
 
@@ -97,34 +97,34 @@ STATE    : 'STATE :'LETTERS* '\n'
          component.setState(name1[name1.length-1].trim());
       //  handler.doIt(component);
         };
-SERVICE_PROVIDED    : 'SERVICE PROVIDED:' (' '|'\t'|'\n')*| ('\t'* 'interface ' LETTERS* '\n')*
+SERVICE_PROVIDED    : 'SERVICE PROVIDED:' (' '|'\t'|'\n')* INTERFACE*
         {
         //System.out.println(getText());
         component.addServiceProvided(getText());
        // handler.doIt(component);
         };
-EVENT_PROVIDED    : 'EVENT PROVIDED:' (' '|'\t'|'\n')*| ('\t'* 'interface ' LETTERS* '\n')*
+EVENT_PROVIDED    : 'EVENT PROVIDED:' (' '|'\t'|'\n')* INTERFACE*
         {
        // handler.doIt(getText());
        // System.out.println("EVENT_PROVIDED : " + getText());
         component.addEventProvided(getText());
        // handler.doIt(component);
         };
-USED_SERVICES   : 'USED SERVICES :'(' '|'\t'|'\n')*|('\t'* 'interface ' LETTERS* '\n')*
+USED_SERVICES   : 'USED SERVICES :'(' '|'\t'|'\n')* INTERFACE*
         {
         //handler.doIt(getText());
       //  System.out.println("USED_SERVICES : " + getText());
         component.addUsedService(getText());
         handler.doIt(component);
         };
-CONSUMED_EVENT    : 'CONSUMED EVENT:'(' '|'\t'|'\n')*|('\t'* 'interface ' LETTERS* '\n')*
+CONSUMED_EVENT    : 'CONSUMED EVENT:'(' '|'\t'|'\n')* INTERFACE*
         {
        // handler.doIt(component);
       //   System.out.println("CONSUMED_EVENT : " + getText());
         component.addConsumedEvent(getText());
         //handler.doIt(component);
         };
-USED_EVENT_SUBSCRIBE : 'USED EVENT SUBSCRIBE:'(' '|'\t'|'\n')*|('\t'* 'interface ' LETTERS* '\n')*
+USED_EVENT_SUBSCRIBE : 'USED EVENT SUBSCRIBE:'(' '|'\t'|'\n')* INTERFACE*
         {
       // handler.doIt(component);
         // System.out.println("USED_EVENT_SUBSCRIBE : " + getText());
@@ -135,17 +135,19 @@ SUB_COMPONENT    : 'SUB COMPONENT:'LETTERS '\n'
       //  handler.doIt(getText());
         // System.out.println("SUB_COMPONENT : " + getText());
         };
-COMPONENT_ITEM    : 'COMPONENT ITEM:'LETTERS '\n'
+COMPONENT_ITEM    : 'COMPONENT ITEM:' LETTERS '\n'
         {
       //  handler.doIt(getText());
         // System.out.println("COMPONENT_ITEM : " + getText());
+        };
+        
+INTERFACE 	: (' '|'\t')*'interface ' LETTERS '\n'
+        {
         };
 POST	:	'</message>' (LETTERS|NUMBERS|'\n')* 
 {
 
 };
-
-
 
  LETTERS : (('A'..'Z')|('a'..'z')|'.'|':'|' '|'<'|'!'|'?'|'>'|'/'|'"'|'-'|'\t')+
  {

@@ -30,8 +30,7 @@ public class Component {
 
     private List<String> consumedEvents;
 
-    private List<String> usedEventsSubscribe;
-
+    // private List<String> usedEventsSubscribe;
     private Component root;
 
     private List<Component> subComponents;
@@ -50,7 +49,8 @@ public class Component {
         servicesProvided = new ArrayList<>();
         eventsProvided = new ArrayList<>();
         usedServices = new ArrayList<>();
-        usedEventsSubscribe = new ArrayList<>();
+        // usedEventsSubscribe = new ArrayList<>();
+        consumedEvents = new ArrayList<>();
         subComponents = new ArrayList<>();
     }
 
@@ -64,9 +64,8 @@ public class Component {
 
     public Component(String name) {
         this(name, null, null, null, null, 0);
-        
+
     }
-    
 
     public boolean isServiceProvider(String service) {
         return servicesProvided.contains(service);
@@ -81,7 +80,7 @@ public class Component {
     }
 
     public boolean isEventConsumer(String event) {
-        return usedEventsSubscribe.contains(event);
+        return consumedEvents.contains(event);
     }
 
     public boolean isSubComponent(Component component) {
@@ -169,24 +168,6 @@ public class Component {
      */
     public void addSubComponent(Component subComponent) {
         this.subComponents.add(subComponent);
-    }
-
-    /**
-     * Get the value of usedEventsSubscribe
-     *
-     * @return the value of usedEventsSubscribe
-     */
-    public List<String> getUsedEventsSubscribe() {
-        return usedEventsSubscribe;
-    }
-
-    /**
-     * Set the value of usedEventsSubscribe
-     *
-     * @param usedEventsSubscribe new value of usedEventsSubscribe
-     */
-    public void setUsedEventsSubscribe(List<String> usedEventsSubscribe) {
-        this.usedEventsSubscribe = usedEventsSubscribe;
     }
 
     /**
@@ -333,7 +314,12 @@ public class Component {
 
     @Override
     public String toString() {
-        return "Component{" + "name=" + name + ", implementation=" + implementation + ", state=" + state + ", servicesProvided=" + servicesProvided + ", eventsProvided=" + eventsProvided + ", usedServices=" + usedServices + ", consumedEvents=" + consumedEvents + ", usedEventsSubscribe=" + usedEventsSubscribe + ", root=" + root + ", subComponents=" + subComponents + ", item=" + item + ", level=" + level + '}';
+        return "Component{" + "name=" + name + ", implementation=" + implementation
+                + ", state=" + state + ", servicesProvided=" + servicesProvided
+                + ", eventsProvided=" + eventsProvided + ", usedServices="
+                + usedServices + ", consumedEvents=" + consumedEvents
+                + ", root=" + root + ", subComponents=" + subComponents
+                + ", item=" + item + ", level=" + level + '}';
     }
 
 }
