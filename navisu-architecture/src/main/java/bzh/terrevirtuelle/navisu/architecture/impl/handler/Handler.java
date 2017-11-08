@@ -6,13 +6,21 @@
 package bzh.terrevirtuelle.navisu.architecture.impl.handler;
 
 import bzh.terrevirtuelle.navisu.domain.architecture.Component;
+import java.util.List;
 
 /**
  *
  * @author serge
  * @date Nov 3, 2017
  */
-public interface Handler {
+public abstract class Handler {
 
-    public void doIt(Component data);
+    protected List<Component> components;
+
+    public abstract void doIt(Component data);
+
+    public List<Component> getComponents() {
+        return components;
+    }
+    
 }

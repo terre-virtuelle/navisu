@@ -13,7 +13,7 @@ import bzh.terrevirtuelle.navisu.domain.architecture.Component;
  * @author serge
  * @date Nov 3, 2017
  */
-public class PrintComponentHandler implements Handler{
+public class PrintComponentHandler extends Handler{
 
     @Override
     public void doIt(Component component) {
