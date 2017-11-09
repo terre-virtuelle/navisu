@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.domain.architecture;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -39,7 +40,10 @@ public class Component {
 
     private int level;
 
-    public Component(String name, String implementation, String state, Component root, String item, int level) {
+    private String module;
+
+    public Component(String module, String name, String implementation, String state, Component root, String item, int level) {
+        this.module = module;
         this.name = name;
         this.implementation = implementation;
         this.state = state;
@@ -49,22 +53,39 @@ public class Component {
         servicesProvided = new ArrayList<>();
         eventsProvided = new ArrayList<>();
         usedServices = new ArrayList<>();
-        // usedEventsSubscribe = new ArrayList<>();
         consumedEvents = new ArrayList<>();
         subComponents = new ArrayList<>();
     }
 
     public Component(String name, String implementation, String state, String item, int level) {
-        this(name, implementation, state, null, item, level);
+        this(null, name, implementation, state, null, item, level);
     }
 
     public Component(String name, String implementation, String state, int level) {
-        this(name, implementation, state, null, null, level);
+        this(null, name, implementation, state, null, null, level);
     }
 
     public Component(String name) {
-        this(name, null, null, null, null, 0);
+        this(null, name, null, null, null, null, 0);
 
+    }
+
+    /**
+     * Get the value of module
+     *
+     * @return the value of module
+     */
+    public String getModule() {
+        return module;
+    }
+
+    /**
+     * Set the value of module
+     *
+     * @param module new value of module
+     */
+    public void setModule(String module) {
+        this.module = module;
     }
 
     public boolean isServiceProvider(String service) {
@@ -314,7 +335,7 @@ public class Component {
 
     @Override
     public String toString() {
-        return "Component{" + "name=" + name + ", implementation=" + implementation
+        return "Component{" + "name=" + getShortName(name) + ", implementation=" + getShortName(implementation)
                 + ", state=" + state + ", servicesProvided=" + servicesProvided
                 + ", eventsProvided=" + eventsProvided + ", usedServices="
                 + usedServices + ", consumedEvents=" + consumedEvents
@@ -322,4 +343,8 @@ public class Component {
                 + ", item=" + item + ", level=" + level + '}';
     }
 
+    public String getShortName(String name) {
+        String[] name0 = name.split(Pattern.quote("."));
+        return name0[name0.length-1].trim();
+    }
 }
