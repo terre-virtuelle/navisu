@@ -5,10 +5,11 @@
  */
 package bzh.terrevirtuelle.navisu.architecture.app;
 
+import bzh.terrevirtuelle.navisu.architecture.app.controlcommand.ControlFrame;
 import bzh.terrevirtuelle.navisu.architecture.impl.controller.parser.ComponentParser;
 import bzh.terrevirtuelle.navisu.architecture.impl.handler.ComponentHandler;
 import bzh.terrevirtuelle.navisu.architecture.impl.handler.Handler;
-import bzh.terrevirtuelle.navisu.architecture.impl.view.ObjectTest;
+import bzh.terrevirtuelle.navisu.architecture.impl.model.ComponentModelView;
 import bzh.terrevirtuelle.navisu.architecture.impl.view.SceneSupport;
 import bzh.terrevirtuelle.navisu.domain.architecture.Component;
 import java.awt.Image;
@@ -22,14 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import org.netbeans.api.visual.action.ActionFactory;
-import org.netbeans.api.visual.model.ObjectSceneEvent;
-import org.netbeans.api.visual.model.ObjectSceneEventType;
-import org.netbeans.api.visual.model.ObjectSceneListener;
-import org.netbeans.api.visual.model.ObjectState;
 import org.netbeans.api.visual.vmd.VMDGraphScene;
 import org.netbeans.api.visual.vmd.VMDNodeWidget;
 import org.netbeans.api.visual.vmd.VMDPinWidget;
@@ -41,10 +35,7 @@ import org.openide.util.Exceptions;
  * @author serge
  * @date Nov 6, 2017
  */
-public class AppComponent 
-      //  extends ObjectTest 
-       // implements ObjectSceneListener
-{
+public class AppComponent {
 
     // private static int nodeID = 1;
     private static int edgeID = 1;
@@ -54,26 +45,17 @@ public class AppComponent
 
     public AppComponent() {
         scene = new VMDGraphScene();
-        JFrame frame= new JFrame();
-        frame.setSize(200, 200);
-        frame.setVisible(true);
-        
-        JMenuBar menubar = new JMenuBar();
-        menubar.add(new JMenu("Menu"));
-        frame.setJMenuBar(menubar);
-        // System.out.println(content);
-        // Handler handler = new PrintComponentHandler();
-      //  addObjectSceneListener (this, ObjectSceneEventType.values ());
+
         Handler handler = new ComponentHandler();
         ComponentParser parser = new ComponentParser();
         String content = read(COMPONENTS_LOG);
         components = parser.parse(handler, content);
-        // components.forEach((c) -> {
-        //     System.out.println(c);
-        // });
-        
-        Map<String, List<Component>> map = filter(components);
-        runScene(scene, map);
+
+        Map<String, List<Component>> componentMap = filter(components);
+        Map<String, List<ComponentModelView>> componentModelViewMap = runScene(scene, componentMap);
+      
+        ControlFrame controlFrame = new ControlFrame(componentModelViewMap);
+        controlFrame.setVisible();
     }
 
     public final Map<String, List<Component>> filter(List<Component> components) {
@@ -90,7 +72,6 @@ public class AppComponent
         });
         Set<String> keySet = componentMap.keySet();
         keySet.forEach((s) -> {
-           // System.out.println(componentMap.get(s));
         });
         return componentMap;
     }
@@ -105,22 +86,25 @@ public class AppComponent
         return content;
     }
 
-    public final void runScene(final VMDGraphScene scene, Map<String, List<Component>> components) {
+    public final Map<String, List<ComponentModelView>> runScene(final VMDGraphScene scene, Map<String, List<Component>> components) {
         int index = 0;
 
-        // createPin(scene, mobile, "start", IMAGE_ITEM, "Start", "Element");
-        // createPin(scene, mobile, "resume", IMAGE_ITEM, "Resume", "Element");
-        /*for (Component c : components) {
-            String nodeID = "node" + index;
-            VMDNodeWidget widget = (VMDNodeWidget) scene.addNode(nodeID);
-            widget.setPreferredLocation(new Point(x, y));
-            widget.setNodeProperties(null, c.getName(), "", null);
-            scene.addPin(nodeID, nodeID + VMDGraphScene.PIN_ID_DEFAULT_SUFFIX);
-            x += 50;
-            y += 50;
-            index++;
-        }
-         */
+        Map<String, List<ComponentModelView>> componentModelView = new HashMap<>();
+/*
+        Set<String> modules = new HashSet<>();
+        components.forEach((c) -> {
+            modules.add(c.getModule());
+        });
+        modules.forEach((m) -> {
+            componentMap.put(m, new ArrayList<>());
+        });
+        components.forEach((c) -> {
+            componentMap.get(c.getModule()).add(c);
+        });
+        Set<String> keySet = componentMap.keySet();
+        keySet.forEach((s) -> {
+        });
+        */
         for (Component c : components.get("app")) {
             double radius = 500 * index / 20;
             double angle = 10 * Math.PI * index / 100;
@@ -130,8 +114,10 @@ public class AppComponent
             VMDNodeWidget widget = (VMDNodeWidget) scene.addNode(nodeID);
             widget.setPreferredLocation(new Point(x, y));
             widget.setNodeProperties(null, c.getName(), c.getModule(), null);
-
-            createPin(scene, nodeID, "game", null, c.getShortName(c.getServicesProvided().get(0)), "Element");
+            
+//componentModelView.put(nodeID, new ComponentModelView(c, widget));
+           
+createPin(scene, nodeID, "game", null, c.getShortName(c.getServicesProvided().get(0)), "Element");
             HashMap<String, List<Widget>> categories = new HashMap<>();
             categories.put("Events produced", null);
             categories.put("Services produced", null);
@@ -167,6 +153,7 @@ public class AppComponent
         }));
 
         SceneSupport.show(scene);
+        return componentModelView;
     }
 
     void createPin(VMDGraphScene scene, String nodeID, String pinID, Image image, String name, String type) {
@@ -188,36 +175,5 @@ public class AppComponent
     public static void main(String[] args) {
         AppComponent appComponent = new AppComponent();
     }
-/*
-    @Override
-    public void objectAdded(ObjectSceneEvent ose, Object o) {
-    }
 
-    @Override
-    public void objectRemoved(ObjectSceneEvent ose, Object o) {
-    }
-
-    @Override
-    public void objectStateChanged(ObjectSceneEvent ose, Object o, ObjectState os, ObjectState os1) {
-    }
-
-    @Override
-    public void selectionChanged(ObjectSceneEvent ose, Set<Object> set, Set<Object> set1) {
-        System.out.println(set + " " + set1);
-  
-    }
-
-    @Override
-    public void highlightingChanged(ObjectSceneEvent ose, Set<Object> set, Set<Object> set1) {
-    }
-
-    @Override
-    public void hoverChanged(ObjectSceneEvent ose, Object o, Object o1) {
-        System.out.println("hoverChanged");
-    }
-
-    @Override
-    public void focusChanged(ObjectSceneEvent ose, Object o, Object o1) {
-    }
-*/
 }
