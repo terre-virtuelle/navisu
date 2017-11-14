@@ -53,7 +53,8 @@ public class ComponentView {
         this.scene = scene;
         widget = (VMDNodeWidget) this.scene.addNode(nodeID);
         widget.setPreferredLocation(new Point(x, y));
-        widget.setNodeProperties(image, component.getName(), component.getModule(), glyphs);
+        widget.setNodeProperties(image, nodeID, component.getModule(), glyphs);
+        System.out.println("nodeID : " + nodeID);
     }
 
     public VMDNodeWidget getWidget() {
