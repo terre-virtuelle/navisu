@@ -124,19 +124,19 @@ public class GuiAgentImpl
         this.width = width;
         this.height = height;
         this.stage = stage;
-        /***********************************************
+        /***********************************************/
         double screenwidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        System.out.println(" ********!!!!!!!!! largeur écran : " + screenwidth);
+        //System.out.println(" ********!!!!!!!!! largeur écran : " + screenwidth);
         double screenheight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        System.out.println(" ********!!!!!!!!! hauteur écran : " + screenheight);
-        //****************************************************
+        //System.out.println(" ********!!!!!!!!! hauteur écran : " + screenheight);
+        //****************************************************/
         double percentx = 1;
         double percenty = 1;
         width = (int) (screenwidth * percentx);
-        System.out.println(" !!!!!!******* largeur fenêtre : " + width);
+        //System.out.println(" !!!!!!******* largeur fenêtre : " + width);
         height = (int) (screenheight * percenty);
-        System.out.println(" !!!!!!******* hauteur fenêtre : " + height);
-        */
+        //System.out.println(" !!!!!!******* hauteur fenêtre : " + height);
+        
         stage.setResizable(true);
         //stage.setFullScreen(true);
         label = new Text();
@@ -207,16 +207,11 @@ public class GuiAgentImpl
 // Deuxieme stage pour le sonar, pour qu'il reste au dessus, bug sur l'api ?
         stage1 = new Stage();
 
-        stage1.setOpacity(
-                .0);
-        stage1.setHeight(
-                400);
-        stage1.setWidth(
-                400);
-        stage1.setX(
-                600);
-        stage1.setY(
-                200);
+        stage1.setOpacity(0.0);
+        stage1.setHeight(400);
+        stage1.setWidth(400);
+        stage1.setX(600);
+        stage1.setY(200);
         stage1.initStyle(StageStyle.UNDECORATED);
     }
 
@@ -237,7 +232,7 @@ public class GuiAgentImpl
         });
 
         //mob.setTranslateX(1075);
-        mob.setTranslateX(1125);
+        mob.setTranslateX(1200);
         mob.setTranslateY(40.0);
         mob.setScale(.75);
         StackPane.setAlignment(mob, Pos.BOTTOM_CENTER);

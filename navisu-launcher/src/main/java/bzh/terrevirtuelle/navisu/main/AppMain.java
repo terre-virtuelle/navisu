@@ -124,8 +124,8 @@ import bzh.terrevirtuelle.navisu.extensions.camera.impl.CameraComponentImpl;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.extensions.commands.impl.NavigationCmdComponentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.server.ServerOptionsComponentServices;
-import bzh.terrevirtuelle.navisu.bathymetry.sounds.BathySoundsServices;
-import bzh.terrevirtuelle.navisu.bathymetry.sounds.impl.BathySoundsImpl;
+import bzh.terrevirtuelle.navisu.media.bathysounds.BathySoundsServices;
+import bzh.terrevirtuelle.navisu.media.bathysounds.impl.BathySoundsImpl;
 import bzh.terrevirtuelle.navisu.bathymetry.view.DisplayBathymetryServices;
 import bzh.terrevirtuelle.navisu.bathymetry.view.impl.DisplayBathymetryImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
@@ -298,7 +298,10 @@ public class AppMain extends Application {
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
 
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
-        guiAgentServices.showGui(stage, 1080, 700);
+        // ***************** size of screen *********************************************        
+        //guiAgentServices.showGui(stage, 1080, 700);
+        guiAgentServices.showGui(stage, 1500, 972);
+        //********************************************************************************
 
         InstrumentTemplateServices instrumentTemplateServices = componentManager.getComponentService(InstrumentTemplateServices.class);
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.bathymetry.sounds.impl.controller;
+package bzh.terrevirtuelle.navisu.media.bathysounds.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;

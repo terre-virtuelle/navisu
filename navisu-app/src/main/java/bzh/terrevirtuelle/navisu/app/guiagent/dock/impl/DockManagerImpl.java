@@ -69,18 +69,19 @@ public class DockManagerImpl<TrackTool>
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
     protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
     protected final String GEBCO = "http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?";
-    
+
     protected RadialMenu BathyStlRadialMenu;
     protected RadialMenu booksRadialMenu;
     protected RadialMenu instrumentsRadialMenu;
+    protected RadialMenu MediasRadialMenu;
     protected RadialMenu meteoRadialMenu;
     protected RadialMenu tidesRadialMenu;
     protected RadialMenu chartsRadialMenu;
     protected RadialMenu toolsRadialMenu;
     protected RadialMenu navigationRadialMenu;
-    protected RadialMenu systemRadialMenu;    
+    protected RadialMenu systemRadialMenu;
     protected RadialMenu tracksRadialMenu;
-    
+
     protected ImageView centerImg;
     protected int width;
     protected int height;
@@ -134,6 +135,10 @@ public class DockManagerImpl<TrackTool>
         DockItemFactory.newImageItem("STL", ICON_PATH + "dock_icons/stl.png",
         (e) -> {
             BathyStlRadialMenu.setVisible(!BathyStlRadialMenu.isVisible());
+        }),
+        DockItemFactory.newImageItem("medias", ICON_PATH + "dock_icons/medias.png",
+        (e) -> {
+            MediasRadialMenu.setVisible(!MediasRadialMenu.isVisible());
         })
     };
     final Dock dock = new Dock(ICONS);
@@ -164,6 +169,7 @@ public class DockManagerImpl<TrackTool>
         createNavigationRadialWidget();
         createSystemRadialWidget();
         createBathyStlWidget();
+        createMediasRadialWidget();
     }
 
     private void createDockWidget(Scene scene) {
@@ -188,6 +194,7 @@ public class DockManagerImpl<TrackTool>
         });
     }
 //--------------STL------------------
+
     private void createBathyStlWidget() {
         BathyStlRadialMenu = RadialMenuBuilder.create()
                 .centralImage("STLradialmenu.png")
@@ -201,6 +208,7 @@ public class DockManagerImpl<TrackTool>
         root.getChildren().add(BathyStlRadialMenu);
         radialMenus.add(BathyStlRadialMenu);
     }
+
     //--------------BOOKS------------------
     private void createBooksRadialWidget() {
         booksRadialMenu = RadialMenuBuilder.create()
@@ -228,13 +236,13 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("S57", ".000"))
                 .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP", ".kap"))
                 .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("GeoTiff", ".tif", ".TIF", ".tiff"))
-               // .createNode(0, "nav.png", 2, "vector3D.png", 2, "stl.png", (e) -> open("S57Stl", ".000",".001",".002"))
+                // .createNode(0, "nav.png", 2, "vector3D.png", 2, "stl.png", (e) -> open("S57Stl", ".000",".001",".002"))
                 .createNode(1, "bathy.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))
                 .createNode(1, "bathy.png", 0, "images.png", 1, "gebco.png", (e) -> openWMS("WMS", GEBCO))
                 .createNode(1, "bathy.png", 1, "data.png", 1, "dbshomon.png", (e) -> openDB(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD))
                 .createNode(1, "bathy.png", 1, "data.png", 2, "dbshomoff.png", (e) -> closeDB(DB_NAME))
                 .createNode(1, "bathy.png", 1, "data.png", 3, "gebco.png", (e) -> open("Bathy", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2"))
-                .createNode(1, "bathy.png", 1, "data.png", 4, "bathySounds.png", (e) -> open("BathySounds"))
+                //.createNode(1, "bathy.png", 1, "data.png", 4, "bathySounds.png", (e) -> open("BathySounds"))
                 .createNode(2, "sediment.png", 0, "data.png", 0, "shom.png", (e) -> open("sedimentology", ".shp", ".SHP"))
                 .createNode(3, "magnetism.png", 0, "data.png", 0, "noaa.png", (e) -> open("Magnetic", ".shp", ".SHP"))
                 .build();
@@ -272,6 +280,23 @@ public class DockManagerImpl<TrackTool>
         instrumentsRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(instrumentsRadialMenu);
         radialMenus.add(instrumentsRadialMenu);
+    }
+
+    //--------------MEDIAS------------------
+    private void createMediasRadialWidget() {
+        MediasRadialMenu = RadialMenuBuilder.create()
+                .centralImage("Mediasradialmenu150.png")
+                .createNode(0, "photos.png", 0, "vide.png", 0, "vide.png", (e) -> open())
+                .createNode(0, "photos.png", 1, "vide.png", 0, "vide.png", (e) -> open())
+                .createNode(1, "sounds.png", 0, "samples.png", 0, "vide.png", (e) -> open())
+                .createNode(1, "sounds.png", 1, "captures.png", 1, "bathySounds.png", (e) -> open("BathySounds"))
+                .createNode(2, "videos.png", 0, "vide.png", 0, "vide.png", (e) -> open())
+                .createNode(2, "videos.png", 1, "vide.png", 0, "vide.png", (e) -> open())
+                .build();
+        MediasRadialMenu.setLayoutX((width / 2) - 10);
+        MediasRadialMenu.setLayoutY(height / 2);
+        root.getChildren().add(MediasRadialMenu);
+        radialMenus.add(MediasRadialMenu);
     }
 
     //--------------METEO------------------
@@ -354,7 +379,7 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "simu.png", 0, "files.png", 2, "nmeaOff.png", (e) -> open())
                 .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp", ".SHP"))
                 .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
-                .createNode(1, "data.png", 0, "files.png", 2, "collada.png", (e) -> open("DAE", ".dae",".DAE"))
+                .createNode(1, "data.png", 0, "files.png", 2, "collada.png", (e) -> open("DAE", ".dae", ".DAE"))
                 .createNode(1, "data.png", 0, "files.png", 3, "wms.png", (e) -> openWMS("WMS_CATALOG", ""))
                 //   .createNode(0, "system.png", 1, "camera.png", 1, "cameraOff.png", (e) -> close("Camera"))
                 //   .createNode(0, "system.png", 1, "camera.png", 2, "cameraOn.png", (e) -> open("Camera"))
@@ -421,7 +446,6 @@ public class DockManagerImpl<TrackTool>
         return groupDock;
     }
 
-    
     @Override
     public void componentStarted() {
     }

@@ -3,6 +3,7 @@
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.GridPane?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="clocksgroup" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="viewpane" prefHeight="170.0" prefWidth="450.0" styleClass="background-pane" />
         <Rectangle arcHeight="30.0" arcWidth="30.0" height="170.0" strokeType="INSIDE" styleClass="instrumentcontour" width="450.0">
@@ -137,5 +138,11 @@
         <Button fx:id="quit" alignment="CENTER" layoutX="403.0" layoutY="11.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="quitbutton" textOverrun="CLIP">
                
         </Button>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" visible="false">
+        <buttons>
+            <Button fx:id="style2" mnemonicParsing="false" text="Style2" />
+        </buttons>
+      </ButtonBar>
+    <Button fx:id="style1" layoutX="335.0" layoutY="13.0" mnemonicParsing="false" text="Style" />
     </children>
 </fx:root>

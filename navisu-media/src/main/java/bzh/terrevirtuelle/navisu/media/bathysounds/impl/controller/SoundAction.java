@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.bathymetry.sounds.impl.controller;
+package bzh.terrevirtuelle.navisu.media.bathysounds.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
@@ -26,7 +26,6 @@ public class SoundAction
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
     }
 
-    @Override
     public void doIt(Point3D point) {
         String sound = soundMap.get(point);
         instrumentDriverManagerServices.open(sound, "true", "1");

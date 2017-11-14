@@ -19,12 +19,16 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -47,7 +51,7 @@ public class ClocksController
     private final String FXML = "clocks.fxml";
 
     @FXML
-    public Group clocksgroup;
+    public Group view;
     @FXML
     public Text utcdaydate;
     @FXML
@@ -63,13 +67,21 @@ public class ClocksController
     @FXML
     public Button hourup;
     @FXML
+    public Button style1;
+    @FXML
+    public Button style2;
+    @FXML
     public Button hourdown;
+
     public static Clock Boardclock;
     public ZoneId zoneid = ZoneId.systemDefault();
-    protected String viewgroupstyle = "clocks.css";
+    public String uri;
+    public String viewgroupstyle;
+    protected String viewgroupstyle2;
     protected ClocksImpl instrument;
     protected Timeline timeline;
     int adjust;
+    private boolean InstrumentStyle = false;
 
     public static ClocksController getInstance(ClocksImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         if (INSTANCE == null) {
@@ -80,10 +92,13 @@ public class ClocksController
 
     private ClocksController(ClocksImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
+        this.viewgroupstyle = "clocks.css";
+        this.viewgroupstyle2 = "clocks2.css";
         this.instrument = instrument;
         load(FXML);
-        String uri = CSS_STYLE_PATH + viewgroupstyle;
-        clocksgroup.getStylesheets().add(uri);
+        uri = CSS_STYLE_PATH + viewgroupstyle;
+        view.getStylesheets().clear();
+        view.getStylesheets().add(uri);
         timeline = new Timeline(
                 new KeyFrame(Duration.seconds(0), new EventHandler<ActionEvent>() {
                     @Override
@@ -100,7 +115,26 @@ public class ClocksController
         );
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+        style1.setOnMouseClicked(ev -> {
+            // Switch entre deux styles pour les essais.
+            uri = InstrumentStyle ? CSS_STYLE_PATH + viewgroupstyle : CSS_STYLE_PATH + viewgroupstyle2;
+            InstrumentStyle = !InstrumentStyle;
+            //System.out.println("Loading CSS at URL " + uri);
+            view.getStylesheets().clear();
+            view.getStylesheets().add(uri);
 
+        });
+        /*
+        style2.setOnMouseClicked(ev -> {
+            // Switch entre deux styles pour les essais.
+            String uri = InstrumentStyle ? CSS_STYLE_PATH + viewgroupstyle : CSS_STYLE_PATH + viewgroupstyle2;
+            InstrumentStyle = !InstrumentStyle;
+            System.out.println("Loading CSS at URL " + uri);
+            view.getStylesheets().clear();
+            view.getStylesheets().add(uri);
+
+        });
+         */
         hourup.setOnMouseClicked((MouseEvent event) -> {
             adjust = adjust + 1;
         });
@@ -108,9 +142,11 @@ public class ClocksController
         hourdown.setOnMouseClicked((MouseEvent event) -> {
             adjust = adjust - 1;
         });
+
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
         });
+
     }
 
     @Override

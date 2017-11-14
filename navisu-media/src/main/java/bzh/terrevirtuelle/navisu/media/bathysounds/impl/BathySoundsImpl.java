@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.bathymetry.sounds.impl;
+package bzh.terrevirtuelle.navisu.media.bathysounds.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.bathymetry.sounds.impl.controller.BathySoundsComponentController;
+import bzh.terrevirtuelle.navisu.media.bathysounds.impl.controller.BathySoundsComponentController;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
-import bzh.terrevirtuelle.navisu.bathymetry.sounds.BathySounds;
-import bzh.terrevirtuelle.navisu.bathymetry.sounds.BathySoundsServices;
+import bzh.terrevirtuelle.navisu.media.bathysounds.BathySounds;
+import bzh.terrevirtuelle.navisu.media.bathysounds.BathySoundsServices;
 
 /**
  * NaVisu
