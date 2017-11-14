@@ -13,6 +13,7 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import java.io.IOException;
+import java.nio.file.Paths;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -34,6 +35,8 @@ public class LocatorController
         extends Widget2DController {
 
     @FXML
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    protected String viewgroupstyle = "locator.css";
     public Group locatorPanel;
     @FXML
     public ImageView quit;
@@ -79,6 +82,9 @@ public class LocatorController
             throw new RuntimeException(exception);
         }
         quit.setOnMouseClicked((MouseEvent event) -> {
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        locatorPanel.getStylesheets().add(uri);
+
             setVisible(false);
         });
         initGui();

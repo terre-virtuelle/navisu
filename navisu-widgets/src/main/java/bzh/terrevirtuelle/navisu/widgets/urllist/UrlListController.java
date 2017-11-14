@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.widgets.urllist;
 
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
+import java.nio.file.Paths;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -27,6 +28,8 @@ public class UrlListController
         extends Widget2DController {
 
     @FXML
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    protected String viewgroupstyle = "urllistpanel.css";
     public Group urlListPanel;
     @FXML
     public ImageView quit;
@@ -61,17 +64,20 @@ public class UrlListController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        gridPane.setStyle("-fx-background-color: #00524e99");
-        scrollPane.setStyle("-fx-background-color: #00524e99");
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        urlListPanel.getStylesheets().add(uri);
+
+        //gridPane.setStyle("-fx-background-color: #00524e99");
+        //scrollPane.setStyle("-fx-background-color: #00524e99");
         quit.setOnMouseClicked((MouseEvent event) -> {
             setVisible(false);
         });
     }
-
+/*
     public ImageView getQuit() {
         return quit;
     }
-
+*/
     public ListView getList() {
         return list;
     }

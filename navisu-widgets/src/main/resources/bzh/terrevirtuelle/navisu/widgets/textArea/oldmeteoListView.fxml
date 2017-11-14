@@ -11,9 +11,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="view" stylesheets="@meteolistview.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root stylesheets="@meteolistview.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="158.0" prefWidth="306.0" styleClass="background-pane">
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="158.0" prefWidth="306.0" styleClass="background-pane">
         </Pane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="159.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="306.0" />
           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="99.0" layoutX="12.0" layoutY="50.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="260.0" />

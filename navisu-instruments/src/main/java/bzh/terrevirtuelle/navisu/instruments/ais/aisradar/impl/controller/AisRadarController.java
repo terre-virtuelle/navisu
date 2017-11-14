@@ -21,6 +21,7 @@ import java.io.FileInputStream;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -189,6 +190,8 @@ public class AisRadarController
     protected NumberFormat formatter = new DecimalFormat("#0");
     protected SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
+    protected String viewgroupstyle = "aisradar.css";
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     public AisRadarController(AisRadarImpl aisRadar) {
         this(aisRadar, null, null);
     }
@@ -211,6 +214,9 @@ public class AisRadarController
             throw new RuntimeException(exception);
         }
         aisinfopanel.setVisible(false);
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        radar.getStylesheets().add(uri);
+        view.setOpacity(0.8);
         aisbuttonpanel.setVisible(true);
         Platform.runLater(() -> {
             radar.setOpacity(0.9);

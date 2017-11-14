@@ -7,10 +7,12 @@ package bzh.terrevirtuelle.navisu.widgets.textlist;
 
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
+import java.nio.file.Paths;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -29,9 +31,11 @@ public class ListController
         extends Widget2DController {
 
     @FXML
-    public Pane view;
+    public Group view;
     @FXML
     public Button quit;
+    @FXML
+    public Pane viewPane;
     @FXML
     public ListView listView;
     @FXML
@@ -42,7 +46,8 @@ public class ListController
     Slider opacitySlider;
     String DEFAULT = "meteoListView.fxml";
     String filename;
-
+public static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    protected String viewgroupstyle = "textlistpanel.css";
     public ListController() {
         filename = DEFAULT;
         setMouseTransparent(false);
@@ -74,6 +79,8 @@ public class ListController
         }
         quit.setOnMouseClicked((MouseEvent event) -> {
             setVisible(false);
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        view.getStylesheets().add(uri);
         });
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
@@ -87,7 +94,7 @@ public class ListController
     }
 
     public Pane getView() {
-        return view;
+        return viewPane;
     }
 
     public Button getQuit() {

@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.widgets.dialogs;
 
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
+import java.nio.file.Paths;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -39,7 +40,8 @@ public class DialogController
     private final String FXML = "dialog.fxml";
     private final Scene scene;
     private final StackPane pane;
-
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    protected String viewgroupstyle = "dialog.css";
     public DialogController(Scene scene, StackPane pane, String text) {
         this.scene = scene;
         this.pane = pane;
@@ -58,6 +60,10 @@ public class DialogController
             throw new RuntimeException(exception);
         }
         view.setOpacity(0.8);
+ // récupération et affectation CSS       
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        view.getStylesheets().add(uri);
+
         label.setText(text);
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
