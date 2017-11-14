@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.architecture.app.controlcommand;
 
-import bzh.terrevirtuelle.navisu.architecture.impl.model.ComponentModelView;
+import bzh.terrevirtuelle.navisu.architecture.impl.view.ComponentView;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JComponent;
@@ -20,7 +20,7 @@ public class ControlFrame {
 
     JFrame frame;
 
-    public ControlFrame(Map<String, List<ComponentModelView>> componentMap) {
+    public ControlFrame(Map<String, List<ComponentView>> componentMap) {
         frame = new JFrame("Liste des modules");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
