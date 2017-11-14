@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.architecture.app.controlcommand;
 
-import bzh.terrevirtuelle.navisu.architecture.impl.model.ComponentModelView;
-import bzh.terrevirtuelle.navisu.domain.architecture.Component;
+
+import bzh.terrevirtuelle.navisu.architecture.impl.view.ComponentView;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +24,7 @@ import javax.swing.event.ListSelectionListener;
 public class ControlPanel extends JPanel
         implements ListSelectionListener {
 
-    Map<String, List<ComponentModelView>> componentMap;
+    Map<String, List<ComponentView>> componentMap;
 
     private final JList<String> list;
     private final DefaultListModel<String> listModel;
@@ -34,7 +34,7 @@ public class ControlPanel extends JPanel
     private final JButton invisibleButton;
 
     @SuppressWarnings("unchecked")
-    public ControlPanel(Map<String, List<ComponentModelView>> componentMap) {
+    public ControlPanel(Map<String, List<ComponentView>> componentMap) {
         super(new BorderLayout());
         this.componentMap = componentMap;
         listModel = new DefaultListModel<>();
@@ -87,8 +87,8 @@ public class ControlPanel extends JPanel
                 list.getSelectedIndices();
                 List<String> values=list.getSelectedValuesList();
                 values.forEach((key) -> {
-                    List<ComponentModelView> componentsSelected = componentMap.get(key);
-                    for(ComponentModelView c : componentsSelected){
+                    List<ComponentView> componentsSelected = componentMap.get(key);
+                    for(ComponentView c : componentsSelected){
                       //  c.
                     }
                 });
