@@ -14,7 +14,7 @@ dest/
 
 #Data produced
 ##################
-/navisu-launcher/privateData/
+/navisu-launcher/privateData/**/*
 /navisu-launcher/private
 
 #Logs and errors

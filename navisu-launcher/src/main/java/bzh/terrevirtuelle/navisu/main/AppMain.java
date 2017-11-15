@@ -494,8 +494,8 @@ public class AppMain extends Application {
         // Neo4J serveur externe
         // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
         // System.out.println("con : " + con);
-        //bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
-        //        "5432", "org.postgresql.Driver", "admin", "admin");
+        bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
+                "5432", "org.postgresql.Driver", "admin", "admin");
         //  bathymetryDBServices.create("C:\\Users\\Dom\\Documents\\Navisu\\shom-data\\bathy\\MNT100M_ATL\\splited\\bathy04.glz");
         //bathymetryDBServices.createIndex();
         /* Test speech */
