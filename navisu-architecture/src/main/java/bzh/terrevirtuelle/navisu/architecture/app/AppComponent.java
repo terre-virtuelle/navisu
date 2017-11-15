@@ -39,12 +39,13 @@ import org.openide.util.Exceptions;
  */
 public class AppComponent extends Application {
 
+    private final String NAVISU_HOME = System.getProperty("user.home") + "/.navisu";
     protected String VIEW_GROUP_STYLE = "common.css";
     protected static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private static int edgeID = 0;
     private static int pinID = 0;
     private static int nodeID = 1;
-    final String COMPONENTS_LOG = "components.log";
+    final String COMPONENTS_LOG = NAVISU_HOME + "/logs/components.log";
     private VMDGraphScene graphScene;
     private List<Component> components;
     @FXML
@@ -142,9 +143,9 @@ public class AppComponent extends Application {
                         //  System.out.println("c : " + c);
                         for (String s : c.getServicesProvided()) {
                             if (s.equals(n)) {
-                               // VMDNodeWidget widget = (VMDNodeWidget) scene.findWidget(cv.getNodeID());
-                               // System.out.println(widget.getNodeName());
-                               // widget = (VMDNodeWidget) scene.findWidget(c.getName());
+                                // VMDNodeWidget widget = (VMDNodeWidget) scene.findWidget(cv.getNodeID());
+                                // System.out.println(widget.getNodeName());
+                                // widget = (VMDNodeWidget) scene.findWidget(c.getName());
                                 //System.out.println(widget.getNodeName());
                                 createEdge(scene, c.getName(), cv.getNodeID());
                             }

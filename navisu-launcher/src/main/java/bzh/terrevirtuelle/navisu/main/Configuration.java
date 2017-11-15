@@ -65,7 +65,13 @@ public class Configuration {
                 Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        if (!Files.exists(Paths.get(navisuHome + "/logs"), LinkOption.NOFOLLOW_LINKS)) {
+            try {
+                Files.createDirectory(Paths.get(navisuHome + "/logs/"));
+            } catch (IOException ex) {
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         String navisuCache = navisuHome + "/caches/caches.properties";
         if (!Files.exists(Paths.get(navisuCache), LinkOption.NOFOLLOW_LINKS)) {
             try {

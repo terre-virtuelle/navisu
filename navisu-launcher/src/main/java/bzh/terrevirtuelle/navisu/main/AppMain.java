@@ -169,6 +169,7 @@ public class AppMain extends Application {
     private final String DATA_S57_CATALOG_5 = "data/charts/vector/s57/catalog/ENC_NP5.kmz";
     private final String DATA_S57_CATALOG_6 = "data/charts/vector/s57/catalog/ENC_NP6.kmz";
     private WorldWindow wwd;
+    private final String NAVISU_HOME = System.getProperty("user.home") + "/.navisu";
 
     @Override
     @SuppressWarnings({"unchecked", "varargs"})
@@ -183,7 +184,7 @@ public class AppMain extends Application {
 
         final ComponentManager componentManager = ComponentManager.componentManager;
 
-        FileHandler fh = new FileHandler("navisuDeployComponents.log");
+        FileHandler fh = new FileHandler(NAVISU_HOME + "/logs/" + "components.log");
         LOGGER.addHandler(fh);
         LOGGER.setUseParentHandlers(false);
         /* Deploy components */
@@ -493,9 +494,8 @@ public class AppMain extends Application {
         // Neo4J serveur externe
         // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
         // System.out.println("con : " + con);
-        bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
-                "5432", "org.postgresql.Driver", "admin", "admin");
-
+        //bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
+        //        "5432", "org.postgresql.Driver", "admin", "admin");
         //  bathymetryDBServices.create("C:\\Users\\Dom\\Documents\\Navisu\\shom-data\\bathy\\MNT100M_ATL\\splited\\bathy04.glz");
         //bathymetryDBServices.createIndex();
         /* Test speech */
