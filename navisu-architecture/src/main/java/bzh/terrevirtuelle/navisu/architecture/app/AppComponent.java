@@ -44,6 +44,7 @@ public class AppComponent extends Application {
     protected static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private static int edgeID = 0;
     private static int pinID = 0;
+    private static int nodeID = 1;
     final String COMPONENTS_LOG = "components.log";
     private VMDGraphScene graphScene;
     private List<Component> components;
@@ -150,13 +151,14 @@ public class AppComponent extends Application {
     }
 
     void createPin(VMDGraphScene scene, String nodeID, String pinID,  String name) {
-        System.out.println("scene : " + scene +" nodeID : " +nodeID + " pinID : " + pinID+" n : "+name);
-       try{
-        //VMDPinWidget pinWidget = ((VMDPinWidget) scene.addPin(nodeID, pinID));
+     //   System.out.println("scene : " + scene +" nodeID : " +nodeID + " pinID : " + pinID+" n : "+name);
+       String id = "node" + AppComponent.nodeID++;
+     try{
+        VMDPinWidget pinWidget = ((VMDPinWidget) scene.addPin(id, pinID));
        //    System.out.println("pinWidget : " + pinWidget);
-       // pinWidget.setProperties(name, null);
+        pinWidget.setProperties(name, null);
        }catch(Exception e){
-           System.out.println("e: " + e);
+          // System.out.println("e: " + e);
        }
     }
 

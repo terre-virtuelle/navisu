@@ -87,7 +87,7 @@ public class VMDTest {
     }
 
      void createPin(VMDGraphScene scene, String nodeID, String pinID, Image image, String name, String type) {
-       
+       System.out.println("scene : " + scene +" nodeID : " +nodeID + " pinID : " + pinID+" n : "+name);
          VMDPinWidget pinWidget = ((VMDPinWidget) scene.addPin(nodeID, pinID));
         pinWidget.setProperties(name, null);
       
