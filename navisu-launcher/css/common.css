@@ -64,6 +64,17 @@
     -fx-background-insets: 0, 1, 2, 4, 4;
     -fx-background-radius: 3, 2, 1, 4, 1;
 }
+/*---------- Templates -----------*/
+.template1{
+    -fx-background-image: url(cssImages/legacy.jpg) ;
+    -fx-content-display: CENTER;
+    -fx-background-size: contain;
+}
+.template2{
+    -fx-background-image: url(cssImages/grey.jpg) ;
+    -fx-content-display: CENTER;
+    -fx-background-size: contain;
+}
 /*---------- LOGO -----------*/
 .logo{
     -fx-background-image: url(cssImages/logo50.png) ;
