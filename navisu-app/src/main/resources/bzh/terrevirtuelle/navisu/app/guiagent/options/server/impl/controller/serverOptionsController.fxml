@@ -27,9 +27,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<fx:root stylesheets="@serverOptionsController.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="560.0" styleClass="background-pane" />
+        <Pane fx:id="viewpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="560.0" styleClass="background-pane" />
       <Group layoutX="20.0" layoutY="215.0">
          <children>
                 <Button fx:id="addConnectionB" layoutX="8.0" minWidth="75.0" mnemonicParsing="false" prefWidth="75.0" text="Add " />
@@ -183,7 +183,7 @@
       </Group>
         <Group styleClass="routeeditor-panel">
             <children>
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true" scaleX="0.9" scaleY="0.9">
                     <image>
                         <Image url="@logoTV64AIS.png" />
                     </image>
@@ -194,7 +194,7 @@
                 <Slider fx:id="opacitySlider" layoutX="541.0" layoutY="46.0" max="1.0" orientation="VERTICAL" prefHeight="153.0" prefWidth="5.0" value="0.4">
                 </Slider>
                 <Text layoutX="121.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="SERVER CONNECTIONS OPTIONS" />
-                <Button fx:id="quit" alignment="CENTER" layoutX="507.0" layoutY="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">    
+                <Button fx:id="quit" alignment="CENTER" layoutX="507.0" layoutY="-6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.5" scaleY="0.5" styleClass="quitbutton" textOverrun="CLIP">    
                 </Button>
                 <StackPane layoutX="14.0" layoutY="51.0" prefHeight="143.0" prefWidth="511.0" styleClass="instrumentcontour">
                     <children>
@@ -210,8 +210,8 @@
                 </StackPane>
             </children>
         </Group>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="510.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="560.0" />
-      <Rectangle id="tabcontener" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="250.0" layoutX="10.0" layoutY="250.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 10; -fx-arc-width: 10;" styleClass="instrumentcontour" width="526.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="10.0" layoutY="45.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 10; -fx-arc-width: 10;" styleClass="instrumentcontour" width="526.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="510.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="560.0" />
+      <Rectangle id="tabcontener" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="250.0" layoutX="10.0" layoutY="250.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 10; -fx-arc-width: 10;" styleClass="instrumentcontour" width="526.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="200.0" layoutX="10.0" layoutY="45.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 10; -fx-arc-width: 10;" styleClass="instrumentcontour" width="526.0" />
     </children>
 </fx:root>

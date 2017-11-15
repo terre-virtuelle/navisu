@@ -81,13 +81,13 @@ public class ConfigurationComponentController
 
     /* Common controls */
     @FXML
-    public Group configgroup;
+    public Group view;
     @FXML
-    public Pane view;
+    public Pane viewPane;
     @FXML
     public TabPane optionsTabPane;
     @FXML
-    public ImageView quit;
+    public Button quit;
     @FXML
     public Button saveButton;
     @FXML
@@ -273,7 +273,7 @@ public class ConfigurationComponentController
             Logger.getLogger(ConfigurationComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         String uri = CSS_STYLE_PATH + viewgroupstyle;
-        configgroup.getStylesheets().add(uri);
+        view.getStylesheets().add(uri);
         this.component = component;
         this.guiAgentServices = guiAgentServices;
         this.gazetteerComponentServices = gazetteerComponentServices;

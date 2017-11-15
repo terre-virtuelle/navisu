@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
@@ -49,12 +51,16 @@ public class ServerOptionsComponentController
 
     GuiAgentServices guiAgentServices;
     DataServerServices dataServerServices;
-
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    public String uri;
     private final String FXML = "serverOptionsController.fxml";
     private static ServerOptionsComponentController INSTANCE;
     private final ServerOptionsComponentImpl component;
+    protected String viewgroupstyle = "serverOptionsController.css";
     @FXML
-    public Pane view;
+    public Group view;
+    @FXML
+    public Pane viewpane;
     @FXML
     public Tab serialT;
     @FXML
@@ -118,7 +124,7 @@ public class ServerOptionsComponentController
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-        try {
+                try {
             fxmlLoader.load();
         } catch (IOException ex) {
             Logger.getLogger(ServerOptionsComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
@@ -129,6 +135,8 @@ public class ServerOptionsComponentController
         //dataServerServices.initSerialReader();
         serialPortNames = dataServerServices.getSerialPortNames();
         //   System.out.println("serialPortNames "+ serialPortNames);
+        uri = CSS_STYLE_PATH + viewgroupstyle;
+        view.getStylesheets().add(uri);
         Platform.runLater(() -> {
             if (serialPortNames != null) {
                 for (String pn : serialPortNames) {
@@ -159,7 +167,7 @@ public class ServerOptionsComponentController
         });
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                view.setOpacity(opacitySlider.getValue());
+                viewpane.setOpacity(opacitySlider.getValue());
             });
         });
         serialT.setUserData("Serial");
