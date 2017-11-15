@@ -42,6 +42,10 @@ public class Component {
 
     private String module;
 
+    private String id;
+
+    
+
     public Component(String module, String name, String implementation, String state, Component root, String item, int level) {
         this.module = module;
         this.name = name;
@@ -346,5 +350,22 @@ public class Component {
     public String getShortName(String name) {
         String[] name0 = name.split(Pattern.quote("."));
         return name0[name0.length-1].trim();
+    }
+    /**
+     * Get the value of id
+     *
+     * @return the value of id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @param id new value of id
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 }

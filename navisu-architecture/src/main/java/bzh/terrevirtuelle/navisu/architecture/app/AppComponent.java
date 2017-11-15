@@ -11,7 +11,6 @@ import bzh.terrevirtuelle.navisu.architecture.impl.handler.Handler;
 import bzh.terrevirtuelle.navisu.architecture.impl.view.ComponentView;
 import bzh.terrevirtuelle.navisu.architecture.impl.view.SceneSupport;
 import bzh.terrevirtuelle.navisu.domain.architecture.Component;
-import java.awt.Image;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -24,12 +23,12 @@ import java.util.Set;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.netbeans.api.visual.action.ActionFactory;
 import org.netbeans.api.visual.vmd.VMDGraphScene;
+import org.netbeans.api.visual.vmd.VMDNodeWidget;
 import org.netbeans.api.visual.vmd.VMDPinWidget;
 import org.netbeans.api.visual.widget.Widget;
 import org.openide.util.Exceptions;
@@ -53,13 +52,10 @@ public class AppComponent extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        //StackPane root = new StackPane();
-        //Scene scene = new Scene(root, 200, 250);
-        //  Parent root = null;
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("componentsControl.fxml"));
-          //  fxmlLoader.setController(new FXMLComponentController());
             root = fxmlLoader.load();
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
@@ -118,7 +114,6 @@ public class AppComponent extends Application {
         int line = 0;
         Map<String, List<ComponentView>> componentViewMap = new HashMap<>();
         Set<String> keys = componentsMap.keySet();
-       // System.out.println("scene : "+scene);
         for (String k : keys) {
             componentViewMap.put(k, new ArrayList<>());
             for (Component c : componentsMap.get(k)) {
@@ -126,14 +121,37 @@ public class AppComponent extends Application {
                 int y = line;
                 ComponentView componentView = new ComponentView(c, null, null, x, y);
                 componentViewMap.get(c.getModule()).add(componentView);
-                for(String n : c.getServicesProvided()){
-                    createPin(scene, componentView.getNodeID(),Integer.toString(AppComponent.edgeID++),c.getShortName(n));
-                }
                 componentView.setScene(scene);
+                c.getServicesProvided().forEach((n) -> {
+                    createPin(scene, componentView.getNodeID(),
+                            Integer.toString(AppComponent.edgeID++),
+                            c.getShortName(n));
+                });
                 line += 20;
             }
             col += 150;
             line = 0;
+        }
+        keys = componentViewMap.keySet();
+
+        for (String k : keys) {
+            for (ComponentView cv : componentViewMap.get(k)) {
+                Component component = cv.getComponent();
+                component.getUsedServices().forEach((n) -> {
+                    for (Component c : componentsMap.get(k)) {
+                        //  System.out.println("c : " + c);
+                        for (String s : c.getServicesProvided()) {
+                            if (s.equals(n)) {
+                               // VMDNodeWidget widget = (VMDNodeWidget) scene.findWidget(cv.getNodeID());
+                               // System.out.println(widget.getNodeName());
+                               // widget = (VMDNodeWidget) scene.findWidget(c.getName());
+                                //System.out.println(widget.getNodeName());
+                                createEdge(scene, c.getName(), cv.getNodeID());
+                            }
+                        }
+                    }
+                });
+            }
         }
 
         /*
@@ -150,23 +168,27 @@ public class AppComponent extends Application {
         return componentViewMap;
     }
 
-    void createPin(VMDGraphScene scene, String nodeID, String pinID,  String name) {
-     //   System.out.println("scene : " + scene +" nodeID : " +nodeID + " pinID : " + pinID+" n : "+name);
-       String id = "node" + AppComponent.nodeID++;
-     try{
-        VMDPinWidget pinWidget = ((VMDPinWidget) scene.addPin(id, pinID));
-       //    System.out.println("pinWidget : " + pinWidget);
-        pinWidget.setProperties(name, null);
-       }catch(Exception e){
-          // System.out.println("e: " + e);
-       }
+    void createPin(VMDGraphScene scene, String nodeID, String pinID, String name) {
+        //  System.out.println("scene : " + scene +" nodeID : " +nodeID + " pinID : " + pinID+" n : "+name);
+        //  String id = "node" + AppComponent.nodeID++;
+        try {
+            VMDPinWidget pinWidget = ((VMDPinWidget) scene.addPin(nodeID, pinID));
+            //    System.out.println("pinWidget : " + pinWidget);
+            pinWidget.setProperties(name, null);
+        } catch (Exception e) {
+            System.out.println("e: " + e);
+        }
     }
 
     void createEdge(VMDGraphScene scene, String sourcePinID, String targetNodeID) {
-
+        System.out.println("sourcePinID : " + sourcePinID + " targetNodeID : " + targetNodeID);
         String edgeIDString = "edge" + AppComponent.edgeID++;
         scene.addEdge(edgeIDString);
-        scene.setEdgeSource(edgeIDString, sourcePinID);
+        try {
+            scene.setEdgeSource(edgeIDString, sourcePinID);
+        } catch (Exception e) {
+            System.out.println("e : " + e);
+        }
         scene.setEdgeTarget(edgeIDString, targetNodeID + VMDGraphScene.PIN_ID_DEFAULT_SUFFIX);
 
     }

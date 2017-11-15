@@ -28,7 +28,7 @@ public class ComponentView {
     Image GLYPH_POST_CODE = new ImageIcon("resources/postCodeGlyph.png").getImage();
     Image GLYPH_CANCEL = new ImageIcon("resources/cancelGlyph.png").getImage();
 
-    private final Component component;
+    private Component component;
     private VMDGraphScene scene;
     private VMDNodeWidget widget;
     Image image;
@@ -51,10 +51,12 @@ public class ComponentView {
 
     public void setScene(VMDGraphScene scene) {
         this.scene = scene;
+     //   System.out.println("scene : " + scene);
         widget = (VMDNodeWidget) this.scene.addNode(nodeID);
         widget.setPreferredLocation(new Point(x, y));
         widget.setNodeProperties(image, nodeID, component.getModule(), glyphs);
-        System.out.println("nodeID : " + nodeID);
+        scene.addPin(nodeID, nodeID + VMDGraphScene.PIN_ID_DEFAULT_SUFFIX); 
+       // System.out.println("nodeID : " + nodeID);
     }
 
     public VMDNodeWidget getWidget() {
@@ -103,6 +105,10 @@ public class ComponentView {
 
     public void setNodeID(String nodeID) {
         this.nodeID = nodeID;
+    }
+
+    public Component getComponent() {
+        return component;
     }
 
 }

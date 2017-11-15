@@ -78,7 +78,7 @@ public class VMDTest {
     }
 
      String createNode(VMDGraphScene scene, int x, int y, Image image, String name, String type, List<Image> glyphs) {
-        String nodeID = "node" + VMDTest.nodeID++;
+        String nodeID = "toto" + VMDTest.nodeID++;
         VMDNodeWidget widget = (VMDNodeWidget) scene.addNode(nodeID);
         widget.setPreferredLocation(new Point(x, y));
         widget.setNodeProperties(image, name, type, glyphs);
@@ -87,7 +87,7 @@ public class VMDTest {
     }
 
      void createPin(VMDGraphScene scene, String nodeID, String pinID, Image image, String name, String type) {
-       System.out.println("scene : " + scene +" nodeID : " +nodeID + " pinID : " + pinID+" n : "+name);
+     //  System.out.println("scene : " + scene +" nodeID : " +nodeID + " pinID : " + pinID+" n : "+name);
          VMDPinWidget pinWidget = ((VMDPinWidget) scene.addPin(nodeID, pinID));
         pinWidget.setProperties(name, null);
       
