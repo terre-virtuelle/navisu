@@ -81,9 +81,10 @@ public class LocatorController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        quit.setOnMouseClicked((MouseEvent event) -> {
         String uri = CSS_STYLE_PATH + viewgroupstyle;
         locatorPanel.getStylesheets().add(uri);
+        quit.setOnMouseClicked((MouseEvent event) -> {
+        
 
             setVisible(false);
         });

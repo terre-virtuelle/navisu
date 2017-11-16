@@ -180,7 +180,7 @@ public abstract class NetCDFViewer {
             }
         }
         opacitySliderController = new SliderController();
-        opacitySliderController.setTranslateY(-30.0);
+        opacitySliderController.setTranslateY(150.0);
         opacitySliderController.setTranslateX(480.0);
         opacitySliderController.setRotate(-90);
         opacitySliderController.setVisible(true);
@@ -253,5 +253,5 @@ public abstract class NetCDFViewer {
     public SliderController getOpacitySliderController() {
         return opacitySliderController;
     }
-    
+
 }

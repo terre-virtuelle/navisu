@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.widgets.slider;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -24,6 +25,9 @@ import javafx.scene.shape.Polygon;
  */
 public class ButtonController
         extends Widget2DController {
+private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+private final String FXML = "buttonSlider.fxml";
+protected String viewgroupstyle = "rightSlider.css";
 
     @FXML
     public Group rightSlider;
@@ -74,6 +78,9 @@ public class ButtonController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        rightSlider.getStylesheets().add(uri);
+
         button.setOnMouseClicked((MouseEvent t) -> {
             if (color == true) {
                 button.setFill(Color.RED);

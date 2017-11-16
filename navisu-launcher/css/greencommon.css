@@ -1,7 +1,7 @@
 /* CSS Document */
 @font-face {
-    -fx-font-family: "Roboto Cn";
-    src: url("fonts/Roboto-Condensed.ttf");
+    -fx-font-family: 'Roboto Cn';
+    src: url('fonts/Roboto-Condensed.ttf');
 }
 /*******************************************************************************
  *                                                                             *
@@ -12,18 +12,18 @@
 *{
     -fx-font-family: "Roboto Cn" ;
     /*---------- couleurs ----------------------*/    
-    -fx-base : #202020;
-    -fx-base-trans : #30303000;
-    -fx-base-trans10 : #30303010;
-    -fx-base-trans20 : #30303020;
-    -fx-base-trans95: #30303095;
-    -fx-color : #303030;
-    -fx-no-border: #303030;
-    -fx-line-base : #e0e0e0;
+    -fx-base : #143b28;
+    -fx-base-trans : #143b2800;
+    -fx-base-trans10 : #143b2810;
+    -fx-base-trans20 : #143b2820;
+    -fx-base-trans95: #143b2895;
+    -fx-color : #143b28;
+    -fx-no-border: #143b28;
+    -fx-line-base : #04fff2;
     -fx-focus-color: derive(-fx-color,80%); /* tonalité claire de la couleur de base*/
     -fx-faint-focus-color: derive(-fx-color,80%);
-    -fx-color-typo: -fx-line-base;
-    -fx-color-title: white;
+    -fx-color-typo: #c2f8c4;
+    -fx-color-title: #fff900;
     -fx-color-backround-value: -fx-base-trans; /* background transparent boutons*/
     -fx-cell-hover-color:#cce3f4;
     /*------- dégradés des boutons----------*/
@@ -87,9 +87,9 @@
 /*---------- QUIT -----------*/  
 .quitbutton
 {
-    
+    /*-fx-background-image: url(cssImages/quitrouge64.png) ;*/
     -fx-background-repeat:no-repeat;
-    -fx-background-color: #aa0000;
+    -fx-background-color: #bb0000;
     -fx-background-radius: 0;
     -fx-background-size: contain;
     -fx-text-fill: -fx-color-typo;
@@ -99,7 +99,7 @@
    /* -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 10,0,2,2 );*/
 }
 .quitbutton:focused {
-    -fx-background-color: #cc0000;
+    -fx-background-color: #bbbb00;
     -fx-background-radius: 20;
 }
 .quitbutton:hover {
@@ -131,29 +131,29 @@
     -fx-stroke: -fx-line-base;
     -fx-stroke-width: 1;
     -fx-fill:-fx-color-backround-value;
-    -fx-arc-height:10;	 
-    -fx-arc-width: 10;
+    -fx-arc-height:30;	 
+    -fx-arc-width: 30;
 }
 .viewcadres{
     -fx-stroke: -fx-line-base;
     -fx-stroke-width: 1;
     -fx-fill:-fx-color-backround-value;
-    -fx-arc-height:10;	 
-    -fx-arc-width: 10;
+    -fx-arc-height:30;	 
+    -fx-arc-width: 30;
 }
 .instrumentcontour{
     -fx-stroke: -fx-line-base;
     -fx-stroke-width: 1;
     -fx-fill : -fx-color-backround-value;
-    -fx-arc-height: 10;	 
-    -fx-arc-width: 10;
+    -fx-arc-height: 40;	 
+    -fx-arc-width: 40;
 }
 .viewcontour{
     -fx-stroke: -fx-line-base;
     -fx-stroke-width: 1;
     -fx-fill : -fx-color-backround-value;
-    -fx-arc-height: 10;	 
-    -fx-arc-width: 10;
+    -fx-arc-height: 40;	 
+    -fx-arc-width: 40;
 }
 .imageviewcontour{
     -fx-stroke: -fx-line-base;
@@ -163,10 +163,34 @@
     -fx-arc-width: 0;
 }
 /*--------- background instruments - view ----------------*/
-
+.foot-pane {
+    -fx-border-radius: 0 0 20 20;
+    -fx-background-radius: 0 0 20 20;
+    -fx-background-color: #143b28;
+}
+.top-pane {
+    -fx-border-radius: 20 20 0 0;
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color: #143b28;    
+}
+.left-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: #143b28;    
+}
+.right-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: #143b28;    
+}
+.center-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: #143b28;    
+}
 .background-pane{
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
     -fx-background-color: -fx-base;
 } 
 /*------- Slider --------*/
@@ -183,7 +207,7 @@
 
 }
 .slider .track {
-    -fx-background-color:  #e0e0e0, -fx-line-base;
+    -fx-background-color:  #04fff2, -fx-line-base;
     -fx-background-insets: 2, 1;
     -fx-background-radius: 0.25em, 0.166667em; /* 3 3 2 */
     -fx-padding: 0.25em; /* 3 */

@@ -1,12 +1,7 @@
-@import url(commonTemplate.css);
+@import url(common.css);
 
 /*******************************************************************************
  *                                                                             *
  * Slider - specific css                                                       *
  *                                                                             *
  ******************************************************************************/
-.buttonslider {
-    -fx-fill: #009933;
-    -fx-stroke: #008822;
-    -fx-stroke-width:2;
-}

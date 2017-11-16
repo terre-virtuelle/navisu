@@ -8,10 +8,12 @@ package bzh.terrevirtuelle.navisu.widgets.slider;
 import bzh.terrevirtuelle.navisu.widgets.Widget2D;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
+import java.nio.file.Paths;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -25,16 +27,18 @@ import javafx.scene.input.MouseEvent;
 public class SliderController
         extends Widget2DController {
 
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+
     @FXML
     public Group sliderPanel;
     @FXML
     public Slider slider;
     @FXML
-    public ImageView quit;
+    public Button quit;
 
     String filename;
     static String DEFAULT_FILE_NAME = "SliderPanel.fxml";
-    private String css = System.getProperty("user.dir");
+    private String uri = CSS_STYLE_PATH + "slider.css";
 
     public SliderController() {
         this(DEFAULT_FILE_NAME);
@@ -62,11 +66,7 @@ public class SliderController
 
     private void load() {
 
-        /* ----------- Répertoire des css dans le launcher -----------------*/
-        //File cssfile = new File("css/slider.css");
-        //css = ("file:///" + cssfile.getAbsolutePath().replace("\\", "/"));
-        //System.out.println(css);
-        /*---------------------------------------*/
+        
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(filename));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -77,14 +77,9 @@ public class SliderController
             throw new RuntimeException(exception);
         }
 
-        /*---- si css non défini dans le fxml ------------*/
-        //slider.getStylesheets().add(css);
-        /* ---- css dans les ressources des widgets -----------*/
-        css = "css/slider.css";
-        slider.getStylesheets().add(Widget2D.class.getResource(css).toExternalForm());
-
+        sliderPanel.getStylesheets().add(uri);
         slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-            // System.out.println("..............");
+            //System.out.println("..............");
         });
 
         quit.setOnMouseClicked((MouseEvent event) -> {
@@ -92,7 +87,7 @@ public class SliderController
         });
     }
 
-    public ImageView getQuit() {
+    public Button getQuit() {
         return quit;
     }
 
