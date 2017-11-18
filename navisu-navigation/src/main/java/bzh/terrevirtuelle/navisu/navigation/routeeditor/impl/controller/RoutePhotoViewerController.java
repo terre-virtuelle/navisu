@@ -9,10 +9,12 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RoutePhotoViewerImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
+import java.nio.file.Paths;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -32,12 +34,15 @@ import javafx.scene.layout.Pane;
 public class RoutePhotoViewerController
         extends Widget2DController {
 
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private GuiAgentServices guiAgentServices;
     private final RoutePhotoViewerImpl instrument;
     private final String FXML = "routephotoviewer.fxml";
-
+    protected String viewgroupstyle = "routeeditor.css";
     @FXML
-    public Pane view;
+    public Group view;
+    @FXML
+    public Pane viewpane;
     @FXML
     public Button quit;
     @FXML
@@ -69,10 +74,12 @@ public class RoutePhotoViewerController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        view.setOpacity(0.8);
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        view.getStylesheets().add(uri);
+        viewpane.setOpacity(0.8);
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                view.setOpacity(opacitySlider.getValue());
+                viewpane.setOpacity(opacitySlider.getValue());
             });
         });
     }

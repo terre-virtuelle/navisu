@@ -35,7 +35,7 @@ public class ListController
     @FXML
     public Button quit;
     @FXML
-    public Pane viewPane;
+    public Pane viewpane;
     @FXML
     public ListView listView;
     @FXML
@@ -84,7 +84,7 @@ public static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.d
         });
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                view.setOpacity(opacitySlider.getValue());
+                viewpane.setOpacity(opacitySlider.getValue());
                // listView.setOpacity(opacitySlider.getValue());
             });
         });
@@ -94,7 +94,7 @@ public static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.d
     }
 
     public Pane getView() {
-        return viewPane;
+        return viewpane;
     }
 
     public Button getQuit() {

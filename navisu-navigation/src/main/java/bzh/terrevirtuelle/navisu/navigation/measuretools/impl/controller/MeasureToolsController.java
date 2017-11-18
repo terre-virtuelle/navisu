@@ -61,6 +61,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -94,8 +95,12 @@ public class MeasureToolsController
     private final String FXML = "measuretools.fxml";
     private NavigationDataSet navigationDataSet;
     private WavefrontOBJBuilder wavefrontOBJBuilder;
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    protected String viewgroupstyle = "measuretools.css";
     @FXML
-    public Pane view;
+    public Group view;
+    @FXML
+    public Pane viewpane;
     @FXML
     public Button quit;
     @FXML
@@ -229,9 +234,12 @@ public class MeasureToolsController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        view.getStylesheets().add(uri);
+
         idTF.setText(String.valueOf(id));
         zoneNameTF.setText(zoneName);
-        view.setOpacity(0.8);
+        viewpane.setOpacity(0.8);
         measureTool = new MeasureTool(wwd);
         MeasureToolController measureToolController = new MeasureToolController();
         measureTool.setController(measureToolController);
@@ -545,7 +553,7 @@ public class MeasureToolsController
         });
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                view.setOpacity(opacitySlider.getValue());
+                viewpane.setOpacity(opacitySlider.getValue());
             });
         });
     }

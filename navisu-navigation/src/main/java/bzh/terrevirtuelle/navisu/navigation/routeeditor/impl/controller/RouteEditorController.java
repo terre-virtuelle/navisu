@@ -88,6 +88,7 @@ import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.Saili
 import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
+import javafx.scene.Group;
 
 /**
  * NaVisu
@@ -97,9 +98,10 @@ import gov.nasa.worldwind.render.PointPlacemark;
  */
 public class RouteEditorController
         extends Widget2DController {
-
+private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private final RouteEditorImpl instrument;
     private final String FXML = "routeeditor.fxml";
+    protected String viewgroupstyle = "routeeditor.css";
     private MeasureTool measureTool;
 
     private List<NavigationalWarnings> avurnavList;
@@ -153,7 +155,9 @@ public class RouteEditorController
     private RenderableLayer profileLayer;
     private GeodeticCurve geoCurve;
     @FXML
-    public Pane view;
+    public Group view;
+    @FXML
+    public Pane viewpane;
     @FXML
     public Button quit;
     @FXML
@@ -246,10 +250,13 @@ public class RouteEditorController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        view.setOpacity(0.8);
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        view.getStylesheets().add(uri);
+
+        viewpane.setOpacity(0.8);
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                view.setOpacity(opacitySlider.getValue());
+                viewpane.setOpacity(opacitySlider.getValue());
             });
         });
     }

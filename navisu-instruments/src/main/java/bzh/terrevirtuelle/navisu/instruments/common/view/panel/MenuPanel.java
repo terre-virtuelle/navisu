@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
@@ -31,15 +32,16 @@ import javafx.scene.layout.Pane;
 public class MenuPanel
         extends Widget2DController
         implements Initializable {
-
-    @FXML
-    public Group menu;
+private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    protected String viewgroupstyle = "radarmenu.css";
+@FXML
+    public Group view;
     @FXML
     public Button quit;
     @FXML
     public Slider slider;
     @FXML
-    public Pane view;
+    public Pane viewpane;
     protected GuiAgentServices guiAgentServices;
 
     public MenuPanel(GuiAgentServices guiAgentServices, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
@@ -53,12 +55,15 @@ public class MenuPanel
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        view.getStylesheets().add(uri);
+
         quit.setOnMouseClicked((MouseEvent event) -> {
-            menu.setVisible(false);
+            view.setVisible(false);
         });
         slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                view.setOpacity(slider.getValue());
+                viewpane.setOpacity(slider.getValue());
             });
         });
     }

@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
@@ -18,6 +19,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 /**
@@ -27,12 +29,15 @@ import javafx.scene.text.Text;
 public class UrlListController
         extends Widget2DController {
 
-    @FXML
+    
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     protected String viewgroupstyle = "urllistpanel.css";
-    public Group urlListPanel;
     @FXML
-    public ImageView quit;
+    public Group view;
+    @FXML
+    public Pane viewpane;
+    @FXML
+    public Button quit;
     @FXML
     GridPane gridPane;
     @FXML
@@ -65,7 +70,7 @@ public class UrlListController
             throw new RuntimeException(exception);
         }
         String uri = CSS_STYLE_PATH + viewgroupstyle;
-        urlListPanel.getStylesheets().add(uri);
+       view.getStylesheets().add(uri);
 
         //gridPane.setStyle("-fx-background-color: #00524e99");
         //scrollPane.setStyle("-fx-background-color: #00524e99");
@@ -73,11 +78,7 @@ public class UrlListController
             setVisible(false);
         });
     }
-/*
-    public ImageView getQuit() {
-        return quit;
-    }
-*/
+
     public ListView getList() {
         return list;
     }

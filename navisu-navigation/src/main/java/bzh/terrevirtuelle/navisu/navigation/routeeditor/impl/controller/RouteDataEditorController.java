@@ -39,7 +39,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javax.xml.bind.JAXBException;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import javafx.scene.Group;
 
 /**
  * NaVisu
@@ -50,7 +52,9 @@ import java.util.ArrayList;
 public class RouteDataEditorController
         extends Widget2DController {
 
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private final String FXML = "routedataeditor.fxml";
+    protected String viewgroupstyle = "routeeditor.css";
     private final GuiAgentServices guiAgentServices;
     private final S57ChartComponentServices s57ChartServices;
     private final LayersManagerServices layersManagerServices;
@@ -59,8 +63,11 @@ public class RouteDataEditorController
     private List<SailingDirections> sailingDirectionsList;
     private List<Gpx> gpxList;
     private File file;
+    
     @FXML
-    public Pane view;
+    public Group view;
+    @FXML
+    public Pane viewpane;
     @FXML
     public Button quit;
     @FXML
@@ -116,10 +123,14 @@ public class RouteDataEditorController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        view.setOpacity(0.8);
+        
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        view.getStylesheets().add(uri);
+
+        viewpane.setOpacity(0.8);
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                view.setOpacity(opacitySlider.getValue());
+                viewpane.setOpacity(opacitySlider.getValue());
             });
         });
         openButton.setOnMouseClicked((MouseEvent event) -> {

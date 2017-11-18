@@ -1,0 +1,132 @@
+/* CSS Document */
+
+@import "common.css";
+
+/*******************************************************************************
+ *                                                                             *
+ * Infos et valeurs AIS                                                        *
+ *                                                                             *
+ ******************************************************************************/
+.aisvalue{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-color-title;
+}
+.aislabel{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-color-title;
+}
+.aisname{
+    -fx-font: 18px "Roboto Cn";
+    -fx-fill : -fx-color-title;
+    -fx-underline : true;
+}
+.info-text{
+    -fx-font: 16px "Roboto Cn";
+    -fx-fill : -fx-color-title;
+}
+/*******************************************************************************
+ *                                                                             *
+ * radar circles and lines                                                     *
+ *                                                                             *
+ ******************************************************************************/
+.ais-panel{
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
+    -fx-background-color: -fx-base;
+    -fx-stroke: -fx-line-base;
+}
+.radar-circle, .radar-line{
+    -fx-stroke: -fx-line-base;
+    -fx-fill: -fx-base-trans10;  
+}
+.radar-line, .radar-ticks {
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 2;
+}
+.radar-ticks10{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 3;
+}
+.radar-degrees{
+    -fx-font: 20pt "Roboto Cn";
+    -fx-fill:-fx-line-base;
+}
+.radar-screen {
+    /*
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 4px;
+    */
+    -fx-arc-height:30;
+    -fx-arc-width:30;
+    -fx-fill: #143b28;    
+}
+.radar-info-pane {
+    -fx-stroke: -fx-line-base;
+    -fx-arc-height:20;
+    -fx-arc-width:20;
+    -fx-fill: -fx-base-trans20;
+}
+.radar-buttonlabel{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
+}
+.radar-buttonlabel-nlines{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
+}
+.radar-togglebutton{
+    -fx-background-color: linear-gradient(to bottom,
+        ladder(
+        -fx-toggle-color,
+        derive(-fx-toggle-color,8%) 75%,
+        derive(-fx-toggle-color,10%) 80%
+        ),
+        derive(-fx-toggle-color,-8%));
+    -fx-body-color-bottomup: linear-gradient(to top, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
+    -fx-body-color-to-right: linear-gradient(to right, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
+    -fx-alignment: CENTER;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * MenuBar                                                                     *
+ *                                                                             *
+ ******************************************************************************/
+
+.menu-bar {
+    -fx-padding: 0.0em 0.666667em 0.0em 0.666667em; /* 0 8 0 8 */
+    -fx-spacing: 0.166667em; /* 2 */
+    -fx-background-color:
+        linear-gradient(to bottom, derive(-fx-base,75%) 0%, -fx-base 90%),
+        linear-gradient(to bottom, derive(-fx-base,46.9%) 2%, derive(-fx-base,-2.1%) 95%);
+    -fx-background-insets: 0 0 0 0, 1 0 1 0;
+    -fx-background-radius: 5 ;
+}
+
+
+/*******************************************************************************
+ *                                                                             *
+ * MenuItem                                                                    *
+ *                                                                             *
+ ******************************************************************************/
+
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-padding: 0.333333em 0.41777em 0.333333em 0.41777em;  /* 4 5 4 5 */
+    -fx-background-radius: 5 ;
+}
+.menu-item > .left-container {
+    -fx-padding: 0.458em 0.791em 0.458em 0.458em;
+}
+.menu-item > .graphic-container {
+    -fx-padding: 0em 0.333em 0em 0em;
+}
+.menu-item >.label {
+    -fx-padding: 0em 0.5em 0em 0em;
+    -fx-text-fill: -fx-color-typo;
+}

@@ -72,7 +72,7 @@ public class AisRadarController
     @FXML
     public Group radar;
     @FXML
-    public Pane view;
+    public Pane viewpane;
     @FXML
     public ImageView faisceau;
     @FXML
@@ -216,7 +216,7 @@ public class AisRadarController
         aisinfopanel.setVisible(false);
         String uri = CSS_STYLE_PATH + viewgroupstyle;
         radar.getStylesheets().add(uri);
-        view.setOpacity(0.8);
+        viewpane.setOpacity(0.8);
         aisbuttonpanel.setVisible(true);
         Platform.runLater(() -> {
             radar.setOpacity(0.9);
@@ -232,7 +232,7 @@ public class AisRadarController
         });
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                view.setOpacity(opacitySlider.getValue());
+                viewpane.setOpacity(opacitySlider.getValue());
             });
         });
         /*

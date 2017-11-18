@@ -58,6 +58,8 @@ import javafx.scene.layout.Pane;
 import javax.xml.bind.JAXBException;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
+import java.nio.file.Paths;
+import javafx.scene.Group;
 
 /**
  * NaVisu
@@ -68,9 +70,13 @@ import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
 public class RoutePhotoEditorController
         extends Widget2DController {
 
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private final String FXML = "routephotoeditor.fxml";
+    protected String viewgroupstyle = "routeeditor.css";
     @FXML
-    public Pane view;
+    public Group view;
+    @FXML
+    public Pane viewpane;
     @FXML
     public Button quit;
     @FXML
@@ -198,7 +204,7 @@ public class RoutePhotoEditorController
         this.viewWW = wwd.getView();
         load(FXML);
         initPanel();
-        System.out.println(""+viewWW.getFieldOfView()+"  "+viewWW.getPitch()+"  "+viewWW.getNearClipDistance());
+        System.out.println("" + viewWW.getFieldOfView() + "  " + viewWW.getPitch() + "  " + viewWW.getNearClipDistance());
     }
 
     final void load(String fxml) {
@@ -211,10 +217,12 @@ public class RoutePhotoEditorController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        view.setOpacity(0.8);
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        view.getStylesheets().add(uri);
+        viewpane.setOpacity(0.8);
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                view.setOpacity(opacitySlider.getValue());
+                viewpane.setOpacity(opacitySlider.getValue());
             });
         });
     }
@@ -228,8 +236,8 @@ public class RoutePhotoEditorController
         });
         gotoButton.setOnMouseClicked((MouseEvent event) -> {
             Ship ship = ShipBuilder.create().latitude(latitude).longitude(longitude).name("Lithops").build();
-          //  aisServices.aisUpdateTargetEvent(ship);
-          // Voir Transpondeur
+            //  aisServices.aisUpdateTargetEvent(ship);
+            // Voir Transpondeur
             viewWW.setHeading(Angle.fromDegrees(heading));
             viewWW.setFieldOfView(Angle.fromDegrees(fieldOfView));
             viewWW.setPitch(Angle.fromDegrees(90.0));

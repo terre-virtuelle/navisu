@@ -24,6 +24,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
@@ -42,10 +43,14 @@ public class WMSCatalogController
         extends Widget2DController
         implements Initializable {
 
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private final String FXML = "catalogListView.fxml";
+    protected String viewgroupstyle = "cataloglistview.css";
     private final String SITES = "data/wms/wms.txt";
     @FXML
-    public Pane view;
+    public Group view;
+    @FXML
+    public Pane viewpane;
     @FXML
     public Button quit;
     @FXML
@@ -64,7 +69,7 @@ public class WMSCatalogController
     public WMSCatalogController(GuiAgentServices guiAgentServices, WebDriver driver) {
         this.guiAgentServices = guiAgentServices;
         this.driver = driver;
-        values =new ArrayList<>();
+        values = new ArrayList<>();
         Path path = Paths.get(SITES);
         try (Stream<String> lines = Files.lines(path)) {
             lines.forEach(s -> values.add(s));
@@ -84,10 +89,12 @@ public class WMSCatalogController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        view.setOpacity(0.8);
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        view.getStylesheets().add(uri);
+        viewpane.setOpacity(0.8);
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                view.setOpacity(opacitySlider.getValue());
+                viewpane.setOpacity(opacitySlider.getValue());
             });
         });
         quit.setOnMouseClicked((MouseEvent event) -> {

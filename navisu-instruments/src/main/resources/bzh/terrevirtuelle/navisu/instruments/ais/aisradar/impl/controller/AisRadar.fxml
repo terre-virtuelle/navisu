@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<fx:root fx:id="radar" stylesheets="@aisradar.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="radar" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1160.0" styleClass="background-pane" />
+        <Pane fx:id="viewpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1160.0" styleClass="background-pane" />
         <Group layoutX="100.0" layoutY="65.0">
             <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="1000.0" layoutX="-100.0" layoutY="-65.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="1160.0" />
@@ -1425,30 +1427,18 @@
         </Group>
         <Group>
             <children>
+            <Pane layoutX="24.0" layoutY="14.0" prefHeight="90.0" prefWidth="90.0" styleClass="logo" />
                 <Button fx:id="buttonsInfos" layoutX="930.0" layoutY="15.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="150.0" styleClass="radar-buttonlabel" text="Buttons / Infos">
                <font>
                   <Font size="18.0" />
                </font></Button>
-                <ImageView fx:id="oldquit" fitHeight="22.0" fitWidth="43.0" layoutX="1091.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" rotate="29.7" scaleX="1.5" scaleY="1.5" visible="false">
-                    <image>
-                        <Image url="@quit.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="20.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@logoTV64AIS.png" />
-                    </image>
-                    <effect>
-                        <Glow />
-                    </effect>
-                </ImageView>
                 <Text layoutX="1123.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Opacity" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
                 <Slider fx:id="opacitySlider" layoutX="1127.0" layoutY="176.0" max="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="175.0" prefWidth="5.0" value="0.6">
                 </Slider>
                 <Text layoutX="1124.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Dimension" textAlignment="CENTER" visible="false" wrappingWidth="58.0" x="-23.0" />
                 <Slider fx:id="dimensionSlider" blockIncrement="1.0" layoutX="1123.0" layoutY="386.0" min="40.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="5.0" value="75.0" visible="false">
                 </Slider>
-                <Button fx:id="quit" alignment="CENTER" layoutX="1085.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" styleClass="quitbutton" textOverrun="CLIP">
+                <Button fx:id="quit" alignment="CENTER" layoutX="1079.0" layoutY="-13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0" scaleX="0.5" scaleY="0.5" styleClass="quitbutton" textOverrun="CLIP">
                     </Button>
             <Text layoutX="417.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="RADAR AIS" textAlignment="CENTER" wrappingWidth="150.0" />
             </children>

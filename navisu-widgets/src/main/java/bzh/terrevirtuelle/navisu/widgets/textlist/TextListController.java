@@ -7,15 +7,18 @@ package bzh.terrevirtuelle.navisu.widgets.textlist;
 
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
+import java.nio.file.Paths;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 /**
@@ -25,10 +28,16 @@ import javafx.scene.text.Text;
 public class TextListController
         extends Widget2DController {
 
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+
+    protected String viewgroupstyle = "textlistpanel.css";
+
     @FXML
     public Group textListPanel;
     @FXML
-    public ImageView quit;
+    public Pane viewpane;
+    @FXML
+    public Button quit;
     @FXML
     GridPane gridPane;
     @FXML
@@ -36,6 +45,7 @@ public class TextListController
     @FXML
     Text title;
     String FXML = "TextListPanel.fxml";
+
     //String FXML ="catalogListView.fxml";
     public TextListController() {
         setMouseTransparent(false);
@@ -61,6 +71,9 @@ public class TextListController
         }
         //gridPane.setStyle("-fx-background-color: #00524e99");
         //scrollPane.setStyle("-fx-background-color: #00524e99");
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        textListPanel.getStylesheets().add(uri);
+
         quit.setOnMouseClicked((MouseEvent event) -> {
             setVisible(false);
         });

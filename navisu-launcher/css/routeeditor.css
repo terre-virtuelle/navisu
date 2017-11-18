@@ -34,28 +34,28 @@
  ******************************************************************************/
 .metriclabel{
     -fx-font: 12px "Roboto Cn";
-    -fx-fill : -fx-color-typo;
+    -fx-fill : -fx-line-base;
 }
 .routeeditorvalue{
     -fx-font: 12px "Roboto Cn";
-    -fx-fill : -fx-color-typo;
+    -fx-fill : #fff900;
 }
 .routeeditorlabel{
     -fx-font: 12px "Roboto Cn";
-    -fx-fill : -fx-color-typo;
+    -fx-fill : whitesmoke;
 }
 .routeeditorcombolabel{
     -fx-font: 10px "Roboto Cn";
-    -fx-fill : -fx-color-typo;
+    -fx-fill : whitesmoke;
 }
 .routeeditorname{
     -fx-font: 18px "Roboto Cn";
-    -fx-fill : -fx-color-typo;
+    -fx-fill : #fff900;
     -fx-underline : true;
 }
 .info-text{
     -fx-font: 18px "Roboto Cn";
-    -fx-fill : -fx-color-title;
+    -fx-fill : #fff900;
 }
 
 /*******************************************************************************
