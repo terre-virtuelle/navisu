@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
  *
  * @author serge
  */
-@XmlType(name = "arcommand", propOrder = {
+@XmlType(name = "command", propOrder = {
     "cmd",
     "navigationData",
     "arg"
@@ -108,7 +108,7 @@ public class Command {
 
     @Override
     public String toString() {
-        return "ArCommand{" + "cmd=" + cmd + ", navigationData=" + navigationData + ", arg=" + arg + '}';
+        return "Command{" + "cmd=" + cmd + ", navigationData=" + navigationData + ", arg=" + arg + '}';
     }
 
 

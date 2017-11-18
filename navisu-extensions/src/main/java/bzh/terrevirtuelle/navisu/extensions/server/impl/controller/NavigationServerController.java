@@ -176,12 +176,8 @@ public class NavigationServerController {
          * provided in arg
          */
         if (navCmd.getCmd().equals("IPInfo") && navCmd.getArg() != null) {
-            try {
                 Client.setInstance(navCmd.getArg());
                 Client.connectToServer();
-            } catch (IOException ex) {
-                Logger.getLogger(NavigationServerController.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
 
         /**

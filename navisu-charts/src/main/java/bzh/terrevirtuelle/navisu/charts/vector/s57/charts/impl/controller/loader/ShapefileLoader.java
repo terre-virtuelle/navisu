@@ -173,7 +173,7 @@ public class ShapefileLoader {
             Logging.logger().severe(message);
             throw new IllegalArgumentException(message);
         }
-
+       // System.out.println("ShapefileLoader createLayerFromShapefile");
         Layer layer = null;
         if (Shapefile.isPointType(shp.getShapeType())) {
             layer = new RenderableLayer();

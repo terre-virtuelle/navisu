@@ -94,7 +94,7 @@ public class VMDTest {
     }
 
      void createEdge(VMDGraphScene scene, String sourcePinID, String targetNodeID) {
-        
+        System.out.println("sourcePinID : " + sourcePinID + " targetNodeID : " + targetNodeID);
          String edgeID = "edge" + VMDTest.edgeID++;
         scene.addEdge(edgeID);
         scene.setEdgeSource(edgeID, sourcePinID);

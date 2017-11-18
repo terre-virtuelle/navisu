@@ -52,56 +52,29 @@ import javax.xml.bind.annotation.XmlType;
 public class NavigationDataSet {
 
     @XmlElements({
-        @XmlElement(name = "area", type = Area.class)
-        ,
-      //  @XmlElement(name = "avurnav", type = NavigationalWarnings.class),
-      //  @XmlElement(name = "avurnavSet", type = NavigationalWarningsSet.class),
-        @XmlElement(name = "avurnavss", type = NavigationalWarningsRSS.class)
-        ,
-      //  @XmlElement(name = "buoyage", type = Buoyage.class),
-        @XmlElement(name = "bcncar", type = BeaconCardinal.class)
-        ,
-        @XmlElement(name = "bcnisd", type = BeaconIsolatedDanger.class)
-        ,
-        @XmlElement(name = "bcnlat", type = BeaconLateral.class)
-        ,
-        @XmlElement(name = "bcnsaw", type = BeaconSafeWater.class)
-        ,
-        @XmlElement(name = "bcnspp", type = BeaconSpecialPurpose.class)
-        ,
-        @XmlElement(name = "buoycar", type = BuoyCardinal.class)
-        ,
-        @XmlElement(name = "buoyinb", type = BuoyInstallation.class)
-        ,
-        @XmlElement(name = "buoyisd", type = BuoyIsolatedDanger.class)
-        ,
-        @XmlElement(name = "buoylat", type = BuoyLateral.class)
-        ,
-        @XmlElement(name = "buoysaw", type = BuoySafeWater.class)
-        ,
-        @XmlElement(name = "buoyssp", type = BuoySpecialPurpose.class)
-        ,
-        @XmlElement(name = "camera", type = Camera.class)
-        ,
-        @XmlElement(name = "daymark", type = Daymark.class)
-        ,
-        @XmlElement(name = "gpx", type = Gpx.class)
-        ,
-     //   @XmlElement(name = "highway", type = Highway.class),
-        @XmlElement(name = "lndmrk", type = Landmark.class)
-        ,
-        @XmlElement(name = "morfac", type = MooringWarpingFacility.class)
-        ,
-        @XmlElement(name = "rss", type = Rss.class)
-        ,
-        @XmlElement(name = "sailingDirections", type = SailingDirections.class)
-        ,
-        @XmlElement(name = "ship", type = Ship.class)
-        ,
-        @XmlElement(name = "s57Chart", type = S57Chart.class)
-        ,
-        @XmlElement(name = "ouvrage", type = Book.class)
-        ,
+        @XmlElement(name = "area", type = Area.class),
+        @XmlElement(name = "avurnavss", type = NavigationalWarningsRSS.class),
+        @XmlElement(name = "bcncar", type = BeaconCardinal.class),
+        @XmlElement(name = "bcnisd", type = BeaconIsolatedDanger.class),
+        @XmlElement(name = "bcnlat", type = BeaconLateral.class),
+        @XmlElement(name = "bcnsaw", type = BeaconSafeWater.class),
+        @XmlElement(name = "bcnspp", type = BeaconSpecialPurpose.class),
+        @XmlElement(name = "buoycar", type = BuoyCardinal.class),
+        @XmlElement(name = "buoyinb", type = BuoyInstallation.class),
+        @XmlElement(name = "buoyisd", type = BuoyIsolatedDanger.class),
+        @XmlElement(name = "buoylat", type = BuoyLateral.class),
+        @XmlElement(name = "buoysaw", type = BuoySafeWater.class),
+        @XmlElement(name = "buoyssp", type = BuoySpecialPurpose.class),
+        @XmlElement(name = "camera", type = Camera.class),
+        @XmlElement(name = "daymark", type = Daymark.class),
+        @XmlElement(name = "gpx", type = Gpx.class),
+        @XmlElement(name = "lndmrk", type = Landmark.class),
+        @XmlElement(name = "morfac", type = MooringWarpingFacility.class),
+        @XmlElement(name = "rss", type = Rss.class),
+        @XmlElement(name = "sailingDirections", type = SailingDirections.class),
+        @XmlElement(name = "ship", type = Ship.class),
+        @XmlElement(name = "s57Chart", type = S57Chart.class),
+        @XmlElement(name = "ouvrage", type = Book.class),
         @XmlElement(name = "texte", type = Text.class),})
     private ConcurrentLinkedQueue<NavigationData> navigationDataQueue;
 

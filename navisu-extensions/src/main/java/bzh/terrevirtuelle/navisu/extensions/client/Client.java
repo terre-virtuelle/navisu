@@ -17,7 +17,6 @@
  */
 package bzh.terrevirtuelle.navisu.extensions.client;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,42 +30,43 @@ import java.util.logging.Logger;
  * @author serge
  * @date Jan 16, 2017
  */
-
 public class Client {
-    
+
     private static Client INSTANCE;
 
     private static BufferedReader in;
     private static PrintWriter out;
 
-    private static int num=0;
-    
+    private static int num = 0;
+
     private static final int PORT = 8899;
     private static String HOST = "localhost";
 
     public Client() {
+        INSTANCE=this;
+        connectToServer();
     }
-    
+
     public static Client getInstance() {
         return INSTANCE;
     }
-    
+
     public static void setInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Client();
         }
-        HOST="localhost";
+        HOST = "localhost";
     }
-    
+
     public static void setInstance(String ip) {
         if (INSTANCE == null) {
             INSTANCE = new Client();
         }
-        HOST=ip;
+        HOST = ip;
     }
 
     public static void actionPerformed() {
-        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: "+num);
+        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: " + num);
         num++;
         out.println(num);
         String response;
@@ -78,109 +78,118 @@ public class Client {
         } catch (IOException ex) {
             response = "Error: " + ex;
         }
-        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Received: "+response);
+        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Received: " + response);
     }
-    
+
     public static void openMenu() {
-        if(INSTANCE == null)
+        if (INSTANCE == null) {
             return;
+        }
         String cmd = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>openMenu</cmd><arg></arg></arCommand>");
-        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: "+cmd);
+        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: " + cmd);
         out.println(cmd);
     }
-    
-    public static void closeMenu() {
-        if(INSTANCE == null)
-            return;
-        String menu = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>closeMenu</cmd><arg></arg></arCommand>");
-        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: "+menu);
-        out.println(menu);
-    }
-    
-    public static void selectMenu() {
-        if(INSTANCE == null)
-            return;
-        String menu = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>selectMenu</cmd><arg></arg></arCommand>");
-        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: "+menu);
-        out.println(menu);
-    }    
-    
-    public static void leftMenu() {
-        if(INSTANCE == null)
-            return;
-        String menu = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>leftMenu</cmd><arg></arg></arCommand>");
-        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: "+menu);
-        out.println(menu);
-    }
-    
-    public static void rightMenu() {
-        if(INSTANCE == null)
-            return;
-        String menu = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>rightMenu</cmd><arg></arg></arCommand>");
-        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: "+menu);
-        out.println(menu);
-    }    
-    
-    public static void connectToServer() throws IOException {
 
-        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Creating Socket");
-        Socket socket = new Socket(HOST, PORT);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out = new PrintWriter(socket.getOutputStream(), true);
-        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Connected");
-          
-        
-        //To Comment when using LeapMotion.
-//        try {
-//            //Simulate an Display Command Send to RA
-//            Client.openMenu();
-//            Thread.sleep(1000);
-//            Client.rightMenu();
-//            Thread.sleep(1000);
-//            Client.leftMenu();
-//            Thread.sleep(1000);
-//            Client.leftMenu();
-//            Thread.sleep(1000);
-//            Client.leftMenu();
-//            Thread.sleep(1000);
-//            Client.leftMenu();
-//            Thread.sleep(1000);
-//            Client.leftMenu();
-//            Thread.sleep(1000);
-//            Client.leftMenu();
-//            Thread.sleep(1000);
-//            Client.leftMenu();
-//            Thread.sleep(1000);
-//            Client.leftMenu();
-//            Thread.sleep(1000);
-//            Client.selectMenu();
-//            Thread.sleep(1000);
-//            Client.rightMenu();
-//            Thread.sleep(1000);
-//            Client.leftMenu();
-//            Thread.sleep(1000);
-//            Client.rightMenu();
-//            Thread.sleep(1000);
-//            Client.rightMenu();
-//            Thread.sleep(1000);
-//            Client.selectMenu();
-//            Thread.sleep(1000);
-//            Client.selectMenu();
-//            Thread.sleep(1000);
-//            Client.selectMenu();
-//            Thread.sleep(1000);
-//            Client.closeMenu();
-//            Thread.sleep(1000);
-//            Client.openMenu();
-//            Thread.sleep(1000);
-//            Client.closeMenu();
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        
+    public static void closeMenu() {
+        if (INSTANCE == null) {
+            return;
+        }
+        String menu = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>closeMenu</cmd><arg></arg></arCommand>");
+        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: " + menu);
+        out.println(menu);
     }
-    
-    public static void disconnectFromServer() throws IOException{
+
+    public static void selectMenu() {
+        if (INSTANCE == null) {
+            return;
+        }
+        String menu = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>selectMenu</cmd><arg></arg></arCommand>");
+        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: " + menu);
+        out.println(menu);
+    }
+
+    public static void leftMenu() {
+        if (INSTANCE == null) {
+            return;
+        }
+        String menu = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>leftMenu</cmd><arg></arg></arCommand>");
+        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: " + menu);
+        out.println(menu);
+    }
+
+    public static void rightMenu() {
+        if (INSTANCE == null) {
+            return;
+        }
+        String menu = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>rightMenu</cmd><arg></arg></arCommand>");
+        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: " + menu);
+        out.println(menu);
+    }
+
+    public  static void connectToServer() {
+
+        try {
+            Logger.getLogger(Client.class.getName()).log(Level.INFO, "Creating Socket");
+            Socket socket = null;
+            try {
+                socket = new Socket(HOST, PORT);
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out = new PrintWriter(socket.getOutputStream(), true);
+            } catch (IOException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Logger.getLogger(Client.class.getName()).log(Level.INFO, "Connected");
+
+            //To Comment when using LeapMotion.
+            //Simulate an Display Command Send to RA
+            Client.openMenu();
+            Thread.sleep(1000);
+            Client.rightMenu();
+            Thread.sleep(1000);
+            Client.leftMenu();
+            Thread.sleep(1000);
+            Client.leftMenu();
+            Thread.sleep(1000);
+            Client.leftMenu();
+            Thread.sleep(1000);
+            Client.leftMenu();
+            Thread.sleep(1000);
+            Client.leftMenu();
+            Thread.sleep(1000);
+            Client.leftMenu();
+            Thread.sleep(1000);
+            Client.leftMenu();
+            Thread.sleep(1000);
+            Client.leftMenu();
+            Thread.sleep(1000);
+            Client.selectMenu();
+            Thread.sleep(1000);
+            Client.rightMenu();
+            Thread.sleep(1000);
+            Client.leftMenu();
+            Thread.sleep(1000);
+            Client.rightMenu();
+            Thread.sleep(1000);
+            Client.rightMenu();
+            Thread.sleep(1000);
+            Client.selectMenu();
+            Thread.sleep(1000);
+            Client.selectMenu();
+            Thread.sleep(1000);
+            Client.selectMenu();
+            Thread.sleep(1000);
+            Client.closeMenu();
+            Thread.sleep(1000);
+            Client.openMenu();
+            Thread.sleep(1000);
+            Client.closeMenu();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public static void disconnectFromServer() throws IOException {
         in.close();
         in = null;
         out.close();
@@ -196,6 +205,6 @@ public class Client {
      */
     public static void main(String[] args) throws Exception {
         Client client = new Client();
-        client.connectToServer();
+        // client.connectToServer();
     }
 }

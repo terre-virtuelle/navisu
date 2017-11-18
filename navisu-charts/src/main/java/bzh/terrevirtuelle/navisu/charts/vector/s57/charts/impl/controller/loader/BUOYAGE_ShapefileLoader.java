@@ -71,6 +71,7 @@ public class BUOYAGE_ShapefileLoader
 
     @Override
     protected void addRenderablesForPoints(Shapefile shp, RenderableLayer layer) {
+        
         this.layer = layer;
         while (shp.hasNext()) {
             ShapefileRecord record = shp.nextRecord();
@@ -95,7 +96,7 @@ public class BUOYAGE_ShapefileLoader
     protected Renderable createPoint(ShapefileRecord record,
             double latDegrees, double lonDegrees,
             PointPlacemarkAttributes attrs) {
-
+        
         try {
             object = (Buoyage) claz.newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {

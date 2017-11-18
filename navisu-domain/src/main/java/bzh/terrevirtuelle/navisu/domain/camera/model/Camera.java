@@ -86,28 +86,6 @@ public class Camera
         this.pitch = pitch;
     }
 
-    /*
-    
-    getEyePosition
-    getEyePoint
-    getUpVector
-    getForwardVector
-    getModelviewMatrix
-    getViewport
-    getFrustum
-    getFrustumInModelCoordinates
-    getProjectionMatrix
-
-The following methods return computed values using state that was updated in the most recent call to apply.
-
-    project
-    unproject
-    computeRayFromScreenPoint
-    computePositionFromScreenPoint
-    computePixelSizeAtDistance
-    computeHorizonDistance
-
-     */
     /**
      * Get the value of pitch
      *

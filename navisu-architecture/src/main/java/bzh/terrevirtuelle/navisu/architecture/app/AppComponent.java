@@ -123,7 +123,7 @@ public class AppComponent extends Application {
                 ComponentView componentView = new ComponentView(c, null, null, x, y);
                 componentViewMap.get(c.getModule()).add(componentView);
                 componentView.setScene(scene);
-                c.getServicesProvided().forEach((n) -> {
+                c.getUsedServices().forEach((n) -> {
                     createPin(scene, componentView.getNodeID(),
                             Integer.toString(AppComponent.edgeID++),
                             c.getShortName(n));
@@ -140,14 +140,10 @@ public class AppComponent extends Application {
                 Component component = cv.getComponent();
                 component.getUsedServices().forEach((n) -> {
                     for (Component c : componentsMap.get(k)) {
-                        //  System.out.println("c : " + c);
                         for (String s : c.getServicesProvided()) {
                             if (s.equals(n)) {
-                                // VMDNodeWidget widget = (VMDNodeWidget) scene.findWidget(cv.getNodeID());
-                                // System.out.println(widget.getNodeName());
-                                // widget = (VMDNodeWidget) scene.findWidget(c.getName());
-                                //System.out.println(widget.getNodeName());
-                                createEdge(scene, c.getName(), cv.getNodeID());
+                                System.out.println("component : " + component.getUsedServices());
+                                createEdge(scene, c.getName(), component.getShortName(n));
                             }
                         }
                     }
@@ -185,12 +181,8 @@ public class AppComponent extends Application {
         System.out.println("sourcePinID : " + sourcePinID + " targetNodeID : " + targetNodeID);
         String edgeIDString = "edge" + AppComponent.edgeID++;
         scene.addEdge(edgeIDString);
-        try {
-            scene.setEdgeSource(edgeIDString, sourcePinID);
-        } catch (Exception e) {
-            System.out.println("e : " + e);
-        }
-        scene.setEdgeTarget(edgeIDString, targetNodeID + VMDGraphScene.PIN_ID_DEFAULT_SUFFIX);
+      //  scene.setEdgeSource(edgeIDString, sourcePinID);
+       // scene.setEdgeTarget(edgeIDString, targetNodeID + VMDGraphScene.PIN_ID_DEFAULT_SUFFIX);
 
     }
 

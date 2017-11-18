@@ -526,8 +526,9 @@ public class AppMain extends Application {
          }
          System.out.println(exif1);
          */
-        // Test Navigation RA Communication with external client 
-        // navigationServerServices.init(8787);
+        // Test Navigation  Communication with external client 
+         navigationServerServices.init(8899);
+         
         // Start Leap Motion 
         // leapMotionComponentServices.on();
         // Test Gazeteer services
