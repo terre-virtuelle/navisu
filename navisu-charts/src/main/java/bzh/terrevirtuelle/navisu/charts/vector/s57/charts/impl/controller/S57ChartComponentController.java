@@ -165,7 +165,7 @@ public class S57ChartComponentController
         String[] tmpTab;
         try {
             BufferedReader input = new BufferedReader(
-                    new FileReader("properties/s57AcronymClasses.txt"));
+                    new FileReader("properties/s57AcronymClasses.table"));
             while ((tmp = input.readLine()) != null) {
                 tmpTab = tmp.split(",");
                 acronyms.put(tmpTab[0], tmpTab[1]);
