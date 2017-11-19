@@ -124,19 +124,20 @@ public class GuiAgentImpl
         this.width = width;
         this.height = height;
         this.stage = stage;
-        /***********************************************/
+        
+        /**********************************************
         double screenwidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         //System.out.println(" ********!!!!!!!!! largeur écran : " + screenwidth);
         double screenheight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         //System.out.println(" ********!!!!!!!!! hauteur écran : " + screenheight);
-        //****************************************************/
+        
         double percentx = 1;
         double percenty = 1;
         width = (int) (screenwidth * percentx);
         //System.out.println(" !!!!!!******* largeur fenêtre : " + width);
         height = (int) (screenheight * percenty);
         //System.out.println(" !!!!!!******* hauteur fenêtre : " + height);
-        
+        */
         stage.setResizable(true);
         //stage.setFullScreen(true);
         label = new Text();
@@ -144,8 +145,7 @@ public class GuiAgentImpl
         label.getStyleClass()
                 .add(STATUS_INFO);
         //label.setFill(Color.WHITESMOKE);        
-        label.setLayoutY(
-                16);
+        label.setLayoutY(16);
 
         this.jobsManager = JobsManager.create();
 

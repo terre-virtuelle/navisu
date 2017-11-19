@@ -300,8 +300,8 @@ public class AppMain extends Application {
 
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         // ***************** size of screen *********************************************        
-        //guiAgentServices.showGui(stage, 1080, 700);
-        guiAgentServices.showGui(stage, 1500, 972);
+        guiAgentServices.showGui(stage, 1080, 700);
+        //guiAgentServices.showGui(stage, 1500, 972);
         //********************************************************************************
 
         InstrumentTemplateServices instrumentTemplateServices = componentManager.getComponentService(InstrumentTemplateServices.class);
