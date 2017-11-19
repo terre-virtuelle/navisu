@@ -142,8 +142,8 @@ public class AppComponent extends Application {
                     for (Component c : componentsMap.get(k)) {
                         for (String s : c.getServicesProvided()) {
                             if (s.equals(n)) {
-                                System.out.println("component : " + component.getUsedServices());
-                                createEdge(scene, c.getName(), component.getShortName(n));
+                               // System.out.println("component : " + component.getUsedServices());
+                                createEdge(scene, c.getName(), n);
                             }
                         }
                     }
@@ -171,6 +171,7 @@ public class AppComponent extends Application {
         try {
             VMDPinWidget pinWidget = ((VMDPinWidget) scene.addPin(nodeID, pinID));
             //    System.out.println("pinWidget : " + pinWidget);
+            System.out.println("name : " + name);
             pinWidget.setProperties(name, null);
         } catch (Exception e) {
             System.out.println("e: " + e);

@@ -238,9 +238,10 @@ public class TestDBImpl
     @Override
     public void runJPA() {
         em = databaseServices.getEntityManager();
-
+        System.out.println("em : " + em);
         guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
             ships = readAllShips();
+            System.out.println("ships : "  +ships);
             persistAllShips();
             ships.clear();
             ships.addAll(findAllShips());
