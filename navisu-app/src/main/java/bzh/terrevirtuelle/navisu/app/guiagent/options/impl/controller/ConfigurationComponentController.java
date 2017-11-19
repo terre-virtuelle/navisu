@@ -579,6 +579,7 @@ public class ConfigurationComponentController
                 cancelButton.setVisible(true);
                 helpButton.setVisible(true);
             }
+            
         });
         
         dataPortTC.setCellValueFactory(cellData -> cellData.getValue().portNameProperty());

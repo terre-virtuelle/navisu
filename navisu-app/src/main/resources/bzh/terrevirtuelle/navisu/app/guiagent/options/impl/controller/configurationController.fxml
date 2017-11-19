@@ -14,8 +14,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -25,7 +23,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="570.0" styleClass="background-pane">
             <children>
@@ -353,7 +351,7 @@
                                         </AnchorPane>
                                     </content>
                                 </Tab>
-                        <Tab text="Template">
+                        <Tab fx:id="templateTab" text="Template">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -401,13 +399,9 @@
                 </GridPane>
             </children>
         </Pane>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="658.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" visible="false" width="569.0" />
-        <ImageView fitHeight="65.0" fitWidth="76.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@logoTV64AIS.png" />
-            </image>
-        </ImageView>
+      <Pane layoutX="10.0" layoutY="10.0" prefHeight="45.0" prefWidth="45.0" styleClass="logo" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="658.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="569.0" />
         <Text layoutX="246.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="Options" textAlignment="CENTER" wrappingWidth="76.50146484375" />
-      <Button fx:id="quit" layoutX="500.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="quitbutton" />
+      <Button fx:id="quit" layoutX="500.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
     </children>
 </fx:root>
