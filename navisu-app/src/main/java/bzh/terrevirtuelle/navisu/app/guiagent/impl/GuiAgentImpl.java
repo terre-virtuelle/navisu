@@ -42,14 +42,12 @@ import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.geom.Position;
-import java.awt.Toolkit;
 import java.nio.file.Paths;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
-import ucar.units.Dimension;
 
 /**
  * NaVisu

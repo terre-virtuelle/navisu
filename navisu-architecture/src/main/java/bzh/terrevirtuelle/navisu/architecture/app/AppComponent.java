@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +29,6 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.netbeans.api.visual.action.ActionFactory;
 import org.netbeans.api.visual.vmd.VMDGraphScene;
-import org.netbeans.api.visual.vmd.VMDNodeWidget;
 import org.netbeans.api.visual.vmd.VMDPinWidget;
 import org.netbeans.api.visual.widget.Widget;
 import org.openide.util.Exceptions;
@@ -48,6 +48,7 @@ public class AppComponent extends Application {
     final String COMPONENTS_LOG = NAVISU_HOME + "/logs/components.log";
     private VMDGraphScene graphScene;
     private List<Component> components;
+    VMDPinWidget widget;
     @FXML
     private StackPane root;
 
@@ -111,45 +112,104 @@ public class AppComponent extends Application {
 
     public final Map<String, List<ComponentView>> runScene(final VMDGraphScene scene,
             Map<String, List<Component>> componentsMap) {
+
         int col = 0;
         int line = 0;
         Map<String, List<ComponentView>> componentViewMap = new HashMap<>();
         Set<String> keys = componentsMap.keySet();
-        for (String k : keys) {
-            componentViewMap.put(k, new ArrayList<>());
-            for (Component c : componentsMap.get(k)) {
-                int x = col;
-                int y = line;
-                ComponentView componentView = new ComponentView(c, null, null, x, y);
-                componentViewMap.get(c.getModule()).add(componentView);
-                componentView.setScene(scene);
-                c.getUsedServices().forEach((n) -> {
-                    createPin(scene, componentView.getNodeID(),
-                            Integer.toString(AppComponent.edgeID++),
-                            c.getShortName(n));
-                });
-                line += 20;
-            }
-            col += 150;
-            line = 0;
-        }
-        keys = componentViewMap.keySet();
 
-        for (String k : keys) {
-            for (ComponentView cv : componentViewMap.get(k)) {
-                Component component = cv.getComponent();
-                component.getUsedServices().forEach((n) -> {
-                    for (Component c : componentsMap.get(k)) {
-                        for (String s : c.getServicesProvided()) {
-                            if (s.equals(n)) {
-                               // System.out.println("component : " + component.getUsedServices());
-                                createEdge(scene, c.getName(), n);
-                            }
+        //Creation de la map de view
+        keys.forEach((k) -> {
+            componentViewMap.put(k, new ArrayList<>());
+        });
+
+        // Cas particulier pour un module
+        // On cree un Set des comosant out concernés pour les afficher
+        String k = "instruments";
+        Set<Component> componentProviderServicesSet = new HashSet<>();
+        componentsMap.get(k).forEach((component) -> {
+            component.getUsedServices().forEach((n) -> {
+                components.forEach((c) -> {
+                    c.getServicesProvided().forEach((nn) -> {
+                        if (n.equals(nn) && !component.getModule().equals(c.getModule())) {
+                            componentProviderServicesSet.add(c);
+                            //  componentProviderSet.add(component);
                         }
-                    }
+                    });
                 });
-            }
+            });
+        });
+
+        // Affichage des view concernes
+        // Affichage des services utilises
+        List<VMDPinWidget> pinProviderServicesWidget = new ArrayList<>();
+        List<VMDPinWidget> pinUsedServicesWidget = new ArrayList<>();
+        HashMap<String, List<Widget>> categories = new HashMap<>();
+
+        for (Component c : componentProviderServicesSet) {
+
+            int x = col;
+            int y = line;
+            ComponentView componentView = new ComponentView(c, null, null, x, y);
+            componentViewMap.get(c.getModule()).add(componentView);
+            componentView.setScene(scene);
+            c.getServicesProvided().forEach((n) -> {
+                widget = createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_P", c.getShortName(n));
+                pinProviderServicesWidget.add(widget);
+            });
+            c.getUsedServices().forEach((n) -> {
+                widget = createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_U", c.getShortName(n));
+                pinUsedServicesWidget.add(widget);
+            });
+            line += 20;
+            col += 120;
+          //  categories.put("Elements", pinProviderServicesWidget);
+           // categories.put("Commands", pinUsedServicesWidget);
+            componentView.getWidget().sortPins(categories);
         }
+
+        Set<Component> componentUserServicesSet = new HashSet<>();
+        componentsMap.get(k).forEach((component) -> {
+            componentUserServicesSet.add(component);
+        });
+
+        // Affichage des view concernes
+        // Affichage des services utilises
+        line += 100;
+        col = 0;
+        for (Component c : componentUserServicesSet) {
+            int x = col;
+            int y = line;
+            ComponentView componentView = new ComponentView(c, null, null, x, y);
+            componentViewMap.get(c.getModule()).add(componentView);
+            componentView.setScene(scene);
+            c.getServicesProvided().forEach((n) -> {
+                createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_P", c.getShortName(n));
+            });
+            c.getUsedServices().forEach((n) -> {
+                createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_U", c.getShortName(n));
+            });
+            line += 20;
+            col += 120;
+        }
+
+        Set<Component> componentSet = new HashSet<>();
+        componentSet.addAll(componentUserServicesSet);
+        componentSet.addAll(componentProviderServicesSet);
+
+        //  componentsMap.get(k).forEach((component) -> {
+        componentSet.forEach((component) -> {
+            component.getUsedServices().forEach((n) -> {
+                componentSet.forEach((c) -> {
+                    c.getServicesProvided().forEach((nn) -> {
+                       // if (n.equals(nn) && !component.getModule().equals(c.getModule())) {
+                       if (n.equals(nn) && component.getModule().equals(k)) {
+                            createEdge(scene, component.getShortName(nn) + "_P", component.getName());
+                        }
+                    });
+                });
+            });
+        });
 
         /*
         VMDNodeWidget widget = (VMDNodeWidget) scene.findWidget(menu);
@@ -165,26 +225,17 @@ public class AppComponent extends Application {
         return componentViewMap;
     }
 
-    void createPin(VMDGraphScene scene, String nodeID, String pinID, String name) {
-        //  System.out.println("scene : " + scene +" nodeID : " +nodeID + " pinID : " + pinID+" n : "+name);
-        //  String id = "node" + AppComponent.nodeID++;
-        try {
-            VMDPinWidget pinWidget = ((VMDPinWidget) scene.addPin(nodeID, pinID));
-            //    System.out.println("pinWidget : " + pinWidget);
-            System.out.println("name : " + name);
-            pinWidget.setProperties(name, null);
-        } catch (Exception e) {
-            System.out.println("e: " + e);
-        }
+    VMDPinWidget createPin(VMDGraphScene scene, String nodeID, String pinID, String name) {
+        VMDPinWidget pinWidget = ((VMDPinWidget) scene.addPin(nodeID, pinID));
+        pinWidget.setProperties(name, null);
+        return pinWidget;
     }
 
     void createEdge(VMDGraphScene scene, String sourcePinID, String targetNodeID) {
-        System.out.println("sourcePinID : " + sourcePinID + " targetNodeID : " + targetNodeID);
         String edgeIDString = "edge" + AppComponent.edgeID++;
         scene.addEdge(edgeIDString);
-      //  scene.setEdgeSource(edgeIDString, sourcePinID);
-       // scene.setEdgeTarget(edgeIDString, targetNodeID + VMDGraphScene.PIN_ID_DEFAULT_SUFFIX);
-
+        scene.setEdgeSource(edgeIDString, sourcePinID);
+        scene.setEdgeTarget(edgeIDString, targetNodeID + VMDGraphScene.PIN_ID_DEFAULT_SUFFIX);
     }
 
     /**

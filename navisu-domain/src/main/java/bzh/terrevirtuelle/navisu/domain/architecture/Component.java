@@ -31,7 +31,6 @@ public class Component {
 
     private List<String> consumedEvents;
 
-    // private List<String> usedEventsSubscribe;
     private Component root;
 
     private List<Component> subComponents;

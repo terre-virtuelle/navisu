@@ -8,17 +8,8 @@ package bzh.terrevirtuelle.navisu.speech.impl;
 import bzh.terrevirtuelle.navisu.speech.Speaker;
 import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 import com.gtranslate.Audio;
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Locale;
-import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javazoom.jl.decoder.JavaLayerException;
 import org.capcaval.c3.component.ComponentState;
 
 /* NaVisu
