@@ -33,17 +33,18 @@ public class SplashScreenLoader extends Preloader {
         bar = new ProgressBar();
         StackPane psplash = new StackPane();
         Pane splashscreen = new Pane();
-        //psplash.setCenter(bar);
         String splashstyle = CSS_STYLE_PATH + "splash.css";
         psplash.getStylesheets().add(splashstyle);
         splashscreen.setId("psplashscreen");
-        splashscreen.setPrefSize(200, 220);
+        splashscreen.setPrefSize(400, 420);
         splashscreen.getChildren().add(bar);
-        bar.setLayoutY(200);
+        bar.setId("splashprogressbar");
+        bar.setLayoutY(400);
         bar.setLayoutX(50);
         psplash.getChildren().add(splashscreen);
-
-        return new Scene(psplash, 200, 220);
+        Scene splashScene = new Scene(psplash, 400, 420);
+        splashScene.setFill(null);
+        return splashScene;
     }
 
     @Override

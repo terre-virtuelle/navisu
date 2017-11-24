@@ -14,11 +14,14 @@ and open the template in the editor.
     
     -fx-background-color: #ff552200;
     -fx-background-radius: 6;
-    -fx-background-image: url(cssImages/logoTV200.png);
+    -fx-background-image: url(cssImages/logoTV400.png);
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, rgba(100, 100, 100, 1), 24, 0.5, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(100, 100, 100, 0.5), 30, 0.5, 5, 5);
 }
-
+#splashprogressbar{
+    -fx-pref-width: 300px;
+    -fx-pref-height: 15px;
+}
 .root{
     -fx-background-color: #00000000;  
 }
