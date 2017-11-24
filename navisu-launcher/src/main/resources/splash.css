@@ -1,0 +1,36 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 19 nov. 2017, 07:48:58
+    Author     : Dom
+*/
+@import "common.css";
+
+.psplash
+
+{
+
+    -fx-border-insets: 23;
+
+    -fx-background-insets: 23;
+
+    -fx-background-radius: 6;
+    -fx-background-image: url(img/logoTV200.png);
+
+    -fx-border-radius: 6;
+
+    -fx-border-color: gray;
+
+    -fx-border-style: solid;
+
+    -fx-border-width: 1;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(100, 100, 100, 1), 24, 0.5, 0, 0);
+
+}
+.box{
+    -fx-background-color: #000000;  
+}
