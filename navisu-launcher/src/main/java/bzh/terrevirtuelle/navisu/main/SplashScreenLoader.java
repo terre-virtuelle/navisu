@@ -5,11 +5,16 @@
  */
 package bzh.terrevirtuelle.navisu.main;
 
+import java.nio.file.Paths;
 import javafx.application.Preloader;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -22,16 +27,29 @@ public class SplashScreenLoader extends Preloader {
     ProgressBar bar;
     Stage stage;
 
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+
     private Scene createPreloaderScene() {
         bar = new ProgressBar();
-        BorderPane p = new BorderPane();
-        p.setCenter(bar);
-        return new Scene(p, 1000, 850);
+        StackPane psplash = new StackPane();
+        Pane splashscreen = new Pane();
+        //psplash.setCenter(bar);
+        String splashstyle = CSS_STYLE_PATH + "splash.css";
+        psplash.getStylesheets().add(splashstyle);
+        splashscreen.setId("psplashscreen");
+        splashscreen.setPrefSize(200, 220);
+        splashscreen.getChildren().add(bar);
+        bar.setLayoutY(200);
+        bar.setLayoutX(50);
+        psplash.getChildren().add(splashscreen);
+
+        return new Scene(psplash, 200, 220);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
+        stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(createPreloaderScene());
         stage.show();
     }
