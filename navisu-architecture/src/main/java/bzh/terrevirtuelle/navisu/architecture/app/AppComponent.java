@@ -42,12 +42,11 @@ public class AppComponent extends Application {
     protected String VIEW_GROUP_STYLE = "common.css";
     protected static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private static int edgeID = 0;
-    private static int pinID = 0;
-    private static int nodeID = 1;
     final String COMPONENTS_LOG = NAVISU_HOME + "/logs/components.log";
     private VMDGraphScene graphScene;
     private List<Component> components;
-    VMDPinWidget widget;
+    private VMDPinWidget widget;
+
     @FXML
     private StackPane root;
 
@@ -72,7 +71,7 @@ public class AppComponent extends Application {
         components = parser.parse(handler, content);
 
         Map<String, List<Component>> componentsMap = createComponentsMap(components);
-        Map<String, List<ComponentView>> componentViewMap = runScene(graphScene, componentsMap);
+        runScene(graphScene, componentsMap);
 
         primaryStage.setTitle("Components control");
         primaryStage.setScene(scene);
@@ -105,15 +104,12 @@ public class AppComponent extends Application {
         components.forEach((c) -> {
             componentMap.get(c.getModule()).add(c);
         });
-
         return componentMap;
     }
 
     public final Map<String, List<ComponentView>> runScene(final VMDGraphScene scene,
             Map<String, List<Component>> componentsMap) {
 
-        int col = 0;
-        int line = 0;
         Map<String, List<ComponentView>> componentViewMap = new HashMap<>();
         Set<String> keys = componentsMap.keySet();
 
@@ -132,7 +128,6 @@ public class AppComponent extends Application {
                     c.getServicesProvided().forEach((nn) -> {
                         if (n.equals(nn) && !component.getModule().equals(c.getModule())) {
                             componentProviderServicesSet.add(c);
-                            //  componentProviderSet.add(component);
                         }
                     });
                 });
@@ -141,66 +136,18 @@ public class AppComponent extends Application {
 
         // Affichage des view concernes
         // Affichage des services utilises
-        List<Widget> pinProviderServicesWidget = new ArrayList<>();
-        List<Widget> pinUsedServicesWidget = new ArrayList<>();
-        HashMap<String, List<Widget>> categories = new HashMap<>();
-
-        for (Component c : componentProviderServicesSet) {
-            pinProviderServicesWidget.clear();
-            pinUsedServicesWidget.clear();
-            categories.clear();
-            int x = col;
-            int y = line;
-            ComponentView componentView = new ComponentView(c, null, null, x, y);
-            componentViewMap.get(c.getModule()).add(componentView);
-            componentView.setScene(scene);
-            c.getServicesProvided().forEach((n) -> {
-                widget = createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_P", c.getShortName(n));
-                pinProviderServicesWidget.add(widget);
-            });
-            c.getUsedServices().forEach((n) -> {
-                widget = createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_U", c.getShortName(n));
-                pinUsedServicesWidget.add(widget);
-            });
-            line += 20;
-            col += 120;
-            categories.put("Provided Services", pinProviderServicesWidget);
-            categories.put("Used Services", pinUsedServicesWidget);
-            componentView.getWidget().sortPins(categories);
-        }
+        int col = 0;
+        int line = 0;
+        createScene(scene, componentViewMap, componentProviderServicesSet, line, col);
 
         Set<Component> componentUserServicesSet = new HashSet<>();
         componentsMap.get(k).forEach((component) -> {
             componentUserServicesSet.add(component);
         });
 
-        // Affichage des view concernes
-        // Affichage des services utilises
         line += 100;
         col = 0;
-        for (Component c : componentUserServicesSet) {
-            pinProviderServicesWidget.clear();
-            pinUsedServicesWidget.clear();
-            categories.clear();
-            int x = col;
-            int y = line;
-            ComponentView componentView = new ComponentView(c, null, null, x, y);
-            componentViewMap.get(c.getModule()).add(componentView);
-            componentView.setScene(scene);
-            c.getServicesProvided().forEach((n) -> {
-                widget = createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_P", c.getShortName(n));
-                pinProviderServicesWidget.add(widget);
-            });
-            c.getUsedServices().forEach((n) -> {
-                widget = createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_U", c.getShortName(n));
-                pinUsedServicesWidget.add(widget);
-            });
-            line += 20;
-            col += 120;
-            categories.put("Provided Services", pinProviderServicesWidget);
-            categories.put("Used Services", pinUsedServicesWidget);
-            componentView.getWidget().sortPins(categories);
-        }
+        createScene(scene, componentViewMap, componentUserServicesSet, line, col);
 
         Set<Component> componentSet = new HashSet<>();
         componentSet.addAll(componentUserServicesSet);
@@ -211,7 +158,6 @@ public class AppComponent extends Application {
             component.getUsedServices().forEach((n) -> {
                 componentSet.forEach((c) -> {
                     c.getServicesProvided().forEach((nn) -> {
-                        // if (n.equals(nn) && !component.getModule().equals(c.getModule())) {
                         if (n.equals(nn) && component.getModule().equals(k)) {
                             createEdge(scene, component.getShortName(nn) + "_P", component.getName());
                         }
@@ -238,6 +184,37 @@ public class AppComponent extends Application {
         scene.addEdge(edgeIDString);
         scene.setEdgeSource(edgeIDString, sourcePinID);
         scene.setEdgeTarget(edgeIDString, targetNodeID + VMDGraphScene.PIN_ID_DEFAULT_SUFFIX);
+    }
+
+    void createScene(final VMDGraphScene scene,
+            Map<String, List<ComponentView>> componentViewMap, Set<Component> components, int line, int col) {
+        List<Widget> pinProviderWidget = new ArrayList<>();
+        List<Widget> pinUsedWidget = new ArrayList<>();
+        HashMap<String, List<Widget>> categories = new HashMap<>();
+
+        for (Component c : components) {
+            pinProviderWidget.clear();
+            pinUsedWidget.clear();
+            categories.clear();
+            int x = col;
+            int y = line;
+            ComponentView componentView = new ComponentView(c, null, null, x, y);
+            componentViewMap.get(c.getModule()).add(componentView);
+            componentView.setScene(scene);
+            c.getServicesProvided().forEach((n) -> {
+                widget = createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_P", c.getShortName(n));
+                pinProviderWidget.add(widget);
+            });
+            c.getUsedServices().forEach((n) -> {
+                widget = createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_U", c.getShortName(n));
+                pinUsedWidget.add(widget);
+            });
+            line += 20;
+            col += 120;
+            categories.put("Provided Services", pinProviderWidget);
+            categories.put("Used Services", pinUsedWidget);
+            componentView.getWidget().sortPins(categories);
+        }
     }
 
     /**
