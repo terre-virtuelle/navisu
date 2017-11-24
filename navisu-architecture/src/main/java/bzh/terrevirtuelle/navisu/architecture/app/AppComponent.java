@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -142,12 +141,14 @@ public class AppComponent extends Application {
 
         // Affichage des view concernes
         // Affichage des services utilises
-        List<VMDPinWidget> pinProviderServicesWidget = new ArrayList<>();
-        List<VMDPinWidget> pinUsedServicesWidget = new ArrayList<>();
+        List<Widget> pinProviderServicesWidget = new ArrayList<>();
+        List<Widget> pinUsedServicesWidget = new ArrayList<>();
         HashMap<String, List<Widget>> categories = new HashMap<>();
 
         for (Component c : componentProviderServicesSet) {
-
+            pinProviderServicesWidget.clear();
+            pinUsedServicesWidget.clear();
+            categories.clear();
             int x = col;
             int y = line;
             ComponentView componentView = new ComponentView(c, null, null, x, y);
@@ -163,8 +164,8 @@ public class AppComponent extends Application {
             });
             line += 20;
             col += 120;
-          //  categories.put("Elements", pinProviderServicesWidget);
-           // categories.put("Commands", pinUsedServicesWidget);
+            categories.put("Provided Services", pinProviderServicesWidget);
+            categories.put("Used Services", pinUsedServicesWidget);
             componentView.getWidget().sortPins(categories);
         }
 
@@ -178,19 +179,27 @@ public class AppComponent extends Application {
         line += 100;
         col = 0;
         for (Component c : componentUserServicesSet) {
+            pinProviderServicesWidget.clear();
+            pinUsedServicesWidget.clear();
+            categories.clear();
             int x = col;
             int y = line;
             ComponentView componentView = new ComponentView(c, null, null, x, y);
             componentViewMap.get(c.getModule()).add(componentView);
             componentView.setScene(scene);
             c.getServicesProvided().forEach((n) -> {
-                createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_P", c.getShortName(n));
+                widget = createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_P", c.getShortName(n));
+                pinProviderServicesWidget.add(widget);
             });
             c.getUsedServices().forEach((n) -> {
-                createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_U", c.getShortName(n));
+                widget = createPin(scene, componentView.getNodeID(), c.getShortName(n) + "_U", c.getShortName(n));
+                pinUsedServicesWidget.add(widget);
             });
             line += 20;
             col += 120;
+            categories.put("Provided Services", pinProviderServicesWidget);
+            categories.put("Used Services", pinUsedServicesWidget);
+            componentView.getWidget().sortPins(categories);
         }
 
         Set<Component> componentSet = new HashSet<>();
@@ -202,8 +211,8 @@ public class AppComponent extends Application {
             component.getUsedServices().forEach((n) -> {
                 componentSet.forEach((c) -> {
                     c.getServicesProvided().forEach((nn) -> {
-                       // if (n.equals(nn) && !component.getModule().equals(c.getModule())) {
-                       if (n.equals(nn) && component.getModule().equals(k)) {
+                        // if (n.equals(nn) && !component.getModule().equals(c.getModule())) {
+                        if (n.equals(nn) && component.getModule().equals(k)) {
                             createEdge(scene, component.getShortName(nn) + "_P", component.getName());
                         }
                     });
@@ -211,13 +220,6 @@ public class AppComponent extends Application {
             });
         });
 
-        /*
-        VMDNodeWidget widget = (VMDNodeWidget) scene.findWidget(menu);
-        HashMap<String, List<Widget>> categories = new HashMap<>();
-        categories.put("Elements", Arrays.asList(scene.findWidget("game"), scene.findWidget("options"), scene.findWidget("help"), scene.findWidget("exit")));
-        categories.put("Commands", Arrays.asList(scene.findWidget("listCommand1"), scene.findWidget("listCommand2")));
-        widget.sortPins(categories);
-         */
         scene.getActions().addAction(ActionFactory.createEditAction((Widget widget1) -> {
             scene.layoutScene();
         }));
