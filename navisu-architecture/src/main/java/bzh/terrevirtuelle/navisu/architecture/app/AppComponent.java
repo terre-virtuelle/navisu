@@ -119,7 +119,7 @@ public class AppComponent extends Application {
         });
 
         // Cas particulier pour un module
-        // On cree un Set des comosant out concernés pour les afficher
+        // On cree un Set des composant out concernés pour les afficher
         String k = "instruments";
         Set<Component> componentProviderServicesSet = new HashSet<>();
         componentsMap.get(k).forEach((component) -> {
