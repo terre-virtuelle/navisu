@@ -22,15 +22,15 @@ import org.openide.util.Exceptions;
  *
  * @author serge
  */
-public class AppComponent extends Application {
+public class AppComponent
+        extends Application {
 
-    private final String FXML = "componentsControl.fxml";
-    private final String NAVISU_HOME = System.getProperty("user.home") + "/.navisu";
-    protected String VIEW_GROUP_STYLE = "common.css";
+    protected final String FXML = "componentsControl.fxml";
+    protected final String TITLE = "Components control";
+    protected final String NAVISU_HOME = System.getProperty("user.home") + "/.navisu";
+    protected final String VIEW_GROUP_STYLE = "common.css";
     protected final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
-    final String COMPONENTS_LOG = NAVISU_HOME + "/logs/components.log";
-    
-    Map<String, List<Component>> componentsMap;
+    protected final String COMPONENTS_LOG = NAVISU_HOME + "/logs/components.log";
 
     @FXML
     public StackPane root;
@@ -38,10 +38,8 @@ public class AppComponent extends Application {
     @Override
     public void start(Stage primaryStage) {
         ComponentViewer componentViewer = new ComponentViewer(COMPONENTS_LOG);
-        componentsMap = componentViewer.getComponentsMap();
+        ComponentController componentController = new ComponentController(componentViewer);
 
-        ComponentController componentController = new ComponentController(componentsMap);
-        
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
             fxmlLoader.setController(componentController);
@@ -53,7 +51,7 @@ public class AppComponent extends Application {
         root.getStylesheets().add(CSS_STYLE_PATH + VIEW_GROUP_STYLE);
         Scene scene = new Scene(root);
 
-        primaryStage.setTitle("Components control");
+        primaryStage.setTitle(TITLE);
         primaryStage.setScene(scene);
         primaryStage.setX(100);
         primaryStage.setY(100);

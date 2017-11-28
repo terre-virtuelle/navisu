@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.architecture.app;
 import bzh.terrevirtuelle.navisu.architecture.impl.controller.parser.ComponentParser;
 import bzh.terrevirtuelle.navisu.architecture.impl.handler.ComponentHandler;
 import bzh.terrevirtuelle.navisu.architecture.impl.handler.Handler;
+import bzh.terrevirtuelle.navisu.architecture.impl.model.Selection;
 import bzh.terrevirtuelle.navisu.architecture.impl.view.ComponentView;
 import bzh.terrevirtuelle.navisu.architecture.impl.view.SceneSupport;
 import bzh.terrevirtuelle.navisu.domain.architecture.Component;
@@ -34,7 +35,7 @@ import org.openide.util.Exceptions;
 public class ComponentViewer {
 
     private VMDGraphScene graphScene;
-    private List<Component> components;
+    private final List<Component> components;
     private VMDPinWidget widget;
     private static int edgeID = 0;
     Map<String, List<Component>> componentsMap;
@@ -44,12 +45,10 @@ public class ComponentViewer {
         ComponentParser parser = new ComponentParser();
         String content = read(filename);
         components = parser.parse(handler, content);
+
         componentsMap = createComponentsMap(components);
 
-        //  graphScene = new VMDGraphScene();
-        runScene(new ArrayList<>(Arrays.asList("app","instruments")));
-
-        // SceneSupport.show(graphScene);
+       // runScene(new ArrayList<>(Arrays.asList("app", "instruments")));
     }
 
     public final String read(String fileName) {
@@ -81,7 +80,76 @@ public class ComponentViewer {
         return componentsMap;
     }
 
-    public final Map<String, List<ComponentView>> runScene(List<String> keyList) {
+    public final void runScene(Selection selection) {
+
+        System.out.println(selection);
+        Map<String, List<ComponentView>> componentViewMap = new HashMap<>();
+        Set<String> keys = componentsMap.keySet();
+
+        //Creation de la map de view
+        keys.forEach((k) -> {
+            componentViewMap.put(k, new ArrayList<>());
+        });
+
+        List<String> keyList=selection.getModules();
+        // Cas particulier pour un module
+        // On cree un Set des composant out concernés pour les afficher
+        // String k = "instruments";
+        keyList.forEach((k) -> {
+            Set<Component> componentProviderServicesSet = new HashSet<>();
+            componentsMap.get(k).forEach((component) -> {
+                component.getUsedServices().forEach((n) -> {
+                    components.forEach((c) -> {
+                        c.getServicesProvided().forEach((nn) -> {
+                            if (n.equals(nn) && !component.getModule().equals(c.getModule())) {
+                                componentProviderServicesSet.add(c);
+                            }
+                        });
+                    });
+                });
+            });
+
+            // Affichage des view concernes
+            // Affichage des services utilises
+            graphScene = new VMDGraphScene();
+            int col = 0;
+            int line = 0;
+            createScene(graphScene, componentViewMap, componentProviderServicesSet, line, col);
+
+            Set<Component> componentUserServicesSet = new HashSet<>();
+            componentsMap.get(k).forEach((component) -> {
+                componentUserServicesSet.add(component);
+            });
+
+            line += 100;
+            col = 0;
+            createScene(graphScene, componentViewMap, componentUserServicesSet, line, col);
+
+            Set<Component> componentSet = new HashSet<>();
+            componentSet.addAll(componentUserServicesSet);
+            componentSet.addAll(componentProviderServicesSet);
+
+            //  componentsMap.get(k).forEach((component) -> {
+            componentSet.forEach((component) -> {
+                component.getUsedServices().forEach((n) -> {
+                    componentSet.forEach((c) -> {
+                        c.getServicesProvided().forEach((nn) -> {
+                            if (n.equals(nn) && component.getModule().equals(k)) {
+                                createEdge(graphScene, component.getShortName(nn) + "_P", component.getName());
+                            }
+                        });
+                    });
+                });
+            });
+        });
+        graphScene.getActions().addAction(ActionFactory.createEditAction((Widget widget1) -> {
+            graphScene.layoutScene();
+        }));
+        SceneSupport.show(graphScene);
+        
+    }
+
+    public final void runScene(List<String> keyList) {
 
         Map<String, List<ComponentView>> componentViewMap = new HashMap<>();
         Set<String> keys = componentsMap.keySet();
@@ -93,7 +161,7 @@ public class ComponentViewer {
 
         // Cas particulier pour un module
         // On cree un Set des composant out concernés pour les afficher
-         // String k = "instruments";
+        // String k = "instruments";
         for (String k : keyList) {
             Set<Component> componentProviderServicesSet = new HashSet<>();
             componentsMap.get(k).forEach((component) -> {
@@ -145,7 +213,7 @@ public class ComponentViewer {
             graphScene.layoutScene();
         }));
         SceneSupport.show(graphScene);
-        return componentViewMap;
+        // return componentViewMap;
     }
 
     VMDPinWidget createPin(VMDGraphScene scene, String nodeID, String pinID, String name) {
@@ -162,8 +230,8 @@ public class ComponentViewer {
     }
 
     void createScene(final VMDGraphScene scene,
-            Map<String, List<ComponentView>> componentViewMap, 
-            Set<Component> components, 
+            Map<String, List<ComponentView>> componentViewMap,
+            Set<Component> components,
             int line, int col) {
         List<Widget> pinProviderWidget = new ArrayList<>();
         List<Widget> pinUsedWidget = new ArrayList<>();

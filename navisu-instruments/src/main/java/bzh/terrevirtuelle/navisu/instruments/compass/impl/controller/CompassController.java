@@ -72,6 +72,7 @@ public class CompassController
         super(keyCode, keyCombination);
         this.instrument = instrument;
         subscribe();
+        
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -81,6 +82,8 @@ public class CompassController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
+       // load(FXML);
         String uri = CSS_STYLE_PATH + viewgroupstyle;
         viewgroup.getStylesheets().add(uri);
         view.setOpacity(0.8);
