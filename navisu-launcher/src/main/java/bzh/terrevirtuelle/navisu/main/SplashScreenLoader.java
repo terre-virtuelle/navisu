@@ -6,13 +6,13 @@
 package bzh.terrevirtuelle.navisu.main;
 
 import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Preloader;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -62,6 +62,7 @@ public class SplashScreenLoader extends Preloader {
 
     @Override
     public void handleStateChangeNotification(StateChangeNotification evt) {
+        System.out.println("evt : " + evt.getType() );
         if (evt.getType() == StateChangeNotification.Type.BEFORE_START) {
             stage.hide();
         }

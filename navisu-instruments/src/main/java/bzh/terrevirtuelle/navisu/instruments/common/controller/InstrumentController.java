@@ -27,7 +27,7 @@ import javafx.scene.layout.Pane;
  * @author Serge Morvan
  */
 public class InstrumentController
-        extends Widget2DController{
+        extends Widget2DController {
 
     protected WorldWindow wwd;
     @FXML
@@ -52,6 +52,7 @@ public class InstrumentController
 
         try {
             fxmlLoader.load();
+
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }

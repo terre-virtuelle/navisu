@@ -168,6 +168,14 @@ public class AppMain extends Application {
     private final String DATA_S57_CATALOG_4 = "data/charts/vector/s57/catalog/ENC_NP4.kmz";
     private final String DATA_S57_CATALOG_5 = "data/charts/vector/s57/catalog/ENC_NP5.kmz";
     private final String DATA_S57_CATALOG_6 = "data/charts/vector/s57/catalog/ENC_NP6.kmz";
+    /*
+    1 - Overview 	< 1 : 1 500 000
+    2 - General 	1 : 350 000 à 1 : 1 500 000
+    3 - Coastal 	1 : 90 000 à 1 : 350 000
+    4 - Approach 	1 : 22 000 à 1 : 90 000
+    5 - Harbour 	1 : 4 000 à 1 : 22 000
+    6 - Berthing 	> 1 : 4 000
+    */
     private WorldWindow wwd;
     private final String NAVISU_HOME = System.getProperty("user.home") + "/.navisu";
 

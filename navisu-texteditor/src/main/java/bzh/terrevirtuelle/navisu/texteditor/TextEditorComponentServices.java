@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.texteditor;
 
 import java.awt.Image;
 import java.util.List;
-import javafx.scene.image.ImageView;
 
 import org.capcaval.c3.component.ComponentService;
 
