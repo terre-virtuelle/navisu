@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.architecture.impl.controller.parser;
 
-import bzh.terrevirtuelle.navisu.architecture.impl.handler.Handler;
+import bzh.terrevirtuelle.navisu.architecture.impl.controller.handler.Handler;
 import bzh.terrevirtuelle.navisu.domain.architecture.Component;
 import java.util.ArrayList;
 import java.util.HashMap;

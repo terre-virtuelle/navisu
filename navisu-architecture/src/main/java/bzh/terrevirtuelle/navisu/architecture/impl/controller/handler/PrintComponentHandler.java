@@ -3,24 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.architecture.impl.handler;
+
+package bzh.terrevirtuelle.navisu.architecture.impl.controller.handler;
 
 import bzh.terrevirtuelle.navisu.domain.architecture.Component;
-import java.util.List;
 
 /**
  *
  * @author serge
  * @date Nov 3, 2017
  */
-public abstract class Handler {
+public class PrintComponentHandler extends Handler{
 
-    protected List<Component> components;
-
-    public abstract void doIt(Component data);
-
-    public List<Component> getComponents() {
-        return components;
+    @Override
+    public void doIt(Component component) {
+        System.out.println(component);
     }
-    
+
 }

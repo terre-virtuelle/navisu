@@ -22,11 +22,9 @@
                      <children>
                         <GridPane prefHeight="365.0" prefWidth="600.0">
                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                           </columnConstraints>
                           <rowConstraints>
                               <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
@@ -39,17 +37,17 @@
                               <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label fx:id="label" alignment="CENTER" prefHeight="15.0" prefWidth="201.0" styleClass="instrumenttitle" text="Services - Events" GridPane.columnIndex="1" />
-                              <ListView fx:id="inOutLV" maxHeight="50.0" prefHeight="30.0" prefWidth="200.0" translateY="-93.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <ListView fx:id="modulesLV" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                              <ListView fx:id="componentsLV" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                              <Label alignment="CENTER" prefHeight="15.0" prefWidth="200.0" styleClass="instrumenttitle" text="Modules" GridPane.columnIndex="2" />
-                              <Label alignment="CENTER" prefHeight="15.0" prefWidth="200.0" styleClass="instrumenttitle" text="Components" GridPane.columnIndex="3" />
-                              <Button fx:id="computeButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="Compute" translateX="90.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                              <Button fx:id="clearIOButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <Button fx:id="clearModulesButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Clear" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                              <Button fx:id="clearComponentsButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Clear" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                              <Button fx:id="helpButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Help" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <Label fx:id="label" alignment="CENTER" prefHeight="15.0" prefWidth="201.0" styleClass="instrumenttitle" text="Services - Events" />
+                              <ListView fx:id="inOutLV" maxHeight="50.0" prefHeight="30.0" prefWidth="200.0" translateY="-93.0" GridPane.rowIndex="2" />
+                              <ListView fx:id="modulesLV" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <ListView fx:id="componentsLV" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <Label alignment="CENTER" prefHeight="15.0" prefWidth="200.0" styleClass="instrumenttitle" text="Modules" GridPane.columnIndex="1" />
+                              <Label alignment="CENTER" prefHeight="15.0" prefWidth="200.0" styleClass="instrumenttitle" text="Components" GridPane.columnIndex="2" />
+                              <Button fx:id="computeButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="Compute" translateX="90.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                              <Button fx:id="clearIOButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Clear" GridPane.rowIndex="4" />
+                              <Button fx:id="clearModulesButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Button fx:id="clearComponentsButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Clear" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                              <Button fx:id="helpButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Help" GridPane.rowIndex="6" />
                            </children>
                         </GridPane>
                      </children>

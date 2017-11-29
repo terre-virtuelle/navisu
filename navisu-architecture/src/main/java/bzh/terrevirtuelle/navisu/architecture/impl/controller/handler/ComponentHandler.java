@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package bzh.terrevirtuelle.navisu.architecture.impl.handler;
+package bzh.terrevirtuelle.navisu.architecture.impl.controller.handler;
 
 import bzh.terrevirtuelle.navisu.domain.architecture.Component;
 import java.util.ArrayList;

@@ -3,20 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.architecture.app;
+package bzh.terrevirtuelle.navisu.architecture.impl.view;
 
 import bzh.terrevirtuelle.navisu.architecture.impl.controller.parser.ComponentParser;
-import bzh.terrevirtuelle.navisu.architecture.impl.handler.ComponentHandler;
-import bzh.terrevirtuelle.navisu.architecture.impl.handler.Handler;
+import bzh.terrevirtuelle.navisu.architecture.impl.controller.handler.ComponentHandler;
+import bzh.terrevirtuelle.navisu.architecture.impl.controller.handler.Handler;
 import bzh.terrevirtuelle.navisu.architecture.impl.model.Selection;
-import bzh.terrevirtuelle.navisu.architecture.impl.view.ComponentView;
-import bzh.terrevirtuelle.navisu.architecture.impl.view.SceneSupport;
 import bzh.terrevirtuelle.navisu.domain.architecture.Component;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -98,12 +95,10 @@ public class ComponentViewer {
             isSingleComponent = true;
             String componentName = selection.getComponents().get(0);
             keys.forEach((k) -> {
-                for (Component c : componentsMap.get(k)) {
-                    if (c.getName().equals(componentName)) {
-                        keyList.add(k);
-                        singleComponent = c;
-                    }
-                }
+                componentsMap.get(k).stream().filter((c) -> (c.getName().equals(componentName))).forEachOrdered((c) -> {
+                    keyList.add(k);
+                    singleComponent = c;
+                });
             });
         }
         keyList.forEach((k) -> {
@@ -157,11 +152,15 @@ public class ComponentViewer {
             componentSet.addAll(componentProviderServicesSet);
 
             //  componentsMap.get(k).forEach((component) -> {
+           // Set<Component> selectedComponents=new HashSet<>();
             componentSet.forEach((component) -> {
                 component.getUsedServices().forEach((n) -> {
                     componentSet.forEach((c) -> {
                         c.getServicesProvided().forEach((nn) -> {
-                            if (n.equals(nn) && component.getModule().equals(k)) {
+                            if (n.equals(nn) 
+                                    && component.getModule().equals(k)){
+                                    //&& !selectedComponents.contains(component)) {
+                               // selectedComponents.add(component);
                                 createEdge(graphScene, component.getShortName(nn) + "_P", component.getName());
                             }
                         });

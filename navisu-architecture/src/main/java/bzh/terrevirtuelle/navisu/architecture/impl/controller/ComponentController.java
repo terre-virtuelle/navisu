@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.architecture.app;
+package bzh.terrevirtuelle.navisu.architecture.impl.controller;
 
+import bzh.terrevirtuelle.navisu.architecture.impl.view.ComponentViewer;
 import bzh.terrevirtuelle.navisu.architecture.impl.model.Selection;
 import bzh.terrevirtuelle.navisu.domain.architecture.Component;
 import java.net.URL;
@@ -103,6 +104,18 @@ public class ComponentController
         if (inOutLV.getSelectionModel().getSelectedItems().isEmpty()) {
             inOutLV.getSelectionModel().selectFirst();
         }
+        if (modulesLV.getSelectionModel().getSelectedItems().isEmpty()
+                && componentsLV.getSelectionModel().getSelectedItems().isEmpty()) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Help");
+            alert.setHeaderText("Visualisation de l'architecture en composants et en modules");
+            alert.setResizable(true);
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            String s = "Vous devez sélectionner au moins un composant.";
+            alert.setContentText(s);
+            alert.show();
+            return null;
+        }
         selection.addInpuOutput(inOutLV.getSelectionModel().getSelectedItems());
         selection.addModules(modulesLV.getSelectionModel().getSelectedItems());
         selection.addComponents(componentsLV.getSelectionModel().getSelectedItems());
@@ -129,6 +142,7 @@ public class ComponentController
         });
     }
 //TODO internationaliser
+
     private void help() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Help");
