@@ -38,17 +38,16 @@ public class ComponentViewer {
     private final List<Component> components;
     private VMDPinWidget widget;
     private static int edgeID = 0;
-    Map<String, List<Component>> componentsMap;
+    private Map<String, List<Component>> componentsMap;
+    private boolean isSingleComponent = false;
+    private Component singleComponent;
 
     public ComponentViewer(String filename) {
         Handler handler = new ComponentHandler();
         ComponentParser parser = new ComponentParser();
         String content = read(filename);
         components = parser.parse(handler, content);
-
         componentsMap = createComponentsMap(components);
-
-       // runScene(new ArrayList<>(Arrays.asList("app", "instruments")));
     }
 
     public final String read(String fileName) {
@@ -81,75 +80,7 @@ public class ComponentViewer {
     }
 
     public final void runScene(Selection selection) {
-
-        System.out.println(selection);
-        Map<String, List<ComponentView>> componentViewMap = new HashMap<>();
-        Set<String> keys = componentsMap.keySet();
-
-        //Creation de la map de view
-        keys.forEach((k) -> {
-            componentViewMap.put(k, new ArrayList<>());
-        });
-
-        List<String> keyList=selection.getModules();
-        // Cas particulier pour un module
-        // On cree un Set des composant out concernés pour les afficher
-        // String k = "instruments";
-        keyList.forEach((k) -> {
-            Set<Component> componentProviderServicesSet = new HashSet<>();
-            componentsMap.get(k).forEach((component) -> {
-                component.getUsedServices().forEach((n) -> {
-                    components.forEach((c) -> {
-                        c.getServicesProvided().forEach((nn) -> {
-                            if (n.equals(nn) && !component.getModule().equals(c.getModule())) {
-                                componentProviderServicesSet.add(c);
-                            }
-                        });
-                    });
-                });
-            });
-
-            // Affichage des view concernes
-            // Affichage des services utilises
-            graphScene = new VMDGraphScene();
-            int col = 0;
-            int line = 0;
-            createScene(graphScene, componentViewMap, componentProviderServicesSet, line, col);
-
-            Set<Component> componentUserServicesSet = new HashSet<>();
-            componentsMap.get(k).forEach((component) -> {
-                componentUserServicesSet.add(component);
-            });
-
-            line += 100;
-            col = 0;
-            createScene(graphScene, componentViewMap, componentUserServicesSet, line, col);
-
-            Set<Component> componentSet = new HashSet<>();
-            componentSet.addAll(componentUserServicesSet);
-            componentSet.addAll(componentProviderServicesSet);
-
-            //  componentsMap.get(k).forEach((component) -> {
-            componentSet.forEach((component) -> {
-                component.getUsedServices().forEach((n) -> {
-                    componentSet.forEach((c) -> {
-                        c.getServicesProvided().forEach((nn) -> {
-                            if (n.equals(nn) && component.getModule().equals(k)) {
-                                createEdge(graphScene, component.getShortName(nn) + "_P", component.getName());
-                            }
-                        });
-                    });
-                });
-            });
-        });
-        graphScene.getActions().addAction(ActionFactory.createEditAction((Widget widget1) -> {
-            graphScene.layoutScene();
-        }));
-        SceneSupport.show(graphScene);
-        
-    }
-
-    public final void runScene(List<String> keyList) {
+        graphScene = new VMDGraphScene();
 
         Map<String, List<ComponentView>> componentViewMap = new HashMap<>();
         Set<String> keys = componentsMap.keySet();
@@ -159,61 +90,89 @@ public class ComponentViewer {
             componentViewMap.put(k, new ArrayList<>());
         });
 
+        List<String> keyList = selection.getModules();
         // Cas particulier pour un module
         // On cree un Set des composant out concernés pour les afficher
-        // String k = "instruments";
-        for (String k : keyList) {
-            Set<Component> componentProviderServicesSet = new HashSet<>();
-            componentsMap.get(k).forEach((component) -> {
-                component.getUsedServices().forEach((n) -> {
-                    components.forEach((c) -> {
-                        c.getServicesProvided().forEach((nn) -> {
-                            if (n.equals(nn) && !component.getModule().equals(c.getModule())) {
-                                componentProviderServicesSet.add(c);
-                            }
-                        });
-                    });
-                });
-            });
 
-            // Affichage des view concernes
-            // Affichage des services utilises
-            graphScene = new VMDGraphScene();
-            int col = 0;
-            int line = 0;
-            createScene(graphScene, componentViewMap, componentProviderServicesSet, line, col);
-
-            Set<Component> componentUserServicesSet = new HashSet<>();
-            componentsMap.get(k).forEach((component) -> {
-                componentUserServicesSet.add(component);
-            });
-
-            line += 100;
-            col = 0;
-            createScene(graphScene, componentViewMap, componentUserServicesSet, line, col);
-
-            Set<Component> componentSet = new HashSet<>();
-            componentSet.addAll(componentUserServicesSet);
-            componentSet.addAll(componentProviderServicesSet);
-
-            //  componentsMap.get(k).forEach((component) -> {
-            componentSet.forEach((component) -> {
-                component.getUsedServices().forEach((n) -> {
-                    componentSet.forEach((c) -> {
-                        c.getServicesProvided().forEach((nn) -> {
-                            if (n.equals(nn) && component.getModule().equals(k)) {
-                                createEdge(graphScene, component.getShortName(nn) + "_P", component.getName());
-                            }
-                        });
-                    });
-                });
+        if (keyList.isEmpty()) {
+            isSingleComponent = true;
+            String componentName = selection.getComponents().get(0);
+            keys.forEach((k) -> {
+                for (Component c : componentsMap.get(k)) {
+                    if (c.getName().equals(componentName)) {
+                        keyList.add(k);
+                        singleComponent = c;
+                    }
+                }
             });
         }
-        graphScene.getActions().addAction(ActionFactory.createEditAction((Widget widget1) -> {
-            graphScene.layoutScene();
-        }));
+        keyList.forEach((k) -> {
+            // System.out.println("k : " + k);
+            Set<Component> componentProviderServicesSet = new HashSet<>();
+            if (isSingleComponent == false) {
+                componentsMap.get(k).forEach((component) -> {
+                    component.getUsedServices().forEach((n) -> {
+                        components.forEach((c) -> {
+                            c.getServicesProvided().forEach((nn) -> {
+                              //  if (n.equals(nn) && !component.getModule().equals(c.getModule())) {
+                                    if (n.equals(nn)) {
+                                    componentProviderServicesSet.add(c);
+                                }
+                            });
+                        });
+                    });
+                });
+            } else {
+                singleComponent.getUsedServices().forEach((n) -> {
+                    components.forEach((c) -> {
+                        c.getServicesProvided().forEach((nn) -> {
+                          //  if (n.equals(nn) && !singleComponent.getModule().equals(c.getModule())) {
+                                if (n.equals(nn) ) {
+                                componentProviderServicesSet.add(c);
+                            }
+                        });
+                    });
+                });
+            }
+            // Affichage des view concernes
+            // Affichage des services utilises
+            int col = 0;
+            int line = 0;
+            createScene(graphScene, componentViewMap, componentProviderServicesSet, line, col);
+
+            Set<Component> componentUserServicesSet = new HashSet<>();
+            if (isSingleComponent == false) {
+                componentsMap.get(k).forEach((component) -> {
+                    componentUserServicesSet.add(component);
+                });
+            } else {
+                componentUserServicesSet.add(singleComponent);
+            }
+            line += 100;
+            col = 0;
+            createScene(graphScene, componentViewMap, componentUserServicesSet, line, col);
+
+            Set<Component> componentSet = new HashSet<>();
+            componentSet.addAll(componentUserServicesSet);
+            componentSet.addAll(componentProviderServicesSet);
+
+            //  componentsMap.get(k).forEach((component) -> {
+            componentSet.forEach((component) -> {
+                component.getUsedServices().forEach((n) -> {
+                    componentSet.forEach((c) -> {
+                        c.getServicesProvided().forEach((nn) -> {
+                            if (n.equals(nn) && component.getModule().equals(k)) {
+                                createEdge(graphScene, component.getShortName(nn) + "_P", component.getName());
+                            }
+                        });
+                    });
+                });
+            });
+            graphScene.getActions().addAction(ActionFactory.createEditAction((Widget widget1) -> {
+                graphScene.layoutScene();
+            }));
+        });
         SceneSupport.show(graphScene);
-        // return componentViewMap;
     }
 
     VMDPinWidget createPin(VMDGraphScene scene, String nodeID, String pinID, String name) {

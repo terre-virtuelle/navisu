@@ -20,17 +20,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 /**
  *
  * @author serge
  */
-public class ComponentController 
+public class ComponentController
         implements Initializable {
 
     @FXML
@@ -51,6 +54,8 @@ public class ComponentController
     public Button clearModulesButton;
     @FXML
     public Button clearComponentsButton;
+    @FXML
+    public Button helpButton;
 
     private final Map<String, List<Component>> componentsMap;
     private final ComponentViewer componentViewer;
@@ -89,7 +94,7 @@ public class ComponentController
         Collections.sort(list);
         oList = FXCollections.observableArrayList(list);
         componentsLV.setItems(oList);
-        componentsLV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        componentsLV.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     private Selection compute() {
@@ -101,9 +106,8 @@ public class ComponentController
         selection.addInpuOutput(inOutLV.getSelectionModel().getSelectedItems());
         selection.addModules(modulesLV.getSelectionModel().getSelectedItems());
         selection.addComponents(componentsLV.getSelectionModel().getSelectedItems());
-        
+
         componentViewer.runScene(selection);
-      //  componentViewer.runScene(new ArrayList<>(Arrays.asList("media")));
         return selection;
     }
 
@@ -120,6 +124,29 @@ public class ComponentController
         clearComponentsButton.setOnMouseClicked((MouseEvent event) -> {
             componentsLV.getSelectionModel().clearSelection();
         });
+        helpButton.setOnMouseClicked((MouseEvent event) -> {
+            help();
+        });
+    }
+//TODO internationaliser
+    private void help() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Help");
+        alert.setHeaderText("Visualisation de l'architecture en composants et en modules");
+        alert.setResizable(true);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        String s = "1-Liste Services-Events : sélection multiple possible.\n"
+                + "Si aucun item n'est sélectioné, l'item Services est pris par défaut\n"
+                + "2-Liste Modules : sélection multiple possible. \n"
+                + "La dépendance de chacun des composants du module sera affichée.\n"
+                + "Si aucun item n'est sélectionné. On doit sélectionner au moins un composant\n"
+                + "dans la liste suivante.\n"
+                + "3-Liste Components :  sélection unique.\n"
+                + "\n"
+                + "Ctrl+roulette : zoom\n"
+                + "Double clic : arrangement des composants.";
+        alert.setContentText(s);
+        alert.show();
     }
 
     @Override

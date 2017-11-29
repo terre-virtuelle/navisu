@@ -47,6 +47,7 @@
                               <Button fx:id="clearIOButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Clear" GridPane.rowIndex="4" />
                               <Button fx:id="clearModulesButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <Button fx:id="clearComponentsButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Clear" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                              <Button fx:id="helpButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Help" GridPane.rowIndex="6" />
                            </children>
                         </GridPane>
                      </children>

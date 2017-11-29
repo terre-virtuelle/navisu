@@ -5,11 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.architecture.app;
 
-import bzh.terrevirtuelle.navisu.domain.architecture.Component;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Map;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
