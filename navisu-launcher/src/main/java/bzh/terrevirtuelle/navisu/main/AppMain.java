@@ -124,6 +124,8 @@ import bzh.terrevirtuelle.navisu.extensions.camera.impl.CameraComponentImpl;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.extensions.commands.impl.NavigationCmdComponentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.server.ServerOptionsComponentServices;
+import bzh.terrevirtuelle.navisu.architecture.ArchitectureComponentServices;
+import bzh.terrevirtuelle.navisu.architecture.impl.ArchitectureComponentImpl;
 import bzh.terrevirtuelle.navisu.media.bathysounds.BathySoundsServices;
 import bzh.terrevirtuelle.navisu.media.bathysounds.impl.BathySoundsImpl;
 import bzh.terrevirtuelle.navisu.bathymetry.view.DisplayBathymetryServices;
@@ -175,7 +177,7 @@ public class AppMain extends Application {
     4 - Approach 	1 : 22 000 à 1 : 90 000
     5 - Harbour 	1 : 4 000 à 1 : 22 000
     6 - Berthing 	> 1 : 4 000
-    */
+     */
     private WorldWindow wwd;
     private final String NAVISU_HOME = System.getProperty("user.home") + "/.navisu";
 
@@ -202,6 +204,7 @@ public class AppMain extends Application {
                         AisLoggerImpl.class,
                         AisPlotterImpl.class,
                         AisRadarImpl.class,
+                        ArchitectureComponentImpl.class,
                         BathymetryDBImpl.class,
                         BathymetryEventProducerImpl.class,
                         BathymetryImpl.class,
@@ -272,6 +275,7 @@ public class AppMain extends Application {
         AisLoggerServices aisLoggerServices = componentManager.getComponentService(AisLoggerServices.class);
         AisPlotterServices aisPlotterServices = componentManager.getComponentService(AisPlotterServices.class);
         AisRadarServices aisRadarServices = componentManager.getComponentService(AisRadarServices.class);
+        ArchitectureComponentServices architectureComponentServices = componentManager.getComponentService(ArchitectureComponentServices.class);
 
         BathymetryServices bathymetryServices = componentManager.getComponentService(BathymetryServices.class);
         BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
@@ -385,6 +389,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(architectureComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(bathySoundsServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(cameraComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
@@ -502,8 +507,8 @@ public class AppMain extends Application {
         // Neo4J serveur externe
         // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
         // System.out.println("con : " + con);
-      //  bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
-      //          "5432", "org.postgresql.Driver", "admin", "admin");
+        //  bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
+        //          "5432", "org.postgresql.Driver", "admin", "admin");
         //  bathymetryDBServices.create("C:\\Users\\Dom\\Documents\\Navisu\\shom-data\\bathy\\MNT100M_ATL\\splited\\bathy04.glz");
         //bathymetryDBServices.createIndex();
         /* Test speech */
@@ -535,8 +540,8 @@ public class AppMain extends Application {
          System.out.println(exif1);
          */
         // Test Navigation  Communication with external client 
-         navigationServerServices.init(8989);
-         
+        navigationServerServices.init(8989);
+
         // Start Leap Motion 
         // leapMotionComponentServices.on();
         // Test Gazeteer services

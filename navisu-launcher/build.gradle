@@ -8,6 +8,7 @@ mainClassName = 'bzh.terrevirtuelle.navisu.main.AppMain'
 
 dependencies {
     compile project(':navisu-agents')
+    compile project(':navisu-architecture')
     compile project(':navisu-bathymetry')
     compile project(':navisu-charts')
     compile project(':navisu-client')
