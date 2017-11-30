@@ -50,6 +50,7 @@
                               <Button fx:id="clearModulesButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Clear" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                               <Button fx:id="clearComponentsButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Clear" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                               <Button fx:id="helpButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Help" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <Button fx:id="snapshotButton" maxHeight="25.0" maxWidth="100.0" mnemonicParsing="false" prefHeight="100.0" text="Snapshot" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                            </children>
                         </GridPane>
                      </children>

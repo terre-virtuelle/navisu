@@ -31,7 +31,6 @@ public class ArchitectureComponentImpl
         InstrumentDriver, ComponentState {
 
     private static final String NAME = "Architecture";
-    private boolean first = true;
     protected final String FXML = "componentsControl.fxml";
     protected final String TITLE = "Components control";
     protected final String NAVISU_HOME = System.getProperty("user.home") + "/.navisu";

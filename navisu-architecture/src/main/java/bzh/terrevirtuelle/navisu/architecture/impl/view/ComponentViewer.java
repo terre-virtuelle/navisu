@@ -10,6 +10,9 @@ import bzh.terrevirtuelle.navisu.architecture.impl.controller.handler.ComponentH
 import bzh.terrevirtuelle.navisu.architecture.impl.controller.handler.Handler;
 import bzh.terrevirtuelle.navisu.architecture.impl.model.Selection;
 import bzh.terrevirtuelle.navisu.domain.architecture.Component;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -19,10 +22,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.imageio.ImageIO;
+import javax.swing.SwingUtilities;
 import org.netbeans.api.visual.action.ActionFactory;
 import org.netbeans.api.visual.vmd.VMDGraphScene;
 import org.netbeans.api.visual.vmd.VMDPinWidget;
 import org.netbeans.api.visual.widget.Widget;
+import org.openide.ErrorManager;
 import org.openide.util.Exceptions;
 
 /**
@@ -109,8 +115,8 @@ public class ComponentViewer {
                     component.getUsedServices().forEach((n) -> {
                         components.forEach((c) -> {
                             c.getServicesProvided().forEach((nn) -> {
-                              //  if (n.equals(nn) && !component.getModule().equals(c.getModule())) {
-                                    if (n.equals(nn)) {
+                                //  if (n.equals(nn) && !component.getModule().equals(c.getModule())) {
+                                if (n.equals(nn)) {
                                     componentProviderServicesSet.add(c);
                                 }
                             });
@@ -121,8 +127,8 @@ public class ComponentViewer {
                 singleComponent.getUsedServices().forEach((n) -> {
                     components.forEach((c) -> {
                         c.getServicesProvided().forEach((nn) -> {
-                          //  if (n.equals(nn) && !singleComponent.getModule().equals(c.getModule())) {
-                                if (n.equals(nn) ) {
+                            //  if (n.equals(nn) && !singleComponent.getModule().equals(c.getModule())) {
+                            if (n.equals(nn)) {
                                 componentProviderServicesSet.add(c);
                             }
                         });
@@ -152,15 +158,15 @@ public class ComponentViewer {
             componentSet.addAll(componentProviderServicesSet);
 
             //  componentsMap.get(k).forEach((component) -> {
-           // Set<Component> selectedComponents=new HashSet<>();
+            // Set<Component> selectedComponents=new HashSet<>();
             componentSet.forEach((component) -> {
                 component.getUsedServices().forEach((n) -> {
                     componentSet.forEach((c) -> {
                         c.getServicesProvided().forEach((nn) -> {
-                            if (n.equals(nn) 
-                                    && component.getModule().equals(k)){
-                                    //&& !selectedComponents.contains(component)) {
-                               // selectedComponents.add(component);
+                            if (n.equals(nn)
+                                    && component.getModule().equals(k)) {
+                                //&& !selectedComponents.contains(component)) {
+                                // selectedComponents.add(component);
                                 createEdge(graphScene, component.getShortName(nn) + "_P", component.getName());
                             }
                         });
@@ -218,6 +224,22 @@ public class ComponentViewer {
             categories.put("Used Services", pinUsedWidget);
             componentView.getWidget().sortPins(categories);
         }
+
     }
 
+    public void export() {
+        SwingUtilities.invokeLater(() -> {
+            System.out.println(graphScene.getBounds());
+            BufferedImage bi = new BufferedImage((int)graphScene.getBounds().getWidth(), 
+                    (int)graphScene.getBounds().getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+            Graphics2D graphics = bi.createGraphics();
+            graphScene.paint(graphics);
+            graphics.dispose();
+            try {
+                ImageIO.write(bi, "png", new File("test.png")); // NOI18N
+            } catch (IOException e) {
+                ErrorManager.getDefault().notify(e);
+            }
+        });
+    }
 }

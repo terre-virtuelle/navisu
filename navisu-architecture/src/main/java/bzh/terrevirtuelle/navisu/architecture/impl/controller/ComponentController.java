@@ -57,6 +57,8 @@ public class ComponentController
     public Button clearComponentsButton;
     @FXML
     public Button helpButton;
+    @FXML
+    public Button snapshotButton;
 
     private final Map<String, List<Component>> componentsMap;
     private final ComponentViewer componentViewer;
@@ -139,6 +141,9 @@ public class ComponentController
         });
         helpButton.setOnMouseClicked((MouseEvent event) -> {
             help();
+        });
+        snapshotButton.setOnMouseClicked((MouseEvent event) -> {
+            componentViewer.export();
         });
     }
 //TODO internationaliser
