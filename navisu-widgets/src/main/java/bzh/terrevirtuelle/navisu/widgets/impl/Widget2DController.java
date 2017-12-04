@@ -103,15 +103,16 @@ public class Widget2DController
     }
 
     public void startFadeTransition(Group group, double start, double end) {
-        FadeTransition fade = new FadeTransition(Duration.millis(1000), this);
+        //FadeTransition fade = new FadeTransition(Duration.millis(1000), this);
+        FadeTransition fade = new FadeTransition(Duration.millis(6000), this);
         fade.setFromValue(start);
         fade.setToValue(end);
         fade.play();
     }
 
     public void startScaleTransition(Group group) {
-        ScaleTransition scaleTransition
-                = new ScaleTransition(Duration.millis(2000), this);
+        //ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(2000), this);
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(6000), this);
         scaleTransition.setToX(2f);
         scaleTransition.setToY(2f);
         scaleTransition.setCycleCount(Transition.INDEFINITE);
