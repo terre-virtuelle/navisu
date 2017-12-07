@@ -1,0 +1,65 @@
+class Title
+!!!190594.java!!!	Title(in nmrAlinea : int, in tDate : String, in tMaj : String, inout texte : Text, in numero : String, inout illustration : Illustration)
+        this.nmrAlinea = nmrAlinea;
+        this.tDate = tDate;
+        this.tMaj = tMaj;
+        this.texte = texte;
+        this.numero = numero;
+        this.illustration = illustration;
+!!!190722.java!!!	Title(in stitle : String, in country : String, in region : String)
+        this.stitle = stitle;
+        this.country = country;
+        this.region = region;
+!!!190850.java!!!	getTtitle() : String
+        return ttitle;
+!!!190978.java!!!	setTtitle(in ttitle : String) : void
+        this.ttitle = ttitle;
+!!!191106.java!!!	getNumero() : String
+        return numero;
+!!!191234.java!!!	setNumero(in numero : String) : void
+        this.numero = numero;
+!!!191362.java!!!	gettMaj() : String
+        return tMaj;
+!!!191490.java!!!	getIllustration() : Illustration
+        return illustration;
+!!!191618.java!!!	setIllustration(inout illustration : Illustration) : void
+        this.illustration = illustration;
+!!!191746.java!!!	settMaj(in tMaj : String) : void
+        this.tMaj = tMaj;
+!!!191874.java!!!	gettDate() : String
+        return tDate;
+!!!192002.java!!!	settDate(in tDate : String) : void
+        this.tDate = tDate;
+!!!192130.java!!!	getTexte() : Text
+        return texte;
+!!!192258.java!!!	setTexte(inout texte : Text) : void
+        this.texte = texte;
+!!!192386.java!!!	getNmrAlinea() : int
+        return nmrAlinea;
+!!!192514.java!!!	setNmrAlinea(in nmrAlinea : int) : void
+        this.nmrAlinea = nmrAlinea;
+!!!192642.java!!!	getStitle() : String
+        return stitle;
+!!!192770.java!!!	getCountry() : String
+        return country;
+!!!192898.java!!!	getRegion() : String
+        return region;
+!!!193026.java!!!	setStitle(in stitle : String) : void
+        this.stitle = stitle;
+!!!193154.java!!!	setCountry(in country : String) : void
+        this.country = country;
+!!!193282.java!!!	setRegion(in region : String) : void
+        this.region = region;
+!!!193410.java!!!	toString() : String
+        return "Title{"
+                + nmrAlinea != null ? "nmrAlinea=" + nmrAlinea : ""
+                        + tDate != null ? ", tDate=" + tDate : ""
+                                + ttitle != null ? ", ttitle=" + ttitle : ""
+                                        + tMaj != null ? ", tMaj=" + tMaj : ""
+                                                + texte != null ? ", texte=" + texte : ""
+                                                        + numero != null ? ", numero=" + numero : ""
+                                                                + stitle != null ? ", stitle=" + stitle : ""
+                                                                        + country != null ? ", country=" + country : ""
+                                                                                + region != null ? ", region=" + region : ""
+                                                                                        + illustration != null ? ", illustration=" + illustration : ""
+                                                                                                + '}';

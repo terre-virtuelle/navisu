@@ -1,0 +1,18 @@
+class Reference
+!!!183170.java!!!	Reference(in tReference : String, in name : String)
+        this.tReference = tReference;
+        this.value = name;
+!!!183298.java!!!	getValue() : String
+        return value;
+!!!183426.java!!!	setValue(in value : String) : void
+        this.value = value;
+!!!183554.java!!!	gettReference() : String
+        return tReference;
+!!!183682.java!!!	settReference(in tReference : String) : void
+        this.tReference = tReference;
+!!!183810.java!!!	contains(inout str : CharSequence) : boolean
+        return value.contains(str);
+!!!183938.java!!!	shorten() : String
+        return value;
+!!!184066.java!!!	toString() : String
+        return "Reference{" + "tReference=" + tReference + ", name=" + value + '}';

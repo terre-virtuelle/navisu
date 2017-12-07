@@ -105,11 +105,11 @@ public class DisplayBathymetryController {
             double latM = 90.0;
             double lonM = 0.0;
             for (Point3D p : points3d) {
-                if (latM >= p.getLat()) {
-                    latM = p.getLat();
+                if (latM >= p.getLatitude()) {
+                    latM = p.getLatitude();
                 }
-                if (lonM >= p.getLon()) {
-                    lonM = p.getLon();
+                if (lonM >= p.getLongitude()) {
+                    lonM = p.getLongitude();
                 }
             }
 
@@ -164,8 +164,8 @@ public class DisplayBathymetryController {
     public void displaySounding(List<Point3D> points, RenderableLayer l) {
 
         points.stream().forEach((pt) -> {
-            displaySounding(pt.getLat(),
-                    pt.getLon(),
+            displaySounding(pt.getLatitude(),
+                    pt.getLongitude(),
                     pt.getElevation(), l);
         });
 

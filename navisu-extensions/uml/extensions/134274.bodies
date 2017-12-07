@@ -1,0 +1,37 @@
+class Alinea
+!!!157186.java!!!	Alinea(in nmrAlinea : int, in tDate : String, in tMaj : String, inout texte : Text, inout liste : TextList, inout tableau : Tabular, inout illustration : Illustration)
+        this.nmrAlinea = nmrAlinea;
+        this.tDate = tDate;
+        this.tMaj = tMaj;
+        this.texte = texte;
+        this.liste = liste;
+        this.tableau = tableau;
+        this.illustration = illustration;
+!!!157314.java!!!	gettMaj() : String
+        return tMaj;
+!!!157442.java!!!	getTableau() : Tabular
+        return tableau;
+!!!157570.java!!!	setTableau(inout tableau : Tabular) : void
+        this.tableau = tableau;
+!!!157698.java!!!	getIllustration() : Illustration
+        return illustration;
+!!!157826.java!!!	setIllustration(inout illustration : Illustration) : void
+        this.illustration = illustration;
+!!!157954.java!!!	settMaj(in tMaj : String) : void
+        this.tMaj = tMaj;
+!!!158082.java!!!	gettDate() : String
+        return tDate;
+!!!158210.java!!!	settDate(in tDate : String) : void
+        this.tDate = tDate;
+!!!158338.java!!!	getListe() : TextList
+        return liste;
+!!!158466.java!!!	getTexte() : Text
+        return texte;
+!!!158594.java!!!	setTexte(inout texte : Text) : void
+        this.texte = texte;
+!!!158722.java!!!	getNmrAlinea() : int
+        return nmrAlinea;
+!!!158850.java!!!	setNmrAlinea(in nmrAlinea : int) : void
+        this.nmrAlinea = nmrAlinea;
+!!!158978.java!!!	toString() : String
+        return "Alinea{" + "nmrAlinea=" + nmrAlinea + ", tDate=" + tDate + ", tMaj=" + tMaj + ", texte=" + texte + ", liste=" + liste + ", tableau=" + tableau + ", illustration=" + illustration + '}';

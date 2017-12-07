@@ -1,0 +1,20 @@
+class Principal
+!!!178690.java!!!	Principal(in id : String)
+        this.id = id;
+!!!178818.java!!!	Principal(in id : String, in name : String)
+        this.id = id;
+        this.value = name;
+!!!178946.java!!!	getValue() : String
+        return value;
+!!!179074.java!!!	setValue(in value : String) : void
+        this.value = value;
+!!!179202.java!!!	getId() : String
+        return id;
+!!!179330.java!!!	setId(in id : String) : void
+        this.id = id;
+!!!179458.java!!!	contains(inout str : CharSequence) : boolean
+        return value.contains(str);
+!!!179586.java!!!	shorten() : String
+        return value;
+!!!179714.java!!!	toString() : String
+        return "Principal{" + "id=" + id + ", name=" + value + '}';

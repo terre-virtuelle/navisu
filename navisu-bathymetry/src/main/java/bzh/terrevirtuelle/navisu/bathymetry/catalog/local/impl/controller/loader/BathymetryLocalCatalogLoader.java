@@ -60,12 +60,12 @@ public class BathymetryLocalCatalogLoader {
 
     private List<Layer> createShomBoundary() {
         ArrayList<Position> pathPositions = new ArrayList<>();
-        pathPositions.add(Position.fromDegrees(points3d.get(8).getLat(), points3d.get(8).getLon(), 250));
-        pathPositions.add(Position.fromDegrees(points3d.get(6).getLat(), points3d.get(6).getLon(), 250));
-        pathPositions.add(Position.fromDegrees(points3d.get(4).getLat(), points3d.get(4).getLon(), 250));
-        pathPositions.add(Position.fromDegrees(points3d.get(0).getLat(), points3d.get(0).getLon(), 250));
+        pathPositions.add(Position.fromDegrees(points3d.get(8).getLatitude(), points3d.get(8).getLongitude(), 250));
+        pathPositions.add(Position.fromDegrees(points3d.get(6).getLatitude(), points3d.get(6).getLongitude(), 250));
+        pathPositions.add(Position.fromDegrees(points3d.get(4).getLatitude(), points3d.get(4).getLongitude(), 250));
+        pathPositions.add(Position.fromDegrees(points3d.get(0).getLatitude(), points3d.get(0).getLongitude(), 250));
         for (int i = 1; i <= 157; i += 2) {
-            pathPositions.add(Position.fromDegrees(points3d.get(i).getLat(), points3d.get(i).getLon(), 500));
+            pathPositions.add(Position.fromDegrees(points3d.get(i).getLatitude(), points3d.get(i).getLongitude(), 500));
         }
         Path pgon = new Path(pathPositions);
         pgon.setAltitudeMode(WorldWind.GREAT_CIRCLE);
@@ -104,14 +104,14 @@ public class BathymetryLocalCatalogLoader {
         //  attributes.setUsePointAsDefaultImage(true);
         PointPlacemark placemark;
         for (Point3D p : points3d) {
-            placemark = new PointPlacemark(Position.fromDegrees(p.getLat(), p.getLon(), 100));
+            placemark = new PointPlacemark(Position.fromDegrees(p.getLatitude(), p.getLongitude(), 100));
             placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
             placemark.setEnableBatchPicking(true);
             placemark.setAttributes(attributes);
 
             String label = "Id : " + p.getId()
-                    + "Lat : " + p.getLat() + " °\n"
-                    + "Lon : " + p.getLon() + " °\n";
+                    + "Lat : " + p.getLatitude() + " °\n"
+                    + "Lon : " + p.getLongitude() + " °\n";
             placemark.setValue(AVKey.DISPLAY_NAME, label);
             layer.addRenderable(placemark);
         }

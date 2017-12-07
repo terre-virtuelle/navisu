@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.extensions.commands;
 
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Depth;
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
@@ -63,7 +64,8 @@ public class Command {
         @XmlElement(name = "sailingDirections", type = SailingDirections.class),
         @XmlElement(name = "s57Chart", type = S57Chart.class),
         @XmlElement(name = "gpx", type = Gpx.class),
-        @XmlElement(name = "camera", type = Camera.class)
+        @XmlElement(name = "camera", type = Camera.class),
+        @XmlElement(name = "depth", type = Depth.class)
     })
     private NavigationData navigationData = null;
     private String arg;

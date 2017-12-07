@@ -324,7 +324,7 @@ public class BathymetryDBController {
             for (int l = 0; l < nbLon - 1; l++) {
                 //Select one point
                 Point3D p = tmp[k][l];
-                Point_dt pp = new Point_dt(p.getLat(), p.getLon(), p.getElevation());
+                Point_dt pp = new Point_dt(p.getLatitude(), p.getLongitude(), p.getElevation());
                 for (Triangle_dt tt : triangles) {
                     // Research  the nearest point of this triangle
                     if (tt.contains(pp)) {
@@ -359,11 +359,11 @@ public class BathymetryDBController {
         if (points != null) {
             if (latLon == true) {
                 points.forEach((p) -> {
-                    lines.add(p.getLat() + " " + p.getLon() + " " + p.getElevation());
+                    lines.add(p.getLatitude() + " " + p.getLongitude() + " " + p.getElevation());
                 });
             } else {
                 points.forEach((p) -> {
-                    lines.add(p.getLon() + " " + p.getLat() + " " + p.getElevation());
+                    lines.add(p.getLongitude() + " " + p.getLatitude() + " " + p.getElevation());
                 });
             }
             try {

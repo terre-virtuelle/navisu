@@ -1,0 +1,22 @@
+class Command
+!!!132738.java!!!	Command(in cmd : String, inout navigationData : NavigationData)
+        this.cmd = cmd;
+        this.navigationData = navigationData;
+
+!!!132866.java!!!	Command(in cmd : String, in arg : String)
+        this.cmd = cmd;
+        this.arg = arg;
+!!!132994.java!!!	getCmd() : String
+        return cmd;
+!!!133122.java!!!	setCmd(in cmd : String) : void
+        this.cmd = cmd;
+!!!133250.java!!!	getNavigationData() : NavigationData
+        return navigationData;
+!!!133378.java!!!	setNavigationData(inout navigationData : NavigationData) : void
+        this.navigationData = navigationData;
+!!!133506.java!!!	getArg() : String
+        return arg;
+!!!133634.java!!!	setArg(in arg : String) : void
+        this.arg = arg;
+!!!133762.java!!!	toString() : String
+        return "Command{" + "cmd=" + cmd + ", navigationData=" + navigationData + ", arg=" + arg + '}';

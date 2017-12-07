@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.extensions.commands.impl;
 
+import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
@@ -34,6 +35,8 @@ public class NavigationCmdComponentImpl
     S57ChartComponentServices s57ChartComponentServices;
     @UsedService
     GpsPlotterServices gpsPlotterServices;
+    @UsedService
+    BathymetryDBServices bathymetryDBServices;
 
     private CameraCmd cameraCmd;
 
@@ -62,7 +65,7 @@ public class NavigationCmdComponentImpl
         cameraCmd = CameraCmd.getInstance();
         cameraCmd.setCameraComponentServices(cameraComponentServices);
         navigationCmdMap.put("CameraCmd", cameraCmd);
-
+        navigationCmdMap.put("BathymetryCmd", BathymetryCmd.getInstance(bathymetryDBServices));
         navigationCmdMap.put("NaVigationDataSetCmd", NaVigationDataSetCmd.getInstance());
         navigationCmdMap.put("OwnerShipCmd", OwnerShipCmd.getInstance(gpsPlotterServices));
     }

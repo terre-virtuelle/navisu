@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.domain.navigation.model;
 
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Depth;
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.rss.Rss;
@@ -22,6 +23,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialP
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Daymark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
@@ -75,7 +77,11 @@ public class NavigationDataSet {
         @XmlElement(name = "ship", type = Ship.class),
         @XmlElement(name = "s57Chart", type = S57Chart.class),
         @XmlElement(name = "ouvrage", type = Book.class),
-        @XmlElement(name = "texte", type = Text.class),})
+        @XmlElement(name = "texte", type = Text.class),
+        @XmlElement(name = "point3d", type = Point3D.class),
+        @XmlElement(name = "depth", type = Depth.class)
+    }
+    )
     private ConcurrentLinkedQueue<NavigationData> navigationDataQueue;
 
     public NavigationDataSet() {

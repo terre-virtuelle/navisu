@@ -43,6 +43,8 @@ public interface BathymetryDBServices
 
     List<Point3D> retrieveAround(double lat, double lon);
 
+    List<Point3D> retrieveAround(double lat, double lon, double limit);
+
     List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax);
 
     void writePointList(List<Point3D> points, Path pathname, boolean latLon);

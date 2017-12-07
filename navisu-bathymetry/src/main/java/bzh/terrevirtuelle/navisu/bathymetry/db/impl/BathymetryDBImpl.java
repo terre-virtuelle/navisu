@@ -139,7 +139,10 @@ public class BathymetryDBImpl
     public List<Point3D> retrieveAround(double lat, double lon) {
         return bathymetryDBController.retrieveAround(lat, lon, LIMIT);
     }
-
+    @Override
+public List<Point3D> retrieveAround(double lat, double lon, double limit) {
+        return bathymetryDBController.retrieveAround(lat, lon, limit);
+    }
     @Override
     public List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
         return bathymetryDBController.retrieveIn(latMin, lonMin, latMax, lonMax);

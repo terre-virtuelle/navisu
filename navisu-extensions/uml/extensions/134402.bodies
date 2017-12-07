@@ -1,0 +1,5 @@
+class TextList
+!!!190210.java!!!	getListe() : Text
+        return texte;
+!!!190338.java!!!	toString() : String
+        return "Liste{" + "texte=" + texte + '}';

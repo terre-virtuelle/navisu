@@ -1,0 +1,8 @@
+class ShomSailingDirections
+!!!187138.java!!!	ShomSailingDirections(in filename : String)
+        this.filename = filename;
+        sailingDirectionsParser = new ShomSailingDirectionsParser(filename);
+!!!187266.java!!!	getFilename() : String
+        return filename;
+!!!187394.java!!!	setFilename(in filename : String) : void
+        this.filename = filename;

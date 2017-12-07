@@ -1,0 +1,25 @@
+class NavigationServerImpl
+!!!136706.java!!!	componentInitiated() : void
+
+!!!136834.java!!!	init() : void
+        navigationServerController = NavigationServerController.getInstance(guiAgentServices,
+                driverManagerServices,
+                webDriverManagerServices,
+                instrumentDriverManagerServices,
+                databaseDriverManagerServices,
+                navigationCmdComponentServices);
+        navigationServerController.init();
+!!!136962.java!!!	init(in port : int) : void
+        navigationServerController = NavigationServerController.getInstance(guiAgentServices,
+                driverManagerServices,
+                webDriverManagerServices,
+                instrumentDriverManagerServices,
+                databaseDriverManagerServices,
+                navigationCmdComponentServices);
+        navigationServerController.init(port);
+!!!137218.java!!!	componentStopped() : void
+
+!!!137346.java!!!	canOpen(in category : String) : boolean
+        return category.equals(KEY_NAME);
+!!!137474.java!!!	getDriver() : InstrumentDriver
+        return this;

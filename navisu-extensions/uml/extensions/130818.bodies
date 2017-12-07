@@ -1,0 +1,133 @@
+class NavigationServerController
+!!!137602.java!!!	NavigationServerController(inout guiAgentServices : GuiAgentServices, inout driverManagerServices : DriverManagerServices, inout webDriverManagerServices : WebDriverManagerServices, inout instrumentDriverManagerServices : InstrumentDriverManagerServices, inout databaseDriverManagerServices : DatabaseDriverManagerServices, inout navigationCmdComponentServices : NavigationCmdComponentServices)
+        this.guiAgentServices = guiAgentServices;
+        this.driverManagerServices = driverManagerServices;
+        this.webDriverManagerServices = webDriverManagerServices;
+        this.instrumentDriverManagerServices = instrumentDriverManagerServices;
+        this.databaseDriverManagerServices = databaseDriverManagerServices;
+        this.navigationCmdComponentServices = navigationCmdComponentServices;
+        initProperties();
+!!!137730.java!!!	getInstance(inout guiAgentServices : GuiAgentServices, inout driverManagerServices : DriverManagerServices, inout webDriverManagerServices : WebDriverManagerServices, inout instrumentDriverManagerServices : InstrumentDriverManagerServices, inout databaseDriverManagerServices : DatabaseDriverManagerServices, inout navigationCmdComponentServices : NavigationCmdComponentServices) : NavigationServerController
+        if (INSTANCE == null) {
+            INSTANCE = new NavigationServerController(guiAgentServices,
+                    driverManagerServices,
+                    webDriverManagerServices,
+                    instrumentDriverManagerServices,
+                    databaseDriverManagerServices,
+                    navigationCmdComponentServices);
+        }
+        return INSTANCE;
+!!!137858.java!!!	init() : void
+        this.port = new Integer(properties.getProperty("port").trim());
+        initVertx();
+!!!137986.java!!!	init(in port : int) : void
+        this.port = port;
+        initVertx();
+!!!138114.java!!!	initProperties() : void
+        properties = new Properties();
+        try {
+            properties.load(new FileInputStream(PROPERTIES_NAME));
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+        }
+!!!138242.java!!!	initVertx() : void
+        cmdVertx = VertxFactory.newVertx();
+        try {
+            cmdVertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
+                if (ws.path().equals(START_CMD)) {
+                    ws.dataHandler((Buffer data) -> {
+                        command = command(data.toString());
+                        if (command != null) {
+                            if (command.getNavigationData() != null) {
+                                navigationDataSet = navigationCmdComponentServices.doIt(command.getCmd(), command.getNavigationData());
+                                if (navigationDataSet != null) {
+                                    if (navigationDataSet.size() > 0) {
+                                        String r = response(navigationDataSet);
+                                        ws.writeTextFrame(r);
+                                    } else {
+                                        ws.writeTextFrame("");
+                                    }
+                                }
+                            }
+                            if (command.getArg() != null) {
+                                navigationDataSet = navigationCmdComponentServices.doIt(command.getCmd(), command.getArg());
+                                if (navigationDataSet != null) {
+                                    if (navigationDataSet.size() > 0) {
+                                        String r = response(navigationDataSet);
+                                        ws.writeTextFrame(r);
+                                    } else {
+                                        ws.writeTextFrame("");
+                                    }
+                                }
+                            }
+                        } else {
+                            ws.writeTextFrame("NACK");
+                        }
+                    });
+                } else {
+                    ws.reject();
+                }
+            }).requestHandler((HttpServerRequest req) -> {
+                if (req.path().equals(HTML_RESPONSE_CMD)) {
+                    req.response().sendFile(HTML_RESPONSE);
+                }
+            }).listen(port);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+        }
+!!!138370.java!!!	command(in data : String) : Command
+        Command navCmd = null;
+        try {
+            navCmd = new Command();
+            navCmd = ImportExportXML.imports(navCmd, new StringReader(data));
+        } catch (JAXBException ex) {
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+        }
+        LOGGER.log(Level.INFO, data);
+
+        /**
+         * If a ArCommand with cmd=IPInfo is send, it will connect to the Server
+         * provided in arg
+         */
+        if (navCmd.getCmd().equals("IPInfo") && navCmd.getArg() != null) {
+                Client.setInstance(navCmd.getArg());
+                Client.connectToServer();
+        }
+
+        /**
+         * If a ArCommand with cmd=ServerClosing is send, it will close its
+         * connection
+         */
+        if (navCmd.getCmd().equals("ServerClosing")) {
+            try {
+                Client.disconnectFromServer();
+                LOGGER.log(Level.INFO, "Disconnected from Server");
+            } catch (IOException ex) {
+                Logger.getLogger(NavigationServerController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+                /**
+         * If a ArCommand with cmd=ActionMenu is send, it will execute the action
+         * provided in arg
+         */
+        if (navCmd.getCmd().equals("ActionMenu") && navCmd.getArg() != null) {
+            String instrumentDriver = navCmd.getArg();
+            Platform.runLater(() -> {
+            instrumentDriverManagerServices.open(instrumentDriver);
+            });
+        }
+        return navCmd;
+!!!138498.java!!!	response(inout response : NavigationDataSet) : String
+        StringWriter xmlString = new StringWriter();
+        try {
+            ImportExportXML.exports(response, xmlString);
+        } catch (JAXBException ex) {
+            System.out.println("ex " + ex);
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+        }
+
+        //TODO
+        return xmlString.toString();
+!!!138626.java!!!	setNavigationCmdComponentServices(inout navigationCmdComponentServices : NavigationCmdComponentServices) : void
+        this.navigationCmdComponentServices = navigationCmdComponentServices;

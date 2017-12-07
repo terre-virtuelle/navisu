@@ -58,14 +58,14 @@ public class SonarController {
                     minElevation = 10000.0;
                     maxElevation = -20.0;
                     points.stream().map((p) -> {
-                        double tmp = p.getLat();
+                        double tmp = p.getLatitude();
                         if (tmp < minLat) {
                             minLat = tmp;
                         }
                         if (tmp > maxLat) {
                             maxLat = tmp;
                         }
-                        tmp = p.getLon();
+                        tmp = p.getLongitude();
                         if (tmp < minLon) {
                             minLon = tmp;
                         }
@@ -85,7 +85,7 @@ public class SonarController {
                    // System.out.println(minLat + " " + maxLat + " " + minLon + " " + maxLon + " " + minElevation + " " + maxElevation);
                     List<javafx.geometry.Point3D> list = new ArrayList<>();
                     for (Point3D p : points) {
-                        list.add(new javafx.geometry.Point3D(p.getLat(), p.getLon(), p.getElevation()));
+                        list.add(new javafx.geometry.Point3D(p.getLatitude(), p.getLongitude(), p.getElevation()));
                     }
                     Platform.runLater(() -> {
                         new Points3D(stage, list,

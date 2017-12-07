@@ -1,0 +1,14 @@
+class MailBoxAddress
+!!!172034.java!!!	MailBoxAddress(in mailBox : String, in value : String)
+        this.mailBox = mailBox;
+        this.value = value;
+!!!172162.java!!!	getValue() : String
+        return value;
+!!!172290.java!!!	setValue(in value : String) : void
+        this.value = value;
+!!!172418.java!!!	getMailBox() : String
+        return mailBox;
+!!!172546.java!!!	setMailBox(in mailBox : String) : void
+        this.mailBox = mailBox;
+!!!172674.java!!!	toString() : String
+        return "MailBoxAddress{" + "mailBox=" + mailBox + ", value=" + value + '}';

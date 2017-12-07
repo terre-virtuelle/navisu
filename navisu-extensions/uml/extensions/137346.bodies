@@ -1,0 +1,29 @@
+class Update
+!!!195458.java!!!	Update(in gan : String, in bat : String, in dms : String, in oldPub : String, in text : String)
+        this.gan = gan;
+        this.bat = bat;
+        this.dms = dms;
+        this.oldPub = oldPub;
+        this.text = text;
+!!!195586.java!!!	getText() : String
+        return text;
+!!!195714.java!!!	setText(in text : String) : void
+        this.text = text;
+!!!195842.java!!!	getOldPub() : String
+        return oldPub;
+!!!195970.java!!!	setOldPub(in oldPub : String) : void
+        this.oldPub = oldPub;
+!!!196098.java!!!	getDms() : String
+        return dms;
+!!!196226.java!!!	setDms(in dms : String) : void
+        this.dms = dms;
+!!!196354.java!!!	getBat() : String
+        return bat;
+!!!196482.java!!!	setBat(in bat : String) : void
+        this.bat = bat;
+!!!196610.java!!!	getGan() : String
+        return gan;
+!!!196738.java!!!	setGan(in gan : String) : void
+        this.gan = gan;
+!!!196866.java!!!	toString() : String
+        return "Update{" + "gan=" + gan + ", bat=" + bat + ", dms=" + dms + ", oldPub=" + oldPub + ", text=" + text + '}';

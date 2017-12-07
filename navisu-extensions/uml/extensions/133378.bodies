@@ -1,0 +1,33 @@
+class Metadata
+!!!174978.java!!!	Metadata(inout author : Author, inout editor : Editor, inout publisher : Publisher, inout publication : Publication, inout copyright : Copyright)
+        this.author = author;
+        this.editor = editor;
+        this.publisher = publisher;
+        this.publication = publication;
+        this.copyright = copyright;
+!!!175106.java!!!	getXmlns() : String
+        return xmlns;
+!!!175234.java!!!	setXmlns(in xmlns : String) : void
+        this.xmlns = xmlns;
+!!!175362.java!!!	getCopyright() : Copyright
+        return copyright;
+!!!175490.java!!!	setCopyright(inout copyright : Copyright) : void
+        this.copyright = copyright;
+!!!175618.java!!!	getPublication() : Publication
+        return publication;
+!!!175746.java!!!	setPublication(inout publication : Publication) : void
+        this.publication = publication;
+!!!175874.java!!!	getPublisher() : Publisher
+        return publisher;
+!!!176002.java!!!	setPublisher(inout publisher : Publisher) : void
+        this.publisher = publisher;
+!!!176130.java!!!	getEditor() : Editor
+        return editor;
+!!!176258.java!!!	setEditor(inout editor : Editor) : void
+        this.editor = editor;
+!!!176386.java!!!	getAuthor() : Author
+        return author;
+!!!176514.java!!!	setAuthor(inout author : Author) : void
+        this.author = author;
+!!!176642.java!!!	toString() : String
+        return "Metadata{" + "author=" + author + ", editor=" + editor + ", publisher=" + publisher + ", publication=" + publication + ", copyright=" + copyright + '}';

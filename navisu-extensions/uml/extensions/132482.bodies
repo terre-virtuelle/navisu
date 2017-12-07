@@ -1,0 +1,11 @@
+class Rss
+!!!148994.java!!!	Rss()
+        channel = new Channel();
+!!!149122.java!!!	Rss(inout channel : Channel)
+        this.channel = channel;
+!!!149250.java!!!	getChannel() : Channel
+        return channel;
+!!!149378.java!!!	setChannel(inout channel : Channel) : void
+        this.channel = channel;
+!!!149506.java!!!	toString() : String
+        return "Rss{" + "channel=" + channel + '}';

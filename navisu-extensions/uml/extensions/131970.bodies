@@ -1,0 +1,24 @@
+class Item
+!!!147074.java!!!	Item(in title : String, in link : String, in description : String, in pubDate : String)
+        this.title = title;
+        this.link = link;
+        this.description = description;
+        this.pubDate = pubDate;
+!!!147202.java!!!	getPubDate() : String
+        return pubDate;
+!!!147330.java!!!	setPubDate(in pubDate : String) : void
+        this.pubDate = pubDate;
+!!!147458.java!!!	getDescription() : String
+        return description;
+!!!147586.java!!!	setDescription(in description : String) : void
+        this.description = description;
+!!!147714.java!!!	getLink() : String
+        return link;
+!!!147842.java!!!	setLink(in link : String) : void
+        this.link = link;
+!!!147970.java!!!	getTitle() : String
+        return title;
+!!!148098.java!!!	setTitle(in title : String) : void
+        this.title = title;
+!!!148226.java!!!	toString() : String
+        return "Item{" + "title=" + title + ", link=" + link + ", description=" + description + ", pubDate=" + pubDate + '}';

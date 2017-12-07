@@ -5,17 +5,32 @@
  */
 package bzh.terrevirtuelle.navisu.domain.geometry;
 
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 /**
  * @date 15 mars 2015
  * @author Serge Morvan
  */
-public class Point3D {
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "point3d", propOrder = {
+    "latitude",
+    "longitude",
+    "elevation",
+    "id"
+})
+@XmlRootElement
+public class Point3D
+        implements NavigationData {
 
-    private int id = 0;
+    private long id = 0;
 
-    public double lon = 0.0;
+    public double longitude = 0.0;
 
-    public double lat = 0.0;
+    public double latitude = 0.0;
 
     public double elevation = 0.0;
 
@@ -23,26 +38,26 @@ public class Point3D {
     }
 
     public Point3D(double lat, double lon) {
-        this.lon = lon;
-        this.lat = lat;
+        this.longitude = lon;
+        this.latitude = lat;
     }
 
     public Point3D(double lat, double lon, double elevation) {
-        this.lon = lon;
-        this.lat = lat;
+        this.longitude = lon;
+        this.latitude = lat;
         this.elevation = elevation;
     }
 
     public Point3D(int id, double lat, double lon) {
         this.id = id;
-        this.lon = lon;
-        this.lat = lat;
+        this.longitude = lon;
+        this.latitude = lat;
     }
 
     public Point3D(int id, double lat, double lon, double elevation) {
         this.id = id;
-        this.lon = lon;
-        this.lat = lat;
+        this.longitude = lon;
+        this.latitude = lat;
         this.elevation = elevation;
     }
 
@@ -51,7 +66,8 @@ public class Point3D {
      *
      * @return the value of id
      */
-    public int getId() {
+    @Override
+    public long getId() {
         return id;
     }
 
@@ -64,20 +80,22 @@ public class Point3D {
         this.id = id;
     }
 
-    public double getLon() {
-        return lon;
+    @Override
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setLon(double lon) {
-        this.lon = lon;
+    public void setLongitude(double lon) {
+        this.longitude = lon;
     }
 
-    public double getLat() {
-        return lat;
+    @Override
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
+    public void setLatitude(double lat) {
+        this.latitude = lat;
     }
 
     public double getElevation() {
@@ -90,8 +108,8 @@ public class Point3D {
 
     @Override
     public String toString() {
-        return "{" + lat + ", " + lon + ", " + elevation + "}";
-    } 
+        return "{" + latitude + ", " + longitude + ", " + elevation + "}";
+    }
 
     @Override
     public int hashCode() {
@@ -111,16 +129,12 @@ public class Point3D {
             return false;
         }
         final Point3D other = (Point3D) obj;
-        if (Double.doubleToLongBits(this.lon) != Double.doubleToLongBits(other.lon)) {
+        if (Double.doubleToLongBits(this.longitude) != Double.doubleToLongBits(other.longitude)) {
             return false;
         }
-        if (Double.doubleToLongBits(this.lat) != Double.doubleToLongBits(other.lat)) {
+        if (Double.doubleToLongBits(this.latitude) != Double.doubleToLongBits(other.latitude)) {
             return false;
         }
-        if (Double.doubleToLongBits(this.elevation) != Double.doubleToLongBits(other.elevation)) {
-            return false;
-        }
-        return true;
+        return Double.doubleToLongBits(this.elevation) == Double.doubleToLongBits(other.elevation);
     }
-    
 }

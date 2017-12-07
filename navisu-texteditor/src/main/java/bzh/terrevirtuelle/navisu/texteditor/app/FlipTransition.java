@@ -11,10 +11,12 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.ImageView;
+import static javafx.scene.input.KeyCode.P;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -33,6 +35,7 @@ public class FlipTransition {
         Node present = group.getChildren().get(group.getChildren().size() - 1);
 
         Rectangle presentClip = new Rectangle(0, 0, width, height);
+      // Polygon presentClip=new Polygon(100, 0, width, height);
         present.setClip(presentClip);
 
         TranslateTransition presentClipAnim = new TranslateTransition(Duration.millis(DURATION), presentClip);

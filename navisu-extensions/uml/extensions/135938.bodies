@@ -1,0 +1,18 @@
+class Link
+!!!170882.java!!!	Link(in tlien : String, in numero : String)
+        this.tlien = tlien;
+        this.numero = numero;
+!!!171010.java!!!	getNumero() : String
+        return numero;
+!!!171138.java!!!	setNumero(in numero : String) : void
+        this.numero = numero;
+!!!171266.java!!!	getTlien() : String
+        return tlien;
+!!!171394.java!!!	setTlien(in tlien : String) : void
+        this.tlien = tlien;
+!!!171522.java!!!	contains(inout str : CharSequence) : boolean
+        return numero.contains(str);
+!!!171650.java!!!	shorten() : String
+        return "";
+!!!171778.java!!!	toString() : String
+        return "Lien{" + "tlien=" + tlien + ", numero=" + numero + '}';

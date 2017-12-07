@@ -1,0 +1,47 @@
+class Channel
+!!!143618.java!!!	Channel()
+        items = new ArrayList<>();
+!!!143746.java!!!	Channel(in title : String, in link : String, in language : String, in copyright : String, in pubDate : String, in lastBuildDate : String, in description : String, inout image : Image, inout items : List<Item>)
+        this.title = title;
+        this.link = link;
+        this.language = language;
+        this.copyright = copyright;
+        this.pubDate = pubDate;
+        this.lastBuildDate = lastBuildDate;
+        this.description = description;
+        this.image = image;
+        this.items = items;
+!!!143874.java!!!	getImage() : Image
+        return image;
+!!!144002.java!!!	setImage(inout image : Image) : void
+        this.image = image;
+!!!144130.java!!!	getDescription() : String
+        return description;
+!!!144258.java!!!	setDescription(in description : String) : void
+        this.description = description;
+!!!144386.java!!!	getLastBuildDate() : String
+        return lastBuildDate;
+!!!144514.java!!!	setLastBuildDate(in lastBuildDate : String) : void
+        this.lastBuildDate = lastBuildDate;
+!!!144642.java!!!	getPubDate() : String
+        return pubDate;
+!!!144770.java!!!	setPubDate(in pubDate : String) : void
+        this.pubDate = pubDate;
+!!!144898.java!!!	getCopyright() : String
+        return copyright;
+!!!145026.java!!!	setCopyright(in copyright : String) : void
+        this.copyright = copyright;
+!!!145154.java!!!	getLanguage() : String
+        return language;
+!!!145282.java!!!	setLanguage(in language : String) : void
+        this.language = language;
+!!!145410.java!!!	getLink() : String
+        return link;
+!!!145538.java!!!	setLink(in link : String) : void
+        this.link = link;
+!!!145666.java!!!	getTitle() : String
+        return title;
+!!!145794.java!!!	setTitle(in title : String) : void
+        this.title = title;
+!!!145922.java!!!	toString() : String
+        return "Channel{" + "title=" + title + ", link=" + link + ", language=" + language + ", copyright=" + copyright + ", pubDate=" + pubDate + ", lastBuildDate=" + lastBuildDate + ", description=" + description + ", image=" + image + ", items=" + items + '}';

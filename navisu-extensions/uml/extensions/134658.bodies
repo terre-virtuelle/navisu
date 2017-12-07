@@ -1,0 +1,24 @@
+class Illustration
+!!!169218.java!!!	Illustration(in tIllustration : String, in orientation : String, in numero : String, inout txt : Txt)
+        this.tIllustration = tIllustration;
+        this.orientation = orientation;
+        this.numero = numero;
+        this.txt = txt;
+!!!169346.java!!!	getTxt() : Txt
+        return txt;
+!!!169474.java!!!	setTxt(inout txt : Txt) : void
+        this.txt = txt;
+!!!169602.java!!!	getNumero() : String
+        return numero;
+!!!169730.java!!!	setNumero(in numero : String) : void
+        this.numero = numero;
+!!!169858.java!!!	getOrientation() : String
+        return orientation;
+!!!169986.java!!!	setOrientation(in orientation : String) : void
+        this.orientation = orientation;
+!!!170114.java!!!	gettIllustration() : String
+        return tIllustration;
+!!!170242.java!!!	settIllustration(in tIllustration : String) : void
+        this.tIllustration = tIllustration;
+!!!170370.java!!!	toString() : String
+        return "Illustration{" + "tIllustration=" + tIllustration + ", orientation=" + orientation + ", numero=" + numero + ", txt=" + txt + '}';

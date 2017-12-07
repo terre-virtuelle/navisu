@@ -1,0 +1,9 @@
+class SubParagrah
+!!!188034.java!!!	getTitre() : Title
+        return titre;
+!!!188162.java!!!	getAlinea() : Alinea
+        return alinea;
+!!!188290.java!!!	setTitre(inout titre : Title) : void
+        this.titre = titre;
+!!!188418.java!!!	toString() : String
+        return "SPara{" + "titre=" + titre + ", alinea=" + alinea + '}';

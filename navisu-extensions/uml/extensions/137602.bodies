@@ -1,0 +1,19 @@
+class SdShom
+!!!184322.java!!!	SdShom(in filename : String, in name : String, in description : String)
+        this.filename = filename;
+        this.name = name;
+        this.description = description;
+!!!184450.java!!!	getDescription() : String
+        return description;
+!!!184578.java!!!	setDescription(in description : String) : void
+        this.description = description;
+!!!184706.java!!!	getName() : String
+        return name;
+!!!184834.java!!!	setName(in name : String) : void
+        this.name = name;
+!!!184962.java!!!	getFilename() : String
+        return filename;
+!!!185090.java!!!	setFilename(in filename : String) : void
+        this.filename = filename;
+!!!185218.java!!!	toString() : String
+        return "SdShom{" + "filename=" + filename + ", name=" + name + ", description=" + description + '}';

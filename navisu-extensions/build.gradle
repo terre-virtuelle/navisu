@@ -7,5 +7,6 @@ dependencies {
     compile project(':navisu-instruments')
     compile project(':navisu-charts')
     compile project(':navisu-navigation')
+    compile project(':navisu-bathymetry')
     compile fileTree(dir: 'lib', include: '*.jar') 
 }

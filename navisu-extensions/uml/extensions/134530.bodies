@@ -1,0 +1,14 @@
+class Tabular
+!!!188674.java!!!	Tabular(in numero : String, inout txt : Txt)
+        this.numero = numero;
+        this.txt = txt;
+!!!188802.java!!!	getTxt() : Txt
+        return txt;
+!!!188930.java!!!	setTxt(inout txt : Txt) : void
+        this.txt = txt;
+!!!189058.java!!!	getNumero() : String
+        return numero;
+!!!189186.java!!!	setNumero(in numero : String) : void
+        this.numero = numero;
+!!!189314.java!!!	toString() : String
+        return "Tableau{" + "numero=" + numero + ", txt=" + txt + '}';

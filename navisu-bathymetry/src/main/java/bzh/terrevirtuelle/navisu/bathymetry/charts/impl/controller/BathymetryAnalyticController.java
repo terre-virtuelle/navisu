@@ -204,7 +204,7 @@ public class BathymetryAnalyticController {
                 }
             }
             if (line < WIDTH && col < HEIGHT) {
-                gridPoints[line][col] = c.getDepth();
+                gridPoints[line][col] = c.getElevation();
             }
         }
          ArrayList<AnalyticSurface.GridPointAttributes> attributesList = new ArrayList<>();

@@ -1,0 +1,24 @@
+class Editor
+!!!165890.java!!!	Editor(inout identity : Identity, inout address : Address, inout contact : Contact, in number : String)
+        this.identity = identity;
+        this.address = address;
+        this.contact = contact;
+        this.number = number;
+!!!166018.java!!!	getNumber() : String
+        return number;
+!!!166146.java!!!	setNumber(in number : String) : void
+        this.number = number;
+!!!166274.java!!!	getContact() : Contact
+        return contact;
+!!!166402.java!!!	setContact(inout contact : Contact) : void
+        this.contact = contact;
+!!!166530.java!!!	getAddress() : Address
+        return address;
+!!!166658.java!!!	setAddress(inout address : Address) : void
+        this.address = address;
+!!!166786.java!!!	getIdentity() : Identity
+        return identity;
+!!!166914.java!!!	setIdentity(inout identity : Identity) : void
+        this.identity = identity;
+!!!167042.java!!!	toString() : String
+        return "Editor{" + "identity=" + identity + ", address=" + address + ", contact=" + contact + ", number=" + number + '}';

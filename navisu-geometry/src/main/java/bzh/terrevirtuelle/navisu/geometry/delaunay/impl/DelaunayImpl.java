@@ -43,7 +43,7 @@ public class DelaunayImpl
 
         Delaunay_Triangulation dt = new Delaunay_Triangulation();
         points.stream().forEach((pt) -> {
-            dt.insertPoint(new Point_dt(pt.getLat(), pt.getLon(), elevation - pt.getElevation()));
+            dt.insertPoint(new Point_dt(pt.getLatitude(), pt.getLongitude(), elevation - pt.getElevation()));
         });
         return dt.get_triangles();
     }
@@ -58,13 +58,13 @@ public class DelaunayImpl
                 Point3D pt2 = points[k][l + 1];
                 Point3D pt3 = points[k + 1][l + 1];
                 triangles.add(new Triangle_dt(
-                        new Point_dt(pt0.getLat(), pt0.getLon(), pt0.getElevation()),
-                        new Point_dt(pt1.getLat(), pt1.getLon(), pt1.getElevation()),
-                        new Point_dt(pt3.getLat(), pt3.getLon(), pt3.getElevation())));
+                        new Point_dt(pt0.getLatitude(), pt0.getLongitude(), pt0.getElevation()),
+                        new Point_dt(pt1.getLatitude(), pt1.getLongitude(), pt1.getElevation()),
+                        new Point_dt(pt3.getLatitude(), pt3.getLongitude(), pt3.getElevation())));
                 triangles.add(new Triangle_dt(
-                        new Point_dt(pt0.getLat(), pt0.getLon(), pt0.getElevation()),
-                        new Point_dt(pt3.getLat(), pt3.getLon(), pt3.getElevation()),
-                        new Point_dt(pt2.getLat(), pt2.getLon(), pt2.getElevation())));
+                        new Point_dt(pt0.getLatitude(), pt0.getLongitude(), pt0.getElevation()),
+                        new Point_dt(pt3.getLatitude(), pt3.getLongitude(), pt3.getElevation()),
+                        new Point_dt(pt2.getLatitude(), pt2.getLongitude(), pt2.getElevation())));
             }
 
         }
@@ -77,7 +77,7 @@ public class DelaunayImpl
         Delaunay_Triangulation dt = new Delaunay_Triangulation();
 
         points.stream().forEach((pt) -> {
-            dt.insertPoint(new Point_dt(pt.getLat(), pt.getLon(), pt.getElevation()));
+            dt.insertPoint(new Point_dt(pt.getLatitude(), pt.getLongitude(), pt.getElevation()));
         });
         return dt;
     }

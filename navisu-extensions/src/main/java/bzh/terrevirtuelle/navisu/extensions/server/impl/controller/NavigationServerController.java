@@ -11,8 +11,6 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverMa
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
-import bzh.terrevirtuelle.navisu.extensions.client.Client;
 import bzh.terrevirtuelle.navisu.extensions.commands.Command;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
@@ -23,7 +21,6 @@ import java.io.StringWriter;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javax.xml.bind.JAXBException;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.VertxFactory;
@@ -31,6 +28,7 @@ import org.vertx.java.core.buffer.Buffer;
 import org.vertx.java.core.http.HttpServerRequest;
 import org.vertx.java.core.http.ServerWebSocket;
 
+//import org.vertx.java.core.Vertx;
 /**
  *
  * @author serge
@@ -42,14 +40,13 @@ public class NavigationServerController {
     protected static final Logger LOGGER = Logger.getLogger(NavigationServerController.class.getName());
     private static NavigationServerController INSTANCE;
 
-    private GuiAgentServices guiAgentServices;
-    private DriverManagerServices driverManagerServices;
-    private WebDriverManagerServices webDriverManagerServices;
-    private InstrumentDriverManagerServices instrumentDriverManagerServices;
-    private DatabaseDriverManagerServices databaseDriverManagerServices;
+    private final GuiAgentServices guiAgentServices;
+    private final DriverManagerServices driverManagerServices;
+    private final WebDriverManagerServices webDriverManagerServices;
+    private final InstrumentDriverManagerServices instrumentDriverManagerServices;
+    private final DatabaseDriverManagerServices databaseDriverManagerServices;
     private NavigationCmdComponentServices navigationCmdComponentServices;
     private NavigationDataSet navigationDataSet;
-    private NavigationViewSet navigationViewSet;
 
     private Properties properties;
     private final String PROPERTIES_NAME = "properties/navigation.properties";
@@ -97,12 +94,12 @@ public class NavigationServerController {
 
     public void init() {
         this.port = new Integer(properties.getProperty("port").trim());
-        initVertx();
+        initServer();
     }
 
     public void init(int port) {
         this.port = port;
-        initVertx();
+        initServer();
     }
 
     private void initProperties() {
@@ -114,12 +111,13 @@ public class NavigationServerController {
         }
     }
 
-    private void initVertx() {
+    private void initServer() {
         cmdVertx = VertxFactory.newVertx();
         try {
             cmdVertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
                 if (ws.path().equals(START_CMD)) {
                     ws.dataHandler((Buffer data) -> {
+                       // System.out.println("data.toString() : " + data.toString());
                         command = command(data.toString());
                         if (command != null) {
                             if (command.getNavigationData() != null) {
@@ -157,7 +155,7 @@ public class NavigationServerController {
                 }
             }).listen(port);
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
@@ -169,40 +167,8 @@ public class NavigationServerController {
         } catch (JAXBException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-        LOGGER.log(Level.INFO, data);
-
-        /**
-         * If a ArCommand with cmd=IPInfo is send, it will connect to the Server
-         * provided in arg
-         */
-        if (navCmd.getCmd().equals("IPInfo") && navCmd.getArg() != null) {
-                Client.setInstance(navCmd.getArg());
-                Client.connectToServer();
-        }
-
-        /**
-         * If a ArCommand with cmd=ServerClosing is send, it will close its
-         * connection
-         */
-        if (navCmd.getCmd().equals("ServerClosing")) {
-            try {
-                Client.disconnectFromServer();
-                LOGGER.log(Level.INFO, "Disconnected from Server");
-            } catch (IOException ex) {
-                Logger.getLogger(NavigationServerController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-                /**
-         * If a ArCommand with cmd=ActionMenu is send, it will execute the action
-         * provided in arg
-         */
-        if (navCmd.getCmd().equals("ActionMenu") && navCmd.getArg() != null) {
-            String instrumentDriver = navCmd.getArg();
-            Platform.runLater(() -> {
-            instrumentDriverManagerServices.open(instrumentDriver);
-            });
-        }
+      //  LOGGER.log(Level.INFO, data);
+       // System.out.println("command : " + navCmd);
         return navCmd;
     }
 

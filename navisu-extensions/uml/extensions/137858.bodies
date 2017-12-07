@@ -1,0 +1,20 @@
+class Secondary
+!!!185858.java!!!	Secondary(in idref : String)
+        this.idref = idref;
+!!!185986.java!!!	Secondary(in idref : String, in name : String)
+        this.idref = idref;
+        this.value = name;
+!!!186114.java!!!	getValue() : String
+        return value;
+!!!186242.java!!!	setValue(in value : String) : void
+        this.value = value;
+!!!186370.java!!!	getIdref() : String
+        return idref;
+!!!186498.java!!!	setIdref(in idref : String) : void
+        this.idref = idref;
+!!!186626.java!!!	contains(inout str : CharSequence) : boolean
+        return value.contains(str);
+!!!186754.java!!!	shorten() : String
+        return value;
+!!!186882.java!!!	toString() : String
+        return "Secondaire{" + "idref=" + idref + ", name=" + value + '}';

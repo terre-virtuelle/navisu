@@ -1,0 +1,13 @@
+class Txt
+!!!194562.java!!!	Txt(in value : String)
+        this.value = value;
+!!!194690.java!!!	getValue() : String
+        return value;
+!!!194818.java!!!	setValue(in value : String) : void
+        this.value = value;
+!!!194946.java!!!	contains(inout str : CharSequence) : boolean
+        return value.contains(str);
+!!!195074.java!!!	shorten() : String
+        return value;
+!!!195202.java!!!	toString() : String
+        return "Txt{" + value + '}';

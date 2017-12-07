@@ -1,0 +1,14 @@
+class NavigationView
+!!!149890.java!!!	NavigationView(in x : double, in y : double)
+        this.x = x;
+        this.y = y;
+!!!150018.java!!!	getY() : double
+        return y;
+!!!150146.java!!!	setY(in y : double) : void
+        this.y = y;
+!!!150274.java!!!	getX() : double
+        return x;
+!!!150402.java!!!	setX(in x : double) : void
+        this.x = x;
+!!!150530.java!!!	toString() : String
+        return "NavigationView{" + "x=" + x + ", y=" + y + '}';

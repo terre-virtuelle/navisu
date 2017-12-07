@@ -1,0 +1,14 @@
+class Document
+!!!164994.java!!!	Document(inout metadata : Metadata, inout book : Book)
+        this.metadata = metadata;
+        this.book = book;
+!!!165122.java!!!	getBook() : Book
+        return book;
+!!!165250.java!!!	setBook(inout book : Book) : void
+        this.book = book;
+!!!165378.java!!!	getMetadata() : Metadata
+        return metadata;
+!!!165506.java!!!	setMetadata(inout metadata : Metadata) : void
+        this.metadata = metadata;
+!!!165634.java!!!	toString() : String
+        return "Document{" + "metadata=" + metadata + ", book=" + book + '}';

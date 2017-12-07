@@ -1,0 +1,45 @@
+class CameraComponentController
+!!!130178.java!!!	CameraComponentController()
+        this.wwd = GeoWorldWindViewImpl.getWW();
+        this.viewWW = wwd.getView();
+        navigationDataSet = new NavigationDataSet();
+!!!130306.java!!!	getInstance() : CameraComponentController
+        if (INSTANCE == null) {
+            INSTANCE = new CameraComponentController();
+        }
+        return INSTANCE;
+!!!130434.java!!!	updateTarget(inout ship : Ship) : void
+        if (ship.isGpsTarget()) {
+            viewWW.setPitch(Angle.fromDegrees(90.0));
+            viewWW.setHeading(Angle.fromDegrees(ship.getHeading() + 90.0));
+            viewWW.goTo(
+                    new Position(new LatLon(Angle.fromDegrees(ship.getLatitude()),
+                            Angle.fromDegrees(ship.getLongitude() - 0.0010)), 100.0), 100
+            );
+        }
+!!!130562.java!!!	updateTarget(inout camera : Camera) : NavigationDataSet
+        if (camera != null) {
+            viewWW.setHeading(Angle.fromDegrees(camera.getHeading()));
+            viewWW.setFieldOfView(Angle.fromDegrees(camera.getFieldOfView()));
+            viewWW.setPitch(Angle.fromDegrees(camera.getPitch()));
+            if (first == true) {
+                viewWW.setEyePosition(new Position(Angle.fromDegrees(camera.getLatitude()),
+                        Angle.fromDegrees(camera.getLongitude()), 100.0));
+            } else {
+                viewWW.goTo(new Position(Angle.fromDegrees(camera.getLatitude()),
+                        Angle.fromDegrees(camera.getLongitude()), 100.0), 100.0);
+            }
+            wwd.redrawNow();
+        }
+        if (first) {
+            navigationDataSet.clear();
+            s57Controllers = s57ChartComponentServices.getS57Controllers();
+            s57Controllers.stream().forEach((S57Controller s) -> {
+                Buoyage buoyage = (Buoyage) s.getNavigationData();
+                navigationDataSet.add(buoyage);
+            });
+            first = false;
+        }
+        return navigationDataSet;
+!!!130690.java!!!	setS57ChartComponentServices(inout s57ChartComponentServices : S57ChartComponentServices) : void
+        this.s57ChartComponentServices = s57ChartComponentServices;

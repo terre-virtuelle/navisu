@@ -32,7 +32,7 @@ public class JTSImpl
     public List<Coordinate> toListCoordinates(List<Point3D> pts) {
         List<Coordinate> coordJTSs = new ArrayList<>();
         pts.stream().forEach((p) -> {
-            coordJTSs.add(new Coordinate(p.getLon(), p.getLat(), p.getElevation()));
+            coordJTSs.add(new Coordinate(p.getLongitude(), p.getLatitude(), p.getElevation()));
         });
         return coordJTSs;
     }
@@ -42,7 +42,7 @@ public class JTSImpl
         Coordinate[] tmp = new Coordinate[pts.size()];
         for (int i = 0; i < tmp.length; i++) {
             Point3D pt = pts.get(i);
-            tmp[i] = new Coordinate(pt.getLon(), pt.getLat(), pt.getElevation());
+            tmp[i] = new Coordinate(pt.getLongitude(), pt.getLatitude(), pt.getElevation());
         }
         return tmp;
     }
@@ -75,7 +75,7 @@ public class JTSImpl
     @Override
     public boolean contains(Geometry geom, Point3D pt3D) {
         boolean result;
-        Coordinate coord = new Coordinate(pt3D.getLon(), pt3D.getLat(), 100);
+        Coordinate coord = new Coordinate(pt3D.getLongitude(), pt3D.getLatitude(), 100);
         GeometryFactory geometryFactory = new GeometryFactory();
         Point pt = geometryFactory.createPoint(coord);
         result = !geom.contains(pt);

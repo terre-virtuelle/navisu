@@ -39,12 +39,11 @@ public class Client {
 
     private static int num = 0;
 
-    private static final int PORT = 8899;
+    private static final int PORT = 9090;
     private static String HOST = "localhost";
 
     public Client() {
         INSTANCE=this;
-        connectToServer();
     }
 
     public static Client getInstance() {
@@ -139,50 +138,11 @@ public class Client {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
             Logger.getLogger(Client.class.getName()).log(Level.INFO, "Connected");
-
+out.println("/");
             //To Comment when using LeapMotion.
             //Simulate an Display Command Send to RA
             Client.openMenu();
             Thread.sleep(1000);
-            Client.rightMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.selectMenu();
-            Thread.sleep(1000);
-            Client.rightMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.rightMenu();
-            Thread.sleep(1000);
-            Client.rightMenu();
-            Thread.sleep(1000);
-            Client.selectMenu();
-            Thread.sleep(1000);
-            Client.selectMenu();
-            Thread.sleep(1000);
-            Client.selectMenu();
-            Thread.sleep(1000);
-            Client.closeMenu();
-            Thread.sleep(1000);
-            Client.openMenu();
-            Thread.sleep(1000);
-            Client.closeMenu();
         } catch (InterruptedException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -205,6 +165,6 @@ public class Client {
      */
     public static void main(String[] args) throws Exception {
         Client client = new Client();
-        // client.connectToServer();
+        client.connectToServer();
     }
 }

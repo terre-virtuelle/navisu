@@ -1,0 +1,52 @@
+class NavigationalWarnings
+!!!140674.java!!!	NavigationalWarnings()
+        super(0, 0.0, 0.0);
+!!!140802.java!!!	NavigationalWarnings(in id : long, in lat : double, in lon : double)
+        super(id, lat, lon);
+!!!140930.java!!!	NavigationalWarnings(in id : long, in geometry : String)
+        super(id, geometry);
+!!!141058.java!!!	NavigationalWarnings(in id : long, in lat : double, in lon : double, in globalZone : String, in description : String, in expirationDate : String, in broadcastTime : String, in restriction : String, in type : String)
+        super(id, lat, lon);
+        this.globalZone = globalZone;
+        this.description = description;
+        this.expirationDate = expirationDate;
+        this.broadcastTime = broadcastTime;
+        this.restriction = restriction;
+        this.type = type;
+!!!141186.java!!!	getGlobalZone() : String
+        return globalZone;
+!!!141314.java!!!	setGlobalZone(in globalZone : String) : void
+        this.globalZone = globalZone;
+!!!141442.java!!!	getDescription() : String
+        return description;
+!!!141570.java!!!	setDescription(in description : String) : void
+        this.description = description;
+!!!141698.java!!!	getExpirationDate() : String
+        return expirationDate;
+!!!141826.java!!!	setExpirationDate(in expirationDate : String) : void
+        this.expirationDate = expirationDate;
+!!!141954.java!!!	getBroadcastTime() : String
+        return broadcastTime;
+!!!142082.java!!!	setBroadcastTime(in broadcastTime : String) : void
+        this.broadcastTime = broadcastTime;
+!!!142210.java!!!	getRestriction() : String
+        return restriction;
+!!!142338.java!!!	setRestriction(in restriction : String) : void
+        this.restriction = restriction;
+!!!142466.java!!!	getType() : String
+        return type;
+!!!142594.java!!!	setType(in type : String) : void
+        this.type = type;
+!!!142722.java!!!	toString() : String
+        return "Avurnav{" + super.toString() + "globalZone=" + globalZone + ", description=" + description + ", expirationDate=" + expirationDate + ", broadcastTime=" + broadcastTime + ", restriction=" + restriction + ", type=" + type + '}';
+!!!142850.java!!!	printf() : String
+        String tmp = "";
+        if (id != 0) {
+            tmp = "Avurnav : " + id + "\n"
+                    + "GlobalZone : " + globalZone + "\n"
+                    + "BroadcastTime : " + broadcastTime + "\n"
+                    + "ExpirationDate : " + expirationDate + "\n"
+                    + "Description : " + description + "\n\n";
+
+        }
+        return tmp;
