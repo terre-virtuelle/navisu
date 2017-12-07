@@ -22,7 +22,7 @@
                         
                         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="104.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@navirecompass.png" />
+                                <Image url="@cssImages/navirecompass.png" />
                             </image>
                         </ImageView>
                         <Pane fx:id="couronne" layoutX="16.0" layoutY="10.0" prefHeight="225.0" prefWidth="225.0" styleClass="compass-couronne" />

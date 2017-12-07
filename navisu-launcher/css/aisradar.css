@@ -93,3 +93,11 @@
     -fx-fill : -fx-color-typo;
     -fx-alignment: CENTER;
 }
+.radar-faisceau{
+ -fx-background-image: url(cssImages/radarfaisceau600.png) ;
+ -fx-content-display: CENTER;
+ -fx-background-repeat:no-repeat;
+}
+.beam{
+    -fx-fill: linear-gradient(-fx-line-base-trans10 0%, -fx-line-base-trans30 25%, -fx-line-base-trans60 75%, -fx-line-base 100%);
+}

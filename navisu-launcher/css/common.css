@@ -106,6 +106,20 @@
     -fx-background-color: #ff0000;
     -fx-background-radius: 20;
 }
+/*---------- jour/nuit -----------*/
+.journuit{
+-fx-background-image: url(cssImages/journuit.png) ;
+    -fx-background-repeat:no-repeat;
+    
+    -fx-background-radius: 0;
+    -fx-background-size: contain;
+}
+.journuit:hover{
+    -fx-background-image: url(cssImages/journuit_nuit.png) ;
+}
+.journuit:focused {
+    -fx-background-image: url(cssImages/journuit_nuit.png) ;
+}
 /*----------- typos communes ----------- */
 .instrumenttitle{
     -fx-font: 20px "Roboto Cn";

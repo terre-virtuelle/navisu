@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.instruments.template.impl.InstrumentTemplateImp
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
@@ -29,15 +31,18 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 public class InstrumentTemplateController
         extends Widget2DController
         implements Initializable {
-
+private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private final String FXML = "InstrumentTemplate.fxml";
+    String viewgroupstyle = "common.css";
     @FXML
     public Group view;
     @FXML
-    public ImageView quit;
+    public Pane quit;
 
     protected InstrumentTemplateImpl instrument;
     protected ComponentManager cm = ComponentManager.componentManager;
+    String uri = CSS_STYLE_PATH + viewgroupstyle;
+    
     /*
      Events subscribe zone
     
@@ -56,6 +61,8 @@ public class InstrumentTemplateController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        
+        view.getStylesheets().add(uri);
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
         });

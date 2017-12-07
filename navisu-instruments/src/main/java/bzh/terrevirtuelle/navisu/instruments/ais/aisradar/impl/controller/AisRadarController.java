@@ -74,7 +74,7 @@ public class AisRadarController
     @FXML
     public Pane viewpane;
     @FXML
-    public ImageView faisceau;
+    public Group faisceau;
     @FXML
     public double route = 0.0;
     @FXML

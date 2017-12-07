@@ -1,0 +1,46 @@
+/* CSS Document */
+
+@import "common.css";
+/*******************************************************************************
+ *                                                                             *
+ * compass                                                  *
+ *                                                                             *
+ ******************************************************************************/
+
+
+.compass-ticks{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width : 5px;
+    -fx-fill: #143b28;
+}
+.compass-ticks-quarter{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width : 10px;
+    -fx-fill: #143b28;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * GPS                                                                         *
+ *                                                                             *
+ ******************************************************************************/
+gps-circle, .gps-line{
+    -fx-stroke: -fx-line-base;
+    -fx-fill: -fx-base-trans10;  
+}
+.gps-line, .gps-ticks {
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 1;
+}
+.gps-ticks10{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 3;
+}
+.gps-degrees{
+  -fx-font: 20pt "Roboto Cn";
+  -fx-font-weight: bold;
+  -fx-fill:-fx-line-base; 
+}
+.gps-sat{
+    -fx-fill : #fff90055;
+}

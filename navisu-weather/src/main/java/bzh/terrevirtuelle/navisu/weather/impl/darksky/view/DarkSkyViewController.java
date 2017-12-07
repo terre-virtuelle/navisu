@@ -140,6 +140,7 @@ public class DarkSkyViewController
     String FXML = "weatherViewPanel.fxml";
     private ForecastIO fio;
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    private static final String CSS_ICONES_PATH = Paths.get(System.getProperty("user.dir") + "/css/cssImages/meteoicons/").toUri().toString();
     public String iconadress = "";
     public String forecasticon = "";
 

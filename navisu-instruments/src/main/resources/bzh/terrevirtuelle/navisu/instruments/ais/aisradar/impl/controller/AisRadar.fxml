@@ -5,9 +5,10 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Arc?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
@@ -1375,11 +1376,25 @@
                         <Text fx:id="longitude" fill="#c2f8c4" layoutX="800.0" layoutY="900.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="radaraisvalue" text="longitude" textAlignment="CENTER" wrappingWidth="200.0" />
                     </children>
                 </Group>
-                <ImageView fx:id="faisceau" blendMode="LIGHTEN" fitHeight="600.0" fitWidth="600.0" layoutX="100.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true" scaleX="1.15" scaleY="1.15" styleClass="screen-pane" visible="true">
-                    <image>
-                        <Image url="@radarfaisceau600.png" />
-                    </image>
-                </ImageView>
+            <Pane fx:id="faisceaux" layoutX="100.0" layoutY="130.0" prefHeight="600.0" prefWidth="600.0" scaleX="1.15" scaleY="1.15" styleClass="radar-faisceau" visible="false" />
+            <Group fx:id="faisceau" layoutX="100.0" layoutY="130.0" scaleX="1.15" scaleY="1.15">
+               <children>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0">
+                     <children>
+                        <Arc layoutX="300.0" layoutY="300.0" length="40.0" radiusX="300.0" radiusY="300.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" type="ROUND">
+                           <fill>
+                              <LinearGradient endX="0.47619047619047616" endY="0.7" startX="0.5428571428571428" startY="1.0">
+                                 <stops>
+                                    <Stop color="#2da3b2de" />
+                                    <Stop color="#ffffff00" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </fill>
+                        </Arc>
+                     </children>
+                  </Pane>
+               </children>
+            </Group>
                 <Group fx:id="aisbuttonpanel" layoutY="-100.0">
                     <children>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" height="900.0" layoutX="800.0" layoutY="100.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0" />

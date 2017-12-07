@@ -3,4 +3,5 @@
     <system systemId="http://javafx.com/javafx/8.0.40" uri="www.oracle.com/technetwork/java/javase/overview/index.html"/>
     <system systemId="http://javafx.com/javafx/8" uri="www.oracle.com/technetwork/java/javase/overview/index.html"/>
     <system systemId="http://javafx.com/javafx/8.0.60" uri="www.oracle.com/technetwork/java/javase/overview/index.html"/>
+    <system systemId="http://javafx.com/javafx/8.0.111" uri="www.oracle.com/technetwork/java/javase/overview/index.html"/>
 </catalog>

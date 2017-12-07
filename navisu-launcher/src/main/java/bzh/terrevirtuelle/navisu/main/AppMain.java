@@ -146,6 +146,7 @@ import bzh.terrevirtuelle.navisu.leapmotion.impl.LeapMotionComponentImpl;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
 import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
+import bzh.terrevirtuelle.navisu.main.Configuration;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.DisplayImpl;
