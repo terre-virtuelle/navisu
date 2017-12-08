@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><command>
+
+Request :
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<command>
     <cmd>cmd</cmd>
     <camera>
         <latitude>0.0</latitude>
@@ -9,3 +12,54 @@
         <nearClipDistance>4000.0</nearClipDistance>
     </camera>
 </command>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Request :
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<command>
+    <cmd>BathymetryCmd</cmd>
+    <depth>
+        <latitude>48.313</latitude>
+        <longitude>-4.6214</longitude>
+        <elevation>0.0</elevation>
+        <id>0</id>
+    </depth>
+</command>
+
+Response XML :
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<navigationDataSet>
+    <point3d>
+        <latitude>48.3140869140625</latitude>
+        <longitude>-4.62025260925293</longitude>
+        <elevation>29.670000076293945</elevation>
+        <id>0</id>
+    </point3d>
+    <point3d>
+        <latitude>48.31322479248047</latitude>
+        <longitude>-4.62025260925293</longitude>
+        <elevation>29.030000686645508</elevation>
+        <id>0</id>
+    </point3d>
+</navigationDataSet>
+
+Object :
+NavigationDataSet={{48.3140869140625, -4.62025260925293, 29.670000076293945}, 
+                   {48.31322479248047, -4.62025260925293, 29.030000686645508}}
+                                     

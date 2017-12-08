@@ -117,7 +117,7 @@ public class NavigationServerController {
             cmdVertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
                 if (ws.path().equals(START_CMD)) {
                     ws.dataHandler((Buffer data) -> {
-                       // System.out.println("data.toString() : " + data.toString());
+                       System.out.println("data.toString() : " + data.toString());
                         command = command(data.toString());
                         if (command != null) {
                             if (command.getNavigationData() != null) {
