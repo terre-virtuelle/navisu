@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.charts.util;
+package bzh.terrevirtuelle.navisu.topology.impl;
 
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
+import bzh.terrevirtuelle.navisu.topology.Topology;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import com.vividsolutions.jts.algorithm.Centroid;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.CoordinateList;
@@ -24,14 +26,30 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.capcaval.c3.component.ComponentState;
 
 /**
  *
- * @author serge
+ * @author Serge Morvan
+ * @date Dec 8, 2017
  */
-public class WwjJTS {
+public class TopologyImpl
+        implements Topology, TopologyServices, ComponentState {
 
-    public static String toPolygonWkt(List<? extends Position> positions) {
+    @Override
+    public void componentStarted() {
+        /* Nothing to do here */ }
+
+    @Override
+    public void componentStopped() {
+        /* Nothing to do here */ }
+
+    @Override
+    public void componentInitiated() {
+    }
+
+    @Override
+    public String wwjPositionsToPolygonWkt(List<? extends Position> positions) {
         String geometry = "POLYGON((";
         int l = positions.size();
         for (int i = 0; i < l - 1; i++) {
@@ -41,7 +59,8 @@ public class WwjJTS {
         return geometry;
     }
 
-    public static String toPolygonWkt1(List<LatLon> positions) {
+    @Override
+    public String wwjLatLonsToPolygonWkt(List<LatLon> positions) {
         String geometry = "POLYGON((";
         int l = positions.size();
         for (int i = 0; i < l - 1; i++) {
@@ -51,7 +70,8 @@ public class WwjJTS {
         return geometry;
     }
 
-    public static String toLineStringWkt(List<? extends Position> positions) {
+    @Override
+    public String wwjPositionsToLineWkt(List<? extends Position> positions) {
         if (positions != null && positions.size() > 2) {
             String geometry = "LINESTRING(";
             int l = positions.size();
@@ -65,7 +85,8 @@ public class WwjJTS {
         }
     }
 
-    public static MultiPoint toMultiPoint(Set<Pair<Double, Double>> positions) {
+    @Override
+    public MultiPoint wwjPositionsToJtsMultiPoint(Set<Pair<Double, Double>> positions) {
         List<Coordinate> coordinates = new ArrayList<>();
         for (Pair<Double, Double> c : positions) {
             coordinates.add(new Coordinate(c.getX(), c.getY()));
@@ -75,8 +96,8 @@ public class WwjJTS {
         return geometryFactory.createMultiPoint(coordinates.toArray(coordinates1));
     }
 
-    public static String surfacePolylinesToWkt(List<SurfacePolylines> polylines) {
-        //MULTILINESTRING((3 4,10 50,20 25),(-5 -8,-10 -8,-15 -4))
+    @Override
+    public String wwjSurfacePolylinesToWkt(List<SurfacePolylines> polylines) {
         if (polylines != null) {
             List<List<LatLon>> listListLatLon = new ArrayList<>();
             polylines.stream().map((s) -> s.getLocations()).map((ll) -> {
@@ -114,7 +135,8 @@ public class WwjJTS {
         }
     }
 
-    public static String surfacePolylinesToWktWithCoalescence(List<SurfacePolylines> polylines) {
+    @Override
+    public String wwjSurfacePolylinesToWktWithCoalescence(List<SurfacePolylines> polylines) {
         List<LatLon> tmp = new ArrayList<>();
         // Iterable<? extends LatLon> tmp;
 
@@ -144,7 +166,8 @@ public class WwjJTS {
     }
 
     @SuppressWarnings("unchecked")
-    public static Pair<Double, Double> getCentroid(String wkt) {
+    @Override
+    public Pair<Double, Double> wtkGetCentroid(String wkt) {
         WKTReader wktReader = new WKTReader();
         Geometry geometry = null;
         Pair<Double, Double> location = null;
@@ -152,7 +175,7 @@ public class WwjJTS {
             try {
                 geometry = wktReader.read(wkt);
             } catch (com.vividsolutions.jts.io.ParseException ex) {
-                Logger.getLogger(WwjJTS.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TopologyImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
             Centroid centroid;
             if (geometry != null) {
@@ -164,8 +187,19 @@ public class WwjJTS {
         return location;
     }
 
-    //<geometry>POLYGON((-4.78192 48.24402-4.78192 48.24402))</geometry>
-    public static Geometry PolygonToGeometry(Polygon polygon) {
+    @Override
+    public Polygon wktPolygonToWwjPolygon(String geometry) {
+        List<Position> positions;
+        Polygon polygon = null;
+        positions = wktPolygonToPositions(geometry);
+        if (positions != null) {
+            polygon = new Polygon(positions);
+        }
+        return polygon;
+    }
+
+    @Override
+    public Geometry wwjPolygonToJtsGeometry(Polygon polygon) {
         Iterable<? extends LatLon> latLon = polygon.getOuterBoundary();
         List<Position> positionList = new ArrayList<>();
         for (LatLon l : latLon) {
@@ -179,7 +213,8 @@ public class WwjJTS {
         return new GeometryFactory().createLineString(coordinates);
     }
 
-    public static List<Position> wktPolygonToPositionList(String geometry) {
+    @Override
+    public List<Position> wktPolygonToPositions(String geometry) {
         List<Position> positions = null;
         String[] tab0;
         String[] tab1;
@@ -207,17 +242,8 @@ public class WwjJTS {
         return positions;
     }
 
-    public static Polygon wktPolygonToPolygon(String geometry) {
-        List<Position> positions;
-        Polygon polygon = null;
-        positions = wktPolygonToPositionList(geometry);
-        if (positions != null) {
-            polygon = new Polygon(positions);
-        }
-        return polygon;
-    }
-
-    public static Polygon wktPolygonToPolygon(Geometry geometry) {
+    @Override
+    public Polygon wktPolygonToWwjPolygon(Geometry geometry) {
         Coordinate[] coordinates = geometry.getCoordinates();
         List<Position> positions = new ArrayList<>();
         for (Coordinate c : coordinates) {
@@ -227,7 +253,8 @@ public class WwjJTS {
         return polygon;
     }
 
-    public static String locationsToWKT(Iterable<? extends LatLon> locations) {
+    @Override
+    public String wwjLocationsToWKT(Iterable<? extends LatLon> locations) {
         String[] tab;
         String result = "POLYGON((";
         List<String> locList = new ArrayList<>();
@@ -246,16 +273,15 @@ public class WwjJTS {
         result += locList.get(locList.size() - 1) + "))";
         return result;
     }
-
-    public static Geometry filter(Geometry geometry, List<LatLon> pts) {
-
+    @Override
+    public Geometry filterWwjLatLonsWithGeometryJts(Geometry geometry, List<LatLon> pts){
         CoordinateList list = new CoordinateList(geometry.getCoordinates());
         list.closeRing();
         GeometryFactory geometryFactory = new GeometryFactory();
         LinearRing ring = geometryFactory.createLinearRing(list.toCoordinateArray());
         com.vividsolutions.jts.geom.Polygon polygonEnv = geometryFactory.createPolygon(ring, null);
 
-        String wkt = WwjJTS.toPolygonWkt1(pts);
+        String wkt = wwjLatLonsToPolygonWkt(pts);
         WKTReader wktReader = new WKTReader();
         Geometry geometryFiltered = null;
         Geometry polygon = null;
@@ -263,7 +289,7 @@ public class WwjJTS {
             try {
                 polygon = wktReader.read(wkt);
             } catch (com.vividsolutions.jts.io.ParseException ex) {
-                Logger.getLogger(WwjJTS.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                Logger.getLogger(TopologyImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
             if (polygonEnv.contains(polygon)) {
                 geometryFiltered = polygon;
@@ -279,5 +305,4 @@ public class WwjJTS {
         }
         return geometryFiltered;
     }
-
 }

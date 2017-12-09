@@ -20,6 +20,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyIsolated
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyLateral;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySafeWater;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialPurpose;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Daymark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
@@ -56,6 +57,7 @@ public class NavigationDataSet {
     @XmlElements({
         @XmlElement(name = "area", type = Area.class),
         @XmlElement(name = "avurnavss", type = NavigationalWarningsRSS.class),
+        @XmlElement(name = "buoyage", type = Buoyage.class),
         @XmlElement(name = "bcncar", type = BeaconCardinal.class),
         @XmlElement(name = "bcnisd", type = BeaconIsolatedDanger.class),
         @XmlElement(name = "bcnlat", type = BeaconLateral.class),
@@ -79,7 +81,8 @@ public class NavigationDataSet {
         @XmlElement(name = "ouvrage", type = Book.class),
         @XmlElement(name = "texte", type = Text.class),
         @XmlElement(name = "point3d", type = Point3D.class),
-        @XmlElement(name = "depth", type = Depth.class)
+        @XmlElement(name = "depth", type = Depth.class),
+        @XmlElement(name = "target", type = Target.class)
     }
     )
     private ConcurrentLinkedQueue<NavigationData> navigationDataQueue;

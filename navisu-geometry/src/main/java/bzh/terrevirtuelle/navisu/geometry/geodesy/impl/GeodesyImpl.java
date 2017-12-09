@@ -27,9 +27,10 @@ public class GeodesyImpl
     @Override
     public double getDistanceM(Position posA, Position posB) {
         GeodeticCalculator geoCalc = new GeodeticCalculator();
-      
+
         GlobalCoordinates wpA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
         GlobalCoordinates wpB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
+       
         return geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpB).getEllipsoidalDistance();
     }
 
@@ -44,6 +45,15 @@ public class GeodesyImpl
         Position p = new Position(Angle.fromDegrees(coordinates.getLatitude()),
                 Angle.fromDegrees(coordinates.getLongitude()), 0);
         return p;
+    }
+
+    @Override
+    public double getAzimuth(Position posA, Position posB) {
+        GeodeticCalculator geoCalc = new GeodeticCalculator();
+        GlobalCoordinates wpA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
+        GlobalCoordinates wpB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
+      
+        return geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpB).getAzimuth();
     }
 
     @Override

@@ -15,6 +15,7 @@ public class BuoyLateral extends Buoyage
     }
 
     public BuoyLateral() {
+        
     }
 
     public String getCategoryOfLateralMark() {

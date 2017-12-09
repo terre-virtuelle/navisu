@@ -18,4 +18,6 @@ public interface GeodesyServices
     double getDistanceM(Position posA, Position posB);
 
     Position getPosition(Position posA, double bearing, double distance);
+    
+    double getAzimuth(Position posA, Position posB);
 }

@@ -4,24 +4,13 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Node;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Spatial;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Model;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR_NAME;
-import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
-import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
-import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.ShomSailingDirections;
-import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
-import java.io.FileNotFoundException;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
+import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.bind.JAXBException;
 
 /**
  * Application NaVisu<br>
@@ -218,6 +207,7 @@ public class Main {
          }
          });
          */
+ /*
         NavigationDataSet navigationDataSet = new NavigationDataSet();
 
         Buoyage beaconCardinal = new BeaconCardinal(2, "POINT(5.0 2.4)");
@@ -273,6 +263,39 @@ public class Main {
         navigationList2.stream().forEach((b) -> {
             System.out.println(b);
         });
+         */
+        Buoyage beaconCardinal = new BeaconCardinal(2, "POINT(5.0 2.4)");
+        List<Class> classes = getSuperClasses(beaconCardinal);
+        classes.forEach((c) -> {
+            System.out.println("c : " + c.getSimpleName());
+        });
+        System.out.println("");
+        Light light = new Light();
+        classes = getSuperClasses(light);
+        classes.forEach((c) -> {
+            System.out.println("c : " + c.getSimpleName());
+        });
+        Area area = new Area();
+        classes = getSuperClasses(area);
+        classes.forEach((c) -> {
+            System.out.println("c : " + c.getSimpleName());
+        });
+    }
+
+    public final List<Class> getSuperClasses(Object o) {
+        List<Class> classList = new ArrayList<>();
+        Class classe = o.getClass();
+        Class superclass = classe.getSuperclass();
+        classList.add(superclass);
+        while (superclass != null) {
+            classe = superclass;
+            superclass = classe.getSuperclass();
+            if (superclass != null) {
+                classList.add(superclass);
+            }
+        }
+      
+        return classList;
     }
 
     public static void main(String[] args) {

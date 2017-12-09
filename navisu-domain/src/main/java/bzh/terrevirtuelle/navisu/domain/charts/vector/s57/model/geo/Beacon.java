@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BCNSHP;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *

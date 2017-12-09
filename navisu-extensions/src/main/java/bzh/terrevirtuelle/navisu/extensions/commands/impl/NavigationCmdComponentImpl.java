@@ -16,6 +16,7 @@ import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponent;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.extensions.camera.impl.controller.CameraCmd;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmd;
+import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import java.util.HashMap;
 import java.util.Map;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -37,6 +38,8 @@ public class NavigationCmdComponentImpl
     GpsPlotterServices gpsPlotterServices;
     @UsedService
     BathymetryDBServices bathymetryDBServices;
+    @UsedService
+    GeodesyServices geodesyServices;
 
     private CameraCmd cameraCmd;
 
@@ -66,6 +69,7 @@ public class NavigationCmdComponentImpl
         cameraCmd.setCameraComponentServices(cameraComponentServices);
         navigationCmdMap.put("CameraCmd", cameraCmd);
         navigationCmdMap.put("BathymetryCmd", BathymetryCmd.getInstance(bathymetryDBServices));
+        navigationCmdMap.put("TargetCmd", TargetCmd.getInstance(s57ChartComponentServices, geodesyServices));
         navigationCmdMap.put("NaVigationDataSetCmd", NaVigationDataSetCmd.getInstance());
         navigationCmdMap.put("OwnerShipCmd", OwnerShipCmd.getInstance(gpsPlotterServices));
     }
