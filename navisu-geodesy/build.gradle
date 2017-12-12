@@ -1,9 +1,5 @@
-
-if (!hasProperty('mainClass')) {
-    ext.mainClass = ''
-}
-
-dependencies {  
+dependencies {
+    compile fileTree(dir: 'lib', include: '*.jar') 
 }
 jar {
    destinationDir project.file('../dest')
