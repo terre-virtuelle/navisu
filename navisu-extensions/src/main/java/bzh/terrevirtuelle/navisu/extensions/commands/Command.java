@@ -23,6 +23,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.Target;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -65,7 +66,8 @@ public class Command {
         @XmlElement(name = "s57Chart", type = S57Chart.class),
         @XmlElement(name = "gpx", type = Gpx.class),
         @XmlElement(name = "camera", type = Camera.class),
-        @XmlElement(name = "depth", type = Depth.class)
+        @XmlElement(name = "depth", type = Depth.class),
+        @XmlElement(name = "target", type = Target.class)
     })
     private NavigationData navigationData = null;
     private String arg;

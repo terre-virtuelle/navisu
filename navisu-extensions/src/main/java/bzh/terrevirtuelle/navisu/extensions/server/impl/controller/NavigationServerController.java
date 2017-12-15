@@ -112,12 +112,14 @@ public class NavigationServerController {
     }
 
     private void initServer() {
+       // System.out.println("initServer");
         cmdVertx = VertxFactory.newVertx();
         try {
             cmdVertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
+              //  System.out.println("(ws.path() : " + ws.path());
                 if (ws.path().equals(START_CMD)) {
                     ws.dataHandler((Buffer data) -> {
-                       System.out.println("data.toString() : " + data.toString());
+                     //  System.out.println("data.toString() : " + data.toString());
                         command = command(data.toString());
                         if (command != null) {
                             if (command.getNavigationData() != null) {
@@ -167,8 +169,9 @@ public class NavigationServerController {
         } catch (JAXBException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-      //  LOGGER.log(Level.INFO, data);
-       // System.out.println("command : " + navCmd);
+        //LOGGER.log(Level.INFO, data);
+       // System.out.println("data : " + data);
+        //System.out.println("command : " + navCmd);
         return navCmd;
     }
 

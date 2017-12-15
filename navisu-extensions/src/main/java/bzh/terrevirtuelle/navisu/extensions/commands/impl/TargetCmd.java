@@ -9,10 +9,10 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServi
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.Target;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmd;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -52,8 +52,18 @@ public class TargetCmd
     @Override
     public NavigationDataSet doIt(NavigationData arg) {
       //  s57Controllers = new HashSet<>();
+      //  System.out.println("arg : " + arg);
+      Target target = (Target)arg;
+        System.out.println("request : " +target.getNavigationData().getClass().getSimpleName());
+       // System.out.println(target.getLatitude());
+       // System.out.println(target.getLongitude());
+        //System.out.println(target.getDistance());
+       // System.out.println(target.getAzimuth());
         s57Controllers = s57ChartComponentServices.getS57Controllers();
-        System.out.println("s57Controllers : " + s57Controllers);
+      //  System.out.println("s57Controllers : " + s57Controllers);
+      for(S57Controller s : s57Controllers){
+          System.out.println("s : " + s.getNavigationData().getClass().getSimpleName());
+      }
        /*
         Depth depth = (Depth) arg;
         double lat = depth.getLatitude();
