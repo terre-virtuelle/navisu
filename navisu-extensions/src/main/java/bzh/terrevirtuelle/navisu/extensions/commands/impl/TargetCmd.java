@@ -8,14 +8,24 @@ package bzh.terrevirtuelle.navisu.extensions.commands.impl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
+
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.Target;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmd;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.util.WWUtil;
+import gov.nasa.worldwindx.examples.util.DirectedPath;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -58,7 +68,7 @@ public class TargetCmd
             GeodesyServices geodesyServices, LayersManagerServices layersManagerServices) {
         this.s57ChartComponentServices = s57ChartComponentServices;
         this.geodesyServices = geodesyServices;
-        this.layersManagerServices=layersManagerServices;
+        this.layersManagerServices = layersManagerServices;
         layer = layersManagerServices.getLayer(GROUP, NAME);
     }
 
@@ -92,17 +102,41 @@ public class TargetCmd
         List<Target> targets = new ArrayList<>();
         for (S57Controller s : validS57) {
             dist = geodesyServices.getDistanceM(s.getLat(), s.getLon(), lat, lon);
-            azi = geodesyServices.getAzimuth(s.getLat(), s.getLon(), lat, lon);
-            System.out.println("dist : " + dist + "azi :  " + azi);
-            tgt = new Target(s.getNavigationData(), s.getNavigationData().getLatitude(), s.getNavigationData().getLongitude(), id, dist, azi);
-
+            azi = geodesyServices.getAzimuth(lat, lon, s.getLat(), s.getLon());
+            tgt = new Target(s.getNavigationData(), s.getNavigationData().getLatitude(),
+                    s.getNavigationData().getLongitude(), id, dist, azi);
             targets.add(tgt);
             id++;
         }
         targets.sort(Comparator.comparingDouble(Target::getDistance));
         navigationDataSet.add(targets.get(0));
-        PointPlacemark pp = new PointPlacemark(Position.fromDegrees(lat,lon, 1e4));
+
+        PointPlacemark pp = new PointPlacemark(Position.fromDegrees(lat, lon, 10));
+        pp.setValue(AVKey.DISPLAY_NAME, "Lat : " + Double.toString(lat) + "\n "
+                + "Lon : " + Double.toString(lon));
         layer.addRenderable(pp);
+
+        ShapeAttributes attrs = new BasicShapeAttributes();
+        attrs.setOutlineMaterial(Material.RED);
+        attrs.setOutlineWidth(2d);
+
+        // Create a path, set some of its properties and set its attributes.
+        ArrayList<Position> pathPositions = new ArrayList<>();
+        pathPositions.add(Position.fromDegrees(lat, lon, 10));
+        pathPositions.add(Position.fromDegrees(targets.get(0).getNavigationData().getLatitude(),
+                targets.get(0).getNavigationData().getLongitude(), 10));
+        Path path =  new DirectedPath(pathPositions);
+        path.setAttributes(attrs);
+        path.setVisible(true);
+        path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+        path.setPathType(AVKey.GREAT_CIRCLE);
+        path.setValue(AVKey.DISPLAY_NAME, 
+                "distance = " 
+                + String.format("%.0f",targets.get(0).getDistance()) + " m \n "
+                + "azimuth : " 
+                + String.format("%.0f",targets.get(0).getAzimuth()) + "°");
+        layer.addRenderable(path);
+
         return navigationDataSet;
     }
 
@@ -121,5 +155,5 @@ public class TargetCmd
         }
         return classList;
     }
-    
+
 }
