@@ -30,7 +30,17 @@ public class GeodesyImpl
 
         GlobalCoordinates wpA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
         GlobalCoordinates wpB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
-       
+
+        return geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpB).getEllipsoidalDistance();
+    }
+
+    @Override
+    public double getDistanceM(double latA, double lonA, double latB, double lonB) {
+        GeodeticCalculator geoCalc = new GeodeticCalculator();
+
+        GlobalCoordinates wpA = new GlobalCoordinates(latA, lonA);
+        GlobalCoordinates wpB = new GlobalCoordinates(latB, lonB);
+
         return geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpB).getEllipsoidalDistance();
     }
 
@@ -48,11 +58,33 @@ public class GeodesyImpl
     }
 
     @Override
+    public Position getPosition(double latA, double lonA, double bearing, double distance) {
+        double[] endBearing = new double[1];
+        GeodeticCalculator geoCalc = new GeodeticCalculator();
+        GlobalCoordinates locA = new GlobalCoordinates(latA, lonA);
+        GlobalCoordinates coordinates = geoCalc.calculateEndingGlobalCoordinates(REFERENCE,
+                locA, bearing, distance, endBearing);
+
+        Position p = new Position(Angle.fromDegrees(coordinates.getLatitude()),
+                Angle.fromDegrees(coordinates.getLongitude()), 0);
+        return p;
+    }
+
+    @Override
     public double getAzimuth(Position posA, Position posB) {
         GeodeticCalculator geoCalc = new GeodeticCalculator();
         GlobalCoordinates wpA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
         GlobalCoordinates wpB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
-      
+
+        return geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpB).getAzimuth();
+    }
+
+    @Override
+    public double getAzimuth(double latA, double lonA, double latB, double lonB) {
+        GeodeticCalculator geoCalc = new GeodeticCalculator();
+        GlobalCoordinates wpA = new GlobalCoordinates(latA, lonA);
+        GlobalCoordinates wpB = new GlobalCoordinates(latB, lonB);
+
         return geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpB).getAzimuth();
     }
 

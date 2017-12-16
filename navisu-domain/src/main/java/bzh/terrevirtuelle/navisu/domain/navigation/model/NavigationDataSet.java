@@ -158,7 +158,7 @@ public class NavigationDataSet {
     public void print() {
         navigationDataQueue.stream().forEach((data) -> {
             if (data != null) {
-                System.out.println(data.getClass().getName());
+                System.out.println(data);
             }
         });
     }

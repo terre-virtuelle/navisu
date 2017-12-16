@@ -80,11 +80,11 @@ public class Target<T extends NavigationData>
 
     private double longitude;
 
-    private long id;
+    private long id = 0;
 
-    private double distance;
+    private double distance = -1;
 
-    private double azimuth;
+    private double azimuth = 511;
 
     public Target() {
     }
@@ -96,6 +96,19 @@ public class Target<T extends NavigationData>
         this.id = id;
         this.distance = distance;
         this.azimuth = azimuth;
+    }
+
+    public Target(T navigationData, double latitude, double longitude) {
+        this.navigationData = navigationData;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public Target(T navigationData, double latitude, double longitude, double distance) {
+        this.navigationData = navigationData;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.distance = distance;
     }
 
     /**
@@ -226,4 +239,10 @@ public class Target<T extends NavigationData>
     public void setTarget(T navigationData) {
         this.navigationData = navigationData;
     }
+
+    @Override
+    public String toString() {
+        return "Target{" + "navigationData=" + navigationData + ", latitude=" + latitude + ", longitude=" + longitude + ", id=" + id + ", distance=" + distance + ", azimuth=" + azimuth + '}';
+    }
+    
 }

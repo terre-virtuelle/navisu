@@ -17,7 +17,13 @@ public interface GeodesyServices
 
     double getDistanceM(Position posA, Position posB);
 
+    double getDistanceM(double latA, double lonA, double latB, double lonB);
+
     Position getPosition(Position posA, double bearing, double distance);
-    
+
+    Position getPosition(double latA, double lonA, double bearing, double distance);
+
     double getAzimuth(Position posA, Position posB);
+
+    double getAzimuth(double latA, double lonA, double latB, double lonB);
 }
