@@ -1,0 +1,39 @@
+class TideNon_harmonicPrediction
+!!!627842.java!!!	TideNon_harmonicPrediction(inout id : Long)
+		this.id=id;
+!!!628098.java!!!	getObjectName() : String
+		return objectName;
+!!!628226.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!628354.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!628482.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!628610.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!628738.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!628866.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!628994.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!629122.java!!!	getStatus() : String
+		return status;
+!!!629250.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!629378.java!!!	getTideAccuracyOfWaterLevel() : String
+		return tideAccuracyOfWaterLevel;
+!!!629506.java!!!	setTideAccuracyOfWaterLevel(in value : String) : void
+		this.tideAccuracyOfWaterLevel= value;
+!!!629634.java!!!	getTideMethodOfTidalPrediction() : String
+		return tideMethodOftidalPrediction;
+!!!629762.java!!!	setTideMethodOfTidalPrediction(in value : String) : void
+		this.tideMethodOftidalPrediction= value;
+!!!629890.java!!!	getTideTimeAndHeightDifferences() : String
+		return tidetimeAndHeightDifferences;
+!!!630018.java!!!	setTideTimeAndHeightDifferences(in value : String) : void
+		this.tidetimeAndHeightDifferences= value;
+!!!630146.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!630274.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

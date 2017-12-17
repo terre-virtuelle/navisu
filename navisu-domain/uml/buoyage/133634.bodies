@@ -1,0 +1,7 @@
+class BeaconIsolatedDanger
+!!!183170.java!!!	BeaconIsolatedDanger(inout id : Long)
+        this.id = id;
+!!!183298.java!!!	BeaconIsolatedDanger(in id : long, in lat : double, in lon : double)
+        super(id, lat, lon);
+!!!183426.java!!!	BeaconIsolatedDanger(in id : long, in geometry : String)
+        super(id, geometry);

@@ -1,0 +1,7 @@
+class Carto
+!!!135810.java!!!	getGeos(in i : int) : Geo
+        return (Geo) this.geos.get(i);
+!!!135938.java!!!	cardGeos() : int
+        return this.geos.size();
+!!!136066.java!!!	toString() : String
+        return "Carto{" + "geos=" + geos + '}';

@@ -1,0 +1,25 @@
+class Titles
+!!!738562.java!!!	getTitles() : Title
+        return titles;
+!!!738690.java!!!	add(inout title : Title) : void
+        titles.add(title);
+!!!738818.java!!!	getStitle() : String
+        List<String> tmp = new ArrayList<>();
+        titles.stream().map((t) -> t.getStitle()).filter((ti) -> (ti != null)).forEach((ti) -> {
+            tmp.add(ti);
+        });
+        return tmp.get(0);
+!!!738946.java!!!	getCountry() : String
+        List<String> tmp = new ArrayList<>();
+        titles.stream().map((t) -> t.getCountry()).filter((ti) -> (ti != null)).forEach((ti) -> {
+            tmp.add(ti);
+        });
+        return tmp.get(0);
+!!!739074.java!!!	getRegion() : String
+        List<String> tmp = new ArrayList<>();
+        titles.stream().map((t) -> t.getRegion()).filter((ti) -> (ti != null)).forEach((ti) -> {
+            tmp.add(ti);
+        });
+        return tmp.get(0);
+!!!739202.java!!!	toString() : String
+        return "Titles{" + "titles=" + titles + '}';

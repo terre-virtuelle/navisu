@@ -1,0 +1,15 @@
+class BeaconCardinal
+!!!182146.java!!!	BeaconCardinal(inout id : Long)
+        this.id = id;
+!!!182274.java!!!	BeaconCardinal(in id : long, in lat : double, in lon : double)
+        super(id, lat, lon);
+!!!182402.java!!!	BeaconCardinal(in id : long, in geometry : String)
+        super(id, geometry);
+!!!182530.java!!!	getCategoryOfCardinalMark() : String
+        return categoryOfMark;
+!!!182658.java!!!	getCategoryOfMarkMeaning(in cat : String) : String
+        return CATCAM.ATT.get(cat);
+!!!182786.java!!!	setCategoryOfCardinalMark(in value : String) : void
+        categoryOfMark = value;
+!!!182914.java!!!	toString() : String
+        return "BeaconCardinal{" + super.toString() + '}';

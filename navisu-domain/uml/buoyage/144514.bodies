@@ -1,0 +1,83 @@
+class MarineFarmCulture
+!!!417922.java!!!	MarineFarmCulture(inout id : Long)
+		this.id=id;
+!!!418178.java!!!	getCategoryOfMarineFarm() : String
+		return categoryOfMarineFarm;
+!!!418306.java!!!	setCategoryOfMarineFarm(in value : String) : void
+		this.categoryOfMarineFarm= value;
+!!!418434.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!418562.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!418690.java!!!	getDateStart() : String
+		return dateStart;
+!!!418818.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!418946.java!!!	getExpositionOfSounding() : String
+		return expositionOfSounding;
+!!!419074.java!!!	setExpositionOfSounding(in value : String) : void
+		this.expositionOfSounding= value;
+!!!419202.java!!!	getObjectName() : String
+		return objectName;
+!!!419330.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!419458.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!419586.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!419714.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!419842.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!419970.java!!!	getQualityOfSoundingMeasurement() : String
+		return qualityOfSoundingMeasurement;
+!!!420098.java!!!	setQualityOfSoundingMeasurement(in value : String) : void
+		this.qualityOfSoundingMeasurement= value;
+!!!420226.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!420354.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!420482.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!420610.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!420738.java!!!	getRestriction() : String
+		return restriction;
+!!!420866.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!420994.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!421122.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!421250.java!!!	getSoundingAccuracy() : String
+		return soundingAccuracy;
+!!!421378.java!!!	setSoundingAccuracy(in value : String) : void
+		this.soundingAccuracy= value;
+!!!421506.java!!!	getStatus() : String
+		return status;
+!!!421634.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!421762.java!!!	getValueOfSounding() : String
+		return valueOfSounding;
+!!!421890.java!!!	setValueOfSounding(in value : String) : void
+		this.valueOfSounding= value;
+!!!422018.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!422146.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!422274.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!422402.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!422530.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!422658.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!422786.java!!!	getWaterLevelEffect() : String
+		return waterLevelEffect;
+!!!422914.java!!!	setWaterLevelEffect(in value : String) : void
+		this.waterLevelEffect= value;
+!!!423042.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!423170.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

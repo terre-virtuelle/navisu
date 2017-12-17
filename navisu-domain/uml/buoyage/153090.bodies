@@ -1,0 +1,39 @@
+class TideHarmonicPrediction
+!!!625282.java!!!	TideHarmonicPrediction(inout id : Long)
+		this.id=id;
+!!!625538.java!!!	getObjectName() : String
+		return objectName;
+!!!625666.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!625794.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!625922.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!626050.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!626178.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!626306.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!626434.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!626562.java!!!	getStatus() : String
+		return status;
+!!!626690.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!626818.java!!!	getTideAccuracyOfWaterLevel() : String
+		return tideAccuracyOfWaterLevel;
+!!!626946.java!!!	setTideAccuracyOfWaterLevel(in value : String) : void
+		this.tideAccuracyOfWaterLevel= value;
+!!!627074.java!!!	getTideMethodOfTidalPrediction() : String
+		return tideMethodOftidalPrediction;
+!!!627202.java!!!	setTideMethodOfTidalPrediction(in value : String) : void
+		this.tideMethodOftidalPrediction= value;
+!!!627330.java!!!	getTideValueOfHarmonicConstituents() : String
+		return tideValueOfHarmonicConstituents;
+!!!627458.java!!!	setTideValueOfHarmonicConstituents(in value : String) : void
+		this.tideValueOfHarmonicConstituents= value;
+!!!627586.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!627714.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

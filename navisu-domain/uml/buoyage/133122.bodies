@@ -1,0 +1,27 @@
+class Association
+!!!171010.java!!!	Association(inout id : Long)
+		this.id=id;
+!!!171266.java!!!	getObjectName() : String
+		return objectName;
+!!!171394.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!171522.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!171650.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!171778.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!171906.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!172034.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!172162.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!172290.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!172418.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!172546.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!172674.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

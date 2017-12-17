@@ -1,0 +1,35 @@
+class Publication
+!!!724866.java!!!	Publication(inout titles : Titles, inout update : Update, inout numbering : Numbering, inout book : Book, inout copyright : Copyright)
+        this.titles = titles;
+        this.update = update;
+        this.numbering = numbering;
+        this.book = book;
+        this.copyright = copyright;
+!!!724994.java!!!	getCopyright() : Copyright
+        return copyright;
+!!!725122.java!!!	setCopyright(inout copyright : Copyright) : void
+        this.copyright = copyright;
+!!!725250.java!!!	getBook() : Book
+        return book;
+!!!725378.java!!!	setBook(inout book : Book) : void
+        this.book = book;
+!!!725506.java!!!	getNumbering() : Numbering
+        return numbering;
+!!!725634.java!!!	setNumbering(inout numbering : Numbering) : void
+        this.numbering = numbering;
+!!!725762.java!!!	getUpdate() : Update
+        return update;
+!!!725890.java!!!	setUpdate(inout update : Update) : void
+        this.update = update;
+!!!726018.java!!!	getTitles() : Titles
+        return titles;
+!!!726146.java!!!	setTitles(inout titles : Titles) : void
+        this.titles = titles;
+!!!726274.java!!!	getStitle() : String
+        return titles.getStitle();
+!!!726402.java!!!	getCountry() : String
+        return titles.getCountry();
+!!!726530.java!!!	getRegion() : String
+        return titles.getRegion();
+!!!726658.java!!!	toString() : String
+        return "Publication{" + "titles=" + titles + ", update=" + update + ", numbering=" + numbering + ", book=" + book + ", copyright=" + copyright + '}';

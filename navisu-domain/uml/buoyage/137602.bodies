@@ -1,0 +1,31 @@
+class ContiguousZone
+!!!250498.java!!!	ContiguousZone(inout id : Long)
+		this.id=id;
+!!!250754.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!250882.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!251010.java!!!	getDateStart() : String
+		return dateStart;
+!!!251138.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!251266.java!!!	getNationality() : String
+		return nationality;
+!!!251394.java!!!	setNationality(in value : String) : void
+		this.nationality= value;
+!!!251522.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!251650.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!251778.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!251906.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!252034.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!252162.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!252290.java!!!	getStatus() : String
+		return status;
+!!!252418.java!!!	setStatus(in value : String) : void
+		this.status= value;

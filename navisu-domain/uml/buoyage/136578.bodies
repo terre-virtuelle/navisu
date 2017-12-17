@@ -1,0 +1,31 @@
+class CartographicSymbol
+!!!231682.java!!!	CartographicSymbol(inout id : Long)
+		this.id=id;
+!!!231938.java!!!	getOrientation() : String
+		return orientation;
+!!!232066.java!!!	setOrientation(in value : String) : void
+		this.orientation= value;
+!!!232194.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!232322.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!232450.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!232578.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!232706.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!232834.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!232962.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!233090.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!233218.java!!!	getSymbolScalingFactor() : String
+		return symbolscalingFactor;
+!!!233346.java!!!	setSymbolScalingFactor(in value : String) : void
+		this.symbolscalingFactor= value;
+!!!233474.java!!!	getSymbolizationCode() : String
+		return symbolizationCode;
+!!!233602.java!!!	setSymbolizationCode(in value : String) : void
+		this.symbolizationCode= value;

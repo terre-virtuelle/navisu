@@ -1,0 +1,5 @@
+class DataSetGeneralInformation
+!!!137986.java!!!	getDstr() : String
+        return this.dstr;
+!!!138370.java!!!	toString() : String
+        return "DataSetGeneralInformation{" + "dstr=" + dstr + '}';

@@ -1,0 +1,7 @@
+class Daymark
+!!!279170.java!!!	Daymark(inout id : Long)
+        this.id = id;
+!!!279426.java!!!	getCategoryOfSpecialPurposeMark() : String
+        return categoryOfMark;
+!!!279554.java!!!	setCategoryOfSpecialPurposeMark(in value : String) : void
+        setCategoryOfMark(categoryOfMark);

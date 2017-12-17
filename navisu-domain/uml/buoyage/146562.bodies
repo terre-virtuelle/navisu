@@ -1,0 +1,31 @@
+class PrecautionaryArea
+!!!477314.java!!!	PrecautionaryArea(inout id : Long)
+		this.id=id;
+!!!477570.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!477698.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!477826.java!!!	getDateStart() : String
+		return dateStart;
+!!!477954.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!478082.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!478210.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!478338.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!478466.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!478594.java!!!	getRestriction() : String
+		return restriction;
+!!!478722.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!478850.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!478978.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!479106.java!!!	getStatus() : String
+		return status;
+!!!479234.java!!!	setStatus(in value : String) : void
+		this.status= value;

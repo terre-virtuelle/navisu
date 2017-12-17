@@ -1,0 +1,34 @@
+format 76
+
+iconcanvas 128770 classdiagram_ref 134530 // target
+  xyz -187 510 2000
+classcanvas 128898 class_ref 145026 // Target
+  draw_all_relations default hide_attributes default hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 139 199 2005
+end
+classcanvas 129026 class_ref 131074 // NavigationData
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 380 82 2011
+end
+classcanvas 129282 class_ref 131202 // NavigationDataSet
+  draw_all_relations default hide_attributes default hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 494 298 2017
+end
+relationcanvas 129154 relation_ref 149890 // <realization>
+  decenter_begin 61
+  from ref 128898 z 2012 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 132610 // <unidirectional association>
+  from ref 129282 z 2018 stereotype "<<ConcurrentLinkedQueue>>" xyz 417.5 216.5 2018 to ref 129026
+  role_a_pos 453 143 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 150018 // <unidirectional association>
+  decenter_begin 279
+  from ref 128898 z 2012 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

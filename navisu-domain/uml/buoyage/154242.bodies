@@ -1,0 +1,35 @@
+class TrafficSeparationSchemeRoundabout
+!!!647810.java!!!	TrafficSeparationSchemeRoundabout(inout id : Long)
+		this.id=id;
+!!!648066.java!!!	getCategoryOfTrafficSeparationScheme() : String
+		return categoryOfTrafficSeparationScheme;
+!!!648194.java!!!	setCategoryOfTrafficSeparationScheme(in value : String) : void
+		this.categoryOfTrafficSeparationScheme= value;
+!!!648322.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!648450.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!648578.java!!!	getDateStart() : String
+		return dateStart;
+!!!648706.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!648834.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!648962.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!649090.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!649218.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!649346.java!!!	getRestriction() : String
+		return restriction;
+!!!649474.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!649602.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!649730.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!649858.java!!!	getStatus() : String
+		return status;
+!!!649986.java!!!	setStatus(in value : String) : void
+		this.status= value;

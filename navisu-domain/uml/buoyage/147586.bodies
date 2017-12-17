@@ -1,0 +1,59 @@
+class RadarStation
+!!!501634.java!!!	RadarStation(inout id : Long)
+		this.id=id;
+!!!501890.java!!!	getCategoryOfRadarStation() : String
+		return categoryOfRadarStation;
+!!!502018.java!!!	setCategoryOfRadarStation(in value : String) : void
+		this.categoryOfRadarStation= value;
+!!!502146.java!!!	getCommunicationChannel() : String
+		return communicationchannel;
+!!!502274.java!!!	setCommunicationChannel(in value : String) : void
+		this.communicationchannel= value;
+!!!502402.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!502530.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!502658.java!!!	getDateStart() : String
+		return dateStart;
+!!!502786.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!502914.java!!!	getHeight() : String
+		return height;
+!!!503042.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!503170.java!!!	getObjectName() : String
+		return objectName;
+!!!503298.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!503426.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!503554.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!503682.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!503810.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!503938.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!504066.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!504194.java!!!	getStatus() : String
+		return status;
+!!!504322.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!504450.java!!!	getValueOfMaximumRange() : String
+		return valueOfMaximumRange;
+!!!504578.java!!!	setValueOfMaximumRange(in value : String) : void
+		this.valueOfMaximumRange= value;
+!!!504706.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!504834.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!504962.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!505090.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!505218.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!505346.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

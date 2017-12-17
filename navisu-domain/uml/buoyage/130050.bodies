@@ -1,0 +1,9 @@
+class Collection
+!!!136450.java!!!	Collection()
+        this.geos = new ArrayList<>();
+!!!136578.java!!!	getGeos(in i : int) : Geo
+        return (Geo) this.geos.get(i);
+!!!136706.java!!!	cardGeos() : int
+        return this.geos.size();
+!!!136834.java!!!	toString() : String
+        return "Collection{" + "geos=" + geos + '}';

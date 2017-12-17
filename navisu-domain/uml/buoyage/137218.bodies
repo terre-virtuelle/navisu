@@ -1,0 +1,64 @@
+class Coastline
+!!!243458.java!!!	Coastline(inout id : Long)
+        this.id = id;
+!!!243714.java!!!	getCategoryOfCoastline() : String
+        return categoryOfcoastline;
+!!!243842.java!!!	setCategoryOfCoastline(in value : String) : void
+        this.categoryOfcoastline = value;
+!!!243970.java!!!	getColour() : String
+        return colour;
+!!!244098.java!!!	setColour(in value : String) : void
+        this.colour = value;
+!!!244226.java!!!	getConspicuousRadar() : String
+        return conspicuousRadar;
+!!!244354.java!!!	setConspicuousRadar(in value : String) : void
+        this.conspicuousRadar = value;
+!!!244482.java!!!	getConspicuousVisually() : String
+        return conspicuousVisually;
+!!!244610.java!!!	setConspicuousVisually(in value : String) : void
+        this.conspicuousVisually = value;
+!!!244738.java!!!	getElevation() : String
+        return elevation;
+!!!244866.java!!!	setElevation(in value : String) : void
+        this.elevation = value;
+!!!244994.java!!!	getObjectName() : String
+        return objectName;
+!!!245122.java!!!	setObjectName(in value : String) : void
+        this.objectName = value;
+!!!245250.java!!!	getPictorialRepresentation() : String
+        return pictorialRepresentation;
+!!!245378.java!!!	setPictorialRepresentation(in value : String) : void
+        this.pictorialRepresentation = value;
+!!!245506.java!!!	getRecordIngdate() : String
+        return recordIngdate;
+!!!245634.java!!!	setRecordIngdate(in value : String) : void
+        this.recordIngdate = value;
+!!!245762.java!!!	getRecordingIndication() : String
+        return recordingIndication;
+!!!245890.java!!!	setRecordingIndication(in value : String) : void
+        this.recordingIndication = value;
+!!!246018.java!!!	getScaleMaximum() : String
+        return scaleMaximum;
+!!!246146.java!!!	setScaleMaximum(in value : String) : void
+        this.scaleMaximum = value;
+!!!246274.java!!!	getVerticalAccuracy() : String
+        return verticalAccuracy;
+!!!246402.java!!!	setVerticalAccuracy(in value : String) : void
+        this.verticalAccuracy = value;
+!!!246530.java!!!	getVerticaldatum() : String
+        return verticaldatum;
+!!!246658.java!!!	setVerticaldatum(in value : String) : void
+        this.verticaldatum = value;
+!!!246786.java!!!	getObjectNameInNationalLanguage() : String
+        return objectNameInNationalLanguage;
+!!!246914.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+        this.objectNameInNationalLanguage = value;
+!!!247042.java!!!	getEdges() : Edge
+        Set<Edge> edges = new HashSet<>();
+
+        HashMap<Spatial, VectorUsage> sr = getSpatialRecord();
+        sr.keySet().stream().forEach((s) -> {
+            Edge n = (Edge) s;
+            edges.add(n);
+        });
+        return edges;

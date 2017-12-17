@@ -1,0 +1,36 @@
+class SailingDirectionsParser
+!!!696578.java!!!	SailingDirectionsParser(in filename : String)
+        document = new Document();
+        textSet = new HashSet<>();
+        poiMap = new HashMap<>();
+        readData(filename);
+!!!696706.java!!!	getDocument() : Document
+        return document;
+!!!696834.java!!!	getTextSet() : Text
+        textSet = parseText();
+        return textSet;
+!!!696962.java!!!	getPoiMap() : Map<Pair<Double, Double>, String>
+        textSet = getTextSet();
+        return parsePoi();
+!!!697090.java!!!	getBook() : Book
+        return document.getBook();
+!!!697218.java!!!	getMetadata() : Metadata
+        return document.getMetadata();
+!!!697346.java!!!	getChapters() : Chapter
+        Book book = document.getBook();
+        if (book != null) {
+            return book.getChapters();
+        }
+        return null;
+!!!697474.java!!!	getCentroid() : Point
+        Map<Pair<Double, Double>, String> result = getPoiMap();
+        if (result != null) {
+            List<Coordinate> coordinates = new ArrayList<>();
+            result.keySet().stream().forEach((c) -> {
+                coordinates.add(new Coordinate(c.getX(), c.getY()));
+            });
+            Coordinate coordinates1[] = coordinates.toArray(new Coordinate[coordinates.size()]);
+            GeometryFactory geometryFactory = new GeometryFactory();
+            return geometryFactory.createMultiPoint(coordinates.toArray(coordinates1)).getCentroid();
+        }
+        return null;

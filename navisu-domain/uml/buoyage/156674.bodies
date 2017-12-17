@@ -1,0 +1,15 @@
+class Image
+!!!690946.java!!!	getLink() : String
+        return link;
+!!!691074.java!!!	setLink(in link : String) : void
+        this.link = link;
+!!!691202.java!!!	getTitle() : String
+        return title;
+!!!691330.java!!!	setTitle(in title : String) : void
+        this.title = title;
+!!!691458.java!!!	getUrl() : String
+        return url;
+!!!691586.java!!!	setUrl(in url : String) : void
+        this.url = url;
+!!!691714.java!!!	toString() : String
+        return "Image{" + "url=" + url + ", title=" + title + ", link=" + link + '}';

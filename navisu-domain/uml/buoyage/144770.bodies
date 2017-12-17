@@ -1,0 +1,19 @@
+class MooringWarpingFacility
+!!!426626.java!!!	MooringWarpingFacility(inout id : Long)
+        this.id = id;
+!!!426882.java!!!	getBuoyShape() : String
+        return buoyShape;
+!!!427010.java!!!	setBuoyShape(in value : String) : void
+        this.buoyShape = value;
+!!!427138.java!!!	getCategoryOfMooring() : String
+        return categoryOfMooring;
+!!!427266.java!!!	setCategoryOfMooring(in value : String) : void
+        this.categoryOfMooring = value;
+!!!427394.java!!!	setCategoryOfMark(in value : String) : void
+        this.categoryOfMooring = categoryOfMark = value;
+!!!427522.java!!!	getCategoryOfMark() : String
+        return categoryOfMark;
+!!!427650.java!!!	getWaterLevelEffect() : String
+        return waterLevelEffect;
+!!!427778.java!!!	setWaterLevelEffect(in value : String) : void
+        this.waterLevelEffect = value;

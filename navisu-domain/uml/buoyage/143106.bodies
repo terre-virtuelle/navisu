@@ -1,0 +1,31 @@
+class LandArea
+!!!381314.java!!!	LandArea(inout id : Long)
+		this.id=id;
+!!!381570.java!!!	getCondition() : String
+		return condition;
+!!!381698.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!381826.java!!!	getObjectName() : String
+		return objectName;
+!!!381954.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!382082.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!382210.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!382338.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!382466.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!382594.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!382722.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!382850.java!!!	getStatus() : String
+		return status;
+!!!382978.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!383106.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!383234.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

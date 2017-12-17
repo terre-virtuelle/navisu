@@ -1,0 +1,27 @@
+class ContinentalShelfArea
+!!!252546.java!!!	ContinentalShelfArea(inout id : Long)
+		this.id=id;
+!!!252802.java!!!	getNationality() : String
+		return nationality;
+!!!252930.java!!!	setNationality(in value : String) : void
+		this.nationality= value;
+!!!253058.java!!!	getObjectName() : String
+		return objectName;
+!!!253186.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!253314.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!253442.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!253570.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!253698.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!253826.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!253954.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!254082.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!254210.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

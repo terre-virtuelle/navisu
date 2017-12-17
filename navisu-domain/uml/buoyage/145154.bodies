@@ -1,0 +1,43 @@
+class NavigationLine
+!!!430722.java!!!	NavigationLine(inout id : Long)
+		this.id=id;
+!!!430978.java!!!	getCategoryOfNavigationLine() : String
+		return categoryOfNavigationLine;
+!!!431106.java!!!	setCategoryOfNavigationLine(in value : String) : void
+		this.categoryOfNavigationLine= value;
+!!!431234.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!431362.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!431490.java!!!	getDateStart() : String
+		return dateStart;
+!!!431618.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!431746.java!!!	getOrientation() : String
+		return orientation;
+!!!431874.java!!!	setOrientation(in value : String) : void
+		this.orientation= value;
+!!!432002.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!432130.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!432258.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!432386.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!432514.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!432642.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!432770.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!432898.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!433026.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!433154.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!433282.java!!!	getStatus() : String
+		return status;
+!!!433410.java!!!	setStatus(in value : String) : void
+		this.status= value;

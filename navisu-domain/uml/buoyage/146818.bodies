@@ -1,0 +1,79 @@
+class ProductionStorageArea
+!!!481410.java!!!	ProductionStorageArea(inout id : Long)
+		this.id=id;
+!!!481666.java!!!	getCategoryOfProductionArea() : String
+		return categoryOfProductionArea;
+!!!481794.java!!!	setCategoryOfProductionArea(in value : String) : void
+		this.categoryOfProductionArea= value;
+!!!481922.java!!!	getCondition() : String
+		return condition;
+!!!482050.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!482178.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!482306.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!482434.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!482562.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!482690.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!482818.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!482946.java!!!	getDateStart() : String
+		return dateStart;
+!!!483074.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!483202.java!!!	getElevation() : String
+		return elevation;
+!!!483330.java!!!	setElevation(in value : String) : void
+		this.elevation= value;
+!!!483458.java!!!	getHeight() : String
+		return height;
+!!!483586.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!483714.java!!!	getObjectName() : String
+		return objectName;
+!!!483842.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!483970.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!484098.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!484226.java!!!	getProduct() : String
+		return product;
+!!!484354.java!!!	setProduct(in value : String) : void
+		this.product= value;
+!!!484482.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!484610.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!484738.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!484866.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!484994.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!485122.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!485250.java!!!	getStatus() : String
+		return status;
+!!!485378.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!485506.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!485634.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!485762.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!485890.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!486018.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!486146.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!486274.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!486402.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

@@ -1,0 +1,5 @@
+class SdShomCatalog
+!!!730370.java!!!	getSdShoms() : SdShom
+        return sdShoms;
+!!!730498.java!!!	toString() : String
+        return "SdShomCatalog{" + "sdShoms=" + sdShoms + '}';

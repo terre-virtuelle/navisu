@@ -1,0 +1,43 @@
+class RetroReflector
+!!!540802.java!!!	RetroReflector(inout id : Long)
+		this.id=id;
+!!!541058.java!!!	getColour() : String
+		return colour;
+!!!541186.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!541314.java!!!	getColourPattern() : String
+		return colourPattern;
+!!!541442.java!!!	setColourPattern(in value : String) : void
+		this.colourPattern= value;
+!!!541570.java!!!	getHeight() : String
+		return height;
+!!!541698.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!541826.java!!!	getMarksNavigationalSystemof() : String
+		return marksNavigationalSystemof;
+!!!541954.java!!!	setMarksNavigationalSystemof(in value : String) : void
+		this.marksNavigationalSystemof= value;
+!!!542082.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!542210.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!542338.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!542466.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!542594.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!542722.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!542850.java!!!	getStatus() : String
+		return status;
+!!!542978.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!543106.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!543234.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!543362.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!543490.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;

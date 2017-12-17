@@ -1,0 +1,39 @@
+class Address
+!!!699906.java!!!	Address(in number : String, in street : String, in cedex0 : String, inout mailBoxAddress : MailBoxAddress, in town : String, in cedex : String, in country : String)
+        this.number = number;
+        this.street = street;
+        this.cedex0 = cedex0;
+        this.mailBoxAddress = mailBoxAddress;
+        this.town = town;
+        this.cedex = cedex;
+        this.country = country;
+!!!700034.java!!!	getCountry() : String
+        return country;
+!!!700162.java!!!	setCountry(in country : String) : void
+        this.country = country;
+!!!700290.java!!!	getCedex() : String
+        return cedex;
+!!!700418.java!!!	setCedex(in cedex : String) : void
+        this.cedex = cedex;
+!!!700546.java!!!	getTown() : String
+        return town;
+!!!700674.java!!!	setTown(in town : String) : void
+        this.town = town;
+!!!700802.java!!!	getMailBoxAddress() : MailBoxAddress
+        return mailBoxAddress;
+!!!700930.java!!!	setMailBoxAddress(inout mailBoxAddress : MailBoxAddress) : void
+        this.mailBoxAddress = mailBoxAddress;
+!!!701058.java!!!	getCedex0() : String
+        return cedex0;
+!!!701186.java!!!	setCedex0(in cedex : String) : void
+        this.cedex0 = cedex;
+!!!701314.java!!!	getStreet() : String
+        return street;
+!!!701442.java!!!	setStreet(in street : String) : void
+        this.street = street;
+!!!701570.java!!!	getNumber() : String
+        return number;
+!!!701698.java!!!	setNumber(in number : String) : void
+        this.number = number;
+!!!701826.java!!!	toString() : String
+        return "Address{" + "number=" + number + ", street=" + street + ", cedex0=" + cedex0 + ", mailBoxAddress=" + mailBoxAddress + ", town=" + town + ", cedex=" + cedex + ", country=" + country + '}';

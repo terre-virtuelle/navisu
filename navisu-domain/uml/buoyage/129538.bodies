@@ -1,0 +1,179 @@
+class Feature
+!!!133250.java!!!	Feature(in id : long)
+        super(id);
+!!!133378.java!!!	Feature()
+        this.spatialRecord = new HashMap<>();
+        this.spatialRecordById = new HashMap<>();
+        this.methods = new HashMap<>();
+        this.feature = true;
+!!!133506.java!!!	getInnerBoundaryIndex() : int
+        return innerBoundaryIndex;
+!!!133634.java!!!	setField(in fieldName : String, inout fieldValue : byte) : S57Object
+        switch (fieldName) {
+            case "ATTF":
+                this.decodATTF(fieldValue);
+                break;
+            case "FSPT":
+                this.decodFSPT(fieldValue);
+                break;
+        }
+        /*
+         else if(fieldName.equals("NATF"))
+         {
+         this.decodNATF(fieldValue);
+         }
+         else if(fieldName.equals("FFPC"))
+         {
+         this.decodFFPC(fieldValue);
+         }
+         else if(fieldName.equals("FFPT"))
+         {
+         this.decodFFPT(fieldValue);
+         }
+         else if(fieldName.equals("FSPC"))
+         {
+         this.decodFSPC(fieldValue);
+         }
+         else if(fieldName.equals("FOID"))
+         {
+         this.decodFOID(fieldValue);
+         }
+         */
+        return this;
+!!!133762.java!!!	getPrim() : int
+        return this.prim;
+!!!133890.java!!!	setPrim(in prim : int) : void
+        /*
+         *	prim==1		-> Point
+         *	prim==2		-> Ligne
+         *	prim==3		-> Aire
+         *	prim==255	-> Aucun objet spatial
+         */
+        this.prim = prim;
+!!!134018.java!!!	decodATTF(inout fieldValue : byte) : void
+        try {
+            int code = 0;
+            for (int i = 0; i < fieldValue.length; i++) {
+                String value = "";
+                code = (fieldValue[i++] & 0xFF) + 256 * (fieldValue[i++] & 0xFF);
+                while (fieldValue[i] != 31) {
+                    value += Character.toString((char) fieldValue[i++]);
+                }
+                this.setAttribute(code, value);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+!!!134658.java!!!	decodFSPT(inout fieldValue : byte) : void
+        for (int i = 0; i * 8 < fieldValue.length; i++) {
+            long id0;
+            id0 = fieldValue[i * 8] & 0xFF;
+            id0 = id0 * 256 + (fieldValue[i * 8 + 4] & 0xFF);
+            id0 = id0 * 256 + (fieldValue[i * 8 + 3] & 0xFF);
+            id0 = id0 * 256 + (fieldValue[i * 8 + 2] & 0xFF);
+            id0 = id0 * 256 + (fieldValue[i * 8 + 1] & 0xFF);
+
+            spatialRecordById.put(id0, new VectorUsage(fieldValue[i * 8 + 5], fieldValue[i * 8 + 6], fieldValue[i * 8 + 7], i + 1));
+            if (innerBoundaryIndex == 0 && fieldValue[i * 8 + 6] == 2) {
+                innerBoundaryIndex = i + 1;
+            }
+        }
+!!!134914.java!!!	decodFRID(inout fieldValue : byte) : Feature
+        long id0 = 0;
+        id0 = fieldValue[0];
+        id0 = id0 * 256 + fieldValue[4];
+        id0 = id0 * 256 + fieldValue[3];
+        id0 = id0 * 256 + fieldValue[2];
+        id0 = id0 * 256 + fieldValue[1];
+
+        this.setId(id0);
+
+        int objectCode = (fieldValue[7] & 0xFF) + 256 * (fieldValue[8] & 0xFF);
+        try {
+            String objName = S57Model.getObjectsValue(objectCode);
+
+            //Objet non traite
+            if (objName == null) {
+                return null;
+            }
+
+            Class classObject = Class.forName("bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo." + objName);
+            // System.out.println("\nClasse: " + classObject.getSimpleName());
+
+            Feature obj = (Feature) classObject
+                    .getConstructor(new Class[]{Long.class})
+                    .newInstance(new Object[]{getId()});
+            obj.setPrim(fieldValue[5]);
+            obj.fillMethods();
+            //  System.out.println("obj : " + obj);
+            return obj;
+        } catch (ClassNotFoundException e) {
+            //objet non trouve
+            System.err.println("Feature" + e);
+            return null;
+        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            System.err.println(e);
+            return null;
+        }
+
+!!!135042.java!!!	setAttribute(in code : int, in value : String) : void
+
+        String acronym = S57Model.getAttributesValue(code);
+        try {
+            Method setMethod = (Method) methods.get(("set" + acronym));
+            Class[] params = setMethod.getParameterTypes();
+
+            switch (params[0].getName()) {
+                case "int": {
+                    Object[] p = {new Integer(value)};
+                    setMethod.invoke((Object) this, p);
+                    break;
+                }
+                case "float": {
+                    Object[] p = {new Float(value)};
+                    setMethod.invoke((Object) this, p);
+                    break;
+                }
+                default: {
+                    Object[] p = {value};
+                    setMethod.invoke((Object) this, p);
+                    break;
+                }
+            }
+        } catch (NullPointerException e) {
+            System.err.println(this.getClass().getSimpleName() + ": Attribut inexistant: " + acronym + " " + code);
+        } catch (NumberFormatException e) {
+
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            Logger.getLogger(Feature.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+!!!135170.java!!!	fillMethods() : void
+        Method[] m = this.getClass().getMethods();
+        for (Method m1 : m) {
+            methods.put(m1.getName(), m1);
+        }
+
+!!!135298.java!!!	toString() : String
+        return super.toString() + "  Feature{" + "prim=" + prim
+                + "\n    ,spatialRecordById=" + spatialRecordById
+                + "\n    ,spatialRecord=" + spatialRecord
+                + "\n    ,innerBoundaryIndex=" + innerBoundaryIndex + '\n' + "  }\n";
+!!!135426.java!!!	linkObjects() : void
+        if (!spatialRecordById.isEmpty()) {
+            HashSet<Long> spatials = new HashSet<>(spatialRecordById.keySet());
+            Iterator<Long> it = spatials.iterator();
+            while (it.hasNext()) {
+                Long id0 = it.next();
+                spatialRecord.put(S57Model.getSpatialObject(id0), this.spatialRecordById.get(id0));
+            }
+        }
+!!!135554.java!!!	getSpatialRecord() : Spatial
+        return spatialRecord;
+!!!135682.java!!!	setSpatialRecord(inout spatialRecord : HashMap<Spatial, VectorUsage>) : void
+        try {
+            this.spatialRecord = spatialRecord;
+        } catch (Exception e) {
+            System.err.println(e);
+        }

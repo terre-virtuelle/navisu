@@ -1,0 +1,47 @@
+class TidalStreamFloodEbb
+!!!612994.java!!!	TidalStreamFloodEbb(inout id : Long)
+		this.id=id;
+!!!613250.java!!!	getCurrentVelocity() : String
+		return currentVelocity;
+!!!613378.java!!!	setCurrentVelocity(in value : String) : void
+		this.currentVelocity= value;
+!!!613506.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!613634.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!613762.java!!!	getDateStart() : String
+		return dateStart;
+!!!613890.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!614018.java!!!	getObjectName() : String
+		return objectName;
+!!!614146.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!614274.java!!!	getOrientation() : String
+		return orientation;
+!!!614402.java!!!	setOrientation(in value : String) : void
+		this.orientation= value;
+!!!614530.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!614658.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!614786.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!614914.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!615042.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!615170.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!615298.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!615426.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!615554.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!615682.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!615810.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!615938.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

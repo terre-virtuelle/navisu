@@ -1,0 +1,83 @@
+class BuildingSingle
+!!!195970.java!!!	BuildingSingle(inout id : Long)
+		this.id=id;
+!!!196226.java!!!	getBuildingShape() : String
+		return buildingShape;
+!!!196354.java!!!	setBuildingShape(in value : String) : void
+		this.buildingShape= value;
+!!!196482.java!!!	getColour() : String
+		return colour;
+!!!196610.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!196738.java!!!	getColourPattern() : String
+		return colourPattern;
+!!!196866.java!!!	setColourPattern(in value : String) : void
+		this.colourPattern= value;
+!!!196994.java!!!	getCondition() : String
+		return condition;
+!!!197122.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!197250.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!197378.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!197506.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!197634.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!197762.java!!!	getElevation() : String
+		return elevation;
+!!!197890.java!!!	setElevation(in value : String) : void
+		this.elevation= value;
+!!!198018.java!!!	getFunction() : String
+		return function;
+!!!198146.java!!!	setFunction(in value : String) : void
+		this.function= value;
+!!!198274.java!!!	getHeight() : String
+		return height;
+!!!198402.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!198530.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!198658.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!198786.java!!!	getObjectName() : String
+		return objectName;
+!!!198914.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!199042.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!199170.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!199298.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!199426.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!199554.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!199682.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!199810.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!199938.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!200066.java!!!	getStatus() : String
+		return status;
+!!!200194.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!200322.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!200450.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!200578.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!200706.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!200834.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!200962.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!201090.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!201218.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

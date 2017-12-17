@@ -1,0 +1,11 @@
+class BuoyInstallation
+!!!205570.java!!!	BuoyInstallation(inout id : Long)
+        this.id = id;
+!!!205826.java!!!	getCategoryOfInstallationBuoy() : String
+        return categoryOfInstallationBuoy;
+!!!205954.java!!!	setCategoryOfInstallationBuoy(in value : String) : void
+        this.categoryOfInstallationBuoy = value;
+!!!206082.java!!!	getProduct() : String
+        return product;
+!!!206210.java!!!	setProduct(in value : String) : void
+        this.product = value;

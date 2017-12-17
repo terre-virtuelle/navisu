@@ -1,0 +1,39 @@
+class SeaPlaneLandingArea
+!!!558978.java!!!	SeaPlaneLandingArea(inout id : Long)
+		this.id=id;
+!!!559234.java!!!	getObjectName() : String
+		return objectName;
+!!!559362.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!559490.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!559618.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!559746.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!559874.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!560002.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!560130.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!560258.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!560386.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!560514.java!!!	getRestriction() : String
+		return restriction;
+!!!560642.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!560770.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!560898.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!561026.java!!!	getStatus() : String
+		return status;
+!!!561154.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!561282.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!561410.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

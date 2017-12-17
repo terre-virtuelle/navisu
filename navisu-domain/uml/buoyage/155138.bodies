@@ -1,0 +1,43 @@
+class Vegetation
+!!!666242.java!!!	Vegetation(inout id : Long)
+		this.id=id;
+!!!666498.java!!!	getCategoryOfVegetation() : String
+		return categoryOfVegetation;
+!!!666626.java!!!	setCategoryOfVegetation(in value : String) : void
+		this.categoryOfVegetation= value;
+!!!666754.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!666882.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!667010.java!!!	getElevation() : String
+		return elevation;
+!!!667138.java!!!	setElevation(in value : String) : void
+		this.elevation= value;
+!!!667266.java!!!	getObjectName() : String
+		return objectName;
+!!!667394.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!667522.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!667650.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!667778.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!667906.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!668034.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!668162.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!668290.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!668418.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!668546.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!668674.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!668802.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!668930.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;

@@ -1,0 +1,15 @@
+class SoundingDatum
+!!!593794.java!!!	SoundingDatum(inout id : Long)
+		this.id=id;
+!!!594050.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!594178.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!594306.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!594434.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!594562.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!594690.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;

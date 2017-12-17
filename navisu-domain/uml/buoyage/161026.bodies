@@ -1,0 +1,24 @@
+class MdTitle
+!!!718466.java!!!	MdTitle(in tTitle : String, in sTitle : String, in country : String, in region : String)
+        this.tTitle = tTitle;
+        this.sTitle = sTitle;
+        this.country = country;
+        this.region = region;
+!!!718594.java!!!	getRegion() : String
+        return region;
+!!!718722.java!!!	setRegion(in region : String) : void
+        this.region = region;
+!!!718850.java!!!	getCountry() : String
+        return country;
+!!!718978.java!!!	setCountry(in country : String) : void
+        this.country = country;
+!!!719106.java!!!	getsTitle() : String
+        return sTitle;
+!!!719234.java!!!	setsTitle(in sTitle : String) : void
+        this.sTitle = sTitle;
+!!!719362.java!!!	gettTitle() : String
+        return tTitle;
+!!!719490.java!!!	settTitle(in tTitle : String) : void
+        this.tTitle = tTitle;
+!!!719618.java!!!	toString() : String
+        return "MdTitle{" + "tTitle=" + tTitle + ", sTitle=" + sTitle + ", country=" + country + ", region=" + region + '}';

@@ -1,0 +1,43 @@
+class OilBarrier
+!!!449666.java!!!	OilBarrier(inout id : Long)
+		this.id=id;
+!!!449922.java!!!	getCategoryOfOilBarrier() : String
+		return categoryOfOilBarrier;
+!!!450050.java!!!	setCategoryOfOilBarrier(in value : String) : void
+		this.categoryOfOilBarrier= value;
+!!!450178.java!!!	getCondition() : String
+		return condition;
+!!!450306.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!450434.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!450562.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!450690.java!!!	getDateStart() : String
+		return dateStart;
+!!!450818.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!450946.java!!!	getObjectName() : String
+		return objectName;
+!!!451074.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!451202.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!451330.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!451458.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!451586.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!451714.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!451842.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!451970.java!!!	getStatus() : String
+		return status;
+!!!452098.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!452226.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!452354.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

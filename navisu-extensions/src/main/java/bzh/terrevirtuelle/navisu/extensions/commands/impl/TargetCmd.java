@@ -23,9 +23,7 @@ import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwind.util.WWUtil;
 import gov.nasa.worldwindx.examples.util.DirectedPath;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -44,18 +42,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TargetCmd
         implements NavigationCmd {
-
+    
     private static TargetCmd INSTANCE;
     private NavigationDataSet navigationDataSet;
     private final GeodesyServices geodesyServices;
     private final S57ChartComponentServices s57ChartComponentServices;
-    private LayersManagerServices layersManagerServices;
+    private final LayersManagerServices layersManagerServices;
     private Set<S57Controller> s57Controllers;
-
+    
     private static final String NAME = "TargetCmd";
     protected static final String GROUP = "S57 charts";
     protected RenderableLayer layer;
-
+    
     public static TargetCmd getInstance(S57ChartComponentServices s57ChartComponentServices,
             GeodesyServices geodesyServices, LayersManagerServices layersManagerServices) {
         if (INSTANCE == null) {
@@ -63,7 +61,7 @@ public class TargetCmd
         }
         return INSTANCE;
     }
-
+    
     private TargetCmd(S57ChartComponentServices s57ChartComponentServices,
             GeodesyServices geodesyServices, LayersManagerServices layersManagerServices) {
         this.s57ChartComponentServices = s57ChartComponentServices;
@@ -71,13 +69,13 @@ public class TargetCmd
         this.layersManagerServices = layersManagerServices;
         layer = layersManagerServices.getLayer(GROUP, NAME);
     }
-
+    
     @Override
     public NavigationDataSet doIt(NavigationData arg) {
         // Set of beacon, buoys, ... on the chart
         s57Controllers = s57ChartComponentServices.getS57Controllers();
         navigationDataSet = new NavigationDataSet();
-
+        
         Target target = (Target) arg;
         double lat = target.getLatitude();
         double lon = target.getLongitude();
@@ -100,6 +98,7 @@ public class TargetCmd
         Target tgt;
         int id = 0;
         List<Target> targets = new ArrayList<>();
+        List<Target> targetsSended = new ArrayList<>();
         for (S57Controller s : validS57) {
             dist = geodesyServices.getDistanceM(s.getLat(), s.getLon(), lat, lon);
             azi = geodesyServices.getAzimuth(lat, lon, s.getLat(), s.getLon());
@@ -109,37 +108,47 @@ public class TargetCmd
             id++;
         }
         targets.sort(Comparator.comparingDouble(Target::getDistance));
-        navigationDataSet.add(targets.get(0));
-
+        if (distance == -1) {
+            navigationDataSet.add(targets.get(0));
+            targetsSended.add(targets.get(0));
+        } else {
+            targets.stream().filter((t) -> (t.getDistance() < distance)).forEachOrdered((t) -> {
+                navigationDataSet.add(t);
+                targetsSended.add(t);
+            });
+        }
+        
         PointPlacemark pp = new PointPlacemark(Position.fromDegrees(lat, lon, 10));
         pp.setValue(AVKey.DISPLAY_NAME, "Lat : " + Double.toString(lat) + "\n "
                 + "Lon : " + Double.toString(lon));
         layer.addRenderable(pp);
-
+        
         ShapeAttributes attrs = new BasicShapeAttributes();
         attrs.setOutlineMaterial(Material.RED);
         attrs.setOutlineWidth(2d);
 
-        // Create a path, set some of its properties and set its attributes.
-        ArrayList<Position> pathPositions = new ArrayList<>();
-        pathPositions.add(Position.fromDegrees(lat, lon, 10));
-        pathPositions.add(Position.fromDegrees(targets.get(0).getNavigationData().getLatitude(),
-                targets.get(0).getNavigationData().getLongitude(), 10));
-        Path path =  new DirectedPath(pathPositions);
-        path.setAttributes(attrs);
-        path.setVisible(true);
-        path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-        path.setPathType(AVKey.GREAT_CIRCLE);
-        path.setValue(AVKey.DISPLAY_NAME, 
-                "distance = " 
-                + String.format("%.0f",targets.get(0).getDistance()) + " m \n "
-                + "azimuth : " 
-                + String.format("%.0f",targets.get(0).getAzimuth()) + "°");
-        layer.addRenderable(path);
-
+        targetsSended.stream().map((t) -> {
+            ArrayList<Position> pathPositions = new ArrayList<>();
+            pathPositions.add(Position.fromDegrees(lat, lon, 10));
+            pathPositions.add(Position.fromDegrees(t.getLatitude(),
+                    t.getLongitude(), 10));
+            Path path = new DirectedPath(pathPositions);
+            path.setAttributes(attrs);
+            path.setVisible(true);
+            path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+            path.setPathType(AVKey.GREAT_CIRCLE);
+            path.setValue(AVKey.DISPLAY_NAME,
+                    "distance = "
+                            + String.format("%.0f", t.getDistance()) + " m \n "
+                                    + "azimuth : "
+                            + String.format("%.0f", t.getAzimuth()) + "°");
+            return path;
+        }).forEachOrdered((path) -> {
+            layer.addRenderable(path);
+        });
         return navigationDataSet;
     }
-
+    
     public final List<Class> getSuperClasses(Object o) {
         List<Class> classList = new ArrayList<>();
         Class classe = o.getClass();
@@ -155,5 +164,5 @@ public class TargetCmd
         }
         return classList;
     }
-
+    
 }

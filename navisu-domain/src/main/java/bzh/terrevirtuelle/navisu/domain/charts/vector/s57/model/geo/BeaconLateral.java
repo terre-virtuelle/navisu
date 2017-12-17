@@ -8,7 +8,8 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "bcnlat")
-public class BeaconLateral extends Beacon
+public class BeaconLateral
+        extends Beacon
         implements Serializable {
 
     public BeaconLateral() {

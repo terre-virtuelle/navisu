@@ -1,0 +1,63 @@
+class UnderwaterAwashRock
+!!!659842.java!!!	UnderwaterAwashRock(inout id : Long)
+		this.id=id;
+!!!660098.java!!!	getExpositionOfSounding() : String
+		return expositionOfSounding;
+!!!660226.java!!!	setExpositionOfSounding(in value : String) : void
+		this.expositionOfSounding= value;
+!!!660354.java!!!	getNatureOfSurface() : String
+		return natureOfSurface;
+!!!660482.java!!!	setNatureOfSurface(in value : String) : void
+		this.natureOfSurface= value;
+!!!660610.java!!!	getNatureOfSurfaceQualifyingTerms() : String
+		return natureOfSurfaceQualifyingTerms;
+!!!660738.java!!!	setNatureOfSurfaceQualifyingTerms(in value : String) : void
+		this.natureOfSurfaceQualifyingTerms= value;
+!!!660866.java!!!	getObjectName() : String
+		return objectName;
+!!!660994.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!661122.java!!!	getQualityOfSoundingMeasurement() : String
+		return qualityOfSoundingMeasurement;
+!!!661250.java!!!	setQualityOfSoundingMeasurement(in value : String) : void
+		this.qualityOfSoundingMeasurement= value;
+!!!661378.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!661506.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!661634.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!661762.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!661890.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!662018.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!662146.java!!!	getSoundingAccuracy() : String
+		return soundingAccuracy;
+!!!662274.java!!!	setSoundingAccuracy(in value : String) : void
+		this.soundingAccuracy= value;
+!!!662402.java!!!	getStatus() : String
+		return status;
+!!!662530.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!662658.java!!!	getTechniqueOfSoundingMeasurement() : String
+		return techniqueOfSoundingMeasurement;
+!!!662786.java!!!	setTechniqueOfSoundingMeasurement(in value : String) : void
+		this.techniqueOfSoundingMeasurement= value;
+!!!662914.java!!!	getValueOfSounding() : String
+		return valueOfSounding;
+!!!663042.java!!!	setValueOfSounding(in value : String) : void
+		this.valueOfSounding= value;
+!!!663170.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!663298.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!663426.java!!!	getWaterLevelEffect() : String
+		return waterLevelEffect;
+!!!663554.java!!!	setWaterLevelEffect(in value : String) : void
+		this.waterLevelEffect= value;
+!!!663682.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!663810.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

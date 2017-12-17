@@ -1,0 +1,3 @@
+class BuoyIsolatedDanger
+!!!206338.java!!!	BuoyIsolatedDanger(inout id : Long)
+        this.id = id;

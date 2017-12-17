@@ -1,0 +1,51 @@
+class Sounding
+!!!590466.java!!!	Sounding(inout id : Long)
+        this.id = id;
+!!!590722.java!!!	getDepth() : double
+        return depth;
+!!!590850.java!!!	setDepth(in depth : double) : void
+        this.depth = depth;
+!!!590978.java!!!	getExpositionOfSounding() : String
+        return expositionOfSounding;
+!!!591106.java!!!	setExpositionOfSounding(in value : String) : void
+        this.expositionOfSounding = value;
+!!!591234.java!!!	getObjectName() : String
+        return objectName;
+!!!591362.java!!!	setObjectName(in value : String) : void
+        this.objectName = value;
+!!!591490.java!!!	getQualityOfSoundingMeasurement() : String
+        return qualityOfSoundingMeasurement;
+!!!591618.java!!!	setQualityOfSoundingMeasurement(in value : String) : void
+        this.qualityOfSoundingMeasurement = value;
+!!!591746.java!!!	getRecordIngdate() : String
+        return recordIngdate;
+!!!591874.java!!!	setRecordIngdate(in value : String) : void
+        this.recordIngdate = value;
+!!!592002.java!!!	getRecordingIndication() : String
+        return recordingIndication;
+!!!592130.java!!!	setRecordingIndication(in value : String) : void
+        this.recordingIndication = value;
+!!!592258.java!!!	getScaleMaximum() : String
+        return scaleMaximum;
+!!!592386.java!!!	setScaleMaximum(in value : String) : void
+        this.scaleMaximum = value;
+!!!592514.java!!!	getSoundingAccuracy() : String
+        return soundingAccuracy;
+!!!592642.java!!!	setSoundingAccuracy(in value : String) : void
+        this.soundingAccuracy = value;
+!!!592770.java!!!	getStatus() : String
+        return status;
+!!!592898.java!!!	setStatus(in value : String) : void
+        this.status = value;
+!!!593026.java!!!	getTechniqueOfSoundingMeasurement() : String
+        return techniqueOfSoundingMeasurement;
+!!!593154.java!!!	setTechniqueOfSoundingMeasurement(in value : String) : void
+        this.techniqueOfSoundingMeasurement = value;
+!!!593282.java!!!	getVerticaldatum() : String
+        return verticaldatum;
+!!!593410.java!!!	setVerticaldatum(in value : String) : void
+        this.verticaldatum = value;
+!!!593538.java!!!	getObjectNameInNationalLanguage() : String
+        return objectNameInNationalLanguage;
+!!!593666.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+        this.objectNameInNationalLanguage = value;

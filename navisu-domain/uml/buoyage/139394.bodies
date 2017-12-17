@@ -1,0 +1,35 @@
+class DistanceMark
+!!!292738.java!!!	DistanceMark(inout id : Long)
+		this.id=id;
+!!!292994.java!!!	getCategoryOfDistanceMark() : String
+		return categoryOfDistanceMark;
+!!!293122.java!!!	setCategoryOfDistanceMark(in value : String) : void
+		this.categoryOfDistanceMark= value;
+!!!293250.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!293378.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!293506.java!!!	getDateStart() : String
+		return dateStart;
+!!!293634.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!293762.java!!!	getObjectName() : String
+		return objectName;
+!!!293890.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!294018.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!294146.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!294274.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!294402.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!294530.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!294658.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!294786.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!294914.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

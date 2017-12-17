@@ -1,0 +1,154 @@
+class Buoyage
+!!!172930.java!!!	Buoyage(in id : long)
+        super(id);
+!!!173058.java!!!	Buoyage(in id : long, in lat : double, in lon : double)
+        super(id, lat, lon);
+!!!173186.java!!!	Buoyage(in id : long, in geometry : String)
+        super(id, geometry);
+!!!173314.java!!!	getNavigationalSystemOfMarks() : String
+        return navigationalSystemOfMarks;
+!!!173442.java!!!	setNavigationalSystemOfMarks(in navigationalSystemOfMarks : String) : void
+        this.navigationalSystemOfMarks = navigationalSystemOfMarks;
+!!!173570.java!!!	getCategoryOfMark() : String
+        return categoryOfMark;
+!!!173698.java!!!	getCategoryOfMarkMeaning(in cat : String) : String
+        return categoryOfMark;
+!!!173826.java!!!	setCategoryOfMark(in categoryOfMark : String) : void
+        this.categoryOfMark = categoryOfMark;
+!!!173954.java!!!	getColourPattern() : String
+        return colourPattern;
+!!!174082.java!!!	getColourPatternMeaning(in colPat : String) : String
+        return COLPAT.ATT.get(colPat);
+!!!174210.java!!!	setColourPattern(in colourPattern : String) : void
+        this.colourPattern = colourPattern;
+!!!174338.java!!!	getColour() : String
+        return colour;
+!!!174466.java!!!	getColourMeaning(in col : String) : String
+        return COLOR_NAME.getColor(col);
+!!!174594.java!!!	setColour(in colour : String) : void
+        this.colour = colour;
+!!!174722.java!!!	getShape() : String
+        return shape;
+!!!174850.java!!!	setShape(in shape : String) : void
+        this.shape = shape;
+!!!174978.java!!!	getShapeMeaning(in shape : String) : String
+        return shape;
+!!!175106.java!!!	getCondition() : String
+        return condition;
+!!!175234.java!!!	setCondition(in condition : String) : void
+        this.condition = condition;
+!!!175362.java!!!	getConspicuousRadar() : String
+        return conspicuousRadar;
+!!!175490.java!!!	setConspicuousRadar(in conspicuousRadar : String) : void
+        this.conspicuousRadar = conspicuousRadar;
+!!!175618.java!!!	getConspicuousVisually() : String
+        return conspicuousVisually;
+!!!175746.java!!!	setConspicuousVisually(in conspicuousVisually : String) : void
+        this.conspicuousVisually = conspicuousVisually;
+!!!175874.java!!!	getDateEnd() : String
+        return dateEnd;
+!!!176002.java!!!	setDateEnd(in dateEnd : String) : void
+        this.dateEnd = dateEnd;
+!!!176130.java!!!	getDateStart() : String
+        return dateStart;
+!!!176258.java!!!	setDateStart(in dateStart : String) : void
+        this.dateStart = dateStart;
+!!!176386.java!!!	getElevation() : String
+        return elevation;
+!!!176514.java!!!	setElevation(in elevation : String) : void
+        this.elevation = elevation;
+!!!176642.java!!!	getHeight() : String
+        return height;
+!!!176770.java!!!	setHeight(in height : String) : void
+        this.height = height;
+!!!176898.java!!!	getNatureOfConstruction() : String
+        return natureOfConstruction;
+!!!177026.java!!!	setNatureOfConstruction(in natureOfConstruction : String) : void
+        this.natureOfConstruction = natureOfConstruction;
+!!!177154.java!!!	getObjectName() : String
+        return objectName;
+!!!177282.java!!!	setObjectName(in objectName : String) : void
+        this.objectName = objectName;
+!!!177410.java!!!	getPeriodicDateStart() : String
+        return periodicDateStart;
+!!!177538.java!!!	setPeriodicDateStart(in periodicDateStart : String) : void
+        this.periodicDateStart = periodicDateStart;
+!!!177666.java!!!	getPeriodicDateEnd() : String
+        return periodicDateEnd;
+!!!177794.java!!!	setPeriodicDateEnd(in periodicDateEnd : String) : void
+        this.periodicDateEnd = periodicDateEnd;
+!!!177922.java!!!	getPictorialRepresentation() : String
+        return pictorialRepresentation;
+!!!178050.java!!!	setPictorialRepresentation(in pictorialRepresentation : String) : void
+        this.pictorialRepresentation = pictorialRepresentation;
+!!!178178.java!!!	getRecordIngdate() : String
+        return recordIngdate;
+!!!178306.java!!!	setRecordIngdate(in recordIngdate : String) : void
+        this.recordIngdate = recordIngdate;
+!!!178434.java!!!	getScaleMaximum() : String
+        return scaleMaximum;
+!!!178562.java!!!	setScaleMaximum(in scaleMaximum : String) : void
+        this.scaleMaximum = scaleMaximum;
+!!!178690.java!!!	getVerticalAccuracy() : String
+        return verticalAccuracy;
+!!!178818.java!!!	setVerticalAccuracy(in verticalAccuracy : String) : void
+        this.verticalAccuracy = verticalAccuracy;
+!!!178946.java!!!	getRecordingIndication() : String
+        return recordingIndication;
+!!!179074.java!!!	setRecordingIndication(in recordingIndication : String) : void
+        this.recordingIndication = recordingIndication;
+!!!179202.java!!!	getVerticaldatum() : String
+        return verticaldatum;
+!!!179330.java!!!	setVerticaldatum(in verticaldatum : String) : void
+        this.verticaldatum = verticaldatum;
+!!!179458.java!!!	getVerticalLength() : String
+        return verticalLength;
+!!!179586.java!!!	setVerticalLength(in verticalLength : String) : void
+        this.verticalLength = verticalLength;
+!!!179714.java!!!	getObjectNameInNationalLanguage() : String
+        return objectNameInNationalLanguage;
+!!!179842.java!!!	setObjectNameInNationalLanguage(in objectNameInNationalLanguage : String) : void
+        this.objectNameInNationalLanguage = objectNameInNationalLanguage;
+!!!179970.java!!!	getStatus() : String
+        return status;
+!!!180098.java!!!	setStatus(in status : String) : void
+        this.status = status;
+!!!180226.java!!!	getGeometry() : String
+        return "POINT(" + Double.toString(longitude) + " " + Double.toString(latitude) + ")";
+!!!180354.java!!!	toString() : String
+        return "Buoyage{"
+                + "shape=" + shape
+                + ", categoryOfMark=" + categoryOfMark
+                + ", colour=" + colour
+                + ", colourPattern=" + colourPattern
+                + ", navigationalSystemOfMarks=" + navigationalSystemOfMarks
+                + ", condition=" + condition
+                + ", conspicuousRadar=" + conspicuousRadar
+                + ", conspicuousVisually=" + conspicuousVisually
+                + ", dateEnd=" + dateEnd
+                + ", dateStart=" + dateStart
+                + ", elevation=" + elevation
+                + ", height=" + height
+                + ", natureOfConstruction=" + natureOfConstruction
+                + ", objectName=" + objectName
+                + ", periodicDateStart=" + periodicDateStart
+                + ", periodicDateEnd=" + periodicDateEnd
+                + ", pictorialRepresentation=" + pictorialRepresentation
+                + ", recordIngdate=" + recordIngdate
+                + ", scaleMaximum=" + scaleMaximum
+                + ", verticalAccuracy=" + verticalAccuracy
+                + ", recordingIndication=" + recordingIndication
+                + ", verticaldatum=" + verticaldatum
+                + ", verticalLength=" + verticalLength
+                + ", objectNameInNationalLanguage=" + objectNameInNationalLanguage
+                + ", status=" + status
+                //  + super.toString() 
+                + '}';
+!!!180482.java!!!	getLabel() : String
+        return label;
+!!!180610.java!!!	setLabel(in label : String) : void
+        this.label = label;
+!!!180738.java!!!	getImageAddress() : String
+        return imageAddress;
+!!!180866.java!!!	setImageAddress(in imageAddress : String) : void
+        this.imageAddress = imageAddress;

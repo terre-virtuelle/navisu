@@ -1,0 +1,35 @@
+class Waterfall
+!!!670082.java!!!	Waterfall(inout id : Long)
+		this.id=id;
+!!!670338.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!670466.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!670594.java!!!	getObjectName() : String
+		return objectName;
+!!!670722.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!670850.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!670978.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!671106.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!671234.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!671362.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!671490.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!671618.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!671746.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!671874.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!672002.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!672130.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!672258.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

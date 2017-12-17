@@ -1,0 +1,67 @@
+class RadioStation
+!!!513154.java!!!	RadioStation(inout id : Long)
+		this.id=id;
+!!!513410.java!!!	getCallSign() : String
+		return callSign;
+!!!513538.java!!!	setCallSign(in value : String) : void
+		this.callSign= value;
+!!!513666.java!!!	getCategoryOfRadioStation() : String
+		return categoryOfRadioStation;
+!!!513794.java!!!	setCategoryOfRadioStation(in value : String) : void
+		this.categoryOfRadioStation= value;
+!!!513922.java!!!	getCommunicationChannel() : String
+		return communicationchannel;
+!!!514050.java!!!	setCommunicationChannel(in value : String) : void
+		this.communicationchannel= value;
+!!!514178.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!514306.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!514434.java!!!	getDateStart() : String
+		return dateStart;
+!!!514562.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!514690.java!!!	getEstimateDrangeOfTransmission() : String
+		return estimateDrangeOfTransmission;
+!!!514818.java!!!	setEstimateDrangeOfTransmission(in value : String) : void
+		this.estimateDrangeOfTransmission= value;
+!!!514946.java!!!	getObjectName() : String
+		return objectName;
+!!!515074.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!515202.java!!!	getOrientation() : String
+		return orientation;
+!!!515330.java!!!	setOrientation(in value : String) : void
+		this.orientation= value;
+!!!515458.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!515586.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!515714.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!515842.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!515970.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!516098.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!516226.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!516354.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!516482.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!516610.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!516738.java!!!	getSignalFrequency() : String
+		return signalFrequency;
+!!!516866.java!!!	setSignalFrequency(in value : String) : void
+		this.signalFrequency= value;
+!!!516994.java!!!	getStatus() : String
+		return status;
+!!!517122.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!517250.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!517378.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

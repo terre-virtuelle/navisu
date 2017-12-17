@@ -1,0 +1,17 @@
+class Part
+!!!705282.java!!!	getId() : String
+        return id;
+!!!705410.java!!!	setId(in id : String) : void
+        this.id = id;
+!!!705538.java!!!	getTitle() : String
+        return titre.toString();
+!!!705666.java!!!	setTitle(in title : String) : void
+        this.title = title;
+!!!705794.java!!!	getTitre() : Title
+        return titre;
+!!!705922.java!!!	setTitre(inout titre : Title) : void
+        this.titre = titre;
+!!!706050.java!!!	toString() : String
+        return id + " " + title;
+!!!706178.java!!!	toLaTeX() : String
+        return "";

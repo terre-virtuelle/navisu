@@ -1,0 +1,33 @@
+class App
+!!!699522.java!!!	App()
+        SailingDirections sailingDirections = new ShomSailingDirections(filename);
+
+        Document document = sailingDirections.getDocument();
+
+        Publication publication = document.getMetadata().getPublication();
+
+        System.out.println(publication.getStitle());
+        System.out.println(publication.getCountry());
+        System.out.println(publication.getRegion());
+        System.out.println(publication.getNumbering().getSerie());
+        System.out.println(publication.getNumbering().getVolume());
+        System.out.println(publication.getUpdate().getGan());
+        System.out.println(document.getBook().getChapters());
+
+        System.out.println(sailingDirections.getPoiMap());
+        
+        
+        SdShomCatalog sdShomCatalog = new SdShomCatalog();
+        
+        try {
+            sdShomCatalog = ImportExportXML.imports(sdShomCatalog, "data/in/instructionsNautiquesShom.xml");
+        } catch (FileNotFoundException | JAXBException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(sdShomCatalog);
+!!!699650.java!!!	main(inout args : String) : void
+        try {
+            new App();
+        } catch (Exception e) {
+            System.out.println("App e : " + e);
+        }

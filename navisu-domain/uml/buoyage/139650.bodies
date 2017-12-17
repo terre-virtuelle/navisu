@@ -1,0 +1,51 @@
+class DredgedArea
+!!!298370.java!!!	DredgedArea(inout id : Long)
+		this.id=id;
+!!!298626.java!!!	getDepthRangeValue1() : String
+		return depthRangeValue1;
+!!!298754.java!!!	setDepthRangeValue1(in value : String) : void
+		this.depthRangeValue1= value;
+!!!298882.java!!!	getDepthRangeValue2() : String
+		return depthRangeValue2;
+!!!299010.java!!!	setDepthRangeValue2(in value : String) : void
+		this.depthRangeValue2= value;
+!!!299138.java!!!	getObjectName() : String
+		return objectName;
+!!!299266.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!299394.java!!!	getQualityOfSoundingMeasurement() : String
+		return qualityOfSoundingMeasurement;
+!!!299522.java!!!	setQualityOfSoundingMeasurement(in value : String) : void
+		this.qualityOfSoundingMeasurement= value;
+!!!299650.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!299778.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!299906.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!300034.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!300162.java!!!	getRestriction() : String
+		return restriction;
+!!!300290.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!300418.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!300546.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!300674.java!!!	getSoundingAccuracy() : String
+		return soundingAccuracy;
+!!!300802.java!!!	setSoundingAccuracy(in value : String) : void
+		this.soundingAccuracy= value;
+!!!300930.java!!!	getTechniqueOfSoundingMeasurement() : String
+		return techniqueOfSoundingMeasurement;
+!!!301058.java!!!	setTechniqueOfSoundingMeasurement(in value : String) : void
+		this.techniqueOfSoundingMeasurement= value;
+!!!301186.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!301314.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!301442.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!301570.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

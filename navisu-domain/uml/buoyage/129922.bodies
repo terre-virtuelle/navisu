@@ -1,0 +1,3 @@
+class CatalogueDirectory
+!!!136322.java!!!	toString() : String
+        return "CatalogueDirectory{" + '}';

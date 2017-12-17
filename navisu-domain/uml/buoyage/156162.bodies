@@ -1,0 +1,47 @@
+class Target
+!!!683266.java!!!	Target(inout navigationData : T, in latitude : double, in longitude : double, in id : long, in distance : double, in azimuth : double)
+        this.navigationData = navigationData;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.id = id;
+        this.distance = distance;
+        this.azimuth = azimuth;
+!!!683394.java!!!	Target(inout navigationData : T, in latitude : double, in longitude : double)
+        this.navigationData = navigationData;
+        this.latitude = latitude;
+        this.longitude = longitude;
+!!!683522.java!!!	Target(inout navigationData : T, in latitude : double, in longitude : double, in distance : double)
+        this.navigationData = navigationData;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.distance = distance;
+!!!683650.java!!!	getAzimuth() : double
+        return azimuth;
+!!!683778.java!!!	setAzimuth(in azimuth : double) : void
+        this.azimuth = azimuth;
+!!!683906.java!!!	getDistance() : double
+        return distance;
+!!!684034.java!!!	setDistance(in distance : double) : void
+        this.distance = distance;
+!!!684162.java!!!	getId() : long
+        return id;
+!!!684290.java!!!	setId(in id : long) : void
+        this.id = id;
+!!!684418.java!!!	getLongitude() : double
+        return longitude;
+!!!684546.java!!!	setLongitude(in longitude : double) : void
+        this.longitude = longitude;
+!!!684674.java!!!	getLatitude() : double
+        return latitude;
+!!!684802.java!!!	setLatitude(in latitude : double) : void
+        this.latitude = latitude;
+!!!684930.java!!!	getNavigationData() : NavigationData
+        return navigationData;
+!!!685058.java!!!	getTarget() : NavigationData
+        return navigationData;
+!!!685186.java!!!	setNavigationData(inout navigationData : T) : void
+        this.navigationData = navigationData;
+!!!685314.java!!!	setTarget(inout navigationData : T) : void
+        this.navigationData = navigationData;
+!!!685442.java!!!	toString() : String
+        return "Target{" + "navigationData=" + navigationData + ", latitude=" + latitude + ", longitude=" + longitude + ", id=" + id + ", distance=" + distance + ", azimuth=" + azimuth + '}';

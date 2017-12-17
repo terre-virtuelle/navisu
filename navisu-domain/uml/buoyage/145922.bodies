@@ -1,0 +1,59 @@
+class PilotBoardingPlace
+!!!456834.java!!!	PilotBoardingPlace(inout id : Long)
+		this.id=id;
+!!!457090.java!!!	getCategoryOfPilotBoardingPlace() : String
+		return categoryOfPilotBoardingPlace;
+!!!457218.java!!!	setCategoryOfPilotBoardingPlace(in value : String) : void
+		this.categoryOfPilotBoardingPlace= value;
+!!!457346.java!!!	getCommunicationChannel() : String
+		return communicationchannel;
+!!!457474.java!!!	setCommunicationChannel(in value : String) : void
+		this.communicationchannel= value;
+!!!457602.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!457730.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!457858.java!!!	getDateStart() : String
+		return dateStart;
+!!!457986.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!458114.java!!!	getObjectName() : String
+		return objectName;
+!!!458242.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!458370.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!458498.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!458626.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!458754.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!458882.java!!!	getPilotDistrict() : String
+		return pilotDistrict;
+!!!459010.java!!!	setPilotDistrict(in value : String) : void
+		this.pilotDistrict= value;
+!!!459138.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!459266.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!459394.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!459522.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!459650.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!459778.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!459906.java!!!	getStatus() : String
+		return status;
+!!!460034.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!460162.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!460290.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;
+!!!460418.java!!!	getPilotDistrictInNationalLanguage() : String
+		return pilotDistrictInNationalLanguage;
+!!!460546.java!!!	setPilotDistrictInNationalLanguage(in value : String) : void
+		this.pilotDistrictInNationalLanguage= value;

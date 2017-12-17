@@ -51,7 +51,7 @@ relationcanvas 128770 relation_ref 130050 // <realization>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128898 relation_ref 130562 // <unidirectional association>
-  from ref 128514 z 2012 stereotype "<<Map>>" xyz 274.5 193.5 2012 to ref 128002
+  from ref 128514 z 2012 stereotype "<<Map>>" xyz 274 193 2012 to ref 128002
   role_a_pos 218 104 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -81,7 +81,7 @@ relationcanvas 129922 relation_ref 131074 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131202 relation_ref 132610 // <unidirectional association>
-  from ref 131074 z 3006 stereotype "<<ConcurrentLinkedQueue>>" xyz 471.5 566.5 3006 to ref 130946
+  from ref 131074 z 3006 stereotype "<<ConcurrentLinkedQueue>>" xyz 471 566 3006 to ref 130946
   role_a_pos 491 501 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end

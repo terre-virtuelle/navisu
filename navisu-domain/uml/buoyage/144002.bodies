@@ -1,0 +1,27 @@
+class LocalMagneticAnomaly
+!!!408706.java!!!	LocalMagneticAnomaly(inout id : Long)
+		this.id=id;
+!!!408962.java!!!	getObjectName() : String
+		return objectName;
+!!!409090.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!409218.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!409346.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!409474.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!409602.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!409730.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!409858.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!409986.java!!!	getValueOfLocalMagneticAnomaly() : String
+		return valueOfLocalMagneticAnomaly;
+!!!410114.java!!!	setValueOfLocalMagneticAnomaly(in value : String) : void
+		this.valueOfLocalMagneticAnomaly= value;
+!!!410242.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!410370.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

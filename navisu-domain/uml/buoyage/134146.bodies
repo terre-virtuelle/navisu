@@ -1,0 +1,59 @@
+class Berth
+!!!186242.java!!!	Berth(inout id : Long)
+		this.id=id;
+!!!186498.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!186626.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!186754.java!!!	getDateStart() : String
+		return dateStart;
+!!!186882.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!187010.java!!!	getDepthRangeValue1() : String
+		return depthRangeValue1;
+!!!187138.java!!!	setDepthRangeValue1(in value : String) : void
+		this.depthRangeValue1= value;
+!!!187266.java!!!	getObjectName() : String
+		return objectName;
+!!!187394.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!187522.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!187650.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!187778.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!187906.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!188034.java!!!	getQualityOfSoundingMeasurement() : String
+		return qualityOfSoundingMeasurement;
+!!!188162.java!!!	setQualityOfSoundingMeasurement(in value : String) : void
+		this.qualityOfSoundingMeasurement= value;
+!!!188290.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!188418.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!188546.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!188674.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!188802.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!188930.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!189058.java!!!	getSoundingAccuracy() : String
+		return soundingAccuracy;
+!!!189186.java!!!	setSoundingAccuracy(in value : String) : void
+		this.soundingAccuracy= value;
+!!!189314.java!!!	getStatus() : String
+		return status;
+!!!189442.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!189570.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!189698.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!189826.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!189954.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

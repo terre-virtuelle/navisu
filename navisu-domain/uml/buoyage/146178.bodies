@@ -1,0 +1,67 @@
+class PipelineOverhead
+!!!464002.java!!!	PipelineOverhead(inout id : Long)
+		this.id=id;
+!!!464258.java!!!	getCategoryOfPipeline() : String
+		return categoryOfPipeline;
+!!!464386.java!!!	setCategoryOfPipeline(in value : String) : void
+		this.categoryOfPipeline= value;
+!!!464514.java!!!	getCondition() : String
+		return condition;
+!!!464642.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!464770.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!464898.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!465026.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!465154.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!465282.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!465410.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!465538.java!!!	getDateStart() : String
+		return dateStart;
+!!!465666.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!465794.java!!!	getObjectName() : String
+		return objectName;
+!!!465922.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!466050.java!!!	getProduct() : String
+		return product;
+!!!466178.java!!!	setProduct(in value : String) : void
+		this.product= value;
+!!!466306.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!466434.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!466562.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!466690.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!466818.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!466946.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!467074.java!!!	getStatus() : String
+		return status;
+!!!467202.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!467330.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!467458.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!467586.java!!!	getVerticalClearance() : String
+		return verticalClearance;
+!!!467714.java!!!	setVerticalClearance(in value : String) : void
+		this.verticalClearance= value;
+!!!467842.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!467970.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!468098.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!468226.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

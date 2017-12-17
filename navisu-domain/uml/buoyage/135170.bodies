@@ -1,0 +1,9 @@
+class BuoyLateral
+!!!206594.java!!!	BuoyLateral(inout id : Long)
+        this.id = id;
+!!!206722.java!!!	BuoyLateral()
+        
+!!!206850.java!!!	getCategoryOfLateralMark() : String
+        return categoryOfMark;
+!!!206978.java!!!	setCategoryOfLateralMark(in value : String) : void
+        categoryOfMark = value;

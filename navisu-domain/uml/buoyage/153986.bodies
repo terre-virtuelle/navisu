@@ -1,0 +1,35 @@
+class TrafficSeparationSchemeCrossing
+!!!642946.java!!!	TrafficSeparationSchemeCrossing(inout id : Long)
+		this.id=id;
+!!!643202.java!!!	getCategoryOfTrafficSeparationScheme() : String
+		return categoryOfTrafficSeparationScheme;
+!!!643330.java!!!	setCategoryOfTrafficSeparationScheme(in value : String) : void
+		this.categoryOfTrafficSeparationScheme= value;
+!!!643458.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!643586.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!643714.java!!!	getDateStart() : String
+		return dateStart;
+!!!643842.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!643970.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!644098.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!644226.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!644354.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!644482.java!!!	getRestriction() : String
+		return restriction;
+!!!644610.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!644738.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!644866.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!644994.java!!!	getStatus() : String
+		return status;
+!!!645122.java!!!	setStatus(in value : String) : void
+		this.status= value;

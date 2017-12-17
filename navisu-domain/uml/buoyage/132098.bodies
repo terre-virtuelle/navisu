@@ -1,0 +1,78 @@
+class S57Model
+!!!152066.java!!!	init() : void
+        BufferedReader bR;
+        String[] tmp;
+        String s;
+        try {
+            bR = new BufferedReader(new FileReader(new File("properties/objects.txt")));
+            do {
+                s = bR.readLine();
+                if (s != null) {
+                    tmp = s.split(";");
+                    objects.put(new Integer(tmp[0]), tmp[1]);
+                }
+            } while (s != null);
+            bR.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            bR = new BufferedReader(new FileReader(new File("properties/attributes.txt")));
+            do {
+                s = bR.readLine();
+                if (s != null) {
+                    tmp = s.split(";");
+                    attributes.put(new Integer(tmp[0]), tmp[1]);
+                }
+            } while (s != null);
+            bR.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+!!!152194.java!!!	putFeatureObject(inout key : Long, inout value : Feature) : void
+        featureObjects.put(key, value);
+        //  System.out.println("key : " + key + "  value : " + value);
+!!!152322.java!!!	putSpatialObject(inout key : Long, inout value : Spatial) : void
+        spatialObjects.put(key, value);
+        // System.out.println("key : " + key + "  value : " + value);
+!!!152450.java!!!	getFeatureObject(inout key : Long) : Feature
+        return featureObjects.get(key);
+!!!152578.java!!!	getFeatureObjects() : Feature
+        return featureObjects;
+!!!152706.java!!!	getSpatialObject(inout key : Long) : Spatial
+        return spatialObjects.get(key);
+!!!152834.java!!!	getSpatialObjects() : Spatial
+        return spatialObjects;
+!!!152962.java!!!	setFeatures(inout features : HashSet<Feature>) : void
+        _features = features;
+!!!153090.java!!!	getAttributesValue(in key : int) : String
+        return (String) attributes.get(key);
+!!!153218.java!!!	getObjectsValue(in key : int) : String
+        return (String) objects.get(key);
+!!!153346.java!!!	linkObjects() : void
+        HashSet<Spatial> sp = new HashSet<>(spatialObjects.values());
+        Iterator<Spatial> itSp = sp.iterator();
+        while (itSp.hasNext()) {
+            itSp.next().linkObjects();
+        }
+
+        Iterator<Feature> itFeat = _features.iterator();
+        while (itFeat.hasNext()) {
+            itFeat.next().linkObjects();
+        }
+!!!153474.java!!!	getSOMF() : int
+        return _dataSet.getSomf();
+!!!153602.java!!!	setSOMF(in somf : int) : void
+        if (_dataSet == null) {
+            _dataSet = new DataSetGeographicReference();
+        }
+        _dataSet.setSomf(somf);
+!!!153730.java!!!	getCOMF() : int
+        return _dataSet.getComf();
+!!!153858.java!!!	setCOMF(in comf : int) : void
+        if (_dataSet == null) {
+            _dataSet = new DataSetGeographicReference();
+        }
+        _dataSet.setComf(comf);
+!!!153986.java!!!	setDataSet(inout dataSet : DataSetGeographicReference) : void
+        _dataSet = dataSet;

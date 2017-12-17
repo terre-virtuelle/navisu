@@ -1,0 +1,93 @@
+class LightVessel
+!!!402690.java!!!	LightVessel(inout id : Long)
+        this.id = id;
+!!!402946.java!!!	getLatitude() : double
+        return 0.0;
+!!!403074.java!!!	getLongitude() : double
+        return 0.0;
+!!!403202.java!!!	getColour() : String
+        return colour;
+!!!403330.java!!!	setColour(in value : String) : void
+        this.colour = value;
+!!!403458.java!!!	getColourPattern() : String
+        return colourPattern;
+!!!403586.java!!!	setColourPattern(in value : String) : void
+        this.colourPattern = value;
+!!!403714.java!!!	getConspicuousRadar() : String
+        return conspicuousRadar;
+!!!403842.java!!!	setConspicuousRadar(in value : String) : void
+        this.conspicuousRadar = value;
+!!!403970.java!!!	getConspicuousVisually() : String
+        return conspicuousVisually;
+!!!404098.java!!!	setConspicuousVisually(in value : String) : void
+        this.conspicuousVisually = value;
+!!!404226.java!!!	getDateEnd() : String
+        return dateEnd;
+!!!404354.java!!!	setDateEnd(in value : String) : void
+        this.dateEnd = value;
+!!!404482.java!!!	getDateStart() : String
+        return dateStart;
+!!!404610.java!!!	setDateStart(in value : String) : void
+        this.dateStart = value;
+!!!404738.java!!!	getHorizontalAccuracy() : String
+        return horizontalAccuracy;
+!!!404866.java!!!	setHorizontalAccuracy(in value : String) : void
+        this.horizontalAccuracy = value;
+!!!404994.java!!!	getHorizontalLength() : String
+        return horizontalLength;
+!!!405122.java!!!	setHorizontalLength(in value : String) : void
+        this.horizontalLength = value;
+!!!405250.java!!!	getHorizontalWidth() : String
+        return horizontalWidth;
+!!!405378.java!!!	setHorizontalWidth(in value : String) : void
+        this.horizontalWidth = value;
+!!!405506.java!!!	getNatureOfConstruction() : String
+        return natureOfConstruction;
+!!!405634.java!!!	setNatureOfConstruction(in value : String) : void
+        this.natureOfConstruction = value;
+!!!405762.java!!!	getObjectName() : String
+        return objectName;
+!!!405890.java!!!	setObjectName(in value : String) : void
+        this.objectName = value;
+!!!406018.java!!!	getPeriodicDateEnd() : String
+        return periodicDateEnd;
+!!!406146.java!!!	setPeriodicDateEnd(in value : String) : void
+        this.periodicDateEnd = value;
+!!!406274.java!!!	getPeriodicDateStart() : String
+        return periodicDateStart;
+!!!406402.java!!!	setPeriodicDateStart(in value : String) : void
+        this.periodicDateStart = value;
+!!!406530.java!!!	getPictorialRepresentation() : String
+        return pictorialRepresentation;
+!!!406658.java!!!	setPictorialRepresentation(in value : String) : void
+        this.pictorialRepresentation = value;
+!!!406786.java!!!	getRecordIngdate() : String
+        return recordIngdate;
+!!!406914.java!!!	setRecordIngdate(in value : String) : void
+        this.recordIngdate = value;
+!!!407042.java!!!	getRecordingIndication() : String
+        return recordingIndication;
+!!!407170.java!!!	setRecordingIndication(in value : String) : void
+        this.recordingIndication = value;
+!!!407298.java!!!	getScaleMaximum() : String
+        return scaleMaximum;
+!!!407426.java!!!	setScaleMaximum(in value : String) : void
+        this.scaleMaximum = value;
+!!!407554.java!!!	getStatus() : String
+        return status;
+!!!407682.java!!!	setStatus(in value : String) : void
+        this.status = value;
+!!!407810.java!!!	getVerticalAccuracy() : String
+        return verticalAccuracy;
+!!!407938.java!!!	setVerticalAccuracy(in value : String) : void
+        this.verticalAccuracy = value;
+!!!408066.java!!!	getVerticalLength() : String
+        return verticalLength;
+!!!408194.java!!!	setVerticalLength(in value : String) : void
+        this.verticalLength = value;
+!!!408322.java!!!	getObjectNameInNationalLanguage() : String
+        return objectNameInNationalLanguage;
+!!!408450.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+        this.objectNameInNationalLanguage = value;
+!!!408578.java!!!	getGeometry() : String
+        return "POINT(" + Double.toString(0.0) + " " + Double.toString(0.0) + ")";

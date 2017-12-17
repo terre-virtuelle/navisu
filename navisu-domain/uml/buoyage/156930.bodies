@@ -1,0 +1,9 @@
+class NavigationalWarningsRSS
+!!!693378.java!!!	NavigationalWarningsRSS(inout rss : Rss)
+        this.rss = rss;
+!!!693506.java!!!	getRss() : Rss
+        return rss;
+!!!693634.java!!!	setRss(inout rss : Rss) : void
+        this.rss = rss;
+!!!693762.java!!!	setId(inout id : Long) : void
+        this.id = id;

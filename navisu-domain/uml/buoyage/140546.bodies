@@ -1,0 +1,47 @@
+class FerryRoute
+!!!321666.java!!!	FerryRoute(inout id : Long)
+		this.id=id;
+!!!321922.java!!!	getCategoryOfFerry() : String
+		return categoryOfFerry;
+!!!322050.java!!!	setCategoryOfFerry(in value : String) : void
+		this.categoryOfFerry= value;
+!!!322178.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!322306.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!322434.java!!!	getDateStart() : String
+		return dateStart;
+!!!322562.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!322690.java!!!	getObjectName() : String
+		return objectName;
+!!!322818.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!322946.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!323074.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!323202.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!323330.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!323458.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!323586.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!323714.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!323842.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!323970.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!324098.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!324226.java!!!	getStatus() : String
+		return status;
+!!!324354.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!324482.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!324610.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

@@ -1,0 +1,63 @@
+class SlopeTopline
+!!!580226.java!!!	SlopeTopline(inout id : Long)
+		this.id=id;
+!!!580482.java!!!	getCategoryOfSlope() : String
+		return categoryOfSlope;
+!!!580610.java!!!	setCategoryOfSlope(in value : String) : void
+		this.categoryOfSlope= value;
+!!!580738.java!!!	getColour() : String
+		return colour;
+!!!580866.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!580994.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!581122.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!581250.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!581378.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!581506.java!!!	getElevation() : String
+		return elevation;
+!!!581634.java!!!	setElevation(in value : String) : void
+		this.elevation= value;
+!!!581762.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!581890.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!582018.java!!!	getNatureOfSurface() : String
+		return natureOfSurface;
+!!!582146.java!!!	setNatureOfSurface(in value : String) : void
+		this.natureOfSurface= value;
+!!!582274.java!!!	getNatureOfSurfaceQualifyingTerms() : String
+		return natureOfSurfaceQualifyingTerms;
+!!!582402.java!!!	setNatureOfSurfaceQualifyingTerms(in value : String) : void
+		this.natureOfSurfaceQualifyingTerms= value;
+!!!582530.java!!!	getObjectName() : String
+		return objectName;
+!!!582658.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!582786.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!582914.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!583042.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!583170.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!583298.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!583426.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!583554.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!583682.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!583810.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!583938.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!584066.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!584194.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

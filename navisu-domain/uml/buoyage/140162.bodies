@@ -1,0 +1,19 @@
+class ExclusiveEconomicZone
+!!!311426.java!!!	ExclusiveEconomicZone(inout id : Long)
+		this.id=id;
+!!!311682.java!!!	getNationality() : String
+		return nationality;
+!!!311810.java!!!	setNationality(in value : String) : void
+		this.nationality= value;
+!!!311938.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!312066.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!312194.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!312322.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!312450.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!312578.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;

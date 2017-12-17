@@ -1,0 +1,5 @@
+class Para
+!!!723202.java!!!	getAlinea() : Alinea
+        return alinea;
+!!!723330.java!!!	getParas() : SubParagrah
+        return sPara;

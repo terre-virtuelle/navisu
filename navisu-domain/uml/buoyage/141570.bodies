@@ -1,0 +1,71 @@
+class Gate
+!!!348290.java!!!	Gate(inout id : Long)
+		this.id=id;
+!!!348546.java!!!	getCategoryOfGate() : String
+		return categoryOfGate;
+!!!348674.java!!!	setCategoryOfGate(in value : String) : void
+		this.categoryOfGate= value;
+!!!348802.java!!!	getCondition() : String
+		return condition;
+!!!348930.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!349058.java!!!	getDepthRangeValue1() : String
+		return depthRangeValue1;
+!!!349186.java!!!	setDepthRangeValue1(in value : String) : void
+		this.depthRangeValue1= value;
+!!!349314.java!!!	getHorizontalAccuracy() : String
+		return horizontalAccuracy;
+!!!349442.java!!!	setHorizontalAccuracy(in value : String) : void
+		this.horizontalAccuracy= value;
+!!!349570.java!!!	getHorizontalClearance() : String
+		return horizontalClearance;
+!!!349698.java!!!	setHorizontalClearance(in value : String) : void
+		this.horizontalClearance= value;
+!!!349826.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!349954.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!350082.java!!!	getObjectName() : String
+		return objectName;
+!!!350210.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!350338.java!!!	getQualityOfSoundingMeasurement() : String
+		return qualityOfSoundingMeasurement;
+!!!350466.java!!!	setQualityOfSoundingMeasurement(in value : String) : void
+		this.qualityOfSoundingMeasurement= value;
+!!!350594.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!350722.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!350850.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!350978.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!351106.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!351234.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!351362.java!!!	getSoundingAccuracy() : String
+		return soundingAccuracy;
+!!!351490.java!!!	setSoundingAccuracy(in value : String) : void
+		this.soundingAccuracy= value;
+!!!351618.java!!!	getStatus() : String
+		return status;
+!!!351746.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!351874.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!352002.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!352130.java!!!	getVerticalClearance() : String
+		return verticalClearance;
+!!!352258.java!!!	setVerticalClearance(in value : String) : void
+		this.verticalClearance= value;
+!!!352386.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!352514.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!352642.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!352770.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

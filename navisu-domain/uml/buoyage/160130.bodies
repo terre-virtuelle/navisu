@@ -1,0 +1,5 @@
+class SubChapter
+!!!732546.java!!!	getPara() : Para
+        return para;
+!!!732674.java!!!	getAlinea() : Alinea
+        return alinea;

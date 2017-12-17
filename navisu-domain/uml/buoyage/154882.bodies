@@ -1,0 +1,19 @@
+class UnitsOfMeasurementOfData
+!!!663938.java!!!	UnitsOfMeasurementOfData(inout id : Long)
+		this.id=id;
+!!!664194.java!!!	getDepthUnits() : String
+		return depthUnits;
+!!!664322.java!!!	setDepthUnits(in value : String) : void
+		this.depthUnits= value;
+!!!664450.java!!!	getHeightLengthUnits() : String
+		return heightLengthUnits;
+!!!664578.java!!!	setHeightLengthUnits(in value : String) : void
+		this.heightLengthUnits= value;
+!!!664706.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!664834.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!664962.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!665090.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;

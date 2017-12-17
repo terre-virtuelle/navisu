@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "boycar")
-public class BuoyCardinal extends Buoyage
+public class BuoyCardinal extends Buoy
         implements  Serializable {
 
     public BuoyCardinal(Long id) {

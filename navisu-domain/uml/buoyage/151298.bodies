@@ -1,0 +1,23 @@
+class Spring
+!!!594818.java!!!	Spring(inout id : Long)
+		this.id=id;
+!!!595074.java!!!	getObjectName() : String
+		return objectName;
+!!!595202.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!595330.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!595458.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!595586.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!595714.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!595842.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!595970.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!596098.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!596226.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

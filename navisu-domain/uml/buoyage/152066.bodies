@@ -1,0 +1,35 @@
+class SweptArea
+!!!606082.java!!!	SweptArea(inout id : Long)
+		this.id=id;
+!!!606338.java!!!	getDepthRangeValue1() : String
+		return depthRangeValue1;
+!!!606466.java!!!	setDepthRangeValue1(in value : String) : void
+		this.depthRangeValue1= value;
+!!!606594.java!!!	getQualityOfSoundingMeasurement() : String
+		return qualityOfSoundingMeasurement;
+!!!606722.java!!!	setQualityOfSoundingMeasurement(in value : String) : void
+		this.qualityOfSoundingMeasurement= value;
+!!!606850.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!606978.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!607106.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!607234.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!607362.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!607490.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!607618.java!!!	getSoundingAccuracy() : String
+		return soundingAccuracy;
+!!!607746.java!!!	setSoundingAccuracy(in value : String) : void
+		this.soundingAccuracy= value;
+!!!607874.java!!!	getTechniqueOfSoundingMeasurement() : String
+		return techniqueOfSoundingMeasurement;
+!!!608002.java!!!	setTechniqueOfSoundingMeasurement(in value : String) : void
+		this.techniqueOfSoundingMeasurement= value;
+!!!608130.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!608258.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;

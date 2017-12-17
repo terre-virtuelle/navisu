@@ -1,0 +1,19 @@
+class NauticalPublicationInformation
+!!!427906.java!!!	NauticalPublicationInformation(inout id : Long)
+		this.id=id;
+!!!428162.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!428290.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!428418.java!!!	getPublicationReference() : String
+		return publicationReference;
+!!!428546.java!!!	setPublicationReference(in value : String) : void
+		this.publicationReference= value;
+!!!428674.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!428802.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!428930.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!429058.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;

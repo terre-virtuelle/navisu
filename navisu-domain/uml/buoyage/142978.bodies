@@ -1,0 +1,23 @@
+class LakeShore
+!!!379778.java!!!	LakeShore(inout id : Long)
+		this.id=id;
+!!!380034.java!!!	getObjectName() : String
+		return objectName;
+!!!380162.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!380290.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!380418.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!380546.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!380674.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!380802.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!380930.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!381058.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!381186.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

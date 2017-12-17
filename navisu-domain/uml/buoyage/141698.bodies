@@ -1,0 +1,55 @@
+class Gridiron
+!!!352898.java!!!	Gridiron(inout id : Long)
+		this.id=id;
+!!!353154.java!!!	getHorizontalAccuracy() : String
+		return horizontalAccuracy;
+!!!353282.java!!!	setHorizontalAccuracy(in value : String) : void
+		this.horizontalAccuracy= value;
+!!!353410.java!!!	getHorizontalLength() : String
+		return horizontalLength;
+!!!353538.java!!!	setHorizontalLength(in value : String) : void
+		this.horizontalLength= value;
+!!!353666.java!!!	getHorizontalWidth() : String
+		return horizontalWidth;
+!!!353794.java!!!	setHorizontalWidth(in value : String) : void
+		this.horizontalWidth= value;
+!!!353922.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!354050.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!354178.java!!!	getObjectName() : String
+		return objectName;
+!!!354306.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!354434.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!354562.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!354690.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!354818.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!354946.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!355074.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!355202.java!!!	getStatus() : String
+		return status;
+!!!355330.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!355458.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!355586.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!355714.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!355842.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!355970.java!!!	getWaterLevelEffect() : String
+		return waterLevelEffect;
+!!!356098.java!!!	setWaterLevelEffect(in value : String) : void
+		this.waterLevelEffect= value;
+!!!356226.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!356354.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

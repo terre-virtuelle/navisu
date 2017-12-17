@@ -1,0 +1,51 @@
+class SlopingGround
+!!!584322.java!!!	SlopingGround(inout id : Long)
+		this.id=id;
+!!!584578.java!!!	getCategoryOfSlope() : String
+		return categoryOfSlope;
+!!!584706.java!!!	setCategoryOfSlope(in value : String) : void
+		this.categoryOfSlope= value;
+!!!584834.java!!!	getColour() : String
+		return colour;
+!!!584962.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!585090.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!585218.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!585346.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!585474.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!585602.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!585730.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!585858.java!!!	getNatureOfSurface() : String
+		return natureOfSurface;
+!!!585986.java!!!	setNatureOfSurface(in value : String) : void
+		this.natureOfSurface= value;
+!!!586114.java!!!	getNatureOfSurfaceQualifyingTerms() : String
+		return natureOfSurfaceQualifyingTerms;
+!!!586242.java!!!	setNatureOfSurfaceQualifyingTerms(in value : String) : void
+		this.natureOfSurfaceQualifyingTerms= value;
+!!!586370.java!!!	getObjectName() : String
+		return objectName;
+!!!586498.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!586626.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!586754.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!586882.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!587010.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!587138.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!587266.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!587394.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!587522.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

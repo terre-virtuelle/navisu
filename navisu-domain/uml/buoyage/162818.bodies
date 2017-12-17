@@ -1,0 +1,28 @@
+class SailingDirectionsViewOld
+!!!742018.java!!!	SailingDirectionsViewOld(in x : double, in y : double)
+        super(x, y);
+!!!742146.java!!!	SailingDirectionsViewOld(inout data : SailingDirections, in x : double, in y : double)
+        super(x, y);
+        this.data = data;
+!!!742274.java!!!	getData() : NavigationData
+        return data;
+!!!742402.java!!!	getLatitude() : double
+        if (data != null) {
+            return data.getLatitude();
+        } else {
+            return 0.0;
+        }
+!!!742530.java!!!	getLongitude() : double
+        if (data != null) {
+            return data.getLongitude();
+        } else {
+            return 0.0;
+        }
+!!!742658.java!!!	getGeometry() : String
+        if (data != null) {
+            return data.getGeometry();
+        } else {
+            return "";
+        }
+!!!742786.java!!!	toString() : String
+        return "SailingDirectionsView{" + "data=" + data + super.toString() + '}';

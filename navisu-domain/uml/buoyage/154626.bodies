@@ -1,0 +1,63 @@
+class TwoWayRoutePart
+!!!655746.java!!!	TwoWayRoutePart(inout id : Long)
+		this.id=id;
+!!!656002.java!!!	getCategoryOfRecommendedTrack() : String
+		return categoryOfRecommendedTrack;
+!!!656130.java!!!	setCategoryOfRecommendedTrack(in value : String) : void
+		this.categoryOfRecommendedTrack= value;
+!!!656258.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!656386.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!656514.java!!!	getDateStart() : String
+		return dateStart;
+!!!656642.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!656770.java!!!	getDepthRangeValue1() : String
+		return depthRangeValue1;
+!!!656898.java!!!	setDepthRangeValue1(in value : String) : void
+		this.depthRangeValue1= value;
+!!!657026.java!!!	getDepthRangeValue2() : String
+		return depthRangeValue2;
+!!!657154.java!!!	setDepthRangeValue2(in value : String) : void
+		this.depthRangeValue2= value;
+!!!657282.java!!!	getOrientation() : String
+		return orientation;
+!!!657410.java!!!	setOrientation(in value : String) : void
+		this.orientation= value;
+!!!657538.java!!!	getQualityOfSoundingMeasurement() : String
+		return qualityOfSoundingMeasurement;
+!!!657666.java!!!	setQualityOfSoundingMeasurement(in value : String) : void
+		this.qualityOfSoundingMeasurement= value;
+!!!657794.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!657922.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!658050.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!658178.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!658306.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!658434.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!658562.java!!!	getSoundingAccuracy() : String
+		return soundingAccuracy;
+!!!658690.java!!!	setSoundingAccuracy(in value : String) : void
+		this.soundingAccuracy= value;
+!!!658818.java!!!	getStatus() : String
+		return status;
+!!!658946.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!659074.java!!!	getTechniqueOfSoundingMeasurement() : String
+		return techniqueOfSoundingMeasurement;
+!!!659202.java!!!	setTechniqueOfSoundingMeasurement(in value : String) : void
+		this.techniqueOfSoundingMeasurement= value;
+!!!659330.java!!!	getTrafficfLow() : String
+		return trafficfLow;
+!!!659458.java!!!	setTrafficfLow(in value : String) : void
+		this.trafficfLow= value;
+!!!659586.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!659714.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;

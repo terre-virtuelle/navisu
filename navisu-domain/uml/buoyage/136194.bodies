@@ -1,0 +1,43 @@
+class CargoTranshipmentArea
+!!!225026.java!!!	CargoTranshipmentArea(inout id : Long)
+		this.id=id;
+!!!225282.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!225410.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!225538.java!!!	getDateStart() : String
+		return dateStart;
+!!!225666.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!225794.java!!!	getObjectName() : String
+		return objectName;
+!!!225922.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!226050.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!226178.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!226306.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!226434.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!226562.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!226690.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!226818.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!226946.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!227074.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!227202.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!227330.java!!!	getStatus() : String
+		return status;
+!!!227458.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!227586.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!227714.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

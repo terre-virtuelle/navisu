@@ -1,0 +1,63 @@
+class IceArea
+!!!368514.java!!!	IceArea(inout id : Long)
+		this.id=id;
+!!!368770.java!!!	getCategoryOfIce() : String
+		return categoryOfIce;
+!!!368898.java!!!	setCategoryOfIce(in value : String) : void
+		this.categoryOfIce= value;
+!!!369026.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!369154.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!369282.java!!!	getElevation() : String
+		return elevation;
+!!!369410.java!!!	setElevation(in value : String) : void
+		this.elevation= value;
+!!!369538.java!!!	getHeight() : String
+		return height;
+!!!369666.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!369794.java!!!	getObjectName() : String
+		return objectName;
+!!!369922.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!370050.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!370178.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!370306.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!370434.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!370562.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!370690.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!370818.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!370946.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!371074.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!371202.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!371330.java!!!	getStatus() : String
+		return status;
+!!!371458.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!371586.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!371714.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!371842.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!371970.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!372098.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!372226.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!372354.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!372482.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

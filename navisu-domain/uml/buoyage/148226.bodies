@@ -1,0 +1,31 @@
+class Rapids
+!!!520066.java!!!	Rapids(inout id : Long)
+		this.id=id;
+!!!520322.java!!!	getObjectName() : String
+		return objectName;
+!!!520450.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!520578.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!520706.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!520834.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!520962.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!521090.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!521218.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!521346.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!521474.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!521602.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!521730.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!521858.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!521986.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

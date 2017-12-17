@@ -1,0 +1,56 @@
+class Spatial
+!!!129666.java!!!	Spatial()
+        this.spatial = true;
+!!!129794.java!!!	setField(in fieldName : String, inout fieldValue : byte) : S57Object
+        switch (fieldName) {
+            case "ATTV":
+                this.decodATTV(fieldValue);
+                break;
+            case "VRPC":
+                this.decodVRPC(fieldValue);
+                break;
+            case "VRPT":
+                this.decodVRPT(fieldValue);
+                break;
+            case "SG2D":
+                this.decodSG2D(fieldValue);
+                break;
+            case "SG3D":
+                this.decodSG3D(fieldValue);
+                break;
+            case "SGCC":
+                this.decodSGCC(fieldValue);
+                break;
+        }
+
+        return this;
+!!!129922.java!!!	decodVRID(inout fieldValue : byte) : Spatial
+        try {
+            int rcnm = fieldValue[0] & 0xFF;
+            long id0;
+            Spatial obj = null;
+            id0 = rcnm;
+            id0 = id0 * 256 + (fieldValue[4] & 0xFF);
+            id0 = id0 * 256 + (fieldValue[3] & 0xFF);
+            id0 = id0 * 256 + (fieldValue[2] & 0xFF);
+            id0 = id0 * 256 + (fieldValue[1] & 0xFF);
+
+            this.setId(id0);
+
+            if (rcnm == 110) {
+                obj = new IsolatedNode(this.getId());
+            } else if (rcnm == 120) {
+                obj = new ConnectedNode(this.getId());
+            } else if (rcnm == 130) {
+                obj = new Edge(this.getId());
+            } else if (rcnm == 140) {
+                obj = new Face(this.getId());
+            }
+            return obj;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+
+!!!130050.java!!!	decodATTV(inout fieldValue : byte) : void
+

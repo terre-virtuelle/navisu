@@ -1,0 +1,95 @@
+class FloatingDock
+!!!332162.java!!!	FloatingDock(inout id : Long)
+		this.id=id;
+!!!332418.java!!!	getColour() : String
+		return colour;
+!!!332546.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!332674.java!!!	getColourPattern() : String
+		return colourPattern;
+!!!332802.java!!!	setColourPattern(in value : String) : void
+		this.colourPattern= value;
+!!!332930.java!!!	getCondition() : String
+		return condition;
+!!!333058.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!333186.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!333314.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!333442.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!333570.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!333698.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!333826.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!333954.java!!!	getDateStart() : String
+		return dateStart;
+!!!334082.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!334210.java!!!	getDepthRangeValue1() : String
+		return depthRangeValue1;
+!!!334338.java!!!	setDepthRangeValue1(in value : String) : void
+		this.depthRangeValue1= value;
+!!!334466.java!!!	getHorizontalAccuracy() : String
+		return horizontalAccuracy;
+!!!334594.java!!!	setHorizontalAccuracy(in value : String) : void
+		this.horizontalAccuracy= value;
+!!!334722.java!!!	getHorizontalClearance() : String
+		return horizontalClearance;
+!!!334850.java!!!	setHorizontalClearance(in value : String) : void
+		this.horizontalClearance= value;
+!!!334978.java!!!	getHorizontalLength() : String
+		return horizontalLength;
+!!!335106.java!!!	setHorizontalLength(in value : String) : void
+		this.horizontalLength= value;
+!!!335234.java!!!	getHorizontalWidth() : String
+		return horizontalWidth;
+!!!335362.java!!!	setHorizontalWidth(in value : String) : void
+		this.horizontalWidth= value;
+!!!335490.java!!!	getLiftingCapacity() : String
+		return liftingCapacity;
+!!!335618.java!!!	setLiftingCapacity(in value : String) : void
+		this.liftingCapacity= value;
+!!!335746.java!!!	getObjectName() : String
+		return objectName;
+!!!335874.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!336002.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!336130.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!336258.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!336386.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!336514.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!336642.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!336770.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!336898.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!337026.java!!!	getStatus() : String
+		return status;
+!!!337154.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!337282.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!337410.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!337538.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!337666.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!337794.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!337922.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!338050.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!338178.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

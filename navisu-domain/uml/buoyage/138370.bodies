@@ -1,0 +1,43 @@
+class Current
+!!!270210.java!!!	Current(inout id : Long)
+		this.id=id;
+!!!270466.java!!!	getCurrentVelocity() : String
+		return currentVelocity;
+!!!270594.java!!!	setCurrentVelocity(in value : String) : void
+		this.currentVelocity= value;
+!!!270722.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!270850.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!270978.java!!!	getDateStart() : String
+		return dateStart;
+!!!271106.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!271234.java!!!	getObjectName() : String
+		return objectName;
+!!!271362.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!271490.java!!!	getOrientation() : String
+		return orientation;
+!!!271618.java!!!	setOrientation(in value : String) : void
+		this.orientation= value;
+!!!271746.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!271874.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!272002.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!272130.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!272258.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!272386.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!272514.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!272642.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!272770.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!272898.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;

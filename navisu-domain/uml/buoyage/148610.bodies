@@ -1,0 +1,31 @@
+class RecommendedTrafficLanePart
+!!!532354.java!!!	RecommendedTrafficLanePart(inout id : Long)
+		this.id=id;
+!!!532610.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!532738.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!532866.java!!!	getDateStart() : String
+		return dateStart;
+!!!532994.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!533122.java!!!	getOrientation() : String
+		return orientation;
+!!!533250.java!!!	setOrientation(in value : String) : void
+		this.orientation= value;
+!!!533378.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!533506.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!533634.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!533762.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!533890.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!534018.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!534146.java!!!	getStatus() : String
+		return status;
+!!!534274.java!!!	setStatus(in value : String) : void
+		this.status= value;

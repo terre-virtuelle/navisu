@@ -1,0 +1,7 @@
+class Buoy
+!!!204930.java!!!	getBuoyShape() : String
+        return shape;
+!!!205058.java!!!	setBuoyShape(in value : String) : void
+        shape = value;
+!!!205186.java!!!	getShapeMeaning(in shape : String) : String
+        return super.getShapeMeaning(BOYSHP.ATT.get(shape));

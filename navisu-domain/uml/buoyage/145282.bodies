@@ -1,0 +1,91 @@
+class Obstruction
+!!!433538.java!!!	Obstruction(inout id : Long)
+		this.id=id;
+!!!433794.java!!!	getCategoryOfObstruction() : String
+		return categoryOfObstruction;
+!!!433922.java!!!	setCategoryOfObstruction(in value : String) : void
+		this.categoryOfObstruction= value;
+!!!434050.java!!!	getCondition() : String
+		return condition;
+!!!434178.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!434306.java!!!	getExpositionOfSounding() : String
+		return expositionOfSounding;
+!!!434434.java!!!	setExpositionOfSounding(in value : String) : void
+		this.expositionOfSounding= value;
+!!!434562.java!!!	getHeight() : String
+		return height;
+!!!434690.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!434818.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!434946.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!435074.java!!!	getNatureOfSurface() : String
+		return natureOfSurface;
+!!!435202.java!!!	setNatureOfSurface(in value : String) : void
+		this.natureOfSurface= value;
+!!!435330.java!!!	getNatureOfSurfaceQualifyingTerms() : String
+		return natureOfSurfaceQualifyingTerms;
+!!!435458.java!!!	setNatureOfSurfaceQualifyingTerms(in value : String) : void
+		this.natureOfSurfaceQualifyingTerms= value;
+!!!435586.java!!!	getObjectName() : String
+		return objectName;
+!!!435714.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!435842.java!!!	getProduct() : String
+		return product;
+!!!435970.java!!!	setProduct(in value : String) : void
+		this.product= value;
+!!!436098.java!!!	getQualityOfSoundingMeasurement() : String
+		return qualityOfSoundingMeasurement;
+!!!436226.java!!!	setQualityOfSoundingMeasurement(in value : String) : void
+		this.qualityOfSoundingMeasurement= value;
+!!!436354.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!436482.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!436610.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!436738.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!436866.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!436994.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!437122.java!!!	getSoundingAccuracy() : String
+		return soundingAccuracy;
+!!!437250.java!!!	setSoundingAccuracy(in value : String) : void
+		this.soundingAccuracy= value;
+!!!437378.java!!!	getStatus() : String
+		return status;
+!!!437506.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!437634.java!!!	getTechniqueOfSoundingMeasurement() : String
+		return techniqueOfSoundingMeasurement;
+!!!437762.java!!!	setTechniqueOfSoundingMeasurement(in value : String) : void
+		this.techniqueOfSoundingMeasurement= value;
+!!!437890.java!!!	getValueOfSounding() : String
+		return valueOfSounding;
+!!!438018.java!!!	setValueOfSounding(in value : String) : void
+		this.valueOfSounding= value;
+!!!438146.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!438274.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!438402.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!438530.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!438658.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!438786.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!438914.java!!!	getWaterLevelEffect() : String
+		return waterLevelEffect;
+!!!439042.java!!!	setWaterLevelEffect(in value : String) : void
+		this.waterLevelEffect= value;
+!!!439170.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!439298.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

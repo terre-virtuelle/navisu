@@ -1,0 +1,47 @@
+class Text
+!!!609922.java!!!	Text(inout id : Long)
+		this.id=id;
+!!!610178.java!!!	getCharacterSpacing() : String
+		return characterSpacing;
+!!!610306.java!!!	setCharacterSpacing(in value : String) : void
+		this.characterSpacing= value;
+!!!610434.java!!!	getCharacterSpecification() : String
+		return characterSpecification;
+!!!610562.java!!!	setCharacterSpecification(in value : String) : void
+		this.characterSpecification= value;
+!!!610690.java!!!	getColour() : String
+		return colour;
+!!!610818.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!610946.java!!!	getJustificationHorizontal() : String
+		return justificationHorizontal;
+!!!611074.java!!!	setJustificationHorizontal(in value : String) : void
+		this.justificationHorizontal= value;
+!!!611202.java!!!	getJustificationVertical() : String
+		return justificationVertical;
+!!!611330.java!!!	setJustificationVertical(in value : String) : void
+		this.justificationVertical= value;
+!!!611458.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!611586.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!611714.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!611842.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!611970.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!612098.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!612226.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!612354.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!612482.java!!!	getTextString() : String
+		return textString;
+!!!612610.java!!!	setTextString(in value : String) : void
+		this.textString= value;
+!!!612738.java!!!	getTextStringInNationalLanguage() : String
+		return textStringInNationalLanguage;
+!!!612866.java!!!	setTextStringInNationalLanguage(in value : String) : void
+		this.textStringInNationalLanguage= value;

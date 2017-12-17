@@ -1,0 +1,63 @@
+class Fairway
+!!!312706.java!!!	Fairway(inout id : Long)
+		this.id=id;
+!!!312962.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!313090.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!313218.java!!!	getDateStart() : String
+		return dateStart;
+!!!313346.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!313474.java!!!	getDepthRangeValue1() : String
+		return depthRangeValue1;
+!!!313602.java!!!	setDepthRangeValue1(in value : String) : void
+		this.depthRangeValue1= value;
+!!!313730.java!!!	getObjectName() : String
+		return objectName;
+!!!313858.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!313986.java!!!	getOrientation() : String
+		return orientation;
+!!!314114.java!!!	setOrientation(in value : String) : void
+		this.orientation= value;
+!!!314242.java!!!	getQualityOfSoundingMeasurement() : String
+		return qualityOfSoundingMeasurement;
+!!!314370.java!!!	setQualityOfSoundingMeasurement(in value : String) : void
+		this.qualityOfSoundingMeasurement= value;
+!!!314498.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!314626.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!314754.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!314882.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!315010.java!!!	getRestriction() : String
+		return restriction;
+!!!315138.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!315266.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!315394.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!315522.java!!!	getSoundingAccuracy() : String
+		return soundingAccuracy;
+!!!315650.java!!!	setSoundingAccuracy(in value : String) : void
+		this.soundingAccuracy= value;
+!!!315778.java!!!	getStatus() : String
+		return status;
+!!!315906.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!316034.java!!!	getTrafficfLow() : String
+		return trafficfLow;
+!!!316162.java!!!	setTrafficfLow(in value : String) : void
+		this.trafficfLow= value;
+!!!316290.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!316418.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!316546.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!316674.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

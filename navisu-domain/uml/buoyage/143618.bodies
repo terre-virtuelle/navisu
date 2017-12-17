@@ -1,0 +1,115 @@
+class Light
+!!!389250.java!!!	Light(inout id : Long)
+        this.id = id;
+!!!389506.java!!!	getCategoryOfLight() : String
+        return categoryOfLight;
+!!!389634.java!!!	setCategoryOfLight(in value : String) : void
+        this.categoryOfLight = value;
+!!!389762.java!!!	getColour() : String
+        return colour;
+!!!389890.java!!!	setColour(in value : String) : void
+        this.colour = value;
+!!!390018.java!!!	getDateEnd() : String
+        return dateEnd;
+!!!390146.java!!!	setDateEnd(in value : String) : void
+        this.dateEnd = value;
+!!!390274.java!!!	getDateStart() : String
+        return dateStart;
+!!!390402.java!!!	setDateStart(in value : String) : void
+        this.dateStart = value;
+!!!390530.java!!!	getExhibitionConditionOfLight() : String
+        return exhibitionConditionOfLight;
+!!!390658.java!!!	setExhibitionConditionOfLight(in value : String) : void
+        this.exhibitionConditionOfLight = value;
+!!!390786.java!!!	getHeight() : String
+        return height;
+!!!390914.java!!!	setHeight(in value : String) : void
+        this.height = value;
+!!!391042.java!!!	getLightCharacteristic() : String
+        return lightCharacteristic;
+!!!391170.java!!!	setLightCharacteristic(in value : String) : void
+        this.lightCharacteristic = value;
+!!!391298.java!!!	getLightVisibility() : String
+        return lightVisibility;
+!!!391426.java!!!	setLightVisibility(in value : String) : void
+        this.lightVisibility = value;
+!!!391554.java!!!	getMarksNavigationalSystemof() : String
+        return marksNavigationalSystemof;
+!!!391682.java!!!	setMarksNavigationalSystemof(in value : String) : void
+        this.marksNavigationalSystemof = value;
+!!!391810.java!!!	getMultiplicityOfLights() : String
+        return multiplicityOfLights;
+!!!391938.java!!!	setMultiplicityOfLights(in value : String) : void
+        this.multiplicityOfLights = value;
+!!!392066.java!!!	getObjectName() : String
+        return objectName;
+!!!392194.java!!!	setObjectName(in value : String) : void
+        this.objectName = value;
+!!!392322.java!!!	getOrientation() : String
+        return orientation;
+!!!392450.java!!!	setOrientation(in value : String) : void
+        this.orientation = value;
+!!!392578.java!!!	getPeriodicDateEnd() : String
+        return periodicDateEnd;
+!!!392706.java!!!	setPeriodicDateEnd(in value : String) : void
+        this.periodicDateEnd = value;
+!!!392834.java!!!	getPeriodicDateStart() : String
+        return periodicDateStart;
+!!!392962.java!!!	setPeriodicDateStart(in value : String) : void
+        this.periodicDateStart = value;
+!!!393090.java!!!	getRecordIngdate() : String
+        return recordIngdate;
+!!!393218.java!!!	setRecordIngdate(in value : String) : void
+        this.recordIngdate = value;
+!!!393346.java!!!	getRecordingIndication() : String
+        return recordingIndication;
+!!!393474.java!!!	setRecordingIndication(in value : String) : void
+        this.recordingIndication = value;
+!!!393602.java!!!	getScaleMaximum() : String
+        return scaleMaximum;
+!!!393730.java!!!	setScaleMaximum(in value : String) : void
+        this.scaleMaximum = value;
+!!!393858.java!!!	getSectorLimitOne() : String
+        return sectorLimitOne;
+!!!393986.java!!!	setSectorLimitOne(in value : String) : void
+        this.sectorLimitOne = value;
+!!!394114.java!!!	getSectorLimitTwo() : String
+        return sectorLimitTwo;
+!!!394242.java!!!	setSectorLimitTwo(in value : String) : void
+        this.sectorLimitTwo = value;
+!!!394370.java!!!	getSignalGroup() : String
+        return signalGroup;
+!!!394498.java!!!	setSignalGroup(in value : String) : void
+        this.signalGroup = value;
+!!!394626.java!!!	getSignalPeriod() : String
+        return signalPeriod;
+!!!394754.java!!!	setSignalPeriod(in value : String) : void
+        this.signalPeriod = value;
+!!!394882.java!!!	getSignalSequence() : String
+        return signalsequence;
+!!!395010.java!!!	setSignalSequence(in value : String) : void
+        this.signalsequence = value;
+!!!395138.java!!!	getStatus() : String
+        return status;
+!!!395266.java!!!	setStatus(in value : String) : void
+        this.status = value;
+!!!395394.java!!!	getValueOfNominalRange() : String
+        return valueOfNominalRange;
+!!!395522.java!!!	setValueOfNominalRange(in value : String) : void
+        this.valueOfNominalRange = value;
+!!!395650.java!!!	getVerticalAccuracy() : String
+        return verticalAccuracy;
+!!!395778.java!!!	setVerticalAccuracy(in value : String) : void
+        this.verticalAccuracy = value;
+!!!395906.java!!!	getVerticaldatum() : String
+        return verticaldatum;
+!!!396034.java!!!	setVerticaldatum(in value : String) : void
+        this.verticaldatum = value;
+!!!396162.java!!!	getObjectNameInNationalLanguage() : String
+        return objectNameInNationalLanguage;
+!!!396290.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+        this.objectNameInNationalLanguage = value;
+!!!396418.java!!!	getGeometry() : String
+        return "POINT(" + Double.toString(longitude) + " " + Double.toString(latitude) + ")";
+!!!396546.java!!!	toString() : String
+        return "Light{" + "categoryOfLight=" + categoryOfLight + ", colour=" + colour + ", dateEnd=" + dateEnd + ", dateStart=" + dateStart + ", exhibitionConditionOfLight=" + exhibitionConditionOfLight + ", height=" + height + ", lightCharacteristic=" + lightCharacteristic + ", marksNavigationalSystemof=" + marksNavigationalSystemof + ", lightVisibility=" + lightVisibility + ", multiplicityOfLights=" + multiplicityOfLights + ", objectName=" + objectName + ", orientation=" + orientation + ", periodicDateEnd=" + periodicDateEnd + ", periodicDateStart=" + periodicDateStart + ", recordIngdate=" + recordIngdate + ", recordingIndication=" + recordingIndication + ", sectorLimitTwo=" + sectorLimitTwo + ", sectorLimitOne=" + sectorLimitOne + ", scaleMaximum=" + scaleMaximum + ", signalGroup=" + signalGroup + ", signalPeriod=" + signalPeriod + ", signalsequence=" + signalsequence + ", status=" + status + ", valueOfNominalRange=" + valueOfNominalRange + ", verticaldatum=" + verticaldatum + ", objectNameInNationalLanguage=" + objectNameInNationalLanguage + ", verticalAccuracy=" + verticalAccuracy + '}';

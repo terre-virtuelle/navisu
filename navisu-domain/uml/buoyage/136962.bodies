@@ -1,0 +1,31 @@
+class Checkpoint
+!!!238338.java!!!	Checkpoint(inout id : Long)
+		this.id=id;
+!!!238594.java!!!	getCategoryOfCheckpoint() : String
+		return categoryOfcheckpoint;
+!!!238722.java!!!	setCategoryOfCheckpoint(in value : String) : void
+		this.categoryOfcheckpoint= value;
+!!!238850.java!!!	getObjectName() : String
+		return objectName;
+!!!238978.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!239106.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!239234.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!239362.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!239490.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!239618.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!239746.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!239874.java!!!	getStatus() : String
+		return status;
+!!!240002.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!240130.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!240258.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

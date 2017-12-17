@@ -1,0 +1,19 @@
+class StackedOnStackedUnder
+!!!598658.java!!!	StackedOnStackedUnder(inout id : Long)
+		this.id=id;
+!!!598914.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!599042.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!599170.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!599298.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!599426.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!599554.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!599682.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!599810.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;

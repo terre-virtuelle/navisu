@@ -1,0 +1,39 @@
+class RadarRange
+!!!497026.java!!!	RadarRange(inout id : Long)
+		this.id=id;
+!!!497282.java!!!	getCommunicationChannel() : String
+		return communicationchannel;
+!!!497410.java!!!	setCommunicationChannel(in value : String) : void
+		this.communicationchannel= value;
+!!!497538.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!497666.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!497794.java!!!	getDateStart() : String
+		return dateStart;
+!!!497922.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!498050.java!!!	getObjectName() : String
+		return objectName;
+!!!498178.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!498306.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!498434.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!498562.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!498690.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!498818.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!498946.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!499074.java!!!	getStatus() : String
+		return status;
+!!!499202.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!499330.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!499458.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

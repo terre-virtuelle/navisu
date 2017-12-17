@@ -1,0 +1,11 @@
+class NavigationalWarningsSet
+!!!687874.java!!!	NavigationalWarningsSet()
+        avurnavs = new ArrayList<>();
+!!!688002.java!!!	NavigationalWarningsSet(inout avurnavs : List<NavigationalWarnings>)
+        this.avurnavs = avurnavs;
+!!!688130.java!!!	getAvurnavs() : NavigationalWarnings
+        return avurnavs;
+!!!688258.java!!!	setAvurnavs(inout avurnavs : List<NavigationalWarnings>) : void
+        this.avurnavs = avurnavs;
+!!!688386.java!!!	add(inout avurnav : NavigationalWarnings) : void
+        avurnavs.add(avurnav);

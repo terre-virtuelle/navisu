@@ -1,0 +1,71 @@
+class OffshoreProductionArea
+!!!445058.java!!!	OffshoreProductionArea(inout id : Long)
+		this.id=id;
+!!!445314.java!!!	getCategoryOfProductionArea() : String
+		return categoryOfProductionArea;
+!!!445442.java!!!	setCategoryOfProductionArea(in value : String) : void
+		this.categoryOfProductionArea= value;
+!!!445570.java!!!	getCondition() : String
+		return condition;
+!!!445698.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!445826.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!445954.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!446082.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!446210.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!446338.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!446466.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!446594.java!!!	getDateStart() : String
+		return dateStart;
+!!!446722.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!446850.java!!!	getHeight() : String
+		return height;
+!!!446978.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!447106.java!!!	getObjectName() : String
+		return objectName;
+!!!447234.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!447362.java!!!	getProduct() : String
+		return product;
+!!!447490.java!!!	setProduct(in value : String) : void
+		this.product= value;
+!!!447618.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!447746.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!447874.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!448002.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!448130.java!!!	getRestriction() : String
+		return restriction;
+!!!448258.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!448386.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!448514.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!448642.java!!!	getStatus() : String
+		return status;
+!!!448770.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!448898.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!449026.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!449154.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!449282.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!449410.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!449538.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

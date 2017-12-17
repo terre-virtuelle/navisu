@@ -1,0 +1,27 @@
+class WaterTurbulence
+!!!672386.java!!!	WaterTurbulence(inout id : Long)
+		this.id=id;
+!!!672642.java!!!	getCategoryOfWaterTurbulence() : String
+		return categoryOfWaterTurbulence;
+!!!672770.java!!!	setCategoryOfWaterTurbulence(in value : String) : void
+		this.categoryOfWaterTurbulence= value;
+!!!672898.java!!!	getObjectName() : String
+		return objectName;
+!!!673026.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!673154.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!673282.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!673410.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!673538.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!673666.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!673794.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!673922.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!674050.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

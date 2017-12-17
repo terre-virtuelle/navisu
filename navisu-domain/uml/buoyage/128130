@@ -1,0 +1,4527 @@
+format 76
+"model" // model
+  revision 2
+  modified_by 2 "serge"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  java_dir "Z:/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/charts/vector/s57/model/"
+  java_package "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model"
+  classview 128130 "model"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 128130 "Arc3Point"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 128642 // <generalisation>
+	relation 128642 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128642 // <generalisation>
+	  b parent class_ref 128258 // ArcCurve
+      end
+
+      classrelation 128770 // stpt (<unidirectional association>)
+	relation 128770 --->
+	  a role_name "stpt" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128770 // stpt (<unidirectional association>)
+	  b parent class_ref 128898 // Point
+      end
+
+      classrelation 128898 // ctpt (<unidirectional association>)
+	relation 128898 --->
+	  a role_name "ctpt" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128898 // ctpt (<unidirectional association>)
+	  b parent class_ref 128898 // Point
+      end
+
+      classrelation 129026 // enpt (<unidirectional association>)
+	relation 129026 --->
+	  a role_name "enpt" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129026 // enpt (<unidirectional association>)
+	  b parent class_ref 128898 // Point
+      end
+
+      operation 131330 "Arc3Point"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131458 "getStpt"
+	public return_type class_ref 128898 // Point
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131586 "cardStpt"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131714 "getCtpt"
+	public return_type class_ref 128898 // Point
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131842 "cardCtpt"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131970 "getEnpt"
+	public return_type class_ref 128898 // Point
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132098 "cardEnpt"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132226 "Arc3Point"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "rcid" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 128258 "ArcCurve"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 128514 // <generalisation>
+	relation 128514 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128514 // <generalisation>
+	  b parent class_ref 128386 // VectorRecord
+      end
+
+      operation 130946 "decodAR2D"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fieldValue" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131074 "decodEL2D"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fieldValue" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131202 "decodCT2D"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fieldValue" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 128386 "VectorRecord"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 128386 // <generalisation>
+	relation 128386 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128386 // <generalisation>
+	  b parent class_ref 128514 // Spatial
+      end
+    end
+
+    class 128514 "Spatial"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 128258 // <generalisation>
+	relation 128258 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128258 // <generalisation>
+	  b parent class_ref 128642 // S57Object
+      end
+
+      operation 129666 "Spatial"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129794 "setField"
+	public return_type class_ref 128642 // S57Object
+	nparams 2
+	  param in name "fieldName" explicit_type "String"
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1}[] ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Recupere les donnees pertinentes a partir des champs de l'objet
+
+@return"
+      end
+
+      operation 129922 "decodVRID"
+	public return_type class_ref 128514 // Spatial
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Recupere les donnees du champ d'identification de l'objet et instancie un
+objet spatial correspondant
+
+@param fieldValue Le tableau d'octets contenus dans le champ
+@return le nouvel objet"
+      end
+
+      operation 130050 "decodATTV"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Non trait� actuellement
+
+@param fieldValue
+
+
+TODO R�cup�re les attributs spatiaux"
+      end
+
+      operation 130178 "decodVRPC"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Non trait� actuellement
+
+@param fieldValue"
+      end
+
+      operation 130306 "decodVRPT"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "R�cup�re les objets spatiaux associ�s � cet objet Trait� dans Edge, Face
+et IsolatedNode
+
+@param fieldValue"
+      end
+
+      operation 130434 "decodSG2D"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Trait� dans les classes h�ritant de Spatial
+
+@param fieldValue"
+      end
+
+      operation 130562 "decodSG3D"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Non trait� actuellement
+
+@param fieldValue"
+      end
+
+      operation 130690 "decodSGCC"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Non trait� actuellement"
+      end
+
+      operation 130818 "decodARCC"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Non trait� actuellement
+
+@param fieldValue"
+      end
+    end
+
+    class 128642 "S57Object"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      java_annotation "@XmlTransient
+@XmlAccessorType(XmlAccessType.FIELD)
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 128130 // <realization>
+	relation 128130 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128130 // <realization>
+	  b parent class_ref 128770 // Serializable
+      end
+
+      attribute 128130 "feature"
+	protected explicit_type "boolean"
+	init_value " false"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlTransient
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 128258 "spatial"
+	protected explicit_type "boolean"
+	init_value " false"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlTransient
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 128386 "dataSet"
+	protected explicit_type "boolean"
+	init_value " false"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlTransient
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 128514 "id"
+	protected explicit_type "long"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 128130 "S57Object"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "id" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128258 "S57Object"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128386 "getId"
+	public explicit_return_type "long"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128514 "setField"
+	public return_type class_ref 128642 // S57Object
+	nparams 2
+	  param in name "fieldName" explicit_type "String"
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1}[] ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Recupere les donnees pertinentes a partir des champs de l'objet
+
+@param fieldName
+@param fieldValue
+@return"
+      end
+
+      operation 128642 "isFeatureObject"
+	public explicit_return_type "boolean"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@return vrai si objet de donn�e"
+      end
+
+      operation 128770 "isSpatialObject"
+	public explicit_return_type "boolean"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@return vrai si objet spatial"
+      end
+
+      operation 128898 "isDataSet"
+	public explicit_return_type "boolean"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@return vrai si c'est un dataSet"
+      end
+
+      operation 129026 "setId"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "id" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@param id"
+      end
+
+      operation 129154 "isFeature"
+	public explicit_return_type "boolean"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129282 "isSpatial"
+	public explicit_return_type "boolean"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129410 "linkObjects"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129538 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 128898 "Point"
+      abstract visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 131074 "x"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131202 "y"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 147970 "getX"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 148098 "setX"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "x" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 148226 "getY"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 148354 "setY"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "y" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 148482 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 129026 "Bezier"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 129410 // <generalisation>
+	relation 129410 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129410 // <generalisation>
+	  b parent class_ref 129154 // Curve
+      end
+
+      operation 132994 "Bezier"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "rcid" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129154 "Curve"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 129154 // <generalisation>
+	relation 129154 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129154 // <generalisation>
+	  b parent class_ref 128258 // ArcCurve
+      end
+
+      attribute 128642 "ordr"
+	protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 128770 "reso"
+	protected explicit_type "float"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 128898 "fpmf"
+	protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 129282 // point (<unidirectional association>)
+	relation 129282 --->
+	  stereotype "List"
+	  a role_name "point" init_value " new ArrayList<>()" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 129282 // point (<unidirectional association>)
+	  b parent class_ref 128898 // Point
+      end
+
+      operation 132354 "getOrdr"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132482 "getReso"
+	public explicit_return_type "float"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132610 "getFpmf"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132738 "getPoint"
+	public return_type class_ref 128898 // Point
+	nparams 1
+	  param in name "i" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132866 "cardPoint"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129282 "BSpline"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 129538 // <generalisation>
+	relation 129538 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129538 // <generalisation>
+	  b parent class_ref 129154 // Curve
+      end
+
+      operation 133122 "BSpline"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "rcid" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129410 "Carto"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 130178 // <generalisation>
+	relation 130178 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130178 // <generalisation>
+	  b parent class_ref 129538 // Feature
+      end
+
+      classrelation 130306 // geos (<unidirectional association>)
+	relation 130306 --->
+	  stereotype "List"
+	  a role_name "geos" init_value " new ArrayList<>()" public
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 130306 // geos (<unidirectional association>)
+	  b parent class_ref 129794 // Geo
+      end
+
+      operation 135810 "getGeos"
+	public return_type class_ref 129794 // Geo
+	nparams 1
+	  param in name "i" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 135938 "cardGeos"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136066 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 129538 "Feature"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      java_annotation "@XmlTransient
+@XmlAccessorType(XmlAccessType.FIELD)
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "Recuperation des objets de donnees
+
+@author PFE"
+      classrelation 129666 // <generalisation>
+	relation 129666 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129666 // <generalisation>
+	  b parent class_ref 128642 // S57Object
+      end
+
+      classrelation 129794 // <realization>
+	relation 129794 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129794 // <realization>
+	  b parent class_ref 128770 // Serializable
+      end
+
+      attribute 129026 "methods"
+	protected explicit_type "String, Method"
+	stereotype "HashMap"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	java_annotation "@XmlTransient
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "Table des m�thodes de l'objet en cours
+"
+      end
+
+      attribute 129154 "prim"
+	protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlTransient
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "Primitive geometrique de l'objet (1->Point, 2->Ligne, 3->Aire 255->Rien)
+"
+      end
+
+      classrelation 129922 // spatialRecordById (<unidirectional association>)
+	relation 129922 --->
+	  stereotype "HashMap"
+	  a role_name "spatialRecordById" protected
+	    comment "Enregistrements spatiaux associes a l'objet reperes par leurs
+identifiants
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<Long, ${type}> ${name}${value};
+"
+	    java_annotation "@XmlTransient
+"
+	    classrelation_ref 129922 // spatialRecordById (<unidirectional association>)
+	  b parent class_ref 129666 // VectorUsage
+      end
+
+      classrelation 130050 // spatialRecord (<unidirectional association>)
+	relation 130050 --->
+	  stereotype "HashMap"
+	  a role_name "spatialRecord" protected
+	    comment "Enregistrements spatiaux associes a l'objet
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}, VectorUsage> ${name}${value};
+"
+	    java_annotation "@XmlTransient
+"
+	    classrelation_ref 130050 // spatialRecord (<unidirectional association>)
+	  b parent class_ref 128514 // Spatial
+      end
+
+      attribute 129282 "innerBoundaryIndex"
+	protected explicit_type "int"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlTransient
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 133250 "Feature"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "id" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133378 "Feature"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Constructeur"
+      end
+
+      operation 133506 "getInnerBoundaryIndex"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne l'indice de la premiere frontiere interieure
+
+@return"
+      end
+
+      operation 133634 "setField"
+	public return_type class_ref 128642 // S57Object
+	nparams 2
+	  param in name "fieldName" explicit_type "String"
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1}[] ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Recupere les donnees pertinentes a partir des champs de l'objet
+
+@return"
+      end
+
+      operation 133762 "getPrim"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133890 "setPrim"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "prim" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 134018 "decodATTF"
+	protected explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Recupere les donnees du champ des attributs de l'objet de donnee
+
+@param fieldValue Le tableau d'octets contenus dans le champ"
+      end
+
+      operation 134146 "decodNATF"
+	protected explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Non traite actuellement
+
+@param fieldValue"
+      end
+
+      operation 134274 "decodFFPC"
+	protected explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Non traite actuellement
+
+@param fieldValue
+
+
+TODO Recupere les donnees du champs de contrele des champs de pointeurs
+sur objets de donnees (pour mise a jour)"
+      end
+
+      operation 134402 "decodFFPT"
+	protected explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Non traite actuellement
+
+
+TODO Recupere les donnees des champs de pointeurs sur objets de donnees "
+      end
+
+      operation 134530 "decodFSPC"
+	protected explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Non traite actuellement
+
+@param fieldValue
+
+
+TODO Recupere les donnees du champs de controle des champs de pointeurs
+ sur objets spatiaux (pour mise a jour)"
+      end
+
+      operation 134658 "decodFSPT"
+	protected explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Recupere les donnees des champs de pointeurs sur objets spatiaux
+
+@param fieldValue"
+      end
+
+      operation 134786 "decodFOID"
+	protected explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Non traite actuellement
+
+@param fieldValue"
+      end
+
+      operation 134914 "decodFRID"
+	protected return_type class_ref 129538 // Feature
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+	comment "Recupere les donnees du champ d'identification de l'objet et instancie un
+objet de donnee correspondant
+
+@param fieldValue Le tableau d'octets contenus dans le champ
+@return le nouvel objet"
+      end
+
+      operation 135042 "setAttribute"
+	protected explicit_return_type "void"
+	nparams 2
+	  param in name "code" explicit_type "int"
+	  param in name "value" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Enregistre l'attribut dans les proprietes de l'objet en cours
+
+@param code Le code de l'attribut
+@param value La valeur de l'attribut"
+      end
+
+      operation 135170 "fillMethods"
+	protected explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Recupere les accesseurs de l'objet en cours"
+      end
+
+      operation 135298 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 135426 "linkObjects"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 135554 "getSpatialRecord"
+	public return_type class_ref 128514 // Spatial
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}HashMap<${type}, VectorUsage> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 135682 "setSpatialRecord"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "spatialRecord" explicit_type "HashMap<Spatial, VectorUsage>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129666 "VectorUsage"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 135682 // <realization>
+	relation 135682 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 135682 // <realization>
+	  b parent class_ref 128770 // Serializable
+      end
+
+      attribute 132354 "ornt"
+	protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132482 "usag"
+	protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132610 "topi"
+	protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132738 "mask"
+	protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132866 "pos"
+	protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 154114 "VectorUsage"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 154242 "VectorUsage"
+	public explicit_return_type ""
+	nparams 5
+	  param in name "ornt" explicit_type "int"
+	  param in name "usag" explicit_type "int"
+	  param in name "topi" explicit_type "int"
+	  param in name "mask" explicit_type "int"
+	  param in name "pos" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 154370 "VectorUsage"
+	public explicit_return_type ""
+	nparams 4
+	  param in name "ornt" explicit_type "int"
+	  param in name "usag" explicit_type "int"
+	  param in name "mask" explicit_type "int"
+	  param in name "pos" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 154498 "getPos"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 154626 "setPos"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "pos" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 154754 "getOrnt"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 154882 "getUsag"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 155010 "getTopi"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 155138 "getMask"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 155266 "setMask"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "mask" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 155394 "setOrnt"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "ornt" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 155522 "setTopi"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "topi" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 155650 "setUsag"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "usag" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 155778 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 129794 "Geo"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      java_annotation "@XmlTransient
+@XmlAccessorType(XmlAccessType.FIELD)
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 133250 // <generalisation>
+	relation 133250 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 133250 // <generalisation>
+	  b parent class_ref 129538 // Feature
+      end
+
+      classrelation 133378 // <realization>
+	relation 133378 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 133378 // <realization>
+	  b parent class_ref 128770 // Serializable
+      end
+
+      classrelation 133506 // cartos (<unidirectional association>)
+	relation 133506 --->
+	  stereotype "List"
+	  a role_name "cartos" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    java_annotation "@XmlTransient
+"
+	    classrelation_ref 133506 // cartos (<unidirectional association>)
+	  b parent class_ref 129410 // Carto
+      end
+
+      classrelation 133634 // geos (<unidirectional association>)
+	relation 133634 --->
+	  stereotype "List"
+	  a role_name "geos" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    java_annotation "@XmlTransient
+"
+	    classrelation_ref 133634 // geos (<unidirectional association>)
+	  b parent class_ref 129794 // Geo
+      end
+
+      attribute 130178 "information"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlTransient
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130306 "informationInNationalLanguage"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlTransient
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130434 "textualDescriptionInNationalLanguage"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlTransient
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130562 "textualDescription"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlTransient
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130690 "scaleMinimum"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlTransient
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130818 "sourceDate"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlTransient
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130946 "sourceIndication"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlTransient
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 144002 "Geo"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "id" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 144130 "Geo"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+      end
+
+      operation 144258 "getCartos"
+	public return_type class_ref 129410 // Carto
+	nparams 1
+	  param in name "i" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 144386 "cardCartos"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 144514 "getGeos"
+	public return_type class_ref 129794 // Geo
+	nparams 1
+	  param in name "i" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 144642 "cardGeos"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 144770 "getInformation"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 144898 "getInformationInNationalLanguage"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 145026 "getTextualDescriptionInNationalLanguage"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 145154 "getTextualDescription"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 145282 "getScaleMinimum"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 145410 "getSourceDate"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 145538 "getSourceIndication"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 145666 "setCartos"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "cartos" explicit_type "List<Carto>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 145794 "setGeos"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "geos" explicit_type "List<Geo>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 145922 "setInformation"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "information" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 146050 "setInformationInNationalLanguage"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "informationInNationalLanguage" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 146178 "setScaleMinimum"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "scaleMinimum" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 146306 "setSourceDate"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "sourceDate" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 146434 "setSourceIndication"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "sourceIndication" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 146562 "setTextualDescription"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "textualDescription" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 146690 "setTextualDescriptionInNationalLanguage"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "textualDescriptionInNationalLanguage" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 146818 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 129922 "CatalogueDirectory"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 130434 // <generalisation>
+	relation 130434 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130434 // <generalisation>
+	  b parent class_ref 128642 // S57Object
+      end
+
+      operation 136194 "decodCATD"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fieldValue" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136322 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 130050 "Collection"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 130562 // <generalisation>
+	relation 130562 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130562 // <generalisation>
+	  b parent class_ref 129538 // Feature
+      end
+
+      classrelation 130690 // <realization>
+	relation 130690 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130690 // <realization>
+	  b parent class_ref 128770 // Serializable
+      end
+
+      classrelation 130818 // geos (<unidirectional association>)
+	relation 130818 --->
+	  stereotype "List"
+	  a role_name "geos" protected
+	    comment "
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 130818 // geos (<unidirectional association>)
+	  b parent class_ref 129794 // Geo
+      end
+
+      operation 136450 "Collection"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136578 "getGeos"
+	public return_type class_ref 129794 // Geo
+	nparams 1
+	  param in name "i" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136706 "cardGeos"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136834 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 130178 "ConnectedNode"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 131202 // <generalisation>
+	relation 131202 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131202 // <generalisation>
+	  b parent class_ref 130306 // Node
+      end
+
+      operation 137602 "ConnectedNode"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "rcid" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137730 "ConnectedNode"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137858 "clone"
+	public return_type class_ref 130178 // ConnectedNode
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "
+@return"
+      end
+    end
+
+    class 130306 "Node"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 130946 // <generalisation>
+	relation 130946 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130946 // <generalisation>
+	  b parent class_ref 128386 // VectorRecord
+      end
+
+      classrelation 131074 // point (<unidirectional association>)
+	relation 131074 --->
+	  a role_name "point" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 131074 // point (<unidirectional association>)
+	  b parent class_ref 128898 // Point
+      end
+
+      operation 136962 "decodSG2D"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Recupere les coordonnees 2D du point
+@param fieldValue"
+      end
+
+      operation 137090 "decodSG3D"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Recupere les coordonnees 3D du point
+@param fieldValue"
+      end
+
+      operation 137218 "getPoint"
+	public return_type class_ref 128898 // Point
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137346 "setPoint"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "pt" type class_ref 128898 // Point
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137474 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 130434 "DataSetGeneralInformation"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 131330 // <generalisation>
+	relation 131330 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131330 // <generalisation>
+	  b parent class_ref 128642 // S57Object
+      end
+
+      attribute 129410 "dstr"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 137986 "getDstr"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138114 "decodDSID"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fieldValue" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138242 "decodDSSI"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fieldValue" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138370 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 130562 "DataSetGeographicReference"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 131458 // <generalisation>
+	relation 131458 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131458 // <generalisation>
+	  b parent class_ref 128642 // S57Object
+      end
+
+      attribute 129538 "comf"
+	public explicit_type "int"
+	init_value " 1"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129666 "somf"
+	public explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129794 "coun"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129922 "ratio"
+	public explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "Ratio de la carte (ne fait pas partie de l'objet S57 d'origine)
+"
+      end
+
+      attribute 130050 "bounds"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "Limites de la carte (ne fait pas partie de l'objet S57 d'origine)
+"
+      end
+
+      operation 138498 "getBounds"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138626 "setBounds"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "bounds" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138754 "getComf"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138882 "getSomf"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139010 "getCoun"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139138 "decodDSPM"
+	public return_type class_ref 130562 // DataSetGeographicReference
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139266 "DataSetGeographicReference"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139394 "getRatio"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139522 "setRatio"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "ratio" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139650 "setComf"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "comf" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139778 "setCoun"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "coun" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139906 "setSomf"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "somf" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 140034 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 130690 "Edge"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 131586 // <generalisation>
+	relation 131586 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131586 // <generalisation>
+	  b parent class_ref 128386 // VectorRecord
+      end
+
+      classrelation 131714 // spatialRecordById (<unidirectional association>)
+	relation 131714 --->
+	  stereotype "HashMap"
+	  a role_name "spatialRecordById" init_value " new HashMap<>(2)" protected
+	    comment "Enregistrements spatiaux associes a l'objet reperes par leurs
+identifiants
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<Long, ${type}> ${name}${value};
+"
+	    classrelation_ref 131714 // spatialRecordById (<unidirectional association>)
+	  b parent class_ref 129666 // VectorUsage
+      end
+
+      classrelation 131842 // spatialRecord (<unidirectional association>)
+	relation 131842 --->
+	  stereotype "HashMap"
+	  a role_name "spatialRecord" init_value " new HashMap<>()" protected
+	    comment "Enregistrements spatiaux associes a l'objet
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}, VectorUsage> ${name}${value};
+"
+	    classrelation_ref 131842 // spatialRecord (<unidirectional association>)
+	  b parent class_ref 128514 // Spatial
+      end
+
+      classrelation 131970 // points (<unidirectional association>)
+	relation 131970 --->
+	  stereotype "List"
+	  a role_name "points" init_value " new ArrayList<>()" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 131970 // points (<unidirectional association>)
+	  b parent class_ref 130818 // Point2D
+      end
+
+      operation 140162 "cardSpatialRecordById"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 140290 "getPoints"
+	public return_type class_ref 130818 // Point2D
+	nparams 1
+	  param in name "i" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 140418 "cardPoints"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 140546 "decodVRPT"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Recupere les noeuds de debut et de fin, les faces de droite et de gauche"
+      end
+
+      operation 140674 "decodSG2D"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Recupere les points definissant la ligne
+
+@param fieldValue"
+      end
+
+      operation 140802 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 140930 "linkObjects"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 141058 "Edge"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "rcid" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 141186 "Edge"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 141314 "getSpatialRecord"
+	public return_type class_ref 128514 // Spatial
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}HashMap<${type}, VectorUsage> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 141442 "getPoints"
+	public return_type class_ref 130818 // Point2D
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}List<${type}> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 141570 "setSpatialRecord"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "spatialRecord" explicit_type "HashMap<Spatial, VectorUsage>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 130818 "Point2D"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 134402 // <generalisation>
+	relation 134402 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 134402 // <generalisation>
+	  b parent class_ref 128898 // Point
+      end
+
+      operation 148610 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 130946 "EllipticalArc"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 132098 // <generalisation>
+	relation 132098 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 132098 // <generalisation>
+	  b parent class_ref 128258 // ArcCurve
+      end
+
+      classrelation 132226 // stpt (<unidirectional association>)
+	relation 132226 --->
+	  a role_name "stpt" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 132226 // stpt (<unidirectional association>)
+	  b parent class_ref 128898 // Point
+      end
+
+      classrelation 132354 // ctpt (<unidirectional association>)
+	relation 132354 --->
+	  a role_name "ctpt" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 132354 // ctpt (<unidirectional association>)
+	  b parent class_ref 128898 // Point
+      end
+
+      classrelation 132482 // enpt (<unidirectional association>)
+	relation 132482 --->
+	  a role_name "enpt" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 132482 // enpt (<unidirectional association>)
+	  b parent class_ref 128898 // Point
+      end
+
+      classrelation 132610 // cdpm (<unidirectional association>)
+	relation 132610 --->
+	  a role_name "cdpm" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 132610 // cdpm (<unidirectional association>)
+	  b parent class_ref 128898 // Point
+      end
+
+      classrelation 132738 // cdpr (<unidirectional association>)
+	relation 132738 --->
+	  a role_name "cdpr" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 132738 // cdpr (<unidirectional association>)
+	  b parent class_ref 128898 // Point
+      end
+
+      operation 141698 "getStpt"
+	public return_type class_ref 128898 // Point
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 141826 "cardStpt"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 141954 "getCtpt"
+	public return_type class_ref 128898 // Point
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 142082 "cardCtpt"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 142210 "getEnpt"
+	public return_type class_ref 128898 // Point
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 142338 "cardEnpt"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 142466 "getCdpm"
+	public return_type class_ref 128898 // Point
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 142594 "cardCdpm"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 142722 "getCdpr"
+	public return_type class_ref 128898 // Point
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 142850 "cardCdpr"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 142978 "EllipticalArc"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "rcid" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 131074 "Face"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 132866 // <generalisation>
+	relation 132866 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 132866 // <generalisation>
+	  b parent class_ref 128386 // VectorRecord
+      end
+
+      classrelation 132994 // spatialRecordById (<unidirectional association>)
+	relation 132994 --->
+	  stereotype "HashMap"
+	  a role_name "spatialRecordById" init_value " new HashMap<>()" protected
+	    comment "Enregistrements spatiaux associes a l'objet reperes par leurs
+identifiants
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<Long, ${type}> ${name}${value};
+"
+	    classrelation_ref 132994 // spatialRecordById (<unidirectional association>)
+	  b parent class_ref 129666 // VectorUsage
+      end
+
+      classrelation 133122 // spatialRecord (<unidirectional association>)
+	relation 133122 --->
+	  stereotype "HashMap"
+	  a role_name "spatialRecord" init_value " new HashMap<>()" protected
+	    comment "Enregistrements spatiaux associes a l'objet
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}, VectorUsage> ${name}${value};
+"
+	    classrelation_ref 133122 // spatialRecord (<unidirectional association>)
+	  b parent class_ref 128514 // Spatial
+      end
+
+      operation 143106 "cardSpatialRecordById"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 143234 "decodVRPT"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 143362 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 143490 "getSpatialRecord"
+	public return_type class_ref 128514 // Spatial
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}HashMap<${type}, VectorUsage> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 143618 "setSpatialRecord"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "spatialRecord" explicit_type "HashMap<Spatial, VectorUsage>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 143746 "linkObjects"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 143874 "Face"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "rcid" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 131202 "IsolatedNode"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 133762 // <generalisation>
+	relation 133762 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 133762 // <generalisation>
+	  b parent class_ref 130306 // Node
+      end
+
+      classrelation 133890 // spatialRecordById (<unidirectional association>)
+	relation 133890 --->
+	  stereotype "HashMap"
+	  a role_name "spatialRecordById" protected
+	    comment "Enregistrements spatiaux associes a l'objet reperes par leurs
+identifiants
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<Long, ${type}> ${name}${value};
+"
+	    classrelation_ref 133890 // spatialRecordById (<unidirectional association>)
+	  b parent class_ref 129666 // VectorUsage
+      end
+
+      classrelation 134018 // spatialRecord (<unidirectional association>)
+	relation 134018 --->
+	  stereotype "HashMap"
+	  a role_name "spatialRecord" protected
+	    comment "Enregistrements spatiaux associes a l'objet
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}, VectorUsage> ${name}${value};
+"
+	    classrelation_ref 134018 // spatialRecord (<unidirectional association>)
+	  b parent class_ref 128514 // Spatial
+      end
+
+      operation 146946 "IsolatedNode"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "rcid" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 147074 "IsolatedNode"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 147202 "cardSpatialRecordById"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 147330 "decodVRPT"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldValue" explicit_type "byte"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Recupere les noeuds de debut et de fin, les faces de droite et de gauche"
+      end
+
+      operation 147458 "linkObjects"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 147586 "getSpatialRecord"
+	public return_type class_ref 128514 // Spatial
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}HashMap<${type}, VectorUsage> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 147714 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 131330 "Meta"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 134146 // <generalisation>
+	relation 134146 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 134146 // <generalisation>
+	  b parent class_ref 129538 // Feature
+      end
+    end
+
+    class 131458 "NURBS"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 134274 // <generalisation>
+	relation 134274 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 134274 // <generalisation>
+	  b parent class_ref 129154 // Curve
+      end
+
+      operation 147842 "NURBS"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "rcid" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 131586 "Point3D"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 134530 // <generalisation>
+	relation 134530 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 134530 // <generalisation>
+	  b parent class_ref 128898 // Point
+      end
+
+      attribute 131330 "z"
+	private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 148738 "getZ"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 148866 "setZ"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "z" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 148994 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 131714 "S57Chart"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      java_annotation "@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author serge
+
+
+@XmlType(name = \"s57Chart\"
+,
+propOrder = {
+\"id\", 
+\"number\",
+\"latitude\", 
+\"longitude\", 
+\"geometry\", 
+\"description\"}
+)
+
+
+@XmlType(name = \"s57Chart\"
+,
+propOrder = {
+\"id\", 
+\"number\",
+\"latitude\", 
+\"longitude\", 
+\"geometry\", 
+\"description\"}
+)"
+      classrelation 134914 // <generalisation>
+	relation 134914 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 134914 // <generalisation>
+	  b parent class_ref 131842 // Location
+      end
+
+      classrelation 135042 // <realization>
+	relation 135042 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 135042 // <realization>
+	  b parent class_ref 131970 // NavigationData
+      end
+
+      attribute 131842 "description"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131970 "number"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 151042 "S57Chart"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 151170 "S57Chart"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "id" explicit_type "long"
+	  param in name "geometry" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 151298 "S57Chart"
+	public explicit_return_type ""
+	nparams 5
+	  param in name "id" explicit_type "long"
+	  param in name "lat" explicit_type "double"
+	  param in name "lon" explicit_type "double"
+	  param in name "description" explicit_type "String"
+	  param in name "number" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 151426 "S57Chart"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "id" explicit_type "long"
+	  param in name "lat" explicit_type "double"
+	  param in name "lon" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 151554 "getDescription"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 151682 "setDescription"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "description" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 151810 "getNumber"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 151938 "setNumber"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "number" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 132098 "S57Model"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      classrelation 135170 // featureObjects (<unidirectional association>)
+	relation 135170 --->
+	  stereotype "HashMap"
+	  a role_name "featureObjects" init_value " new HashMap<>()" class_relation const_relation private
+	    comment "Table des enregistrements de donnees indexes par leur identifiant
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<Long, ${type}> ${name}${value};
+"
+	    classrelation_ref 135170 // featureObjects (<unidirectional association>)
+	  b parent class_ref 129538 // Feature
+      end
+
+      classrelation 135298 // spatialObjects (<unidirectional association>)
+	relation 135298 --->
+	  stereotype "HashMap"
+	  a role_name "spatialObjects" init_value " new HashMap<>()" class_relation const_relation private
+	    comment "Table des enregistrements spatiaux indexes par leur identifiant
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<Long, ${type}> ${name}${value};
+"
+	    classrelation_ref 135298 // spatialObjects (<unidirectional association>)
+	  b parent class_ref 128514 // Spatial
+      end
+
+      attribute 132098 "attributes"
+	class_attribute const_attribute private explicit_type "HashMap"
+	init_value " new HashMap()"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "Table associant le code de l'attribut a son nom
+"
+      end
+
+      attribute 132226 "objects"
+	class_attribute const_attribute private explicit_type "HashMap"
+	init_value " new HashMap()"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "Table associant le code d'un objet S57 a son nom
+"
+      end
+
+      classrelation 135426 // _features (<unidirectional association>)
+	relation 135426 --->
+	  stereotype "HashSet"
+	  a role_name "_features" class_relation private
+	    comment "Ensemble des objets
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 135426 // _features (<unidirectional association>)
+	  b parent class_ref 129538 // Feature
+      end
+
+      classrelation 135554 // _dataSet (<unidirectional association>)
+	relation 135554 --->
+	  a role_name "_dataSet" class_relation private
+	    comment "
+Objet contenant des informations sur la carte trait�e
+
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 135554 // _dataSet (<unidirectional association>)
+	  b parent class_ref 130562 // DataSetGeographicReference
+      end
+
+      operation 152066 "init"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+      end
+
+      operation 152194 "putFeatureObject"
+	class_operation public explicit_return_type "void"
+	nparams 2
+	  param inout name "key" explicit_type "Long"
+	  param inout name "value" type class_ref 129538 // Feature
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Enregistre l'objet de donnee associe a son identifiant
+
+@param key l'identifiant
+@param value l'objet de donnee"
+      end
+
+      operation 152322 "putSpatialObject"
+	class_operation public explicit_return_type "void"
+	nparams 2
+	  param inout name "key" explicit_type "Long"
+	  param inout name "value" type class_ref 128514 // Spatial
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Enregistre l'objet spatial associe a son identifiant
+
+@param key l'identifiant
+@param value l'objet spatial"
+      end
+
+      operation 152450 "getFeatureObject"
+	class_operation public return_type class_ref 129538 // Feature
+	nparams 1
+	  param inout name "key" explicit_type "Long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne l'objet de donnee associe a l'identifiant
+
+@param key l'identifiant
+@return l'objet de donnee"
+      end
+
+      operation 152578 "getFeatureObjects"
+	class_operation public return_type class_ref 129538 // Feature
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}HashMap<Long, ${type}> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 152706 "getSpatialObject"
+	class_operation public return_type class_ref 128514 // Spatial
+	nparams 1
+	  param inout name "key" explicit_type "Long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Retourne l'objet spatial associe a l'identifiant
+
+@param key l'identifiant
+@return l'objet de spatial"
+      end
+
+      operation 152834 "getSpatialObjects"
+	class_operation public return_type class_ref 128514 // Spatial
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}HashMap<Long, ${type}> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 152962 "setFeatures"
+	class_operation public explicit_return_type "void"
+	nparams 1
+	  param inout name "features" explicit_type "HashSet<Feature>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 153090 "getAttributesValue"
+	class_operation public explicit_return_type "String"
+	nparams 1
+	  param in name "key" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Renvoie le nom de l'attribut associe au code
+
+@param key le code de l'attribut
+@return nom de l'attribut"
+      end
+
+      operation 153218 "getObjectsValue"
+	class_operation public explicit_return_type "String"
+	nparams 1
+	  param in name "key" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Renvoie le nom de l'objet associ� au code
+
+@param key le code de l'objet
+@return nom de l'objet"
+      end
+
+      operation 153346 "linkObjects"
+	class_operation public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Cree les liens entre les objets a partir des identifiants
+"
+      end
+
+      operation 153474 "getSOMF"
+	class_operation public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Renvoie le coefficient multiplicateur des donn�es de sonde
+
+@return le coefficient multiplicateur des donn�es de sonde"
+      end
+
+      operation 153602 "setSOMF"
+	class_operation public explicit_return_type "void"
+	nparams 1
+	  param in name "somf" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Enregistre le coefficient multiplicateur des donn�es de sonde
+
+@param somf"
+      end
+
+      operation 153730 "getCOMF"
+	class_operation public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Renvoie le coefficient multiplicateur des coordonn�es 2D
+
+@return le coefficient multiplicateur des coordonn�es 2D"
+      end
+
+      operation 153858 "setCOMF"
+	class_operation public explicit_return_type "void"
+	nparams 1
+	  param in name "comf" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Enregistre le coefficient multiplicateur des coordonn�es 2D
+
+@param comf"
+      end
+
+      operation 153986 "setDataSet"
+	class_operation public explicit_return_type "void"
+	nparams 1
+	  param inout name "dataSet" type class_ref 130562 // DataSetGeographicReference
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+  end
+
+  deploymentview 128130 "model"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 128130 "S57Object"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
+${definition}"
+      associated_classes
+	class_ref 128642 // S57Object
+      end
+    end
+
+    artifact 128258 "Spatial"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 128514 // Spatial
+      end
+    end
+
+    artifact 128386 "VectorRecord"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 128386 // VectorRecord
+      end
+    end
+
+    artifact 128514 "ArcCurve"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 128258 // ArcCurve
+      end
+    end
+
+    artifact 128642 "Arc3Point"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 128130 // Arc3Point
+      end
+    end
+
+    artifact 128770 "Curve"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.util.*;
+${definition}"
+      associated_classes
+	class_ref 129154 // Curve
+      end
+    end
+
+    artifact 128898 "Bezier"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 129026 // Bezier
+      end
+    end
+
+    artifact 129026 "BSpline"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 129282 // BSpline
+      end
+    end
+
+    artifact 129154 "Feature"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.Serializable;
+import java.util.*;
+import java.lang.reflect.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
+${definition}"
+      associated_classes
+	class_ref 129538 // Feature
+      end
+    end
+
+    artifact 129282 "Carto"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.util.*;
+${definition}"
+      associated_classes
+	class_ref 129410 // Carto
+      end
+    end
+
+    artifact 129410 "CatalogueDirectory"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 129922 // CatalogueDirectory
+      end
+    end
+
+    artifact 129538 "Collection"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.Serializable;
+import java.util.*;
+${definition}"
+      associated_classes
+	class_ref 130050 // Collection
+      end
+    end
+
+    artifact 129666 "Node"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.nio.ByteOrder;
+${definition}"
+      associated_classes
+	class_ref 130306 // Node
+      end
+    end
+
+    artifact 129794 "ConnectedNode"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 130178 // ConnectedNode
+      end
+    end
+
+    artifact 129922 "DataSetGeneralInformation"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 130434 // DataSetGeneralInformation
+      end
+    end
+
+    artifact 130050 "DataSetGeographicReference"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 130562 // DataSetGeographicReference
+      end
+    end
+
+    artifact 130178 "Edge"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+${definition}"
+      associated_classes
+	class_ref 130690 // Edge
+      end
+    end
+
+    artifact 130306 "EllipticalArc"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 130946 // EllipticalArc
+      end
+    end
+
+    artifact 130434 "Face"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+${definition}"
+      associated_classes
+	class_ref 131074 // Face
+      end
+    end
+
+    artifact 130562 "Geo"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.Serializable;
+import java.util.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
+${definition}"
+      associated_classes
+	class_ref 129794 // Geo
+      end
+    end
+
+    artifact 130690 "IsolatedNode"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+${definition}"
+      associated_classes
+	class_ref 131202 // IsolatedNode
+      end
+    end
+
+    artifact 130818 "Meta"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 131330 // Meta
+      end
+    end
+
+    artifact 130946 "NURBS"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 131458 // NURBS
+      end
+    end
+
+    artifact 131074 "Point"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 128898 // Point
+      end
+    end
+
+    artifact 131202 "Point2D"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 130818 // Point2D
+      end
+    end
+
+    artifact 131330 "Point3D"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 131586 // Point3D
+      end
+    end
+
+    artifact 131586 "S57Chart"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+${definition}"
+      associated_classes
+	class_ref 131714 // S57Chart
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 131714 "S57Model"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.app.Main;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+${definition}"
+      associated_classes
+	class_ref 132098 // S57Model
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 131842 "VectorUsage"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.Serializable;
+${definition}"
+      associated_classes
+	class_ref 129666 // VectorUsage
+      end
+    end
+  end
+
+  package_ref 128386 // geo
+
+  classview 128514 "buoyage"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    classdiagram 128130 "buoyage"
+      draw_all_relations no hide_attributes default hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+  end
+end

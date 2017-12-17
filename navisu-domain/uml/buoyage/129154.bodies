@@ -1,0 +1,11 @@
+class Curve
+!!!132354.java!!!	getOrdr() : int
+		return this.ordr;
+!!!132482.java!!!	getReso() : float
+		return this.reso;
+!!!132610.java!!!	getFpmf() : int
+		return this.fpmf;
+!!!132738.java!!!	getPoint(in i : int) : Point
+		return (Point) this.point.get(i);
+!!!132866.java!!!	cardPoint() : int
+		return this.point.size();

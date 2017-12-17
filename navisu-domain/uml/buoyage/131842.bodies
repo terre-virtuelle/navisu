@@ -1,0 +1,68 @@
+class Location
+!!!149250.java!!!	Location(in id : long)
+        super(id);
+!!!149378.java!!!	Location(in id : long, in lat : double, in lon : double)
+        super(id);
+        this.latitude = lat;
+        this.longitude = lon;
+!!!149506.java!!!	Location(in id : long, in geometry : String)
+        super(id);
+        this.geometry = geometry;
+        if (geometry != null) {
+            parse(this.geometry);
+        }
+!!!149634.java!!!	getGeometry() : String
+        return geometry;
+!!!149762.java!!!	setGeometry(in geometry : String) : void
+        this.geometry = geometry;
+        if (geometry != null) {
+            parse(this.geometry);
+        }
+!!!149890.java!!!	setLatLon(in lat : double, in lon : double) : void
+        this.latitude = lat;
+        this.longitude = lon;
+        this.geometry = "POINT(" + lon + " " + lat + ")";
+!!!150018.java!!!	getLatitude() : double
+        return latitude;
+!!!150146.java!!!	getLongitude() : double
+        return longitude;
+!!!150274.java!!!	setLatitude(in lat : double) : void
+        this.latitude = lat;
+        this.geometry = "POINT(" + longitude + " " + lat + ")";
+!!!150402.java!!!	setLongitude(in lon : double) : void
+        this.longitude = lon;
+        this.geometry = "POINT(" + lon + " " + latitude + ")";
+!!!150530.java!!!	parse(in wkt : String) : void
+        Geometry geometryJTS = null;
+        WKTReader wktReader = new WKTReader();
+        try {
+            geometryJTS = wktReader.read(wkt);
+        } catch (ParseException ex) {
+            Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (wkt.contains("POINT") || wkt.contains("Point")) {
+            createCentroidPoint(geometryJTS);
+        }
+        if (wkt.contains("POLYGON") || wkt.contains("Polygon")) {
+            createCentroidArea(geometryJTS);
+        }
+!!!150658.java!!!	createCentroidPoint(inout geometryJTS : Geometry) : void
+        Coordinate[] coordinates = geometryJTS.getCoordinates();
+        if (coordinates != null) {
+            if (coordinates.length == 1) {
+                latitude = coordinates[0].y;
+                longitude = coordinates[0].x;//Simple Point
+            } else {
+                Centroid centroid = new Centroid(geometryJTS); //Multi point
+                Coordinate coord = centroid.getCentroid();
+                latitude = coord.y;
+                longitude = coord.x;
+            }
+        }
+!!!150786.java!!!	createCentroidArea(inout geometryJTS : Geometry) : void
+        Centroid centroid = new Centroid(geometryJTS);
+        Coordinate coord = centroid.getCentroid();
+        latitude = coord.y;
+        longitude = coord.x;
+!!!150914.java!!!	toString() : String
+        return "Location{" + "lat=" + latitude + ", lon=" + longitude + ", geometry=" + geometry + '}';

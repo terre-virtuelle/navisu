@@ -1,0 +1,29 @@
+class Copyright
+!!!708226.java!!!	Copyright(in label : String, in year : String, in country : String, inout identity : Identity, in text : String)
+        this.label = label;
+        this.year = year;
+        this.country = country;
+        this.identity = identity;
+        this.text = text;
+!!!708354.java!!!	getText() : String
+        return text;
+!!!708482.java!!!	setText(in text : String) : void
+        this.text = text;
+!!!708610.java!!!	getIdentity() : Identity
+        return identity;
+!!!708738.java!!!	setIdentity(inout identity : Identity) : void
+        this.identity = identity;
+!!!708866.java!!!	getCountry() : String
+        return country;
+!!!708994.java!!!	setCountry(in country : String) : void
+        this.country = country;
+!!!709122.java!!!	getYear() : String
+        return year;
+!!!709250.java!!!	setYear(in year : String) : void
+        this.year = year;
+!!!709378.java!!!	getLabel() : String
+        return label;
+!!!709506.java!!!	setLabel(in label : String) : void
+        this.label = label;
+!!!709634.java!!!	toString() : String
+        return "Copyright{" + "label=" + label + ", year=" + year + ", country=" + country + ", identity=" + identity + ", text=" + text + '}';

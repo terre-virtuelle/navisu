@@ -1,0 +1,39 @@
+class IncinerationArea
+!!!372610.java!!!	IncinerationArea(inout id : Long)
+		this.id=id;
+!!!372866.java!!!	getObjectName() : String
+		return objectName;
+!!!372994.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!373122.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!373250.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!373378.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!373506.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!373634.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!373762.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!373890.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!374018.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!374146.java!!!	getRestriction() : String
+		return restriction;
+!!!374274.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!374402.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!374530.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!374658.java!!!	getStatus() : String
+		return status;
+!!!374786.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!374914.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!375042.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

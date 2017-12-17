@@ -1,0 +1,51 @@
+class LockBasin
+!!!410498.java!!!	LockBasin(inout id : Long)
+		this.id=id;
+!!!410754.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!410882.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!411010.java!!!	getDateStart() : String
+		return dateStart;
+!!!411138.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!411266.java!!!	getHorizontalAccuracy() : String
+		return horizontalAccuracy;
+!!!411394.java!!!	setHorizontalAccuracy(in value : String) : void
+		this.horizontalAccuracy= value;
+!!!411522.java!!!	getHorizontalClearance() : String
+		return horizontalClearance;
+!!!411650.java!!!	setHorizontalClearance(in value : String) : void
+		this.horizontalClearance= value;
+!!!411778.java!!!	getHorizontalLength() : String
+		return horizontalLength;
+!!!411906.java!!!	setHorizontalLength(in value : String) : void
+		this.horizontalLength= value;
+!!!412034.java!!!	getHorizontalWidth() : String
+		return horizontalWidth;
+!!!412162.java!!!	setHorizontalWidth(in value : String) : void
+		this.horizontalWidth= value;
+!!!412290.java!!!	getObjectName() : String
+		return objectName;
+!!!412418.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!412546.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!412674.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!412802.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!412930.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!413058.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!413186.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!413314.java!!!	getStatus() : String
+		return status;
+!!!413442.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!413570.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!413698.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

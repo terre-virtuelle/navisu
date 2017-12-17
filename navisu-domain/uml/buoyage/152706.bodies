@@ -1,0 +1,35 @@
+class TidalStreamNon_harmonicPrediction
+!!!618370.java!!!	TidalStreamNon_harmonicPrediction(inout id : Long)
+		this.id=id;
+!!!618626.java!!!	getObjectName() : String
+		return objectName;
+!!!618754.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!618882.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!619010.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!619138.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!619266.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!619394.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!619522.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!619650.java!!!	getStatus() : String
+		return status;
+!!!619778.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!619906.java!!!	getTideMethodOfTidalPrediction() : String
+		return tideMethodOftidalPrediction;
+!!!620034.java!!!	setTideMethodOfTidalPrediction(in value : String) : void
+		this.tideMethodOftidalPrediction= value;
+!!!620162.java!!!	getTideTimeAndHeightDifferences() : String
+		return tidetimeAndHeightDifferences;
+!!!620290.java!!!	setTideTimeAndHeightDifferences(in value : String) : void
+		this.tidetimeAndHeightDifferences= value;
+!!!620418.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!620546.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

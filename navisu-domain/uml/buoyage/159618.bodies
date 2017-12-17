@@ -1,0 +1,34 @@
+class Identity
+!!!712194.java!!!	Identity(in firstname : String, in lastname : String, in grade : String, in occupation : String, in organization : String, in breviation : String)
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.grade = grade;
+        this.occupation = occupation;
+        this.organization = organization;
+        this.breviation = breviation;
+!!!712322.java!!!	getBreviation() : String
+        return breviation;
+!!!712450.java!!!	setBreviation(in breviation : String) : void
+        this.breviation = breviation;
+!!!712578.java!!!	getOrganization() : String
+        return organization;
+!!!712706.java!!!	setOrganization(in organization : String) : void
+        this.organization = organization;
+!!!712834.java!!!	getOccupation() : String
+        return occupation;
+!!!712962.java!!!	setOccupation(in occupation : String) : void
+        this.occupation = occupation;
+!!!713090.java!!!	getGrade() : String
+        return grade;
+!!!713218.java!!!	setGrade(in grade : String) : void
+        this.grade = grade;
+!!!713346.java!!!	getLastname() : String
+        return lastname;
+!!!713474.java!!!	setLastname(in lastname : String) : void
+        this.lastname = lastname;
+!!!713602.java!!!	getFirstname() : String
+        return firstname;
+!!!713730.java!!!	setFirstname(in firstname : String) : void
+        this.firstname = firstname;
+!!!713858.java!!!	toString() : String
+        return "Identity{" + "firstname=" + firstname + ", lastname=" + lastname + ", grade=" + grade + ", occupation=" + occupation + ", organization=" + organization + ", breviation=" + breviation + '}';

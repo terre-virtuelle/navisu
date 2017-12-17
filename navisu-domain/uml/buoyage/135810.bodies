@@ -1,0 +1,59 @@
+class CableSubmarine
+!!!215298.java!!!	CableSubmarine(inout id : Long)
+		this.id=id;
+!!!215554.java!!!	getBuriedDepth() : String
+		return buriedDepth;
+!!!215682.java!!!	setBuriedDepth(in value : String) : void
+		this.buriedDepth= value;
+!!!215810.java!!!	getCategoryOfCable() : String
+		return categoryOfcable;
+!!!215938.java!!!	setCategoryOfCable(in value : String) : void
+		this.categoryOfcable= value;
+!!!216066.java!!!	getCondition() : String
+		return condition;
+!!!216194.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!216322.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!216450.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!216578.java!!!	getDateStart() : String
+		return dateStart;
+!!!216706.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!216834.java!!!	getDepthRangeValue1() : String
+		return depthRangeValue1;
+!!!216962.java!!!	setDepthRangeValue1(in value : String) : void
+		this.depthRangeValue1= value;
+!!!217090.java!!!	getDepthRangeValue2() : String
+		return depthRangeValue2;
+!!!217218.java!!!	setDepthRangeValue2(in value : String) : void
+		this.depthRangeValue2= value;
+!!!217346.java!!!	getObjectName() : String
+		return objectName;
+!!!217474.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!217602.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!217730.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!217858.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!217986.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!218114.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!218242.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!218370.java!!!	getStatus() : String
+		return status;
+!!!218498.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!218626.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!218754.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!218882.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!219010.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

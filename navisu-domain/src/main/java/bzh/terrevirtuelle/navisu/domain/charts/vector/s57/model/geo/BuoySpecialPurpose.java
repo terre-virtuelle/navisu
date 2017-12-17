@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "boyspp")
-public class BuoySpecialPurpose extends Buoyage
+public class BuoySpecialPurpose extends Buoy
         implements NavigationData, Serializable {
 
     public BuoySpecialPurpose(Long id) {

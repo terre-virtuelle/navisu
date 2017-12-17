@@ -1,0 +1,23 @@
+class Tideway
+!!!633730.java!!!	Tideway(inout id : Long)
+		this.id=id;
+!!!633986.java!!!	getObjectName() : String
+		return objectName;
+!!!634114.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!634242.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!634370.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!634498.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!634626.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!634754.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!634882.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!635010.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!635138.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

@@ -1,0 +1,19 @@
+class HorizontalDatumShiftParameters
+!!!362626.java!!!	HorizontalDatumShiftParameters(inout id : Long)
+		this.id=id;
+!!!362882.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!363010.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!363138.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!363266.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!363394.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!363522.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!363650.java!!!	getShiftParameters() : String
+		return shiftParameters;
+!!!363778.java!!!	setShiftParameters(in value : String) : void
+		this.shiftParameters= value;

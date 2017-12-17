@@ -1,0 +1,51 @@
+class SurveyReliability
+!!!602754.java!!!	SurveyReliability(inout id : Long)
+		this.id=id;
+!!!603010.java!!!	getQualityOfSoundingMeasurement() : String
+		return qualityOfSoundingMeasurement;
+!!!603138.java!!!	setQualityOfSoundingMeasurement(in value : String) : void
+		this.qualityOfSoundingMeasurement= value;
+!!!603266.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!603394.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!603522.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!603650.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!603778.java!!!	getScaleValueOne() : String
+		return scaleValueOne;
+!!!603906.java!!!	setScaleValueOne(in value : String) : void
+		this.scaleValueOne= value;
+!!!604034.java!!!	getScaleValueTwo() : String
+		return scaleValueTwo;
+!!!604162.java!!!	setScaleValueTwo(in value : String) : void
+		this.scaleValueTwo= value;
+!!!604290.java!!!	getSoundingDistanceMaximum() : String
+		return soundingDistanceMaximum;
+!!!604418.java!!!	setSoundingDistanceMaximum(in value : String) : void
+		this.soundingDistanceMaximum= value;
+!!!604546.java!!!	getSoundingDistanceMinimum() : String
+		return soundingDistanceMinimum;
+!!!604674.java!!!	setSoundingDistanceMinimum(in value : String) : void
+		this.soundingDistanceMinimum= value;
+!!!604802.java!!!	getSurveyAuthority() : String
+		return surveyAuthority;
+!!!604930.java!!!	setSurveyAuthority(in value : String) : void
+		this.surveyAuthority= value;
+!!!605058.java!!!	getSurveyDateEnd() : String
+		return surveyDateEnd;
+!!!605186.java!!!	setSurveyDateEnd(in value : String) : void
+		this.surveyDateEnd= value;
+!!!605314.java!!!	getSurveyDateStart() : String
+		return surveyDatestart;
+!!!605442.java!!!	setSurveyDateStart(in value : String) : void
+		this.surveyDatestart= value;
+!!!605570.java!!!	getSurveyType() : String
+		return surveyType;
+!!!605698.java!!!	setSurveyType(in value : String) : void
+		this.surveyType= value;
+!!!605826.java!!!	getTechniqueOfSoundingMeasurement() : String
+		return techniqueOfSoundingMeasurement;
+!!!605954.java!!!	setTechniqueOfSoundingMeasurement(in value : String) : void
+		this.techniqueOfSoundingMeasurement= value;

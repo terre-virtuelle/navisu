@@ -1,0 +1,43 @@
+class Airport
+!!!161538.java!!!	Airport(inout id : Long)
+		this.id=id;
+!!!161794.java!!!	getCategoryOfAirportAirfield() : String
+		return categoryOfAirportAirfield;
+!!!161922.java!!!	setCategoryOfAirportAirfield(in value : String) : void
+		this.categoryOfAirportAirfield= value;
+!!!162050.java!!!	getCondition() : String
+		return condition;
+!!!162178.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!162306.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!162434.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!162562.java!!!	getObjectName() : String
+		return objectName;
+!!!162690.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!162818.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!162946.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!163074.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!163202.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!163330.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!163458.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!163586.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!163714.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!163842.java!!!	getStatus() : String
+		return status;
+!!!163970.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!164098.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!164226.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

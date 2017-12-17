@@ -1,0 +1,23 @@
+class AccuracyOfData
+!!!155906.java!!!	AccuracyOfData(inout id : Long)
+		this.id=id;
+!!!156162.java!!!	getHorizontalAccuracy() : String
+		return horizontalAccuracy;
+!!!156290.java!!!	setHorizontalAccuracy(in value : String) : void
+		this.horizontalAccuracy= value;
+!!!156418.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!156546.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!156674.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!156802.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!156930.java!!!	getSoundingAccuracy() : String
+		return soundingAccuracy;
+!!!157058.java!!!	setSoundingAccuracy(in value : String) : void
+		this.soundingAccuracy= value;
+!!!157186.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!157314.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;

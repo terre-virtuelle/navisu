@@ -1,0 +1,40 @@
+class S57Object
+!!!128130.java!!!	S57Object(in id : long)
+        this.id = id;
+!!!128386.java!!!	getId() : long
+        return this.id;
+!!!128514.java!!!	setField(in fieldName : String, inout fieldValue : byte) : S57Object
+        try {
+            switch (fieldName) {
+                case "FRID":
+                    Feature ft = new Feature();
+                    ft = ft.decodFRID(fieldValue);
+                    return ft;
+                case "VRID":
+                    Spatial sp = new Spatial();
+                    sp = sp.decodVRID(fieldValue);
+                    return sp;
+                case "DSPM":
+                    DataSetGeographicReference ds = new DataSetGeographicReference();
+                    ds = ds.decodDSPM(fieldValue);
+                    return ds;
+            }
+            return this;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+!!!128642.java!!!	isFeatureObject() : boolean
+        return feature;
+!!!128770.java!!!	isSpatialObject() : boolean
+        return spatial;
+!!!128898.java!!!	isDataSet() : boolean
+        return dataSet;
+!!!129026.java!!!	setId(in id : long) : void
+        this.id = id;
+!!!129154.java!!!	isFeature() : boolean
+        return feature;
+!!!129282.java!!!	isSpatial() : boolean
+        return spatial;
+!!!129538.java!!!	toString() : String
+        return "S57Object{" + "id=" + id + '}' + '\n';

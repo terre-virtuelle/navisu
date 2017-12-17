@@ -1,0 +1,31 @@
+class ProductionInformation
+!!!479362.java!!!	ProductionInformation(inout id : Long)
+		this.id=id;
+!!!479618.java!!!	getAgencyResponsibleforproduction() : String
+		return agencyResponsibleforproduction;
+!!!479746.java!!!	setAgencyResponsibleforproduction(in value : String) : void
+		this.agencyResponsibleforproduction= value;
+!!!479874.java!!!	getCompilationDate() : String
+		return compilationDate;
+!!!480002.java!!!	setCompilationDate(in value : String) : void
+		this.compilationDate= value;
+!!!480130.java!!!	getNationality() : String
+		return nationality;
+!!!480258.java!!!	setNationality(in value : String) : void
+		this.nationality= value;
+!!!480386.java!!!	getNoticeToMarinersDate() : String
+		return noticeToMarinersDate;
+!!!480514.java!!!	setNoticeToMarinersDate(in value : String) : void
+		this.noticeToMarinersDate= value;
+!!!480642.java!!!	getProducingCountry() : String
+		return producingCountry;
+!!!480770.java!!!	setProducingCountry(in value : String) : void
+		this.producingCountry= value;
+!!!480898.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!481026.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!481154.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!481282.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;

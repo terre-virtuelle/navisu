@@ -7,7 +7,8 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "bcnisd")
-public class BeaconIsolatedDanger extends Beacon
+public class BeaconIsolatedDanger
+        extends Beacon
         implements Serializable {
 
     public BeaconIsolatedDanger() {

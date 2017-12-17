@@ -1,0 +1,15 @@
+class VerticalDatumOfData
+!!!669058.java!!!	VerticalDatumOfData(inout id : Long)
+		this.id=id;
+!!!669314.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!669442.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!669570.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!669698.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!669826.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!669954.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;

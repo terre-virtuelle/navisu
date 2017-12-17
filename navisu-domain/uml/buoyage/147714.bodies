@@ -1,0 +1,63 @@
+class RadarTransponderBeacon
+!!!505474.java!!!	RadarTransponderBeacon(inout id : Long)
+		this.id=id;
+!!!505730.java!!!	getCategoryOfRadarTransponderBeacon() : String
+		return categoryOfRadarTransponderBeacon;
+!!!505858.java!!!	setCategoryOfRadarTransponderBeacon(in value : String) : void
+		this.categoryOfRadarTransponderBeacon= value;
+!!!505986.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!506114.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!506242.java!!!	getDateStart() : String
+		return dateStart;
+!!!506370.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!506498.java!!!	getObjectName() : String
+		return objectName;
+!!!506626.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!506754.java!!!	getRadarWaveLength() : String
+		return radarWaveLength;
+!!!506882.java!!!	setRadarWaveLength(in value : String) : void
+		this.radarWaveLength= value;
+!!!507010.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!507138.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!507266.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!507394.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!507522.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!507650.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!507778.java!!!	getSectorLimitOne() : String
+		return sectorLimitOne;
+!!!507906.java!!!	setSectorLimitOne(in value : String) : void
+		this.sectorLimitOne= value;
+!!!508034.java!!!	getSectorLimitTwo() : String
+		return sectorLimitTwo;
+!!!508162.java!!!	setSectorLimitTwo(in value : String) : void
+		this.sectorLimitTwo= value;
+!!!508290.java!!!	getSignalGroup() : String
+		return signalGroup;
+!!!508418.java!!!	setSignalGroup(in value : String) : void
+		this.signalGroup= value;
+!!!508546.java!!!	getSignalSequence() : String
+		return signalsequence;
+!!!508674.java!!!	setSignalSequence(in value : String) : void
+		this.signalsequence= value;
+!!!508802.java!!!	getStatus() : String
+		return status;
+!!!508930.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!509058.java!!!	getValueOfMaximumRange() : String
+		return valueOfMaximumRange;
+!!!509186.java!!!	setValueOfMaximumRange(in value : String) : void
+		this.valueOfMaximumRange= value;
+!!!509314.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!509442.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

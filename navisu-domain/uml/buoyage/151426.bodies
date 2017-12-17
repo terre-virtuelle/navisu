@@ -1,0 +1,35 @@
+class Square
+!!!596354.java!!!	Square(inout id : Long)
+		this.id=id;
+!!!596610.java!!!	getCondition() : String
+		return condition;
+!!!596738.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!596866.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!596994.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!597122.java!!!	getObjectName() : String
+		return objectName;
+!!!597250.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!597378.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!597506.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!597634.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!597762.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!597890.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!598018.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!598146.java!!!	getStatus() : String
+		return status;
+!!!598274.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!598402.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!598530.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

@@ -1,0 +1,31 @@
+class Node
+!!!136962.java!!!	decodSG2D(inout fieldValue : byte) : void
+        java.nio.ByteBuffer bb = java.nio.ByteBuffer.allocate(fieldValue.length);
+
+        bb.put(fieldValue);
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+        double y = (double) bb.getInt(0);
+        double x = (double) bb.getInt(4);
+        Point2D pt = new Point2D();
+        pt.setX(x / S57Model.getCOMF());
+        pt.setY(y / S57Model.getCOMF());
+        setPoint(pt);
+!!!137090.java!!!	decodSG3D(inout fieldValue : byte) : void
+        java.nio.ByteBuffer bb = java.nio.ByteBuffer.allocate(fieldValue.length);
+
+        bb.put(fieldValue);
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+        double y = (double) bb.getInt(0);
+        double x = (double) bb.getInt(4);
+        double z = (double) bb.getInt(8);
+        Point3D pt = new Point3D();
+        pt.setX(x / S57Model.getCOMF());
+        pt.setY(y / S57Model.getCOMF());
+        pt.setZ(z / S57Model.getSOMF());
+        setPoint(pt);
+!!!137218.java!!!	getPoint() : Point
+        return point;
+!!!137346.java!!!	setPoint(inout pt : Point) : void
+        this.point = pt;
+!!!137474.java!!!	toString() : String
+        return "Node{" + "point=" + point + '}';

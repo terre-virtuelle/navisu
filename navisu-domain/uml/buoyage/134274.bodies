@@ -1,0 +1,91 @@
+class Bridge
+!!!190082.java!!!	Bridge(inout id : Long)
+		this.id=id;
+!!!190338.java!!!	getCategoryOfBridge() : String
+		return categoryOfBridge;
+!!!190466.java!!!	setCategoryOfBridge(in value : String) : void
+		this.categoryOfBridge= value;
+!!!190594.java!!!	getColour() : String
+		return colour;
+!!!190722.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!190850.java!!!	getColourPattern() : String
+		return colourPattern;
+!!!190978.java!!!	setColourPattern(in value : String) : void
+		this.colourPattern= value;
+!!!191106.java!!!	getCondition() : String
+		return condition;
+!!!191234.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!191362.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!191490.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!191618.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!191746.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!191874.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!192002.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!192130.java!!!	getDateStart() : String
+		return dateStart;
+!!!192258.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!192386.java!!!	getHorizontalAccuracy() : String
+		return horizontalAccuracy;
+!!!192514.java!!!	setHorizontalAccuracy(in value : String) : void
+		this.horizontalAccuracy= value;
+!!!192642.java!!!	getHorizontalClearance() : String
+		return horizontalClearance;
+!!!192770.java!!!	setHorizontalClearance(in value : String) : void
+		this.horizontalClearance= value;
+!!!192898.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!193026.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!193154.java!!!	getObjectName() : String
+		return objectName;
+!!!193282.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!193410.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!193538.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!193666.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!193794.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!193922.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!194050.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!194178.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!194306.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!194434.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!194562.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!194690.java!!!	getVerticalClearance() : String
+		return verticalClearance;
+!!!194818.java!!!	setVerticalClearance(in value : String) : void
+		this.verticalClearance= value;
+!!!194946.java!!!	getVerticalClearanceClosed() : String
+		return verticalClearanceClosed;
+!!!195074.java!!!	setVerticalClearanceClosed(in value : String) : void
+		this.verticalClearanceClosed= value;
+!!!195202.java!!!	getVerticalClearanceOpen() : String
+		return verticalClearanceOpen;
+!!!195330.java!!!	setVerticalClearanceOpen(in value : String) : void
+		this.verticalClearanceOpen= value;
+!!!195458.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!195586.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!195714.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!195842.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

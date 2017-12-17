@@ -1,0 +1,23 @@
+class NavigationalSystemOfMarks
+!!!429186.java!!!	NavigationalSystemOfMarks(inout id : Long)
+		this.id=id;
+!!!429442.java!!!	getMarksNavigationalSystemof() : String
+		return marksNavigationalSystemof;
+!!!429570.java!!!	setMarksNavigationalSystemof(in value : String) : void
+		this.marksNavigationalSystemof= value;
+!!!429698.java!!!	getOrientation() : String
+		return orientation;
+!!!429826.java!!!	setOrientation(in value : String) : void
+		this.orientation= value;
+!!!429954.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!430082.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!430210.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!430338.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!430466.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!430594.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;

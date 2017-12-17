@@ -1,0 +1,7 @@
+class Point3D
+!!!148738.java!!!	getZ() : double
+        return z;
+!!!148866.java!!!	setZ(in z : double) : void
+        this.z = z;
+!!!148994.java!!!	toString() : String
+        return super.toString() + "Point3D{" + "z=" + z + '}';

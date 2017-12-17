@@ -1,0 +1,55 @@
+class Tunnel
+!!!652162.java!!!	Tunnel(inout id : Long)
+		this.id=id;
+!!!652418.java!!!	getBuriedDepth() : String
+		return buriedDepth;
+!!!652546.java!!!	setBuriedDepth(in value : String) : void
+		this.buriedDepth= value;
+!!!652674.java!!!	getCondition() : String
+		return condition;
+!!!652802.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!652930.java!!!	getHorizontalAccuracy() : String
+		return horizontalAccuracy;
+!!!653058.java!!!	setHorizontalAccuracy(in value : String) : void
+		this.horizontalAccuracy= value;
+!!!653186.java!!!	getHorizontalClearance() : String
+		return horizontalClearance;
+!!!653314.java!!!	setHorizontalClearance(in value : String) : void
+		this.horizontalClearance= value;
+!!!653442.java!!!	getObjectName() : String
+		return objectName;
+!!!653570.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!653698.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!653826.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!653954.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!654082.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!654210.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!654338.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!654466.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!654594.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!654722.java!!!	getStatus() : String
+		return status;
+!!!654850.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!654978.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!655106.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!655234.java!!!	getVerticalClearance() : String
+		return verticalClearance;
+!!!655362.java!!!	setVerticalClearance(in value : String) : void
+		this.verticalClearance= value;
+!!!655490.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!655618.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

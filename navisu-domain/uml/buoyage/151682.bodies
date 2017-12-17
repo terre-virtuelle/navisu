@@ -1,0 +1,19 @@
+class StraightTerritorialSeaBaseline
+!!!599938.java!!!	StraightTerritorialSeaBaseline(inout id : Long)
+		this.id=id;
+!!!600194.java!!!	getNationality() : String
+		return nationality;
+!!!600322.java!!!	setNationality(in value : String) : void
+		this.nationality= value;
+!!!600450.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!600578.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!600706.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!600834.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!600962.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!601090.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;

@@ -1,0 +1,19 @@
+class Publisher
+!!!726914.java!!!	Publisher(inout identity : Identity, inout address : Address, inout contact : Contact)
+        this.identity = identity;
+        this.address = address;
+        this.contact = contact;
+!!!727042.java!!!	getContact() : Contact
+        return contact;
+!!!727170.java!!!	setContact(inout contact : Contact) : void
+        this.contact = contact;
+!!!727298.java!!!	getAddress() : Address
+        return address;
+!!!727426.java!!!	setAddress(inout address : Address) : void
+        this.address = address;
+!!!727554.java!!!	getIdentity() : Identity
+        return identity;
+!!!727682.java!!!	setIdentity(inout identity : Identity) : void
+        this.identity = identity;
+!!!727810.java!!!	toString() : String
+        return "Publisher{" + "identity=" + identity + ", address=" + address + ", contact=" + contact + '}';

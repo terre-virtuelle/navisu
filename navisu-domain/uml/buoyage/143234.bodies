@@ -1,0 +1,39 @@
+class LandElevation
+!!!383362.java!!!	LandElevation(inout id : Long)
+		this.id=id;
+!!!383618.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!383746.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!383874.java!!!	getElevation() : String
+		return elevation;
+!!!384002.java!!!	setElevation(in value : String) : void
+		this.elevation= value;
+!!!384130.java!!!	getObjectName() : String
+		return objectName;
+!!!384258.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!384386.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!384514.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!384642.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!384770.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!384898.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!385026.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!385154.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!385282.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!385410.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!385538.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!385666.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!385794.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

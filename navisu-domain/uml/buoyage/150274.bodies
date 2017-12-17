@@ -1,0 +1,51 @@
+class SignalStationTraffic
+!!!567938.java!!!	SignalStationTraffic(inout id : Long)
+		this.id=id;
+!!!568194.java!!!	getCategoryOfSignalstationTraffic() : String
+		return categoryOfSignalstationTraffic;
+!!!568322.java!!!	setCategoryOfSignalstationTraffic(in value : String) : void
+		this.categoryOfSignalstationTraffic= value;
+!!!568450.java!!!	getCommunicationChannel() : String
+		return communicationchannel;
+!!!568578.java!!!	setCommunicationChannel(in value : String) : void
+		this.communicationchannel= value;
+!!!568706.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!568834.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!568962.java!!!	getDateStart() : String
+		return dateStart;
+!!!569090.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!569218.java!!!	getObjectName() : String
+		return objectName;
+!!!569346.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!569474.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!569602.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!569730.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!569858.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!569986.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!570114.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!570242.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!570370.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!570498.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!570626.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!570754.java!!!	getStatus() : String
+		return status;
+!!!570882.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!571010.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!571138.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

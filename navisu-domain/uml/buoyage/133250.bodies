@@ -1,0 +1,15 @@
+class Beacon
+!!!181122.java!!!	Beacon(in id : long)
+        super(id);
+!!!181250.java!!!	Beacon(in id : long, in lat : double, in lon : double)
+        super(id, lat, lon);
+!!!181378.java!!!	Beacon(in id : long, in geometry : String)
+        super(id, geometry);
+!!!181506.java!!!	getBeaconShape() : String
+        return shape;
+!!!181634.java!!!	setBeaconShape(in value : String) : void
+        shape = value;
+!!!181762.java!!!	toString() : String
+        return super.toString();
+!!!181890.java!!!	getShapeMeaning(in shape : String) : String
+        return super.getShapeMeaning(BCNSHP.ATT.get(shape));

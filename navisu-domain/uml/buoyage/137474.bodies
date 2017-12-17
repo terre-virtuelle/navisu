@@ -1,0 +1,15 @@
+class CompilationScaleOfData
+!!!249474.java!!!	CompilationScaleOfData(inout id : Long)
+		this.id=id;
+!!!249730.java!!!	getCompilationScale() : String
+		return compilationScale;
+!!!249858.java!!!	setCompilationScale(in value : String) : void
+		this.compilationScale= value;
+!!!249986.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!250114.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!250242.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!250370.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;

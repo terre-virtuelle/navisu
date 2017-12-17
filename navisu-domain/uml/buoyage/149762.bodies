@@ -1,0 +1,27 @@
+class SeaAreaNamedWaterArea
+!!!554626.java!!!	SeaAreaNamedWaterArea(inout id : Long)
+		this.id=id;
+!!!554882.java!!!	getCategoryOfSeaArea() : String
+		return categoryOfSeaArea;
+!!!555010.java!!!	setCategoryOfSeaArea(in value : String) : void
+		this.categoryOfSeaArea= value;
+!!!555138.java!!!	getObjectName() : String
+		return objectName;
+!!!555266.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!555394.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!555522.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!555650.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!555778.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!555906.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!556034.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!556162.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!556290.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

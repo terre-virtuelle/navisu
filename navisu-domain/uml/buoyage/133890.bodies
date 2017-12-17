@@ -1,0 +1,7 @@
+class BeaconSafeWater
+!!!184450.java!!!	BeaconSafeWater(inout id : Long)
+        super(id);
+!!!184706.java!!!	BeaconSafeWater(in id : long, in lat : double, in lon : double)
+        super(id, lat, lon);
+!!!184834.java!!!	BeaconSafeWater(in id : long, in geometry : String)
+        super(id, geometry);

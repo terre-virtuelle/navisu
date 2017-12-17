@@ -1,0 +1,3 @@
+class BuoySafeWater
+!!!207106.java!!!	BuoySafeWater(inout id : Long)
+        this.id = id;

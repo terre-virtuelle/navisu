@@ -1,0 +1,31 @@
+class RadarLine
+!!!494978.java!!!	RadarLine(inout id : Long)
+		this.id=id;
+!!!495234.java!!!	getObjectName() : String
+		return objectName;
+!!!495362.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!495490.java!!!	getOrientation() : String
+		return orientation;
+!!!495618.java!!!	setOrientation(in value : String) : void
+		this.orientation= value;
+!!!495746.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!495874.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!496002.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!496130.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!496258.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!496386.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!496514.java!!!	getStatus() : String
+		return status;
+!!!496642.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!496770.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!496898.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

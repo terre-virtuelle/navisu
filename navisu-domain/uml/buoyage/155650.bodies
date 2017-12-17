@@ -1,0 +1,27 @@
+class WeedKelp
+!!!674178.java!!!	WeedKelp(inout id : Long)
+		this.id=id;
+!!!674434.java!!!	getCategoryOfWeed() : String
+		return categoryOfWeed;
+!!!674562.java!!!	setCategoryOfWeed(in value : String) : void
+		this.categoryOfWeed= value;
+!!!674690.java!!!	getObjectName() : String
+		return objectName;
+!!!674818.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!674946.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!675074.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!675202.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!675330.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!675458.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!675586.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!675714.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!675842.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

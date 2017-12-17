@@ -1,0 +1,27 @@
+class River
+!!!543618.java!!!	River(inout id : Long)
+		this.id=id;
+!!!543874.java!!!	getObjectName() : String
+		return objectName;
+!!!544002.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!544130.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!544258.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!544386.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!544514.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!544642.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!544770.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!544898.java!!!	getStatus() : String
+		return status;
+!!!545026.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!545154.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!545282.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

@@ -1,0 +1,35 @@
+class Compass
+!!!247170.java!!!	Compass(inout id : Long)
+		this.id=id;
+!!!247426.java!!!	getCompasssize() : String
+		return compasssize;
+!!!247554.java!!!	setCompasssize(in value : String) : void
+		this.compasssize= value;
+!!!247682.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!247810.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!247938.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!248066.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!248194.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!248322.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!248450.java!!!	getReferenceYearForMagneticVariation() : String
+		return referenceYearForMagneticVariation;
+!!!248578.java!!!	setReferenceYearForMagneticVariation(in value : String) : void
+		this.referenceYearForMagneticVariation= value;
+!!!248706.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!248834.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!248962.java!!!	getValueOfAnnualChangeInMagneticVariation() : String
+		return valueOfAnnualChangeInMagneticvariation;
+!!!249090.java!!!	setValueOfAnnualChangeInMagneticVariation(in value : String) : void
+		this.valueOfAnnualChangeInMagneticvariation= value;
+!!!249218.java!!!	getValueOfMagneticVariation() : String
+		return valueOfMagneticvariation;
+!!!249346.java!!!	setValueOfMagneticVariation(in value : String) : void
+		this.valueOfMagneticvariation= value;

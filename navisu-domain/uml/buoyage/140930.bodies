@@ -1,0 +1,35 @@
+class FishingGround
+!!!329858.java!!!	FishingGround(inout id : Long)
+		this.id=id;
+!!!330114.java!!!	getObjectName() : String
+		return objectName;
+!!!330242.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!330370.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!330498.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!330626.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!330754.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!330882.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!331010.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!331138.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!331266.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!331394.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!331522.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!331650.java!!!	getStatus() : String
+		return status;
+!!!331778.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!331906.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!332034.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

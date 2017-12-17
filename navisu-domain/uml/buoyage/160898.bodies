@@ -1,0 +1,9 @@
+class MdDate
+!!!717826.java!!!	MdDate(in date : String)
+        this.date = date;
+!!!717954.java!!!	getDate() : String
+        return date;
+!!!718082.java!!!	setDate(in date : String) : void
+        this.date = date;
+!!!718210.java!!!	toString() : String
+        return "MdDate{" + "date=" + date + '}';

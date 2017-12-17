@@ -1,0 +1,19 @@
+class S57Chart
+!!!151042.java!!!	S57Chart()
+        super(0, 0.0, 0.0);
+!!!151170.java!!!	S57Chart(in id : long, in geometry : String)
+        super(id, geometry);
+!!!151298.java!!!	S57Chart(in id : long, in lat : double, in lon : double, in description : String, in number : String)
+        super(id, lat, lon);
+        this.description = description;
+        this.number = number;
+!!!151426.java!!!	S57Chart(in id : long, in lat : double, in lon : double)
+        super(id, lat, lon);
+!!!151554.java!!!	getDescription() : String
+        return description;
+!!!151682.java!!!	setDescription(in description : String) : void
+        this.description = description;
+!!!151810.java!!!	getNumber() : String
+        return number;
+!!!151938.java!!!	setNumber(in number : String) : void
+        this.number = number;

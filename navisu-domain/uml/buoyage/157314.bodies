@@ -1,0 +1,28 @@
+class AvurnavView
+!!!695682.java!!!	AvurnavView(in x : double, in y : double)
+        super(x, y);
+!!!695810.java!!!	AvurnavView(inout data : NavigationalWarnings, in x : double, in y : double)
+        super(x, y);
+        this.data = data;
+!!!695938.java!!!	getData() : NavigationData
+        return data;
+!!!696066.java!!!	getLatitude() : double
+        if (data != null) {
+            return data.getLatitude();
+        } else {
+            return 0.0;
+        }
+!!!696194.java!!!	getLongitude() : double
+        if (data != null) {
+            return data.getLongitude();
+        } else {
+            return 0.0;
+        }
+!!!696322.java!!!	getGeometry() : String
+        if (data != null) {
+            return data.getGeometry();
+        } else {
+            return "";
+        }
+!!!696450.java!!!	toString() : String
+        return "AvurnavView{" + "data=" + data + super.toString() + '}';

@@ -1,0 +1,39 @@
+class LandRegion
+!!!386690.java!!!	LandRegion(inout id : Long)
+		this.id=id;
+!!!386946.java!!!	getCategoryOfLandRegion() : String
+		return categoryOfLandRegion;
+!!!387074.java!!!	setCategoryOfLandRegion(in value : String) : void
+		this.categoryOfLandRegion= value;
+!!!387202.java!!!	getNatureOfSurface() : String
+		return natureOfSurface;
+!!!387330.java!!!	setNatureOfSurface(in value : String) : void
+		this.natureOfSurface= value;
+!!!387458.java!!!	getNatureOfSurfaceQualifyingTerms() : String
+		return natureOfSurfaceQualifyingTerms;
+!!!387586.java!!!	setNatureOfSurfaceQualifyingTerms(in value : String) : void
+		this.natureOfSurfaceQualifyingTerms= value;
+!!!387714.java!!!	getObjectName() : String
+		return objectName;
+!!!387842.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!387970.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!388098.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!388226.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!388354.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!388482.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!388610.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!388738.java!!!	getWaterLevelEffect() : String
+		return waterLevelEffect;
+!!!388866.java!!!	setWaterLevelEffect(in value : String) : void
+		this.waterLevelEffect= value;
+!!!388994.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!389122.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

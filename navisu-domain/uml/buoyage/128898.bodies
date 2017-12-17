@@ -1,0 +1,11 @@
+class Point
+!!!147970.java!!!	getX() : double
+        return x;
+!!!148098.java!!!	setX(in x : double) : void
+        this.x = x;
+!!!148226.java!!!	getY() : double
+        return y;
+!!!148354.java!!!	setY(in y : double) : void
+        this.y = y;
+!!!148482.java!!!	toString() : String
+        return "Point{" + "x=" + x + ", y=" + y + '}';

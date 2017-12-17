@@ -1,0 +1,41 @@
+class EllipticalArc
+!!!141698.java!!!	getStpt() : Point
+        return this.stpt;
+!!!141826.java!!!	cardStpt() : int
+        if (this.stpt == null) {
+            return 0;
+        } else {
+            return 1;
+        }
+!!!141954.java!!!	getCtpt() : Point
+        return this.ctpt;
+!!!142082.java!!!	cardCtpt() : int
+        if (this.ctpt == null) {
+            return 0;
+        } else {
+            return 1;
+        }
+!!!142210.java!!!	getEnpt() : Point
+        return this.enpt;
+!!!142338.java!!!	cardEnpt() : int
+        if (this.enpt == null) {
+            return 0;
+        } else {
+            return 1;
+        }
+!!!142466.java!!!	getCdpm() : Point
+        return this.cdpm;
+!!!142594.java!!!	cardCdpm() : int
+        if (this.cdpm == null) {
+            return 0;
+        } else {
+            return 1;
+        }
+!!!142722.java!!!	getCdpr() : Point
+        return this.cdpr;
+!!!142850.java!!!	cardCdpr() : int
+        if (this.cdpr == null) {
+            return 0;
+        } else {
+            return 1;
+        }

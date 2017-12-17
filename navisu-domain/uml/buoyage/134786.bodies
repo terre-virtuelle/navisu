@@ -1,0 +1,3 @@
+class BuoyCardinal
+!!!205314.java!!!	BuoyCardinal(inout id : Long)
+        this.id = id;

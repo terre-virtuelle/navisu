@@ -1,0 +1,71 @@
+class DeepWaterRoutePart
+!!!284290.java!!!	DeepWaterRoutePart(inout id : Long)
+		this.id=id;
+!!!284546.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!284674.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!284802.java!!!	getDateStart() : String
+		return dateStart;
+!!!284930.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!285058.java!!!	getDepthRangeValue1() : String
+		return depthRangeValue1;
+!!!285186.java!!!	setDepthRangeValue1(in value : String) : void
+		this.depthRangeValue1= value;
+!!!285314.java!!!	getDepthRangeValue2() : String
+		return depthRangeValue2;
+!!!285442.java!!!	setDepthRangeValue2(in value : String) : void
+		this.depthRangeValue2= value;
+!!!285570.java!!!	getObjectName() : String
+		return objectName;
+!!!285698.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!285826.java!!!	getOrientation() : String
+		return orientation;
+!!!285954.java!!!	setOrientation(in value : String) : void
+		this.orientation= value;
+!!!286082.java!!!	getQualityOfSoundingMeasurement() : String
+		return qualityOfSoundingMeasurement;
+!!!286210.java!!!	setQualityOfSoundingMeasurement(in value : String) : void
+		this.qualityOfSoundingMeasurement= value;
+!!!286338.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!286466.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!286594.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!286722.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!286850.java!!!	getRestriction() : String
+		return restriction;
+!!!286978.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!287106.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!287234.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!287362.java!!!	getSoundingAccuracy() : String
+		return soundingAccuracy;
+!!!287490.java!!!	setSoundingAccuracy(in value : String) : void
+		this.soundingAccuracy= value;
+!!!287618.java!!!	getStatus() : String
+		return status;
+!!!287746.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!287874.java!!!	getTechniqueOfSoundingMeasurement() : String
+		return techniqueOfSoundingMeasurement;
+!!!288002.java!!!	setTechniqueOfSoundingMeasurement(in value : String) : void
+		this.techniqueOfSoundingMeasurement= value;
+!!!288130.java!!!	getTrafficfLow() : String
+		return trafficfLow;
+!!!288258.java!!!	setTrafficfLow(in value : String) : void
+		this.trafficfLow= value;
+!!!288386.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!288514.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!288642.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!288770.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

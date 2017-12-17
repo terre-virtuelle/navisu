@@ -1,0 +1,51 @@
+class AnchorBerth
+!!!167682.java!!!	AnchorBerth(inout id : Long)
+		this.id=id;
+!!!167938.java!!!	getCategoryOfAnchorage() : String
+		return categoryOfAnchorage;
+!!!168066.java!!!	setCategoryOfAnchorage(in value : String) : void
+		this.categoryOfAnchorage= value;
+!!!168194.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!168322.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!168450.java!!!	getDateStart() : String
+		return dateStart;
+!!!168578.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!168706.java!!!	getObjectName() : String
+		return objectName;
+!!!168834.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!168962.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!169090.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!169218.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!169346.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!169474.java!!!	getRadius() : String
+		return radius;
+!!!169602.java!!!	setRadius(in value : String) : void
+		this.radius= value;
+!!!169730.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!169858.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!169986.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!170114.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!170242.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!170370.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!170498.java!!!	getStatus() : String
+		return status;
+!!!170626.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!170754.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!170882.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

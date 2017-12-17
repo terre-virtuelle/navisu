@@ -1,0 +1,27 @@
+class FreePortArea
+!!!346498.java!!!	FreePortArea(inout id : Long)
+		this.id=id;
+!!!346754.java!!!	getObjectName() : String
+		return objectName;
+!!!346882.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!347010.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!347138.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!347266.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!347394.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!347522.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!347650.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!347778.java!!!	getStatus() : String
+		return status;
+!!!347906.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!348034.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!348162.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

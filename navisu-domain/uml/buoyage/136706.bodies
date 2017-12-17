@@ -1,0 +1,39 @@
+class Causeway
+!!!233730.java!!!	Causeway(inout id : Long)
+		this.id=id;
+!!!233986.java!!!	getCondition() : String
+		return condition;
+!!!234114.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!234242.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!234370.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!234498.java!!!	getObjectName() : String
+		return objectName;
+!!!234626.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!234754.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!234882.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!235010.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!235138.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!235266.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!235394.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!235522.java!!!	getStatus() : String
+		return status;
+!!!235650.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!235778.java!!!	getWaterLevelEffect() : String
+		return waterLevelEffect;
+!!!235906.java!!!	setWaterLevelEffect(in value : String) : void
+		this.waterLevelEffect= value;
+!!!236034.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!236162.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

@@ -1,0 +1,47 @@
+class CoastguardStation
+!!!240386.java!!!	CoastguardStation(inout id : Long)
+		this.id=id;
+!!!240642.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!240770.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!240898.java!!!	getDateStart() : String
+		return dateStart;
+!!!241026.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!241154.java!!!	getObjectName() : String
+		return objectName;
+!!!241282.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!241410.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!241538.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!241666.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!241794.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!241922.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!242050.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!242178.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!242306.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!242434.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!242562.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!242690.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!242818.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!242946.java!!!	getStatus() : String
+		return status;
+!!!243074.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!243202.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!243330.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

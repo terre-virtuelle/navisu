@@ -1,0 +1,23 @@
+class TerritorialSeaArea
+!!!608386.java!!!	TerritorialSeaArea(inout id : Long)
+		this.id=id;
+!!!608642.java!!!	getNationality() : String
+		return nationality;
+!!!608770.java!!!	setNationality(in value : String) : void
+		this.nationality= value;
+!!!608898.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!609026.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!609154.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!609282.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!609410.java!!!	getRestriction() : String
+		return restriction;
+!!!609538.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!609666.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!609794.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;

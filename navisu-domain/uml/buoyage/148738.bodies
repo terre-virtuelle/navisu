@@ -1,0 +1,47 @@
+class RescueStation
+!!!534402.java!!!	RescueStation(inout id : Long)
+		this.id=id;
+!!!534658.java!!!	getCategoryOfRescueStation() : String
+		return categoryOfRescueStation;
+!!!534786.java!!!	setCategoryOfRescueStation(in value : String) : void
+		this.categoryOfRescueStation= value;
+!!!534914.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!535042.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!535170.java!!!	getDateStart() : String
+		return dateStart;
+!!!535298.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!535426.java!!!	getObjectName() : String
+		return objectName;
+!!!535554.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!535682.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!535810.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!535938.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!536066.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!536194.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!536322.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!536450.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!536578.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!536706.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!536834.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!536962.java!!!	getStatus() : String
+		return status;
+!!!537090.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!537218.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!537346.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

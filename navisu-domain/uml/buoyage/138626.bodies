@@ -1,0 +1,75 @@
+class Dam
+!!!274306.java!!!	Dam(inout id : Long)
+		this.id=id;
+!!!274562.java!!!	getCategoryOfDam() : String
+		return categoryOfDam;
+!!!274690.java!!!	setCategoryOfDam(in value : String) : void
+		this.categoryOfDam= value;
+!!!274818.java!!!	getColour() : String
+		return colour;
+!!!274946.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!275074.java!!!	getColourPattern() : String
+		return colourPattern;
+!!!275202.java!!!	setColourPattern(in value : String) : void
+		this.colourPattern= value;
+!!!275330.java!!!	getCondition() : String
+		return condition;
+!!!275458.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!275586.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!275714.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!275842.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!275970.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!276098.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!276226.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!276354.java!!!	getDateStart() : String
+		return dateStart;
+!!!276482.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!276610.java!!!	getHeight() : String
+		return height;
+!!!276738.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!276866.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!276994.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!277122.java!!!	getObjectName() : String
+		return objectName;
+!!!277250.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!277378.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!277506.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!277634.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!277762.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!277890.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!278018.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!278146.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!278274.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!278402.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!278530.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!278658.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!278786.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!278914.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!279042.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

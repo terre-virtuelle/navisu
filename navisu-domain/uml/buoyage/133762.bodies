@@ -1,0 +1,13 @@
+class BeaconLateral
+!!!183682.java!!!	BeaconLateral(inout id : Long)
+        super(id);
+!!!183810.java!!!	BeaconLateral(in id : long, in lat : double, in lon : double)
+        super(id, lat, lon);
+!!!183938.java!!!	BeaconLateral(in id : long, in geometry : String)
+        super(id, geometry);
+!!!184066.java!!!	getCategoryOfLateralMark() : String
+        return categoryOfMark;
+!!!184194.java!!!	getCategoryOfMarkMeaning(in cat : String) : String
+        return CATLAM.ATT.get(cat);
+!!!184322.java!!!	setCategoryOfLateralMark(in value : String) : void
+        this.categoryOfMark = value;

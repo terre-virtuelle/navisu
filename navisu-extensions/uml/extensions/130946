@@ -1,6 +1,6 @@
 format 76
 "shom" // navigation::sailingDirections::model::shom
-  revision 1
+  revision 2
   modified_by 2 "serge"
   // class settings
   //class diagram settings

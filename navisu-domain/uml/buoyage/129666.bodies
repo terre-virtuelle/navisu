@@ -1,0 +1,36 @@
+class VectorUsage
+!!!154114.java!!!	VectorUsage()
+        super();
+!!!154242.java!!!	VectorUsage(in ornt : int, in usag : int, in topi : int, in mask : int, in pos : int)
+        this.mask = mask & 0xFF;
+        this.ornt = ornt & 0xFF;
+        this.usag = usag & 0xFF;
+        this.topi = topi & 0xFF;
+
+!!!154370.java!!!	VectorUsage(in ornt : int, in usag : int, in mask : int, in pos : int)
+        this.mask = mask & 0xFF;
+        this.ornt = ornt & 0xFF;
+        this.usag = usag & 0xFF;
+        this.pos = pos;
+!!!154498.java!!!	getPos() : int
+        return pos;
+!!!154626.java!!!	setPos(in pos : int) : void
+        this.pos = pos;
+!!!154754.java!!!	getOrnt() : int
+        return this.ornt;
+!!!154882.java!!!	getUsag() : int
+        return this.usag;
+!!!155010.java!!!	getTopi() : int
+        return this.topi;
+!!!155138.java!!!	getMask() : int
+        return this.mask;
+!!!155266.java!!!	setMask(in mask : int) : void
+        this.mask = mask;
+!!!155394.java!!!	setOrnt(in ornt : int) : void
+        this.ornt = ornt;
+!!!155522.java!!!	setTopi(in topi : int) : void
+        this.topi = topi;
+!!!155650.java!!!	setUsag(in usag : int) : void
+        this.usag = usag;
+!!!155778.java!!!	toString() : String
+        return "VectorUsage{" + "ornt=" + ornt + ", usag=" + usag + ", topi=" + topi + ", mask=" + mask + ", pos=" + pos + '}';

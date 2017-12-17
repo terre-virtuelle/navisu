@@ -1,0 +1,13 @@
+class Book
+!!!706434.java!!!	getChapters() : Chapter
+        return chapitre;
+!!!706562.java!!!	getName() : String
+        return name;
+!!!706690.java!!!	getLongname() : String
+        return longname;
+!!!706818.java!!!	getNota() : String
+        return nota;
+!!!706946.java!!!	toLaTeX() : String
+        return "";
+!!!707074.java!!!	toString() : String
+        return title;

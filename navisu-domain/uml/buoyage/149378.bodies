@@ -1,0 +1,43 @@
+class Road
+!!!546946.java!!!	Road(inout id : Long)
+		this.id=id;
+!!!547202.java!!!	getCategoryOfRoad() : String
+		return categoryOfRoad;
+!!!547330.java!!!	setCategoryOfRoad(in value : String) : void
+		this.categoryOfRoad= value;
+!!!547458.java!!!	getCondition() : String
+		return condition;
+!!!547586.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!547714.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!547842.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!547970.java!!!	getObjectName() : String
+		return objectName;
+!!!548098.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!548226.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!548354.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!548482.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!548610.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!548738.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!548866.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!548994.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!549122.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!549250.java!!!	getStatus() : String
+		return status;
+!!!549378.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!549506.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!549634.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

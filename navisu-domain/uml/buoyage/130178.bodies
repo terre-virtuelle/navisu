@@ -1,0 +1,10 @@
+class ConnectedNode
+!!!137602.java!!!	ConnectedNode(in rcid : long)
+        this.setId(rcid);
+!!!137730.java!!!	ConnectedNode()
+ 
+!!!137858.java!!!	clone() : ConnectedNode
+        ConnectedNode n;
+        n = new ConnectedNode(id);
+        n.setPoint(this.point);
+        return n;

@@ -1,0 +1,51 @@
+class DockArea
+!!!295042.java!!!	DockArea(inout id : Long)
+		this.id=id;
+!!!295298.java!!!	getCategoryOfDock() : String
+		return categoryOfDock;
+!!!295426.java!!!	setCategoryOfDock(in value : String) : void
+		this.categoryOfDock= value;
+!!!295554.java!!!	getCondition() : String
+		return condition;
+!!!295682.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!295810.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!295938.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!296066.java!!!	getDateStart() : String
+		return dateStart;
+!!!296194.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!296322.java!!!	getHorizontalAccuracy() : String
+		return horizontalAccuracy;
+!!!296450.java!!!	setHorizontalAccuracy(in value : String) : void
+		this.horizontalAccuracy= value;
+!!!296578.java!!!	getHorizontalClearance() : String
+		return horizontalClearance;
+!!!296706.java!!!	setHorizontalClearance(in value : String) : void
+		this.horizontalClearance= value;
+!!!296834.java!!!	getObjectName() : String
+		return objectName;
+!!!296962.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!297090.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!297218.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!297346.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!297474.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!297602.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!297730.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!297858.java!!!	getStatus() : String
+		return status;
+!!!297986.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!298114.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!298242.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

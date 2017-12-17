@@ -1,0 +1,51 @@
+class TideTimeSeries
+!!!630402.java!!!	TideTimeSeries(inout id : Long)
+		this.id=id;
+!!!630658.java!!!	getObjectName() : String
+		return objectName;
+!!!630786.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!630914.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!631042.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!631170.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!631298.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!631426.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!631554.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!631682.java!!!	getStatus() : String
+		return status;
+!!!631810.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!631938.java!!!	getTideAccuracyOfWaterLevel() : String
+		return tideAccuracyOfWaterLevel;
+!!!632066.java!!!	setTideAccuracyOfWaterLevel(in value : String) : void
+		this.tideAccuracyOfWaterLevel= value;
+!!!632194.java!!!	getTideHighandLowWaterValues() : String
+		return tideHighandLowWaterValues;
+!!!632322.java!!!	setTideHighandLowWaterValues(in value : String) : void
+		this.tideHighandLowWaterValues= value;
+!!!632450.java!!!	getTideTimeSeriesValues() : String
+		return tidetimeSeriesValues;
+!!!632578.java!!!	setTideTimeSeriesValues(in value : String) : void
+		this.tidetimeSeriesValues= value;
+!!!632706.java!!!	getTideTimeIntervalOfValue() : String
+		return tidetimeIntervalOfValue;
+!!!632834.java!!!	setTideTimeIntervalOfValue(in value : String) : void
+		this.tidetimeIntervalOfValue= value;
+!!!632962.java!!!	getTimeEnd() : String
+		return timeEnd;
+!!!633090.java!!!	setTimeEnd(in value : String) : void
+		this.timeEnd= value;
+!!!633218.java!!!	getTimeStart() : String
+		return timeStart;
+!!!633346.java!!!	setTimeStart(in value : String) : void
+		this.timeStart= value;
+!!!633474.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!633602.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

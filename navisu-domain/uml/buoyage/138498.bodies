@@ -1,0 +1,19 @@
+class CustomZone
+!!!273026.java!!!	CustomZone(inout id : Long)
+		this.id=id;
+!!!273282.java!!!	getNationality() : String
+		return nationality;
+!!!273410.java!!!	setNationality(in value : String) : void
+		this.nationality= value;
+!!!273538.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!273666.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!273794.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!273922.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!274050.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!274178.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;

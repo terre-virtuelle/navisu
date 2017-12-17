@@ -1,0 +1,31 @@
+class FisheryZone
+!!!324738.java!!!	FisheryZone(inout id : Long)
+		this.id=id;
+!!!324994.java!!!	getNationality() : String
+		return nationality;
+!!!325122.java!!!	setNationality(in value : String) : void
+		this.nationality= value;
+!!!325250.java!!!	getObjectName() : String
+		return objectName;
+!!!325378.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!325506.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!325634.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!325762.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!325890.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!326018.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!326146.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!326274.java!!!	getStatus() : String
+		return status;
+!!!326402.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!326530.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!326658.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

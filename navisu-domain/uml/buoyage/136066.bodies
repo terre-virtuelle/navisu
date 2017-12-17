@@ -1,0 +1,35 @@
+class CanalBank
+!!!222722.java!!!	CanalBank(inout id : Long)
+		this.id=id;
+!!!222978.java!!!	getCondition() : String
+		return condition;
+!!!223106.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!223234.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!223362.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!223490.java!!!	getDateStart() : String
+		return dateStart;
+!!!223618.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!223746.java!!!	getObjectName() : String
+		return objectName;
+!!!223874.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!224002.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!224130.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!224258.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!224386.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!224514.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!224642.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!224770.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!224898.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

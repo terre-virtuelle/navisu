@@ -1,0 +1,16 @@
+class SailingDirections
+!!!698626.java!!!	getDocument() : Document
+        return sailingDirectionsParser.getDocument();
+!!!698754.java!!!	getTextSet() : Text
+
+        return sailingDirectionsParser.getTextSet();
+!!!698882.java!!!	getPoiMap() : Map<Pair<Double, Double>, String>
+        return sailingDirectionsParser.getPoiMap();
+!!!699010.java!!!	getBook() : Book
+        return sailingDirectionsParser.getBook();
+!!!699138.java!!!	getMetadata() : Metadata
+        return sailingDirectionsParser.getMetadata();
+!!!699266.java!!!	getChapters() : Chapter
+        return sailingDirectionsParser.getChapters();
+!!!699394.java!!!	getCentroid() : Point
+        return sailingDirectionsParser.getCentroid();

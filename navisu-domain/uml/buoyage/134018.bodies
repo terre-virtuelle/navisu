@@ -1,0 +1,19 @@
+class BeaconSpecialPurpose
+!!!185090.java!!!	BeaconSpecialPurpose(inout id : Long)
+        this.id = id;
+!!!185218.java!!!	BeaconSpecialPurpose(in id : long, in lat : double, in lon : double)
+        super(id, lat, lon);
+!!!185346.java!!!	BeaconSpecialPurpose(in id : long, in geometry : String)
+        super(id, geometry);
+!!!185474.java!!!	getBeaconShape() : String
+        return beaconShape;
+!!!185602.java!!!	setBeaconShape(in value : String) : void
+        this.beaconShape = value;
+!!!185730.java!!!	getCategoryOfSpecialPurposeMark() : String
+        return categoryOfSpecialPurposeMark;
+!!!185858.java!!!	setCategoryOfSpecialPurposeMark(in value : String) : void
+        this.categoryOfSpecialPurposeMark = value;
+!!!185986.java!!!	getMarksNavigationalSystemof() : String
+        return marksNavigationalSystemof;
+!!!186114.java!!!	setMarksNavigationalSystemof(in value : String) : void
+        this.marksNavigationalSystemof = value;

@@ -1,0 +1,35 @@
+class CartographicArea
+!!!227842.java!!!	CartographicArea(inout id : Long)
+		this.id=id;
+!!!228098.java!!!	getColour() : String
+		return colour;
+!!!228226.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!228354.java!!!	getOrientation() : String
+		return orientation;
+!!!228482.java!!!	setOrientation(in value : String) : void
+		this.orientation= value;
+!!!228610.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!228738.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!228866.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!228994.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!229122.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!229250.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!229378.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!229506.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!229634.java!!!	getSymbolizationCode() : String
+		return symbolizationCode;
+!!!229762.java!!!	setSymbolizationCode(in value : String) : void
+		this.symbolizationCode= value;
+!!!229890.java!!!	getTint() : String
+		return tint;
+!!!230018.java!!!	setTint(in value : String) : void
+		this.tint= value;

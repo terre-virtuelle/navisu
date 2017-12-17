@@ -1,0 +1,55 @@
+class BuiltUpArea
+!!!201346.java!!!	BuiltUpArea(inout id : Long)
+		this.id=id;
+!!!201602.java!!!	getCategoryOfBuiltuparea() : String
+		return categoryOfBuiltuparea;
+!!!201730.java!!!	setCategoryOfBuiltuparea(in value : String) : void
+		this.categoryOfBuiltuparea= value;
+!!!201858.java!!!	getCondition() : String
+		return condition;
+!!!201986.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!202114.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!202242.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!202370.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!202498.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!202626.java!!!	getHeight() : String
+		return height;
+!!!202754.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!202882.java!!!	getObjectName() : String
+		return objectName;
+!!!203010.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!203138.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!203266.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!203394.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!203522.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!203650.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!203778.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!203906.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!204034.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!204162.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!204290.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!204418.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!204546.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!204674.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!204802.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

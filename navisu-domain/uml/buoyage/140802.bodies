@@ -1,0 +1,47 @@
+class FishingFacility
+!!!326786.java!!!	FishingFacility(inout id : Long)
+		this.id=id;
+!!!327042.java!!!	getCategoryOfFishingFacility() : String
+		return categoryOfFishingFacility;
+!!!327170.java!!!	setCategoryOfFishingFacility(in value : String) : void
+		this.categoryOfFishingFacility= value;
+!!!327298.java!!!	getObjectName() : String
+		return objectName;
+!!!327426.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!327554.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!327682.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!327810.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!327938.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!328066.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!328194.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!328322.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!328450.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!328578.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!328706.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!328834.java!!!	getStatus() : String
+		return status;
+!!!328962.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!329090.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!329218.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!329346.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!329474.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!329602.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!329730.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

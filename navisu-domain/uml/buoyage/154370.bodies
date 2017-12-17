@@ -1,0 +1,31 @@
+class TrafficSeparationZone
+!!!650114.java!!!	TrafficSeparationZone(inout id : Long)
+		this.id=id;
+!!!650370.java!!!	getCategoryOfTrafficSeparationScheme() : String
+		return categoryOfTrafficSeparationScheme;
+!!!650498.java!!!	setCategoryOfTrafficSeparationScheme(in value : String) : void
+		this.categoryOfTrafficSeparationScheme= value;
+!!!650626.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!650754.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!650882.java!!!	getDateStart() : String
+		return dateStart;
+!!!651010.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!651138.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!651266.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!651394.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!651522.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!651650.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!651778.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!651906.java!!!	getStatus() : String
+		return status;
+!!!652034.java!!!	setStatus(in value : String) : void
+		this.status= value;

@@ -1,0 +1,39 @@
+class TrafficSeparationSchemeLanepart
+!!!645250.java!!!	TrafficSeparationSchemeLanepart(inout id : Long)
+		this.id=id;
+!!!645506.java!!!	getCategoryOfTrafficSeparationScheme() : String
+		return categoryOfTrafficSeparationScheme;
+!!!645634.java!!!	setCategoryOfTrafficSeparationScheme(in value : String) : void
+		this.categoryOfTrafficSeparationScheme= value;
+!!!645762.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!645890.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!646018.java!!!	getDateStart() : String
+		return dateStart;
+!!!646146.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!646274.java!!!	getOrientation() : String
+		return orientation;
+!!!646402.java!!!	setOrientation(in value : String) : void
+		this.orientation= value;
+!!!646530.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!646658.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!646786.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!646914.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!647042.java!!!	getRestriction() : String
+		return restriction;
+!!!647170.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!647298.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!647426.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!647554.java!!!	getStatus() : String
+		return status;
+!!!647682.java!!!	setStatus(in value : String) : void
+		this.status= value;

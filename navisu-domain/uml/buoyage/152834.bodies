@@ -1,0 +1,27 @@
+class TidalStreamPanelData
+!!!620674.java!!!	TidalStreamPanelData(inout id : Long)
+		this.id=id;
+!!!620930.java!!!	getObjectName() : String
+		return objectName;
+!!!621058.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!621186.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!621314.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!621442.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!621570.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!621698.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!621826.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!621954.java!!!	getTidalStreamPanelValues() : String
+		return tidalStreamPanelValues;
+!!!622082.java!!!	setTidalStreamPanelValues(in value : String) : void
+		this.tidalStreamPanelValues= value;
+!!!622210.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!622338.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

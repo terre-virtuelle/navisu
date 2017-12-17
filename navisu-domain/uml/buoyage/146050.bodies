@@ -1,0 +1,51 @@
+class PipelineArea
+!!!460674.java!!!	PipelineArea(inout id : Long)
+		this.id=id;
+!!!460930.java!!!	getCategoryOfPipeline() : String
+		return categoryOfPipeline;
+!!!461058.java!!!	setCategoryOfPipeline(in value : String) : void
+		this.categoryOfPipeline= value;
+!!!461186.java!!!	getCondition() : String
+		return condition;
+!!!461314.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!461442.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!461570.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!461698.java!!!	getDateStart() : String
+		return dateStart;
+!!!461826.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!461954.java!!!	getObjectName() : String
+		return objectName;
+!!!462082.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!462210.java!!!	getProduct() : String
+		return product;
+!!!462338.java!!!	setProduct(in value : String) : void
+		this.product= value;
+!!!462466.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!462594.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!462722.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!462850.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!462978.java!!!	getRestriction() : String
+		return restriction;
+!!!463106.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!463234.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!463362.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!463490.java!!!	getStatus() : String
+		return status;
+!!!463618.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!463746.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!463874.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

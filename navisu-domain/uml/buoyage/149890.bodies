@@ -1,0 +1,39 @@
+class SeabedArea
+!!!556418.java!!!	SeabedArea(inout id : Long)
+		this.id=id;
+!!!556674.java!!!	getColour() : String
+		return colour;
+!!!556802.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!556930.java!!!	getNatureOfSurface() : String
+		return natureOfSurface;
+!!!557058.java!!!	setNatureOfSurface(in value : String) : void
+		this.natureOfSurface= value;
+!!!557186.java!!!	getNatureOfSurfaceQualifyingTerms() : String
+		return natureOfSurfaceQualifyingTerms;
+!!!557314.java!!!	setNatureOfSurfaceQualifyingTerms(in value : String) : void
+		this.natureOfSurfaceQualifyingTerms= value;
+!!!557442.java!!!	getObjectName() : String
+		return objectName;
+!!!557570.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!557698.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!557826.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!557954.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!558082.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!558210.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!558338.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!558466.java!!!	getWaterLevelEffect() : String
+		return waterLevelEffect;
+!!!558594.java!!!	setWaterLevelEffect(in value : String) : void
+		this.waterLevelEffect= value;
+!!!558722.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!558850.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

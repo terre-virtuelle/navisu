@@ -1,0 +1,39 @@
+class Railway
+!!!517506.java!!!	Railway(inout id : Long)
+		this.id=id;
+!!!517762.java!!!	getCondition() : String
+		return condition;
+!!!517890.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!518018.java!!!	getHeight() : String
+		return height;
+!!!518146.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!518274.java!!!	getObjectName() : String
+		return objectName;
+!!!518402.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!518530.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!518658.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!518786.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!518914.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!519042.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!519170.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!519298.java!!!	getStatus() : String
+		return status;
+!!!519426.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!519554.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!519682.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!519810.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!519938.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

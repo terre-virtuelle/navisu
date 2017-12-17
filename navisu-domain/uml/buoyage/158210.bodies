@@ -1,0 +1,3 @@
+class Chapter
+!!!707330.java!!!	getChapitres() : SubChapter
+        return sChapitre;

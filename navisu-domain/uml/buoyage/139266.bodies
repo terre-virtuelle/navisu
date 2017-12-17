@@ -1,0 +1,23 @@
+class DepthContour
+!!!291202.java!!!	DepthContour(inout id : Long)
+		this.id=id;
+!!!291458.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!291586.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!291714.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!291842.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!291970.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!292098.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!292226.java!!!	getValueOfDepthContour() : String
+		return valueOfDepthContour;
+!!!292354.java!!!	setValueOfDepthContour(in value : String) : void
+		this.valueOfDepthContour= value;
+!!!292482.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!292610.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;

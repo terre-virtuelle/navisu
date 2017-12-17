@@ -1,0 +1,43 @@
+class SmallCraftFacility
+!!!587650.java!!!	SmallCraftFacility(inout id : Long)
+		this.id=id;
+!!!587906.java!!!	getCategoryOfSmallCraftFacility() : String
+		return categoryOfSmallcraftFacility;
+!!!588034.java!!!	setCategoryOfSmallCraftFacility(in value : String) : void
+		this.categoryOfSmallcraftFacility= value;
+!!!588162.java!!!	getObjectName() : String
+		return objectName;
+!!!588290.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!588418.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!588546.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!588674.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!588802.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!588930.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!589058.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!589186.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!589314.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!589442.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!589570.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!589698.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!589826.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!589954.java!!!	getStatus() : String
+		return status;
+!!!590082.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!590210.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!590338.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

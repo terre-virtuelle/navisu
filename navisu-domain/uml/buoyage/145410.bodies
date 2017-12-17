@@ -1,0 +1,87 @@
+class OffshorePlatform
+!!!439426.java!!!	OffshorePlatform(inout id : Long)
+		this.id=id;
+!!!439682.java!!!	getCategoryOfOffshorePlatform() : String
+		return categoryOfOffshorePlatform;
+!!!439810.java!!!	setCategoryOfOffshorePlatform(in value : String) : void
+		this.categoryOfOffshorePlatform= value;
+!!!439938.java!!!	getColour() : String
+		return colour;
+!!!440066.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!440194.java!!!	getColourPattern() : String
+		return colourPattern;
+!!!440322.java!!!	setColourPattern(in value : String) : void
+		this.colourPattern= value;
+!!!440450.java!!!	getCondition() : String
+		return condition;
+!!!440578.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!440706.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!440834.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!440962.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!441090.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!441218.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!441346.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!441474.java!!!	getDateStart() : String
+		return dateStart;
+!!!441602.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!441730.java!!!	getHeight() : String
+		return height;
+!!!441858.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!441986.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!442114.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!442242.java!!!	getObjectName() : String
+		return objectName;
+!!!442370.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!442498.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!442626.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!442754.java!!!	getProduct() : String
+		return product;
+!!!442882.java!!!	setProduct(in value : String) : void
+		this.product= value;
+!!!443010.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!443138.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!443266.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!443394.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!443522.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!443650.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!443778.java!!!	getStatus() : String
+		return status;
+!!!443906.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!444034.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!444162.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!444290.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!444418.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!444546.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!444674.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!444802.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!444930.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

@@ -1,0 +1,55 @@
+class HarbourFacility
+!!!358274.java!!!	HarbourFacility(inout id : Long)
+		this.id=id;
+!!!358530.java!!!	getCategoryOfHarbourFacility() : String
+		return categoryOfHarbourFacility;
+!!!358658.java!!!	setCategoryOfHarbourFacility(in value : String) : void
+		this.categoryOfHarbourFacility= value;
+!!!358786.java!!!	getCondition() : String
+		return condition;
+!!!358914.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!359042.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!359170.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!359298.java!!!	getDateStart() : String
+		return dateStart;
+!!!359426.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!359554.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!359682.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!359810.java!!!	getObjectName() : String
+		return objectName;
+!!!359938.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!360066.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!360194.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!360322.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!360450.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!360578.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!360706.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!360834.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!360962.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!361090.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!361218.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!361346.java!!!	getStatus() : String
+		return status;
+!!!361474.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!361602.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!361730.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

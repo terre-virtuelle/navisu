@@ -1,0 +1,27 @@
+class LogPond
+!!!413826.java!!!	LogPond(inout id : Long)
+		this.id=id;
+!!!414082.java!!!	getObjectName() : String
+		return objectName;
+!!!414210.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!414338.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!414466.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!414594.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!414722.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!414850.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!414978.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!415106.java!!!	getStatus() : String
+		return status;
+!!!415234.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!415362.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!415490.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

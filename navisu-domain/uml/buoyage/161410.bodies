@@ -1,0 +1,24 @@
+class Numbering
+!!!721794.java!!!	Numbering(in issn : String, in isbn : String, in serie : String, in volume : String)
+        this.issn = issn;
+        this.isbn = isbn;
+        this.serie = serie;
+        this.volume = volume;
+!!!721922.java!!!	getVolume() : String
+        return volume;
+!!!722050.java!!!	setVolume(in volume : String) : void
+        this.volume = volume;
+!!!722178.java!!!	getSerie() : String
+        return serie;
+!!!722306.java!!!	setSerie(in serie : String) : void
+        this.serie = serie;
+!!!722434.java!!!	getIsbn() : String
+        return isbn;
+!!!722562.java!!!	setIsbn(in isbn : String) : void
+        this.isbn = isbn;
+!!!722690.java!!!	getIssn() : String
+        return issn;
+!!!722818.java!!!	setIssn(in issn : String) : void
+        this.issn = issn;
+!!!722946.java!!!	toString() : String
+        return "Numbering{" + "issn=" + issn + ", isbn=" + isbn + ", serie=" + serie + ", volume=" + volume + '}';

@@ -1,0 +1,23 @@
+class SubmarineTransitLane
+!!!601218.java!!!	SubmarineTransitLane(inout id : Long)
+		this.id=id;
+!!!601474.java!!!	getObjectName() : String
+		return objectName;
+!!!601602.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!601730.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!601858.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!601986.java!!!	getRestriction() : String
+		return restriction;
+!!!602114.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!602242.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!602370.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!602498.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!602626.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

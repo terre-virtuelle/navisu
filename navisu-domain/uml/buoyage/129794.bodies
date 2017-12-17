@@ -1,0 +1,55 @@
+class Geo
+!!!144002.java!!!	Geo(in id : long)
+        super(id);
+!!!144130.java!!!	Geo()
+        this.geos = new ArrayList();
+        this.cartos = new ArrayList();
+!!!144258.java!!!	getCartos(in i : int) : Carto
+        return this.cartos.get(i);
+!!!144386.java!!!	cardCartos() : int
+        return this.cartos.size();
+!!!144514.java!!!	getGeos(in i : int) : Geo
+        return this.geos.get(i);
+!!!144642.java!!!	cardGeos() : int
+        return this.geos.size();
+!!!144770.java!!!	getInformation() : String
+        return this.information;
+!!!144898.java!!!	getInformationInNationalLanguage() : String
+        return this.informationInNationalLanguage;
+!!!145026.java!!!	getTextualDescriptionInNationalLanguage() : String
+        return this.textualDescriptionInNationalLanguage;
+!!!145154.java!!!	getTextualDescription() : String
+        return this.textualDescription;
+!!!145282.java!!!	getScaleMinimum() : String
+        return this.scaleMinimum;
+!!!145410.java!!!	getSourceDate() : String
+        return this.sourceDate;
+!!!145538.java!!!	getSourceIndication() : String
+        return this.sourceIndication;
+!!!145666.java!!!	setCartos(inout cartos : List<Carto>) : void
+        this.cartos = cartos;
+!!!145794.java!!!	setGeos(inout geos : List<Geo>) : void
+        this.geos = geos;
+!!!145922.java!!!	setInformation(in information : String) : void
+        this.information = information;
+!!!146050.java!!!	setInformationInNationalLanguage(in informationInNationalLanguage : String) : void
+        this.informationInNationalLanguage = informationInNationalLanguage;
+!!!146178.java!!!	setScaleMinimum(in scaleMinimum : String) : void
+        this.scaleMinimum = scaleMinimum;
+!!!146306.java!!!	setSourceDate(in sourceDate : String) : void
+        this.sourceDate = sourceDate;
+!!!146434.java!!!	setSourceIndication(in sourceIndication : String) : void
+        this.sourceIndication = sourceIndication;
+!!!146562.java!!!	setTextualDescription(in textualDescription : String) : void
+        this.textualDescription = textualDescription;
+!!!146690.java!!!	setTextualDescriptionInNationalLanguage(in textualDescriptionInNationalLanguage : String) : void
+        this.textualDescriptionInNationalLanguage = textualDescriptionInNationalLanguage;
+!!!146818.java!!!	toString() : String
+        return super.toString() + "  Geo{" + "cartos=" + cartos + ", geos=" + geos
+                + ", information=" + information
+                + ", informationInNationalLanguage=" + informationInNationalLanguage
+                + ", textualDescriptionInNationalLanguage=" + textualDescriptionInNationalLanguage
+                + ", textualDescription=" + textualDescription
+                + ", scaleMinimum=" + scaleMinimum
+                + ", sourceDate=" + sourceDate
+                + ", sourceIndication=" + sourceIndication + '}' + '\n';

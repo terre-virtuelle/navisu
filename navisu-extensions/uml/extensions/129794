@@ -1,6 +1,6 @@
 format 76
 "model" // navigation::model
-  revision 1
+  revision 2
   modified_by 2 "serge"
   // class settings
   //class diagram settings
@@ -294,6 +294,444 @@ ${members}}
 	
       end
     end
+
+    class 145026 "Target"
+      visibility public 
+      nformals 1
+      formal name "T" type "" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      java_annotation "@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = \"target\", propOrder = {
+    \"navigationData\",
+    \"latitude\",
+    \"longitude\",
+    \"distance\",
+    \"azimuth\",
+    \"id\"
+})
+@XmlRootElement
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author serge
+@param <T>
+@date Dec 8, 2017"
+      classrelation 149890 // <realization>
+	relation 149890 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 149890 // <realization>
+	  b parent class_ref 131074 // NavigationData
+      end
+
+      attribute 153474 "navigationData"
+	private explicit_type "T"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlElements({
+        @XmlElement(name = \"area\", type = Area.class)
+        ,
+        @XmlElement(name = \"avurnavss\", type = NavigationalWarningsRSS.class)
+        ,
+        @XmlElement(name = \"buoyage\", type = Buoyage.class)
+        ,
+        @XmlElement(name = \"bcncar\", type = BeaconCardinal.class)
+        ,
+        @XmlElement(name = \"bcnisd\", type = BeaconIsolatedDanger.class)
+        ,
+        @XmlElement(name = \"bcnlat\", type = BeaconLateral.class)
+        ,
+        @XmlElement(name = \"bcnsaw\", type = BeaconSafeWater.class)
+        ,
+        @XmlElement(name = \"bcnspp\", type = BeaconSpecialPurpose.class)
+        ,
+        @XmlElement(name = \"buoycar\", type = BuoyCardinal.class)
+        ,
+        @XmlElement(name = \"buoyinb\", type = BuoyInstallation.class)
+        ,
+        @XmlElement(name = \"buoyisd\", type = BuoyIsolatedDanger.class)
+        ,
+        @XmlElement(name = \"buoylat\", type = BuoyLateral.class)
+        ,
+        @XmlElement(name = \"buoysaw\", type = BuoySafeWater.class)
+        ,
+        @XmlElement(name = \"buoyssp\", type = BuoySpecialPurpose.class)
+    })
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 153602 "latitude"
+	private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 153730 "longitude"
+	private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 153858 "id"
+	private explicit_type "long"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 153986 "distance"
+	private explicit_type "double"
+	init_value " -1"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 154114 "azimuth"
+	private explicit_type "double"
+	init_value " 511"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 207106 "Target"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 207234 "Target"
+	public explicit_return_type ""
+	nparams 6
+	  param inout name "navigationData" explicit_type "T"
+	  param in name "latitude" explicit_type "double"
+	  param in name "longitude" explicit_type "double"
+	  param in name "id" explicit_type "long"
+	  param in name "distance" explicit_type "double"
+	  param in name "azimuth" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}, ${t5} ${p5}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 207362 "Target"
+	public explicit_return_type ""
+	nparams 3
+	  param inout name "navigationData" explicit_type "T"
+	  param in name "latitude" explicit_type "double"
+	  param in name "longitude" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 207490 "Target"
+	public explicit_return_type ""
+	nparams 4
+	  param inout name "navigationData" explicit_type "T"
+	  param in name "latitude" explicit_type "double"
+	  param in name "longitude" explicit_type "double"
+	  param in name "distance" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 207618 "getAzimuth"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of azimuth
+
+@return the value of azimuth"
+      end
+
+      operation 207746 "setAzimuth"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "azimuth" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of azimuth
+
+@param azimuth new value of azimuth"
+      end
+
+      operation 207874 "getDistance"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of distance
+
+@return the value of distance"
+      end
+
+      operation 208002 "setDistance"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "distance" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of distance
+
+@param distance new value of distance"
+      end
+
+      operation 208130 "getId"
+	public explicit_return_type "long"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Get the value of id
+
+@return the value of id"
+      end
+
+      operation 208258 "setId"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "id" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of id
+
+@param id new value of id"
+      end
+
+      operation 208386 "getLongitude"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Get the value of longitude
+
+@return the value of longitude"
+      end
+
+      operation 208514 "setLongitude"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "longitude" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of longitude
+
+@param longitude new value of longitude"
+      end
+
+      operation 208642 "getLatitude"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Get the value of latitude
+
+@return the value of latitude"
+      end
+
+      operation 208770 "setLatitude"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "latitude" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of latitude
+
+@param latitude new value of latitude"
+      end
+
+      operation 208898 "getNavigationData"
+	public return_type class_ref 131074 // NavigationData
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of navigationData
+
+@return the value of navigationData"
+      end
+
+      operation 209026 "getTarget"
+	public return_type class_ref 131074 // NavigationData
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of navigationData
+
+@return the value of navigationData"
+      end
+
+      operation 209154 "setNavigationData"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "navigationData" explicit_type "T"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of navigationData
+
+@param navigationData new value of navigationData"
+      end
+
+      operation 209282 "setTarget"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "navigationData" explicit_type "T"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of navigationData
+
+@param navigationData new value of navigationData"
+      end
+
+      operation 209410 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      classrelation 150018 // <unidirectional association>
+	relation 150018 --->
+	  a role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 150018 // <unidirectional association>
+	  b parent class_ref 131074 // NavigationData
+      end
+    end
   end
 
   deploymentview 129410 "model"
@@ -342,6 +780,40 @@ import javax.xml.bind.annotation.XmlType;
 ${definition}"
       associated_classes
 	class_ref 131202 // NavigationDataSet
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 143746 "Target"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconSafeWater;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconSpecialPurpose;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyCardinal;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyInstallation;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyIsolatedDanger;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyLateral;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySafeWater;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialPurpose;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.rss.NavigationalWarningsRSS;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+${definition}"
+      associated_classes
+	class_ref 145026 // Target
       end
       comment "To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates

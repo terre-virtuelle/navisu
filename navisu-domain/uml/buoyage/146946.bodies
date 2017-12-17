@@ -1,0 +1,83 @@
+class PylonBridgeSupport
+!!!486530.java!!!	PylonBridgeSupport(inout id : Long)
+		this.id=id;
+!!!486786.java!!!	getCategoryOfPylon() : String
+		return categoryOfPylon;
+!!!486914.java!!!	setCategoryOfPylon(in value : String) : void
+		this.categoryOfPylon= value;
+!!!487042.java!!!	getColour() : String
+		return colour;
+!!!487170.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!487298.java!!!	getColourPattern() : String
+		return colourPattern;
+!!!487426.java!!!	setColourPattern(in value : String) : void
+		this.colourPattern= value;
+!!!487554.java!!!	getCondition() : String
+		return condition;
+!!!487682.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!487810.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!487938.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!488066.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!488194.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!488322.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!488450.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!488578.java!!!	getDateStart() : String
+		return dateStart;
+!!!488706.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!488834.java!!!	getHeight() : String
+		return height;
+!!!488962.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!489090.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!489218.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!489346.java!!!	getObjectName() : String
+		return objectName;
+!!!489474.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!489602.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!489730.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!489858.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!489986.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!490114.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!490242.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!490370.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!490498.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!490626.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!490754.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!490882.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!491010.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!491138.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!491266.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!491394.java!!!	getWaterLevelEffect() : String
+		return waterLevelEffect;
+!!!491522.java!!!	setWaterLevelEffect(in value : String) : void
+		this.waterLevelEffect= value;
+!!!491650.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!491778.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

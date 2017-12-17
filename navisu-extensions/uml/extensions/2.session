@@ -1,13 +1,15 @@
 window_sizes 1280 1000 300 900 682 82
 diagrams
-  active  classdiagram_ref 128002 // extensions
+  classdiagram_ref 128002 // extensions
     974 844 100 4 36 0
+  active  classdiagram_ref 134530 // target
+    775 675 100 4 0 0
 end
 show_stereotypes
 selected 
-  package_ref 129794 // model
+  package_ref 129 // extensions
 open
-  
-  package_ref 129666 // navigation
+  classview_ref 129666 // model
+  classview_ref 137474 // target
 end
 end

@@ -1,0 +1,75 @@
+class FenceWall
+!!!316802.java!!!	FenceWall(inout id : Long)
+		this.id=id;
+!!!317058.java!!!	getCategoryOfFenceLine() : String
+		return categoryOfFenceLine;
+!!!317186.java!!!	setCategoryOfFenceLine(in value : String) : void
+		this.categoryOfFenceLine= value;
+!!!317314.java!!!	getColour() : String
+		return colour;
+!!!317442.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!317570.java!!!	getColourPattern() : String
+		return colourPattern;
+!!!317698.java!!!	setColourPattern(in value : String) : void
+		this.colourPattern= value;
+!!!317826.java!!!	getCondition() : String
+		return condition;
+!!!317954.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!318082.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!318210.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!318338.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!318466.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!318594.java!!!	getElevation() : String
+		return elevation;
+!!!318722.java!!!	setElevation(in value : String) : void
+		this.elevation= value;
+!!!318850.java!!!	getHeight() : String
+		return height;
+!!!318978.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!319106.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!319234.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!319362.java!!!	getObjectName() : String
+		return objectName;
+!!!319490.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!319618.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!319746.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!319874.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!320002.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!320130.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!320258.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!320386.java!!!	getStatus() : String
+		return status;
+!!!320514.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!320642.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!320770.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!320898.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!321026.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!321154.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!321282.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!321410.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!321538.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

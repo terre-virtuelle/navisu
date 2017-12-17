@@ -1,0 +1,23 @@
+class SandWaves
+!!!553090.java!!!	SandWaves(inout id : Long)
+		this.id=id;
+!!!553346.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!553474.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!553602.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!553730.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!553858.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!553986.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!554114.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!554242.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!554370.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!554498.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;

@@ -1,0 +1,23 @@
+class CartographicLine
+!!!230146.java!!!	CartographicLine(inout id : Long)
+		this.id=id;
+!!!230402.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!230530.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!230658.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!230786.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!230914.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!231042.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!231170.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!231298.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!231426.java!!!	getSymbolizationCode() : String
+		return symbolizationCode;
+!!!231554.java!!!	setSymbolizationCode(in value : String) : void
+		this.symbolizationCode= value;

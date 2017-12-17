@@ -1,0 +1,27 @@
+class Aggregation
+!!!159746.java!!!	Aggregation(inout id : Long)
+		this.id=id;
+!!!160002.java!!!	getObjectName() : String
+		return objectName;
+!!!160130.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!160258.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!160386.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!160514.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!160642.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!160770.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!160898.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!161026.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!161154.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!161282.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!161410.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

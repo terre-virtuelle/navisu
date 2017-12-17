@@ -1,0 +1,43 @@
+class TidalStreamTimeSeries
+!!!622466.java!!!	TidalStreamTimeSeries(inout id : Long)
+		this.id=id;
+!!!622722.java!!!	getObjectName() : String
+		return objectName;
+!!!622850.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!622978.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!623106.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!623234.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!623362.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!623490.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!623618.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!623746.java!!!	getStatus() : String
+		return status;
+!!!623874.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!624002.java!!!	getTidalStreamTimeSeriesValues() : String
+		return tidalStreamtimeSeriesValues;
+!!!624130.java!!!	setTidalStreamTimeSeriesValues(in value : String) : void
+		this.tidalStreamtimeSeriesValues= value;
+!!!624258.java!!!	getTideTimeIntervalOfValue() : String
+		return tidetimeIntervalOfValue;
+!!!624386.java!!!	setTideTimeIntervalOfValue(in value : String) : void
+		this.tidetimeIntervalOfValue= value;
+!!!624514.java!!!	getTimeEnd() : String
+		return timeEnd;
+!!!624642.java!!!	setTimeEnd(in value : String) : void
+		this.timeEnd= value;
+!!!624770.java!!!	getTimeStart() : String
+		return timeStart;
+!!!624898.java!!!	setTimeStart(in value : String) : void
+		this.timeStart= value;
+!!!625026.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!625154.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

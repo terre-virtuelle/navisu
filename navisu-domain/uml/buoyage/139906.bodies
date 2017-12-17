@@ -1,0 +1,35 @@
+class DumpingGround
+!!!305794.java!!!	DumpingGround(inout id : Long)
+		this.id=id;
+!!!306050.java!!!	getCategoryOfDumpingGround() : String
+		return categoryOfDumpingGround;
+!!!306178.java!!!	setCategoryOfDumpingGround(in value : String) : void
+		this.categoryOfDumpingGround= value;
+!!!306306.java!!!	getObjectName() : String
+		return objectName;
+!!!306434.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!306562.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!306690.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!306818.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!306946.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!307074.java!!!	getRestriction() : String
+		return restriction;
+!!!307202.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!307330.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!307458.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!307586.java!!!	getStatus() : String
+		return status;
+!!!307714.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!307842.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!307970.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

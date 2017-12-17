@@ -1,0 +1,31 @@
+class CautionArea
+!!!236290.java!!!	CautionArea(inout id : Long)
+		this.id=id;
+!!!236546.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!236674.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!236802.java!!!	getDateStart() : String
+		return dateStart;
+!!!236930.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!237058.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!237186.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!237314.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!237442.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!237570.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!237698.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!237826.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!237954.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!238082.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!238210.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;

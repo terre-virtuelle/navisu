@@ -1,0 +1,87 @@
+class SiloTank
+!!!574594.java!!!	SiloTank(inout id : Long)
+		this.id=id;
+!!!574850.java!!!	getBuildingShape() : String
+		return buildingShape;
+!!!574978.java!!!	setBuildingShape(in value : String) : void
+		this.buildingShape= value;
+!!!575106.java!!!	getCategoryOfSilo() : String
+		return categoryOfSilo;
+!!!575234.java!!!	setCategoryOfSilo(in value : String) : void
+		this.categoryOfSilo= value;
+!!!575362.java!!!	getColour() : String
+		return colour;
+!!!575490.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!575618.java!!!	getColourPattern() : String
+		return colourPattern;
+!!!575746.java!!!	setColourPattern(in value : String) : void
+		this.colourPattern= value;
+!!!575874.java!!!	getCondition() : String
+		return condition;
+!!!576002.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!576130.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!576258.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!576386.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!576514.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!576642.java!!!	getElevation() : String
+		return elevation;
+!!!576770.java!!!	setElevation(in value : String) : void
+		this.elevation= value;
+!!!576898.java!!!	getHeight() : String
+		return height;
+!!!577026.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!577154.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!577282.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!577410.java!!!	getObjectName() : String
+		return objectName;
+!!!577538.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!577666.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!577794.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!577922.java!!!	getProduct() : String
+		return product;
+!!!578050.java!!!	setProduct(in value : String) : void
+		this.product= value;
+!!!578178.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!578306.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!578434.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!578562.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!578690.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!578818.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!578946.java!!!	getStatus() : String
+		return status;
+!!!579074.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!579202.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!579330.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!579458.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!579586.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!579714.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!579842.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!579970.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!580098.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

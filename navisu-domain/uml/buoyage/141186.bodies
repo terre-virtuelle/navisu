@@ -1,0 +1,63 @@
+class FogSignal
+!!!338306.java!!!	FogSignal(inout id : Long)
+		this.id=id;
+!!!338562.java!!!	getCategoryOfFogSignal() : String
+		return categoryOfFogSignal;
+!!!338690.java!!!	setCategoryOfFogSignal(in value : String) : void
+		this.categoryOfFogSignal= value;
+!!!338818.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!338946.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!339074.java!!!	getDateStart() : String
+		return dateStart;
+!!!339202.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!339330.java!!!	getObjectName() : String
+		return objectName;
+!!!339458.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!339586.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!339714.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!339842.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!339970.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!340098.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!340226.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!340354.java!!!	getSignalFrequency() : String
+		return signalFrequency;
+!!!340482.java!!!	setSignalFrequency(in value : String) : void
+		this.signalFrequency= value;
+!!!340610.java!!!	getSignalGeneration() : String
+		return signalGeneration;
+!!!340738.java!!!	setSignalGeneration(in value : String) : void
+		this.signalGeneration= value;
+!!!340866.java!!!	getSignalGroup() : String
+		return signalGroup;
+!!!340994.java!!!	setSignalGroup(in value : String) : void
+		this.signalGroup= value;
+!!!341122.java!!!	getSignalPeriod() : String
+		return signalPeriod;
+!!!341250.java!!!	setSignalPeriod(in value : String) : void
+		this.signalPeriod= value;
+!!!341378.java!!!	getSignalSequence() : String
+		return signalsequence;
+!!!341506.java!!!	setSignalSequence(in value : String) : void
+		this.signalsequence= value;
+!!!341634.java!!!	getStatus() : String
+		return status;
+!!!341762.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!341890.java!!!	getValueOfMaximumRange() : String
+		return valueOfMaximumRange;
+!!!342018.java!!!	setValueOfMaximumRange(in value : String) : void
+		this.valueOfMaximumRange= value;
+!!!342146.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!342274.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

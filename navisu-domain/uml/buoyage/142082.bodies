@@ -1,0 +1,11 @@
+class HorizontalDatumOfData
+!!!361858.java!!!	HorizontalDatumOfData(inout id : Long)
+		this.id=id;
+!!!362114.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!362242.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!362370.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!362498.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;

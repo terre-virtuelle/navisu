@@ -1,0 +1,35 @@
+class MagneticVariation
+!!!415618.java!!!	MagneticVariation(inout id : Long)
+		this.id=id;
+!!!415874.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!416002.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!416130.java!!!	getDateStart() : String
+		return dateStart;
+!!!416258.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!416386.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!416514.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!416642.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!416770.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!416898.java!!!	getReferenceYearForMagneticVariation() : String
+		return referenceYearForMagneticVariation;
+!!!417026.java!!!	setReferenceYearForMagneticVariation(in value : String) : void
+		this.referenceYearForMagneticVariation= value;
+!!!417154.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!417282.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!417410.java!!!	getValueOfAnnualChangeInMagneticVariation() : String
+		return valueOfAnnualChangeInMagneticvariation;
+!!!417538.java!!!	setValueOfAnnualChangeInMagneticVariation(in value : String) : void
+		this.valueOfAnnualChangeInMagneticvariation= value;
+!!!417666.java!!!	getValueOfMagneticVariation() : String
+		return valueOfMagneticvariation;
+!!!417794.java!!!	setValueOfMagneticVariation(in value : String) : void
+		this.valueOfMagneticvariation= value;

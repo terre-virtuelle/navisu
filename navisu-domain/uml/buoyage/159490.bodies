@@ -1,0 +1,19 @@
+class Author
+!!!704130.java!!!	Author(inout identity : Identity, inout address : Address, inout contact : Contact)
+        this.identity = identity;
+        this.address = address;
+        this.contact = contact;
+!!!704258.java!!!	getContact() : Contact
+        return contact;
+!!!704386.java!!!	setContact(inout contact : Contact) : void
+        this.contact = contact;
+!!!704514.java!!!	getAddress() : Address
+        return address;
+!!!704642.java!!!	setAddress(inout address : Address) : void
+        this.address = address;
+!!!704770.java!!!	getIdentity() : Identity
+        return identity;
+!!!704898.java!!!	setIdentity(inout identity : Identity) : void
+        this.identity = identity;
+!!!705026.java!!!	toString() : String
+        return "Author{" + "identity=" + identity + ", address=" + address + ", contact=" + contact + '}';

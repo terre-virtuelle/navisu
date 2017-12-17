@@ -1,0 +1,90 @@
+class TargetCmd
+!!!206594.java!!!	getInstance(inout s57ChartComponentServices : S57ChartComponentServices, inout geodesyServices : GeodesyServices, inout layersManagerServices : LayersManagerServices) : TargetCmd
+        if (INSTANCE == null) {
+            INSTANCE = new TargetCmd(s57ChartComponentServices, geodesyServices, layersManagerServices);
+        }
+        return INSTANCE;
+!!!206722.java!!!	TargetCmd(inout s57ChartComponentServices : S57ChartComponentServices, inout geodesyServices : GeodesyServices, inout layersManagerServices : LayersManagerServices)
+        this.s57ChartComponentServices = s57ChartComponentServices;
+        this.geodesyServices = geodesyServices;
+        this.layersManagerServices = layersManagerServices;
+        layer = layersManagerServices.getLayer(GROUP, NAME);
+!!!206850.java!!!	doIt(inout arg : NavigationData) : NavigationDataSet
+        // Set of beacon, buoys, ... on the chart
+        s57Controllers = s57ChartComponentServices.getS57Controllers();
+        navigationDataSet = new NavigationDataSet();
+
+        Target target = (Target) arg;
+        double lat = target.getLatitude();
+        double lon = target.getLongitude();
+        double distance = target.getDistance();
+        double azimuth = target.getAzimuth();
+
+        //First filter the type of NavigatiobData
+        Class type = target.getNavigationData().getClass();
+        Set<S57Controller> validS57 = new HashSet<>();
+        List<Class> types;
+        for (S57Controller s : s57Controllers) {
+            types = getSuperClasses(s.getNavigationData());
+            if (types.contains(type)) {
+                validS57.add(s);
+            }
+        }
+        //Calculate distance from locate point
+        double dist;
+        double azi;
+        Target tgt;
+        int id = 0;
+        List<Target> targets = new ArrayList<>();
+        for (S57Controller s : validS57) {
+            dist = geodesyServices.getDistanceM(s.getLat(), s.getLon(), lat, lon);
+            azi = geodesyServices.getAzimuth(lat, lon, s.getLat(), s.getLon());
+            tgt = new Target(s.getNavigationData(), s.getNavigationData().getLatitude(),
+                    s.getNavigationData().getLongitude(), id, dist, azi);
+            targets.add(tgt);
+            id++;
+        }
+        targets.sort(Comparator.comparingDouble(Target::getDistance));
+        navigationDataSet.add(targets.get(0));
+
+        PointPlacemark pp = new PointPlacemark(Position.fromDegrees(lat, lon, 10));
+        pp.setValue(AVKey.DISPLAY_NAME, "Lat : " + Double.toString(lat) + "\n "
+                + "Lon : " + Double.toString(lon));
+        layer.addRenderable(pp);
+
+        ShapeAttributes attrs = new BasicShapeAttributes();
+        attrs.setOutlineMaterial(Material.RED);
+        attrs.setOutlineWidth(2d);
+
+        // Create a path, set some of its properties and set its attributes.
+        ArrayList<Position> pathPositions = new ArrayList<>();
+        pathPositions.add(Position.fromDegrees(lat, lon, 10));
+        pathPositions.add(Position.fromDegrees(targets.get(0).getNavigationData().getLatitude(),
+                targets.get(0).getNavigationData().getLongitude(), 10));
+        Path path =  new DirectedPath(pathPositions);
+        path.setAttributes(attrs);
+        path.setVisible(true);
+        path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+        path.setPathType(AVKey.GREAT_CIRCLE);
+        path.setValue(AVKey.DISPLAY_NAME, 
+                "distance = " 
+                + String.format("%.0f",targets.get(0).getDistance()) + " m \n "
+                + "azimuth : " 
+                + String.format("%.0f",targets.get(0).getAzimuth()) + "°");
+        layer.addRenderable(path);
+
+        return navigationDataSet;
+!!!206978.java!!!	getSuperClasses(inout o : Object) : List<Class>
+        List<Class> classList = new ArrayList<>();
+        Class classe = o.getClass();
+        classList.add(classe);
+        Class superclass = classe.getSuperclass();
+        classList.add(superclass);
+        while (superclass != null) {
+            classe = superclass;
+            superclass = classe.getSuperclass();
+            if (superclass != null) {
+                classList.add(superclass);
+            }
+        }
+        return classList;

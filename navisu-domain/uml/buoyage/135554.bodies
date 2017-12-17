@@ -1,0 +1,43 @@
+class CableArea
+!!!207874.java!!!	CableArea(inout id : Long)
+		this.id=id;
+!!!208130.java!!!	getCategoryOfCable() : String
+		return categoryOfcable;
+!!!208258.java!!!	setCategoryOfCable(in value : String) : void
+		this.categoryOfcable= value;
+!!!208386.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!208514.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!208642.java!!!	getDateStart() : String
+		return dateStart;
+!!!208770.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!208898.java!!!	getObjectName() : String
+		return objectName;
+!!!209026.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!209154.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!209282.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!209410.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!209538.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!209666.java!!!	getRestriction() : String
+		return restriction;
+!!!209794.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!209922.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!210050.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!210178.java!!!	getStatus() : String
+		return status;
+!!!210306.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!210434.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!210562.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

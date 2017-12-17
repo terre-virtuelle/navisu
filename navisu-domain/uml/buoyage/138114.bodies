@@ -1,0 +1,15 @@
+class Coverage
+!!!263554.java!!!	Coverage(inout id : Long)
+		this.id=id;
+!!!263810.java!!!	getCategoryOfCoverage() : String
+		return categoryOfcoverage;
+!!!263938.java!!!	setCategoryOfCoverage(in value : String) : void
+		this.categoryOfcoverage= value;
+!!!264066.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!264194.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!264322.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!264450.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;

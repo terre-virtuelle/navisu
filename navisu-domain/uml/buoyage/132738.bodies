@@ -1,0 +1,51 @@
+class AnchorageArea
+!!!164354.java!!!	AnchorageArea(inout id : Long)
+		this.id=id;
+!!!164610.java!!!	getCategoryOfAnchorage() : String
+		return categoryOfAnchorage;
+!!!164738.java!!!	setCategoryOfAnchorage(in value : String) : void
+		this.categoryOfAnchorage= value;
+!!!164866.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!164994.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!165122.java!!!	getDateStart() : String
+		return dateStart;
+!!!165250.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!165378.java!!!	getObjectName() : String
+		return objectName;
+!!!165506.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!165634.java!!!	getPeriodicDateEnd() : String
+		return periodicDateEnd;
+!!!165762.java!!!	setPeriodicDateEnd(in value : String) : void
+		this.periodicDateEnd= value;
+!!!165890.java!!!	getPeriodicDateStart() : String
+		return periodicDateStart;
+!!!166018.java!!!	setPeriodicDateStart(in value : String) : void
+		this.periodicDateStart= value;
+!!!166146.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!166274.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!166402.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!166530.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!166658.java!!!	getRestriction() : String
+		return restriction;
+!!!166786.java!!!	setRestriction(in value : String) : void
+		this.restriction= value;
+!!!166914.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!167042.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!167170.java!!!	getStatus() : String
+		return status;
+!!!167298.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!167426.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!167554.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

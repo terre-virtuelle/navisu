@@ -1,0 +1,33 @@
+class Face
+!!!143106.java!!!	cardSpatialRecordById() : int
+        return this.spatialRecordById.size();
+!!!143234.java!!!	decodVRPT(inout fieldValue : byte) : void
+        for (int i = 0; i < fieldValue.length; i += 8) {
+            long id0;
+            id0 = fieldValue[i] & 0xFF;
+            id0 = id0 * 256 + (fieldValue[i + 4] & 0xFF);
+            id0 = id0 * 256 + (fieldValue[i + 3] & 0xFF);
+            id0 = id0 * 256 + (fieldValue[i + 2] & 0xFF);
+            id0 = id0 * 256 + (fieldValue[i + 1] & 0xFF);
+
+            spatialRecordById.put(id0, new VectorUsage(fieldValue[i + 5], fieldValue[i + 6], fieldValue[i + 7], fieldValue[i + 8], 0));
+        }
+        //System.out.println("Nombre de segments: " + this.cardSpatialRecordById());
+
+!!!143362.java!!!	toString() : String
+        return "  Face{" + "spatialRecordById=" + spatialRecordById + ", spatialRecord=" + spatialRecord + '}';
+!!!143490.java!!!	getSpatialRecord() : Spatial
+        return spatialRecord;
+!!!143618.java!!!	setSpatialRecord(inout spatialRecord : HashMap<Spatial, VectorUsage>) : void
+        this.spatialRecord = spatialRecord;
+!!!143746.java!!!	linkObjects() : void
+        if (this.cardSpatialRecordById() != 0) {
+            HashSet<Long> spatials = new HashSet<>(spatialRecordById.keySet());
+            Iterator<Long> it = spatials.iterator();
+            while (it.hasNext()) {
+                Long id0 = it.next();
+                spatialRecord.put(S57Model.getSpatialObject(id0), this.spatialRecordById.get(id0));
+            }
+        }
+!!!143874.java!!!	Face(in rcid : long)
+        this.setId(rcid);

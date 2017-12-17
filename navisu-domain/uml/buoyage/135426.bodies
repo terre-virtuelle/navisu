@@ -1,0 +1,7 @@
+class BuoySpecialPurpose
+!!!207362.java!!!	BuoySpecialPurpose(inout id : Long)
+        this.id = id;
+!!!207618.java!!!	getCategoryOfSpecialPurposeMark() : String
+        return categoryOfMark;
+!!!207746.java!!!	setCategoryOfSpecialPurposeMark(in value : String) : void
+        categoryOfMark = value;

@@ -1,0 +1,42 @@
+class DataSetGeographicReference
+!!!138498.java!!!	getBounds() : String
+        return this.bounds;
+!!!138626.java!!!	setBounds(in bounds : String) : void
+        this.bounds = bounds;
+!!!138754.java!!!	getComf() : int
+        return this.comf;
+!!!138882.java!!!	getSomf() : int
+        return this.somf;
+!!!139010.java!!!	getCoun() : String
+        return this.coun;
+!!!139138.java!!!	decodDSPM(inout fieldValue : byte) : DataSetGeographicReference
+        try {
+            //COMF: Octets de 16 a 19
+            comf = (fieldValue[19] & 0xFF);
+            comf = comf * 256 + (fieldValue[18] & 0xFF);
+            comf = comf * 256 + (fieldValue[17] & 0xFF);
+            comf = comf * 256 + (fieldValue[16] & 0xFF);
+
+            //SOMF: Octets de 20 a 23
+            somf = (fieldValue[23] & 0xFF);
+            somf = somf * 256 + (fieldValue[22] & 0xFF);
+            somf = somf * 256 + (fieldValue[21] & 0xFF);
+            somf = somf * 256 + (fieldValue[20] & 0xFF);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return this;
+!!!139266.java!!!	DataSetGeographicReference()
+        dataSet = true;
+!!!139394.java!!!	getRatio() : double
+        return ratio;
+!!!139522.java!!!	setRatio(in ratio : double) : void
+        this.ratio = ratio;
+!!!139650.java!!!	setComf(in comf : int) : void
+        this.comf = comf;
+!!!139778.java!!!	setCoun(in coun : String) : void
+        this.coun = coun;
+!!!139906.java!!!	setSomf(in somf : int) : void
+        this.somf = somf;
+!!!140034.java!!!	toString() : String
+        return "DataSetGeographicReference{" + "comf=" + comf + ", somf=" + somf + ", coun=" + coun + ", ratio=" + ratio + ", bounds=" + bounds + '}';

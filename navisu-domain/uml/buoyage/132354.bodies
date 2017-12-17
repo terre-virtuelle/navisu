@@ -1,0 +1,35 @@
+class AdministrationArea
+!!!157442.java!!!	AdministrationArea(inout id : Long)
+		this.id=id;
+!!!157698.java!!!	getJurisdiction() : String
+		return jurisdiction;
+!!!157826.java!!!	setJurisdiction(in value : String) : void
+		this.jurisdiction= value;
+!!!157954.java!!!	getNationality() : String
+		return nationality;
+!!!158082.java!!!	setNationality(in value : String) : void
+		this.nationality= value;
+!!!158210.java!!!	getObjectName() : String
+		return objectName;
+!!!158338.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!158466.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!158594.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!158722.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!158850.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!158978.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!159106.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!159234.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!159362.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!159490.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!159618.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

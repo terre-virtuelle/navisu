@@ -1,0 +1,99 @@
+class ShorelineConstruction
+!!!561538.java!!!	ShorelineConstruction(inout id : Long)
+		this.id=id;
+!!!561794.java!!!	getCategoryOfShorelineConstruction() : String
+		return categoryOfShorelineconstruction;
+!!!561922.java!!!	setCategoryOfShorelineConstruction(in value : String) : void
+		this.categoryOfShorelineconstruction= value;
+!!!562050.java!!!	getColour() : String
+		return colour;
+!!!562178.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!562306.java!!!	getColourPattern() : String
+		return colourPattern;
+!!!562434.java!!!	setColourPattern(in value : String) : void
+		this.colourPattern= value;
+!!!562562.java!!!	getCondition() : String
+		return condition;
+!!!562690.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!562818.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!562946.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!563074.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!563202.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!563330.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!563458.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!563586.java!!!	getDateStart() : String
+		return dateStart;
+!!!563714.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!563842.java!!!	getHeight() : String
+		return height;
+!!!563970.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!564098.java!!!	getHorizontalAccuracy() : String
+		return horizontalAccuracy;
+!!!564226.java!!!	setHorizontalAccuracy(in value : String) : void
+		this.horizontalAccuracy= value;
+!!!564354.java!!!	getHorizontalClearance() : String
+		return horizontalClearance;
+!!!564482.java!!!	setHorizontalClearance(in value : String) : void
+		this.horizontalClearance= value;
+!!!564610.java!!!	getHorizontalLength() : String
+		return horizontalLength;
+!!!564738.java!!!	setHorizontalLength(in value : String) : void
+		this.horizontalLength= value;
+!!!564866.java!!!	getHorizontalWidth() : String
+		return horizontalWidth;
+!!!564994.java!!!	setHorizontalWidth(in value : String) : void
+		this.horizontalWidth= value;
+!!!565122.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!565250.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!565378.java!!!	getObjectName() : String
+		return objectName;
+!!!565506.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!565634.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!565762.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!565890.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!566018.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!566146.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!566274.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!566402.java!!!	getStatus() : String
+		return status;
+!!!566530.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!566658.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!566786.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!566914.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!567042.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!567170.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!567298.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!567426.java!!!	getWaterLevelEffect() : String
+		return waterLevelEffect;
+!!!567554.java!!!	setWaterLevelEffect(in value : String) : void
+		this.waterLevelEffect= value;
+!!!567682.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!567810.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

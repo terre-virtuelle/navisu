@@ -1,0 +1,23 @@
+class RiverBank
+!!!545410.java!!!	RiverBank(inout id : Long)
+		this.id=id;
+!!!545666.java!!!	getObjectName() : String
+		return objectName;
+!!!545794.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!545922.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!546050.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!546178.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!546306.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!546434.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!546562.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!546690.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!546818.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

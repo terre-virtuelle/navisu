@@ -1,0 +1,14 @@
+class Text
+!!!734466.java!!!	getTextParts() : TextPart
+        return textParts;
+!!!734594.java!!!	toString() : String
+        return "Texte{" + "textParts=" + textParts + '}';
+!!!734722.java!!!	contains(inout str : CharSequence) : boolean
+        textParts.stream().filter((tp) -> (tp.contains(str) == true)).forEach((_item) -> {
+            contains = true;
+        });
+        return contains;
+!!!734850.java!!!	shorten() : String
+        String tmp = new String();
+        tmp = textParts.stream().map((tp) -> tp.shorten()).reduce(tmp, String::concat);
+        return tmp;

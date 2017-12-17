@@ -1,0 +1,35 @@
+class Lake
+!!!377474.java!!!	Lake(inout id : Long)
+		this.id=id;
+!!!377730.java!!!	getElevation() : String
+		return elevation;
+!!!377858.java!!!	setElevation(in value : String) : void
+		this.elevation= value;
+!!!377986.java!!!	getObjectName() : String
+		return objectName;
+!!!378114.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!378242.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!378370.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!378498.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!378626.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!378754.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!378882.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!379010.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!379138.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!379266.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!379394.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!379522.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!379650.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

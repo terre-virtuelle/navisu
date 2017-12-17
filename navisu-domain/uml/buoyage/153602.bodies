@@ -1,0 +1,55 @@
+class Topmark
+!!!635266.java!!!	Topmark(inout id : Long)
+        this.id = id;
+!!!635522.java!!!	getColour() : String
+        return colour;
+!!!635650.java!!!	setColour(in value : String) : void
+        this.colour = value;
+!!!635778.java!!!	getColourPattern() : String
+        return colourPattern;
+!!!635906.java!!!	setColourPattern(in value : String) : void
+        this.colourPattern = value;
+!!!636034.java!!!	getHeight() : String
+        return height;
+!!!636162.java!!!	setHeight(in value : String) : void
+        this.height = value;
+!!!636290.java!!!	getMarksNavigationalSystemof() : String
+        return marksNavigationalSystemof;
+!!!636418.java!!!	setMarksNavigationalSystemof(in value : String) : void
+        this.marksNavigationalSystemof = value;
+!!!636546.java!!!	getPictorialRepresentation() : String
+        return pictorialRepresentation;
+!!!636674.java!!!	setPictorialRepresentation(in value : String) : void
+        this.pictorialRepresentation = value;
+!!!636802.java!!!	getRecordIngdate() : String
+        return recordIngdate;
+!!!636930.java!!!	setRecordIngdate(in value : String) : void
+        this.recordIngdate = value;
+!!!637058.java!!!	getRecordingIndication() : String
+        return recordingIndication;
+!!!637186.java!!!	setRecordingIndication(in value : String) : void
+        this.recordingIndication = value;
+!!!637314.java!!!	getScaleMaximum() : String
+        return scaleMaximum;
+!!!637442.java!!!	setScaleMaximum(in value : String) : void
+        this.scaleMaximum = value;
+!!!637570.java!!!	getStatus() : String
+        return status;
+!!!637698.java!!!	setStatus(in value : String) : void
+        this.status = value;
+!!!637826.java!!!	getTopMark_daymarkshape() : String
+        return topMark_daymarkshape;
+!!!637954.java!!!	setTopMark_daymarkshape(in value : String) : void
+        this.topMark_daymarkshape = value;
+!!!638082.java!!!	getVerticalAccuracy() : String
+        return verticalAccuracy;
+!!!638210.java!!!	setVerticalAccuracy(in value : String) : void
+        this.verticalAccuracy = value;
+!!!638338.java!!!	getVerticaldatum() : String
+        return verticaldatum;
+!!!638466.java!!!	setVerticaldatum(in value : String) : void
+        this.verticaldatum = value;
+!!!638594.java!!!	getVerticalLength() : String
+        return verticalLength;
+!!!638722.java!!!	setVerticalLength(in value : String) : void
+        this.verticalLength = value;

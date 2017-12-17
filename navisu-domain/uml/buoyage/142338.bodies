@@ -1,0 +1,71 @@
+class Hulk
+!!!363906.java!!!	Hulk(inout id : Long)
+		this.id=id;
+!!!364162.java!!!	getCategoryOfHulk() : String
+		return categoryOfHulk;
+!!!364290.java!!!	setCategoryOfHulk(in value : String) : void
+		this.categoryOfHulk= value;
+!!!364418.java!!!	getColour() : String
+		return colour;
+!!!364546.java!!!	setColour(in value : String) : void
+		this.colour= value;
+!!!364674.java!!!	getColourPattern() : String
+		return colourPattern;
+!!!364802.java!!!	setColourPattern(in value : String) : void
+		this.colourPattern= value;
+!!!364930.java!!!	getCondition() : String
+		return condition;
+!!!365058.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!365186.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!365314.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!365442.java!!!	getConspicuousVisually() : String
+		return conspicuousVisually;
+!!!365570.java!!!	setConspicuousVisually(in value : String) : void
+		this.conspicuousVisually= value;
+!!!365698.java!!!	getHorizontalAccuracy() : String
+		return horizontalAccuracy;
+!!!365826.java!!!	setHorizontalAccuracy(in value : String) : void
+		this.horizontalAccuracy= value;
+!!!365954.java!!!	getHorizontalLength() : String
+		return horizontalLength;
+!!!366082.java!!!	setHorizontalLength(in value : String) : void
+		this.horizontalLength= value;
+!!!366210.java!!!	getHorizontalWidth() : String
+		return horizontalWidth;
+!!!366338.java!!!	setHorizontalWidth(in value : String) : void
+		this.horizontalWidth= value;
+!!!366466.java!!!	getObjectName() : String
+		return objectName;
+!!!366594.java!!!	setObjectName(in value : String) : void
+		this.objectName= value;
+!!!366722.java!!!	getPictorialRepresentation() : String
+		return pictorialRepresentation;
+!!!366850.java!!!	setPictorialRepresentation(in value : String) : void
+		this.pictorialRepresentation= value;
+!!!366978.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!367106.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!367234.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!367362.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!367490.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!367618.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!367746.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!367874.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!368002.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!368130.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
+!!!368258.java!!!	getObjectNameInNationalLanguage() : String
+		return objectNameInNationalLanguage;
+!!!368386.java!!!	setObjectNameInNationalLanguage(in value : String) : void
+		this.objectNameInNationalLanguage= value;

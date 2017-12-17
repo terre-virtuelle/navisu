@@ -1,0 +1,11 @@
+class Contact
+!!!707458.java!!!	getSite() : String
+        return site;
+!!!707586.java!!!	setSite(in site : String) : void
+        this.site = site;
+!!!707714.java!!!	getEmail() : String
+        return email;
+!!!707842.java!!!	setEmail(in email : String) : void
+        this.email = email;
+!!!707970.java!!!	toString() : String
+        return "Contact{" + "email=" + email + ", site=" + site + '}';

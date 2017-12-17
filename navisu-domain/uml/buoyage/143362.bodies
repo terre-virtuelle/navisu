@@ -1,0 +1,11 @@
+class Landmark
+!!!385922.java!!!	Landmark(inout id : Long)
+        this.id = id;
+!!!386178.java!!!	getCategoryOfLandMark() : String
+        return categoryOfMark;
+!!!386306.java!!!	setCategoryOfLandMark(in value : String) : void
+        this.categoryOfMark = value;
+!!!386434.java!!!	getFunction() : String
+        return function;
+!!!386562.java!!!	setFunction(in value : String) : void
+        this.function = value;

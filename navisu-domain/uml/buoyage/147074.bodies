@@ -1,0 +1,47 @@
+class QualityOfData
+!!!491906.java!!!	QualityOfData(inout id : Long)
+		this.id=id;
+!!!492162.java!!!	getCategoryOfQualityOfData() : String
+		return categoryOfQualityOfData;
+!!!492290.java!!!	setCategoryOfQualityOfData(in value : String) : void
+		this.categoryOfQualityOfData= value;
+!!!492418.java!!!	getCategoryOfZoneOfConfidenceInData() : String
+		return categoryOfZoneOfconfidenceInData;
+!!!492546.java!!!	setCategoryOfZoneOfConfidenceInData(in value : String) : void
+		this.categoryOfZoneOfconfidenceInData= value;
+!!!492674.java!!!	getDepthRangeValue1() : String
+		return depthRangeValue1;
+!!!492802.java!!!	setDepthRangeValue1(in value : String) : void
+		this.depthRangeValue1= value;
+!!!492930.java!!!	getDepthRangeValue2() : String
+		return depthRangeValue2;
+!!!493058.java!!!	setDepthRangeValue2(in value : String) : void
+		this.depthRangeValue2= value;
+!!!493186.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!493314.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!493442.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!493570.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!493698.java!!!	getSoundingAccuracy() : String
+		return soundingAccuracy;
+!!!493826.java!!!	setSoundingAccuracy(in value : String) : void
+		this.soundingAccuracy= value;
+!!!493954.java!!!	getSurveyDateEnd() : String
+		return surveyDateEnd;
+!!!494082.java!!!	setSurveyDateEnd(in value : String) : void
+		this.surveyDateEnd= value;
+!!!494210.java!!!	getSurveyDateStart() : String
+		return surveyDatestart;
+!!!494338.java!!!	setSurveyDateStart(in value : String) : void
+		this.surveyDatestart= value;
+!!!494466.java!!!	getTechniqueOfSoundingMeasurement() : String
+		return techniqueOfSoundingMeasurement;
+!!!494594.java!!!	setTechniqueOfSoundingMeasurement(in value : String) : void
+		this.techniqueOfSoundingMeasurement= value;
+!!!494722.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!494850.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;

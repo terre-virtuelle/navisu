@@ -1,0 +1,44 @@
+class NavigationViewSet
+!!!742914.java!!!	NavigationViewSet()
+        navigationViewQueue = new ConcurrentLinkedQueue<>();
+!!!743042.java!!!	add(inout data : NavigationView) : void
+        navigationViewQueue.add(data);
+!!!743170.java!!!	addAll(inout data : Collection<? extends NavigationView>) : void
+        navigationViewQueue.addAll(data);
+!!!743298.java!!!	poll() : NavigationView
+        return navigationViewQueue.poll();
+!!!743426.java!!!	isEmpty() : boolean
+        return navigationViewQueue.isEmpty();
+!!!743554.java!!!	setNavigationViewQueue(inout navigationViewQueue : ConcurrentLinkedQueue<NavigationView>) : void
+        this.navigationViewQueue = navigationViewQueue;
+!!!743682.java!!!	getNNavigationViewList() : NavigationView
+        return new ArrayList(navigationViewQueue);
+!!!743810.java!!!	getNavigationViewQueue() : NavigationView
+        return navigationViewQueue;
+!!!743938.java!!!	size() : int
+        return navigationViewQueue.size();
+!!!744066.java!!!	clear() : void
+        navigationViewQueue.clear();
+!!!744194.java!!!	get(inout t : Class<T>) : List<T>
+        List<T> tmp = new ArrayList<>();
+        navigationViewQueue.stream().forEach((data) -> {
+            if (data.getClass() == t) {
+                tmp.add((T) data);
+            }
+        });
+        return tmp;
+!!!744322.java!!!	display() : void
+
+        navigationViewQueue.stream().forEach((data) -> {
+            if (data != null) {
+                System.out.println(data);
+            }
+        });
+!!!744450.java!!!	toString() : String
+        return "NavigationViewSet{" + "navigationViewQueue=" + navigationViewQueue + '}';
+!!!744578.java!!!	print() : void
+        navigationViewQueue.stream().forEach((data) -> {
+            if (data != null) {
+                System.out.println(data.getClass().getName());
+            }
+        });

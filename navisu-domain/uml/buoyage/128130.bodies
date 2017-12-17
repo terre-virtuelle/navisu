@@ -1,0 +1,25 @@
+class Arc3Point
+!!!131458.java!!!	getStpt() : Point
+        return this.stpt;
+!!!131586.java!!!	cardStpt() : int
+        if (this.stpt == null) {
+            return 0;
+        } else {
+            return 1;
+        }
+!!!131714.java!!!	getCtpt() : Point
+        return this.ctpt;
+!!!131842.java!!!	cardCtpt() : int
+        if (this.ctpt == null) {
+            return 0;
+        } else {
+            return 1;
+        }
+!!!131970.java!!!	getEnpt() : Point
+        return this.enpt;
+!!!132098.java!!!	cardEnpt() : int
+        if (this.enpt == null) {
+            return 0;
+        } else {
+            return 1;
+        }

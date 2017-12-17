@@ -1,0 +1,31 @@
+class RadarReflector
+!!!499586.java!!!	RadarReflector(inout id : Long)
+		this.id=id;
+!!!499842.java!!!	getHeight() : String
+		return height;
+!!!499970.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!500098.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!500226.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!500354.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!500482.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!500610.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!500738.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!500866.java!!!	getStatus() : String
+		return status;
+!!!500994.java!!!	setStatus(in value : String) : void
+		this.status= value;
+!!!501122.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!501250.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!501378.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!501506.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;

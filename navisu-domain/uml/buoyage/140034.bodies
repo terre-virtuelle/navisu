@@ -1,0 +1,51 @@
+class Dyke
+!!!308098.java!!!	Dyke(inout id : Long)
+		this.id=id;
+!!!308354.java!!!	getCondition() : String
+		return condition;
+!!!308482.java!!!	setCondition(in value : String) : void
+		this.condition= value;
+!!!308610.java!!!	getConspicuousRadar() : String
+		return conspicuousRadar;
+!!!308738.java!!!	setConspicuousRadar(in value : String) : void
+		this.conspicuousRadar= value;
+!!!308866.java!!!	getDateEnd() : String
+		return dateEnd;
+!!!308994.java!!!	setDateEnd(in value : String) : void
+		this.dateEnd= value;
+!!!309122.java!!!	getDateStart() : String
+		return dateStart;
+!!!309250.java!!!	setDateStart(in value : String) : void
+		this.dateStart= value;
+!!!309378.java!!!	getHeight() : String
+		return height;
+!!!309506.java!!!	setHeight(in value : String) : void
+		this.height= value;
+!!!309634.java!!!	getNatureOfConstruction() : String
+		return natureOfConstruction;
+!!!309762.java!!!	setNatureOfConstruction(in value : String) : void
+		this.natureOfConstruction= value;
+!!!309890.java!!!	getRecordIngdate() : String
+		return recordIngdate;
+!!!310018.java!!!	setRecordIngdate(in value : String) : void
+		this.recordIngdate= value;
+!!!310146.java!!!	getRecordingIndication() : String
+		return recordingIndication;
+!!!310274.java!!!	setRecordingIndication(in value : String) : void
+		this.recordingIndication= value;
+!!!310402.java!!!	getScaleMaximum() : String
+		return scaleMaximum;
+!!!310530.java!!!	setScaleMaximum(in value : String) : void
+		this.scaleMaximum= value;
+!!!310658.java!!!	getVerticalAccuracy() : String
+		return verticalAccuracy;
+!!!310786.java!!!	setVerticalAccuracy(in value : String) : void
+		this.verticalAccuracy= value;
+!!!310914.java!!!	getVerticaldatum() : String
+		return verticaldatum;
+!!!311042.java!!!	setVerticaldatum(in value : String) : void
+		this.verticaldatum= value;
+!!!311170.java!!!	getVerticalLength() : String
+		return verticalLength;
+!!!311298.java!!!	setVerticalLength(in value : String) : void
+		this.verticalLength= value;
