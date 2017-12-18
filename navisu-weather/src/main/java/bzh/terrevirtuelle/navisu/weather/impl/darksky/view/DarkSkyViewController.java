@@ -26,6 +26,8 @@ import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.FIOHourly;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.FIOMinutely;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.ForecastIO;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
@@ -132,15 +134,36 @@ public class DarkSkyViewController
     NumberAxis dyAxis;
     @FXML
     StackPane iconId;
+    @FXML
+    Group clearday;
+    @FXML
+    Group clearnight;
+    @FXML
+    Group cloudy;
+    @FXML
+    Group fog;
+    @FXML
+    Group partlycloudyday;
+    @FXML
+    Group partlycloudynight;
+    @FXML
+    Group rain;
+    @FXML
+    Group sleet;
+    @FXML
+    Group snow;
+    @FXML
+    Group wind;
+
     private String town;
     private String country;
     private String unit;
+    private Map<String, Group> iconMap;
 
     String FXML = "weatherViewPanel.fxml";
     private ForecastIO fio;
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
-    private static final String CSS_ICONES_PATH = Paths.get(System.getProperty("user.dir") + "/css/cssImages/meteoicons/").toUri().toString();
-    public String iconadress = "";
+    //public String iconadress = "";
     public String forecasticon = "";
 
     public DarkSkyViewController() {
@@ -168,7 +191,18 @@ public class DarkSkyViewController
         setOpacity(1.0);
         String uri = CSS_STYLE_PATH + viewgroupstyle;
         weatherViewPanel.getStylesheets().add(uri);
-
+        /*
+        clearday.setVisible(false);
+        clearnight.setVisible(false);
+        cloudy.setVisible(false);
+        fog.setVisible(false);
+        partlycloudyday.setVisible(false);
+        partlycloudynight.setVisible(false);
+        rain.setVisible(false);
+        sleet.setVisible(false);
+        snow.setVisible(false);
+        wind.setVisible(false);
+         */
     }
 
     public void setTitle(Label title) {
@@ -196,6 +230,7 @@ public class DarkSkyViewController
         summaryLabel.setText(tr("wheater.darsky.summary"));
         timeLabel.setText(tr("wheater.darsky.time"));
         resultsTitle.setText("Results request forecast for " + town);
+
         quit.setOnMouseClicked((MouseEvent event) -> {
             setVisible(false);
         });
@@ -248,13 +283,25 @@ public class DarkSkyViewController
             this.timeData.setText(currently.get().time() != null ? currently.get().time() : "NC");
             showHoursWindData(fio);
             showDaysWindData(fio);
-
+            /*---- création d la table des icônes ---*/
+            iconMap = new HashMap<>();
+            iconMap.put("clear-day", clearday);
+            iconMap.put("clear-night", clearnight);
+            iconMap.put("cloudy", cloudy);
+            iconMap.put("fog", fog);
+            iconMap.put("partly-cloudy-day", partlycloudyday);
+            iconMap.put("partly-cloudy-night", partlycloudynight);
+            iconMap.put("rain", rain);
+            iconMap.put("sleet", sleet);
+            iconMap.put("snow", snow);
+            iconMap.put("wind", wind);
+            /*----- récupération du nom de l'icône météo - suppression des guillemets ---*/
             forecasticon = currently.get().icon();
             forecasticon = deleteCharAt(forecasticon, 0);
             forecasticon = removeLastChar(forecasticon);
-            iconadress = "meteoicons/" + forecasticon + ".svg";
-            SVGContent content = SVGLoader.load(getClass().getResource(iconadress).toString());
-            iconId.getChildren().add(content);
+            /*----- affichage icône ---*/
+            iconMap.get(forecasticon).setVisible(true);
+            
         } else {
             System.out.println("Données non transmises");
         }
@@ -447,16 +494,17 @@ public class DarkSkyViewController
         System.out.println(currently.get().icon());
     }
 
+    /*
     public String adressIcon(ForecastIO fio) {
         FIOCurrently currently = new FIOCurrently(fio);
         forecasticon = currently.get().icon();
         forecasticon = deleteCharAt(forecasticon, 0);
         forecasticon = removeLastChar(forecasticon);
-        iconadress = "meteoicons/" + forecasticon + ".svg";
-
+        iconadress = CSS_ICONES_PATH + forecasticon + ".svg";
+        System.out.println(iconadress);
         return iconadress;
     }
-
+     */
     private static String deleteCharAt(String strValue, int index) {
         return strValue.substring(0, index) + strValue.substring(index + 1);
 

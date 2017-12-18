@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.Double?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Polygon?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Polygon layoutX="261.0" layoutY="183.0" stroke="BLACK" strokeType="INSIDE">
+        <points>
+          <Double fx:value="-50.0" />
+          <Double fx:value="40.0" />
+          <Double fx:value="50.0" />
+          <Double fx:value="40.0" />
+          <Double fx:value="0.0" />
+          <Double fx:value="-60.0" />
+        </points>
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0" startX="0.3619047619047619" startY="0.4523809523809524">
+               <stops>
+                  <Stop color="#e80f0f" />
+                  <Stop color="#12e510" offset="0.4914089347079038" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Polygon>
+   </children>
+</Pane>
