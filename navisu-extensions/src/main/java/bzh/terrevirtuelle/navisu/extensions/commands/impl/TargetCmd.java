@@ -42,18 +42,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TargetCmd
         implements NavigationCmd {
-    
+
     private static TargetCmd INSTANCE;
     private NavigationDataSet navigationDataSet;
     private final GeodesyServices geodesyServices;
     private final S57ChartComponentServices s57ChartComponentServices;
     private final LayersManagerServices layersManagerServices;
     private Set<S57Controller> s57Controllers;
-    
+
     private static final String NAME = "TargetCmd";
     protected static final String GROUP = "S57 charts";
     protected RenderableLayer layer;
-    
+
     public static TargetCmd getInstance(S57ChartComponentServices s57ChartComponentServices,
             GeodesyServices geodesyServices, LayersManagerServices layersManagerServices) {
         if (INSTANCE == null) {
@@ -61,7 +61,7 @@ public class TargetCmd
         }
         return INSTANCE;
     }
-    
+
     private TargetCmd(S57ChartComponentServices s57ChartComponentServices,
             GeodesyServices geodesyServices, LayersManagerServices layersManagerServices) {
         this.s57ChartComponentServices = s57ChartComponentServices;
@@ -69,13 +69,14 @@ public class TargetCmd
         this.layersManagerServices = layersManagerServices;
         layer = layersManagerServices.getLayer(GROUP, NAME);
     }
-    
+
     @Override
+    @SuppressWarnings("unchecked")
     public NavigationDataSet doIt(NavigationData arg) {
         // Set of beacon, buoys, ... on the chart
         s57Controllers = s57ChartComponentServices.getS57Controllers();
         navigationDataSet = new NavigationDataSet();
-        
+
         Target target = (Target) arg;
         double lat = target.getLatitude();
         double lon = target.getLongitude();
@@ -108,47 +109,37 @@ public class TargetCmd
             id++;
         }
         targets.sort(Comparator.comparingDouble(Target::getDistance));
-        if (distance == -1) {
+        if (distance == -1 && azimuth == 511) {
             navigationDataSet.add(targets.get(0));
             targetsSended.add(targets.get(0));
-        } else {
-            targets.stream().filter((t) -> (t.getDistance() < distance)).forEachOrdered((t) -> {
+        }
+        if (distance != -1 && azimuth == 511) {
+            targets.stream().filter((t) -> (t.getDistance() <= distance)).forEachOrdered((t) -> {
                 navigationDataSet.add(t);
                 targetsSended.add(t);
             });
         }
-        
-        PointPlacemark pp = new PointPlacemark(Position.fromDegrees(lat, lon, 10));
-        pp.setValue(AVKey.DISPLAY_NAME, "Lat : " + Double.toString(lat) + "\n "
-                + "Lon : " + Double.toString(lon));
-        layer.addRenderable(pp);
-        
-        ShapeAttributes attrs = new BasicShapeAttributes();
-        attrs.setOutlineMaterial(Material.RED);
-        attrs.setOutlineWidth(2d);
-
-        targetsSended.stream().map((t) -> {
-            ArrayList<Position> pathPositions = new ArrayList<>();
-            pathPositions.add(Position.fromDegrees(lat, lon, 10));
-            pathPositions.add(Position.fromDegrees(t.getLatitude(),
-                    t.getLongitude(), 10));
-            Path path = new DirectedPath(pathPositions);
-            path.setAttributes(attrs);
-            path.setVisible(true);
-            path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-            path.setPathType(AVKey.GREAT_CIRCLE);
-            path.setValue(AVKey.DISPLAY_NAME,
-                    "distance = "
-                            + String.format("%.0f", t.getDistance()) + " m \n "
-                                    + "azimuth : "
-                            + String.format("%.0f", t.getAzimuth()) + "°");
-            return path;
-        }).forEachOrdered((path) -> {
-            layer.addRenderable(path);
-        });
+        if (distance != -1 && azimuth != 511) {
+            targets.stream().filter((t) -> (t.getDistance() <= distance
+                    && t.getAzimuth() >= azimuth - 10 && t.getAzimuth() <= azimuth + 10)).map((t) -> {
+                navigationDataSet.add(t);
+                return t;
+            }).forEachOrdered((t) -> {
+                targetsSended.add(t);
+            });
+        }
+        if (distance == -1 && azimuth != 511) {
+            targets.stream().filter((t) -> (t.getAzimuth() >= azimuth - 10 && t.getAzimuth() <= azimuth + 10)).map((t) -> {
+                navigationDataSet.add(t);
+                return t;
+            }).forEachOrdered((t) -> {
+                targetsSended.add(t);
+            });
+        }
+        viewTargets(targetsSended, lat, lon);
         return navigationDataSet;
     }
-    
+
     public final List<Class> getSuperClasses(Object o) {
         List<Class> classList = new ArrayList<>();
         Class classe = o.getClass();
@@ -164,5 +155,35 @@ public class TargetCmd
         }
         return classList;
     }
-    
+
+    private void viewTargets(List<Target> targets, double lat, double lon) {
+        PointPlacemark pp = new PointPlacemark(Position.fromDegrees(lat, lon, 10));
+        pp.setValue(AVKey.DISPLAY_NAME, "Lat : " + Double.toString(lat) + "\n "
+                + "Lon : " + Double.toString(lon));
+        layer.addRenderable(pp);
+
+        ShapeAttributes attrs = new BasicShapeAttributes();
+        attrs.setOutlineMaterial(Material.RED);
+        attrs.setOutlineWidth(2d);
+
+        targets.stream().map((t) -> {
+            ArrayList<Position> pathPositions = new ArrayList<>();
+            pathPositions.add(Position.fromDegrees(lat, lon, 10));
+            pathPositions.add(Position.fromDegrees(t.getLatitude(),
+                    t.getLongitude(), 10));
+            Path path = new DirectedPath(pathPositions);
+            path.setAttributes(attrs);
+            path.setVisible(true);
+            path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+            path.setPathType(AVKey.GREAT_CIRCLE);
+            path.setValue(AVKey.DISPLAY_NAME,
+                    "distance = "
+                    + String.format("%.0f", t.getDistance()) + " m \n "
+                    + "azimuth : "
+                    + String.format("%.0f", t.getAzimuth()) + "°");
+            return path;
+        }).forEachOrdered((path) -> {
+            layer.addRenderable(path);
+        });
+    }
 }

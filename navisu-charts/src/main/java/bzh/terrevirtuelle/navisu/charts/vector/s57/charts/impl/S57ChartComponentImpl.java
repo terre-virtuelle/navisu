@@ -125,6 +125,7 @@ public class S57ChartComponentImpl
             String value = t.getValue().getName().trim();
             if (clipConditionsKeySet.contains(value)) {
                 layer = (Layer) t.getValue().getDisplayLayer();
+                layer.setPickEnabled(true);
                 if (((CheckBoxTreeItem<GeoLayer>) t).isSelected()) {
                     enabledLayers.add(layer);
                 }
@@ -132,6 +133,7 @@ public class S57ChartComponentImpl
         });
         altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
         enabledLayers.stream().forEach((l) -> {
+            l.setPickEnabled(true);
             clip(l, clipConditions.get(l.getName()));
         });
     }
@@ -273,8 +275,8 @@ public class S57ChartComponentImpl
             ViewControlsLayer viewControlsLayer = new ViewControlsLayer();
             wwd.addSelectListener(new ViewControlsSelectListener(wwd, viewControlsLayer));
             geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(viewControlsLayer));
-
-            /* airspaceLayers = chartS57Controller.getAirspaceLayers();
+/*
+             airspaceLayers = chartS57Controller.getAirspaceLayers();
             airspaceLayers.stream().filter((l) -> (l != null)).map((l) -> {
                 String name = l.getName();
                 if (name.contains("LIGHTS")) {
@@ -287,7 +289,7 @@ public class S57ChartComponentImpl
             }).forEach((l) -> {
              //   layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
             });
-             */
+     */        
         } catch (Exception e) {
             System.out.println("handleOpenFile e " + e);
         }
