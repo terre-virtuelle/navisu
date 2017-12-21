@@ -66,15 +66,7 @@ public class BUOYAGE_Stl_ShapefileWriter
         this.sideY = sideY;
         geometryFactory = new GeometryFactory();
         result = "";
-        /*
-        double latRange = WwjGeodesy.getDistanceM(positions.get(0), positions.get(3));
-        double lonRange = WwjGeodesy.getDistanceM(positions.get(0), positions.get(1));
-        
-        System.out.println("latRange : " + latRange + "lonRange : " + lonRange);
-        scaleLatFactor = sideY / latRange;
-        scaleLonFactor = sideX / lonRange;
-        System.out.println("scaleLatFactor : " + scaleLatFactor + " " + scaleLonFactor);
-         */
+       
     }
 
     @SuppressWarnings("unchecked")
@@ -84,15 +76,7 @@ public class BUOYAGE_Stl_ShapefileWriter
             PointPlacemarkAttributes attrs) {
         super.createPoint(record, latDegrees, lonDegrees, attrs);
         if (geometryEnveloppe.contains(geometryFactory.createPoint(new Coordinate(lonDegrees, latDegrees)))) {
-            /*
-            latMetric = WwjGeodesy.getDistanceM(positions.get(0),
-                    new Position(Angle.fromDegrees(latDegrees),
-                            Angle.fromDegrees(positions.get(0).getLongitude().getDegrees()), 100));
-
-            lonMetric = WwjGeodesy.getDistanceM(positions.get(0),
-                    new Position(Angle.fromDegrees(positions.get(0).getLatitude().getDegrees()),
-                            Angle.fromDegrees(lonDegrees), 100));
-            */
+            
             latMetric = WwjGeodesy.getDistanceM(positions.get(0),
                     new Position(Angle.fromDegrees(latDegrees),
                             Angle.fromDegrees(positions.get(0).getLongitude().getDegrees()), 0));
@@ -100,15 +84,7 @@ public class BUOYAGE_Stl_ShapefileWriter
             lonMetric = WwjGeodesy.getDistanceM(positions.get(0),
                     new Position(Angle.fromDegrees(positions.get(0).getLatitude().getDegrees()),
                             Angle.fromDegrees(lonDegrees), 0));
-            
-            
-            /*
-            latMetric = WwjGeodesy.getDistanceM(positions.get(0),
-                    positions.get(3));
 
-            lonMetric = WwjGeodesy.getDistanceM(positions.get(0),
-                    positions.get(1));
-*/
             latMetric *= scaleLatFactor;
             lonMetric *= scaleLonFactor;
 

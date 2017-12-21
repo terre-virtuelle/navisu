@@ -25,4 +25,8 @@ public class BeaconIsolatedDanger
     public BeaconIsolatedDanger(long id, String geometry) {
         super(id, geometry);
     }
+    @Override
+    public String toString() {
+        return "BeaconIsolatedDanger{" + super.toString() + '}';
+    }
 }

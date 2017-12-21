@@ -54,4 +54,13 @@ public class MooringWarpingFacility extends Buoyage
     public void setWaterLevelEffect(String value) {
         this.waterLevelEffect = value;
     }
+
+    @Override
+    public String toString() {
+        return "MooringWarpingFacility{" + "buoyShape=" 
+                + buoyShape + ", categoryOfMooring=" 
+                + categoryOfMooring + ", waterLevelEffect=" 
+                + waterLevelEffect + super.toString() + '}';
+    }
+    
 }

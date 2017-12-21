@@ -39,4 +39,8 @@ public class BeaconLateral
     public void setCategoryOfLateralMark(String value) {
         this.categoryOfMark = value;
     }
+    @Override
+    public String toString() {
+        return "BeaconLateral{" + super.toString() + '}';
+    }
 }

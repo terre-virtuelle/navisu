@@ -58,4 +58,5 @@ public class Beacon
     public String getShapeMeaning(String shape) {
         return super.getShapeMeaning(BCNSHP.ATT.get(shape));
     }
+    
 }

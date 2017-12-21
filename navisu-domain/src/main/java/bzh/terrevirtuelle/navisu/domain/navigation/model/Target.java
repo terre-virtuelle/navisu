@@ -17,8 +17,11 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyLateral;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySafeWater;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialPurpose;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.rss.NavigationalWarningsRSS;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -46,33 +49,23 @@ public class Target<T extends NavigationData>
         implements NavigationData {
 
     @XmlElements({
-        @XmlElement(name = "area", type = Area.class)
-        ,
-        @XmlElement(name = "avurnavss", type = NavigationalWarningsRSS.class)
-        ,
-        @XmlElement(name = "buoyage", type = Buoyage.class)
-        ,
-        @XmlElement(name = "bcncar", type = BeaconCardinal.class)
-        ,
-        @XmlElement(name = "bcnisd", type = BeaconIsolatedDanger.class)
-        ,
-        @XmlElement(name = "bcnlat", type = BeaconLateral.class)
-        ,
-        @XmlElement(name = "bcnsaw", type = BeaconSafeWater.class)
-        ,
-        @XmlElement(name = "bcnspp", type = BeaconSpecialPurpose.class)
-        ,
-        @XmlElement(name = "buoycar", type = BuoyCardinal.class)
-        ,
-        @XmlElement(name = "buoyinb", type = BuoyInstallation.class)
-        ,
-        @XmlElement(name = "buoyisd", type = BuoyIsolatedDanger.class)
-        ,
-        @XmlElement(name = "buoylat", type = BuoyLateral.class)
-        ,
-        @XmlElement(name = "buoysaw", type = BuoySafeWater.class)
-        ,
-        @XmlElement(name = "buoyssp", type = BuoySpecialPurpose.class)
+        @XmlElement(name = "area", type = Area.class) ,
+        @XmlElement(name = "avurnavss", type = NavigationalWarningsRSS.class),
+        @XmlElement(name = "buoyage", type = Buoyage.class),
+        @XmlElement(name = "bcncar", type = BeaconCardinal.class) ,
+        @XmlElement(name = "bcnisd", type = BeaconIsolatedDanger.class),
+        @XmlElement(name = "bcnlat", type = BeaconLateral.class) ,
+        @XmlElement(name = "bcnsaw", type = BeaconSafeWater.class),
+        @XmlElement(name = "bcnspp", type = BeaconSpecialPurpose.class),
+        @XmlElement(name = "buoycar", type = BuoyCardinal.class),
+        @XmlElement(name = "buoyinb", type = BuoyInstallation.class),
+        @XmlElement(name = "buoyisd", type = BuoyIsolatedDanger.class) ,
+        @XmlElement(name = "buoylat", type = BuoyLateral.class),
+        @XmlElement(name = "buoysaw", type = BuoySafeWater.class),
+        @XmlElement(name = "buoyssp", type = BuoySpecialPurpose.class),
+        @XmlElement(name = "morfac", type = MooringWarpingFacility.class),
+        @XmlElement(name = "lndmrk", type = Landmark.class),
+        @XmlElement(name = "ship", type = Ship.class),
     })
     private T navigationData;
 

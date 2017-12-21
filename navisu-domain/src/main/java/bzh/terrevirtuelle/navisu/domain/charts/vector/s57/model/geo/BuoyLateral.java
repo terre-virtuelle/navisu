@@ -26,4 +26,9 @@ public class BuoyLateral extends Buoy
         categoryOfMark = value;
     }
 
+    @Override
+    public String toString() {
+        return "BuoyLateral{" + super.toString() + '}';
+    }
+
 }

@@ -17,4 +17,9 @@ public class BuoyCardinal extends Buoy
     public BuoyCardinal() {
     }
 
+    @Override
+    public String toString() {
+        return "BuoyCardinal{" + super.toString() + '}';
+    }
+
 }

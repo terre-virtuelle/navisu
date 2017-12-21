@@ -17,4 +17,9 @@ public class BuoySafeWater extends Buoy
     public BuoySafeWater() {
     }
 
+    @Override
+    public String toString() {
+        return "BuoySafeWater{" + super.toString() + '}';
+    }
+
 }

@@ -25,4 +25,10 @@ public class BuoySpecialPurpose extends Buoy
     public void setCategoryOfSpecialPurposeMark(String value) {
         categoryOfMark = value;
     }
+
+    @Override
+    public String toString() {
+        return "BuoySpecialPurpose{" + super.toString() + '}';
+    }
+    
 }

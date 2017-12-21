@@ -26,5 +26,8 @@ public class BeaconSafeWater
         super(id, geometry);
     }
 
-    
+    @Override
+    public String toString() {
+        return "BeaconSafeWater{" + super.toString() + '}';
+    }
 }

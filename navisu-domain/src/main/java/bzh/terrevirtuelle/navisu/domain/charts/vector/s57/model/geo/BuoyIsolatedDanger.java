@@ -17,4 +17,9 @@ public class BuoyIsolatedDanger extends Buoy
     public BuoyIsolatedDanger() {
     }
 
+    @Override
+    public String toString() {
+        return "BuoyIsolatedDanger{" + super.toString() + '}';
+    }
+
 }

@@ -47,7 +47,6 @@ public class TargetCmd
     private NavigationDataSet navigationDataSet;
     private final GeodesyServices geodesyServices;
     private final S57ChartComponentServices s57ChartComponentServices;
-    private final LayersManagerServices layersManagerServices;
     private Set<S57Controller> s57Controllers;
 
     private static final String NAME = "TargetCmd";
@@ -66,7 +65,6 @@ public class TargetCmd
             GeodesyServices geodesyServices, LayersManagerServices layersManagerServices) {
         this.s57ChartComponentServices = s57ChartComponentServices;
         this.geodesyServices = geodesyServices;
-        this.layersManagerServices = layersManagerServices;
         layer = layersManagerServices.getLayer(GROUP, NAME);
     }
 
@@ -93,50 +91,55 @@ public class TargetCmd
                 validS57.add(s);
             }
         }
-        //Calculate distance from locate point
-        double dist;
-        double azi;
-        Target tgt;
-        int id = 0;
-        List<Target> targets = new ArrayList<>();
-        List<Target> targetsSended = new ArrayList<>();
-        for (S57Controller s : validS57) {
-            dist = geodesyServices.getDistanceM(s.getLat(), s.getLon(), lat, lon);
-            azi = geodesyServices.getAzimuth(lat, lon, s.getLat(), s.getLon());
-            tgt = new Target(s.getNavigationData(), s.getNavigationData().getLatitude(),
-                    s.getNavigationData().getLongitude(), id, dist, azi);
-            targets.add(tgt);
-            id++;
+
+        if (!validS57.isEmpty()) {
+            //Calculate distance and azimuth from locate point
+            double dist;
+            double azi;
+            Target tgt;
+            int id = 0;
+            List<Target> targets = new ArrayList<>();
+            List<Target> targetsSended = new ArrayList<>();
+            for (S57Controller s : validS57) {
+                dist = geodesyServices.getDistanceM(s.getLat(), s.getLon(), lat, lon);
+                azi = geodesyServices.getAzimuth(lat, lon, s.getLat(), s.getLon());
+                tgt = new Target(s.getNavigationData(), s.getNavigationData().getLatitude(),
+                        s.getNavigationData().getLongitude(), id, dist, azi);
+                targets.add(tgt);
+                id++;
+            }
+            //Filters from TargetCmd
+            targets.sort(Comparator.comparingDouble(Target::getDistance));
+            if (distance == -1 && azimuth == 511) {
+                navigationDataSet.add(targets.get(0));
+                targetsSended.add(targets.get(0));
+            }
+            if (distance != -1 && azimuth == 511) {
+                targets.stream().filter((t) -> (t.getDistance() <= distance)).forEachOrdered((t) -> {
+                    navigationDataSet.add(t);
+                    targetsSended.add(t);
+                });
+            }
+            if (distance != -1 && azimuth != 511) {
+                targets.stream().filter((t) -> (t.getDistance() <= distance
+                        && t.getAzimuth() >= azimuth - 10 && t.getAzimuth() <= azimuth + 10)).map((t) -> {
+                    navigationDataSet.add(t);
+                    return t;
+                }).forEachOrdered((t) -> {
+                    targetsSended.add(t);
+                });
+            }
+            if (distance == -1 && azimuth != 511) {
+                targets.stream().filter((t) -> (t.getAzimuth() >= azimuth - 10 && t.getAzimuth() <= azimuth + 10)).map((t) -> {
+                    navigationDataSet.add(t);
+                    return t;
+                }).forEachOrdered((t) -> {
+                    targetsSended.add(t);
+                });
+            }
+
+            viewTargets(targetsSended, lat, lon);
         }
-        targets.sort(Comparator.comparingDouble(Target::getDistance));
-        if (distance == -1 && azimuth == 511) {
-            navigationDataSet.add(targets.get(0));
-            targetsSended.add(targets.get(0));
-        }
-        if (distance != -1 && azimuth == 511) {
-            targets.stream().filter((t) -> (t.getDistance() <= distance)).forEachOrdered((t) -> {
-                navigationDataSet.add(t);
-                targetsSended.add(t);
-            });
-        }
-        if (distance != -1 && azimuth != 511) {
-            targets.stream().filter((t) -> (t.getDistance() <= distance
-                    && t.getAzimuth() >= azimuth - 10 && t.getAzimuth() <= azimuth + 10)).map((t) -> {
-                navigationDataSet.add(t);
-                return t;
-            }).forEachOrdered((t) -> {
-                targetsSended.add(t);
-            });
-        }
-        if (distance == -1 && azimuth != 511) {
-            targets.stream().filter((t) -> (t.getAzimuth() >= azimuth - 10 && t.getAzimuth() <= azimuth + 10)).map((t) -> {
-                navigationDataSet.add(t);
-                return t;
-            }).forEachOrdered((t) -> {
-                targetsSended.add(t);
-            });
-        }
-        viewTargets(targetsSended, lat, lon);
         return navigationDataSet;
     }
 

@@ -67,6 +67,7 @@ public class BUOYAGE_ShapefileLoader
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //System.out.println("BUOYAGE_ShapefileLoader");
     }
 
     @Override
@@ -174,10 +175,10 @@ public class BUOYAGE_ShapefileLoader
         if (s57Controllers != null) {
             s57Controllers.add(buoyageController);
         }
-
+        
         placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-        //   placemark.setLabelText(object.getObjectName());
+
         String catMark = "";
         if (acronym.contains("CAR")) {
             catMark = CATCAM.ATT.get(object.getCategoryOfMark());
@@ -230,6 +231,7 @@ public class BUOYAGE_ShapefileLoader
                 + "_" + marsys
                 + ".png";
         object.setImageAddress(imageAddress);
+        
         attrs.setImageAddress(imageAddress);
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.65);//0.9

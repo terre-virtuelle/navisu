@@ -31,4 +31,10 @@ public class Buoy extends Buoyage {
     public String getShapeMeaning(String shape) {
         return super.getShapeMeaning(BOYSHP.ATT.get(shape));
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+    
 }

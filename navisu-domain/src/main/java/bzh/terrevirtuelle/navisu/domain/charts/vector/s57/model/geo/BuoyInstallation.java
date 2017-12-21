@@ -36,4 +36,9 @@ public class BuoyInstallation extends Buoy
         this.product = value;
     }
 
+    @Override
+    public String toString() {
+        return "BuoyInstallation{" + "categoryOfInstallationBuoy=" + categoryOfInstallationBuoy + ", product=" + product + super.toString() + '}';
+    }
+
 }

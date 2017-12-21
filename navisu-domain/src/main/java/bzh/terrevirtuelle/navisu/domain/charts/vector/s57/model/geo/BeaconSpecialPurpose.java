@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "bcnspp")
-public class BeaconSpecialPurpose 
+public class BeaconSpecialPurpose
         extends Beacon
         implements Serializable {
 
@@ -55,5 +55,12 @@ public class BeaconSpecialPurpose
     public void setMarksNavigationalSystemof(String value) {
         this.marksNavigationalSystemof = value;
     }
+
+    @Override
+    public String toString() {
+        return "BeaconSpecialPurpose{" + "beaconShape=" + beaconShape + ", categoryOfSpecialPurposeMark=" + categoryOfSpecialPurposeMark + ", marksNavigationalSystemof=" + marksNavigationalSystemof + '}';
+    }
+
+    
 
 }
