@@ -146,7 +146,6 @@ import bzh.terrevirtuelle.navisu.leapmotion.impl.LeapMotionComponentImpl;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
 import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
-import bzh.terrevirtuelle.navisu.main.Configuration;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.DisplayImpl;
@@ -154,6 +153,10 @@ import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
 import gov.nasa.worldwind.WorldWindow;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
+import bzh.terrevirtuelle.navisu.util.dir.FileSystem;
+import de.micromata.opengis.kml.v_2_2_0.Placemark;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.FileHandler;
 
 /**
@@ -169,7 +172,7 @@ public class AppMain extends Application {
     private final String DATA_S57_CATALOG_2 = "data/charts/vector/s57/catalog/ENC_NP2.kmz";
     private final String DATA_S57_CATALOG_3 = "data/charts/vector/s57/catalog/ENC_NP3.kmz";
     private final String DATA_S57_CATALOG_4 = "data/charts/vector/s57/catalog/ENC_NP4.kmz";
-    private final String DATA_S57_CATALOG_5 = "data/charts/vector/s57/catalog/ENC_NP5.kmz";
+    private final String DATA_S57_CATALOG_5 = "data/charts/vector/s57/catalog/ENC_NP5.kml";
     private final String DATA_S57_CATALOG_6 = "data/charts/vector/s57/catalog/ENC_NP6.kmz";
     /*
     1 - Overview 	< 1 : 1 500 000
@@ -322,7 +325,7 @@ public class AppMain extends Application {
         JTSServices jtsServices = componentManager.getComponentService(JTSServices.class);
 
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
-        KmlComponentServices kmlObjectServices = componentManager.getComponentService(KmlComponentServices.class);
+        KmlComponentServices kmlComponentServices = componentManager.getComponentService(KmlComponentServices.class);
 
         LayersManagerServices layersManagerServices = componentManager.getComponentService(LayersManagerServices.class);
         LeapMotionComponentServices leapMotionComponentServices = componentManager.getComponentService(LeapMotionComponentServices.class);
@@ -376,7 +379,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(currentsServices.getDriver());
         driverServices.registerNewDriver((Driver) geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
-        driverServices.registerNewDriver(kmlObjectServices.getDriver());
+        driverServices.registerNewDriver(kmlComponentServices.getDriver());
         driverServices.registerNewDriver(magneticServices.getDriver());
         driverServices.registerNewDriver((Driver) meteoNetCdfServices.getDriver());
         driverServices.registerNewDriver(sedimentologyServices.getDriver());
@@ -427,8 +430,19 @@ public class AppMain extends Application {
                 DATA_S57_CATALOG_4,
                 DATA_S57_CATALOG_5,
                 DATA_S57_CATALOG_6);
-
-        //First position
+/*
+        List<Placemark> placemarks = kmlComponentServices.getPlacemarkFromKmlCatalog(DATA_S57_CATALOG_5);
+        List<String> catalog = new ArrayList<>();
+        placemarks.forEach((pm) -> {
+            String fr = pm.getName();
+            fr = fr.substring(0, 2);
+            if (fr.equals("FR")) {
+                catalog.add(pm.getName());
+            }
+        });
+        FileSystem.copyFolder("/home/serge/Data/cartography/data/ENC/FR", 
+                "/home/serge/Data/cartography/data/ENC/FR/ENC_NP5", catalog);
+    */    
         wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 120000));
 
         // Initialisation du serveur
@@ -508,10 +522,10 @@ public class AppMain extends Application {
         // Neo4J serveur externe
         // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
         // System.out.println("con : " + con);
-         //
-       //bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
+        //
+        //bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
         //          "5432", "org.postgresql.Driver", "admin", "admin");
-         // bathymetryDBServices.create("/home/serge/Data/bathymetry/data/shom/MNT100M_ATL/Atlantique_100_WGS84_prof_positive.glz");
+        // bathymetryDBServices.create("/home/serge/Data/bathymetry/data/shom/MNT100M_ATL/Atlantique_100_WGS84_prof_positive.glz");
         //bathymetryDBServices.createIndex();
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut

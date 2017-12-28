@@ -32,8 +32,15 @@ import javafx.scene.layout.StackPane;
 import javax.xml.stream.XMLStreamException;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.kml.KmlComponent;
+import de.micromata.opengis.kml.v_2_2_0.Container;
+import de.micromata.opengis.kml.v_2_2_0.Document;
+import de.micromata.opengis.kml.v_2_2_0.Feature;
+import de.micromata.opengis.kml.v_2_2_0.Folder;
+import de.micromata.opengis.kml.v_2_2_0.Kml;
+import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.ogc.collada.impl.ColladaController;
+import java.util.ArrayList;
 
 /**
  * @author Serge Morvan
@@ -133,7 +140,7 @@ public class KmlComponentImpl
             case "DAE":
                 ColladaComponentController colladaComponentController
                         = new ColladaComponentController(layersManagerServices, this, fileName, guiAgentServices.getRoot());
-               
+
                 break;
         }
     }
@@ -239,5 +246,42 @@ public class KmlComponentImpl
     @Override
     public void setScale(double x, double y, double z) {
         colladaRoot.setModelScale(new Vec4(x, y, z));
+    }
+
+    @Override
+    public ArrayList<Placemark> getPlacemarkFromKmlCatalog(String catalog) {
+        Kml kml = Kml.unmarshal(new File(catalog));
+        return getPlacemarks(kml.getFeature()); 
+    }
+
+    public ArrayList<Placemark> getPlacemarks(Feature root) {
+        ArrayList<Placemark> Placemarks = new ArrayList<>();
+
+        if (root instanceof Container) {
+            if (root instanceof Document) {
+                ((Document) root).getFeature().forEach((feature) -> {
+                    if (feature instanceof Placemark) {
+                        Placemarks.add((Placemark) feature);
+                    } else if ((feature instanceof Document)
+                            || (feature instanceof Folder)) {
+                        Placemarks.addAll(getPlacemarks(feature));
+                    }
+                });
+            } else if (root instanceof Folder) {
+                ((Folder) root).getFeature().forEach((feature) -> {
+                    if (feature instanceof Placemark) {
+                        Placemarks.add((Placemark) feature);
+                    } else if ((feature instanceof Document)
+                            || (feature instanceof Folder)) {
+                        Placemarks.addAll(getPlacemarks(feature));
+                    }
+                });
+            }
+        } else {
+            if (root instanceof Placemark) {
+                Placemarks.add((Placemark) root);
+            }
+        }
+        return Placemarks;
     }
 }

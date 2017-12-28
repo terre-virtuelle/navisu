@@ -310,6 +310,7 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "files.png", 1, "model.png", 0, "dump.png",
                         (e) -> open("NetCdfInfo", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2", ".grb2"))
                 .createNode(1, "sites.png", 0, "local.png", 0, "darkSky.png", (e) -> open("DarkSky"))
+                .createNode(1, "sites.png", 1, "northA.png", 0, "metoffice.png", (e) -> open("MetOffice"))
                 .build();
         meteoRadialMenu.setLayoutX((width / 2) - 30);
         meteoRadialMenu.setLayoutY(height / 2);
