@@ -8,8 +8,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -17,11 +15,11 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="configGroup" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="configGroup" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="603.0" styleClass="background-pane">
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="610.0" styleClass="background-pane">
             <children>
-                <GridPane layoutY="1.0" prefHeight="451.0" prefWidth="603.0">
+                <GridPane layoutX="7.0" layoutY="1.0" prefHeight="461.0" prefWidth="600.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="10.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="542.0" minWidth="10.0" prefWidth="537.0" />
@@ -142,25 +140,17 @@
                         <TextField fx:id="chartNameTF" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                             </children>
                         </GridPane>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="301.0" layoutY="50.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" translateX="3.0" translateY="-30.0" width="598.0" GridPane.rowIndex="3" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="93.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" translateX="-28.0" translateY="28.0" width="598.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="301.0" layoutX="6.0" layoutY="50.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" translateX="3.0" translateY="-30.0" width="590.0" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="95.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" translateX="-28.0" translateY="28.0" width="590.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     </children>
                 </GridPane>
             </children>
         </Pane>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="474.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="604.0" />
-        <ImageView fitHeight="65.0" fitWidth="76.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@logoTV64AIS.png" />
-            </image>
-        </ImageView>
-        <ImageView fx:id="quit" fitHeight="40.0" fitWidth="45.0" layoutX="557.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@quit.png" />
-            </image>
-        </ImageView>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="500.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="610.0" />
+      <Pane layoutX="14.0" layoutY="10.0" prefHeight="50.0" prefWidth="50.0" styleClass="logo" />
+      <Pane fx:id="quit" layoutX="557.0" layoutY="15.0" prefHeight="35.0" prefWidth="35.0" styleClass="quitbutton" />
         <Text layoutX="76.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="groupviewtittle" text="Options X3D/STL " textAlignment="CENTER" wrappingWidth="159.771484375" />
-      <TextField fx:id="titleTF" layoutX="349.0" layoutY="22.0" prefHeight="25.0" prefWidth="204.0" />
-      <Label alignment="TOP_RIGHT" layoutX="282.0" layoutY="29.0" prefHeight="15.0" prefWidth="55.0" text="Titre" textAlignment="RIGHT" />
+      <TextField fx:id="titleTF" layoutX="320.0" layoutY="22.0" prefHeight="25.0" prefWidth="204.0" />
+      <Label alignment="TOP_RIGHT" layoutX="253.0" layoutY="29.0" prefHeight="15.0" prefWidth="55.0" text="Titre" textAlignment="RIGHT" />
     </children>
 </fx:root>

@@ -65,6 +65,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -95,7 +96,8 @@ public class StlComponentController
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     // Pour récupérer le .css
     protected final String FXML = "configurationStlController.fxml";
-    protected String VIEW_GROUP_STYLE = "configuration.css";
+    //protected String VIEW_GROUP_STYLE = "configuration.css";
+    protected String VIEW_GROUP_STYLE = "common.css";
     protected static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     // Le dir navisu-launcher est dans le PATH
     protected String OUT_DIR = "privateData/x3d/";
@@ -143,7 +145,7 @@ public class StlComponentController
     @FXML
     public Group configGroup;
     @FXML
-    public ImageView quit;
+    public Pane quit;
     @FXML
     public ChoiceBox<String> choiceCB;
     @FXML
