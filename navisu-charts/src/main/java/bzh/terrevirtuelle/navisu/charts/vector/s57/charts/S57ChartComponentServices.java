@@ -2,10 +2,10 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import gov.nasa.worldwind.render.SurfacePolylines;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
 import org.capcaval.c3.component.ComponentService;
@@ -36,6 +36,12 @@ public interface S57ChartComponentServices
     Set<NavigationData> getS57Charts();
 
     List<SurfacePolylines> getCoastalLines();
-    
-    S57ChartComponentController getS57ChartComponentController();
+
+    /*
+    Return list of paths of S57 charts in the catalog, fromm root of ENC
+    catalog = "ENC_NP5.kml" for Harbour charts
+    country = "FR" for France
+    version = "000" for first version
+     */
+    List<Path> getFilePaths(String rootFileNames, String kmlCatalog, String country, String version);
 }

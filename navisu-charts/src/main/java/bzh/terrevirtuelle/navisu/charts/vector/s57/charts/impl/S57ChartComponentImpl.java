@@ -48,7 +48,14 @@ import bzh.terrevirtuelle.navisu.instruments.transponder.impl.events.Transponder
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponent;
+import de.micromata.opengis.kml.v_2_2_0.Container;
+import de.micromata.opengis.kml.v_2_2_0.Document;
+import de.micromata.opengis.kml.v_2_2_0.Feature;
+import de.micromata.opengis.kml.v_2_2_0.Folder;
+import de.micromata.opengis.kml.v_2_2_0.Kml;
+import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import gov.nasa.worldwind.render.SurfacePolylines;
+import java.util.stream.Stream;
 
 /**
  * @author Serge Morvan
@@ -149,8 +156,8 @@ public class S57ChartComponentImpl
     @Override
     public boolean canOpen(String category, String file) {
         boolean canOpen = false;
-        if (category.equals(NAME) && 
-                (file.toLowerCase().endsWith(EXTENSION_0)
+        if (category.equals(NAME)
+                && (file.toLowerCase().endsWith(EXTENSION_0)
                 || file.toLowerCase().endsWith(EXTENSION_1)
                 || file.toLowerCase().endsWith(EXTENSION_2)
                 || file.toLowerCase().endsWith(EXTENSION_3))) {
@@ -275,7 +282,7 @@ public class S57ChartComponentImpl
             ViewControlsLayer viewControlsLayer = new ViewControlsLayer();
             wwd.addSelectListener(new ViewControlsSelectListener(wwd, viewControlsLayer));
             geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(viewControlsLayer));
-/*
+            /*
              airspaceLayers = chartS57Controller.getAirspaceLayers();
             airspaceLayers.stream().filter((l) -> (l != null)).map((l) -> {
                 String name = l.getName();
@@ -289,7 +296,7 @@ public class S57ChartComponentImpl
             }).forEach((l) -> {
              //   layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
             });
-     */        
+             */
         } catch (Exception e) {
             System.out.println("handleOpenFile e " + e);
         }
@@ -382,9 +389,77 @@ public class S57ChartComponentImpl
     }
 
     @Override
-    public S57ChartComponentController getS57ChartComponentController() {
-        return s57ChartComponentController;
+    public List<Path> getFilePaths(String rootFileNames, String kmlCatalog,
+            String preFix, String version) {
+        List<Placemark> placemarks = getPlacemarkFromKmlCatalog(kmlCatalog);
+        List<String> catalog = new ArrayList<>();
+        placemarks.forEach((pm) -> {
+            String fr = pm.getName();
+            fr = fr.substring(0, 2);
+            if (fr.equals(preFix)) {
+                catalog.add(pm.getName());
+            }
+        });
+
+        List<Path> filePaths = filter(rootFileNames, catalog, version);
+        return filePaths;
     }
 
+    //Search for Placemark from Kml catalog
+    private List<Placemark> getPlacemarkFromKmlCatalog(String catalog) {
+        Kml kml = Kml.unmarshal(new File(catalog));
+        return getPlacemarks(kml.getFeature());
+    }
 
+    private ArrayList<Placemark> getPlacemarks(Feature root) {
+        ArrayList<Placemark> Placemarks = new ArrayList<>();
+
+        if (root instanceof Container) {
+            if (root instanceof Document) {
+                ((Document) root).getFeature().forEach((feature) -> {
+                    if (feature instanceof Placemark) {
+                        Placemarks.add((Placemark) feature);
+                    } else if ((feature instanceof Document)
+                            || (feature instanceof Folder)) {
+                        Placemarks.addAll(getPlacemarks(feature));
+                    }
+                });
+            } else if (root instanceof Folder) {
+                ((Folder) root).getFeature().forEach((feature) -> {
+                    if (feature instanceof Placemark) {
+                        Placemarks.add((Placemark) feature);
+                    } else if ((feature instanceof Document)
+                            || (feature instanceof Folder)) {
+                        Placemarks.addAll(getPlacemarks(feature));
+                    }
+                });
+            }
+        } else {
+            if (root instanceof Placemark) {
+                Placemarks.add((Placemark) root);
+            }
+        }
+        return Placemarks;
+    }
+
+    //
+    private List<Path> filter(String src, List<String> catalog, String criteria) {
+        List<Path> filePaths = new ArrayList<>();
+        try (Stream<Path> filePathStream = Files.walk(Paths.get(src))) {
+            filePathStream.forEach(filePath -> {
+                if (Files.isRegularFile(filePath)) {
+                    String[] tab = filePath.getFileName().toString().split("\\.");
+                    if (tab != null) {
+                        if (catalog.contains(tab[0]) && tab[1].equals(criteria)) {
+                            filePaths.add(filePath);
+                        }
+                    }
+                }
+
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+        return filePaths;
+    }
 }
