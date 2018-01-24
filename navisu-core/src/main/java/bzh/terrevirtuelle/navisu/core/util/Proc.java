@@ -68,7 +68,7 @@ public class Proc {
         args.stream().forEach((arg) -> {
             sb.append(arg).append(SPACE);
         });
-       //   System.out.println("sb : " + sb);
+          System.out.println("sb : " + sb);
         String[] envp = new String[environment.size()];
         int count = 0;
         for (Map.Entry<String, String> entry : environment.entrySet()) {

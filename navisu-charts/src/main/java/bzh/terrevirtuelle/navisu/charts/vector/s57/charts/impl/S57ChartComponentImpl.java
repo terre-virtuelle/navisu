@@ -243,7 +243,7 @@ public class S57ChartComponentImpl
                         .exec(environment);
                 inputFile = tmp;
             } catch (IOException | InterruptedException e) {
-                LOGGER.log(Level.SEVERE, null, e);
+                LOGGER.log(Level.SEVERE, e.toString(), e);
             }
 
             cmd = cmd + " -nlt POINT25D";
@@ -260,7 +260,7 @@ public class S57ChartComponentImpl
                         .exec(environment);
                 inputFile = tmp;
             } catch (IOException | InterruptedException e) {
-                LOGGER.log(Level.SEVERE, null, e);
+                LOGGER.log(Level.SEVERE, e.toString(), e);
             }
             s57ChartComponentController.init("data/shp/shp_" + i++);
             layers = s57ChartComponentController.getLayers();
@@ -461,5 +461,55 @@ public class S57ChartComponentImpl
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
         return filePaths;
+    }
+
+    @Override
+    public void loadDataBase(List<Path> paths, String database, String epsg) {
+        System.out.println(paths + " " + database + " " + epsg);
+        guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
+            Map<String, String> environment = new HashMap<>(System.getenv());
+            String options
+                    = "\"RECODE_BY_DSSI=ON, "
+                    + "ENCODING=UTF8, "
+                    + "UPDATES=APPLY, "
+                    + "RETURN_PRIMITIVES=ON, "
+                    + "RETURN_LINKAGES=ON, "
+                    + "LNAM_REFS=ON, "
+                    + "SPLIT_MULTIPOINT=ON, "
+                    + "ADD_SOUNDG_DEPTH=ON\" \n";
+            environment.put("OGR_S57_OPTIONS", options);
+            options = System.getProperty("user.dir") + "/gdal/data";
+            environment.put("GDAL_DATA", options);
+
+            String cmd = null;
+            if (OS.isWindows()) {
+                cmd = "gdal/win/ogr2ogr";
+            } else if (OS.isLinux()) {
+                cmd = "/usr/bin/ogr2ogr";
+            } else if (OS.isMac()) {
+                cmd = "gdal/osx/ogr2ogr";
+            } else {
+                System.out.println("OS not found");
+            }
+
+            int j = 0;
+            for (Path tmp : paths) {
+                new File("data/shp").mkdir();
+                new File("data/shp/shp_" + j).mkdir();
+                try {
+                    Proc.BUILDER.create()
+                            .setCmd(cmd)
+                            .addArg("-skipfailures ").addArg("-overwrite ")
+                            .addArg("data/shp/shp_" + j)// + "/out.shp ")
+                            .addArg(tmp.toString())
+                            .setOut(System.out)
+                            .setErr(System.err)
+                            .exec(environment);
+                } catch (IOException | InterruptedException e) {
+                    LOGGER.log(Level.SEVERE, null, e);
+                }
+                j++;
+            }
+        });
     }
 }

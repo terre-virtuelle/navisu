@@ -44,4 +44,10 @@ public interface S57ChartComponentServices
     version = "000" for first version
      */
     List<Path> getFilePaths(String rootFileNames, String kmlCatalog, String country, String version);
+    
+    /*
+     Translate S7 charts in shapefiles and load these in a spatial DB
+     script shell for Linux
+    */
+    void loadDataBase(List<Path> paths, String database,String epsg);
 }

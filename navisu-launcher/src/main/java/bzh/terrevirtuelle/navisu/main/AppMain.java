@@ -153,9 +153,7 @@ import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
 import gov.nasa.worldwind.WorldWindow;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
-import bzh.terrevirtuelle.navisu.util.dir.FileSystem;
-import de.micromata.opengis.kml.v_2_2_0.Placemark;
-import java.util.ArrayList;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.logging.FileHandler;
 
@@ -168,12 +166,12 @@ import java.util.logging.FileHandler;
 public class AppMain extends Application {
 
     private static final Logger LOGGER = Logger.getLogger(AppMain.class.getName());
-    private final String DATA_S57_CATALOG_1 = "data/charts/vector/s57/catalog/ENC_NP1.kmz";
-    private final String DATA_S57_CATALOG_2 = "data/charts/vector/s57/catalog/ENC_NP2.kmz";
-    private final String DATA_S57_CATALOG_3 = "data/charts/vector/s57/catalog/ENC_NP3.kmz";
-    private final String DATA_S57_CATALOG_4 = "data/charts/vector/s57/catalog/ENC_NP4.kmz";
+    private final String DATA_S57_CATALOG_1 = "data/charts/vector/s57/catalog/ENC_NP1.kml";
+    private final String DATA_S57_CATALOG_2 = "data/charts/vector/s57/catalog/ENC_NP2.kml";
+    private final String DATA_S57_CATALOG_3 = "data/charts/vector/s57/catalog/ENC_NP3.kml";
+    private final String DATA_S57_CATALOG_4 = "data/charts/vector/s57/catalog/ENC_NP4.kml";
     private final String DATA_S57_CATALOG_5 = "data/charts/vector/s57/catalog/ENC_NP5.kml";
-    private final String DATA_S57_CATALOG_6 = "data/charts/vector/s57/catalog/ENC_NP6.kmz";
+    private final String DATA_S57_CATALOG_6 = "data/charts/vector/s57/catalog/ENC_NP6.kml";
     /*
     1 - Overview 	< 1 : 1 500 000
     2 - General 	1 : 350 000 à 1 : 1 500 000
@@ -430,19 +428,7 @@ public class AppMain extends Application {
                 DATA_S57_CATALOG_4,
                 DATA_S57_CATALOG_5,
                 DATA_S57_CATALOG_6);
-/*
-        List<Placemark> placemarks = kmlComponentServices.getPlacemarkFromKmlCatalog(DATA_S57_CATALOG_5);
-        List<String> catalog = new ArrayList<>();
-        placemarks.forEach((pm) -> {
-            String fr = pm.getName();
-            fr = fr.substring(0, 2);
-            if (fr.equals("FR")) {
-                catalog.add(pm.getName());
-            }
-        });
-        FileSystem.copyFolder("/home/serge/Data/cartography/data/ENC/FR", 
-                "/home/serge/Data/cartography/data/ENC/FR/ENC_NP5", catalog);
-    */    
+
         wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 120000));
 
         // Initialisation du serveur
@@ -566,17 +552,31 @@ public class AppMain extends Application {
          http://download.geonames.org/export/dump/allCountries.zip
          */
  /*
-         String gazetteerPath = "/home/serge/Data/allCountries/allCountries.txt";
+         String gazeteerPath = "/home/serge/Data/allCountries/allCountries.txt";
          String indexPath = "/home/serge/Data/allCountries/geoIndex";
-         gazetteerComponentServices.buildIndex(gazetteerPath, indexPath, true);
+         gazeteerComponentServices.buildIndex(gazeteerPath, indexPath, true);
          */
         // Si un index est creee 
         /*
-         Location location = gazetteerComponentServices.searchGeoName("TOULOUSE", "FR");
+         Location location = gazeteerComponentServices.searchGeoName("TOULOUSE", "FR");
         if (location != null) {
             wwd.getView().setEyePosition(Position.fromDegrees(location.getLatitude(), location.getLongitude(), 15000));
         }
          */
+         /*
+        Test load all S57 from one category of scale in DB
+         */
+        String ENC_HOME = "/home/serge/Data/cartography/data/ENC/FR";
+        String S57_DB = "s57NP5DB";
+        String country = "FR";
+        String version = "000";
+        String EPSG = "4326";
+        //List files filtered
+    //    List<Path> paths = chartS57ComponentServices.getFilePaths(ENC_HOME, DATA_S57_CATALOG_5, country, version);
+        //Create files at data/shp/... first, with ogr2ogr
+        //Load in DB with ogr2ogr
+     //   chartS57ComponentServices.loadDataBase(paths, S57_DB, EPSG);
+
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");
