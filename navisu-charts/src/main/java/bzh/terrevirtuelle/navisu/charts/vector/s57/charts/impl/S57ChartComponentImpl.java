@@ -55,6 +55,8 @@ import de.micromata.opengis.kml.v_2_2_0.Folder;
 import de.micromata.opengis.kml.v_2_2_0.Kml;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import gov.nasa.worldwind.render.SurfacePolylines;
+import java.io.FileOutputStream;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 /**
@@ -465,8 +467,8 @@ public class S57ChartComponentImpl
 
     @Override
     public void loadDataBase(List<Path> paths, String database, String epsg) {
-        System.out.println(paths + " " + database + " " + epsg);
-        guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
+        //  System.out.println(paths + " " + database + " " + epsg);
+        guiAgentServices.getJobsManager().newJob("Load DB", (progressHandle) -> {
             Map<String, String> environment = new HashMap<>(System.getenv());
             String options
                     = "\"RECODE_BY_DSSI=ON, "
@@ -478,19 +480,11 @@ public class S57ChartComponentImpl
                     + "SPLIT_MULTIPOINT=ON, "
                     + "ADD_SOUNDG_DEPTH=ON\" \n";
             environment.put("OGR_S57_OPTIONS", options);
+
             options = System.getProperty("user.dir") + "/gdal/data";
             environment.put("GDAL_DATA", options);
 
-            String cmd = null;
-            if (OS.isWindows()) {
-                cmd = "gdal/win/ogr2ogr";
-            } else if (OS.isLinux()) {
-                cmd = "/usr/bin/ogr2ogr";
-            } else if (OS.isMac()) {
-                cmd = "gdal/osx/ogr2ogr";
-            } else {
-                System.out.println("OS not found");
-            }
+            String cmd = startCmd("ogr2ogr");
 
             int j = 0;
             for (Path tmp : paths) {
@@ -510,6 +504,58 @@ public class S57ChartComponentImpl
                 }
                 j++;
             }
+
+            try (Stream<Path> filePathStream = Files.walk(Paths.get("data/shp"))) {
+
+                String userDirPath = System.getProperty("user.dir");
+                Map<String, String> environment1 = new HashMap<>(System.getenv());
+                String options1 = System.getProperty("user.dir") + "/gdal/data";
+                environment1.put("GDAL_DATA", options1);
+                String cmd1 = startCmd("shp2pgsql");
+                filePathStream.forEach(filePath -> {
+                    if (Files.isRegularFile(filePath)) {
+                        String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
+                        String[] nameTab1 = (userDirPath + "/" + nameTab[0].trim()).split(Pattern.quote("."));
+                        if (nameTab[1].equals("shp")) {
+                            //  System.out.println("userDir : "+userDirPath);
+                            System.out.println("parent : " + userDirPath + "/" + filePath);
+                            System.out.println("root : " + nameTab[0]);
+
+                            try {
+                                Proc.BUILDER.create()
+                                        .setCmd(cmd1)
+                                        .addArg(" -a -I -s 4326 ")
+                                        .addArg(userDirPath + "/" + filePath)
+                                        .addArg(nameTab[0])
+                                        .setOut(new FileOutputStream(nameTab1[0]+ ".sql"))
+                                        .setErr(System.err)
+                                        .exec(environment1);
+                            } catch (IOException | InterruptedException ex) {
+                                Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                });
+
+            } catch (IOException ex) {
+                Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+
         });
+
+    }
+
+    private String startCmd(String command) {
+        String cmd = null;
+        if (OS.isWindows()) {
+            cmd = "gdal/win/" + command;
+        } else if (OS.isLinux()) {
+            cmd = "/usr/bin/" + command;
+        } else if (OS.isMac()) {
+            cmd = "gdal/osx/" + command;
+        } else {
+            System.out.println("OS not found");
+        }
+        return cmd;
     }
 }

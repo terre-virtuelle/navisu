@@ -572,10 +572,10 @@ public class AppMain extends Application {
         String version = "000";
         String EPSG = "4326";
         //List files filtered
-    //    List<Path> paths = chartS57ComponentServices.getFilePaths(ENC_HOME, DATA_S57_CATALOG_5, country, version);
+       // List<Path> paths = chartS57ComponentServices.getFilePaths(ENC_HOME, DATA_S57_CATALOG_5, country, version);
         //Create files at data/shp/... first, with ogr2ogr
         //Load in DB with ogr2ogr
-     //   chartS57ComponentServices.loadDataBase(paths, S57_DB, EPSG);
+      //  chartS57ComponentServices.loadDataBase(paths, S57_DB, EPSG);
 
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
