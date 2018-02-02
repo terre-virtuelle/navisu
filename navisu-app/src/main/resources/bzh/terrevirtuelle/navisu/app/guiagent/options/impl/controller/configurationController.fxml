@@ -23,7 +23,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="570.0" styleClass="background-pane">
             <children>
@@ -374,6 +374,48 @@
                                  </children>
                               </AnchorPane>
                           </content>
+                        </Tab>
+                        <Tab fx:id="userTab1" text="DataBases     ">
+                           <content>
+                              <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
+                                 <children>
+                                    <GridPane layoutX="1.0" prefHeight="221.0" prefWidth="531.0" styleClass="tab-conteneur">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="1.0" prefWidth="260.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="80.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <children>
+                                          <Label prefHeight="15.0" prefWidth="153.0" text="S57ChartsDir" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label text="DarkSkyApiKey" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Label text="AllCountriesPath" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <Label text="LuceneAllCountriesIndexPath" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <TextField fx:id="s57DBTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <TextField fx:id="darkSkyTF1" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <TextField fx:id="allCountriesTF1" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <TextField fx:id="allCountriesIndexTF1" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                          <Button fx:id="s57Button1" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <Button fx:id="allCPathButton1" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                          <Button fx:id="luceneButton1" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                          <Button fx:id="buildIndexButton1" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Build Index" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
                         </Tab>
                             </tabs>
                         </TabPane>

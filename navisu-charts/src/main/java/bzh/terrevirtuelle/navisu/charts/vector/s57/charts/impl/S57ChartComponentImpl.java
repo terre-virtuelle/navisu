@@ -466,7 +466,7 @@ public class S57ChartComponentImpl
     }
 
     @Override
-    public void loadDataBase(List<Path> paths, String database, String epsg) {
+    public void s57ToShapeFile(List<Path> paths,  String epsg) {
         //  System.out.println(paths + " " + database + " " + epsg);
         guiAgentServices.getJobsManager().newJob("Load DB", (progressHandle) -> {
             Map<String, String> environment = new HashMap<>(System.getenv());
@@ -520,7 +520,7 @@ public class S57ChartComponentImpl
                             //  System.out.println("userDir : "+userDirPath);
                             System.out.println("parent : " + userDirPath + "/" + filePath);
                             System.out.println("root : " + nameTab[0]);
-
+/*
                             try {
                                 Proc.BUILDER.create()
                                         .setCmd(cmd1)
@@ -533,6 +533,7 @@ public class S57ChartComponentImpl
                             } catch (IOException | InterruptedException ex) {
                                 Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.SEVERE, null, ex);
                             }
+*/
                         }
                     }
                 });
@@ -542,7 +543,6 @@ public class S57ChartComponentImpl
             }
 
         });
-
     }
 
     private String startCmd(String command) {

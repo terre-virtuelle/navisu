@@ -49,5 +49,5 @@ public interface S57ChartComponentServices
      Translate S7 charts in shapefiles and load these in a spatial DB
      script shell for Linux
     */
-    void loadDataBase(List<Path> paths, String database,String epsg);
+    void s57ToShapeFile(List<Path> paths,String epsg);
 }

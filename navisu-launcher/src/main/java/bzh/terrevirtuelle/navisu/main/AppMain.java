@@ -153,8 +153,8 @@ import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
 import gov.nasa.worldwind.WorldWindow;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
-import java.nio.file.Path;
-import java.util.List;
+import bzh.terrevirtuelle.navisu.tools.ToolsComponentServices;
+import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import java.util.logging.FileHandler;
 
 /**
@@ -265,6 +265,7 @@ public class AppMain extends Application {
                         S57GlobalCatalogImpl.class,
                         StlComponentImpl.class,
                         TestDBImpl.class,
+                        ToolsComponentImpl.class,
                         TransponderImpl.class,
                         WeatherComponentImpl.class,
                         WebDriverManagerImpl.class,
@@ -356,6 +357,7 @@ public class AppMain extends Application {
         StlComponentServices s57StlComponentServices = componentManager.getComponentService(StlComponentServices.class);
 
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
+        ToolsComponentServices toolsComponentServices = componentManager.getComponentService(ToolsComponentServices.class);
         TransponderServices transponderServices = componentManager.getComponentService(TransponderServices.class);
 
         WeatherComponentServices weatherComponentServices = componentManager.getComponentService(WeatherComponentServices.class);
@@ -414,6 +416,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(s57StlComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(toolsComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(webViewServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(weatherComponentServices.getDriver());
 
@@ -563,19 +566,19 @@ public class AppMain extends Application {
             wwd.getView().setEyePosition(Position.fromDegrees(location.getLatitude(), location.getLongitude(), 15000));
         }
          */
-         /*
+ /*
         Test load all S57 from one category of scale in DB
          */
-        String ENC_HOME = "/home/serge/Data/cartography/data/ENC/FR";
-        String S57_DB = "s57NP5DB";
-        String country = "FR";
-        String version = "000";
-        String EPSG = "4326";
+        String ENC_HOME = "/home/serge/Data/cartography/data/ENC/FR"; // Personnaliser
+        String S57_DB = "s57NP5DB"; // Choisir la base à peupler
+        String country = "FR"; // Choisir son filtre pays
+        String version = "000"; // Ne pas modifier
+        String EPSG = "4326"; // Ne pas modifier
         //List files filtered
-       // List<Path> paths = chartS57ComponentServices.getFilePaths(ENC_HOME, DATA_S57_CATALOG_5, country, version);
+        // List<Path> paths = chartS57ComponentServices.getFilePaths(ENC_HOME, DATA_S57_CATALOG_5, country, version);
         //Create files at data/shp/... first, with ogr2ogr
         //Load in DB with ogr2ogr
-      //  chartS57ComponentServices.loadDataBase(paths, S57_DB, EPSG);
+        // chartS57ComponentServices.s57ToShapeFile(paths,  EPSG);
 
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {

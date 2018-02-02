@@ -1,4 +1,5 @@
-package bzh.terrevirtuelle.navisu.app.guiagent.options;
+package bzh.terrevirtuelle.navisu.tools;
+
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import org.capcaval.c3.component.ComponentService;
@@ -6,15 +7,16 @@ import org.capcaval.c3.component.ComponentService;
 /**
  * NaVisu
  *
- * @date 21 mai 2016
  * @author Serge Morvan
+* @date 1/02/2018 12:49
  */
-public interface ConfigurationComponentServices 
-        extends ComponentService, CommonOptions {
+public interface ToolsComponentServices
+        extends ComponentService {
 
     void on(String... files);
 
     boolean canOpen(String category);
 
     InstrumentDriver getDriver();
+
 }
