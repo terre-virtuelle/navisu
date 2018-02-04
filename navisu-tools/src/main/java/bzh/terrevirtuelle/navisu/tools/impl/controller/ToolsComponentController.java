@@ -6,10 +6,6 @@
 package bzh.terrevirtuelle.navisu.tools.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.Option;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.SerialDeviceOption;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.UserOption;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.UserOptionBuilder;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -17,13 +13,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,6 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -55,7 +52,7 @@ public class ToolsComponentController
         implements Initializable {
 
     GuiAgentServices guiAgentServices;
-    
+
     private final String FXML = "toolsController.fxml";
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
 
@@ -93,20 +90,32 @@ public class ToolsComponentController
     @FXML
     public TextField dataS57CatalogTF;
     @FXML
+    public TextField dataBaseNameTF;
+    @FXML
+    public TextField epsgTF;
+    @FXML
     public Button encButton;
-    
+    @FXML
+    public ChoiceBox<String> catalogCB;
+    @FXML
+    public ChoiceBox<String> countryCB;
+    @FXML
+    public ChoiceBox<String> epsgCB;
+
     /* Bathy controls */
     @FXML
     public Tab bathyDBTab;
-    
+
     String encPath;
     String countryPath;
-    
+
     String encPathOld;
     String countryPathOld;
-    
-    private ObservableList<String> countryCbData = FXCollections.observableArrayList();
-    
+
+    private ObservableList<String> catalogCbData = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
+    private ObservableList<String> countryCbData = FXCollections.observableArrayList("FR", "CA", "DE", "KR", "NO", "PE",
+            "PH", "PT", "RU", "TR", "US", "ZA");
+    private ObservableList<String> epsgCbData = FXCollections.observableArrayList("4326", "2154");
     protected FileChooser fileChooser;
 
     /**
@@ -133,78 +142,107 @@ public class ToolsComponentController
         view.getStylesheets().add(uri);
         this.component = component;
         this.guiAgentServices = guiAgentServices;
-        
+
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
-       
-        
+
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+
         /* Init userTab and ownerShipTab 
            Values are store in CONFIG_FILE_NAME 
            properties file
-        */
+         */
         properties = new Properties();
         try {
             properties.load(new FileInputStream(CONFIG_FILE_NAME));
         } catch (IOException ex) {
             Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-       
+
         encHomeTF.setText(properties.getProperty("s57ChartsDir").trim());
-       
+
         encPathOld = encHomeTF.getText().trim();
-        
+
         try {
             properties.store(new FileOutputStream(CONFIG_FILE_NAME), null);
         } catch (IOException ex) {
             Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
+        catalogCB.setItems(catalogCbData);
+        catalogCB.getSelectionModel().select("5");
+        dataS57CatalogTF.setText("ENC_NP5.kml");
+        dataBaseNameTF.setText("s57NP5DB");
+        catalogCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable,
+                        String oldValue, String newValue)
+                        -> {
+                    dataS57CatalogTF.setText("ENC_NP5"
+                            + newValue
+                            + ".kml");
+                    dataBaseNameTF.setText("s57NP"
+                            + newValue
+                            + "DB");
+                });
+
+        countryCB.setItems(countryCbData);
+        countryCB.getSelectionModel().select("FR");
+        countryTF.setText("FR");
+        countryCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable,
+                        String oldValue, String newValue)
+                        -> countryTF.setText(newValue));
+
+        epsgCB.setItems(epsgCbData);
+        epsgCB.getSelectionModel().select("4326");
+        epsgTF.setText("4326");
+        epsgCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable,
+                        String oldValue, String newValue)
+                        -> epsgTF.setText(newValue));
 
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
         });
-        
+
         saveButton.setOnMouseClicked((MouseEvent event) -> {
             if (encDBTab.isSelected()) {
                 encPath = encHomeTF.getText();
-                
+
                 saveUser();
             }
-            
 
         });
 
         cancelButton.setOnMouseClicked((MouseEvent event) -> {
             if (bathyDBTab.isSelected()) {
                 encHomeTF.setText(encPathOld);
-               
+
                 saveUser();
             }
-            
+
         });
         defaultButton.setOnMouseClicked((MouseEvent event) -> {
             if (encDBTab.isSelected()) {
                 encPath = "";
                 encHomeTF.setText(encPath);
-               
+
                 saveUser();
             }
-            
+
         });
         helpButton.setOnMouseClicked((MouseEvent event) -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Options");
             alert.setHeaderText("Données utilisateur");
             Text s = new Text("    S57ChartsDir : chemin de la racine des cartes S57 \n");
-                 
-                    
             s.setWrappingWidth(650);
             alert.getDialogPane().setContent(s);
             alert.show();
@@ -212,7 +250,6 @@ public class ToolsComponentController
         encButton.setOnMouseClicked((MouseEvent event) -> {
             openDir(encHomeTF);
         });
-        
 
     }
 
@@ -231,16 +268,12 @@ public class ToolsComponentController
         } catch (IOException ex) {
             Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-*/
+         */
     }
-
-    
-
-
-    
 
     public void openFile(TextField tf) {
         this.fileChooser = new FileChooser();
+
         this.fileChooser.setTitle(tr("popup.fileChooser.open"));
         String userInitialDirectory = System.getProperty("user.home");
         this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
@@ -266,12 +299,4 @@ public class ToolsComponentController
         }
     }
 
-    private void notifyConfEvent(Option option) {
-
-        try {
-           // component.notifyConfEvent(option);
-        } catch (Exception e) {
-
-        }
-    }
 }

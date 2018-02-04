@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -12,7 +13,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
 <fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
@@ -47,29 +47,38 @@
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                     </columnConstraints>
                                                     <rowConstraints>
-                                                        <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
                                                     </rowConstraints>
                                                     <opaqueInsets>
                                                         <Insets />
                                                     </opaqueInsets>
                                                     <children>
+                                          <TextField fx:id="dataBaseNameTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                                                         <Label prefHeight="15.0" prefWidth="153.0" text="ENC Home" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                         <Label text="Data S57 Catalog" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                         <Label text="Country" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                         <Label text="EPSG" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                         <TextField fx:id="encHomeTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                                        <TextField fx:id="dataS57CatalogTF" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                        <TextField fx:id="dataS57CatalogTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                                         <TextField fx:id="countryTF" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                                         <TextField fx:id="epsgTF" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                                         <Button fx:id="encButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                           <Label text="DataBase Name" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <Label fx:id="dataBaseNameLabel" prefHeight="15.0" prefWidth="252.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                          <ChoiceBox fx:id="catalogCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <ChoiceBox fx:id="countryCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                          <ChoiceBox fx:id="epsgCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                          <Label prefHeight="15.0" prefWidth="142.0" text="Hostname" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <TextField fx:id="hsotnameTF" text="localhost" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                          <Label prefHeight="15.0" prefWidth="140.0" text="Port" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                          <TextField fx:id="encPortBDTF" text="5432" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                                                     </children>
                                                 </GridPane>
                                             </children>
@@ -101,17 +110,16 @@
                                           <Insets />
                                        </opaqueInsets>
                                        <children>
-                                          <Label prefHeight="15.0" prefWidth="153.0" text="ENC Home" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Label text="Data S57 Catalog" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <Label text="Country" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Label text="EPSG" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <Label prefHeight="15.0" prefWidth="153.0" text="Bathy File directory" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <TextField fx:id="encHomeTF1" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <TextField fx:id="dataS57CatalogTF1" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <TextField fx:id="countryTF1" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                          <TextField fx:id="epsgTF1" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                          <TextField fx:id="dataS57CatalogTF1" text="BathyShomDB" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <TextField fx:id="countryTF1" text="localhost" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                           <Button fx:id="encButton1" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                          <Label text="DataBase Name" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <Label text="DataBase Name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <Label fx:id="dataBaseNameLabel1" prefHeight="15.0" prefWidth="252.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                          <Label text="Hostname" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <Label prefHeight="15.0" prefWidth="141.0" text="Port" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <TextField fx:id="bathyDBPortTF" text="5432" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                        </children>
                                     </GridPane>
                                  </children>
@@ -132,7 +140,7 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="saveButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Save" GridPane.columnIndex="1" />
+                                <Button fx:id="saveButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Save &amp; Go" GridPane.columnIndex="1" />
                                 <Button fx:id="defaultButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Default" GridPane.columnIndex="3" />
                                 <Button fx:id="helpButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Help" GridPane.columnIndex="4" />
                                 <Button fx:id="cancelButton" maxWidth="70.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cancel" GridPane.columnIndex="2" />
@@ -143,7 +151,6 @@
             </children>
         </Pane>
       <Pane layoutX="10.0" layoutY="10.0" prefHeight="45.0" prefWidth="45.0" styleClass="logo" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="512.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="569.0" />
         <Text layoutX="246.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="Tools" textAlignment="CENTER" wrappingWidth="76.50146484375" />
       <Button fx:id="quit" layoutX="500.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
     </children>
