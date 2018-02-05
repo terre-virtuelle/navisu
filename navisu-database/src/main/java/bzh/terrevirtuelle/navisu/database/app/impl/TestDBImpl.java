@@ -70,7 +70,7 @@ public class TestDBImpl
 
     @Override
     public Connection connect(String dbName, String user, String passwd) {
-        connection = databaseServices.connect(dbName, user, passwd);
+        connection = databaseServices.connectDerby(dbName, user, passwd);
         return connection;
     }
 

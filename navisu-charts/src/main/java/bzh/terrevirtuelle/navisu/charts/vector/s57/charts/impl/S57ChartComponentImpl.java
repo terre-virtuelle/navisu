@@ -104,6 +104,8 @@ public class S57ChartComponentImpl
     protected List<GeoLayer<Layer>> geoLayerList;
     protected List<String> groupNames = new ArrayList<>();
     protected boolean chartsOpen = false;
+    protected String userDirPath = null;
+    protected String sqlDir;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -391,19 +393,25 @@ public class S57ChartComponentImpl
     }
 
     @Override
-    public List<Path> getFilePaths(String rootFileNames, String kmlCatalog,
-            String preFix, String version) {
+    public List<Path> getFilePaths(String rootFileNames, String kmlCatalog, String preFix) {
         List<Placemark> placemarks = getPlacemarkFromKmlCatalog(kmlCatalog);
         List<String> catalog = new ArrayList<>();
         placemarks.forEach((pm) -> {
             String fr = pm.getName();
             fr = fr.substring(0, 2);
-            if (fr.equals(preFix)) {
-                catalog.add(pm.getName());
+            if (preFix.equals("ALL")) {
+                if (fr.chars().allMatch(Character::isLetter)) {
+                    catalog.add(pm.getName());
+                }
+            } else {
+                if (fr.equals(preFix)) {
+                    catalog.add(pm.getName());
+                }
             }
         });
+        //Only the first publication : .000
+        List<Path> filePaths = filter(rootFileNames, catalog, "000");
 
-        List<Path> filePaths = filter(rootFileNames, catalog, version);
         return filePaths;
     }
 
@@ -460,89 +468,83 @@ public class S57ChartComponentImpl
 
             });
         } catch (IOException ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return filePaths;
     }
 
     @Override
-    public void s57ToShapeFile(List<Path> paths,  String epsg) {
-        //  System.out.println(paths + " " + database + " " + epsg);
-        guiAgentServices.getJobsManager().newJob("Load DB", (progressHandle) -> {
-            Map<String, String> environment = new HashMap<>(System.getenv());
-            String options
-                    = "\"RECODE_BY_DSSI=ON, "
-                    + "ENCODING=UTF8, "
-                    + "UPDATES=APPLY, "
-                    + "RETURN_PRIMITIVES=ON, "
-                    + "RETURN_LINKAGES=ON, "
-                    + "LNAM_REFS=ON, "
-                    + "SPLIT_MULTIPOINT=ON, "
-                    + "ADD_SOUNDG_DEPTH=ON\" \n";
-            environment.put("OGR_S57_OPTIONS", options);
+    public String s57ToShapeFile(List<Path> paths, String epsg) {
 
-            options = System.getProperty("user.dir") + "/gdal/data";
-            environment.put("GDAL_DATA", options);
+        Map<String, String> environment = new HashMap<>(System.getenv());
+        String options
+                = "\"RECODE_BY_DSSI=ON, "
+                + "ENCODING=UTF8, "
+                + "UPDATES=APPLY, "
+                + "RETURN_PRIMITIVES=ON, "
+                + "RETURN_LINKAGES=ON, "
+                + "LNAM_REFS=ON, "
+                + "SPLIT_MULTIPOINT=ON, "
+                + "ADD_SOUNDG_DEPTH=ON\" \n";
+        environment.put("OGR_S57_OPTIONS", options);
 
-            String cmd = startCmd("ogr2ogr");
+        options = System.getProperty("user.dir") + "/gdal/data";
+        environment.put("GDAL_DATA", options);
 
-            int j = 0;
-            for (Path tmp : paths) {
-                new File("data/shp").mkdir();
-                new File("data/shp/shp_" + j).mkdir();
-                try {
-                    Proc.BUILDER.create()
-                            .setCmd(cmd)
-                            .addArg("-skipfailures ").addArg("-overwrite ")
-                            .addArg("data/shp/shp_" + j)// + "/out.shp ")
-                            .addArg(tmp.toString())
-                            .setOut(System.out)
-                            .setErr(System.err)
-                            .exec(environment);
-                } catch (IOException | InterruptedException e) {
-                    LOGGER.log(Level.SEVERE, null, e);
-                }
-                j++;
+        String cmd = startCmd("ogr2ogr");
+
+        int j = 0;
+        for (Path tmp : paths) {
+            new File("data/shp").mkdir();
+            new File("data/shp/shp_" + j).mkdir();
+            try {
+                Proc.BUILDER.create()
+                        .setCmd(cmd)
+                        .addArg("-skipfailures ").addArg("-overwrite ")
+                        .addArg("data/shp/shp_" + j)
+                        .addArg(tmp.toString())
+                        .setOut(System.out)
+                        .setErr(System.err)
+                        .exec(environment);
+            } catch (IOException | InterruptedException e) {
+                LOGGER.log(Level.SEVERE, e.toString(), e);
             }
-
-            try (Stream<Path> filePathStream = Files.walk(Paths.get("data/shp"))) {
-
-                String userDirPath = System.getProperty("user.dir");
-                Map<String, String> environment1 = new HashMap<>(System.getenv());
-                String options1 = System.getProperty("user.dir") + "/gdal/data";
-                environment1.put("GDAL_DATA", options1);
-                String cmd1 = startCmd("shp2pgsql");
-                filePathStream.forEach(filePath -> {
-                    if (Files.isRegularFile(filePath)) {
-                        String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
-                        String[] nameTab1 = (userDirPath + "/" + nameTab[0].trim()).split(Pattern.quote("."));
-                        if (nameTab[1].equals("shp")) {
-                            //  System.out.println("userDir : "+userDirPath);
-                            System.out.println("parent : " + userDirPath + "/" + filePath);
-                            System.out.println("root : " + nameTab[0]);
+            j++;
+        }
 /*
-                            try {
-                                Proc.BUILDER.create()
-                                        .setCmd(cmd1)
-                                        .addArg(" -a -I -s 4326 ")
-                                        .addArg(userDirPath + "/" + filePath)
-                                        .addArg(nameTab[0])
-                                        .setOut(new FileOutputStream(nameTab1[0]+ ".sql"))
-                                        .setErr(System.err)
-                                        .exec(environment1);
-                            } catch (IOException | InterruptedException ex) {
-                                Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-*/
+        try (Stream<Path> filePathStream = Files.walk(Paths.get("data/shp"))) {
+
+            userDirPath = System.getProperty("user.dir");
+            Files.createDirectory(Paths.get(userDirPath + "/data/sql/"));
+            Map<String, String> environment1 = new HashMap<>(System.getenv());
+            String options1 = System.getProperty("user.dir") + "/gdal/data";
+            environment1.put("GDAL_DATA", options1);
+            String cmd1 = startCmd("shp2pgsql");
+            filePathStream.forEach(filePath -> {
+                if (Files.isRegularFile(filePath)) {
+                    String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
+                    String[] nameTab1 = (userDirPath + "/" + nameTab[0].trim()).split(Pattern.quote("."));
+                    if (nameTab[1].equals("shp")) {
+                        try {
+                            Proc.BUILDER.create()
+                                    .setCmd(cmd1)
+                                    .addArg(" -a -I -s 4326 ")
+                                    .addArg(userDirPath + "/" + filePath)
+                                    .addArg(nameTab[0])
+                                    .setOut(new FileOutputStream(userDirPath + "/data/sql/" + nameTab[0] + ".sql", true))
+                                    .setErr(System.err)
+                                    .exec(environment1);
+                        } catch (IOException | InterruptedException ex) {
+                            Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                         }
                     }
-                });
-
-            } catch (IOException ex) {
-                Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
-
-        });
+                }
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+*/
+        return userDirPath + "/data/shp/";
     }
 
     private String startCmd(String command) {
@@ -557,5 +559,15 @@ public class S57ChartComponentImpl
             System.out.println("OS not found");
         }
         return cmd;
+    }
+
+    @Override
+    public String prepareLoadDB(String rootFileNames, String kmlCatalog, String country, String epsg) {
+
+        guiAgentServices.getJobsManager().newJob("Load S57 DB", (progressHandle) -> {
+            List<Path> paths = getFilePaths(rootFileNames, kmlCatalog, country);
+            sqlDir = s57ToShapeFile(paths, epsg);
+        });
+        return sqlDir;
     }
 }

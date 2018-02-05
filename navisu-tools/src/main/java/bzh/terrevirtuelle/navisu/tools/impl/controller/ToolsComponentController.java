@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.tools.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.File;
@@ -52,8 +53,9 @@ public class ToolsComponentController
         implements Initializable {
 
     GuiAgentServices guiAgentServices;
-
+    S57ChartComponentServices s57ChartComponentServices;
     private final String FXML = "toolsController.fxml";
+
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
 
     protected Properties properties;
@@ -102,6 +104,8 @@ public class ToolsComponentController
     @FXML
     public ChoiceBox<String> epsgCB;
 
+    private String encDataBaseName;
+
     /* Bathy controls */
     @FXML
     public Tab bathyDBTab;
@@ -113,23 +117,32 @@ public class ToolsComponentController
     String countryPathOld;
 
     private ObservableList<String> catalogCbData = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
-    private ObservableList<String> countryCbData = FXCollections.observableArrayList("FR", "CA", "DE", "KR", "NO", "PE",
+    private ObservableList<String> countryCbData = FXCollections.observableArrayList("FR", "ALL", "CA", "DE", "KR", "NO", "PE",
             "PH", "PT", "RU", "TR", "US", "ZA");
     private ObservableList<String> epsgCbData = FXCollections.observableArrayList("4326", "2154");
     protected FileChooser fileChooser;
 
+    private final String COMPONENT_KEY_NAME_0 = "DbS57";
+    private final String COMPONENT_KEY_NAME_1 = "DbBathy";
+    private final String ENC_CATALOG_HOME = "data/charts/vector/s57/catalog/";
+    private String componentKeyName;
+
     /**
      *
      * @param component
+     * @param componentKeyName
      * @param keyCode
      * @param keyCombination
      * @param guiAgentServices
+     * @param s57ChartComponentServices
      */
     @SuppressWarnings("unchecked")
-    public ToolsComponentController(ToolsComponentImpl component,
+    public ToolsComponentController(ToolsComponentImpl component, String componentKeyName,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
-            GuiAgentServices guiAgentServices) {
+            GuiAgentServices guiAgentServices,
+            S57ChartComponentServices s57ChartComponentServices) {
         super(keyCode, keyCombination);
+        this.componentKeyName = componentKeyName;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -142,6 +155,7 @@ public class ToolsComponentController
         view.getStylesheets().add(uri);
         this.component = component;
         this.guiAgentServices = guiAgentServices;
+        this.s57ChartComponentServices = s57ChartComponentServices;
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
@@ -156,6 +170,13 @@ public class ToolsComponentController
            Values are store in CONFIG_FILE_NAME 
            properties file
          */
+        if (componentKeyName.equals(COMPONENT_KEY_NAME_0)) {
+            toolsTabPane.getSelectionModel().select(encDBTab);
+        } else {
+            if (componentKeyName.equals(COMPONENT_KEY_NAME_1)) {
+                toolsTabPane.getSelectionModel().select(bathyDBTab);
+            }
+        }
         properties = new Properties();
         try {
             properties.load(new FileInputStream(CONFIG_FILE_NAME));
@@ -215,16 +236,19 @@ public class ToolsComponentController
         saveButton.setOnMouseClicked((MouseEvent event) -> {
             if (encDBTab.isSelected()) {
                 encPath = encHomeTF.getText();
-
                 saveUser();
             }
 
+            encDataBaseName = dataBaseNameTF.getText();
+            String dir = s57ChartComponentServices.prepareLoadDB(encHomeTF.getText(),
+                    ENC_CATALOG_HOME + dataS57CatalogTF.getText(),
+                    countryTF.getText(),
+                    epsgTF.getText());
         });
 
         cancelButton.setOnMouseClicked((MouseEvent event) -> {
             if (bathyDBTab.isSelected()) {
                 encHomeTF.setText(encPathOld);
-
                 saveUser();
             }
 
@@ -233,7 +257,6 @@ public class ToolsComponentController
             if (encDBTab.isSelected()) {
                 encPath = "";
                 encHomeTF.setText(encPath);
-
                 saveUser();
             }
 

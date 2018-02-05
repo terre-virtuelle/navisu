@@ -23,7 +23,7 @@ public interface DatabaseServices
 
     Connection connect(String hostName, String protocol, String port, String driverName, String userName, String passwd);
 
-    Connection connect(String driverName, String user, String passwd);
+    Connection connectDerby(String dbName, String user, String passwd);
 
     EntityManager getEntityManager();
 

@@ -34,6 +34,7 @@ public class JobsManagerImpl implements JobsManager {
 
     protected HBox container;
     protected Text text;
+    protected String jobName;
     protected ProgressIndicator progress;
     protected static final String TSTYLE = "-fx-fill: -fx-text-status-color;";
     protected Stage jobsDialog;
@@ -69,6 +70,7 @@ public class JobsManagerImpl implements JobsManager {
 
     @Override
     public void newJob(final String name, final Job job) {
+        this.jobName = name;
         Executors.newSingleThreadExecutor().execute(() -> {
 
             JobDisplayController jobViewCtrl = new JobDisplayController(name);
@@ -78,6 +80,7 @@ public class JobsManagerImpl implements JobsManager {
 
     @Override
     public void newJob(final String name, final Job... jobs) {
+        this.jobName = name;
         ExecutorService es = Executors.newSingleThreadExecutor();
         for (Job j : jobs) {
             es.execute(() -> {
@@ -90,6 +93,7 @@ public class JobsManagerImpl implements JobsManager {
 
     @Override
     public void newJob(String name, int workunit, Job job) {
+        this.jobName = name;
         Executors.newSingleThreadExecutor().execute(() -> {
 
             JobDisplayController jobViewCtrl = new JobDisplayController(name, workunit);
@@ -130,7 +134,8 @@ public class JobsManagerImpl implements JobsManager {
 
         Platform.runLater(() -> {
             //this.text.setText(nbJobs + " job" + (nbJobs > 1 ? "s" : "") + " processes...");
-            this.text.setText((nbJobs > 0 ? "Loading... " : ""));
+            // this.text.setText((nbJobs > 0 ? "Loading... " : ""));
+            this.text.setText((nbJobs > 0 ? jobName + "... " : ""));
             this.progress.setVisible(nbJobs > 0);
         });
     }

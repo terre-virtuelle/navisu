@@ -2,11 +2,23 @@ package bzh.terrevirtuelle.navisu.tools.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.S57ChartComponentImpl;
 import bzh.terrevirtuelle.navisu.tools.ToolsComponent;
 import bzh.terrevirtuelle.navisu.tools.ToolsComponentServices;
 import bzh.terrevirtuelle.navisu.tools.impl.controller.ToolsComponentController;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -19,9 +31,12 @@ public class ToolsComponentImpl
 
     @UsedService
     GuiAgentServices guiAgentServices;
-
+    @UsedService
+    S57ChartComponentServices s57ChartComponentServices;
+    
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
     private final String COMPONENT_KEY_NAME_1 = "DbBathy";
+    private String componentKeyName;
     ToolsComponentController controller;
 
     @SuppressWarnings("unchecked")
@@ -34,11 +49,21 @@ public class ToolsComponentImpl
     public void on(String... files) {
         String[] cmd = files;
         if (cmd != null) {
+            componentKeyName = cmd[0];
             if (cmd[0].equals(COMPONENT_KEY_NAME_0) || cmd[0].equals(COMPONENT_KEY_NAME_1)) {
-                controller = new ToolsComponentController(this, KeyCode.T, KeyCombination.CONTROL_DOWN,
-                        guiAgentServices);
+                controller = new ToolsComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
+                        guiAgentServices, s57ChartComponentServices);
                 controller.setVisible(true);
             }
+        }
+    }
+
+    @Override
+    public void off() {
+        if (controller != null) {
+            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller);
+            guiAgentServices.getRoot().getChildren().remove(controller);
+            controller.setVisible(false);
         }
     }
 
@@ -47,8 +72,7 @@ public class ToolsComponentImpl
         boolean canOpen = false;
 
         if (category.equals(COMPONENT_KEY_NAME_0)
-                || category.equals(COMPONENT_KEY_NAME_1)
-                ) {
+                || category.equals(COMPONENT_KEY_NAME_1)) {
             canOpen = true;
         }
         return canOpen;
@@ -67,6 +91,10 @@ public class ToolsComponentImpl
     @Override
     public void componentStopped() {
 
+    }
+
+    public String getComponentKeyName() {
+        return componentKeyName;
     }
 
 }

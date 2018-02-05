@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.database.relational.impl.derby;
+package bzh.terrevirtuelle.navisu.database.relational.impl;
 
 import bzh.terrevirtuelle.navisu.database.relational.Database;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
@@ -82,7 +82,7 @@ public class DatabaseImpl
      * @return
      */
     @Override
-    public Connection connect(String dbName, String user, String passwd) {
+    public Connection connectDerby(String dbName, String user, String passwd) {
         //Le mot de passe doit faire plus de huit caracteres
         String url = "jdbc:derby:" + dbName
                 + ";create=true;"
@@ -98,7 +98,7 @@ public class DatabaseImpl
     }
 
     /**
-     * Cas particulier de Neo4J
+     * 
      *
      * @param hostName
      * @param protocol

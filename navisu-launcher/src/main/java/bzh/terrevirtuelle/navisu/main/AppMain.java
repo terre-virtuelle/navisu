@@ -46,7 +46,7 @@ import bzh.terrevirtuelle.navisu.currents.impl.CurrentsImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.database.app.TestDBServices;
 import bzh.terrevirtuelle.navisu.database.app.impl.TestDBImpl;
-import bzh.terrevirtuelle.navisu.database.relational.impl.derby.DatabaseImpl;
+import bzh.terrevirtuelle.navisu.database.relational.impl.DatabaseImpl;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.Bezier2DServices;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.impl.Bezier2DImpl;
 import bzh.terrevirtuelle.navisu.gpx.GpxObjectServices;
@@ -155,7 +155,16 @@ import gov.nasa.worldwind.WorldWindow;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.tools.ToolsComponentServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.List;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -433,7 +442,7 @@ public class AppMain extends Application {
                 DATA_S57_CATALOG_6);
 
         wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 120000));
-
+        clearTmpDirs();
         // Initialisation du serveur
         dataServerServices.init("localhost", 8585);
 
@@ -496,23 +505,23 @@ public class AppMain extends Application {
         //dataServerServices.openGpsd("fridu.net", 2947);
 
         /* Test DB */
-        //testDBServices.connect("data/databases/TestJdbcDB", "navisu", "!!navisu??");
+        //testDBServices.connectDerby("data/databases/TestJdbcDB", "navisu", "!!navisu??");
         // testDBServices.runJdbcDerby();//OK
         //String dbName, String hostName, String protocol, String port, String driverName, String userName, String passwd
-        // testDBServices.connect("inpolygons", "localhost", "jdbc:mysql://", "3306", "com.mysql.jdbc.Driver", "root", "lithops");
+        // testDBServices.connectDerby("inpolygons", "localhost", "jdbc:mysql://", "3306", "com.mysql.jdbc.Driver", "root", "lithops");
         // testDBServices.runJdbcMySql();
-        //Pas de connect() pour JPA, la DB est NavisuDB dans data/databases
+        //Pas de connectDerby() pour JPA, la DB est NavisuDB dans data/databases
         //Modifier le mode ddl classe DatabaseImpl avant le test
         //testDBServices.runJPA();//OK
         // Tests Neo4J
         // Neo4J embedded
-        // Pas de connect() pour GraphDB, la DB est TestNeo4JDB dans data/databases
+        // Pas de connectDerby() pour GraphDB, la DB est TestNeo4JDB dans data/databases
         // testDBServices.runEmbeddedNeo4J("data/databases/TestNeo4JDB");
         // Neo4J serveur externe
-        // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
+        // Connection con = testDBServices.connectDerby("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
         // System.out.println("con : " + con);
         //
-        //bathymetryDBServices.connect("BathyShomDB", "localhost", "jdbc:postgresql://",
+        //bathymetryDBServices.connectDerby("BathyShomDB", "localhost", "jdbc:postgresql://",
         //          "5432", "org.postgresql.Driver", "admin", "admin");
         // bathymetryDBServices.create("/home/serge/Data/bathymetry/data/shom/MNT100M_ATL/Atlantique_100_WGS84_prof_positive.glz");
         //bathymetryDBServices.createIndex();
@@ -566,20 +575,6 @@ public class AppMain extends Application {
             wwd.getView().setEyePosition(Position.fromDegrees(location.getLatitude(), location.getLongitude(), 15000));
         }
          */
- /*
-        Test load all S57 from one category of scale in DB
-         */
-        String ENC_HOME = "/home/serge/Data/cartography/data/ENC/FR"; // Personnaliser
-        String S57_DB = "s57NP5DB"; // Choisir la base à peupler
-        String country = "FR"; // Choisir son filtre pays
-        String version = "000"; // Ne pas modifier
-        String EPSG = "4326"; // Ne pas modifier
-        //List files filtered
-        // List<Path> paths = chartS57ComponentServices.getFilePaths(ENC_HOME, DATA_S57_CATALOG_5, country, version);
-        //Create files at data/shp/... first, with ogr2ogr
-        //Load in DB with ogr2ogr
-        // chartS57ComponentServices.s57ToShapeFile(paths,  EPSG);
-
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");
@@ -606,4 +601,25 @@ public class AppMain extends Application {
         Application.launch();
     }
 
+    private void clearTmpDirs() {
+        try {
+            Path directory = Paths.get("data/sql");
+            Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Files.delete(file);
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    Files.delete(dir);
+                    return FileVisitResult.CONTINUE;
+                }
+
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.INFO, "Clean tmp directories", ex);
+        }
+    }
 }

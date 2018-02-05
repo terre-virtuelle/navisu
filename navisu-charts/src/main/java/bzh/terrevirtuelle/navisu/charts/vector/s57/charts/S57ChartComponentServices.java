@@ -41,13 +41,15 @@ public interface S57ChartComponentServices
     Return list of paths of S57 charts in the catalog, fromm root of ENC
     catalog = "ENC_NP5.kml" for Harbour charts
     country = "FR" for France
-    version = "000" for first version
+    version = "000" for first version default
      */
-    List<Path> getFilePaths(String rootFileNames, String kmlCatalog, String country, String version);
+    List<Path> getFilePaths(String rootFileNames, String kmlCatalog, String country);
     
     /*
      Translate S7 charts in shapefiles and load these in a spatial DB
      script shell for Linux
     */
-    void s57ToShapeFile(List<Path> paths,String epsg);
+    String s57ToShapeFile(List<Path> paths,String epsg);
+    
+    String prepareLoadDB(String rootFileNames, String kmlCatalog, String country, String epsg);
 }
