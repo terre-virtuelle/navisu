@@ -5,10 +5,14 @@
  */
 package bzh.terrevirtuelle.navisu.database.relational.impl;
 
+import bzh.terrevirtuelle.navisu.core.util.OS;
+import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.database.relational.Database;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,6 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -47,6 +53,7 @@ public class DatabaseImpl
     private final String DB_HOME = ".navisu/databases/";
     private String userHome;
     private final String NAVISU_DB = "NaVisuDB";
+    private String userDirPath;
 
     @Override
     public void componentInitiated() {
@@ -98,7 +105,7 @@ public class DatabaseImpl
     }
 
     /**
-     * 
+     *
      *
      * @param hostName
      * @param protocol
@@ -231,4 +238,61 @@ public class DatabaseImpl
         return entityManager;
     }
 
+    @Override
+    public String shapeFileToSql(String epsg) {
+        
+        userDirPath = System.getProperty("user.dir");
+        try {
+            Files.createDirectory(Paths.get(userDirPath + "/data/sql/"));
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Map<String, String> environment = new HashMap<>(System.getenv());
+        String options = System.getProperty("user.dir") + "/gdal/data";
+        environment.put("GDAL_DATA", options);
+        String cmd = startCmd("shp2pgsql");
+        try (Stream<Path> filePathStream = Files.walk(Paths.get("data/shp"))) {
+            filePathStream.forEach(filePath -> {
+                if (Files.isRegularFile(filePath)) {
+                    String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
+                    //   String[] nameTab1 = (userDirPath + "/" + nameTab[0].trim()).split(Pattern.quote("."));
+                    if (nameTab[1].equals("shp")) {
+                        try {
+                            Proc.BUILDER.create()
+                                    .setCmd(cmd)
+                                    .addArg(" -a -I -s " + epsg)
+                                    .addArg(userDirPath + "/" + filePath)
+                                    .addArg(nameTab[0])
+                                    .setOut(new FileOutputStream(userDirPath + "/data/sql/" + nameTab[0] + ".sql", true))
+                                    .setErr(System.err)
+                                    .exec(environment);
+                        } catch (IOException | InterruptedException ex) {
+                            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                        }
+                    }
+                }
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        return userDirPath + "/data/sql";
+    }
+
+    @Override
+    public void sqlToSpatialDB(String dir) {
+
+    }
+    private String startCmd(String command) {
+        String cmd = null;
+        if (OS.isWindows()) {
+            cmd = "gdal/win/" + command;
+        } else if (OS.isLinux()) {
+            cmd = "/usr/bin/" + command;
+        } else if (OS.isMac()) {
+            cmd = "gdal/osx/" + command;
+        } else {
+            System.out.println("OS not found");
+        }
+        return cmd;
+    }
 }

@@ -42,4 +42,8 @@ public interface DatabaseServices
     void drop(String tableName);
 
     void close();
+    
+    String shapeFileToSql(String epsg);
+    
+    void sqlToSpatialDB(String dir);
 }
