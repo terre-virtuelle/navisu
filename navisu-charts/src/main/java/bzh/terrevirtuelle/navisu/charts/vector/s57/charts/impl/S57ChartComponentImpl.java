@@ -105,7 +105,7 @@ public class S57ChartComponentImpl
     protected List<String> groupNames = new ArrayList<>();
     protected boolean chartsOpen = false;
     protected String userDirPath = null;
-    protected String sqlDir;
+    protected String shpDir;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -474,7 +474,7 @@ public class S57ChartComponentImpl
     }
 
     @Override
-    public String s57ToShapeFile(List<Path> paths, String epsg) {
+    public String s57ToShapeFile(List<Path> paths) {
 
         Map<String, String> environment = new HashMap<>(System.getenv());
         String options
@@ -511,39 +511,6 @@ public class S57ChartComponentImpl
             }
             j++;
         }
-/*
-        try (Stream<Path> filePathStream = Files.walk(Paths.get("data/shp"))) {
-
-            userDirPath = System.getProperty("user.dir");
-            Files.createDirectory(Paths.get(userDirPath + "/data/sql/"));
-            Map<String, String> environment1 = new HashMap<>(System.getenv());
-            String options1 = System.getProperty("user.dir") + "/gdal/data";
-            environment1.put("GDAL_DATA", options1);
-            String cmd1 = startCmd("shp2pgsql");
-            filePathStream.forEach(filePath -> {
-                if (Files.isRegularFile(filePath)) {
-                    String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
-                    String[] nameTab1 = (userDirPath + "/" + nameTab[0].trim()).split(Pattern.quote("."));
-                    if (nameTab[1].equals("shp")) {
-                        try {
-                            Proc.BUILDER.create()
-                                    .setCmd(cmd1)
-                                    .addArg(" -a -I -s 4326 ")
-                                    .addArg(userDirPath + "/" + filePath)
-                                    .addArg(nameTab[0])
-                                    .setOut(new FileOutputStream(userDirPath + "/data/sql/" + nameTab[0] + ".sql", true))
-                                    .setErr(System.err)
-                                    .exec(environment1);
-                        } catch (IOException | InterruptedException ex) {
-                            Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-                        }
-                    }
-                }
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-*/
         return userDirPath + "/data/shp/";
     }
 
@@ -562,12 +529,10 @@ public class S57ChartComponentImpl
     }
 
     @Override
-    public String prepareLoadDB(String rootFileNames, String kmlCatalog, String country, String epsg) {
+    public String s57FromCatalogToShapeFile(String rootFileNames, String kmlCatalog, String country, String epsg) {
 
-        guiAgentServices.getJobsManager().newJob("Load S57 DB", (progressHandle) -> {
-            List<Path> paths = getFilePaths(rootFileNames, kmlCatalog, country);
-            sqlDir = s57ToShapeFile(paths, epsg);
-        });
-        return sqlDir;
+        List<Path> paths = getFilePaths(rootFileNames, kmlCatalog, country);
+        shpDir = s57ToShapeFile(paths);
+        return shpDir;
     }
 }

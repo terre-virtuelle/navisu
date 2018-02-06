@@ -49,7 +49,7 @@ public interface S57ChartComponentServices
      Translate S7 charts in shapefiles and load these in a spatial DB
      script shell for Linux
     */
-    String s57ToShapeFile(List<Path> paths,String epsg);
+    String s57ToShapeFile(List<Path> paths);
     
-    String prepareLoadDB(String rootFileNames, String kmlCatalog, String country, String epsg);
+    String s57FromCatalogToShapeFile(String rootFileNames, String kmlCatalog, String country, String epsg);
 }
