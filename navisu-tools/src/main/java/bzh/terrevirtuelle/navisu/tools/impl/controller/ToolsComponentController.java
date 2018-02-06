@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.tools.impl.controller;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.File;
@@ -54,6 +55,7 @@ public class ToolsComponentController
 
     GuiAgentServices guiAgentServices;
     S57ChartComponentServices s57ChartComponentServices;
+    DatabaseServices databaseServices;
     private final String FXML = "toolsController.fxml";
 
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
@@ -140,7 +142,8 @@ public class ToolsComponentController
     public ToolsComponentController(ToolsComponentImpl component, String componentKeyName,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
-            S57ChartComponentServices s57ChartComponentServices) {
+            S57ChartComponentServices s57ChartComponentServices,
+            DatabaseServices databaseServices) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -156,6 +159,7 @@ public class ToolsComponentController
         this.component = component;
         this.guiAgentServices = guiAgentServices;
         this.s57ChartComponentServices = s57ChartComponentServices;
+        this.databaseServices = databaseServices;
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
@@ -206,9 +210,8 @@ public class ToolsComponentController
                     dataS57CatalogTF.setText("ENC_NP5"
                             + newValue
                             + ".kml");
-                    dataBaseNameTF.setText("s57NP"
-                            + newValue
-                            + "DB");
+                    encDataBaseName = "s57NP" + newValue + "DB";
+                    dataBaseNameTF.setText(encDataBaseName);
                 });
 
         countryCB.setItems(countryCbData);
@@ -240,10 +243,14 @@ public class ToolsComponentController
             }
 
             encDataBaseName = dataBaseNameTF.getText();
-            String dir = s57ChartComponentServices.prepareLoadDB(encHomeTF.getText(),
-                    ENC_CATALOG_HOME + dataS57CatalogTF.getText(),
-                    countryTF.getText(),
-                    epsgTF.getText());
+            guiAgentServices.getJobsManager().newJob("Load DB : " + encDataBaseName, (progressHandle) -> {
+                s57ChartComponentServices.s57FromCatalogToShapeFile(encHomeTF.getText(),
+                        ENC_CATALOG_HOME + dataS57CatalogTF.getText(),
+                        countryTF.getText(),
+                        epsgTF.getText());
+                String sqlDir = databaseServices.shapeFileToSql(epsgTF.getText());
+
+            });
         });
 
         cancelButton.setOnMouseClicked((MouseEvent event) -> {
