@@ -1,6 +1,7 @@
 package bzh.terrevirtuelle.navisu.tools.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
@@ -26,6 +27,8 @@ public class ToolsComponentImpl
     S57ChartComponentServices s57ChartComponentServices;
     @UsedService
     DatabaseServices databaseServices;
+    @UsedService
+    InstrumentDriverManagerServices instrumentDriverManagerServices;
     
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
     private final String COMPONENT_KEY_NAME_1 = "DbBathy";
@@ -45,7 +48,8 @@ public class ToolsComponentImpl
             componentKeyName = cmd[0];
             if (cmd[0].equals(COMPONENT_KEY_NAME_0) || cmd[0].equals(COMPONENT_KEY_NAME_1)) {
                 controller = new ToolsComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
-                        guiAgentServices, s57ChartComponentServices, databaseServices);
+                        guiAgentServices, s57ChartComponentServices, 
+                        databaseServices, instrumentDriverManagerServices);
                 controller.setVisible(true);
             }
         }

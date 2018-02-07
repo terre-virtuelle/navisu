@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.tools.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
@@ -53,13 +54,15 @@ public class ToolsComponentController
         extends Widget2DController
         implements Initializable {
 
-    GuiAgentServices guiAgentServices;
-    S57ChartComponentServices s57ChartComponentServices;
-    DatabaseServices databaseServices;
+    protected GuiAgentServices guiAgentServices;
+    protected S57ChartComponentServices s57ChartComponentServices;
+    protected DatabaseServices databaseServices;
+    protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     private final String FXML = "toolsController.fxml";
 
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
-
+    protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
+    protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected Properties properties;
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private static ToolsComponentController INSTANCE;
@@ -137,13 +140,16 @@ public class ToolsComponentController
      * @param keyCombination
      * @param guiAgentServices
      * @param s57ChartComponentServices
+     * @param databaseServices
+     * @param instrumentDriverManagerServices
      */
     @SuppressWarnings("unchecked")
     public ToolsComponentController(ToolsComponentImpl component, String componentKeyName,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
             S57ChartComponentServices s57ChartComponentServices,
-            DatabaseServices databaseServices) {
+            DatabaseServices databaseServices,
+            InstrumentDriverManagerServices instrumentDriverManagerServices) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -160,6 +166,7 @@ public class ToolsComponentController
         this.guiAgentServices = guiAgentServices;
         this.s57ChartComponentServices = s57ChartComponentServices;
         this.databaseServices = databaseServices;
+        this.instrumentDriverManagerServices=instrumentDriverManagerServices;
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
@@ -244,12 +251,13 @@ public class ToolsComponentController
 
             encDataBaseName = dataBaseNameTF.getText();
             guiAgentServices.getJobsManager().newJob("Load DB : " + encDataBaseName, (progressHandle) -> {
-                s57ChartComponentServices.s57FromCatalogToShapeFile(encHomeTF.getText(),
+                String shpDir = s57ChartComponentServices.s57FromCatalogToShapeFile(encHomeTF.getText(),
                         ENC_CATALOG_HOME + dataS57CatalogTF.getText(),
                         countryTF.getText(),
                         epsgTF.getText());
-                String sqlDir = databaseServices.shapeFileToSql(epsgTF.getText());
-
+               // System.out.println("shpDir : " + shpDir);
+                String sqlDir = databaseServices.shapeFileToSql(shpDir, epsgTF.getText());
+                instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             });
         });
 

@@ -55,8 +55,6 @@ import de.micromata.opengis.kml.v_2_2_0.Folder;
 import de.micromata.opengis.kml.v_2_2_0.Kml;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import gov.nasa.worldwind.render.SurfacePolylines;
-import java.io.FileOutputStream;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 /**
@@ -106,6 +104,7 @@ public class S57ChartComponentImpl
     protected boolean chartsOpen = false;
     protected String userDirPath = null;
     protected String shpDir;
+    protected String dir;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -494,13 +493,14 @@ public class S57ChartComponentImpl
         String cmd = startCmd("ogr2ogr");
 
         int j = 0;
+        
         for (Path tmp : paths) {
             new File("data/shp").mkdir();
             new File("data/shp/shp_" + j).mkdir();
             try {
                 Proc.BUILDER.create()
                         .setCmd(cmd)
-                        .addArg("-skipfailures ").addArg("-overwrite ")
+                        .addArg("-skipfailures ").addArg("-overwrite ").addArg("-nlt PROMOTE_TO_MULTI")
                         .addArg("data/shp/shp_" + j)
                         .addArg(tmp.toString())
                         .setOut(System.out)
@@ -511,7 +511,7 @@ public class S57ChartComponentImpl
             }
             j++;
         }
-        return userDirPath + "/data/shp/";
+        return dir;
     }
 
     private String startCmd(String command) {
