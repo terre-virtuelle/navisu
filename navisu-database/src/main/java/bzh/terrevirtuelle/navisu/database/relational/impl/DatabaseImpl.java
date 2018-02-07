@@ -20,8 +20,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -54,6 +58,8 @@ public class DatabaseImpl
     private String userHome;
     private final String NAVISU_DB = "NaVisuDB";
     private String userDirPath;
+    private int j = 0;
+    private Set<String> tableSet;
 
     @Override
     public void componentInitiated() {
@@ -239,8 +245,8 @@ public class DatabaseImpl
     }
 
     @Override
-    public String shapeFileToSql(String epsg) {
-        
+    public String shapeFileToSql(String shpDir, String epsg) {
+
         userDirPath = System.getProperty("user.dir");
         try {
             Files.createDirectory(Paths.get(userDirPath + "/data/sql/"));
@@ -251,16 +257,61 @@ public class DatabaseImpl
         String options = System.getProperty("user.dir") + "/gdal/data";
         environment.put("GDAL_DATA", options);
         String cmd = startCmd("shp2pgsql");
+
+        //Search all different tables
+        tableSet = new HashSet<>();
+        List<Path> refPathList = new ArrayList<>();
         try (Stream<Path> filePathStream = Files.walk(Paths.get("data/shp"))) {
             filePathStream.forEach(filePath -> {
                 if (Files.isRegularFile(filePath)) {
                     String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
-                    //   String[] nameTab1 = (userDirPath + "/" + nameTab[0].trim()).split(Pattern.quote("."));
+                    if (nameTab[1].equals("shp")) {
+                        System.out.println("filePath : " + filePath);
+                        System.out.println("nameTab : " + nameTab[0]);
+                        if (tableSet.add(nameTab[0])) {
+                            refPathList.add(filePath);
+                        }
+                    }
+                }
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+
+        //Option -p, put shp2pgsql in create mode, only create table
+        //The refPathList contains the set of all tables.
+        Stream<Path> filePathStream = refPathList.stream();
+        filePathStream.forEach(filePath -> {
+            if (Files.isRegularFile(filePath)) {
+                String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
+                if (nameTab[1].equals("shp")) {
+                    try {
+                        Proc.BUILDER.create()
+                                .setCmd(cmd)
+                                .addArg("-p -I -i -s " + epsg)
+                                .addArg(userDirPath + "/" + filePath)
+                                .addArg(nameTab[0])
+                                .setOut(new FileOutputStream(userDirPath + "/data/sql/" + nameTab[0] + ".sql", true))
+                                .setErr(System.err)
+                                .exec(environment);
+                    } catch (IOException | InterruptedException ex) {
+                        Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                    }
+                }
+            }
+        });
+
+        //Option -a : appends shape file into current table
+        try {
+            filePathStream = Files.walk(Paths.get("data/shp"));
+            filePathStream.forEach(filePath -> {
+                if (Files.isRegularFile(filePath)) {
+                    String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
                     if (nameTab[1].equals("shp")) {
                         try {
                             Proc.BUILDER.create()
                                     .setCmd(cmd)
-                                    .addArg(" -a -I -s " + epsg)
+                                    .addArg("-a -I -i -s " + epsg)
                                     .addArg(userDirPath + "/" + filePath)
                                     .addArg(nameTab[0])
                                     .setOut(new FileOutputStream(userDirPath + "/data/sql/" + nameTab[0] + ".sql", true))
@@ -275,13 +326,25 @@ public class DatabaseImpl
         } catch (IOException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+
         return userDirPath + "/data/sql";
     }
 
     @Override
     public void sqlToSpatialDB(String dir) {
+        /*
+        #!/bin/bash
 
+         export PGPASSWORD=admin 
+         psql -U admin -d s57NP5DB 
+
+         for f in *.sql
+          do
+         psql -d s57NP5DB -f $f
+        done
+         */
     }
+
     private String startCmd(String command) {
         String cmd = null;
         if (OS.isWindows()) {
