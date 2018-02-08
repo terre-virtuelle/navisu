@@ -45,5 +45,5 @@ public interface DatabaseServices
 
     String shapeFileToSql(String shpDir, String epsg);
 
-    void sqlToSpatialDB(String dir);
+    void sqlToSpatialDB(String databaseName, String user, String passwd, String dir);
 }

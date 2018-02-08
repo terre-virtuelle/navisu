@@ -63,6 +63,8 @@ public class ToolsComponentController
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
+    private final String USER="admin";
+    private final String PASSWD="admin";
     protected Properties properties;
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private static ToolsComponentController INSTANCE;
@@ -257,6 +259,7 @@ public class ToolsComponentController
                         epsgTF.getText());
                // System.out.println("shpDir : " + shpDir);
                 String sqlDir = databaseServices.shapeFileToSql(shpDir, epsgTF.getText());
+                databaseServices.sqlToSpatialDB(encDataBaseName, USER, PASSWD, sqlDir);
                 instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             });
         });

@@ -9,8 +9,10 @@ import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.database.relational.Database;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -29,6 +31,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -60,6 +63,8 @@ public class DatabaseImpl
     private String userDirPath;
     private int j = 0;
     private Set<String> tableSet;
+    FileOutputStream loadFileLog = null;
+    FileOutputStream errorFileLog = null;
 
     @Override
     public void componentInitiated() {
@@ -266,8 +271,6 @@ public class DatabaseImpl
                 if (Files.isRegularFile(filePath)) {
                     String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
                     if (nameTab[1].equals("shp")) {
-                        System.out.println("filePath : " + filePath);
-                        System.out.println("nameTab : " + nameTab[0]);
                         if (tableSet.add(nameTab[0])) {
                             refPathList.add(filePath);
                         }
@@ -301,6 +304,29 @@ public class DatabaseImpl
             }
         });
 
+        //Alter varchar(80) to varchar in each tables
+        try {
+            filePathStream = Files.walk(Paths.get("data/sql"));
+            filePathStream.forEach(filePath -> {
+                if (Files.isRegularFile(filePath)) {
+                    String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
+                    if (nameTab[1].equals("sql")) {
+                        try {
+                            try (Stream<String> lines = Files.lines(filePath)) {
+                                String content = new String(Files.readAllBytes(filePath));
+                                content = content.replaceAll("varchar\\(80\\)", "varchar");
+                                Files.write(filePath, content.getBytes());
+                            }
+                        } catch (IOException ex) {
+                            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                        }
+                    }
+                }
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+
         //Option -a : appends shape file into current table
         try {
             filePathStream = Files.walk(Paths.get("data/shp"));
@@ -326,23 +352,56 @@ public class DatabaseImpl
         } catch (IOException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-
         return userDirPath + "/data/sql";
     }
 
     @Override
-    public void sqlToSpatialDB(String dir) {
-        /*
-        #!/bin/bash
+    public void sqlToSpatialDB(String databaseName, String user, String passwd, String dir) {
 
-         export PGPASSWORD=admin 
-         psql -U admin -d s57NP5DB 
+        Map<String, String> environment = new HashMap<>(System.getenv());
+        environment.put("PGPASSWORD", "admin");
+        String cmd = startCmd("psql ");
 
-         for f in *.sql
-          do
-         psql -d s57NP5DB -f $f
-        done
-         */
+        try {
+            Proc.BUILDER.create()
+                    .setCmd(cmd)
+                    .addArg("-U admin ").addArg("-d s57NP5DB ")
+                    .setOut(System.out)
+                    .setErr(System.err)
+                    .exec(environment);
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+
+        try {
+            loadFileLog = new FileOutputStream("load.log", true);
+            errorFileLog = new FileOutputStream("error.log", true);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try (Stream<Path> filePathStream = Files.walk(Paths.get("data/sql"))) {
+            filePathStream.forEach(filePath -> {
+                if (Files.isRegularFile(filePath)) {
+                    String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
+                    if (nameTab[1].equals("sql")) {
+                        try {
+                            Proc.BUILDER.create()
+                                    .setCmd(cmd)
+                                    .addArg("-d s57NP5DB ").addArg("-f ")
+                                    .addArg(userDirPath + "/" + filePath)
+                                    .setOut(loadFileLog)
+                                    .setErr(errorFileLog)
+                                    .exec(environment);
+                        } catch (IOException | InterruptedException ex) {
+                            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+
     }
 
     private String startCmd(String command) {
