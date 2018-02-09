@@ -407,7 +407,7 @@ public class DatabaseImpl
     private String startCmd(String command) {
         String cmd = null;
         if (OS.isWindows()) {
-            cmd = "gdal/win/" + command;
+            cmd = "" + command;
         } else if (OS.isLinux()) {
             cmd = "/usr/bin/" + command;
         } else if (OS.isMac()) {
