@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 //@XmlTransient
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Beacon
+public abstract class Beacon
         extends Buoyage {
 
     public Beacon() {
@@ -58,5 +58,6 @@ public class Beacon
     public String getShapeMeaning(String shape) {
         return super.getShapeMeaning(BCNSHP.ATT.get(shape));
     }
+
     
 }

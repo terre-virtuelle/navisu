@@ -34,5 +34,16 @@ public class Landmark extends Buoyage
     public void setFunction(String value) {
         this.function = value;
     }
+@Override
+    public String spatialRequest(double lat0, double lon0, double lat1, double lon1, String epsg) {
+        String request = "SELECT ST_AsText(ST_GeometryN(geom, 1)),"
+                + "objnam, rcid, lnma, catcam, colour, colpat, status, datend, datsta";
 
+        return request;
+    }
+
+    @Override
+    public String spatialRequest(double lat0, double lon0, double lat1, double lon1) {
+        return spatialRequest(lat0, lon0, lat1, lon1, "4326");
+    }
 }

@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "buoyage")
-public class Buoyage
+public abstract class Buoyage
         extends Location
         implements NavigationData {
 
@@ -412,4 +412,10 @@ public class Buoyage
         this.imageAddress = imageAddress;
     }
 
+    public abstract String spatialRequest(double lat0, double lon0, double lat1, double lon1, String epsg);
+
+   
+    public String spatialRequest(double lat0, double lon0, double lat1, double lon1) {
+        return spatialRequest(lat0, lon0, lat1, lon1, "4326");
+    }
 }

@@ -4,9 +4,17 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Node;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Spatial;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Model;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconSafeWater;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconSpecialPurpose;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyCardinal;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyInstallation;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyIsolatedDanger;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyLateral;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySafeWater;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialPurpose;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
-import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -264,6 +272,7 @@ public class Main {
             System.out.println(b);
         });
          */
+ /*
         Buoyage beaconCardinal = new BeaconCardinal(2, "POINT(5.0 2.4)");
         List<Class> classes = getSuperClasses(beaconCardinal);
         classes.forEach((c) -> {
@@ -280,6 +289,39 @@ public class Main {
         classes.forEach((c) -> {
             System.out.println("c : " + c.getSimpleName());
         });
+         */
+        Buoyage buoyCardinal = new BuoyCardinal();
+        System.out.println("req : " + buoyCardinal.spatialRequest(-3, 48, -4, 49, "4326"));
+        
+        Buoyage buoyLateral = new BuoyLateral();
+        System.out.println("req : " + buoyLateral.spatialRequest(-3, 48, -4, 49, "4326"));
+        
+        Buoyage buoyinb = new BuoyInstallation();
+        System.out.println("req : " + buoyinb.spatialRequest(-3, 48, 1, 49));
+        
+        Buoyage buoyspp = new BuoySpecialPurpose();
+        System.out.println("req : " + buoyspp.spatialRequest(-3, 48, 1, 49));
+        
+        Buoyage buoyisd = new BuoyIsolatedDanger();
+        System.out.println("req : " + buoyisd.spatialRequest(-3, 48, 1, 49));
+        
+        Buoyage buoysaw= new BuoySafeWater();
+        System.out.println("req : " + buoysaw.spatialRequest(-3, 48, 1, 49));
+        
+        Buoyage beaconCardinal = new BeaconCardinal();
+        System.out.println("req : " + beaconCardinal.spatialRequest(-3, 48, -4, 49));
+        
+        Buoyage bcnisd = new BeaconIsolatedDanger();
+        System.out.println("req : " + bcnisd.spatialRequest(-3, 48, 1, 49));
+        
+        Buoyage bcnLateral = new BeaconLateral();
+        System.out.println("req : " + bcnLateral.spatialRequest(-3, 48, -4, 49, "4326"));
+        
+        Buoyage bcnsaw= new BeaconSafeWater();
+        System.out.println("req : " + bcnsaw.spatialRequest(-3, 48, 1, 49));
+        
+        Buoyage bcnspp = new BeaconSpecialPurpose();
+        System.out.println("req : " + bcnspp.spatialRequest(-3, 48, 1, 49));
     }
 
     public final List<Class> getSuperClasses(Object o) {
@@ -294,7 +336,7 @@ public class Main {
                 classList.add(superclass);
             }
         }
-      
+
         return classList;
     }
 
