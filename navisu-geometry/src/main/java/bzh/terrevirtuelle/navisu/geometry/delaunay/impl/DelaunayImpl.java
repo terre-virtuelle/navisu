@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.Delaunay;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
-import bzh.terrevirtuelle.navisu.geometry.geodesy.impl.GeodesyImpl;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Delaunay_Triangulation;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Point_dt;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
