@@ -36,7 +36,7 @@ public class Proc {
         this.out = System.out;
         this.err = System.err;
         try {
-            errors = new FileOutputStream("errors.txt");
+            errors = new FileOutputStream("errors.log", true);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Proc.class.getName()).log(Level.SEVERE, null, ex);
         }

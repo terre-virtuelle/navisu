@@ -162,9 +162,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
+import org.openide.util.Exceptions;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -195,6 +195,8 @@ public class AppMain extends Application {
     @Override
     @SuppressWarnings({"unchecked", "varargs"})
     public void start(Stage stage) throws Exception {
+        clearTmpDirs(System.getProperty("user.dir") + "/data/sql", ".sql", true);
+        clearTmpDirs(System.getProperty("user.dir"), ".log", false);
         wwd = GeoWorldWindViewImpl.getWW();
 
         Translator.setLang(I18nLangEnum.FRENCH);
@@ -442,7 +444,7 @@ public class AppMain extends Application {
                 DATA_S57_CATALOG_6);
 
         wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 120000));
-        clearTmpDirs();
+        
         // Initialisation du serveur
         dataServerServices.init("localhost", 8585);
 
@@ -601,25 +603,30 @@ public class AppMain extends Application {
         Application.launch();
     }
 
-    private void clearTmpDirs() {
+    private void clearTmpDirs(String dir, String extension, boolean rmDir) {
         try {
-            Path directory = Paths.get("data/sql");
+            Path directory = Paths.get(dir);
+            
             Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    Files.delete(file);
+                    if (file.toString().endsWith(extension)) {
+                        Files.delete(file);
+                    }
                     return FileVisitResult.CONTINUE;
                 }
 
                 @Override
                 public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                    Files.delete(dir);
+                    if (rmDir == true) {
+                        Files.delete(dir);
+                    }
                     return FileVisitResult.CONTINUE;
                 }
-
+            
             });
         } catch (IOException ex) {
-            Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.INFO, "Clean tmp directories", ex);
+            //Nothing if dir don't exist
         }
     }
 }

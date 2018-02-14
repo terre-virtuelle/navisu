@@ -48,6 +48,7 @@ import bzh.terrevirtuelle.navisu.instruments.transponder.impl.events.Transponder
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponent;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import de.micromata.opengis.kml.v_2_2_0.Container;
 import de.micromata.opengis.kml.v_2_2_0.Document;
 import de.micromata.opengis.kml.v_2_2_0.Feature;
@@ -535,4 +536,11 @@ public class S57ChartComponentImpl
         shpDir = s57ToShapeFile(paths);
         return shpDir;
     }
+
+    @Override
+    public List<Buoyage> getBuoyage(String database, String user, String passwd,
+            Buoyage buoy,double lat0, double lon0, double lat1, double lon1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

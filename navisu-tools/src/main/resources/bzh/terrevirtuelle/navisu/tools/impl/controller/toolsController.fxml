@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="570.0" styleClass="background-pane">
             <children>
@@ -32,13 +32,13 @@
                         <RowConstraints />
                     </rowConstraints>
                     <children>
-                        <TabPane fx:id="toolsTabPane" prefHeight="247.0" prefWidth="533.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TabPane fx:id="toolsTabPane" prefHeight="247.0" prefWidth="533.0" styleClass="tab-container" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <tabs>
-                                <Tab fx:id="encDBTab" text="S57DataBase">
+                                <Tab fx:id="encDBTab" styleClass="tab-container" text="S57DataBase">
                                     <content>
                                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
                                             <children>
-                                                <GridPane layoutX="1.0" prefHeight="281.0" prefWidth="531.0" styleClass="tab-conteneur">
+                                                <GridPane layoutX="1.0" prefHeight="281.0" prefWidth="531.0">
                                                     <columnConstraints>
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />
@@ -49,6 +49,7 @@
                                                     <rowConstraints>
                                                         <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -61,35 +62,38 @@
                                                         <Insets />
                                                     </opaqueInsets>
                                                     <children>
-                                          <TextField fx:id="dataBaseNameTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                          <TextField fx:id="dataBaseNameTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                                         <Label prefHeight="15.0" prefWidth="153.0" text="ENC Home" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                        <Label text="Data S57 Catalog" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                        <Label text="Country" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                        <Label text="EPSG" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                        <Label text="Data S57 Catalog" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                        <Label text="Country" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                        <Label text="EPSG" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                         <TextField fx:id="encHomeTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                                        <TextField fx:id="dataS57CatalogTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                                        <TextField fx:id="countryTF" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                                        <TextField fx:id="epsgTF" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                                        <TextField fx:id="dataS57CatalogTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                                        <TextField fx:id="countryTF" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                                        <TextField fx:id="epsgTF" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                                                         <Button fx:id="encButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                          <Label text="DataBase Name" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <ChoiceBox fx:id="catalogCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                          <ChoiceBox fx:id="countryCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                          <ChoiceBox fx:id="epsgCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                          <Label prefHeight="15.0" prefWidth="142.0" text="Hostname" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                          <TextField fx:id="hsotnameTF" text="localhost" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                                          <Label prefHeight="15.0" prefWidth="140.0" text="Port" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                          <TextField fx:id="encPortBDTF" text="5432" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                                          <Label text="DataBase Name" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <ChoiceBox fx:id="catalogCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                          <ChoiceBox fx:id="countryCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                          <ChoiceBox fx:id="epsgCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                          <Label prefHeight="15.0" prefWidth="142.0" text="Hostname" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                          <TextField fx:id="hsotnameTF" editable="false" text="localhost" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                                          <Label prefHeight="15.0" prefWidth="140.0" text="Port" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                          <TextField fx:id="encPortBDTF" editable="false" text="5432" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                                          <TextField fx:id="psqlTF" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <Label prefHeight="15.0" prefWidth="169.0" text="psql Path" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Button fx:id="psqlButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                                     </children>
                                                 </GridPane>
                                             </children>
                                         </AnchorPane>
                                     </content>
                                 </Tab>
-                        <Tab fx:id="bathyDBTab" text="Bathy DataBase">
+                        <Tab fx:id="bathyDBTab" styleClass="tab-container" text="Bathy DataBase">
                            <content>
                               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
                                  <children>
-                                    <GridPane layoutX="1.0" prefHeight="281.0" prefWidth="531.0" styleClass="tab-conteneur">
+                                    <GridPane layoutX="1.0" prefHeight="281.0" prefWidth="531.0">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />
@@ -130,20 +134,17 @@
                         </TabPane>
                         <GridPane maxHeight="50.0" maxWidth="600.0" prefHeight="27.0" prefWidth="533.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="252.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="70.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="100.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="70.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="150.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="95.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="30.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="70.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="saveButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Save &amp; Go" GridPane.columnIndex="1" />
-                                <Button fx:id="defaultButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Default" GridPane.columnIndex="3" />
-                                <Button fx:id="helpButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Help" GridPane.columnIndex="4" />
-                                <Button fx:id="cancelButton" maxWidth="70.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cancel" GridPane.columnIndex="2" />
+                                <Button fx:id="saveButton" maxWidth="122.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Create &amp; populate DB" GridPane.columnIndex="1" />
+                                <Button fx:id="helpButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Help" GridPane.columnIndex="3" />
                             </children>
                         </GridPane>
                     </children>

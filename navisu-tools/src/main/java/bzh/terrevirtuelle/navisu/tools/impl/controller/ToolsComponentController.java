@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverMa
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Properties;
@@ -63,8 +65,8 @@ public class ToolsComponentController
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
-    private final String USER="admin";
-    private final String PASSWD="admin";
+    private final String USER = "admin";
+    private final String PASSWD = "admin";
     protected Properties properties;
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private static ToolsComponentController INSTANCE;
@@ -83,10 +85,6 @@ public class ToolsComponentController
     @FXML
     public Button saveButton;
     @FXML
-    public Button cancelButton;
-    @FXML
-    public Button defaultButton;
-    @FXML
     public Button helpButton;
 
     /* enc controls */
@@ -94,6 +92,8 @@ public class ToolsComponentController
     public Tab encDBTab;
     @FXML
     public TextField encHomeTF;
+    @FXML
+    public TextField psqlTF;
     @FXML
     public TextField countryTF;
     @FXML
@@ -104,6 +104,8 @@ public class ToolsComponentController
     public TextField epsgTF;
     @FXML
     public Button encButton;
+    @FXML
+    public Button psqlButton;
     @FXML
     public ChoiceBox<String> catalogCB;
     @FXML
@@ -118,10 +120,8 @@ public class ToolsComponentController
     public Tab bathyDBTab;
 
     String encPath;
+    String psqlPath;
     String countryPath;
-
-    String encPathOld;
-    String countryPathOld;
 
     private ObservableList<String> catalogCbData = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
     private ObservableList<String> countryCbData = FXCollections.observableArrayList("FR", "ALL", "CA", "DE", "KR", "NO", "PE",
@@ -168,7 +168,7 @@ public class ToolsComponentController
         this.guiAgentServices = guiAgentServices;
         this.s57ChartComponentServices = s57ChartComponentServices;
         this.databaseServices = databaseServices;
-        this.instrumentDriverManagerServices=instrumentDriverManagerServices;
+        this.instrumentDriverManagerServices = instrumentDriverManagerServices;
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
@@ -197,9 +197,14 @@ public class ToolsComponentController
             Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
 
-        encHomeTF.setText(properties.getProperty("s57ChartsDir").trim());
-
-        encPathOld = encHomeTF.getText().trim();
+        String p = properties.getProperty("encDir");
+        if (p != null) {
+            encHomeTF.setText(p);
+        }
+        p = properties.getProperty("psqlPath");
+        if (p != null) {
+            psqlTF.setText(p);
+        }
 
         try {
             properties.store(new FileOutputStream(CONFIG_FILE_NAME), null);
@@ -248,6 +253,7 @@ public class ToolsComponentController
         saveButton.setOnMouseClicked((MouseEvent event) -> {
             if (encDBTab.isSelected()) {
                 encPath = encHomeTF.getText();
+                psqlPath=psqlTF.getText();
                 saveUser();
             }
 
@@ -257,28 +263,12 @@ public class ToolsComponentController
                         ENC_CATALOG_HOME + dataS57CatalogTF.getText(),
                         countryTF.getText(),
                         epsgTF.getText());
-               // System.out.println("shpDir : " + shpDir);
                 String sqlDir = databaseServices.shapeFileToSql(shpDir, epsgTF.getText());
-                databaseServices.sqlToSpatialDB(encDataBaseName, USER, PASSWD, sqlDir);
+                databaseServices.sqlToSpatialDB(encDataBaseName, USER, PASSWD, sqlDir, psqlTF.getText() + "/psql");
                 instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             });
         });
 
-        cancelButton.setOnMouseClicked((MouseEvent event) -> {
-            if (bathyDBTab.isSelected()) {
-                encHomeTF.setText(encPathOld);
-                saveUser();
-            }
-
-        });
-        defaultButton.setOnMouseClicked((MouseEvent event) -> {
-            if (encDBTab.isSelected()) {
-                encPath = "";
-                encHomeTF.setText(encPath);
-                saveUser();
-            }
-
-        });
         helpButton.setOnMouseClicked((MouseEvent event) -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Options");
@@ -291,25 +281,24 @@ public class ToolsComponentController
         encButton.setOnMouseClicked((MouseEvent event) -> {
             openDir(encHomeTF);
         });
+        psqlButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(psqlTF);
+        });
 
     }
 
     private void saveUser() {
-        /*
+
         try (OutputStream output = new FileOutputStream(CONFIG_FILE_NAME)) {
-            properties.setProperty("s57ChartsDir", encPath);
-            
+            properties.setProperty("encDir", encPath);
+            properties.setProperty("psqlPath", psqlPath);
             properties.store(output, null);
             output.close();
 
-            UserOption userOption = UserOptionBuilder.create()
-                    .s57Path(s57Path)
-                    .build();
-            notifyConfEvent(userOption);
         } catch (IOException ex) {
             Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-         */
+
     }
 
     public void openFile(TextField tf) {
@@ -340,4 +329,15 @@ public class ToolsComponentController
         }
     }
 
+    private String startCmd() {
+        String cmd = null;
+        if (OS.isWindows()) {
+            cmd = "C:\\Program\\ Files\\PostgreSQL\\9.4\\bin\\";
+        } else if (OS.isLinux()) {
+            cmd = "/usr/bin/";
+        } else {
+            System.out.println("OS not found");
+        }
+        return cmd;
+    }
 }

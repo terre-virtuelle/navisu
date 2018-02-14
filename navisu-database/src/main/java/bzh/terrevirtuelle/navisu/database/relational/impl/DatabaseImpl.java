@@ -12,7 +12,6 @@ import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,7 +30,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -356,12 +354,11 @@ public class DatabaseImpl
     }
 
     @Override
-    public void sqlToSpatialDB(String databaseName, String user, String passwd, String dir) {
+    public void sqlToSpatialDB(String databaseName, String user, String passwd, String dir, String cmd) {
 
         Map<String, String> environment = new HashMap<>(System.getenv());
         environment.put("PGPASSWORD", "admin");
-        String cmd = startCmd("psql ");
-
+        
         try {
             Proc.BUILDER.create()
                     .setCmd(cmd)
@@ -375,7 +372,7 @@ public class DatabaseImpl
 
         try {
             loadFileLog = new FileOutputStream("load.log", true);
-            errorFileLog = new FileOutputStream("error.log", true);
+          //  errorFileLog = new FileOutputStream("error.log", true);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -389,8 +386,10 @@ public class DatabaseImpl
                                     .setCmd(cmd)
                                     .addArg("-d s57NP5DB ").addArg("-f ")
                                     .addArg(userDirPath + "/" + filePath)
+                                  //  .setOut(loadFileLog)
+                                   // .setErr(errorFileLog)
                                     .setOut(loadFileLog)
-                                    .setErr(errorFileLog)
+                                  //  .setErr(System.err)
                                     .exec(environment);
                         } catch (IOException | InterruptedException ex) {
                             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
