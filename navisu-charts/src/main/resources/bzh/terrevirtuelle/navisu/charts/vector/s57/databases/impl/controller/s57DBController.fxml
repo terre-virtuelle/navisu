@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="514.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="570.0" />
+        <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="570.0" styleClass="background-pane">
+            <children>
+                <GridPane prefHeight="506.0" prefWidth="560.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="22.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="542.0" minWidth="10.0" prefWidth="537.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="538.0" minWidth="8.0" prefWidth="13.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="95.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="500.0" minHeight="10.0" prefHeight="360.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints />
+                    </rowConstraints>
+                    <children>
+                        <TabPane fx:id="toolsTabPane" prefHeight="247.0" prefWidth="533.0" styleClass="tab-container" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <tabs>
+                                <Tab fx:id="encDBTab" styleClass="tab-container" text="S57DataBase">
+                                    <content>
+                                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
+                                            <children>
+                                                <GridPane layoutX="1.0" prefHeight="281.0" prefWidth="531.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="1.0" prefWidth="200.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="200.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
+                                                    </rowConstraints>
+                                                    <opaqueInsets>
+                                                        <Insets />
+                                                    </opaqueInsets>
+                                                    <children>
+                                                        <Label text="Database" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                        <Label text="Objects selected" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                        <Label text="Selection mode" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                        <TextField fx:id="databaseTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                        <TextField fx:id="objectsTF" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <ChoiceBox fx:id="databaseCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <ChoiceBox fx:id="objectsCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <Label prefHeight="15.0" prefWidth="142.0" text="Hostname" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                          <TextField fx:id="hsotnameTF" editable="false" text="localhost" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                                          <Label prefHeight="15.0" prefWidth="140.0" text="Port" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                          <TextField fx:id="encPortBDTF" editable="false" text="5432" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                                          <CheckBox fx:id="interactiveCB" mnemonicParsing="false" text="Interactive" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                          <CheckBox fx:id="latLonCB" mnemonicParsing="false" prefHeight="18.0" prefWidth="142.0" text="Lat,Lon -- Lat,Lon" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                                    </children>
+                                                </GridPane>
+                                            </children>
+                                        </AnchorPane>
+                                    </content>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+                        <GridPane maxHeight="50.0" maxWidth="600.0" prefHeight="27.0" prefWidth="533.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="150.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="95.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="30.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="70.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <Button fx:id="requestButton" maxWidth="122.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Request DB" GridPane.columnIndex="1" />
+                                <Button fx:id="helpButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Help" GridPane.columnIndex="3" />
+                            </children>
+                        </GridPane>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="                           S57 Databases" textAlignment="CENTER" wrappingWidth="323.50146484375" GridPane.columnIndex="1" />
+                    </children>
+                </GridPane>
+            </children>
+        </Pane>
+      <Pane layoutX="10.0" layoutY="10.0" prefHeight="45.0" prefWidth="45.0" styleClass="logo" />
+      <Pane fx:id="quit" layoutX="520.0" layoutY="10.0" prefHeight="35.0" prefWidth="35.0" styleClass="quitbutton" />
+    </children>
+</fx:root>
