@@ -201,7 +201,7 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "dem.png", 0, "vide.png", 0, "vide.png", (e) -> open())
                 .createNode(1, "bathy.png", 1, "vide.png", 0, "vide.png", (e) -> open())
                 .createNode(2, "charts.png", 1, "files.png", 0, "vide.png", (e) -> open())
-                .createNode(2, "charts.png", 2, "db.png", 0, "s57np5db.png", (e) -> open("DbS57"))
+                .createNode(2, "charts.png", 2, "db.png", 0, "scales.png", (e) -> open("DbS57"))
               //  .createNode(1, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> open())
               //  .createNode(1, "vide.png", 1, "vide.png", 1, "vide.png", (e) -> open())
                 .build();
