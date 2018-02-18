@@ -78,7 +78,9 @@ public class S57DBComponentImpl
             componentKeyName = cmd[0];
             if (cmd[0].equals(COMPONENT_KEY_NAME_0)) {
                 controller = new S57DBComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
-                        guiAgentServices, s57ChartComponentServices,
+                        guiAgentServices, 
+                        layersManagerServices,
+                        s57ChartComponentServices,
                         databaseServices, instrumentDriverManagerServices);
                 controller.setVisible(true);
             }

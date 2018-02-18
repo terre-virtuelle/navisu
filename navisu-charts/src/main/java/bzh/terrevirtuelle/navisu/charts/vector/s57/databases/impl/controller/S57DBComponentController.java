@@ -32,6 +32,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -82,6 +83,8 @@ public class S57DBComponentController
     private final String USER = "admin";
     private final String PASSWD = "admin";
     protected Properties properties;
+    private static final String NAME = "S57DB";
+    protected static final String GROUP = "S57 charts";
 
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     protected String viewgroupstyle = "configuration.css";
@@ -108,6 +111,11 @@ public class S57DBComponentController
     @FXML
     public Button interactiveButton;
     @FXML
+    public TextField databaseTF;
+    @FXML
+    public TextField objectsTF;
+
+    @FXML
     public TextField hostnameTF;
     @FXML
     public TextField encPortDBTF;
@@ -115,8 +123,7 @@ public class S57DBComponentController
     protected Map<String, String> acronyms;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected String marsys;
-    protected final String NAME = "";
-    protected final String GROUP = "";
+
     protected final Set<S57Controller> s57Controllers = new HashSet<>();
     protected boolean first = true;
     protected RenderableLayer layer;
@@ -126,47 +133,48 @@ public class S57DBComponentController
     protected double lon1;
 
     private ObservableList<String> dbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
-    private ObservableList<String> objectsCbData = FXCollections.observableArrayList("ALL:All objects",
-            "BUOYAGE:All buoyage",
-            "ACHARE:AnchorageArea",
-            "BCNCAR:BeaconCardinal",
-            "BCNISD:BeaconIsolatedDanger",
-            "BCNLAT:BeaconLateral",
-            "BCNSAW:BeaconSafeWater",
-            "BCNSPP:BeaconSpecialPurposeGeneral",
-            "BOYCAR:BuoyCardinal",
-            "BOYINB:BuoyInstallation",
-            "BOYISD:BuoyIsolatedDanger",
-            "BOYLAT:BuoyLateral",
-            "BOYSAW:BuoySafeWater",
-            "BOYSPP:BuoySpecial",
-            "DAYMAR:Daymark",
-            "DEPARE:DepthArea",
-            "DEPCNT:DepthContour",
-            "DOCARE:DockArea",
-            "DRGARE:DredgedArea",
-            "FAIRWY:Fairway",
-            "LAKARE:Lake",
-            "LIGHTS:Light",
-            "LNDMRK:Landmark",
-            "MIPARE:MilitaryPracticeArea",
-            "MORFAC:MooringWarpingFacility",
-            "NAVLNE:NavigationLine",
-            "OBSTRN:NavigationalSystemOfMarks",
-            "PONTON:Pontoon",
-            "RESARE:RestrictedArea",
-            "SEAARE:SeaAreaNamedWaterArea",
-            "SLCONS:ShorelineConstruction",
-            "SOUNDG:Sounding",
-            "TOPMAR:Topmark",
-            "TSSBND:TrafficSeparationSchemeBoundary",
-            "UNSARE:UnsurveyedArea",
-            "UWTROC:UnderwaterAwashRock",
-            "WRECKS:Wreck");
+    private ObservableList<String> objectsCbData = FXCollections.observableArrayList("ALL : All objects",
+            "BUOYAGE : All buoyage",
+            "ACHARE : AnchorageArea",
+            "BCNCAR : BeaconCardinal",
+            "BCNISD : BeaconIsolatedDanger",
+            "BCNLAT : BeaconLateral",
+            "BCNSAW : BeaconSafeWater",
+            "BCNSPP : BeaconSpecialPurposeGeneral",
+            "BOYCAR : BuoyCardinal",
+            "BOYINB : BuoyInstallation",
+            "BOYISD : BuoyIsolatedDanger",
+            "BOYLAT : BuoyLateral",
+            "BOYSAW : BuoySafeWater",
+            "BOYSPP : BuoySpecial",
+            "DAYMAR : Daymark",
+            "DEPARE : DepthArea",
+            "DEPCNT : DepthContour",
+            "DOCARE : DockArea",
+            "DRGARE : DredgedArea",
+            "FAIRWY : Fairway",
+            "LAKARE : Lake",
+            "LIGHTS : Light",
+            "LNDMRK : Landmark",
+            "MIPARE : MilitaryPracticeArea",
+            "MORFAC : MooringWarpingFacility",
+            "NAVLNE : NavigationLine",
+            "OBSTRN : NavigationalSystemOfMarks",
+            "PONTON : Pontoon",
+            "RESARE : RestrictedArea",
+            "SEAARE : SeaAreaNamedWaterArea",
+            "SLCONS : ShorelineConstruction",
+            "SOUNDG : Sounding",
+            "TOPMAR : Topmark",
+            "TSSBND : TrafficSeparationSchemeBoundary",
+            "UNSARE : UnsurveyedArea",
+            "UWTROC : UnderwaterAwashRock",
+            "WRECKS : Wreck");
 
     public S57DBComponentController(S57DBComponentImpl component, String componentKeyName,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
+            LayersManagerServices layersManagerServices,
             S57ChartComponentServices s57ChartComponentServices,
             DatabaseServices databaseServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices) {
@@ -185,13 +193,14 @@ public class S57DBComponentController
         this.component = component;
         this.guiAgentServices = guiAgentServices;
         // this.s57ChartComponentServices = s57ChartComponentServices;
+        this.layersManagerServices = layersManagerServices;
         this.databaseServices = databaseServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
-        //    layer = layersManagerServices.getLayer(GROUP, NAME);
-
+        layer = layersManagerServices.getLayer(GROUP, NAME);
+        System.out.println("layer : " + layer);
         initAcronymsMap();
     }
 
@@ -211,32 +220,30 @@ public class S57DBComponentController
         }
     }
 
-    private void initCheckBox(String filename, ChoiceBox<String> cb) {
-        String content;
-        String[] parts;
-        try {
-            content = new String(Files.readAllBytes(Paths.get(filename)));
-            parts = content.split(",");
-            ObservableList<String> cbData = FXCollections.observableArrayList();
-            cbData.addAll(Arrays.asList(parts));
-            cb.setItems(cbData);
-            System.out.println("cbData : " + cbData);
-        } catch (IOException ex) {
-            Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-    }
-
-    public final void init(String path) {
-
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         databasesCB.setItems(dbCbData);
         databasesCB.getSelectionModel().select("s57NP5DB");
+        databaseTF.setText("s57NP5DB");
+        databasesCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener(
+                        (ObservableValue<? extends String> observable, String oldValue, String newValue)
+                        -> databaseTF.setText(databasesCB.getValue())
+                );
         objectsCB.setItems(objectsCbData);
         // initCheckBox( "properties/objects_1.csv", objectsCB);
-        objectsCB.getSelectionModel().select("ALL:All objects");
+        objectsCB.getSelectionModel().select("ALL : All objects");
+        objectsTF.setText("ALL");
+        objectsCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener(
+                        (ObservableValue<? extends String> observable, String oldValue, String newValue)
+                        -> {
+                    String[] v = newValue.split(":");
+                    objectsTF.setText(v[0]);
+                }
+                );
 
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
@@ -264,7 +271,7 @@ public class S57DBComponentController
     }
 
     private void initSelectedZone() {
-        
+
         Dialog dialog = new Dialog<>();
         dialog.setTitle("Create Area");
         dialog.setHeaderText("Please enter selected area coordinates.");
@@ -299,19 +306,19 @@ public class S57DBComponentController
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
         okButton.addEventFilter(ActionEvent.ACTION, event -> {
-            try{
-            lat0 = Double.valueOf(lat0TF.getText().trim());
-            lon0 = Double.valueOf(lon0TF.getText().trim());
-            lat1 = Double.valueOf(lat1TF.getText().trim());
-            lon1 = Double.valueOf(lon1TF.getText().trim());
-            }catch(NumberFormatException e ){
+            try {
+                lat0 = Double.valueOf(lat0TF.getText().trim());
+                lon0 = Double.valueOf(lon0TF.getText().trim());
+                lat1 = Double.valueOf(lat1TF.getText().trim());
+                lon1 = Double.valueOf(lon1TF.getText().trim());
+            } catch (NumberFormatException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Range latitude : -90° <= Latitude <= 90° \n"
-                +"Range longitude : -180° <= Longitude <= 180°");
+                        + "Range longitude : -180° <= Longitude <= 180°");
                 alert.show();
             }
-            if (lat0 < -90.0 || lat0 > 90.0 || lat1 < -90.0 || lat1 > 90.0 ) {
+            if (lat0 < -90.0 || lat0 > 90.0 || lat1 < -90.0 || lat1 > 90.0) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Range latitude : -90° <= Latitude <= 90°");
@@ -328,5 +335,21 @@ public class S57DBComponentController
         });
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
         dialog.showAndWait();
+    }
+
+    private void initCheckBox(String filename, ChoiceBox<String> cb) {
+        /* Pb a l'affichage */
+        String content;
+        String[] parts;
+        try {
+            content = new String(Files.readAllBytes(Paths.get(filename)));
+            parts = content.split(",");
+            ObservableList<String> cbData = FXCollections.observableArrayList();
+            cbData.addAll(Arrays.asList(parts));
+            cb.setItems(cbData);
+            System.out.println("cbData : " + cbData);
+        } catch (IOException ex) {
+            Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
     }
 }
