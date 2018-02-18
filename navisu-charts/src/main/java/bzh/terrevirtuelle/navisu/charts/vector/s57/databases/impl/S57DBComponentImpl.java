@@ -53,7 +53,7 @@ public class S57DBComponentImpl
     ComponentManager cm;
     ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
 
-    private final String COMPONENT_KEY_NAME_0 = "DbS57";
+    private final String COMPONENT_KEY_NAME_0 = "ReqDbS57";
     private String componentKeyName;
 
     protected S57DBComponentController controller;

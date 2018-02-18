@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="514.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="570.0" />
         <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="570.0" styleClass="background-pane">
