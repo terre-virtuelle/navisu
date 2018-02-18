@@ -70,7 +70,7 @@ public class DockManagerImpl<TrackTool>
     protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
     protected final String GEBCO = "http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?";
 
-    protected RadialMenu BathyStlRadialMenu;
+    protected RadialMenu stlRadialMenu;
     protected RadialMenu booksRadialMenu;
     protected RadialMenu instrumentsRadialMenu;
     protected RadialMenu MediasRadialMenu;
@@ -134,7 +134,7 @@ public class DockManagerImpl<TrackTool>
         }),
         DockItemFactory.newImageItem("STL", ICON_PATH + "dock_icons/stl.png",
         (e) -> {
-            BathyStlRadialMenu.setVisible(!BathyStlRadialMenu.isVisible());
+            stlRadialMenu.setVisible(!stlRadialMenu.isVisible());
         }),
         DockItemFactory.newImageItem("medias", ICON_PATH + "dock_icons/medias.png",
         (e) -> {
@@ -168,7 +168,7 @@ public class DockManagerImpl<TrackTool>
         createToolsRadialWidget();
         createNavigationRadialWidget();
         createSystemRadialWidget();
-        createBathyStlWidget();
+        createStlWidget();
         createMediasRadialWidget();
     }
 
@@ -195,18 +195,20 @@ public class DockManagerImpl<TrackTool>
     }
 //--------------STL------------------
 
-    private void createBathyStlWidget() {
-        BathyStlRadialMenu = RadialMenuBuilder.create()
+    private void createStlWidget() {
+        stlRadialMenu = RadialMenuBuilder.create()
                 .centralImage("STLradialmenu.png")
-                .createNode(0, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> open())
-                .createNode(0, "vide.png", 1, "vide.png", 0, "vide.png", (e) -> open())
-                .createNode(1, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> open())
-                .createNode(1, "vide.png", 1, "vide.png", 1, "vide.png", (e) -> open())
+                .createNode(0, "dem.png", 0, "vide.png", 0, "vide.png", (e) -> open())
+                .createNode(1, "bathy.png", 1, "vide.png", 0, "vide.png", (e) -> open())
+                .createNode(2, "charts.png", 1, "files.png", 0, "vide.png", (e) -> open())
+                .createNode(2, "charts.png", 2, "db.png", 0, "s57np5db.png", (e) -> open("DbS57"))
+              //  .createNode(1, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> open())
+              //  .createNode(1, "vide.png", 1, "vide.png", 1, "vide.png", (e) -> open())
                 .build();
-        BathyStlRadialMenu.setLayoutX((width / 2) - 10);
-        BathyStlRadialMenu.setLayoutY(height / 2);
-        root.getChildren().add(BathyStlRadialMenu);
-        radialMenus.add(BathyStlRadialMenu);
+        stlRadialMenu.setLayoutX((width / 2) - 10);
+        stlRadialMenu.setLayoutY(height / 2);
+        root.getChildren().add(stlRadialMenu);
+        radialMenus.add(stlRadialMenu);
     }
 
     //--------------BOOKS------------------

@@ -130,6 +130,8 @@ import bzh.terrevirtuelle.navisu.media.bathysounds.BathySoundsServices;
 import bzh.terrevirtuelle.navisu.media.bathysounds.impl.BathySoundsImpl;
 import bzh.terrevirtuelle.navisu.bathymetry.view.DisplayBathymetryServices;
 import bzh.terrevirtuelle.navisu.bathymetry.view.impl.DisplayBathymetryImpl;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.S57DBComponentServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
@@ -163,8 +165,6 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import org.openide.util.Exceptions;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -273,6 +273,7 @@ public class AppMain extends Application {
                         SoundImpl.class,
                         SpeakerImpl.class,
                         S57ChartComponentImpl.class,
+                        S57DBComponentImpl.class,
                         S57GlobalCatalogImpl.class,
                         StlComponentImpl.class,
                         TestDBImpl.class,
@@ -362,9 +363,10 @@ public class AppMain extends Application {
         SonarServices sonarServices = componentManager.getComponentService(SonarServices.class);
         SoundServices soundServices = componentManager.getComponentService(SoundServices.class);
         SpeakerServices speakerServices = componentManager.getComponentService(SpeakerServices.class);
-        S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
-        S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
         S57ChartComponentServices chartS57ComponentServices = componentManager.getComponentService(S57ChartComponentServices.class);
+        S57DBComponentServices Ss57DBComponentServices = componentManager.getComponentService(S57DBComponentServices.class);
+        S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
+        S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
         StlComponentServices s57StlComponentServices = componentManager.getComponentService(StlComponentServices.class);
 
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
@@ -424,6 +426,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routePhotoEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(serverOptionsComponentServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(Ss57DBComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(s57StlComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
@@ -444,7 +447,7 @@ public class AppMain extends Application {
                 DATA_S57_CATALOG_6);
 
         wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 120000));
-        
+
         // Initialisation du serveur
         dataServerServices.init("localhost", 8585);
 
@@ -606,7 +609,7 @@ public class AppMain extends Application {
     private void clearTmpDirs(String dir, String extension, boolean rmDir) {
         try {
             Path directory = Paths.get(dir);
-            
+
             Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
@@ -623,7 +626,7 @@ public class AppMain extends Application {
                     }
                     return FileVisitResult.CONTINUE;
                 }
-            
+
             });
         } catch (IOException ex) {
             //Nothing if dir don't exist

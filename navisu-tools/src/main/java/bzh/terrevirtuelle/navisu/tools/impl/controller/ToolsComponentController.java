@@ -56,10 +56,13 @@ public class ToolsComponentController
         extends Widget2DController
         implements Initializable {
 
+    private final ToolsComponentImpl component;
+
     protected GuiAgentServices guiAgentServices;
     protected S57ChartComponentServices s57ChartComponentServices;
     protected DatabaseServices databaseServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
+
     private final String FXML = "toolsController.fxml";
 
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
@@ -68,9 +71,8 @@ public class ToolsComponentController
     private final String USER = "admin";
     private final String PASSWD = "admin";
     protected Properties properties;
+    
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
-    private static ToolsComponentController INSTANCE;
-    private final ToolsComponentImpl component;
     protected String viewgroupstyle = "configuration.css";
 
     /* Common controls */
@@ -253,7 +255,7 @@ public class ToolsComponentController
         saveButton.setOnMouseClicked((MouseEvent event) -> {
             if (encDBTab.isSelected()) {
                 encPath = encHomeTF.getText();
-                psqlPath=psqlTF.getText();
+                psqlPath = psqlTF.getText();
                 saveUser();
             }
 
