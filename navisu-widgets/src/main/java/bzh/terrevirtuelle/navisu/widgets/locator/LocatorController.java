@@ -14,6 +14,8 @@ import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -21,10 +23,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 /**
@@ -36,10 +38,10 @@ public class LocatorController
 
     @FXML
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
-    protected String viewgroupstyle = "locator.css";
+    protected String viewgroupstyle = "common.css";
     public Group locatorPanel;
     @FXML
-    public ImageView quit;
+    public Pane quitPane;
     @FXML
     Text title;
     @FXML
@@ -51,12 +53,15 @@ public class LocatorController
     @FXML
     TextField headingTF;
     @FXML
+    TextField heightTF;
+    @FXML
     TextField scaleTF;
     String FXML = "LocatorPanel.fxml";
     ColladaRoot colladaRoot;
     private WorldWindow wwd;
     private double oldLat = 0.0;
     private double oldLon = 0.0;
+    final static Pattern DOUBLE_FORMAT = Pattern.compile("^(\\-?)[0]*([0-9]+)(?:\\.([0-9]+?)[0]*)?$");
 
     public LocatorController(ColladaRoot colladaRoot) {
         this.colladaRoot = colladaRoot;
@@ -83,9 +88,7 @@ public class LocatorController
         }
         String uri = CSS_STYLE_PATH + viewgroupstyle;
         locatorPanel.getStylesheets().add(uri);
-        quit.setOnMouseClicked((MouseEvent event) -> {
-        
-
+        quitPane.setOnMouseClicked((MouseEvent event) -> {
             setVisible(false);
         });
         initGui();
@@ -97,44 +100,48 @@ public class LocatorController
 //        setHeadingTF(String.valueOf(colladaRoot.getHeading().getDegrees()));
 //        setScaleTF(String.valueOf(colladaRoot.getModelScale().getX()));
         latitudeTF.textProperty().addListener((final ObservableValue<? extends String> observable, final String oldValue, final String newValue) -> {
-            System.out.println("********" + oldValue + "  " + newValue);
-            if (!latitudeTF.getText().equals("") && latitudeTF.getText() != null) {
+            //  System.out.println("********" + oldValue + "  " + newValue);
+            if (!latitudeTF.getText().equals("")
+                    && latitudeTF.getText() != null
+                    && !heightTF.getText().equals("-")) {
                 double val = Double.parseDouble(newValue.trim());
                 if (val <= 90 && val >= -90) {
                     colladaRoot.setPosition(Position.fromDegrees(
                             val,
                             Double.parseDouble(longitudeTF.getText().trim()),
-                            1000.0));
+                            100.0));
                     oldLat = val;
                 } else {
                     colladaRoot.setPosition(Position.fromDegrees(
                             oldLat,
                             Double.parseDouble(longitudeTF.getText().trim()),
-                            1000.0));
+                            100.0));
 
                 }
-              //  Platform.runLater(() -> {
-                    System.out.println("Platform.runLater " + oldLat);
-                    latitudeTF.setText(Double.toString(oldLat));
-              //  });
+                //  Platform.runLater(() -> {
+                // System.out.println("Platform.runLater " + oldLat);
+                latitudeTF.setText(Double.toString(oldLat));
+                //  });
                 wwd.redrawNow();
             }
         });
         longitudeTF.textProperty().addListener((final ObservableValue<? extends String> observable, final String oldValue, final String newValue) -> {
-            System.out.println("ooooooooooooo" + oldValue + "  " + newValue);
-            if (!longitudeTF.getText().equals("") && longitudeTF.getText() != null) {
+            // System.out.println("ooooooooooooo" + oldValue + "  " + newValue);
+            if (!longitudeTF.getText().equals("")
+                    && longitudeTF.getText() != null
+                    && !heightTF.getText().equals("-")) {
                 double val = Double.parseDouble(newValue.trim());
                 if (val <= 180 && val >= -180) {
                     colladaRoot.setPosition(Position.fromDegrees(
                             Double.parseDouble(latitudeTF.getText().trim()),
                             val,
-                            1000.0));
+                            100.0));
                     oldLon = val;
                 } else {
                     colladaRoot.setPosition(Position.fromDegrees(
                             Double.parseDouble(latitudeTF.getText().trim()),
                             oldLon,
-                            1000.0));
+                            100.0));
                     Platform.runLater(() -> {
                         longitudeTF.setText(Double.toString(oldLon));
                     });
@@ -157,7 +164,15 @@ public class LocatorController
                 wwd.redrawNow();
             }
         });
-
+        heightTF.textProperty().addListener((final ObservableValue<? extends String> observable, final String oldValue, final String newValue) -> {
+            if (!heightTF.getText().equals("") && !heightTF.getText().equals("-")) {
+                colladaRoot.setPosition(Position.fromDegrees(
+                        Double.parseDouble(latitudeTF.getText().trim()),
+                        Double.parseDouble(longitudeTF.getText().trim()),
+                        Double.parseDouble(heightTF.getText().trim())));
+                wwd.redrawNow();
+            }
+        });
     }
 
     public void setTitle(Text title) {

@@ -12,8 +12,11 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TOPMAR_DbLoader;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWindow;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -29,7 +32,13 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
@@ -57,6 +66,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import org.postgis.PGgeometry;
 
 /**
  * @author Serge Morvan
@@ -114,6 +124,14 @@ public class S57DBComponentController
     public TextField databaseTF;
     @FXML
     public TextField objectsTF;
+    @FXML
+    public Label latMinLabel;
+    @FXML
+    public Label lonMinLabel;
+    @FXML
+    public Label latMaxLabel;
+    @FXML
+    public Label lonMaxLabel;
 
     @FXML
     public TextField hostnameTF;
@@ -131,8 +149,10 @@ public class S57DBComponentController
     protected double lon0;
     protected double lat1;
     protected double lon1;
-
+    protected Connection connection;
+    private Map<Pair<Double, Double>, String> topMarks = new HashMap<>();
     private ObservableList<String> dbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
+    /*
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList("ALL : All objects",
             "BUOYAGE : All buoyage",
             "ACHARE : AnchorageArea",
@@ -170,7 +190,69 @@ public class S57DBComponentController
             "UNSARE : UnsurveyedArea",
             "UWTROC : UnderwaterAwashRock",
             "WRECKS : Wreck");
+     */
+    private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
+            "ALL : All objects",
+            "BUOYAGE : All buoyage",
+            "BCNCAR : BeaconCardinal",
+            "BCNISD : BeaconIsolatedDanger",
+            "BCNLAT : BeaconLateral",
+            "BCNSAW : BeaconSafeWater",
+            "BCNSPP : BeaconSpecialPurposeGeneral",
+            "BOYCAR : BuoyCardinal",
+            "BOYINB : BuoyInstallation",
+            "BOYISD : BuoyIsolatedDanger",
+            "BOYLAT : BuoyLateral",
+            "BOYSAW : BuoySafeWater",
+            "BOYSPP : BuoySpecial",
+            "TOPMAR : Topmark"
+    );
+    public static final Map<String, String> S57_REQUEST_MAP = Collections.unmodifiableMap(new HashMap<String, String>() {
+        {
+            put("TOPMAR", "SELECT geom, topshp "
+                    + " FROM topmar "
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("BCNCAR", "SELECT objnam, geom, bcnshp, colour, colpat, marsys, rcid, height, catcam "
+                    + " FROM bcncar "
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("BCNLAT", "SELECT objnam, geom, bcnshp, colour, colpat, marsys, rcid, height, catlam "
+                    + " FROM bcnlat "
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("BCNISD", "SELECT objnam, geom, bcnshp, colour, colpat, marsys, rcid, height"
+                    + " FROM bcnisd  "
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("BCNSAW", "SELECT objnam, geom, bcnshp, colour, colpat, marsys, rcid, height"
+                    + " FROM bcnsaw "
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("BCNSPP", "SELECT objnam, geom, bcnshp, colour, colpat, marsys, rcid, height, catspm"
+                    + " FROM bcnspp "
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("BCNISD", "SELECT objnam, geom, bcnshp, colour, colpat, marsys, rcid, height"
+                    + " FROM bcnisd "
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("BOYCAR", "SELECT objnam, geom, boyshp, colour, colpat, marsys, rcid, catcam"
+                    + " FROM boycar "
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("BOYINB", "SELECT objnam, geom, boyshp, colour, colpat, marsys, rcid"
+                    + " FROM boyinb "
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("BOYISD", "SELECT objnam, geom, boyshp, colour, colpat, marsys, rcid"
+                    + " FROM boyisd "
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("BOYLAT", "SELECT objnam, geom, boyshp, colour, colpat, marsys, rcid, catlam"
+                    + " FROM boylat"
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("BOYSAW", "SELECT objnam, geom, boyshp, colour, colpat, marsys, rcid"
+                    + " FROM boysaw "
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("BOYSPP", "SELECT objnam, geom, boyshp, colour, colpat, marsys, rcid, catspm"
+                    + " FROM boyspp"
+                    + " WHERE geom && ST_MakeEnvelope");
+        }
+    ;
 
+    });
+    
     public S57DBComponentController(S57DBComponentImpl component, String componentKeyName,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
@@ -200,7 +282,7 @@ public class S57DBComponentController
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
         layer = layersManagerServices.getLayer(GROUP, NAME);
-        System.out.println("layer : " + layer);
+        // System.out.println("layer : " + layer.getName());
         initAcronymsMap();
     }
 
@@ -268,6 +350,13 @@ public class S57DBComponentController
         latLonButton.setOnMouseClicked((MouseEvent event) -> {
             initSelectedZone();
         });
+        requestButton.setOnMouseClicked((MouseEvent event) -> {
+
+            connection = databaseServices.connect(databaseTF.getText(),
+                    "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", "admin", "admin");
+            retrieveBuoyageIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
+        });
+
     }
 
     private void initSelectedZone() {
@@ -332,6 +421,10 @@ public class S57DBComponentController
             }
             event.consume();
             dialog.close();
+            latMinLabel.setText(Double.toString(lat0));
+            lonMinLabel.setText(Double.toString(lon0));
+            latMaxLabel.setText(Double.toString(lat1));
+            lonMaxLabel.setText(Double.toString(lon1));
         });
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
         dialog.showAndWait();
@@ -351,5 +444,45 @@ public class S57DBComponentController
         } catch (IOException ex) {
             Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+    }
+
+    public List<Buoyage> retrieveBuoyageIn(String object, double latMin, double lonMin,
+            double latMax, double lonMax) {
+        
+        TOPMAR_DbLoader topmarDbLoader = new TOPMAR_DbLoader(connection, topMarks); 
+        
+        topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+        
+        
+        List<Buoyage> tmp1 = new ArrayList<>();
+        PGgeometry geom;
+        ResultSet r;
+        if (connection != null) {
+            try {
+                //  System.out.println("object : " + object);
+                String request = S57_REQUEST_MAP.get(object.trim());
+                request += "(" + lonMin + ", " + latMin + ", "
+                        + lonMax + ", " + latMax + ", "
+                        + "4326);";
+                System.out.println("request : " + request);
+                r = connection.createStatement().executeQuery(request);
+                while (r.next()) {
+                    geom = (PGgeometry) r.getObject(2);
+                    /*
+                    Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
+                            geom.getGeometry().getFirstPoint().getY(),
+                            0.0);
+                    tmp1.add(pt);
+                     */
+                }
+                System.out.println("tmp1 : " + tmp1);
+
+            } catch (SQLException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            }
+        } else {
+            // alert();
+        }
+        return tmp1;
     }
 }

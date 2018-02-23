@@ -315,7 +315,7 @@
 .tab-conteneur{
     -fx-background-color:-fx-base-trans;
     -fx-border-color: -fx-line-base;
-    -fx-border-width: 30;
+    -fx-border-width: 1;
     -fx-border-radius:0 0 10 10;
 }
 

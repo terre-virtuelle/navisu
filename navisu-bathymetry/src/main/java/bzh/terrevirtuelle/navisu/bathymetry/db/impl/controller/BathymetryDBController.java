@@ -243,6 +243,7 @@ public class BathymetryDBController {
         PGgeometry geom;
         double depth;
         ResultSet r;
+        
         if (connection != null) {
             try {
                 r = connection.createStatement().executeQuery(
