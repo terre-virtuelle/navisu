@@ -448,15 +448,14 @@ public class S57DBComponentController
 
     public List<Buoyage> retrieveBuoyageIn(String object, double latMin, double lonMin,
             double latMax, double lonMax) {
-        
-        TOPMAR_DbLoader topmarDbLoader = new TOPMAR_DbLoader(connection, topMarks); 
-        
+
+        TOPMAR_DbLoader topmarDbLoader = new TOPMAR_DbLoader(connection, topMarks);
         topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-        
-        
+
         List<Buoyage> tmp1 = new ArrayList<>();
         PGgeometry geom;
         ResultSet r;
+/*
         if (connection != null) {
             try {
                 //  System.out.println("object : " + object);
@@ -468,21 +467,15 @@ public class S57DBComponentController
                 r = connection.createStatement().executeQuery(request);
                 while (r.next()) {
                     geom = (PGgeometry) r.getObject(2);
-                    /*
-                    Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
-                            geom.getGeometry().getFirstPoint().getY(),
-                            0.0);
-                    tmp1.add(pt);
-                     */
+                    
                 }
                 System.out.println("tmp1 : " + tmp1);
 
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
-        } else {
-            // alert();
         }
+*/
         return tmp1;
     }
 }

@@ -29,6 +29,7 @@ public class TOPMAR_DbLoader {
     protected Connection connection;
 
     public TOPMAR_DbLoader(Connection connection, Map<Pair<Double, Double>, String> topMarks) {
+        this.connection=connection;
         this.topMarks = topMarks;
     }
 
