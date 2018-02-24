@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -28,10 +29,12 @@ public class TOPMAR_DbLoader {
     protected Map<Pair<Double, Double>, String> topMarks;
     protected Connection connection;
 
-    public TOPMAR_DbLoader(Connection connection, Map<Pair<Double, Double>, String> topMarks) {
+    public TOPMAR_DbLoader(Connection connection) {
         this.connection=connection;
-        this.topMarks = topMarks;
+        this.topMarks = new HashMap<>();
     }
+
+    
 
     public Map<Pair<Double, Double>, String> retrieveIn(double latMin, double lonMin,
             double latMax, double lonMax) {
@@ -44,7 +47,7 @@ public class TOPMAR_DbLoader {
                 request += "(" + lonMin + ", " + latMin + ", "
                         + lonMax + ", " + latMax + ", "
                         + "4326);";
-                System.out.println("requestTopmar : " + request);
+               // System.out.println("requestTopmar : " + request);
                 r = connection.createStatement().executeQuery(request);
                 while (r.next()) {
                     geom = (PGgeometry) r.getObject(1);

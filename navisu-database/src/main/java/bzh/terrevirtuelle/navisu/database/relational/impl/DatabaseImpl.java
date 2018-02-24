@@ -406,7 +406,7 @@ public class DatabaseImpl
     private String startCmd(String command) {
         String cmd = null;
         if (OS.isWindows()) {
-            cmd = "" + command;
+            cmd = "C:\\Program Files\\PostgreSQL\\9.4\\bin\\" + command;
         } else if (OS.isLinux()) {
             cmd = "/usr/bin/" + command;
         } else if (OS.isMac()) {

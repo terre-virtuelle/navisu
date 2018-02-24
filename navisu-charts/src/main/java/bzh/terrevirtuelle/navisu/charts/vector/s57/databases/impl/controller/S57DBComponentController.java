@@ -354,7 +354,7 @@ public class S57DBComponentController
 
             connection = databaseServices.connect(databaseTF.getText(),
                     "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", "admin", "admin");
-            retrieveBuoyageIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
+            retrieveObjectIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
         });
 
     }
@@ -446,16 +446,16 @@ public class S57DBComponentController
         }
     }
 
-    public List<Buoyage> retrieveBuoyageIn(String object, double latMin, double lonMin,
+    public List<Buoyage> retrieveObjectIn(String object, double latMin, double lonMin,
             double latMax, double lonMax) {
 
-        TOPMAR_DbLoader topmarDbLoader = new TOPMAR_DbLoader(connection, topMarks);
-        topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+        TOPMAR_DbLoader topmarDbLoader = new TOPMAR_DbLoader(connection);
+        topMarks =  topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
         List<Buoyage> tmp1 = new ArrayList<>();
         PGgeometry geom;
         ResultSet r;
-/*
+        /*
         if (connection != null) {
             try {
                 //  System.out.println("object : " + object);
@@ -475,7 +475,7 @@ public class S57DBComponentController
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
         }
-*/
+         */
         return tmp1;
     }
 }
