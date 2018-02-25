@@ -12,7 +12,9 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TOPMAR_DbLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BeaconCardinalDbLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDbLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDbLoader;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
@@ -33,9 +35,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -66,7 +65,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import org.postgis.PGgeometry;
 
 /**
  * @author Serge Morvan
@@ -140,7 +138,6 @@ public class S57DBComponentController
 
     protected Map<String, String> acronyms;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
-    protected String marsys;
 
     protected final Set<S57Controller> s57Controllers = new HashSet<>();
     protected boolean first = true;
@@ -150,7 +147,8 @@ public class S57DBComponentController
     protected double lat1;
     protected double lon1;
     protected Connection connection;
-    private Map<Pair<Double, Double>, String> topMarks = new HashMap<>();
+    private Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
+    private Map<Pair<Double, Double>, String> marsysMap = new HashMap<>();
     private ObservableList<String> dbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
     /*
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList("ALL : All objects",
@@ -212,40 +210,43 @@ public class S57DBComponentController
             put("TOPMAR", "SELECT geom, topshp "
                     + " FROM topmar "
                     + " WHERE geom && ST_MakeEnvelope");
-            put("BCNCAR", "SELECT objnam, geom, bcnshp, colour, colpat, marsys, rcid, height, catcam "
+            put("M_NSYS", "SELECT geom, marsys "
+                    + " FROM m_nsys "
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("BCNCAR", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, catcam "
                     + " FROM bcncar "
                     + " WHERE geom && ST_MakeEnvelope");
-            put("BCNLAT", "SELECT objnam, geom, bcnshp, colour, colpat, marsys, rcid, height, catlam "
+            put("BCNLAT", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, catlam "
                     + " FROM bcnlat "
                     + " WHERE geom && ST_MakeEnvelope");
-            put("BCNISD", "SELECT objnam, geom, bcnshp, colour, colpat, marsys, rcid, height"
+            put("BCNISD", "SELECT objnam, geom, bcnshp, colour, colpat, rcid"
                     + " FROM bcnisd  "
                     + " WHERE geom && ST_MakeEnvelope");
-            put("BCNSAW", "SELECT objnam, geom, bcnshp, colour, colpat, marsys, rcid, height"
+            put("BCNSAW", "SELECT objnam, geom, bcnshp, colour, colpat, rcid"
                     + " FROM bcnsaw "
                     + " WHERE geom && ST_MakeEnvelope");
-            put("BCNSPP", "SELECT objnam, geom, bcnshp, colour, colpat, marsys, rcid, height, catspm"
+            put("BCNSPP", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, catspm"
                     + " FROM bcnspp "
                     + " WHERE geom && ST_MakeEnvelope");
-            put("BCNISD", "SELECT objnam, geom, bcnshp, colour, colpat, marsys, rcid, height"
+            put("BCNISD", "SELECT objnam, geom, bcnshp, colour, colpat, rcid"
                     + " FROM bcnisd "
                     + " WHERE geom && ST_MakeEnvelope");
-            put("BOYCAR", "SELECT objnam, geom, boyshp, colour, colpat, marsys, rcid, catcam"
+            put("BOYCAR", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catcam"
                     + " FROM boycar "
                     + " WHERE geom && ST_MakeEnvelope");
-            put("BOYINB", "SELECT objnam, geom, boyshp, colour, colpat, marsys, rcid"
+            put("BOYINB", "SELECT objnam, geom, boyshp, colour, colpat, rcid"
                     + " FROM boyinb "
                     + " WHERE geom && ST_MakeEnvelope");
-            put("BOYISD", "SELECT objnam, geom, boyshp, colour, colpat, marsys, rcid"
+            put("BOYISD", "SELECT objnam, geom, boyshp, colour, colpat, rcid"
                     + " FROM boyisd "
                     + " WHERE geom && ST_MakeEnvelope");
-            put("BOYLAT", "SELECT objnam, geom, boyshp, colour, colpat, marsys, rcid, catlam"
+            put("BOYLAT", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catlam"
                     + " FROM boylat"
                     + " WHERE geom && ST_MakeEnvelope");
-            put("BOYSAW", "SELECT objnam, geom, boyshp, colour, colpat, marsys, rcid"
+            put("BOYSAW", "SELECT objnam, geom, boyshp, colour, colpat, rcid"
                     + " FROM boysaw "
                     + " WHERE geom && ST_MakeEnvelope");
-            put("BOYSPP", "SELECT objnam, geom, boyshp, colour, colpat, marsys, rcid, catspm"
+            put("BOYSPP", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catspm"
                     + " FROM boyspp"
                     + " WHERE geom && ST_MakeEnvelope");
         }
@@ -354,7 +355,7 @@ public class S57DBComponentController
 
             connection = databaseServices.connect(databaseTF.getText(),
                     "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", "admin", "admin");
-            retrieveObjectIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
+            retrieveIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
         });
 
     }
@@ -446,36 +447,21 @@ public class S57DBComponentController
         }
     }
 
-    public List<Buoyage> retrieveObjectIn(String object, double latMin, double lonMin,
+    public void retrieveIn(String object, double latMin, double lonMin,
             double latMax, double lonMax) {
 
-        TOPMAR_DbLoader topmarDbLoader = new TOPMAR_DbLoader(connection);
-        topMarks =  topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+        TopmarDbLoader topmarDbLoader = new TopmarDbLoader(connection);
+        topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+        //  System.out.println("topMarkMap : " + topMarkMap.size());
 
-        List<Buoyage> tmp1 = new ArrayList<>();
-        PGgeometry geom;
-        ResultSet r;
-        /*
-        if (connection != null) {
-            try {
-                //  System.out.println("object : " + object);
-                String request = S57_REQUEST_MAP.get(object.trim());
-                request += "(" + lonMin + ", " + latMin + ", "
-                        + lonMax + ", " + latMax + ", "
-                        + "4326);";
-                System.out.println("request : " + request);
-                r = connection.createStatement().executeQuery(request);
-                while (r.next()) {
-                    geom = (PGgeometry) r.getObject(2);
-                    
-                }
-                System.out.println("tmp1 : " + tmp1);
+        MnsysDbLoader mnsysDbLoader = new MnsysDbLoader(connection);
+        marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+        //  System.out.println("marsysMap : " + marsysMap.size());
 
-            } catch (SQLException ex) {
-                LOGGER.log(Level.SEVERE, ex.toString(), ex);
-            }
-        }
-         */
-        return tmp1;
+        BeaconCardinalDbLoader beaconCardinalDbLoader = new BeaconCardinalDbLoader(connection,  marsysMap);
+        List<Buoyage> buoyages = beaconCardinalDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+        buoyages.forEach((b) -> {
+            System.out.println(b.getObjectName());
+        });
     }
 }

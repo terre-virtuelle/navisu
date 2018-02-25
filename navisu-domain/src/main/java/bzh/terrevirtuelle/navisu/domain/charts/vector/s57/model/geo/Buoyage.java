@@ -51,6 +51,7 @@ public abstract class Buoyage
     protected String verticalLength;
     protected String objectNameInNationalLanguage;
     protected String status;
+    protected String marsys;
     @XmlTransient
     protected String label;
     protected String imageAddress;
@@ -359,6 +360,14 @@ public abstract class Buoyage
         this.status = status;
     }
 
+    public String getMarsys() {
+        return marsys;
+    }
+
+    public void setMarsys(String marsys) {
+        this.marsys = marsys;
+    }
+
     @Override
     public String getGeometry() {
         return "POINT(" + Double.toString(longitude) + " " + Double.toString(latitude) + ")";
@@ -392,6 +401,7 @@ public abstract class Buoyage
                 + ", verticalLength=" + verticalLength
                 + ", objectNameInNationalLanguage=" + objectNameInNationalLanguage
                 + ", status=" + status
+                + ", marsys=" + marsys
                 //  + super.toString() 
                 + '}';
     }

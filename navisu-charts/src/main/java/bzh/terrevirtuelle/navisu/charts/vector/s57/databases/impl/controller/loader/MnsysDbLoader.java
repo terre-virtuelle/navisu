@@ -6,65 +6,60 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 import org.postgis.PGgeometry;
 
 /**
  *
  * @author serge
  */
-public class TOPMAR_DbLoader {
-
-    protected static final Logger LOGGER = Logger.getLogger(TOPMAR_DbLoader.class.getName());
-    protected Map<Pair<Double, Double>, String> topMarks;
+public class MnsysDbLoader {
+    protected static final Logger LOGGER = Logger.getLogger(MnsysDbLoader.class.getName());
+    protected Map<Pair<Double, Double>, String> marsysMap;
     protected Connection connection;
 
-    public TOPMAR_DbLoader(Connection connection) {
-        this.connection=connection;
-        this.topMarks = new HashMap<>();
+    public MnsysDbLoader(Connection connection) {
+        this.connection = connection;
+        marsysMap=new HashMap<>();
     }
-
-    
-
+    @SuppressWarnings("unchecked")
     public Map<Pair<Double, Double>, String> retrieveIn(double latMin, double lonMin,
             double latMax, double lonMax) {
-        List<Point3D> tmp1 = new ArrayList<>();
         PGgeometry geom;
         ResultSet r;
         if (connection != null) {
             try {
-                String request = S57_REQUEST_MAP.get("TOPMAR");
+                String request = S57_REQUEST_MAP.get("M_NSYS");
                 request += "(" + lonMin + ", " + latMin + ", "
                         + lonMax + ", " + latMax + ", "
                         + "4326);";
-               // System.out.println("requestTopmar : " + request);
                 r = connection.createStatement().executeQuery(request);
                 while (r.next()) {
+                    String marsys = r.getString(2);
+                    if (marsys == null || marsys.equals("9") || marsys.equals("10")) {
+                        marsys = "0";
+                    }
                     geom = (PGgeometry) r.getObject(1);
-
-                    Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
-                            geom.getGeometry().getFirstPoint().getY(),
-                            0.0);
-                    tmp1.add(pt);
-
+                    marsysMap.put(new Pair(geom.getGeometry().getFirstPoint().getY(),
+                            geom.getGeometry().getFirstPoint().getX()), marsys);
                 }
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
         } else {
-            // alert();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Database connection fail");
+                alert.show();
         }
-        System.out.println("List<Point3D> : " + tmp1);
-        return topMarks;
+        return marsysMap;
     }
 }

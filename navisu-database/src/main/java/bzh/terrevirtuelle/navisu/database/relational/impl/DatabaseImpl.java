@@ -254,7 +254,7 @@ public class DatabaseImpl
         try {
             Files.createDirectory(Paths.get(userDirPath + "/data/sql/"));
         } catch (IOException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         Map<String, String> environment = new HashMap<>(System.getenv());
         String options = System.getProperty("user.dir") + "/gdal/data";
