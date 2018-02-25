@@ -435,22 +435,6 @@ public class S57DBComponentController
         dialog.showAndWait();
     }
     
-    private void initCheckBox(String filename, ChoiceBox<String> cb) {
-        /* Pb a l'affichage */
-        String content;
-        String[] parts;
-        try {
-            content = new String(Files.readAllBytes(Paths.get(filename)));
-            parts = content.split(",");
-            ObservableList<String> cbData = FXCollections.observableArrayList();
-            cbData.addAll(Arrays.asList(parts));
-            cb.setItems(cbData);
-            System.out.println("cbData : " + cbData);
-        } catch (IOException ex) {
-            Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-    }
-    
     public void retrieveIn(String object, double latMin, double lonMin,
             double latMax, double lonMax) {
         
