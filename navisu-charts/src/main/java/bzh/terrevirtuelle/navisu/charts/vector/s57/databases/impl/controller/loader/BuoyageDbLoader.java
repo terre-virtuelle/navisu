@@ -46,7 +46,6 @@ public class BuoyageDbLoader {
         this.marsysMap = marsysMap;
 
         String className = BUOYAGE.ATT.get(acronym);
-        System.out.println("className : " + className);
         try {
             claz = Class.forName(BUOYAGE_PATH + "." + className);
         } catch (ClassNotFoundException ex) {
@@ -72,21 +71,19 @@ public class BuoyageDbLoader {
                         .executeQuery(request);
 
                 while (resultSet.next()) {
-
                     try {
                         buoyage = (Buoyage) claz.newInstance();
                     } catch (InstantiationException | IllegalAccessException ex) {
                         Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                     }
-                    
-                    String tmp=resultSet.getString(1);
+                    String tmp=resultSet.getString("objnam");
                     String name="";
                     if (tmp != null) {
                         name = tmp;
                     }
                     buoyage.setObjectName(name);
 
-                    geom = (PGgeometry) resultSet.getObject(2);
+                    geom = (PGgeometry) resultSet.getObject("geom");
                     lat = geom.getGeometry().getFirstPoint().getY();
                     lon = geom.getGeometry().getFirstPoint().getX();
                     buoyage.setLatitude(lat);
@@ -99,21 +96,21 @@ public class BuoyageDbLoader {
                     }
                     buoyage.setShape(shp);
 
-                    tmp = resultSet.getString(4);
+                    tmp = resultSet.getString("colour");
                     String col = "0";
                     if (tmp != null) {
-                        shp = tmp;
+                        col = tmp;
                     }
                     buoyage.setColour(col);
 
-                    tmp = resultSet.getString(5);
+                    tmp = resultSet.getString("colpat");
                     String colPat = "0";
                     if (tmp != null) {
                         colPat = tmp;
                     }
                     buoyage.setColourPattern(colPat);
 
-                    buoyage.setId(resultSet.getLong(6));
+                    buoyage.setId(resultSet.getLong("rcid"));
 
                     String ma = marsysMap.get(new Pair(lat, lon));
                     if (ma == null) {

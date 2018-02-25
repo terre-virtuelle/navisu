@@ -15,6 +15,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponent
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BeaconCardinalDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDbLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
@@ -40,6 +41,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -73,7 +75,7 @@ import javafx.scene.text.Text;
 public class S57DBComponentController
         extends Widget2DController
         implements Initializable {
-
+    
     protected S57DBComponentImpl component;
     private String componentKeyName;
     protected static final Logger LOGGER = Logger.getLogger(S57DBComponentController.class.getName());
@@ -82,9 +84,9 @@ public class S57DBComponentController
     protected LayersManagerServices layersManagerServices;
     protected DatabaseServices databaseServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
-
+    
     private final String FXML = "s57DBController.fxml";
-
+    
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
@@ -93,7 +95,7 @@ public class S57DBComponentController
     protected Properties properties;
     private static final String NAME = "S57DB";
     protected static final String GROUP = "S57 charts";
-
+    
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     protected String viewgroupstyle = "configuration.css";
 
@@ -130,15 +132,15 @@ public class S57DBComponentController
     public Label latMaxLabel;
     @FXML
     public Label lonMaxLabel;
-
+    
     @FXML
     public TextField hostnameTF;
     @FXML
     public TextField encPortDBTF;
-
+    
     protected Map<String, String> acronyms;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
-
+    
     protected final Set<S57Controller> s57Controllers = new HashSet<>();
     protected boolean first = true;
     protected RenderableLayer layer;
@@ -147,9 +149,9 @@ public class S57DBComponentController
     protected double lat1;
     protected double lon1;
     protected Connection connection;
-    private Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
-    private Map<Pair<Double, Double>, String> marsysMap = new HashMap<>();
-    private ObservableList<String> dbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
+    protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
+    protected Map<Pair<Double, Double>, String> marsysMap = new HashMap<>();
+    protected ObservableList<String> dbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
     /*
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList("ALL : All objects",
             "BUOYAGE : All buoyage",
@@ -251,7 +253,7 @@ public class S57DBComponentController
                     + " WHERE geom && ST_MakeEnvelope");
         }
     ;
-
+    
     });
     
     public S57DBComponentController(S57DBComponentImpl component, String componentKeyName,
@@ -279,14 +281,14 @@ public class S57DBComponentController
         this.layersManagerServices = layersManagerServices;
         this.databaseServices = databaseServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
-
+        
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
         layer = layersManagerServices.getLayer(GROUP, NAME);
         // System.out.println("layer : " + layer.getName());
         initAcronymsMap();
     }
-
+    
     private void initAcronymsMap() {
         acronyms = new HashMap<>();
         String tmp;
@@ -302,7 +304,7 @@ public class S57DBComponentController
             Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         databasesCB.setItems(dbCbData);
@@ -327,7 +329,7 @@ public class S57DBComponentController
                     objectsTF.setText(v[0]);
                 }
                 );
-
+        
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
         });
@@ -349,34 +351,36 @@ public class S57DBComponentController
             alert.show();
         });
         latLonButton.setOnMouseClicked((MouseEvent event) -> {
-            initSelectedZone();
+            Platform.runLater(() -> {
+                initSelectedZone();
+            });
         });
         requestButton.setOnMouseClicked((MouseEvent event) -> {
-
+            
             connection = databaseServices.connect(databaseTF.getText(),
-                    "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", "admin", "admin");
+                    "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
             retrieveIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
         });
-
+        
     }
-
+    
     private void initSelectedZone() {
-
+        
         Dialog dialog = new Dialog<>();
         dialog.setTitle("Create Area");
         dialog.setHeaderText("Please enter selected area coordinates.");
         dialog.setResizable(false);
-
+        
         Label lat0Label = new Label("Northwest point latitude : ");
         Label lon0Label = new Label("Northwest point longitude : ");
         Label lat1Label = new Label("Southeast point latatitude : ");
         Label lon1Label = new Label("Southeast point longitude : ");
-
+        
         TextField lat0TF = new TextField();
         TextField lat1TF = new TextField();
         TextField lon0TF = new TextField();
         TextField lon1TF = new TextField();
-
+        
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -386,12 +390,12 @@ public class S57DBComponentController
         grid.add(lat0TF, 1, 0);
         grid.add(lon0Label, 0, 1);
         grid.add(lon0TF, 1, 1);
-
+        
         grid.add(lat1Label, 0, 2);
         grid.add(lat1TF, 1, 2);
         grid.add(lon1Label, 0, 3);
         grid.add(lon1TF, 1, 3);
-
+        
         dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
@@ -430,7 +434,7 @@ public class S57DBComponentController
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
         dialog.showAndWait();
     }
-
+    
     private void initCheckBox(String filename, ChoiceBox<String> cb) {
         /* Pb a l'affichage */
         String content;
@@ -446,22 +450,26 @@ public class S57DBComponentController
             Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
-
+    
     public void retrieveIn(String object, double latMin, double lonMin,
             double latMax, double lonMax) {
-
+        
+        //Define TopMak for all buoyages, default is 0 : no topmark
         TopmarDbLoader topmarDbLoader = new TopmarDbLoader(connection);
         topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-        //  System.out.println("topMarkMap : " + topMarkMap.size());
-
+        
+        //Define IALA system for all buoyages, default is 1
         MnsysDbLoader mnsysDbLoader = new MnsysDbLoader(connection);
         marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-        //  System.out.println("marsysMap : " + marsysMap.size());
-
-        BeaconCardinalDbLoader beaconCardinalDbLoader = new BeaconCardinalDbLoader(connection,  marsysMap);
+        
+        //Create a loader for BeaconCardinal
+        //Retrieve all BeaconCardinals in a rectangle latMin, lonMin, latMax, lonMax
+        BeaconCardinalDbLoader beaconCardinalDbLoader = new BeaconCardinalDbLoader(connection, marsysMap);
         List<Buoyage> buoyages = beaconCardinalDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-        buoyages.forEach((b) -> {
-            System.out.println(b.getObjectName());
-        });
+        
+        //Create a Viewer for Buoyage
+        //Display all buoyages retrieved
+        BuoyageView buoyageView = new BuoyageView(topMarkMap, layersManagerServices, GROUP, "BOYAGE", "BCNCAR");
+        buoyageView.display(buoyages);
     }
 }
