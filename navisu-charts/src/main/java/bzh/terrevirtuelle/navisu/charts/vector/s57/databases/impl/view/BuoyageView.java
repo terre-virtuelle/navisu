@@ -70,7 +70,9 @@ public class BuoyageView {
             if (topMark == null) {
                 topMark = "0";
             }
-            String imageAddress = "img/buoyage_" + buoyage.getMarsys() + "/" + acronym + "_"
+            String imageAddress = "img/buoyage_" 
+                    + buoyage.getMarsys() + "/" 
+                    + acronym + "_"
                     + buoyage.getShape() + "_"
                     + buoyage.getCategoryOfMark() + "_"
                     + buoyage.getColour() + "_"

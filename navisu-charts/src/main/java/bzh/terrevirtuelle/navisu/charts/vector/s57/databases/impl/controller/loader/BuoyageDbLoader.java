@@ -65,7 +65,7 @@ public class BuoyageDbLoader {
                 request += "(" + lonMin + ", " + latMin + ", "
                         + lonMax + ", " + latMax + ", "
                         + "4326);";
-                
+
                 resultSet = connection
                         .createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)
                         .executeQuery(request);
@@ -76,8 +76,8 @@ public class BuoyageDbLoader {
                     } catch (InstantiationException | IllegalAccessException ex) {
                         Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                     }
-                    String tmp=resultSet.getString("objnam");
-                    String name="";
+                    String tmp = resultSet.getString("objnam");
+                    String name = "";
                     if (tmp != null) {
                         name = tmp;
                     }
@@ -89,7 +89,7 @@ public class BuoyageDbLoader {
                     buoyage.setLatitude(lat);
                     buoyage.setLongitude(lon);
 
-                     tmp = resultSet.getString(3);
+                    tmp = resultSet.getString(3);
                     String shp = "0";
                     if (tmp != null) {
                         shp = tmp;
@@ -111,6 +111,12 @@ public class BuoyageDbLoader {
                     buoyage.setColourPattern(colPat);
 
                     buoyage.setId(resultSet.getLong("rcid"));
+                    
+                    String cat = resultSet.getString(7);
+                    if (cat == null) {
+                        cat = "0";
+                    }
+                    buoyage.setCategoryOfMark(cat);
 
                     String ma = marsysMap.get(new Pair(lat, lon));
                     if (ma == null) {
@@ -132,4 +138,5 @@ public class BuoyageDbLoader {
         }
         return buoyages;
     }
+
 }
