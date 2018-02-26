@@ -103,6 +103,7 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                           </GridPane>
+                                          <Button fx:id="selectedButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="175.0" text="Selected" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                                     </children>
                                                 </GridPane>
                                             </children>
