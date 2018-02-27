@@ -13,16 +13,19 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServi
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDbLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DaymarDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDbLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.PontonDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.BuoyageView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DaymarView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWindow;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -85,7 +88,7 @@ public class S57DBComponentController
     protected LayersManagerServices layersManagerServices;
     protected DatabaseServices databaseServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
-
+    protected TopologyServices topologyServices;
     private final String FXML = "s57DBController.fxml";
 
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
@@ -95,8 +98,6 @@ public class S57DBComponentController
     private final String PASSWD = "admin";
     protected Properties properties;
     private static final String NAME = "S57DB";
-    protected static final String GROUP = "S57 charts";
-    protected static final String LAYER = "BUOYAGE";
 
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     protected String viewgroupstyle = "configuration.css";
@@ -147,7 +148,25 @@ public class S57DBComponentController
     protected MeasureTool measureTool;
     protected final Set<S57Controller> s57Controllers = new HashSet<>();
     protected boolean first = true;
-    protected RenderableLayer layer;
+    protected static final String GROUP = "S57 charts";
+    protected static final String BUOYAGE_LAYER = "BUOYAGE";
+    protected static final String HARBOUR_LAYER = "HARBOUR";
+    protected static final String DEPARE_LAYER = "DEPARE";
+    protected static final String AREA_LAYER = "AREA";
+    protected static final String BUILDING_LAYER = "BUILDING";
+    protected static final String EARTH_LAYER = "EARTH";
+    protected static final String NAVIGATION_LAYER = "NAVIGATION";
+    protected static final String DANGERS_LAYER = "DANGERS";
+    protected static final String CBLSUB_LAYER = "CBLSUB";
+    protected RenderableLayer buoyageLayer;
+    protected RenderableLayer harbourLayer;
+    protected RenderableLayer depareLayer;
+    protected RenderableLayer areaLayer;
+    protected RenderableLayer buildingLayer;
+    protected RenderableLayer earthLayer;
+    protected RenderableLayer navigationLayer;
+    protected RenderableLayer dangersLayer;
+    protected RenderableLayer cblsubLayer;
     protected double lat0;
     protected double lon0;
     protected double lat1;
@@ -157,20 +176,8 @@ public class S57DBComponentController
     protected Map<Pair<Double, Double>, String> marsysMap = new HashMap<>();
     protected ObservableList<String> dbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
     /*
-    private ObservableList<String> objectsCbData = FXCollections.observableArrayList("ALL : All objects",
-            "BUOYAGE : All buoyage",
+    private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
             "ACHARE : AnchorageArea",
-            "BCNCAR : BeaconCardinal",
-            "BCNISD : BeaconIsolatedDanger",
-            "BCNLAT : BeaconLateral",
-            "BCNSAW : BeaconSafeWater",
-            "BCNSPP : BeaconSpecialPurposeGeneral",
-            "BOYCAR : BuoyCardinal",
-            "BOYINB : BuoyInstallation",
-            "BOYISD : BuoyIsolatedDanger",
-            "BOYLAT : BuoyLateral",
-            "BOYSAW : BuoySafeWater",
-            "BOYSPP : BuoySpecial",
             "DAYMAR : Daymark",
             "DEPARE : DepthArea",
             "DEPCNT : DepthContour",
@@ -181,10 +188,8 @@ public class S57DBComponentController
             "LIGHTS : Light",
             "LNDMRK : Landmark",
             "MIPARE : MilitaryPracticeArea",
-            "MORFAC : MooringWarpingFacility",
             "NAVLNE : NavigationLine",
             "OBSTRN : NavigationalSystemOfMarks",
-            "PONTON : Pontoon",
             "RESARE : RestrictedArea",
             "SEAARE : SeaAreaNamedWaterArea",
             "SLCONS : ShorelineConstruction",
@@ -196,20 +201,9 @@ public class S57DBComponentController
             "WRECKS : Wreck");
      */
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
-            "ALL : All objects",
+            "ALL : All S57 objects",
             "BUOYAGE : All buoyage",
-            "BCNCAR : BeaconCardinal",
-            "BCNISD : BeaconIsolatedDanger",
-            "BCNLAT : BeaconLateral",
-            "BCNSAW : BeaconSafeWater",
-            "BCNSPP : BeaconSpecialPurposeGeneral",
-            "BOYCAR : BuoyCardinal",
-            "BOYINB : BuoyInstallation",
-            "BOYISD : BuoyIsolatedDanger",
-            "BOYLAT : BuoyLateral",
-            "BOYSAW : BuoySafeWater",
-            "BOYSPP : BuoySpecial",
-            "MORFAC : MooringWarpingFacility"
+            "PONTON : Pontoon"
     );
     public static final Map<String, String> S57_REQUEST_MAP = Collections.unmodifiableMap(new HashMap<String, String>() {
         {
@@ -255,8 +249,14 @@ public class S57DBComponentController
             put("BOYSPP", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catspm"
                     + " FROM boyspp"
                     + " WHERE geom && ST_MakeEnvelope");
+            put("DAYMAR", "SELECT objnam, geom, topshp, colour, colpat, rcid, natcon"
+                    + " FROM daymar"
+                    + " WHERE geom && ST_MakeEnvelope");
             put("MORFAC", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catmor"
                     + " FROM morfac"
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("PONTON", "SELECT  ST_AsText(geom)"
+                    + " FROM ponton"
                     + " WHERE geom && ST_MakeEnvelope");
         }
     ;
@@ -269,7 +269,8 @@ public class S57DBComponentController
             LayersManagerServices layersManagerServices,
             S57ChartComponentServices s57ChartComponentServices,
             DatabaseServices databaseServices,
-            InstrumentDriverManagerServices instrumentDriverManagerServices) {
+            InstrumentDriverManagerServices instrumentDriverManagerServices,
+            TopologyServices topologyServices) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -288,28 +289,18 @@ public class S57DBComponentController
         this.layersManagerServices = layersManagerServices;
         this.databaseServices = databaseServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
-
+        this.topologyServices = topologyServices;
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
-        layer = layersManagerServices.getLayer(GROUP, NAME);
-        // System.out.println("layer : " + layer.getName());
-        initAcronymsMap();
-    }
-
-    private void initAcronymsMap() {
-        acronyms = new HashMap<>();
-        String tmp;
-        String[] tmpTab;
-        try {
-            BufferedReader input = new BufferedReader(
-                    new FileReader("properties/s57AcronymClasses.table"));
-            while ((tmp = input.readLine()) != null) {
-                tmpTab = tmp.split(",");
-                acronyms.put(tmpTab[0], tmpTab[1]);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        buoyageLayer = layersManagerServices.getLayer(GROUP, BUOYAGE_LAYER);
+        harbourLayer = layersManagerServices.getLayer(GROUP, HARBOUR_LAYER);
+        depareLayer = layersManagerServices.getLayer(GROUP, DEPARE_LAYER);
+        areaLayer = layersManagerServices.getLayer(GROUP, AREA_LAYER);
+        buildingLayer = layersManagerServices.getLayer(GROUP, BUILDING_LAYER);
+        earthLayer = layersManagerServices.getLayer(GROUP, EARTH_LAYER);
+        navigationLayer = layersManagerServices.getLayer(GROUP, NAVIGATION_LAYER);
+        dangersLayer = layersManagerServices.getLayer(GROUP, DANGERS_LAYER);
+        cblsubLayer = layersManagerServices.getLayer(GROUP, CBLSUB_LAYER);
     }
 
     @Override
@@ -325,7 +316,7 @@ public class S57DBComponentController
                 );
         objectsCB.setItems(objectsCbData);
         // initCheckBox( "properties/objects_1.csv", objectsCB);
-        objectsCB.getSelectionModel().select("ALL : All objects");
+        objectsCB.getSelectionModel().select("ALL : All S57 objects");
         objectsTF.setText("ALL");
         objectsCB.getSelectionModel()
                 .selectedItemProperty()
@@ -369,24 +360,26 @@ public class S57DBComponentController
             measureTool.setMeasureShapeType(MeasureTool.SHAPE_SQUARE);
             measureTool.setArmed(true);
         });
-        selectedButton.setOnMouseClicked((MouseEvent event) -> {            
+        selectedButton.setOnMouseClicked((MouseEvent event) -> {
             List<? extends Position> positions = measureTool.getPositions();
             lat0 = positions.get(0).getLatitude().getDegrees();
             lon0 = positions.get(0).getLongitude().getDegrees();
             lat1 = positions.get(2).getLatitude().getDegrees();
             lon1 = positions.get(2).getLongitude().getDegrees();
-            
-            latMinLabel.setText(Double.toString(lat0));
-            lonMinLabel.setText(Double.toString(lon0));
-            latMaxLabel.setText(Double.toString(lat1));
-            lonMaxLabel.setText(Double.toString(lon1));
-            
+
+            latMinLabel.setText(String.format("%.2f", lat0));
+            lonMinLabel.setText(String.format("%.2f", lon0));
+            latMaxLabel.setText(String.format("%.2f", lat1));
+            lonMaxLabel.setText(String.format("%.2f", lon1));
+
             measureTool.setArmed(false);
             measureTool.dispose();
         });
 
         requestButton.setOnMouseClicked((MouseEvent event) -> {
-
+            if (buoyageLayer.getNumRenderables() != 0) {
+                buoyageLayer.removeAllRenderables();
+            }
             connection = databaseServices.connect(databaseTF.getText(),
                     "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
             retrieveIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
@@ -476,51 +469,61 @@ public class S57DBComponentController
         MnsysDbLoader mnsysDbLoader = new MnsysDbLoader(connection);
         marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
-        //Create a loader for BeaconCardinal, Retrieve all BeaconCardinals in a rectangle latMin, lonMin, latMax, lonMax
-        BuoyageDbLoader buoyageDbLoader = new BuoyageDbLoader(connection, "BCNCAR", marsysMap);
-        List<Buoyage> buoyages = buoyageDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+        if (object.trim().equals("ALL") || object.trim().equals("BUOYAGE")) {
+            //Create a loader for BeaconCardinal, Retrieve all BeaconCardinals in a rectangle latMin, lonMin, latMax, lonMax
+            BuoyageDbLoader buoyageDbLoader = new BuoyageDbLoader(connection, "BCNCAR", marsysMap);
+            List<Buoyage> buoyages = buoyageDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
-        //Create a Viewer for Buoyage,Display all buoyages retrieved
-        BuoyageView buoyageView = new BuoyageView(topMarkMap, layersManagerServices, GROUP, LAYER, "BCNCAR");
-        buoyageView.display(buoyages);
+            //Create a Viewer for Buoyage,Display all buoyages retrieved
+            BuoyageView buoyageView = new BuoyageView(topMarkMap, buoyageLayer, "BCNCAR");
+            buoyageView.display(buoyages);
 
-        new BuoyageView(topMarkMap, layersManagerServices, GROUP, LAYER, "BCNLAT")
-                .display(new BuoyageDbLoader(connection, "BCNLAT", marsysMap)
-                        .retrieveIn(latMin, lonMin, latMax, lonMax));
-        new BuoyageView(topMarkMap, layersManagerServices, GROUP, LAYER, "BCNISD")
-                .display(new BuoyageDbLoader(connection, "BCNISD", marsysMap)
-                        .retrieveIn(latMin, lonMin, latMax, lonMax));
-        new BuoyageView(topMarkMap, layersManagerServices, GROUP, LAYER, "BCNSAW")
-                .display(new BuoyageDbLoader(connection, "BCNSAW", marsysMap)
-                        .retrieveIn(latMin, lonMin, latMax, lonMax));
-        new BuoyageView(topMarkMap, layersManagerServices, GROUP, LAYER, "BCNSPP")
-                .display(new BuoyageDbLoader(connection, "BCNSPP", marsysMap)
-                        .retrieveIn(latMin, lonMin, latMax, lonMax));
-        new BuoyageView(topMarkMap, layersManagerServices, GROUP, LAYER, "BCNISD")
-                .display(new BuoyageDbLoader(connection, "BCNISD", marsysMap)
-                        .retrieveIn(latMin, lonMin, latMax, lonMax));
+            new BuoyageView(topMarkMap, buoyageLayer, "BCNLAT")
+                    .display(new BuoyageDbLoader(connection, "BCNLAT", marsysMap)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
+            new BuoyageView(topMarkMap, buoyageLayer, "BCNISD")
+                    .display(new BuoyageDbLoader(connection, "BCNISD", marsysMap)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
+            new BuoyageView(topMarkMap, buoyageLayer, "BCNSAW")
+                    .display(new BuoyageDbLoader(connection, "BCNSAW", marsysMap)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
+            new BuoyageView(topMarkMap, buoyageLayer, "BCNSPP")
+                    .display(new BuoyageDbLoader(connection, "BCNSPP", marsysMap)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
+            new BuoyageView(topMarkMap, buoyageLayer, "BCNISD")
+                    .display(new BuoyageDbLoader(connection, "BCNISD", marsysMap)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
 
-        new BuoyageView(topMarkMap, layersManagerServices, GROUP, LAYER, "BOYCAR")
-                .display(new BuoyageDbLoader(connection, "BOYCAR", marsysMap)
-                        .retrieveIn(latMin, lonMin, latMax, lonMax));
-        new BuoyageView(topMarkMap, layersManagerServices, GROUP, LAYER, "BOYLAT")
-                .display(new BuoyageDbLoader(connection, "BOYLAT", marsysMap)
-                        .retrieveIn(latMin, lonMin, latMax, lonMax));
-        new BuoyageView(topMarkMap, layersManagerServices, GROUP, LAYER, "BOYINB")
-                .display(new BuoyageDbLoader(connection, "BOYINB", marsysMap)
-                        .retrieveIn(latMin, lonMin, latMax, lonMax));
-        new BuoyageView(topMarkMap, layersManagerServices, GROUP, LAYER, "BOYISD")
-                .display(new BuoyageDbLoader(connection, "BOYISD", marsysMap)
-                        .retrieveIn(latMin, lonMin, latMax, lonMax));
-        new BuoyageView(topMarkMap, layersManagerServices, GROUP, LAYER, "BOYSAW")
-                .display(new BuoyageDbLoader(connection, "BOYSAW", marsysMap)
-                        .retrieveIn(latMin, lonMin, latMax, lonMax));
-        new BuoyageView(topMarkMap, layersManagerServices, GROUP, LAYER, "BOYSPP")
-                .display(new BuoyageDbLoader(connection, "BOYSPP", marsysMap)
-                        .retrieveIn(latMin, lonMin, latMax, lonMax));
+            new BuoyageView(topMarkMap, buoyageLayer, "BOYCAR")
+                    .display(new BuoyageDbLoader(connection, "BOYCAR", marsysMap)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
+            new BuoyageView(topMarkMap, buoyageLayer, "BOYLAT")
+                    .display(new BuoyageDbLoader(connection, "BOYLAT", marsysMap)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
+            new BuoyageView(topMarkMap, buoyageLayer, "BOYINB")
+                    .display(new BuoyageDbLoader(connection, "BOYINB", marsysMap)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
+            new BuoyageView(topMarkMap, buoyageLayer, "BOYISD")
+                    .display(new BuoyageDbLoader(connection, "BOYISD", marsysMap)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
+            new BuoyageView(topMarkMap, buoyageLayer, "BOYSAW")
+                    .display(new BuoyageDbLoader(connection, "BOYSAW", marsysMap)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
+            new BuoyageView(topMarkMap, buoyageLayer, "BOYSPP")
+                    .display(new BuoyageDbLoader(connection, "BOYSPP", marsysMap)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
+            new DaymarView(topMarkMap, harbourLayer, "DAYMAR")
+                    .display(new DaymarDbLoader(connection, "DAYMAR", marsysMap)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
 
-        new BuoyageView(topMarkMap, layersManagerServices, GROUP, LAYER, "MORFAC")
-                .display(new BuoyageDbLoader(connection, "MORFAC", marsysMap)
-                        .retrieveIn(latMin, lonMin, latMax, lonMax));
+            new BuoyageView(topMarkMap, buoyageLayer, "MORFAC")
+                    .display(new BuoyageDbLoader(connection, "MORFAC", marsysMap)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
+        }
+        if (object.trim().equals("ALL") || object.trim().equals("PONTON")) {
+            new PontonView(topologyServices, harbourLayer, "PONTON")
+                    .display(new PontonDbLoader(connection, "PONTON")
+                            .retrieveIn(latMin, lonMin, latMax, lonMax));
+        }
     }
 }

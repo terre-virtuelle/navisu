@@ -10,6 +10,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPoint;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolylines;
 import java.util.List;
@@ -47,6 +48,10 @@ public interface TopologyServices
     List<Position> wktPolygonToPositions(String geometry);
 
     String wwjLocationsToWKT(Iterable<? extends LatLon> locations);
-    
+
+    Polygon wktMultiLineToWwjPolygon(String geometry);
+
+    Path wktMultiLineToWwjPath(String geometry, double height);
+
     Geometry filterWwjLatLonsWithGeometryJts(Geometry geometry, List<LatLon> pts);
 }

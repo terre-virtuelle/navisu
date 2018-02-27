@@ -157,6 +157,8 @@ import gov.nasa.worldwind.WorldWindow;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.tools.ToolsComponentServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import bzh.terrevirtuelle.navisu.topology.impl.TopologyImpl;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -278,6 +280,7 @@ public class AppMain extends Application {
                         StlComponentImpl.class,
                         TestDBImpl.class,
                         ToolsComponentImpl.class,
+                        TopologyImpl.class,
                         TransponderImpl.class,
                         WeatherComponentImpl.class,
                         WebDriverManagerImpl.class,
@@ -370,6 +373,7 @@ public class AppMain extends Application {
         StlComponentServices s57StlComponentServices = componentManager.getComponentService(StlComponentServices.class);
 
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
+        TopologyServices topologyServices = componentManager.getComponentService(TopologyServices.class);
         ToolsComponentServices toolsComponentServices = componentManager.getComponentService(ToolsComponentServices.class);
         TransponderServices transponderServices = componentManager.getComponentService(TransponderServices.class);
 

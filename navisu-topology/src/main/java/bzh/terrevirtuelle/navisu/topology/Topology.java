@@ -6,11 +6,13 @@
 
 package bzh.terrevirtuelle.navisu.topology;
 
+import org.capcaval.c3.component.Component;
+
 /**
  *
  * @author serge
  * @date Dec 8, 2017
  */
-public interface Topology {
+public interface Topology extends Component{
 
 }

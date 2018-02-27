@@ -8,7 +8,8 @@ import java.util.Set;
 public class BUOYAGE {
 
    
-    public static final Map<String, String> ATT = Collections.unmodifiableMap(new HashMap<String, String>() {
+    public static final Map<String, String> ATT 
+            = Collections.unmodifiableMap(new HashMap<String, String>() {
         {
             put("BCNCAR", "BeaconCardinal");
             put("BCNLAT", "BeaconLateral");
@@ -23,6 +24,7 @@ public class BUOYAGE {
             put("BOYINB", "BuoyInstallation");
             put("LNDMRK", "Landmark");
             put("MORFAC", "MooringWarpingFacility");
+            put("DAYMAR", "Daymark");
         }
     });
 

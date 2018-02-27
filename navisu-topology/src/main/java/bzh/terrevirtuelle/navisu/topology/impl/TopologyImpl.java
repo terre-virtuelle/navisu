@@ -19,6 +19,7 @@ import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolylines;
 import java.util.ArrayList;
@@ -198,6 +199,39 @@ public class TopologyImpl
         return polygon;
     }
 
+    //MULTILINESTRING((-4.49067 48.37985,-4.49005 48.37938,-4.48888 48.3785))
+    @Override
+    public Polygon wktMultiLineToWwjPolygon(String geometry) {
+        String tmp = geometry.replace("MULTILINESTRING((", "");
+        tmp = tmp.replace("))", "");
+        String[] posTab0 = tmp.split(",");
+        if (posTab0.length > 2) {
+            List<Position> positions = new ArrayList<>();
+            for (String s : posTab0) {
+                String[] posTab1 = s.split("\\s+");
+                positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1])),
+                        Angle.fromDegrees(Double.valueOf(posTab1[0])), 0));
+            }
+            return new Polygon(positions);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Path wktMultiLineToWwjPath(String geometry,double height) {
+        String tmp = geometry.replace("MULTILINESTRING((", "");
+        tmp = tmp.replace("))", "");
+        String[] posTab0 = tmp.split(",");
+        List<Position> positions = new ArrayList<>();
+        for (String s : posTab0) {
+            String[] posTab1 = s.split("\\s+");
+            positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1])),
+                    Angle.fromDegrees(Double.valueOf(posTab1[0])), height));
+        }
+        return new Path(positions);
+    }
+
     @Override
     public Geometry wwjPolygonToJtsGeometry(Polygon polygon) {
         Iterable<? extends LatLon> latLon = polygon.getOuterBoundary();
@@ -273,8 +307,9 @@ public class TopologyImpl
         result += locList.get(locList.size() - 1) + "))";
         return result;
     }
+
     @Override
-    public Geometry filterWwjLatLonsWithGeometryJts(Geometry geometry, List<LatLon> pts){
+    public Geometry filterWwjLatLonsWithGeometryJts(Geometry geometry, List<LatLon> pts) {
         CoordinateList list = new CoordinateList(geometry.getCoordinates());
         list.closeRing();
         GeometryFactory geometryFactory = new GeometryFactory();

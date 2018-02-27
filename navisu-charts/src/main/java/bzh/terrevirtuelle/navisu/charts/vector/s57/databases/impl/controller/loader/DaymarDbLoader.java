@@ -26,9 +26,9 @@ import org.postgis.PGgeometry;
  *
  * @author serge
  */
-public class BuoyageDbLoader {
+public class DaymarDbLoader {
 
-    protected final String BUOYAGE_PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
+    protected final String PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
     protected Connection connection;
     protected String acronym;
     protected Buoyage buoyage;
@@ -39,7 +39,7 @@ public class BuoyageDbLoader {
     protected double lon;
     protected ResultSet resultSet;
 
-    public BuoyageDbLoader(Connection connection, String acronym,
+    public DaymarDbLoader(Connection connection, String acronym,
             Map<Pair<Double, Double>, String> marsysMap) {
         this.connection = connection;
         this.acronym = acronym;
@@ -47,10 +47,11 @@ public class BuoyageDbLoader {
 
         String className = BUOYAGE.ATT.get(acronym);
         try {
-            claz = Class.forName(BUOYAGE_PATH + "." + className);
+            claz = Class.forName(PATH + "." + className);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -111,11 +112,11 @@ public class BuoyageDbLoader {
 
                     buoyage.setId(resultSet.getLong("rcid"));
                     
-                    String cat = resultSet.getString(7);
-                    if (cat == null) {
-                        cat = "0";
+                    String natcon = resultSet.getString(7);
+                    if (natcon == null) {
+                        natcon = "0";
                     }
-                    buoyage.setCategoryOfMark(cat);
+                    buoyage.setNatureOfConstruction(natcon);
 
                     String ma = marsysMap.get(new Pair(lat, lon));
                     if (ma == null) {

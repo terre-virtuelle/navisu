@@ -33,6 +33,7 @@ dependencies {
     compile project(':navisu-server')
     compile project(':navisu-stl')
     compile project(':navisu-tools')
+    compile project(':navisu-topology')
     compile project(':navisu-util')
     compile project(':navisu-weather')
     compile project(':navisu-wms')
