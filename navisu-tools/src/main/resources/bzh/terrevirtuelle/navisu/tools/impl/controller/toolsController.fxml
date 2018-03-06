@@ -16,9 +16,8 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="514.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="570.0" />
         <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="570.0" styleClass="background-pane">
             <children>
                 <GridPane prefHeight="506.0" prefWidth="560.0">
@@ -40,7 +39,7 @@
                                     <content>
                                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
                                             <children>
-                                                <GridPane layoutX="1.0" prefHeight="281.0" prefWidth="531.0">
+                                                <GridPane layoutX="1.0" prefHeight="281.0" prefWidth="531.0" styleClass="tab-conteneur">
                                                     <columnConstraints>
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />
@@ -95,7 +94,7 @@
                            <content>
                               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
                                  <children>
-                                    <GridPane layoutX="1.0" prefHeight="281.0" prefWidth="531.0">
+                                    <GridPane layoutX="1.0" prefHeight="281.0" prefWidth="531.0" styleClass="tab-conteneur">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />
@@ -151,10 +150,11 @@
                         </GridPane>
                     </children>
                 </GridPane>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="514.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="570.0" />
             </children>
         </Pane>
       <Pane layoutX="10.0" layoutY="10.0" prefHeight="45.0" prefWidth="45.0" styleClass="logo" />
         <Text layoutX="246.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="Tools" textAlignment="CENTER" wrappingWidth="76.50146484375" />
-      <Pane fx:id="quit" layoutX="520.0" layoutY="10.0" prefHeight="35.0" prefWidth="35.0" styleClass="quitbutton" />
+      <Button fx:id="quit" layoutX="520.0" layoutY="10.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" styleClass="quitbutton" />
     </children>
 </fx:root>

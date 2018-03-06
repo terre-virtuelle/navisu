@@ -110,7 +110,7 @@ public class S57DBComponentController
     @FXML
     public TabPane toolsTabPane;
     @FXML
-    public Pane quit;
+    public Button quit;
     @FXML
     public Button requestButton;
     @FXML

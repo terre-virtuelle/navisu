@@ -83,7 +83,7 @@ public class ToolsComponentController
     @FXML
     public TabPane toolsTabPane;
     @FXML
-    public Pane quit;
+    public Button quit;
     @FXML
     public Button saveButton;
     @FXML
