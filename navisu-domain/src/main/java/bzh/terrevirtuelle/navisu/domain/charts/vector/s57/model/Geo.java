@@ -30,6 +30,16 @@ public class Geo
     protected String sourceDate;
     @XmlTransient
     protected String sourceIndication;
+    @XmlTransient
+    protected String geom;
+
+    public String getGeom() {
+        return geom;
+    }
+
+    public void setGeom(String geom) {
+        this.geom = geom;
+    }
 
     public Geo(long id) {
         super(id);

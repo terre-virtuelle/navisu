@@ -14,11 +14,13 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.naviga
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DaymarDbLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepareDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.PontonDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DaymarView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
@@ -41,6 +43,7 @@ import gov.nasa.worldwind.util.measure.MeasureToolController;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
@@ -178,8 +181,6 @@ public class S57DBComponentController
     /*
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
             "ACHARE : AnchorageArea",
-            "DAYMAR : Daymark",
-            "DEPARE : DepthArea",
             "DEPCNT : DepthContour",
             "DOCARE : DockArea",
             "DRGARE : DredgedArea",
@@ -203,7 +204,8 @@ public class S57DBComponentController
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
             "ALL : All S57 objects",
             "BUOYAGE : All buoyage",
-            "PONTON : Pontoon"
+            "PONTON : Pontoon",
+            "DEPARE : DepthArea"
     );
     public static final Map<String, String> S57_REQUEST_MAP = Collections.unmodifiableMap(new HashMap<String, String>() {
         {
@@ -257,6 +259,9 @@ public class S57DBComponentController
                     + " WHERE geom && ST_MakeEnvelope");
             put("PONTON", "SELECT  ST_AsText(geom)"
                     + " FROM ponton"
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("DEPARE", "SELECT  ST_AsText(geom), drval1, drval2"
+                    + " FROM depare"
                     + " WHERE geom && ST_MakeEnvelope");
         }
     ;
@@ -524,6 +529,15 @@ public class S57DBComponentController
             new PontonView(topologyServices, harbourLayer, "PONTON")
                     .display(new PontonDbLoader(connection, "PONTON")
                             .retrieveIn(latMin, lonMin, latMax, lonMax));
+        }
+        if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) { 
+            try {
+                new DepareView(topologyServices, harbourLayer, "DEPARE")
+                        .display(new DepareDbLoader(connection, "DEPARE")
+                                .retrieveIn(latMin, lonMin, latMax, lonMax));
+            } catch (SQLException ex) {
+                Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

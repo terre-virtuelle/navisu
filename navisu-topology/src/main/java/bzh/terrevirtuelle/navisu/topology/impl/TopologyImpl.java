@@ -219,7 +219,7 @@ public class TopologyImpl
     }
 
     @Override
-    public Path wktMultiLineToWwjPath(String geometry,double height) {
+    public Path wktMultiLineToWwjPath(String geometry, double height) {
         String tmp = geometry.replace("MULTILINESTRING((", "");
         tmp = tmp.replace("))", "");
         String[] posTab0 = tmp.split(",");
@@ -230,6 +230,26 @@ public class TopologyImpl
                     Angle.fromDegrees(Double.valueOf(posTab1[0])), height));
         }
         return new Path(positions);
+    }
+
+    @Override
+    public Polygon wktMultiPolygonToWwjPolygon(String geometry) {
+      //  System.out.println("geometry : " + geometry);
+            String tmp = geometry.replace("MULTIPOLYGON(((", "");
+            tmp = tmp.replace(")))", "");
+            tmp = tmp.replace(")", "");
+            tmp = tmp.replace("(", "");
+         //   System.out.println("tmp : " + tmp);
+            String[] posTab0 = tmp.split(",");
+            List<Position> positions = new ArrayList<>();
+            for (String s : posTab0) {
+                String[] posTab1 = s.split("\\s+");
+              //  System.out.println(posTab1[0] + " " + posTab1[1]);
+                positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1])),
+                        Angle.fromDegrees(Double.valueOf(posTab1[0])), 10.0));
+            }
+            
+        return new Polygon(positions);
     }
 
     @Override
@@ -249,29 +269,25 @@ public class TopologyImpl
 
     @Override
     public List<Position> wktPolygonToPositions(String geometry) {
+        //Pb if multi polygon
         List<Position> positions = null;
         String[] tab0;
         String[] tab1;
         String[] tab2;
+        String tmp;
         if (geometry != null && geometry.toUpperCase().contains("POLYGON")) {
-            tab0 = geometry.split("\\(\\(");
-            if (tab0.length > 1) {
-                positions = new ArrayList<>();
-                tab1 = tab0[1].split("\\)\\)");
-                tab2 = tab1[0].split(",");
-                int l = tab2.length;
-                //   for(String s : tab2){
-                //       System.out.println("s : " + s);
-                //  }
+           tmp=geometry.replace("POLYGON((", "");
+           tmp=tmp.replace("))", "");
+           tab0=tmp.split(",");
+           int l = tab0.length;
+           positions = new ArrayList<>();
                 for (int i = 0; i < l; i++) {
-                    String[] latLon = tab2[i].trim().split(" ");
+                    String[] latLon = tab0[i].trim().split(" ");
                     String lat = latLon[1];
                     String lon = latLon[0];
-
                     positions.add(new Position(Angle.fromDegrees(Double.parseDouble(lat)),
                             Angle.fromDegrees(Double.parseDouble(lon)), 5));
                 }
-            }
         }
         return positions;
     }
