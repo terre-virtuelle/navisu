@@ -12,6 +12,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import java.util.ArrayList;
 import java.util.List;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -25,7 +26,7 @@ import org.capcaval.c3.component.annotation.UsedService;
 public class LayersManagerImpl
         implements LayersManager, LayersManagerServices, ComponentState {
 
-    @UsedService
+     @UsedService
     GeoViewServices geoViewServices;
 
     @UsedService
@@ -66,6 +67,23 @@ public class LayersManagerImpl
             layer.setName(layerName);
             geoViewServices.getLayerManager().insertGeoLayer(groupName, GeoLayer.factory.newWorldWindGeoLayer(layer));
             layerTreeServices.addGeoLayer(groupName, GeoLayer.factory.newWorldWindGeoLayer(layer));
+        }
+        return layer;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public RenderableLayer getLayer(String layerName) {
+        List<String> groupNames = layerTreeServices.getGroupNames();
+        RenderableLayer layer = null;
+        List<GeoLayer<Layer>> groups;
+        for (String g : groupNames) {
+            groups = geoViewServices.getLayerManager().getGroup(g);
+            for (GeoLayer<Layer> gg : groups) {
+                if (gg.getName().contains(layerName)) {
+                    layer = (RenderableLayer) gg.getDisplayLayer();
+                }
+            }
         }
         return layer;
     }

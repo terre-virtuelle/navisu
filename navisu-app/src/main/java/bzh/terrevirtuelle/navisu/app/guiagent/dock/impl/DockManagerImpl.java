@@ -306,9 +306,9 @@ public class DockManagerImpl<TrackTool>
         meteoRadialMenu = RadialMenuBuilder.create()
                 .centralImage("meteoradialmenu150.png")
                 .createNode(0, "files.png", 0, "grib.png", 0, "wind.png",
-                        (e) -> open("Wind", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2"))
+                        (e) -> open("Wind", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2", ".grb2"))
                 .createNode(0, "files.png", 0, "grib.png", 0, "pressure.png",
-                        (e) -> open("Pressure", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2"))
+                        (e) -> open("Pressure", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2", ".grb2"))
                 .createNode(0, "files.png", 1, "model.png", 0, "dump.png",
                         (e) -> open("NetCdfInfo", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2", ".grb2"))
                 .createNode(1, "sites.png", 0, "local.png", 0, "darkSky.png", (e) -> open("DarkSky"))

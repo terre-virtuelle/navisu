@@ -31,7 +31,7 @@ public interface LayerTreeServices
 
     CheckBoxTreeItem<GeoLayer> search(GeoLayer layer);
 
-    GeoLayer getLayer(String name);
+    GeoLayer getGeoLayer(String name);
 
     List<String> getGroupNames();
 

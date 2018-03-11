@@ -211,6 +211,7 @@ public class GeoViewImpl
                 WorldWindLayers.CountryBoundaries.newInstance(),
                 WorldWindLayers.PlaceName.newInstance(),
                 WorldWindLayers.LatLonGraticule.newInstance()
+                
         );
 
         layerManager.createGroup("On-screen layers",

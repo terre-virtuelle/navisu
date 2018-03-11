@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDbLoader.LOGGER;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthArea;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,29 +15,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import javafx.scene.control.Alert;
-import org.postgis.MultiPolygon;
+import org.postgis.LineString;
+import org.postgis.MultiLineString;
 
 /**
  * @date 28/02/2018
  * @author serge
  */
-public class DepareDbLoader {
+public class DepthContourDbLoader {
 
     protected Connection connection;
     protected String request;
     protected ResultSet resultSet;
     protected String acronym;
-    
-    public DepareDbLoader(Connection connection, String acronym) {
+
+    public DepthContourDbLoader(Connection connection, String acronym) {
         this.connection = connection;
         this.acronym = acronym;
 
     }
 
     @SuppressWarnings("unchecked")
-    public List<DepthArea> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
-        List<DepthArea> depthAreas = new ArrayList<>();
-        DepthArea depthArea = null;
+    public List<DepthContour> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
+        List<DepthContour> depthContours = new ArrayList<>();
+        DepthContour depthContour;
         if (connection != null) {
             try {
                 request = S57_REQUEST_MAP.get(acronym);
@@ -50,17 +51,15 @@ public class DepareDbLoader {
 
                 while (resultSet.next()) {
                     String s = resultSet.getString(1);
-                    MultiPolygon p = new MultiPolygon(s);
-                    org.postgis.Polygon[] polyTab = p.getPolygons();
-                    for (org.postgis.Polygon pp : polyTab) {
-                        int geoms = pp.numGeoms();
+                    MultiLineString p = new MultiLineString(s);
+                    LineString[] polyTab = p.getLines();
+                    for (LineString ls : polyTab) {
+                        int geoms = ls.numGeoms();
                         for (int i = 0; i < geoms; i++) {
-                            depthArea = new DepthArea();
-                            String tmp = pp.getSubGeometry(i).toString();
-                            depthArea.setGeom(tmp);
-                            depthArea.setDepthRangeValue1(resultSet.getString(2));
-                            depthArea.setDepthRangeValue2(resultSet.getString(3));
-                            depthAreas.add(depthArea);
+                            depthContour = new DepthContour();
+                            depthContour.setGeom(ls.toString());
+                            depthContour.setValueOfDepthContour(resultSet.getString(2));
+                            depthContours.add(depthContour);
                         }
                     }
                 }
@@ -73,7 +72,7 @@ public class DepareDbLoader {
             alert.setHeaderText("Database connection fail");
             alert.show();
         }
-        return depthAreas;
+        return depthContours;
     }
 
 }

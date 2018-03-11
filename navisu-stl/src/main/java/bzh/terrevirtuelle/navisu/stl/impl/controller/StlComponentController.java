@@ -234,6 +234,7 @@ public class StlComponentController
         // Layer buildings = new OSMBuildingsStlLayer();
         //  layerTreeServices.addGeoLayer("Buildings", buildings);
         // wwd.getModel().getLayers().add(buildings);
+        
     }
 
     public void showGUI(KMLSurfacePolygonImpl polygon) {

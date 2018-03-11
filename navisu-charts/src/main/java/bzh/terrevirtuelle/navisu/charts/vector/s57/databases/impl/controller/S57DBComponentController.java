@@ -15,12 +15,14 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponent
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DaymarDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepareDbLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepthContourDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.PontonDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DaymarView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DepareView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DephContourView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
@@ -181,7 +183,7 @@ public class S57DBComponentController
     /*
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
             "ACHARE : AnchorageArea",
-            "DEPCNT : DepthContour",
+            
             "DOCARE : DockArea",
             "DRGARE : DredgedArea",
             "FAIRWY : Fairway",
@@ -205,7 +207,8 @@ public class S57DBComponentController
             "ALL : All S57 objects",
             "BUOYAGE : All buoyage",
             "PONTON : Pontoon",
-            "DEPARE : DepthArea"
+            "DEPARE : DepthArea",
+            "DEPCNT : DepthContour"
     );
     public static final Map<String, String> S57_REQUEST_MAP = Collections.unmodifiableMap(new HashMap<String, String>() {
         {
@@ -262,6 +265,9 @@ public class S57DBComponentController
                     + " WHERE geom && ST_MakeEnvelope");
             put("DEPARE", "SELECT  ST_AsText(geom), drval1, drval2"
                     + " FROM depare"
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("DEPCNT", "SELECT  ST_AsText(geom), valdco"
+                    + " FROM depcnt"
                     + " WHERE geom && ST_MakeEnvelope");
         }
     ;
@@ -366,19 +372,21 @@ public class S57DBComponentController
             measureTool.setArmed(true);
         });
         selectedButton.setOnMouseClicked((MouseEvent event) -> {
-            List<? extends Position> positions = measureTool.getPositions();
-            lat0 = positions.get(0).getLatitude().getDegrees();
-            lon0 = positions.get(0).getLongitude().getDegrees();
-            lat1 = positions.get(2).getLatitude().getDegrees();
-            lon1 = positions.get(2).getLongitude().getDegrees();
+            if (measureTool != null) {
+                List<? extends Position> positions = measureTool.getPositions();
+                lat0 = positions.get(0).getLatitude().getDegrees();
+                lon0 = positions.get(0).getLongitude().getDegrees();
+                lat1 = positions.get(2).getLatitude().getDegrees();
+                lon1 = positions.get(2).getLongitude().getDegrees();
 
-            latMinLabel.setText(String.format("%.2f", lat0));
-            lonMinLabel.setText(String.format("%.2f", lon0));
-            latMaxLabel.setText(String.format("%.2f", lat1));
-            lonMaxLabel.setText(String.format("%.2f", lon1));
+                latMinLabel.setText(String.format("%.2f", lat0));
+                lonMinLabel.setText(String.format("%.2f", lon0));
+                latMaxLabel.setText(String.format("%.2f", lat1));
+                lonMaxLabel.setText(String.format("%.2f", lon1));
 
-            measureTool.setArmed(false);
-            measureTool.dispose();
+                measureTool.setArmed(false);
+                measureTool.dispose();
+            }
         });
 
         requestButton.setOnMouseClicked((MouseEvent event) -> {
@@ -530,7 +538,7 @@ public class S57DBComponentController
                     .display(new PontonDbLoader(connection, "PONTON")
                             .retrieveIn(latMin, lonMin, latMax, lonMax));
         }
-        if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) { 
+        if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
             try {
                 new DepareView(topologyServices, harbourLayer, "DEPARE")
                         .display(new DepareDbLoader(connection, "DEPARE")
@@ -539,5 +547,17 @@ public class S57DBComponentController
                 Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        if (object.trim().equals("ALL") || object.trim().equals("DEPCNT")) {
+            guiAgentServices.getJobsManager().newJob("Load contours", (progressHandle) -> {
+                try {
+                    new DephContourView(topologyServices, harbourLayer, "DEPCNT")
+                            .display(new DepthContourDbLoader(connection, "DEPCNT")
+                                    .retrieveIn(latMin, lonMin, latMax, lonMax));
+                } catch (SQLException ex) {
+                    Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+        }
     }
+
 }

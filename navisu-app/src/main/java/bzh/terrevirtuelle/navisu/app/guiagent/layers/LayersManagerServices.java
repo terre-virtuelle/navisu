@@ -19,7 +19,9 @@ public interface LayersManagerServices
 
     RenderableLayer getLayer(String groupName, String layerName);
 
+    RenderableLayer getLayer(String layerName);
+
     RenderableLayer getlayer(String groupName, String layerName, String onLayerName);
-    
+
     boolean removeLayer(RenderableLayer... layer);
 }
