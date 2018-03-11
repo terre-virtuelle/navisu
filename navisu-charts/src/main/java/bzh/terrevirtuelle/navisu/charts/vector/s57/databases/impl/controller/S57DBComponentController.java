@@ -107,8 +107,8 @@ public class S57DBComponentController
     public Group view;
     @FXML
     public Pane viewPane;
-    @FXML
-    public TabPane toolsTabPane;
+    /*@FXML
+    public TabPane toolsTabPane;*/
     @FXML
     public Button quit;
     @FXML
