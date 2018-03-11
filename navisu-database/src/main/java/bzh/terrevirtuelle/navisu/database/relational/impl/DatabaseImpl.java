@@ -358,7 +358,7 @@ public class DatabaseImpl
 
         Map<String, String> environment = new HashMap<>(System.getenv());
         environment.put("PGPASSWORD", "admin");
-        
+        /*
         try {
             Proc.BUILDER.create()
                     .setCmd(cmd)
@@ -369,7 +369,7 @@ public class DatabaseImpl
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-
+*/
         try {
             loadFileLog = new FileOutputStream("load.log", true);
           //  errorFileLog = new FileOutputStream("error.log", true);
@@ -384,7 +384,7 @@ public class DatabaseImpl
                         try {
                             Proc.BUILDER.create()
                                     .setCmd(cmd)
-                                    .addArg("-d s57NP5DB ").addArg("-f ")
+                                    .addArg("-U admin -d s57NP5DB ").addArg("-f ")
                                     .addArg(userDirPath + "/" + filePath)
                                   //  .setOut(loadFileLog)
                                    // .setErr(errorFileLog)
@@ -406,7 +406,7 @@ public class DatabaseImpl
     private String startCmd(String command) {
         String cmd = null;
         if (OS.isWindows()) {
-            cmd = "C:\\Program Files\\PostgreSQL\\9.4\\bin\\" + command;
+            cmd = "C:\\PostgreSQL\\9.4\\bin\\" + command;
         } else if (OS.isLinux()) {
             cmd = "/usr/bin/" + command;
         } else if (OS.isMac()) {

@@ -20,6 +20,7 @@
     <children>
         <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="570.0" styleClass="background-pane">
             <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="514.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="570.0" />
                 <GridPane prefHeight="506.0" prefWidth="560.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="22.0" />
@@ -150,7 +151,6 @@
                         </GridPane>
                     </children>
                 </GridPane>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="514.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="570.0" />
             </children>
         </Pane>
       <Pane layoutX="10.0" layoutY="10.0" prefHeight="45.0" prefWidth="45.0" styleClass="logo" />
