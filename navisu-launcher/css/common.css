@@ -176,6 +176,15 @@
     -fx-arc-height: 0;	 
     -fx-arc-width: 0;
 }
+.infoslabel {
+	-fx-background-color:-fx-color-backround-value;
+	-fx-background-radius: 1;
+	-fx-border-color: whitesmoke;
+	-fx-border-radius: 1;
+	-fx-border-width : 1px;
+}
+
+}
 /*--------- background instruments - view ----------------*/
 .foot-pane {
     -fx-border-radius: 0 0 20 20;
@@ -294,6 +303,13 @@
 .grid-pane {
     -fx-background-color: -fx-base;  
 }
+.grid-pane-contour{
+    -fx-background-color: -fx-base;
+    -fx-border-color: -fx-line-base;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+}
+
 /*------------------ TabPane ------------------*/
 .tab-pane > .tab-header-area > .headers-region > .tab:selected {
     -fx-background-color: -fx-focus-color;
