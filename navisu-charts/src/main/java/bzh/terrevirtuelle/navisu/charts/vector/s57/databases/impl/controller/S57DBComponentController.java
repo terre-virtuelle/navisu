@@ -67,7 +67,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -254,7 +253,7 @@ public class S57DBComponentController
             put("BOYSPP", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catspm"
                     + " FROM boyspp"
                     + " WHERE geom && ST_MakeEnvelope");
-            put("DAYMAR", "SELECT objnam, geom, topshp, colour, colpat, rcid, natcon"
+            put("DAYMAR", "SELECT objnam, geom, topshp, colour, colpat, rcid, catspm, natcon"
                     + " FROM daymar"
                     + " WHERE geom && ST_MakeEnvelope");
             put("MORFAC", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catmor"
@@ -303,9 +302,9 @@ public class S57DBComponentController
         this.topologyServices = topologyServices;
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
+        depareLayer = layersManagerServices.getLayer(GROUP, DEPARE_LAYER);
         buoyageLayer = layersManagerServices.getLayer(GROUP, BUOYAGE_LAYER);
         harbourLayer = layersManagerServices.getLayer(GROUP, HARBOUR_LAYER);
-        depareLayer = layersManagerServices.getLayer(GROUP, DEPARE_LAYER);
         areaLayer = layersManagerServices.getLayer(GROUP, AREA_LAYER);
         buildingLayer = layersManagerServices.getLayer(GROUP, BUILDING_LAYER);
         earthLayer = layersManagerServices.getLayer(GROUP, EARTH_LAYER);
@@ -392,6 +391,30 @@ public class S57DBComponentController
         requestButton.setOnMouseClicked((MouseEvent event) -> {
             if (buoyageLayer.getNumRenderables() != 0) {
                 buoyageLayer.removeAllRenderables();
+            }
+            if (harbourLayer.getNumRenderables() != 0) {
+                harbourLayer.removeAllRenderables();
+            }
+            if (depareLayer.getNumRenderables() != 0) {
+                depareLayer.removeAllRenderables();
+            }
+            if (areaLayer.getNumRenderables() != 0) {
+                areaLayer.removeAllRenderables();
+            }
+            if (buildingLayer.getNumRenderables() != 0) {
+                buildingLayer.removeAllRenderables();
+            }
+            if (earthLayer.getNumRenderables() != 0) {
+                earthLayer.removeAllRenderables();
+            }
+            if (navigationLayer.getNumRenderables() != 0) {
+                navigationLayer.removeAllRenderables();
+            }
+            if (dangersLayer.getNumRenderables() != 0) {
+                dangersLayer.removeAllRenderables();
+            }
+            if (cblsubLayer.getNumRenderables() != 0) {
+                cblsubLayer.removeAllRenderables();
             }
             connection = databaseServices.connect(databaseTF.getText(),
                     "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
@@ -481,6 +504,17 @@ public class S57DBComponentController
         //Define IALA system for all buoyages, default is 1
         MnsysDbLoader mnsysDbLoader = new MnsysDbLoader(connection);
         marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+        if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
+            guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
+                try {
+                    new DepareView(topologyServices, depareLayer, "DEPARE")
+                            .display(new DepareDbLoader(connection, "DEPARE")
+                                    .retrieveIn(latMin, lonMin, latMax, lonMax));
+                } catch (SQLException ex) {
+                    Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                }
+            });
+        }
 
         if (object.trim().equals("ALL") || object.trim().equals("BUOYAGE")) {
             //Create a loader for BeaconCardinal, Retrieve all BeaconCardinals in a rectangle latMin, lonMin, latMax, lonMax
@@ -538,15 +572,8 @@ public class S57DBComponentController
                     .display(new PontonDbLoader(connection, "PONTON")
                             .retrieveIn(latMin, lonMin, latMax, lonMax));
         }
-        if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
-            try {
-                new DepareView(topologyServices, harbourLayer, "DEPARE")
-                        .display(new DepareDbLoader(connection, "DEPARE")
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-            } catch (SQLException ex) {
-                Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+
+        /*
         if (object.trim().equals("ALL") || object.trim().equals("DEPCNT")) {
             guiAgentServices.getJobsManager().newJob("Load contours", (progressHandle) -> {
                 try {
@@ -554,10 +581,11 @@ public class S57DBComponentController
                             .display(new DepthContourDbLoader(connection, "DEPCNT")
                                     .retrieveIn(latMin, lonMin, latMax, lonMax));
                 } catch (SQLException ex) {
-                    Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                 }
             });
         }
+         */
     }
 
 }

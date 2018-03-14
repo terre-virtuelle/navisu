@@ -44,7 +44,8 @@ public class Geo
     public Geo(long id) {
         super(id);
     }
-@SuppressWarnings("unchecked")
+
+    @SuppressWarnings("unchecked")
     public Geo() {
         this.geos = new ArrayList();
         this.cartos = new ArrayList();

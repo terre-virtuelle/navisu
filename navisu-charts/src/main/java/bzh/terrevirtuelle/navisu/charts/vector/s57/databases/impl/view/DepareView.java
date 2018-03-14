@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthArea;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthAreaWithHoles;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
@@ -42,13 +43,14 @@ public class DepareView {
         this.topologyServices = topologyServices;
         this.acronym = acronym;
         this.layer = layer;
-      //  GeometryClipper GeometryClipper;
+        //  GeometryClipper GeometryClipper;
     }
 
     @SuppressWarnings("unchecked")
-    public void display(List<DepthArea> depthAreas) throws SQLException {
+    public void display(List<DepthAreaWithHoles> depthAreas) throws SQLException {
 
-        for (DepthArea d : depthAreas) {
+        for (DepthAreaWithHoles d : depthAreas) {
+            //area
             String s = d.getGeom();
             s = s.replace("(", "");
             s = s.replace(")", "");
@@ -63,27 +65,48 @@ public class DepareView {
                         Angle.fromDegrees(Double.parseDouble(lon)), 5));
             }
             polygon = new Polygon(positions);
+/*
+            // holes
+            List<String> geoms = d.getGeoms();
+            System.out.println("i : " + i++ + "geoms : " + geoms.size());
+            if(geoms.size()<0){
+            for (String g : geoms) {
+                g = s.replace("(", "");
+                g = s.replace(")", "");
+                tab0 = s.split(",");
+                l = tab0.length;
+                positions.clear();
+                for (int j = 0; j < l; j++) {
+                    String[] latLon = tab0[j].trim().split(" ");
+                    String lat = latLon[1];
+                    String lon = latLon[0];
+                    positions.add(new Position(Angle.fromDegrees(Double.parseDouble(lat)),
+                            Angle.fromDegrees(Double.parseDouble(lon)), 5));
+                }
+                polygon.addInnerBoundary(positions);
+            }
+            }
+            */
             color = defineColor(Double.parseDouble(d.getDepthRangeValue1()),
                     Double.parseDouble(d.getDepthRangeValue2()));
-            //  System.out.println("color : " + color);
             ShapeAttributes attrs = new BasicShapeAttributes();
             attrs.setDrawInterior(true);
-            attrs.setDrawOutline(false);
+            attrs.setDrawOutline(true);
+            attrs.setOutlineMaterial(Material.BLACK);
             attrs.setInteriorMaterial(new Material(color));
+            attrs.setEnableLighting(false);
             polygon.setAttributes(attrs);
             polygon.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+
             layer.addRenderable(polygon);
+            wwd.redrawNow();
         }
-        wwd.redrawNow();
     }
 
     private Color defineColor(double val1, double val2) {
-        //  System.out.println("val1 : " + val1 + " val2 : " + val2);
         color = new Color(159, 215, 247);
 
-        if (val1 == -9.0 && val2 <= 0.0) {
-            color = new Color(151, 199, 0);
-        }
+        
         if (val1 >= -14.0 && val2 <= 0.0) {
             color = new Color(151, 199, 0);
             // color = new Color(87, 137, 108);

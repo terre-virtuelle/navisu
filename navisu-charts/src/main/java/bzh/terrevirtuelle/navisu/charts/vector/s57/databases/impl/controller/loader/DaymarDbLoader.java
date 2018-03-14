@@ -111,12 +111,18 @@ public class DaymarDbLoader {
                     buoyage.setColourPattern(colPat);
 
                     buoyage.setId(resultSet.getLong("rcid"));
-                    
-                    String natcon = resultSet.getString(7);
+
+                    String natcon = resultSet.getString("natcon");
                     if (natcon == null) {
                         natcon = "0";
                     }
                     buoyage.setNatureOfConstruction(natcon);
+                    
+                    String cat = resultSet.getString("catspm");
+                    if (cat == null) {
+                        cat = "0";
+                    }
+                    buoyage.setCategoryOfMark(cat);
 
                     String ma = marsysMap.get(new Pair(lat, lon));
                     if (ma == null) {

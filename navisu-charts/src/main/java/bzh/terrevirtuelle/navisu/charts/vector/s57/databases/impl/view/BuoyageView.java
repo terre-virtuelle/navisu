@@ -66,6 +66,18 @@ public class BuoyageView {
             if (topMark == null) {
                 topMark = "0";
             }
+           /* 
+            label =  buoyage.getMarsys() + "/" 
+                    + acronym + "_"
+                    + buoyage.getShape() + "_"
+                    + buoyage.getCategoryOfMark() + "_"
+                    + buoyage.getColour() + "_"
+                    + buoyage.getColourPattern() + "_"
+                    + topMark + "_"
+                    + buoyage.getMarsys()
+                    + ".png";
+            placemark.setValue(AVKey.DISPLAY_NAME, label);
+            */
             String imageAddress = "img/buoyage_" 
                     + buoyage.getMarsys() + "/" 
                     + acronym + "_"

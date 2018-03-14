@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDbLoader.LOGGER;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthArea;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthAreaWithHoles;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +28,8 @@ public class DepareDbLoader {
     protected String request;
     protected ResultSet resultSet;
     protected String acronym;
-    
+    static int count = 0;
+
     public DepareDbLoader(Connection connection, String acronym) {
         this.connection = connection;
         this.acronym = acronym;
@@ -35,9 +37,10 @@ public class DepareDbLoader {
     }
 
     @SuppressWarnings("unchecked")
-    public List<DepthArea> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
-        List<DepthArea> depthAreas = new ArrayList<>();
-        DepthArea depthArea = null;
+    public List<DepthAreaWithHoles> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
+        List<DepthAreaWithHoles> depthAreas = new ArrayList<>();
+        DepthAreaWithHoles depthAreaWithHoles;
+        DepthArea depthArea;
         if (connection != null) {
             try {
                 request = S57_REQUEST_MAP.get(acronym);
@@ -53,15 +56,22 @@ public class DepareDbLoader {
                     MultiPolygon p = new MultiPolygon(s);
                     org.postgis.Polygon[] polyTab = p.getPolygons();
                     for (org.postgis.Polygon pp : polyTab) {
+                       // depthAreas.clear();
                         int geoms = pp.numGeoms();
-                        for (int i = 0; i < geoms; i++) {
-                            depthArea = new DepthArea();
-                            String tmp = pp.getSubGeometry(i).toString();
-                            depthArea.setGeom(tmp);
-                            depthArea.setDepthRangeValue1(resultSet.getString(2));
-                            depthArea.setDepthRangeValue2(resultSet.getString(3));
-                            depthAreas.add(depthArea);
+                        // System.out.println("geoms : " + geoms);
+                        depthAreaWithHoles = new DepthAreaWithHoles();
+                        String tmp = pp.getSubGeometry(0).toString();
+                        depthAreaWithHoles.setGeom(tmp);
+                        depthAreaWithHoles.setDepthRangeValue1(resultSet.getString(2));
+                        depthAreaWithHoles.setDepthRangeValue2(resultSet.getString(3));
+                        depthAreas.add(depthAreaWithHoles);
+                        if (geoms >= 1) {
+                            for (int i = 1; i < geoms; i++) {
+                                tmp = pp.getSubGeometry(i).toString();
+                                depthAreaWithHoles.getGeoms().add(tmp);
+                            }
                         }
+                     //  System.out.println(depthAreas);
                     }
                 }
             } catch (SQLException ex) {
