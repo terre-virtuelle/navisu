@@ -56,18 +56,20 @@ public class DepareDbLoader {
                     MultiPolygon p = new MultiPolygon(s);
                     org.postgis.Polygon[] polyTab = p.getPolygons();
                     for (org.postgis.Polygon pp : polyTab) {
-                       // depthAreas.clear();
+                        System.out.println("p : " + p);
                         int geoms = pp.numGeoms();
-                        // System.out.println("geoms : " + geoms);
+                       // System.out.println("geoms : " + geoms);
                         depthAreaWithHoles = new DepthAreaWithHoles();
                         String tmp = pp.getSubGeometry(0).toString();
                         depthAreaWithHoles.setGeom(tmp);
+                      //  System.out.println("tmp : " + tmp);
                         depthAreaWithHoles.setDepthRangeValue1(resultSet.getString(2));
                         depthAreaWithHoles.setDepthRangeValue2(resultSet.getString(3));
                         depthAreas.add(depthAreaWithHoles);
                         if (geoms >= 1) {
                             for (int i = 1; i < geoms; i++) {
                                 tmp = pp.getSubGeometry(i).toString();
+                               // System.out.println("tmp : " + tmp);
                                 depthAreaWithHoles.getGeoms().add(tmp);
                             }
                         }

@@ -6,11 +6,11 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthArea;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthAreaWithHoles;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -51,12 +51,15 @@ public class DepareView {
 
         for (DepthAreaWithHoles d : depthAreas) {
             //area
+            int l;
+            List<Position> positions = new ArrayList<>();
+
             String s = d.getGeom();
             s = s.replace("(", "");
             s = s.replace(")", "");
             String[] tab0 = s.split(",");
-            int l = tab0.length;
-            List<Position> positions = new ArrayList<>();
+            l = tab0.length;
+
             for (int j = 0; j < l; j++) {
                 String[] latLon = tab0[j].trim().split(" ");
                 String lat = latLon[1];
@@ -65,30 +68,31 @@ public class DepareView {
                         Angle.fromDegrees(Double.parseDouble(lon)), 5));
             }
             polygon = new Polygon(positions);
-/*
+
             // holes
             List<String> geoms = d.getGeoms();
-            System.out.println("i : " + i++ + "geoms : " + geoms.size());
-            if(geoms.size()<0){
             for (String g : geoms) {
-                g = s.replace("(", "");
-                g = s.replace(")", "");
-                tab0 = s.split(",");
-                l = tab0.length;
+                g = g.replace("(", "");
+                g = g.replace(")", "");
+                String[] tab1 = g.split(",");
+                l = tab1.length;
                 positions.clear();
                 for (int j = 0; j < l; j++) {
-                    String[] latLon = tab0[j].trim().split(" ");
-                    String lat = latLon[1];
-                    String lon = latLon[0];
-                    positions.add(new Position(Angle.fromDegrees(Double.parseDouble(lat)),
-                            Angle.fromDegrees(Double.parseDouble(lon)), 5));
+                    String[] latLon = tab1[j].trim().split(" ");
+                    positions.add(new Position(Angle.fromDegrees(Double.parseDouble(latLon[1])),
+                            Angle.fromDegrees(Double.parseDouble(latLon[0])), 5));
                 }
                 polygon.addInnerBoundary(positions);
+                // polygon = new Polygon(positions);
             }
-            }
-            */
+
             color = defineColor(Double.parseDouble(d.getDepthRangeValue1()),
-                    Double.parseDouble(d.getDepthRangeValue2()));
+                    Double.parseDouble(d.getDepthRangeValue1()));
+
+            String label0 = (int) Double.parseDouble(d.getDepthRangeValue1())
+                    + ", "
+                    + (int) Double.parseDouble(d.getDepthRangeValue2());
+
             ShapeAttributes attrs = new BasicShapeAttributes();
             attrs.setDrawInterior(true);
             attrs.setDrawOutline(true);
@@ -96,17 +100,19 @@ public class DepareView {
             attrs.setInteriorMaterial(new Material(color));
             attrs.setEnableLighting(false);
             polygon.setAttributes(attrs);
+            polygon.setValue(AVKey.DISPLAY_NAME, label0);
             polygon.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-
+            
             layer.addRenderable(polygon);
-            wwd.redrawNow();
+            //}
         }
+
+        wwd.redrawNow();
     }
 
     private Color defineColor(double val1, double val2) {
         color = new Color(159, 215, 247);
 
-        
         if (val1 >= -14.0 && val2 <= 0.0) {
             color = new Color(151, 199, 0);
             // color = new Color(87, 137, 108);
