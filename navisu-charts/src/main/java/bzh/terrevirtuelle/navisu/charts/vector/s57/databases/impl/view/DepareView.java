@@ -94,9 +94,9 @@ public class DepareView {
                     + (int) Double.parseDouble(d.getDepthRangeValue2());
 
             ShapeAttributes attrs = new BasicShapeAttributes();
-            attrs.setDrawInterior(true);
+            attrs.setDrawInterior(false);
             attrs.setDrawOutline(true);
-            attrs.setOutlineMaterial(Material.BLACK);
+            attrs.setOutlineMaterial(new Material(color));
             attrs.setInteriorMaterial(new Material(color));
             attrs.setEnableLighting(false);
             polygon.setAttributes(attrs);

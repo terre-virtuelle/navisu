@@ -56,7 +56,7 @@ public class DepareDbLoader {
                     MultiPolygon p = new MultiPolygon(s);
                     org.postgis.Polygon[] polyTab = p.getPolygons();
                     for (org.postgis.Polygon pp : polyTab) {
-                        System.out.println("p : " + p);
+                      //  System.out.println("p : " + p);
                         int geoms = pp.numGeoms();
                        // System.out.println("geoms : " + geoms);
                         depthAreaWithHoles = new DepthAreaWithHoles();
