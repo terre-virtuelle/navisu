@@ -8,7 +8,6 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthAreaWithHoles;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
-import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
@@ -17,7 +16,9 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polygon;
+//import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
+//import gov.nasa.worldwind.render.airspaces.Polygon;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,8 +49,10 @@ public class DepareView {
 
     @SuppressWarnings("unchecked")
     public void display(List<DepthAreaWithHoles> depthAreas) throws SQLException {
-
+        int count = 0;
+        List<Position> buffer = new ArrayList();
         for (DepthAreaWithHoles d : depthAreas) {
+            //if (count++ < 30) {
             //area
             int l;
             List<Position> positions = new ArrayList<>();
@@ -65,10 +68,13 @@ public class DepareView {
                 String lat = latLon[1];
                 String lon = latLon[0];
                 positions.add(new Position(Angle.fromDegrees(Double.parseDouble(lat)),
-                        Angle.fromDegrees(Double.parseDouble(lon)), 5));
+                        Angle.fromDegrees(Double.parseDouble(lon)),
+                        Double.parseDouble(d.getDepthRangeValue2())));
             }
-            polygon = new Polygon(positions);
+            // System.out.println(positions.get(0));
 
+            polygon = new Polygon(positions);
+            /*
             // holes
             List<String> geoms = d.getGeoms();
             for (String g : geoms) {
@@ -85,7 +91,7 @@ public class DepareView {
                 polygon.addInnerBoundary(positions);
                 // polygon = new Polygon(positions);
             }
-
+             */
             color = defineColor(Double.parseDouble(d.getDepthRangeValue1()),
                     Double.parseDouble(d.getDepthRangeValue1()));
 
@@ -94,19 +100,22 @@ public class DepareView {
                     + (int) Double.parseDouble(d.getDepthRangeValue2());
 
             ShapeAttributes attrs = new BasicShapeAttributes();
-            attrs.setDrawInterior(false);
+            attrs.setDrawInterior(true);
             attrs.setDrawOutline(true);
-            attrs.setOutlineMaterial(new Material(color));
+            attrs.setOutlineMaterial(Material.BLACK);
             attrs.setInteriorMaterial(new Material(color));
-            attrs.setEnableLighting(false);
+            attrs.setEnableLighting(true);
+         //   polygon.setAltitudes(300 - Double.parseDouble(d.getDepthRangeValue1()) * 10,
+          //          300 - Double.parseDouble(d.getDepthRangeValue2()) * 10);
             polygon.setAttributes(attrs);
-            polygon.setValue(AVKey.DISPLAY_NAME, label0);
-            polygon.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-            
-            layer.addRenderable(polygon);
-            //}
-        }
+            //  polygon.setValue(AVKey.DISPLAY_NAME, label0);
+            polygon.setValue(AVKey.DISPLAY_NAME, count++);
+            //  polygon.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
 
+            layer.addRenderable(polygon);
+
+        }
+        System.out.println("count : " + count);
         wwd.redrawNow();
     }
 

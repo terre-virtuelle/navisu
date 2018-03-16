@@ -15,14 +15,12 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponent
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DaymarDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepareDbLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepthContourDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.PontonDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DaymarView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DepareView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DephContourView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
@@ -270,7 +268,11 @@ public class S57DBComponentController
                     + " WHERE geom && ST_MakeEnvelope");
         }
     ;
-
+/*
+        pgsql2shp -f depar_0 -h localhost 
+        -u admin -P admin s57NP5DB 
+        "SELECT geom FROM depare WHERE geom && ST_MakeEnvelope(-4.55,48.25,-4.3,48.42,4326)";
+        */
     });
     
     public S57DBComponentController(S57DBComponentImpl component, String componentKeyName,
