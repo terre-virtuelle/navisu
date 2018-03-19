@@ -71,7 +71,7 @@ public class ToolsComponentController
     private final String USER = "admin";
     private final String PASSWD = "admin";
     protected Properties properties;
-    
+
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     protected String viewgroupstyle = "configuration.css";
 
@@ -223,7 +223,7 @@ public class ToolsComponentController
                 .addListener((ObservableValue<? extends String> observable,
                         String oldValue, String newValue)
                         -> {
-                    dataS57CatalogTF.setText("ENC_NP5"
+                    dataS57CatalogTF.setText("ENC_NP"
                             + newValue
                             + ".kml");
                     encDataBaseName = "s57NP" + newValue + "DB";
@@ -261,11 +261,12 @@ public class ToolsComponentController
 
             encDataBaseName = dataBaseNameTF.getText();
             guiAgentServices.getJobsManager().newJob("Load DB : " + encDataBaseName, (progressHandle) -> {
+                System.out.println("dataS57CatalogTF.getText() : " + dataS57CatalogTF.getText());
                 String shpDir = s57ChartComponentServices.s57FromCatalogToShapeFile(encHomeTF.getText(),
                         ENC_CATALOG_HOME + dataS57CatalogTF.getText(),
                         countryTF.getText(),
                         epsgTF.getText());
-                String sqlDir = databaseServices.shapeFileToSql(shpDir, epsgTF.getText());
+                String sqlDir = databaseServices.shapeFileToSql(psqlPath, shpDir, epsgTF.getText());
                 databaseServices.sqlToSpatialDB(encDataBaseName, USER, PASSWD, sqlDir, psqlTF.getText() + "/psql");
                 instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             });
@@ -334,9 +335,9 @@ public class ToolsComponentController
     private String startCmd() {
         String cmd = null;
         if (OS.isWindows()) {
-            cmd = "C:\\Program\\ Files\\PostgreSQL\\9.4\\bin\\";
+            cmd = psqlPath;
         } else if (OS.isLinux()) {
-            cmd = "/usr/bin/";
+            cmd = psqlPath;
         } else {
             System.out.println("OS not found");
         }

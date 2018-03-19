@@ -268,11 +268,7 @@ public class S57DBComponentController
                     + " WHERE geom && ST_MakeEnvelope");
         }
     ;
-/*
-        pgsql2shp -f depar_0 -h localhost 
-        -u admin -P admin s57NP5DB 
-        "SELECT geom FROM depare WHERE geom && ST_MakeEnvelope(-4.55,48.25,-4.3,48.42,4326)";
-        */
+
     });
     
     public S57DBComponentController(S57DBComponentImpl component, String componentKeyName,
@@ -375,19 +371,25 @@ public class S57DBComponentController
         selectedButton.setOnMouseClicked((MouseEvent event) -> {
             if (measureTool != null) {
                 List<? extends Position> positions = measureTool.getPositions();
-                lat0 = positions.get(0).getLatitude().getDegrees();
-                lon0 = positions.get(0).getLongitude().getDegrees();
-                lat1 = positions.get(2).getLatitude().getDegrees();
-                lon1 = positions.get(2).getLongitude().getDegrees();
+                if (!positions.isEmpty()) {
+                    lat0 = positions.get(0).getLatitude().getDegrees();
+                    lon0 = positions.get(0).getLongitude().getDegrees();
+                    lat1 = positions.get(2).getLatitude().getDegrees();
+                    lon1 = positions.get(2).getLongitude().getDegrees();
 
-                latMinLabel.setText(String.format("%.2f", lat0));
-                lonMinLabel.setText(String.format("%.2f", lon0));
-                latMaxLabel.setText(String.format("%.2f", lat1));
-                lonMaxLabel.setText(String.format("%.2f", lon1));
-
-                measureTool.setArmed(false);
-                measureTool.dispose();
+                    latMinLabel.setText(String.format("%.2f", lat0));
+                    lonMinLabel.setText(String.format("%.2f", lon0));
+                    latMaxLabel.setText(String.format("%.2f", lat1));
+                    lonMaxLabel.setText(String.format("%.2f", lon1));
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Sélectionnez une zone d'acquisition");
+                    alert.show();
+                }
             }
+            measureTool.setArmed(false);
+            measureTool.dispose();
         });
 
         requestButton.setOnMouseClicked((MouseEvent event) -> {
@@ -507,15 +509,21 @@ public class S57DBComponentController
         MnsysDbLoader mnsysDbLoader = new MnsysDbLoader(connection);
         marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
         if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
+            /*
             guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
-                try {
                     new DepareView(topologyServices, depareLayer, "DEPARE")
                             .display(new DepareDbLoader(connection, "DEPARE")
                                     .retrieveIn(latMin, lonMin, latMax, lonMax));
-                } catch (SQLException ex) {
-                    Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-                }
             });
+             */
+/*
+            guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
+                new DepareDbLoader(databaseServices,
+                        databaseTF.getText(),
+                        USER,
+                        PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax);
+            });
+            */
         }
 
         if (object.trim().equals("ALL") || object.trim().equals("BUOYAGE")) {

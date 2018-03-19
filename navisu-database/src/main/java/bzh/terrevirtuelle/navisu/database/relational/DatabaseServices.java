@@ -118,7 +118,7 @@ public interface DatabaseServices
      * @param epsg
      * @return
      */
-    String shapeFileToSql(String shpDir, String epsg);
+    String shapeFileToSql(String path, String shpDir, String epsg);
 
     /**
      *
@@ -129,4 +129,8 @@ public interface DatabaseServices
      * @param cmd
      */
     void sqlToSpatialDB(String databaseName, String user, String passwd, String dir, String cmd);
+    
+    void spatialDBToShapefile(String databaseName,
+            String user, String passwd,
+            double latMin, double lonMin, double latMax, double lonMax);
 }

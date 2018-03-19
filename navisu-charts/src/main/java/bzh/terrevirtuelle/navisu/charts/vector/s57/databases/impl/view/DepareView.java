@@ -6,29 +6,43 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.ndf.view.NFD_COLOUR;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthAreaWithHoles;
+import bzh.terrevirtuelle.navisu.shapefiles.impl.controller.loader.ShapefileLoader;
+import bzh.terrevirtuelle.navisu.shapefiles.impl.controller.loader.SingleAREA_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.geom.Sector;
+import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polygon;
-//import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfacePolygons;
 //import gov.nasa.worldwind.render.airspaces.Polygon;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author serge
  */
 public class DepareView {
+    //extends ShapefileLoader {
 
     protected TopologyServices topologyServices;
     protected RenderableLayer layer;
@@ -40,13 +54,77 @@ public class DepareView {
     protected float val2;
     protected Color color;
 
+    private ShapefileRecord record;
+    private Set<Map.Entry<String, Object>> entries;
+    private SurfacePolygons shape;
+
     public DepareView(TopologyServices topologyServices, RenderableLayer layer, String acronym) {
         this.topologyServices = topologyServices;
         this.acronym = acronym;
         this.layer = layer;
-        //  GeometryClipper GeometryClipper;
+
     }
 
+    public void display(Shapefile shp) {
+
+        while (shp.hasNext()) {
+            try {
+                record = shp.nextRecord();
+                if (record != null) {
+                    if (record.getAttributes() != null) {
+                        entries = record.getAttributes().getEntries();
+                        entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
+                            if (e.getKey().equals("TYPEVALE")) {
+                                color = NFD_COLOUR.ATT.get(((String) e.getValue()).trim());
+                            } else {
+                                color = new Color((int) (Math.random() * 255),
+                                        (int) (Math.random() * 255), (int) (Math.random() * 255));
+                            }
+                        });
+                    }
+                    if (!Shapefile.isPolygonType(record.getShapeType())) {
+                        continue;
+                    }
+
+                    createPolygon(record);
+                    setPolygonAttributes(shape, color);
+                    layer.addRenderable(shape);
+                    label = "";
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(SingleAREA_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+    }
+
+    protected void createPolygon(ShapefileRecord record) {
+        this.record = record;
+        shape = new SurfacePolygons(
+                Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
+                record.getCompoundPointBuffer());
+        shape.setWindingRule(AVKey.CLOCKWISE);
+        shape.setPolygonRingGroups(new int[]{0});
+    }
+
+    protected void setPolygonAttributes(SurfacePolygons shape, Color color) {
+
+        ShapeAttributes normalAttributes = new BasicShapeAttributes();
+        normalAttributes.setDrawInterior(true);
+        normalAttributes.setInteriorMaterial(new Material(color));
+        normalAttributes.setDrawOutline(true);
+        normalAttributes.setOutlineMaterial(new Material(Color.BLACK));
+        normalAttributes.setEnableLighting(true);
+        shape.setAttributes(normalAttributes);
+
+        ShapeAttributes highlightAttributes = new BasicShapeAttributes(normalAttributes);
+        highlightAttributes.setOutlineOpacity(1);
+        highlightAttributes.setDrawInterior(true);
+        highlightAttributes.setInteriorMaterial(new Material(Color.WHITE));
+        highlightAttributes.setInteriorOpacity(.5);
+        highlightAttributes.setEnableLighting(true);
+        shape.setHighlightAttributes(highlightAttributes);
+    }
+/*
     @SuppressWarnings("unchecked")
     public void display(List<DepthAreaWithHoles> depthAreas) throws SQLException {
         int count = 0;
@@ -69,31 +147,13 @@ public class DepareView {
                 String lon = latLon[0];
                 positions.add(new Position(Angle.fromDegrees(Double.parseDouble(lat)),
                         Angle.fromDegrees(Double.parseDouble(lon)),
-                        Double.parseDouble(d.getDepthRangeValue2())));
+                        5));
             }
-            // System.out.println(positions.get(0));
 
             polygon = new Polygon(positions);
-            /*
-            // holes
-            List<String> geoms = d.getGeoms();
-            for (String g : geoms) {
-                g = g.replace("(", "");
-                g = g.replace(")", "");
-                String[] tab1 = g.split(",");
-                l = tab1.length;
-                positions.clear();
-                for (int j = 0; j < l; j++) {
-                    String[] latLon = tab1[j].trim().split(" ");
-                    positions.add(new Position(Angle.fromDegrees(Double.parseDouble(latLon[1])),
-                            Angle.fromDegrees(Double.parseDouble(latLon[0])), 5));
-                }
-                polygon.addInnerBoundary(positions);
-                // polygon = new Polygon(positions);
-            }
-             */
-            color = defineColor(Double.parseDouble(d.getDepthRangeValue1()),
-                    Double.parseDouble(d.getDepthRangeValue1()));
+
+            color = defineColor(Double.parseDouble(d.getDepthRangeValue2()),
+                    Double.parseDouble(d.getDepthRangeValue2()));
 
             String label0 = (int) Double.parseDouble(d.getDepthRangeValue1())
                     + ", "
@@ -105,12 +165,12 @@ public class DepareView {
             attrs.setOutlineMaterial(Material.BLACK);
             attrs.setInteriorMaterial(new Material(color));
             attrs.setEnableLighting(true);
-         //   polygon.setAltitudes(300 - Double.parseDouble(d.getDepthRangeValue1()) * 10,
-          //          300 - Double.parseDouble(d.getDepthRangeValue2()) * 10);
+            //   polygon.setAltitudes(300 - Double.parseDouble(d.getDepthRangeValue1()) * 10,
+            //           300 - Double.parseDouble(d.getDepthRangeValue2()) * 10);
             polygon.setAttributes(attrs);
             //  polygon.setValue(AVKey.DISPLAY_NAME, label0);
             polygon.setValue(AVKey.DISPLAY_NAME, count++);
-            //  polygon.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+            polygon.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
 
             layer.addRenderable(polygon);
 
@@ -118,7 +178,7 @@ public class DepareView {
         System.out.println("count : " + count);
         wwd.redrawNow();
     }
-
+*/
     private Color defineColor(double val1, double val2) {
         color = new Color(159, 215, 247);
 

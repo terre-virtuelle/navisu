@@ -10,18 +10,14 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
-import gov.nasa.worldwind.geom.LatLon;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwind.render.SurfacePolygon;
 import gov.nasa.worldwind.render.SurfacePolygons;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -81,11 +77,7 @@ public class SingleAREA_ShapefileLoader
                             (int) (Math.random() * 255), (int) (Math.random() * 255));
                     ShapeAttributes attrs = this.createPolygonAttributes(color);
                     this.createPolygon(record, attrs, layer);
-                    if (layer.getNumRenderables() > this.numPolygonsPerLayer) {
-                        layer = new RenderableLayer();
-                        layer.setEnabled(false);
-                        layers.add(layer);
-                    }
+
                     label = "";
                 }
             } catch (Exception ex) {
@@ -95,34 +87,19 @@ public class SingleAREA_ShapefileLoader
     }
 
     @Override
-    protected void createPolygon(ShapefileRecord record, ShapeAttributes attrs, RenderableLayer layer) {
+    protected void createPolygon(ShapefileRecord record,
+            ShapeAttributes attrs,
+            RenderableLayer layer) {
         this.record = record;
-
-        /*
-        Iterable<? extends Position> pos = record.getCompoundPointBuffer().getPositions();
-        for (Position p : pos) {
-            System.out.println("p : " + p);
-        }
-         */
         shape = new SurfacePolygons(
                 Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
                 record.getCompoundPointBuffer());
 
         shape.setAttributes(attrs);
+        System.out.println("attrs : " + shape.getAttributes());
         shape.setWindingRule(AVKey.CLOCKWISE);
         shape.setPolygonRingGroups(new int[]{0});
-        /*
-        System.out.println(((ShapefileRecordPolygon) record).getBoundingRectangle()[0]
-                + " " + ((ShapefileRecordPolygon) record).getBoundingRectangle()[1]
-                + " " + ((ShapefileRecordPolygon) record).getBoundingRectangle()[2]
-                + " " + ((ShapefileRecordPolygon) record).getBoundingRectangle()[3]);
-         */
- /*
-        Iterable<? extends LatLon> pos = shape.getLocations();
-        for(LatLon p : pos){
-            System.out.println("p : " + p);
-        }
-         */
+
         ShapeAttributes highlightAttributes = new BasicShapeAttributes(attrs);
         highlightAttributes.setOutlineOpacity(1);
         highlightAttributes.setDrawInterior(true);
@@ -131,26 +108,13 @@ public class SingleAREA_ShapefileLoader
         highlightAttributes.setEnableLighting(true);
 
         shape.setHighlightAttributes(highlightAttributes);
-        if (dbList != null) {
-            List<String> tmp = dbList.get(i);
-            tmp.forEach((s) -> {
-                label += s;
-            });
-        }
 
-        List<Position> pos = new ArrayList<>();
-
-        Iterable<? extends LatLon> latLon = shape.getLocations();
-        for (LatLon ll : latLon) {
-            pos.add(new Position(ll.getLatitude(), ll.getLongitude(), 5));
-        }
-        SurfacePolygon polygon = new SurfacePolygon(pos);
-
-     //   shape.setValue(AVKey.DISPLAY_NAME, label);
-       
-       // layer.addRenderable(shape);
-       layer.addRenderable(polygon);
+        layer.addRenderable(shape);
         i++;
+    }
+
+    public List<SurfacePolygons> createPolygons(Shapefile shp, RenderableLayer layer) {
+        return null;
     }
 
     protected ShapeAttributes createPolygonAttributes(Color color) {

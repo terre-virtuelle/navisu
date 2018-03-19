@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.database.relational.Database;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,6 +58,8 @@ public class DatabaseImpl
     private EntityManager entityManager = null;
     private final String PERSISTENCE_UNIT = "navisuPU";
     private final String DB_HOME = ".navisu/databases/";
+    protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
+    protected Properties properties;
     private String userHome;
     private final String NAVISU_DB = "NaVisuDB";
     private String userDirPath;
@@ -248,9 +252,8 @@ public class DatabaseImpl
     }
 
     @Override
-    public String shapeFileToSql(String shpDir, String epsg) {
+    public String shapeFileToSql(String path, String shpDir, String epsg) {
 
-        userDirPath = System.getProperty("user.dir");
         try {
             Files.createDirectory(Paths.get(userDirPath + "/data/sql/"));
         } catch (IOException ex) {
@@ -259,7 +262,7 @@ public class DatabaseImpl
         Map<String, String> environment = new HashMap<>(System.getenv());
         String options = System.getProperty("user.dir") + "/gdal/data";
         environment.put("GDAL_DATA", options);
-        String cmd = startCmd("shp2pgsql");
+        String cmd = startCmd(path, "/shp2pgsql");
 
         //Search all different tables
         tableSet = new HashSet<>();
@@ -355,26 +358,13 @@ public class DatabaseImpl
 
     @Override
     public void sqlToSpatialDB(String databaseName, String user, String passwd, String dir, String cmd) {
-
+        
         Map<String, String> environment = new HashMap<>(System.getenv());
         environment.put("PGPASSWORD", "admin");
-        /*
-        try {
-            Proc.BUILDER.create()
-                    .setCmd(cmd)
-                    .addArg("-U admin ").addArg("-d s57NP5DB ")
-                    .setOut(System.out)
-                    .setErr(System.err)
-                    .exec(environment);
-        } catch (IOException | InterruptedException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-*/
         try {
             loadFileLog = new FileOutputStream("load.log", true);
-          //  errorFileLog = new FileOutputStream("error.log", true);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         try (Stream<Path> filePathStream = Files.walk(Paths.get("data/sql"))) {
             filePathStream.forEach(filePath -> {
@@ -384,15 +374,12 @@ public class DatabaseImpl
                         try {
                             Proc.BUILDER.create()
                                     .setCmd(cmd)
-                                    .addArg("-U admin -d s57NP5DB ").addArg("-f ")
+                                    .addArg("-U admin -h localhost -d " + databaseName + " ").addArg("-f ")
                                     .addArg(userDirPath + "/" + filePath)
-                                  //  .setOut(loadFileLog)
-                                   // .setErr(errorFileLog)
                                     .setOut(loadFileLog)
-                                  //  .setErr(System.err)
                                     .exec(environment);
                         } catch (IOException | InterruptedException ex) {
-                            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                         }
                     }
                 }
@@ -400,17 +387,98 @@ public class DatabaseImpl
         } catch (IOException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+    }
+
+    @Override
+    public void spatialDBToShapefile(String databaseName, String user, String passwd,
+            double latMin, double lonMin, double latMax, double lonMax) {
+        properties = new Properties();
+        try {
+            properties.load(new FileInputStream(CONFIG_FILE_NAME));
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+
+        userDirPath = System.getProperty("user.dir");
+        String path = properties.getProperty("psqlPath");
+        // String cmd = "/pgsql2shp";
+        String cmd = "/ogr2ogr";
+        cmd = startCmd(path, cmd);
+        if (path == null) {
+            //alarm   
+        }
+
+        Map<String, String> environment = new HashMap<>(System.getenv());
+        String options
+                = "\"RECODE_BY_DSSI=ON, "
+                + "ENCODING=UTF8, "
+                + "UPDATES=APPLY, "
+                + "RETURN_PRIMITIVES=ON, "
+                + "RETURN_LINKAGES=ON, "
+                + "LNAM_REFS=ON, "
+                + "SPLIT_MULTIPOINT=ON, "
+                + "ADD_SOUNDG_DEPTH=ON\" \n";
+        environment.put("OGR_S57_OPTIONS", options);
+        options = System.getProperty("user.dir") + "/gdal/data";
+        environment.put("GDAL_DATA", options);
+        try {
+            loadFileLog = new FileOutputStream("load.log", true);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        try {
+            /*
+            pgsql2shp -f depar_0 -h localhost
+            -u admin -P admin s57NP5DB
+            "SELECT geom FROM depare WHERE geom && ST_MakeEnvelope(-4.55,48.25,-4.3,48.42,4326)";
+            
+           
+             */
+ /*
+            Proc.BUILDER.create()
+                    .setCmd(cmd)
+                    .addArg("-f s57Objects'")
+                    .addArg("-h localhost -u admin -P admin " + databaseName )
+                    .addArg(" \"SELECT geom FROM depare WHERE geom && ST_MakeEnvelope("
+                            + lonMin + "," + latMin + "," + lonMax + "," + latMax + ")\"")
+                    .setOut(loadFileLog)
+                    .exec(environment);
+             */
+ /*
+            ogr2ogr -f "ESRI Shapefile" qds_cnt.shp PG:"host=localhost user=postgres dbname=gisdb
+            password=password" -sql 
+            "SELECT sp_count, geom FROM grid50_rsa WHERE province = 'Gauteng'"
+             */
+ /*
+            ogr2ogr -f "ESRI Shapefile" "C:\temp\sqlexport.shp"
+"MSSQL:server=localhost\sqlexpress;database=tempdb;trusted_connection=yes;"
+-sql "SELECT * FROM OGRExportTestTable WHERE shapegeom.STGeometryType() = 'POINT'"
+-overwrite
+             */
+           
+            Proc.BUILDER.create()
+                    .setCmd(cmd)
+                    .addArg("-f \"ESRI Shapefile\" depare.shp ")
+                    .addArg("PG:\"host=localhost user=admin dbname=" + databaseName + " password=admin\" -sql")
+                    .addArg("\"SELECT geom FROM depare WHERE geom && ST_MakeEnvelope("
+                            + lonMin + "," + latMin + "," + lonMax + "," + latMax + ")\"")
+                    .setOut(loadFileLog)
+                    .exec(environment);
+
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
 
     }
 
-    private String startCmd(String command) {
+    private String startCmd(String path, String command) {
         String cmd = null;
         if (OS.isWindows()) {
-            cmd = "C:\\PostgreSQL\\9.4\\bin\\" + command;
+            cmd = path + command;
         } else if (OS.isLinux()) {
-            cmd = "/usr/bin/" + command;
+            cmd = path + command;
         } else if (OS.isMac()) {
-            cmd = "gdal/osx/" + command;
+            cmd = path + command;
         } else {
             System.out.println("OS not found");
         }

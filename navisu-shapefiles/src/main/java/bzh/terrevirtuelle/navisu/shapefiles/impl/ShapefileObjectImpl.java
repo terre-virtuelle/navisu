@@ -105,13 +105,6 @@ public class ShapefileObjectImpl
                 }
                 dbList.add(tmp);
             }
-            
-            // lecture des element repondant a une cle
-           // int index = keys.get("auteurs");
-           // dbList.forEach((l) -> {
-            //    System.out.println(l.get(index));
-           // });
-             
         } catch (DBFException | FileNotFoundException ex) {
             Logger.getLogger(ShapefileObjectImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
