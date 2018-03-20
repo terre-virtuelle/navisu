@@ -447,7 +447,7 @@ public class DatabaseImpl
              */
 
             Proc.BUILDER.create()
-                    .setCmd("ogr2ogr ")
+                    .setCmd(cmd)
                     .addArg("-f \"ESRI Shapefile\" depare.shp")
                     .addArg("PG:\"host=localhost port=5432 user=admin dbname=" + databaseName)
                     .addArg("password=admin\" -sql")
