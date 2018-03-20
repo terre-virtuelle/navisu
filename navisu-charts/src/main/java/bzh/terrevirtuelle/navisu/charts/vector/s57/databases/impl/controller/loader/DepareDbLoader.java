@@ -37,16 +37,10 @@ public class DepareDbLoader {
 
     @SuppressWarnings("unchecked")
     public Shapefile retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
-        /*
-        pgsql2shp -f depar_0 -h localhost 
-        -u admin -P admin s57NP5DB 
-        "SELECT geom FROM depare WHERE geom && ST_MakeEnvelope(-4.55,48.25,-4.3,48.42,4326)";
-         */
         databaseServices.spatialDBToShapefile(databaseName,
                 user, passwd,
                 latMin, lonMin, latMax, lonMax);
         return null;
-
     }
 
     public Shapefile createLayerFromSource(Object source) {

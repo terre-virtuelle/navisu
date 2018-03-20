@@ -22,6 +22,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.BuoyageVi
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DaymarView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonView;
+import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
@@ -509,21 +510,12 @@ public class S57DBComponentController
         MnsysDbLoader mnsysDbLoader = new MnsysDbLoader(connection);
         marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
         if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
-            /*
-            guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
-                    new DepareView(topologyServices, depareLayer, "DEPARE")
-                            .display(new DepareDbLoader(connection, "DEPARE")
-                                    .retrieveIn(latMin, lonMin, latMax, lonMax));
-            });
-             */
-/*
-            guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
-                new DepareDbLoader(databaseServices,
-                        databaseTF.getText(),
-                        USER,
-                        PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax);
-            });
-            */
+            //  guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
+            new DepareDbLoader(databaseServices,
+                    databaseTF.getText(),
+                    USER,
+                    PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax);
+            //  });
         }
 
         if (object.trim().equals("ALL") || object.trim().equals("BUOYAGE")) {
@@ -550,7 +542,6 @@ public class S57DBComponentController
             new BuoyageView(topMarkMap, buoyageLayer, "BCNISD")
                     .display(new BuoyageDbLoader(connection, "BCNISD", marsysMap)
                             .retrieveIn(latMin, lonMin, latMax, lonMax));
-
             new BuoyageView(topMarkMap, buoyageLayer, "BOYCAR")
                     .display(new BuoyageDbLoader(connection, "BOYCAR", marsysMap)
                             .retrieveIn(latMin, lonMin, latMax, lonMax));
@@ -572,7 +563,6 @@ public class S57DBComponentController
             new DaymarView(topMarkMap, harbourLayer, "DAYMAR")
                     .display(new DaymarDbLoader(connection, "DAYMAR", marsysMap)
                             .retrieveIn(latMin, lonMin, latMax, lonMax));
-
             new BuoyageView(topMarkMap, buoyageLayer, "MORFAC")
                     .display(new BuoyageDbLoader(connection, "MORFAC", marsysMap)
                             .retrieveIn(latMin, lonMin, latMax, lonMax));

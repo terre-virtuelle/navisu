@@ -253,7 +253,7 @@ public class DatabaseImpl
 
     @Override
     public String shapeFileToSql(String path, String shpDir, String epsg) {
-
+        userDirPath = System.getProperty("user.dir");
         try {
             Files.createDirectory(Paths.get(userDirPath + "/data/sql/"));
         } catch (IOException ex) {
@@ -358,7 +358,7 @@ public class DatabaseImpl
 
     @Override
     public void sqlToSpatialDB(String databaseName, String user, String passwd, String dir, String cmd) {
-        
+        userDirPath = System.getProperty("user.dir");
         Map<String, String> environment = new HashMap<>(System.getenv());
         environment.put("PGPASSWORD", "admin");
         try {
@@ -409,17 +409,7 @@ public class DatabaseImpl
         }
 
         Map<String, String> environment = new HashMap<>(System.getenv());
-        String options
-                = "\"RECODE_BY_DSSI=ON, "
-                + "ENCODING=UTF8, "
-                + "UPDATES=APPLY, "
-                + "RETURN_PRIMITIVES=ON, "
-                + "RETURN_LINKAGES=ON, "
-                + "LNAM_REFS=ON, "
-                + "SPLIT_MULTIPOINT=ON, "
-                + "ADD_SOUNDG_DEPTH=ON\" \n";
-        environment.put("OGR_S57_OPTIONS", options);
-        options = System.getProperty("user.dir") + "/gdal/data";
+        String options = System.getProperty("user.dir") + "/gdal/data";
         environment.put("GDAL_DATA", options);
         try {
             loadFileLog = new FileOutputStream("load.log", true);
@@ -437,8 +427,8 @@ public class DatabaseImpl
  /*
             Proc.BUILDER.create()
                     .setCmd(cmd)
-                    .addArg("-f s57Objects'")
-                    .addArg("-h localhost -u admin -P admin " + databaseName )
+                    .addArg("-f s57Objects ")
+                    .addArg("-h localhost -p 5432 -u admin -P admin " + databaseName )
                     .addArg(" \"SELECT geom FROM depare WHERE geom && ST_MakeEnvelope("
                             + lonMin + "," + latMin + "," + lonMax + "," + latMax + ")\"")
                     .setOut(loadFileLog)
@@ -455,20 +445,20 @@ public class DatabaseImpl
 -sql "SELECT * FROM OGRExportTestTable WHERE shapegeom.STGeometryType() = 'POINT'"
 -overwrite
              */
-           
+
             Proc.BUILDER.create()
-                    .setCmd(cmd)
-                    .addArg("-f \"ESRI Shapefile\" depare.shp ")
-                    .addArg("PG:\"host=localhost user=admin dbname=" + databaseName + " password=admin\" -sql")
+                    .setCmd("ogr2ogr ")
+                    .addArg("-f \"ESRI Shapefile\" depare.shp")
+                    .addArg("PG:\"host=localhost port=5432 user=admin dbname=" + databaseName)
+                    .addArg("password=admin\" -sql")
                     .addArg("\"SELECT geom FROM depare WHERE geom && ST_MakeEnvelope("
                             + lonMin + "," + latMin + "," + lonMax + "," + latMax + ")\"")
                     .setOut(loadFileLog)
+                    .setErr(errorFileLog)
                     .exec(environment);
-
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-
     }
 
     private String startCmd(String path, String command) {
