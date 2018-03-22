@@ -20,9 +20,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DaymarView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonView;
-import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
@@ -44,7 +42,6 @@ import gov.nasa.worldwind.util.measure.MeasureToolController;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
@@ -445,6 +442,12 @@ public class S57DBComponentController
         TextField lon0TF = new TextField();
         TextField lon1TF = new TextField();
 
+        //Default values
+        lat0TF.setText("48.21");
+        lat1TF.setText("48.22");
+        lon0TF.setText("-4.61");
+        lon1TF.setText("-4.30");
+        
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
