@@ -401,8 +401,8 @@ public class DatabaseImpl
 
         userDirPath = System.getProperty("user.dir");
         String path = properties.getProperty("psqlPath");
-        // String cmd = "/pgsql2shp";
-        String cmd = "/ogr2ogr";
+        String cmd = "/pgsql2shp";
+        //String cmd = "/ogr2ogr";
         cmd = startCmd(path, cmd);
         if (path == null) {
             //alarm   
@@ -411,6 +411,7 @@ public class DatabaseImpl
         Map<String, String> environment = new HashMap<>(System.getenv());
         String options = System.getProperty("user.dir") + "/gdal/data";
         environment.put("GDAL_DATA", options);
+        environment.put("PGCLIENTENCODING", "LATIN1");
         try {
             loadFileLog = new FileOutputStream("load.log", true);
         } catch (FileNotFoundException ex) {
@@ -427,7 +428,7 @@ public class DatabaseImpl
  /*
             Proc.BUILDER.create()
                     .setCmd(cmd)
-                    .addArg("-f s57Objects ")
+                    .addArg("-f depare ")
                     .addArg("-h localhost -p 5432 -u admin -P admin " + databaseName )
                     .addArg(" \"SELECT geom FROM depare WHERE geom && ST_MakeEnvelope("
                             + lonMin + "," + latMin + "," + lonMax + "," + latMax + ")\"")
@@ -456,6 +457,7 @@ public class DatabaseImpl
                     .setOut(loadFileLog)
                     .setErr(errorFileLog)
                     .exec(environment);
+
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }

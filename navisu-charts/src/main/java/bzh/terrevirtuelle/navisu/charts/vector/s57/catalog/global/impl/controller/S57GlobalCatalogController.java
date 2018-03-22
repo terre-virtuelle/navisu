@@ -145,7 +145,7 @@ public class S57GlobalCatalogController
                                         }
                                     }
                                      */
-                                    component.loadFile(filepath.toString());                                                                                                                           
+                                    component.loadFile(filepath.toString());
                                     s57Chart = new S57Chart();
                                     String number = filepathToNumber(filepath.toString());
                                     s57Chart.setNumber(number);
@@ -160,7 +160,10 @@ public class S57GlobalCatalogController
                                     alert(filename);
                                 }
                             } else {
-                                System.out.println(Translator.tr("chart.error"));
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Error");
+                                alert.setHeaderText(Translator.tr("chart.error"));
+                                alert.show();
                             }
                         }
                     });
