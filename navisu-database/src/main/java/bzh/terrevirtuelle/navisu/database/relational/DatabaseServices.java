@@ -130,7 +130,7 @@ public interface DatabaseServices
      */
     void sqlToSpatialDB(String databaseName, String user, String passwd, String dir, String cmd);
     
-    void spatialDBToShapefile(String databaseName,
+    String spatialDBToShapefile(String table, String databaseName,
             String user, String passwd,
             double latMin, double lonMin, double latMax, double lonMax);
 }

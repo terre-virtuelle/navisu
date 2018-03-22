@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.database.relational.Database;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -390,77 +391,28 @@ public class DatabaseImpl
     }
 
     @Override
-    public void spatialDBToShapefile(String databaseName, String user, String passwd,
+    public String spatialDBToShapefile(String table, String databaseName, String user, String passwd,
             double latMin, double lonMin, double latMax, double lonMax) {
-        properties = new Properties();
         try {
+            properties = new Properties();
             properties.load(new FileInputStream(CONFIG_FILE_NAME));
-        } catch (IOException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-
-        userDirPath = System.getProperty("user.dir");
-        String path = properties.getProperty("psqlPath");
-        String cmd = "/pgsql2shp";
-        //String cmd = "/ogr2ogr";
-        cmd = startCmd(path, cmd);
-        if (path == null) {
-            //alarm   
-        }
-
-        Map<String, String> environment = new HashMap<>(System.getenv());
-        String options = System.getProperty("user.dir") + "/gdal/data";
-        environment.put("GDAL_DATA", options);
-        environment.put("PGCLIENTENCODING", "LATIN1");
-        try {
-            loadFileLog = new FileOutputStream("load.log", true);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-        try {
-            /*
-            pgsql2shp -f depar_0 -h localhost
-            -u admin -P admin s57NP5DB
-            "SELECT geom FROM depare WHERE geom && ST_MakeEnvelope(-4.55,48.25,-4.3,48.42,4326)";
-            
-           
-             */
- /*
-            Proc.BUILDER.create()
-                    .setCmd(cmd)
-                    .addArg("-f depare ")
-                    .addArg("-h localhost -p 5432 -u admin -P admin " + databaseName )
-                    .addArg(" \"SELECT geom FROM depare WHERE geom && ST_MakeEnvelope("
-                            + lonMin + "," + latMin + "," + lonMax + "," + latMax + ")\"")
-                    .setOut(loadFileLog)
-                    .exec(environment);
-             */
- /*
-            ogr2ogr -f "ESRI Shapefile" qds_cnt.shp PG:"host=localhost user=postgres dbname=gisdb
-            password=password" -sql 
-            "SELECT sp_count, geom FROM grid50_rsa WHERE province = 'Gauteng'"
-             */
- /*
-            ogr2ogr -f "ESRI Shapefile" "C:\temp\sqlexport.shp"
-"MSSQL:server=localhost\sqlexpress;database=tempdb;trusted_connection=yes;"
--sql "SELECT * FROM OGRExportTestTable WHERE shapegeom.STGeometryType() = 'POINT'"
--overwrite
-             */
+            userDirPath = System.getProperty("user.dir");
+            String path = properties.getProperty("psqlPath");
+            String cmd = "/ogr2ogr";
+            cmd = startCmd(path, cmd);
+            if (path == null) {
+                //alarm
+            }
+            String command = createCmdSh(table, cmd, databaseName, user, passwd,
+                    latMin, lonMin, latMax, lonMax);
 
             Proc.BUILDER.create()
-                    .setCmd(cmd)
-                    .addArg("-f \"ESRI Shapefile\" depare.shp")
-                    .addArg("PG:\"host=localhost port=5432 user=admin dbname=" + databaseName)
-                    .addArg("password=admin\" -sql")
-                    .addArg("\"SELECT geom FROM depare WHERE geom && ST_MakeEnvelope("
-                            + lonMin + "," + latMin + "," + lonMax + "," + latMax + ")\"")
-                    .setOut(loadFileLog)
-                    .setErr(errorFileLog)
-                    .exec(environment);
-
+                    .setCmd(userDirPath + "/" + command)
+                    .exec();
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+        return userDirPath + "/" + table + ".shp";
     }
 
     private String startCmd(String path, String command) {
@@ -475,5 +427,39 @@ public class DatabaseImpl
             System.out.println("OS not found");
         }
         return cmd;
+    }
+
+    private String createCmdSh(String table, String cmd, String databaseName, String user, String passwd,
+            double latMin, double lonMin, double latMax, double lonMax) {
+
+        String command = cmd
+                + " -f \"ESRI Shapefile\" tmp/"
+                + table + ".shp PG:\"host=localhost "
+                + "user=" + user
+                + " password=" + passwd
+                + " dbname=" + databaseName
+                + "\" -sql \"SELECT geom FROM " + table
+                + " WHERE geom && ST_MakeEnvelope("
+                + lonMin + "," + latMin + "," + lonMax + "," + latMax + ")\"";
+
+        command += "\n";
+
+        command += cmd
+                + " -clipdst "
+                + Double.toString(lonMin) + " " + Double.toString(latMin) + " "
+                + Double.toString(lonMax) + " " + Double.toString(latMax) + " "
+                + "tmp/" + table + "clp.shp tmp/" + table + ".shp";
+
+        String cmdFile = "tmp/cmd.sh";
+        try {
+            Files.write(Paths.get(cmdFile), command.getBytes());
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        File file = new File(cmdFile);
+        file.setReadable(true);
+        file.setWritable(true);
+        file.setExecutable(true);
+        return cmdFile;
     }
 }
