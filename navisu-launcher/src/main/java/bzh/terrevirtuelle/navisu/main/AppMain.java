@@ -199,6 +199,8 @@ public class AppMain extends Application {
     public void start(Stage stage) throws Exception {
         clearTmpDirs(System.getProperty("user.dir") + "/data/sql", ".sql", true);
         clearTmpDirs(System.getProperty("user.dir"), ".log", false);
+        clearTmpDirs(System.getProperty("user.dir") + "/tmp", "*", false);
+
         wwd = GeoWorldWindViewImpl.getWW();
 
         Translator.setLang(I18nLangEnum.FRENCH);
@@ -618,6 +620,9 @@ public class AppMain extends Application {
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                     if (file.toString().endsWith(extension)) {
+                        Files.delete(file);
+                    }
+                    if (extension.equals("*")) {
                         Files.delete(file);
                     }
                     return FileVisitResult.CONTINUE;

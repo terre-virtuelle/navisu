@@ -5,6 +5,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManager;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import javafx.stage.FileChooser;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -23,6 +24,8 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.logging.Level;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 
 /**
  * NaVisu
@@ -41,7 +44,7 @@ public class DriverManagerImpl
     GuiAgentServices guiAgentServices;
 
     protected FileChooser fileChooser;
-  //  protected FileChooser fileChooserDock;
+    //  protected FileChooser fileChooserDock;
     Properties properties;
     protected List<Driver> availableDriverList = new ArrayList<>();
 
@@ -52,7 +55,7 @@ public class DriverManagerImpl
     @Override
     public void init() {
         this.fileChooser = new FileChooser();
-     //   this.fileChooserDock = new FileChooser();
+        //   this.fileChooserDock = new FileChooser();
         this.fileChooser.setTitle(tr("popup.fileChooser.open"));
 
         properties = new Properties();
@@ -66,7 +69,7 @@ public class DriverManagerImpl
             this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
         } else {
             this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
-            
+
         }
     }
 
@@ -87,21 +90,21 @@ public class DriverManagerImpl
             if (userInitialDirectory.equals("")) {
                 userInitialDirectory = System.getProperty("user.dir") + "/data/";
                 this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
-               // this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
+                // this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
             } else {
-               // userInitialDirectory = System.getProperty("user.dir") + "/data/";
+                // userInitialDirectory = System.getProperty("user.dir") + "/data/";
                 this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
-              //  this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
+                //  this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
             }
         } else {
             userInitialDirectory = System.getProperty("user.dir") + "/data/";
             this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
-         //   this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
+            //   this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
         }
 
-       // this.fileChooserDock.getExtensionFilters().clear();
-       // this.fileChooserDock.getExtensionFilters().add(
-       //         new FileChooser.ExtensionFilter(category, Arrays.asList(ext)));
+        // this.fileChooserDock.getExtensionFilters().clear();
+        // this.fileChooserDock.getExtensionFilters().add(
+        //         new FileChooser.ExtensionFilter(category, Arrays.asList(ext)));
         this.fileChooser.getExtensionFilters().clear();
         this.fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter(category, Arrays.asList(ext)));
@@ -113,7 +116,13 @@ public class DriverManagerImpl
                 System.out.println("Load : " + selectedFile.getAbsolutePath());
             }
         } catch (Exception e) {
-            System.out.println("Attention userInitialDirectory is not valide. Clean your caches.properties file");
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(Translator.tr("drivermanager.error"));
+                alert.show();
+            });
+            System.out.println("");
         }
     }
 

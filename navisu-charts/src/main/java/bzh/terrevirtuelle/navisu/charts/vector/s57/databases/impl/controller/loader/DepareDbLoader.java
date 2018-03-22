@@ -11,8 +11,6 @@ import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwind.util.WWIO;
 import gov.nasa.worldwind.util.WWUtil;
-import java.sql.Connection;
-import java.sql.ResultSet;
 
 /**
  * @date 28/02/2018
@@ -37,7 +35,7 @@ public class DepareDbLoader {
 
     @SuppressWarnings("unchecked")
     public Shapefile retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
-        databaseServices.spatialDBToShapefile(databaseName,
+        databaseServices.spatialDBToShapefile("depare", databaseName,
                 user, passwd,
                 latMin, lonMin, latMax, lonMax);
         return null;

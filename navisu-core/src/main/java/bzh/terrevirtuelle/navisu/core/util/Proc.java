@@ -74,11 +74,11 @@ public class Proc {
         for (Map.Entry<String, String> entry : environment.entrySet()) {
             envp[count++] = entry.getKey() + "=" + entry.getValue();
         }
-
+redirectSreamAsync(process.getInputStream(), out);
+        redirectSreamAsync(process.getErrorStream(), errors);
         process = Runtime.getRuntime().exec(sb.toString(), envp);
 
-        redirectSreamAsync(process.getInputStream(), out);
-        redirectSreamAsync(process.getErrorStream(), errors);
+        
 
         this.returnCode = process.waitFor();
     }
