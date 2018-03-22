@@ -160,10 +160,12 @@ public class S57GlobalCatalogController
                                     alert(filename);
                                 }
                             } else {
-                                Alert alert = new Alert(Alert.AlertType.ERROR);
-                                alert.setTitle("Error");
-                                alert.setHeaderText(Translator.tr("chart.error"));
-                                alert.show();
+                                Platform.runLater(() -> {
+                                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                                    alert.setTitle("Error");
+                                    alert.setHeaderText(Translator.tr("chart.error"));
+                                    alert.show();
+                                });
                             }
                         }
                     });
