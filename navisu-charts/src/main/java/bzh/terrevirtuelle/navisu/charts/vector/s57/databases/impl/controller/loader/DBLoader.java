@@ -30,8 +30,8 @@ public class DBLoader {
     }
 
     @SuppressWarnings("unchecked")
-    public Shapefile retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax) {
-        String fileName = databaseServices.spatialDBToShapefile(table,
+    public Shapefile retrieveIn(String table, String attributes, double latMin, double lonMin, double latMax, double lonMax) {
+        String fileName = databaseServices.spatialDBToShapefile(table, attributes,
                 databaseName,
                 user, passwd,
                 latMin, lonMin, latMax, lonMax);
@@ -45,11 +45,11 @@ public class DBLoader {
             throw new IllegalArgumentException(message);
         }
         Shapefile shp = null;
-        try {
+       // try {
             shp = new Shapefile(source);
-        } finally {
-            WWIO.closeStream(shp, source.toString());
-        }
+       // } finally {
+       //     WWIO.closeStream(shp, source.toString());
+      //  }
         return shp;
     }
 

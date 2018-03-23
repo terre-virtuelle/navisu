@@ -21,6 +21,6 @@ public class DepareDbLoader
 
     @SuppressWarnings("unchecked")
     public Shapefile retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
-        return retrieveIn("depare", latMin, lonMin, latMax, lonMax);
+        return retrieveIn("depare", "geom,drval1,drval2", latMin, lonMin, latMax, lonMax);
     }
 }

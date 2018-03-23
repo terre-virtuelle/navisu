@@ -35,10 +35,9 @@ public class DepareView {
 
     protected RenderableLayer layer;
     protected Polygon polygon;
-    protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected String label;
-    protected float val1;
-    protected float val2;
+    protected double val1;
+    protected double val2;
     protected Color color;
 
     private ShapefileRecord record;
@@ -50,38 +49,37 @@ public class DepareView {
     }
 
     public void display(Shapefile shp) {
-        
-     //   while (shp.hasNext()) {
+
+        while (shp.hasNext()) {
             try {
                 record = shp.nextRecord();
-                
                 if (record != null) {
                     if (record.getAttributes() != null) {
                         entries = record.getAttributes().getEntries();
                         entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
-                            if (e.getKey().equals("TYPEVALE")) {
-                                color = NFD_COLOUR.ATT.get(((String) e.getValue()).trim());
-                            } else {
-                                color = new Color((int) (Math.random() * 255),
-                                        (int) (Math.random() * 255), (int) (Math.random() * 255));
+                            if (e.getKey().equalsIgnoreCase("drval1")) {
+                                val1 = (Double)e.getValue();
                             }
+                            if (e.getKey().equalsIgnoreCase("drval2")) {
+                                val2 = (Double)e.getValue();
+                            }
+                            color = defineColor(val1, val2);
                         });
                     }
-                  //  if (!Shapefile.isPolygonType(record.getShapeType())) {
-                   //     continue;
-                   // }
+                    if (!Shapefile.isPolygonType(record.getShapeType())) {
+                        continue;
+                    }
 
                     createPolygon(record);
-                    System.out.println("createPolygon(record) ");
                     setPolygonAttributes(shape, color);
-                    System.out.println("shape " + shape);
+                    
                     layer.addRenderable(shape);
                     label = "";
                 }
             } catch (Exception ex) {
                 Logger.getLogger(SingleAREA_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
-      //  }
+        }
     }
 
     protected void createPolygon(ShapefileRecord record) {
