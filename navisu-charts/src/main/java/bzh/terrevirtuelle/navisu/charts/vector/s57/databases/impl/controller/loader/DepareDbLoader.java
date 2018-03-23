@@ -7,55 +7,20 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
-import gov.nasa.worldwind.layers.Layer;
-import gov.nasa.worldwind.util.Logging;
-import gov.nasa.worldwind.util.WWIO;
-import gov.nasa.worldwind.util.WWUtil;
 
 /**
  * @date 28/02/2018
  * @author serge
  */
-public class DepareDbLoader {
+public class DepareDbLoader
+        extends DBLoader {
 
-    protected DatabaseServices databaseServices;
-    protected String databaseName;
-    protected String user;
-    protected String passwd;
-
-    public DepareDbLoader(DatabaseServices databaseServices,
-            String databaseName,
-            String user,
-            String passwd) {
-        this.databaseServices = databaseServices;
-        this.databaseName = databaseName;
-        this.user = user;
-        this.passwd = passwd;
+    public DepareDbLoader(DatabaseServices databaseServices, String databaseName, String user, String passwd) {
+        super(databaseServices, databaseName, user, passwd);
     }
 
     @SuppressWarnings("unchecked")
     public Shapefile retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
-        databaseServices.spatialDBToShapefile("depare", databaseName,
-                user, passwd,
-                latMin, lonMin, latMax, lonMax);
-        return null;
-    }
-
-    public Shapefile createLayerFromSource(Object source) {
-        if (WWUtil.isEmpty(source)) {
-            String message = Logging.getMessage("nullValue.SourceIsNull");
-            Logging.logger().severe(message);
-            throw new IllegalArgumentException(message);
-        }
-
-        Shapefile shp = null;
-        Layer layer = null;
-        try {
-            shp = new Shapefile(source);
-        } finally {
-            WWIO.closeStream(shp, source.toString());
-        }
-
-        return shp;
+        return retrieveIn("depare", latMin, lonMin, latMax, lonMax);
     }
 }

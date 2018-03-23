@@ -20,6 +20,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DaymarView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
@@ -447,7 +448,7 @@ public class S57DBComponentController
         lat1TF.setText("48.22");
         lon0TF.setText("-4.61");
         lon1TF.setText("-4.30");
-        
+
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -512,14 +513,15 @@ public class S57DBComponentController
         //Define IALA system for all buoyages, default is 1
         MnsysDbLoader mnsysDbLoader = new MnsysDbLoader(connection);
         marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-        if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
-            //  guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
-            new DepareDbLoader(databaseServices,
-                    databaseTF.getText(),
-                    USER,
-                    PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax);
-            //  });
-        }
+        
+       // if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
+            guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
+                new DepareView(depareLayer).display(new DepareDbLoader(databaseServices,
+                        databaseTF.getText(),
+                        USER,
+                        PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
+            });
+      //  }
 
         if (object.trim().equals("ALL") || object.trim().equals("BUOYAGE")) {
             //Create a loader for BeaconCardinal, Retrieve all BeaconCardinals in a rectangle latMin, lonMin, latMax, lonMax
