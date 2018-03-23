@@ -391,7 +391,8 @@ public class DatabaseImpl
     }
 
     @Override
-    public String spatialDBToShapefile(String table, String databaseName, String user, String passwd,
+    public String spatialDBToShapefile(String table, 
+            String databaseName, String user, String passwd,
             double latMin, double lonMin, double latMax, double lonMax) {
         try {
             properties = new Properties();
@@ -409,10 +410,11 @@ public class DatabaseImpl
             Proc.BUILDER.create()
                     .setCmd(userDirPath + "/" + command)
                     .exec();
+            
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        return userDirPath + "/" + table + ".shp";
+        return userDirPath + "/tmp/" + table + ".shp";
     }
 
     private String startCmd(String path, String command) {
@@ -429,12 +431,13 @@ public class DatabaseImpl
         return cmd;
     }
 
-    private String createCmdSh(String table, String cmd, String databaseName, String user, String passwd,
+    private String createCmdSh(String table, String cmd, 
+            String databaseName, String user, String passwd,
             double latMin, double lonMin, double latMax, double lonMax) {
 
         String command = cmd
                 + " -f \"ESRI Shapefile\" tmp/"
-                + table + ".shp PG:\"host=localhost "
+                + "tmp.shp PG:\"host=localhost "
                 + "user=" + user
                 + " password=" + passwd
                 + " dbname=" + databaseName
@@ -448,7 +451,7 @@ public class DatabaseImpl
                 + " -clipdst "
                 + Double.toString(lonMin) + " " + Double.toString(latMin) + " "
                 + Double.toString(lonMax) + " " + Double.toString(latMax) + " "
-                + "tmp/" + table + "clp.shp tmp/" + table + ".shp";
+                + "tmp/" + table + ".shp tmp/" + "tmp.shp";
 
         String cmdFile = "tmp/cmd.sh";
         try {

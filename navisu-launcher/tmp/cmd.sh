@@ -1,2 +1,2 @@
-/usr/bin/ogr2ogr -f "ESRI Shapefile" tmp/depare.shp PG:"host=localhost user=admin password=admin dbname=s57NP5DB" -sql "SELECT geom FROM depare WHERE geom && ST_MakeEnvelope(-4.625766207297139,48.244745832576,-4.322969632075049,48.445994601570526)"
-/usr/bin/ogr2ogr -clipdst -4.625766207297139 48.244745832576 -4.322969632075049 48.445994601570526 tmp/depareclp.shp tmp/depare.shp
+/usr/bin/ogr2ogr -f "ESRI Shapefile" tmp/tmp.shp PG:"host=localhost user=admin password=admin dbname=s57NP5DB" -sql "SELECT geom FROM depare WHERE geom && ST_MakeEnvelope(-4.499145402329754,48.23223634294203,-4.2197841572188315,48.41798322411538)"
+/usr/bin/ogr2ogr -clipdst -4.499145402329754 48.23223634294203 -4.2197841572188315 48.41798322411538 tmp/depare.shp tmp/tmp.shp

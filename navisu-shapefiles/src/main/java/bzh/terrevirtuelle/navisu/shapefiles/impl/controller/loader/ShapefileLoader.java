@@ -14,7 +14,6 @@ import gov.nasa.worldwind.layers.*;
 import gov.nasa.worldwind.render.*;
 import gov.nasa.worldwind.util.*;
 
-
 import java.util.*;
 
 /**
@@ -51,6 +50,7 @@ public class ShapefileLoader {
      * creating an additional layer.
      */
     protected int numPolygonsPerLayer = 5000;
+    protected Set<Map.Entry<String, Object>> entries;
 
     /**
      * Constructs a ShapefileLoader, but otherwise does nothing.
@@ -282,7 +282,7 @@ public class ShapefileLoader {
 
         while (shp.hasNext()) {
             ShapefileRecord record = shp.nextRecord();
-        //   System.out.println("record " + record.getAttributes().getEntries());
+            //   System.out.println("record " + record.getAttributes().getEntries());
 
             //   System.out.println("");
             PointPlacemarkAttributes attrs = this.createPointAttributes(record);
@@ -314,7 +314,7 @@ public class ShapefileLoader {
 
             ShapeAttributes attrs = this.createPolylineAttributes(record);
             layer.addRenderable(this.createPolyline(record, attrs));
-          //  System.out.println(layer.getRenderables());
+            //  System.out.println(layer.getRenderables());
         }
 
         // Une seule Shapefile pas de sélection possible
@@ -375,11 +375,18 @@ public class ShapefileLoader {
     @SuppressWarnings({"UnusedDeclaration"})
     protected Renderable createPoint(ShapefileRecord record, double latDegrees, double lonDegrees,
             PointPlacemarkAttributes attrs) {
-        // System.out.println("createPoint " +  record.getAttributes().getEntries());
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setAttributes(attrs);
-        placemark.setValue(AVKey.DISPLAY_NAME, String.valueOf(record.getAttributes().getValue("ELEVATION")));
+       
+        String txt = "";
+        entries = record.getAttributes().getEntries();
+        
+
+        for (Map.Entry<String, Object> m : entries) {
+            txt += String.format("%1$-1s", m.getKey() + " : " + m.getValue() + "\n");
+        }
+        placemark.setValue(AVKey.DISPLAY_NAME, txt);
         return placemark;
     }
 
@@ -479,7 +486,7 @@ public class ShapefileLoader {
     //**************************************************************//
     @SuppressWarnings({"UnusedDeclaration"})
     protected PointPlacemarkAttributes createPointAttributes(ShapefileRecord record) {
-      //  System.out.println("createPointAttributes " + record.getAttributes().getEntries());
+        //  System.out.println("createPointAttributes " + record.getAttributes().getEntries());
 
         return randomAttrs.nextPointAttributes();
     }
