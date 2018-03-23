@@ -391,7 +391,7 @@ public class DatabaseImpl
     }
 
     @Override
-    public String spatialDBToShapefile(String table, 
+    public String spatialDBToShapefile(String table, String attributes,
             String databaseName, String user, String passwd,
             double latMin, double lonMin, double latMax, double lonMax) {
         try {
@@ -404,7 +404,7 @@ public class DatabaseImpl
             if (path == null) {
                 //alarm
             }
-            String command = createCmdSh(table, cmd, databaseName, user, passwd,
+            String command = createCmdSh(table, attributes, cmd, databaseName, user, passwd,
                     latMin, lonMin, latMax, lonMax);
 
             Proc.BUILDER.create()
@@ -431,7 +431,8 @@ public class DatabaseImpl
         return cmd;
     }
 
-    private String createCmdSh(String table, String cmd, 
+    private String createCmdSh(String table, String attributes,
+            String cmd, 
             String databaseName, String user, String passwd,
             double latMin, double lonMin, double latMax, double lonMax) {
 
@@ -441,7 +442,7 @@ public class DatabaseImpl
                 + "user=" + user
                 + " password=" + passwd
                 + " dbname=" + databaseName
-                + "\" -sql \"SELECT geom FROM " + table
+                + "\" -sql \"SELECT "+ attributes + " FROM " + table
                 + " WHERE geom && ST_MakeEnvelope("
                 + lonMin + "," + latMin + "," + lonMax + "," + latMax + ")\"";
 
