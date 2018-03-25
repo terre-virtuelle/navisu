@@ -48,7 +48,10 @@ import bzh.terrevirtuelle.navisu.instruments.transponder.impl.events.Transponder
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponent;
+import bzh.terrevirtuelle.navisu.database.relational.impl.DatabaseImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import com.sun.jna.Library;
+import com.sun.jna.Native;
 import de.micromata.opengis.kml.v_2_2_0.Container;
 import de.micromata.opengis.kml.v_2_2_0.Document;
 import de.micromata.opengis.kml.v_2_2_0.Feature;
@@ -56,6 +59,9 @@ import de.micromata.opengis.kml.v_2_2_0.Folder;
 import de.micromata.opengis.kml.v_2_2_0.Kml;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import gov.nasa.worldwind.render.SurfacePolylines;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Properties;
 import java.util.stream.Stream;
 
 /**
@@ -86,6 +92,8 @@ public class S57ChartComponentImpl
     private static final String EXTENSION_3 = ".003";
     protected static final String GROUP = "S57 charts";
     static private int i = 0;
+    protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
+    protected Properties properties;
     protected S57ChartComponentController s57ChartComponentController;
     //  private SurveyZoneController surveyZoneController;
     protected List<Layer> layers;
@@ -224,48 +232,42 @@ public class S57ChartComponentImpl
             options = System.getProperty("user.dir") + "/gdal/data";
             environment.put("GDAL_DATA", options);
 
-            String cmd = null;
+            String cmd0 = null;
+            properties = new Properties();
+            properties.load(new FileInputStream(CONFIG_FILE_NAME));
+            cmd0 = startCmd(properties.getProperty("psqlPath"), "ogr2ogr");
 
-            if (OS.isWindows()) {
-                cmd = "gdal/win/ogr2ogr";
-            } else if (OS.isLinux()) {
-                cmd = "/usr/bin/ogr2ogr";
-            } else if (OS.isMac()) {
-                cmd = "gdal/osx/ogr2ogr";
-            } else {
-                System.out.println("OS not found");
-            }
+            String cmd = cmd0;
             try {
                 Path tmp = Paths.get(inputFile.toString());
+                cmd = cmd0 + " -skipfailures -overwrite data/shp/shp_" + i + " " + tmp.toString();
+                String command = createCmdSh(cmd);
                 Proc.BUILDER.create()
-                        .setCmd(cmd)
-                        .addArg("-skipfailures ").addArg("-overwrite ")
-                        .addArg("data/shp/shp_" + i)// + "/out.shp ")
-                        .addArg(tmp.toString())
+                        .setCmd(command)
                         .setOut(System.out)
                         .setErr(System.err)
-                        .exec(environment);
+                        .exec();
                 inputFile = tmp;
             } catch (IOException | InterruptedException e) {
                 LOGGER.log(Level.SEVERE, e.toString(), e);
             }
 
-            cmd = cmd + " -nlt POINT25D";
             try {
                 Path tmp = Paths.get(inputFile.toString());
+                cmd = cmd0 + " -nlt POINT25D -skipfailures -append data/shp/shp_" + i + "/soundg/SOUNDG.shp "
+                        + tmp.toString() + " SOUNDG";
+                String command = createCmdSh(cmd);
                 Proc.BUILDER.create()
-                        .setCmd(cmd)
-                        .addArg("-skipfailures ").addArg("-append ")
-                        .addArg("data/shp/shp_" + i + "/soundg/SOUNDG.shp")
-                        .addArg(tmp.toString())
-                        .addArg("SOUNDG")
+                        .setCmd(command)
                         .setOut(System.out)
                         .setErr(System.err)
-                        .exec(environment);
+                        .exec();
                 inputFile = tmp;
+
             } catch (IOException | InterruptedException e) {
                 LOGGER.log(Level.SEVERE, e.toString(), e);
             }
+
             s57ChartComponentController.init("data/shp/shp_" + i++);
             layers = s57ChartComponentController.getLayers();
             chartsOpen = true;
@@ -301,8 +303,9 @@ public class S57ChartComponentImpl
              //   layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
             });
              */
-        } catch (Exception e) {
-            System.out.println("handleOpenFile e " + e);
+        } catch (Exception ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+
         }
     }
 
@@ -475,6 +478,12 @@ public class S57ChartComponentImpl
 
     @Override
     public String s57ToShapeFile(List<Path> paths) {
+        properties = new Properties();
+        try {
+            properties.load(new FileInputStream(CONFIG_FILE_NAME));
+        } catch (IOException ex) {
+            Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
 
         Map<String, String> environment = new HashMap<>(System.getenv());
         String options
@@ -491,19 +500,22 @@ public class S57ChartComponentImpl
         options = System.getProperty("user.dir") + "/gdal/data";
         environment.put("GDAL_DATA", options);
 
-        String cmd = startCmd("ogr2ogr");
-
+        String cmd = startCmd(properties.getProperty("psqlPath"), "ogr2ogr");
         int j = 0;
-        
         for (Path tmp : paths) {
             new File("data/shp").mkdir();
             new File("data/shp/shp_" + j).mkdir();
             try {
+                String command = cmd
+                        + "-skipfailures "
+                        + "-overwrite "
+                        + "-nlt PROMOTE_TO_MULTI"
+                        + "data/shp/shp_" + j + " "
+                        + tmp.toString();
+
+                String command1 = createCmdSh(command);
                 Proc.BUILDER.create()
-                        .setCmd(cmd)
-                        .addArg("-skipfailures ").addArg("-overwrite ").addArg("-nlt PROMOTE_TO_MULTI")
-                        .addArg("data/shp/shp_" + j)
-                        .addArg(tmp.toString())
+                        .setCmd(command1)
                         .setOut(System.out)
                         .setErr(System.err)
                         .exec(environment);
@@ -515,14 +527,12 @@ public class S57ChartComponentImpl
         return dir;
     }
 
-    private String startCmd(String command) {
+    private String startCmd(String path, String command) {
         String cmd = null;
         if (OS.isWindows()) {
-            cmd = "gdal/win/" + command;
+            cmd = path + "/" + command;
         } else if (OS.isLinux()) {
-            cmd = "/usr/bin/" + command;
-        } else if (OS.isMac()) {
-            cmd = "gdal/osx/" + command;
+            cmd = path + "/" + command;
         } else {
             System.out.println("OS not found");
         }
@@ -539,8 +549,40 @@ public class S57ChartComponentImpl
 
     @Override
     public List<Buoyage> getBuoyage(String database, String user, String passwd,
-            Buoyage buoy,double lat0, double lon0, double lat1, double lon1) {
+            Buoyage buoy, double lat0, double lon0, double lat1, double lon1) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private String createCmdSh(String cmd) {
+        String cmdFile = "tmp/cmd.sh";
+        try {
+            Files.write(Paths.get(cmdFile), cmd.getBytes());
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        chmodCmd(cmdFile);
+        return cmdFile;
+    }
+
+    private String chmodCmd(String cmdFile) {
+        String cmd = null;
+        if (OS.isWindows()) {
+            LinkedOSLibrary linkedLibrary
+                    = (LinkedOSLibrary) Native.loadLibrary("c", LinkedOSLibrary.class);
+            linkedLibrary.chmod(cmdFile, 0777);
+        } else if (OS.isLinux()) {
+            File file = new File(cmdFile);
+            file.setReadable(true, false);
+            file.setWritable(true, false);
+            file.setExecutable(true, false);
+        } else {
+            System.out.println("OS not found");
+        }
+        return cmd;
+    }
+}
+
+interface LinkedOSLibrary extends Library {
+
+    public int chmod(String path, int mode);
 }

@@ -386,9 +386,10 @@ public class S57DBComponentController
                     alert.setHeaderText("Sélectionnez une zone d'acquisition");
                     alert.show();
                 }
+                measureTool.setArmed(false);
+                measureTool.dispose();
             }
-            measureTool.setArmed(false);
-            measureTool.dispose();
+
         });
 
         requestButton.setOnMouseClicked((MouseEvent event) -> {
@@ -513,15 +514,15 @@ public class S57DBComponentController
         //Define IALA system for all buoyages, default is 1
         MnsysDbLoader mnsysDbLoader = new MnsysDbLoader(connection);
         marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-        
-       // if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
-            guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
-                new DepareView(depareLayer).display(new DepareDbLoader(databaseServices,
-                        databaseTF.getText(),
-                        USER,
-                        PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
-            });
-      //  }
+
+        // if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
+        guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
+            new DepareView(depareLayer).display(new DepareDbLoader(databaseServices,
+                    databaseTF.getText(),
+                    USER,
+                    PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
+        });
+        //  }
 
         if (object.trim().equals("ALL") || object.trim().equals("BUOYAGE")) {
             //Create a loader for BeaconCardinal, Retrieve all BeaconCardinals in a rectangle latMin, lonMin, latMax, lonMax

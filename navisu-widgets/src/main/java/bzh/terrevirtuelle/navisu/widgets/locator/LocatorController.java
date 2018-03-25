@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.widgets.locator;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
+import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
@@ -14,7 +15,6 @@ import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
@@ -165,6 +165,7 @@ public class LocatorController
             }
         });
         heightTF.textProperty().addListener((final ObservableValue<? extends String> observable, final String oldValue, final String newValue) -> {
+           colladaRoot.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
             if (!heightTF.getText().equals("") && !heightTF.getText().equals("-")) {
                 colladaRoot.setPosition(Position.fromDegrees(
                         Double.parseDouble(latitudeTF.getText().trim()),
