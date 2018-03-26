@@ -12,7 +12,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import java.util.ArrayList;
 import java.util.List;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;

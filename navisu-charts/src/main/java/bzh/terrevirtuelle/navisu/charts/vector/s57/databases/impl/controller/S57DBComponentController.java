@@ -149,7 +149,9 @@ public class S57DBComponentController
     protected MeasureTool measureTool;
     protected final Set<S57Controller> s57Controllers = new HashSet<>();
     protected boolean first = true;
-    protected static final String GROUP = "S57 charts";
+    protected static final String GROUP_0 = "S57 charts";
+    protected static final String GROUP_1 = "BATHYMETRY";
+    protected static final String BATHYMETRY_LAYER = "BATHYMETRY";
     protected static final String BUOYAGE_LAYER = "BUOYAGE";
     protected static final String HARBOUR_LAYER = "HARBOUR";
     protected static final String DEPARE_LAYER = "DEPARE";
@@ -159,6 +161,9 @@ public class S57DBComponentController
     protected static final String NAVIGATION_LAYER = "NAVIGATION";
     protected static final String DANGERS_LAYER = "DANGERS";
     protected static final String CBLSUB_LAYER = "CBLSUB";
+    protected static final String LIGHTS_LAYER = "LIGHTS";
+    protected static final String LIGHTS_SECTORS_LAYER = "LIGHTS_SECTORS";
+    protected RenderableLayer bathymetryLayer;
     protected RenderableLayer buoyageLayer;
     protected RenderableLayer harbourLayer;
     protected RenderableLayer depareLayer;
@@ -168,6 +173,8 @@ public class S57DBComponentController
     protected RenderableLayer navigationLayer;
     protected RenderableLayer dangersLayer;
     protected RenderableLayer cblsubLayer;
+    protected RenderableLayer lightsLayer;
+    protected RenderableLayer lightsSectorsLayer;
     protected double lat0;
     protected double lon0;
     protected double lat1;
@@ -299,15 +306,18 @@ public class S57DBComponentController
         this.topologyServices = topologyServices;
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
-        depareLayer = layersManagerServices.getLayer(GROUP, DEPARE_LAYER);
-        buoyageLayer = layersManagerServices.getLayer(GROUP, BUOYAGE_LAYER);
-        harbourLayer = layersManagerServices.getLayer(GROUP, HARBOUR_LAYER);
-        areaLayer = layersManagerServices.getLayer(GROUP, AREA_LAYER);
-        buildingLayer = layersManagerServices.getLayer(GROUP, BUILDING_LAYER);
-        earthLayer = layersManagerServices.getLayer(GROUP, EARTH_LAYER);
-        navigationLayer = layersManagerServices.getLayer(GROUP, NAVIGATION_LAYER);
-        dangersLayer = layersManagerServices.getLayer(GROUP, DANGERS_LAYER);
-        cblsubLayer = layersManagerServices.getLayer(GROUP, CBLSUB_LAYER);
+        bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
+        depareLayer = layersManagerServices.getLayer(GROUP_0, DEPARE_LAYER);
+        buoyageLayer = layersManagerServices.getLayer(GROUP_0, BUOYAGE_LAYER);
+        harbourLayer = layersManagerServices.getLayer(GROUP_0, HARBOUR_LAYER);
+        areaLayer = layersManagerServices.getLayer(GROUP_0, AREA_LAYER);
+        buildingLayer = layersManagerServices.getLayer(GROUP_0, BUILDING_LAYER);
+        earthLayer = layersManagerServices.getLayer(GROUP_0, EARTH_LAYER);
+        navigationLayer = layersManagerServices.getLayer(GROUP_0, NAVIGATION_LAYER);
+        dangersLayer = layersManagerServices.getLayer(GROUP_0, DANGERS_LAYER);
+        cblsubLayer = layersManagerServices.getLayer(GROUP_0, CBLSUB_LAYER);
+        lightsLayer = layersManagerServices.getLayer(GROUP_0, LIGHTS_LAYER);
+        lightsSectorsLayer = layersManagerServices.getLayer(GROUP_0, LIGHTS_SECTORS_LAYER);
     }
 
     @Override
@@ -393,6 +403,9 @@ public class S57DBComponentController
         });
 
         requestButton.setOnMouseClicked((MouseEvent event) -> {
+            if (bathymetryLayer.getNumRenderables() != 0) {
+                bathymetryLayer.removeAllRenderables();
+            }
             if (buoyageLayer.getNumRenderables() != 0) {
                 buoyageLayer.removeAllRenderables();
             }
@@ -420,6 +433,12 @@ public class S57DBComponentController
             if (cblsubLayer.getNumRenderables() != 0) {
                 cblsubLayer.removeAllRenderables();
             }
+            if (lightsLayer.getNumRenderables() != 0) {
+                lightsLayer.removeAllRenderables();
+            }
+            if (lightsSectorsLayer.getNumRenderables() != 0) {
+                lightsSectorsLayer.removeAllRenderables();
+            }
             connection = databaseServices.connect(databaseTF.getText(),
                     "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
             retrieveIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
@@ -446,7 +465,7 @@ public class S57DBComponentController
 
         //Default values
         lat0TF.setText("48.21");
-        lat1TF.setText("48.22");
+        lat1TF.setText("48.42");
         lon0TF.setText("-4.61");
         lon1TF.setText("-4.30");
 
@@ -515,14 +534,14 @@ public class S57DBComponentController
         MnsysDbLoader mnsysDbLoader = new MnsysDbLoader(connection);
         marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
-        // if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
-        guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
-            new DepareView(depareLayer).display(new DepareDbLoader(databaseServices,
-                    databaseTF.getText(),
-                    USER,
-                    PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
-        });
-        //  }
+        if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
+            guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
+                new DepareView(depareLayer).display(new DepareDbLoader(databaseServices,
+                        databaseTF.getText(),
+                        USER,
+                        PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
+            });
+        }
 
         if (object.trim().equals("ALL") || object.trim().equals("BUOYAGE")) {
             //Create a loader for BeaconCardinal, Retrieve all BeaconCardinals in a rectangle latMin, lonMin, latMax, lonMax

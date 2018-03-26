@@ -10,7 +10,11 @@ import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
+import bzh.terrevirtuelle.navisu.database.relational.impl.DatabaseImpl;
+import com.sun.jna.Library;
+import com.sun.jna.Native;
 import gov.nasa.worldwind.layers.Layer;
+import java.io.File;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -96,7 +100,15 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
         try {
 
             Path tmpTif = Paths.get(inputFile.toString() + ".tif");
-            System.out.print(tmpTif);
+           // System.out.print(tmpTif);
+            cmd+=" -b 1 "+file+" "+tmpTif.toString();
+            String cmd0=createCmdSh(cmd);
+            Proc.BUILDER.create()
+                    .setCmd(cmd0)
+                    .setOut(System.out)
+                    .setErr(System.err)
+                    .exec();
+            /*
             Proc.BUILDER.create()
                     .setCmd(cmd)
                     .addArg("-b 1")
@@ -105,7 +117,8 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
                     .setOut(System.out)
                     .setErr(System.err)
                     .exec(environment);
-
+*/
+            
             inputFile = tmpTif;
             System.out.print(tmpTif);
         } catch (IOException | InterruptedException e) {
@@ -130,6 +143,39 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
             }
         }
 
+    }
+
+    private String createCmdSh(String cmd) {
+        String cmdFile = "tmp/cmd.sh";
+        try {
+            Files.write(Paths.get(cmdFile), cmd.getBytes());
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        chmodCmd(cmdFile);
+        return cmdFile;
+    }
+
+    private String chmodCmd(String cmdFile) {
+        String cmd = null;
+        if (OS.isWindows()) {
+            LinkedOSLibrary linkedLibrary
+                    = (LinkedOSLibrary) Native.loadLibrary("c", LinkedOSLibrary.class);
+            linkedLibrary.chmod(cmdFile, 0777);
+        } else if (OS.isLinux()) {
+            File file = new File(cmdFile);
+            file.setReadable(true, false);
+            file.setWritable(true, false);
+            file.setExecutable(true, false);
+        } else {
+            System.out.println("OS not found");
+        }
+        return cmd;
+    }
+
+    interface LinkedOSLibrary extends Library {
+
+        public int chmod(String path, int mode);
     }
 
     @Override

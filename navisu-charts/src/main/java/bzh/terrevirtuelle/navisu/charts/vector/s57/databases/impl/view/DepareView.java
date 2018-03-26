@@ -29,7 +29,6 @@ public class DepareView
     }
 
     public void display(Shapefile shp) {
-
         while (shp.hasNext()) {
             try {
                 record = shp.nextRecord();
@@ -58,7 +57,7 @@ public class DepareView
                    //  wwd.redrawNow();
                 }
             } catch (Exception ex) {
-                Logger.getLogger(SingleAREA_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
          wwd.redrawNow();

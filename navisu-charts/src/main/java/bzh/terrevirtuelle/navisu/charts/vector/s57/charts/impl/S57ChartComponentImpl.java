@@ -232,12 +232,11 @@ public class S57ChartComponentImpl
             options = System.getProperty("user.dir") + "/gdal/data";
             environment.put("GDAL_DATA", options);
 
-            String cmd0 = null;
             properties = new Properties();
             properties.load(new FileInputStream(CONFIG_FILE_NAME));
-            cmd0 = startCmd(properties.getProperty("psqlPath"), "ogr2ogr");
+            String cmd0 = startCmd("ogr2ogr");
 
-            String cmd = cmd0;
+            String cmd;
             try {
                 Path tmp = Paths.get(inputFile.toString());
                 cmd = cmd0 + " -skipfailures -overwrite data/shp/shp_" + i + " " + tmp.toString();
@@ -500,7 +499,7 @@ public class S57ChartComponentImpl
         options = System.getProperty("user.dir") + "/gdal/data";
         environment.put("GDAL_DATA", options);
 
-        String cmd = startCmd(properties.getProperty("psqlPath"), "ogr2ogr");
+        String cmd = startCmd("ogr2ogr");
         int j = 0;
         for (Path tmp : paths) {
             new File("data/shp").mkdir();
@@ -527,12 +526,12 @@ public class S57ChartComponentImpl
         return dir;
     }
 
-    private String startCmd(String path, String command) {
+    private String startCmd(String command) {
         String cmd = null;
         if (OS.isWindows()) {
-            cmd = path + "/" + command;
+            cmd = "gdal/win" + "/" + command;
         } else if (OS.isLinux()) {
-            cmd = path + "/" + command;
+            cmd = properties.getProperty("psqlPath") + "/" + command;
         } else {
             System.out.println("OS not found");
         }
