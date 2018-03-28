@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.SerialDeviceOption;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.UserOption;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.UserOptionBuilder;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ConfigurationComponentImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.tests.OptionsEventTest;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
@@ -107,6 +108,10 @@ public class ConfigurationComponentController
     @FXML
     public TextField allCountriesIndexTF;
     @FXML
+    public TextField psqlTF;
+    @FXML
+    public TextField gdalTF;
+    @FXML
     public Button s57Button;
     @FXML
     public Button allCPathButton;
@@ -114,6 +119,10 @@ public class ConfigurationComponentController
     public Button luceneButton;
     @FXML
     public Button buildIndexButton;
+    @FXML
+    public Button psqlButton;
+    @FXML
+    public Button gdalButton;
 
     /* Own ship controls */
     @FXML
@@ -191,11 +200,15 @@ public class ConfigurationComponentController
     String darkSkyKey;
     String allCountriesPath;
     String allCountriesIndexPath;
+    String psqlPath;
+    String gdalPath;
 
     String s57PathOld;
     String darkSkyKeyOld;
     String allCountriesPathOld;
     String allCountriesIndexPathOld;
+    String psqlPathOld;
+    String gdalPathOld;
 
     String name;
     String mmsi;
@@ -314,49 +327,60 @@ public class ConfigurationComponentController
             parityIndex = Integer.parseInt(tmp);
             parityCB.getSelectionModel().select(parityIndex);
         }
-
-         // OptionsEventTest optionsEventTest = new OptionsEventTest();
-        //  optionsEventTest.subscribe();
+        tmp = properties.getProperty("psqlPath");
+        if (tmp != null) {
+            psqlTF.setText(tmp);
+        }
+        tmp = properties.getProperty("gdalPath");
+        if (tmp != null) {
+            gdalTF.setText(tmp);
+        }
+       //  OptionsEventTest optionsEventTest = new OptionsEventTest();
+       //   optionsEventTest.subscribe();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+
         /* Init userTab and ownerShipTab 
            Values are store in CONFIG_FILE_NAME 
            properties file
-        */
+         */
         properties = new Properties();
         try {
             properties.load(new FileInputStream(CONFIG_FILE_NAME));
         } catch (IOException ex) {
             Logger.getLogger(ConfigurationComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        darkSkyTF.setText(properties.getProperty("darkSkyApiKey").trim());
-        s57TF.setText(properties.getProperty("s57ChartsDir").trim());
-        allCountriesTF.setText(properties.getProperty("allCountriesPath").trim());
-        allCountriesIndexTF.setText(properties.getProperty("luceneAllCountriesIndexPath").trim());
+        darkSkyTF.setText(properties.getProperty("darkSkyApiKey"));
+        s57TF.setText(properties.getProperty("s57ChartsDir"));
+        allCountriesTF.setText(properties.getProperty("allCountriesPath"));
+        allCountriesIndexTF.setText(properties.getProperty("luceneAllCountriesIndexPath"));
+        psqlTF.setText(properties.getProperty("psqlPath"));
+        gdalTF.setText(properties.getProperty("gdalPath"));
 
-        darkSkyKeyOld = darkSkyTF.getText().trim();
-        s57PathOld = s57TF.getText().trim();
-        allCountriesPathOld = allCountriesTF.getText().trim();
-        allCountriesIndexPathOld = allCountriesIndexTF.getText().trim();
+        darkSkyKeyOld = darkSkyTF.getText();
+        s57PathOld = s57TF.getText();
+        allCountriesPathOld = allCountriesTF.getText();
+        allCountriesIndexPathOld = allCountriesIndexTF.getText();
+        psqlPathOld = psqlTF.getText();
+        gdalPathOld = gdalTF.getText();
 
-        nameTF.setText(properties.getProperty("name").trim());
-        mmsiTF.setText(properties.getProperty("mmsi").trim());
-        countryTF.setText(properties.getProperty("country").trim());
-        lengthTF.setText(properties.getProperty("length").trim());
-        widthTF.setText(properties.getProperty("width").trim());
-        shipTypeTF.setText(properties.getProperty("shipType").trim());
-        draughtTF.setText(properties.getProperty("draught").trim());
-        navigationalStatusTF.setText(properties.getProperty("navigationalStatus").trim());
-        callSignTF.setText(properties.getProperty("callSign").trim());
-        latitudeTF.setText(properties.getProperty("latitude").trim());
-        longitudeTF.setText(properties.getProperty("longitude").trim());
-        cogTF.setText(properties.getProperty("cog").trim());
-        sogTF.setText(properties.getProperty("sog").trim());
-        daeModelPathTF.setText(properties.getProperty("daeModelPath").trim());
+        nameTF.setText(properties.getProperty("name"));
+        mmsiTF.setText(properties.getProperty("mmsi"));
+        countryTF.setText(properties.getProperty("country"));
+        lengthTF.setText(properties.getProperty("length"));
+        widthTF.setText(properties.getProperty("width"));
+        shipTypeTF.setText(properties.getProperty("shipType"));
+        draughtTF.setText(properties.getProperty("draught"));
+        navigationalStatusTF.setText(properties.getProperty("navigationalStatus"));
+        callSignTF.setText(properties.getProperty("callSign"));
+        latitudeTF.setText(properties.getProperty("latitude"));
+        longitudeTF.setText(properties.getProperty("longitude"));
+        cogTF.setText(properties.getProperty("cog"));
+        sogTF.setText(properties.getProperty("sog"));
+        daeModelPathTF.setText(properties.getProperty("daeModelPath"));
         //Mise a jour de nouvelles proprietes
         if (properties.getProperty("scale") == null) {
             properties.setProperty("scale", "1.0");
@@ -385,7 +409,6 @@ public class ConfigurationComponentController
         daeModelPathOld = daeModelPathTF.getText().trim();
         scaleOld = scaleTF.getText().trim();
 
-
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
         });
@@ -398,6 +421,8 @@ public class ConfigurationComponentController
                 darkSkyKey = darkSkyTF.getText();
                 allCountriesPath = allCountriesTF.getText();
                 allCountriesIndexPath = allCountriesIndexTF.getText();
+                psqlPath = psqlTF.getText();
+                gdalPath = gdalTF.getText();
                 saveUser();
             }
             if (ownerShipTab.isSelected()) {
@@ -431,6 +456,8 @@ public class ConfigurationComponentController
                 darkSkyKey = darkSkyTF.getText();
                 allCountriesPath = allCountriesTF.getText();
                 allCountriesIndexPath = allCountriesIndexTF.getText();
+                psqlPath = psqlTF.getText();
+                gdalPath = gdalTF.getText();
                 saveUser();
             }
             if (ownerShipTab.isSelected()) {
@@ -555,12 +582,18 @@ public class ConfigurationComponentController
                 gazetteerComponentServices.buildIndex(allCountriesTF.getText(), allCountriesIndexTF.getText(), true);
             }
         });
+        psqlButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(psqlTF);
+        });
+        gdalButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(gdalTF);
+        });
 
         /*
           Init devicesTab
           used Button set setVisible(false)
           Values are store
-        */
+         */
         connectionsTV.setEditable(true);
         tableData = connectionsTV.getItems();
 
@@ -577,16 +610,15 @@ public class ConfigurationComponentController
                 cancelButton.setVisible(true);
                 helpButton.setVisible(true);
             }
-            
+
         });
-        
+
         dataPortTC.setCellValueFactory(cellData -> cellData.getValue().portNameProperty());
         typeTC.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
         statusTC.setCellValueFactory(c -> new SimpleBooleanProperty(c.getValue().getStatus()));
         statusTC.setCellFactory(tc -> new CheckBoxTableCell<>());
         parametersTC.setCellValueFactory(cellData -> cellData.getValue().baudRateProperty());
 
-        
         addButton.setOnMouseClicked((MouseEvent event) -> {
             portName = portNameCB.getSelectionModel().getSelectedItem();
             String baudRateS = baudRateCB.getSelectionModel().getSelectedItem();
@@ -657,7 +689,8 @@ public class ConfigurationComponentController
             properties.setProperty("darkSkyApiKey", darkSkyKey);
             properties.setProperty("allCountriesPath", allCountriesPath);
             properties.setProperty("luceneAllCountriesIndexPath", allCountriesIndexPath);
-
+            properties.setProperty("psqlPath", psqlPath);
+            properties.setProperty("gdalPath", gdalPath);
             properties.store(output, null);
             output.close();
 

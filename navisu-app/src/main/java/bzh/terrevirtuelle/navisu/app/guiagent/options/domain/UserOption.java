@@ -18,6 +18,45 @@ public class UserOption
     private String darkSkyKey;
     private String allCountriesPath;
     private String allCountriesIndexPath;
+    private String psqlPath;
+    private String gdalPath;
+
+    /**
+     * Get the value of gdalPath
+     *
+     * @return the value of gdalPath
+     */
+    public String getGdalPath() {
+        return gdalPath;
+    }
+
+    /**
+     * Set the value of gdalPath
+     *
+     * @param gdalPath new value of gdalPath
+     */
+    public void setGdalPath(String gdalPath) {
+        this.gdalPath = gdalPath;
+    }
+
+
+    /**
+     * Get the value of psqlPath
+     *
+     * @return the value of psqlPath
+     */
+    public String getPsqlPath() {
+        return psqlPath;
+    }
+
+    /**
+     * Set the value of psqlPath
+     *
+     * @param psqlPath new value of psqlPath
+     */
+    public void setPsqlPath(String psqlPath) {
+        this.psqlPath = psqlPath;
+    }
 
     public UserOption() {
     }

@@ -86,8 +86,9 @@ public class OSMBuildingsStlLayer
         sc.setOpacity(1);
         setScreenCredit(sc);
 
-        setExpiryTime(365L * 24L * 60L * 60L * 1000L);
+       // setExpiryTime(365L * 24L * 60L * 60L * 1000L);
 
+       setExpiryTime(0);
         // System.out.println("ROOT:"+cacheRoot);
         /*
         List<FileStoreDataSet> dataSets = FileStoreDataSet.getDataSets(cacheRoot);
