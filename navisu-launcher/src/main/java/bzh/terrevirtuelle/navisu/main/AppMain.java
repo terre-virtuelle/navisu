@@ -200,6 +200,7 @@ public class AppMain extends Application {
         clearTmpDirs(System.getProperty("user.dir") + "/data/sql", ".sql", true);
         clearTmpDirs(System.getProperty("user.dir"), ".log", false);
         clearTmpDirs(System.getProperty("user.dir") + "/tmp", "*", false);
+        clearTmpDirs(System.getProperty("user.dir") + "/cmd", "*", false);
 
         wwd = GeoWorldWindViewImpl.getWW();
 
