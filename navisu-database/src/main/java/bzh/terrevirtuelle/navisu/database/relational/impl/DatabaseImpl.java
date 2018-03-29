@@ -400,7 +400,7 @@ public class DatabaseImpl
             properties = new Properties();
             properties.load(new FileInputStream(CONFIG_FILE_NAME));
             userDirPath = System.getProperty("user.dir");
-            String path = properties.getProperty("psqlPath");
+            String path = properties.getProperty("gdalPath");
             String cmd = "/ogr2ogr";
             cmd = startCmd(path, cmd);
             if (path == null) {

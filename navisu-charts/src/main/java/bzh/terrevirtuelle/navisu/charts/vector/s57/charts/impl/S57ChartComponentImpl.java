@@ -531,7 +531,7 @@ public class S57ChartComponentImpl
         if (OS.isWindows()) {
             cmd = "gdal/win" + "/" + command;
         } else if (OS.isLinux()) {
-            cmd = properties.getProperty("psqlPath") + "/" + command;
+            cmd = properties.getProperty("gdalPath") + "/" + command;
         } else {
             System.out.println("OS not found");
         }

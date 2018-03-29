@@ -1,0 +1,2 @@
+/usr/bin/ogr2ogr -f "ESRI Shapefile" tmp/tmp.shp PG:"host=localhost user=admin password=admin dbname=s57NP5DB" -sql "SELECT geom,drval1,drval2 FROM depare WHERE geom && ST_MakeEnvelope(-4.61,48.21,-4.3,48.42)"
+/usr/bin/ogr2ogr -clipdst -4.61 48.21 -4.3 48.42 tmp/depare.shp tmp/tmp.shp

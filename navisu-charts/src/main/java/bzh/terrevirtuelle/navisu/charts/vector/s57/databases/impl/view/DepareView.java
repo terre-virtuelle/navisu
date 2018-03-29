@@ -72,6 +72,7 @@ public class DepareView
 
                     createPolygon(record);
                     setPolygonAttributes(shape, color);
+                   
                     /*
                     List<ExtrudedPolygon> polyList = new ArrayList<>();
                     ExtrudedPolygon pgon;
@@ -87,9 +88,16 @@ public class DepareView
                             polyList.add(pgon);
                         }
                     }
+                   
                     layer.addRenderables(polyList);
 */
+                    
+                    
+                    
+                    
+                    
                       layer.addRenderable(shape);
+                      
                     label = "";
                 }
             } catch (Exception ex) {

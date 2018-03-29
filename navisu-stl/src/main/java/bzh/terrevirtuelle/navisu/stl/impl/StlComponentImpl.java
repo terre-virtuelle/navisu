@@ -41,6 +41,7 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponent;
+import java.util.Properties;
 
 /**
  *
@@ -88,7 +89,8 @@ public class StlComponentImpl
 
     static private int i = 0;
     private boolean first = true;
-
+    protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
+    protected Properties properties;
     protected static final Logger LOGGER = Logger.getLogger(StlComponentImpl.class.getName());
 
     @Override
