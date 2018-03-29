@@ -11,13 +11,28 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.ExtrudedPolygon;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwindx.examples.kml.KMLDocumentBuilder;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 /**
  *
@@ -50,6 +65,9 @@ public class DepareView
         sideAttrs.setInteriorMaterial(Material.BLUE);
         sideAttrs.setEnableLighting(true);
         int altitudeMode = WorldWind.CONSTANT;
+
+        //  List<Polygon> polygons = new ArrayList<>();
+        List<Path> paths = new ArrayList<>();
         while (shp.hasNext()) {
             try {
                 record = shp.nextRecord();
@@ -72,38 +90,66 @@ public class DepareView
 
                     createPolygon(record);
                     setPolygonAttributes(shape, color);
-                   
-                    /*
-                    List<ExtrudedPolygon> polyList = new ArrayList<>();
-                    ExtrudedPolygon pgon;
+                    layer.addRenderable(shape);
+                   // Polygon p;
+                    Path p;
                     for (int i = 0; i < shape.getBuffer().size(); i++) {
-                        for (int j = 0; j < shape.getBuffer().subBuffer(i).getSize(); j++) {
-
-                            pgon = new ExtrudedPolygon(shape.getBuffer().subBuffer(i).getPositions(), 1200-val2*50);
-                            pgon.setAltitudeMode(altitudeMode);
-                            pgon.setEnableSides(true);
-                            pgon.setEnableCap(true);
-                            pgon.setCapAttributes(capAttrs);
-                            pgon.setSideAttributes(sideAttrs);
-                            polyList.add(pgon);
-                        }
+                        p = new Path(shape.getBuffer().subBuffer(i).getPositions());
+                        p.setAltitudeMode(altitudeMode);
+                        // polygons.add(p);
+                        paths.add(p);
                     }
-                   
-                    layer.addRenderables(polyList);
-*/
-                    
-                    
-                    
-                    
-                    
-                      layer.addRenderable(shape);
-                      
-                    label = "";
                 }
             } catch (Exception ex) {
                 Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
         wwd.redrawNow();
+        /*
+        System.out.println("polygons : " + polygons.size());
+        Polygon[] polygonArray = new Polygon[polygons.size()];
+        for(int i = 0; i < polygons.size(); i++){
+            polygonArray[i]=polygons.get(i);
+        }
+
+        try {
+            Writer stringWriter = new StringWriter();
+            // Create a document builder that will write KML to the StringWriter
+            KMLDocumentBuilder kmlBuilder = new KMLDocumentBuilder(stringWriter);
+            System.out.println("kmlBuilder : " + kmlBuilder);
+            kmlBuilder.writeObjects(polygonArray);
+            kmlBuilder.close();
+            // Get the exported document as a string
+            String xmlString = stringWriter.toString();
+            // Set up a transformer to pretty-print the XML
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            // Write the pretty-printed document to stdout
+            transformer.transform(new StreamSource(new StringReader(xmlString)), new StreamResult(new File("output.kml")));
+        } catch (IOException | IllegalArgumentException | XMLStreamException | TransformerException ex) {
+            Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+         */
+        Path[] pathArray = new Path[paths.size()];
+        for (int i = 0; i < paths.size(); i++) {
+            pathArray[i] = paths.get(i);
+        }
+
+        try {
+            Writer stringWriter = new StringWriter();
+            // Create a document builder that will write KML to the StringWriter
+            KMLDocumentBuilder kmlBuilder = new KMLDocumentBuilder(stringWriter);
+            System.out.println("kmlBuilder : " + kmlBuilder);
+            kmlBuilder.writeObjects(pathArray);
+            kmlBuilder.close();
+            String xmlString = stringWriter.toString();
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            transformer.transform(new StreamSource(new StringReader(xmlString)), new StreamResult(new File("output.kml")));
+        } catch (IOException | IllegalArgumentException | XMLStreamException | TransformerException ex) {
+            Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
     }
 }
