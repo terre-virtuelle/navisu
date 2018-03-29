@@ -416,7 +416,7 @@ public class DatabaseImpl
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        return userDirPath + "/tmp/" + table + ".shp";
+        return userDirPath + "/cmd/" + table + ".shp";
     }
 
     private String startCmd(String path, String command) {
@@ -439,7 +439,7 @@ public class DatabaseImpl
             double latMin, double lonMin, double latMax, double lonMax) {
 
         String command = cmd
-                + " -f \"ESRI Shapefile\" tmp/"
+                + " -f \"ESRI Shapefile\" cmd/"
                 + "tmp.shp PG:\"host=localhost "
                 + "user=" + user
                 + " password=" + passwd
@@ -454,9 +454,9 @@ public class DatabaseImpl
                 + " -clipdst "
                 + Double.toString(lonMin) + " " + Double.toString(latMin) + " "
                 + Double.toString(lonMax) + " " + Double.toString(latMax) + " "
-                + "tmp/" + table + ".shp tmp/" + "tmp.shp";
+                + "cmd/" + table + ".shp cmd/" + "tmp.shp";
 
-        String cmdFile = "tmp/cmd.sh";
+        String cmdFile = "cmd/cmd.sh";
         try {
             Files.write(Paths.get(cmdFile), command.getBytes());
         } catch (IOException ex) {
