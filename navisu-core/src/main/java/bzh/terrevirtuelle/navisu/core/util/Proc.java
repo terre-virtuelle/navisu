@@ -1,6 +1,18 @@
 package bzh.terrevirtuelle.navisu.core.util;
 
-import java.io.*;
+import com.sun.jna.Library;
+import com.sun.jna.Native;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,7 +71,7 @@ public class Proc {
         this.returnCode = process.waitFor();
     }
 
-    protected void exec(Map<String, String> environment) 
+    protected void exec(Map<String, String> environment)
             throws IOException, InterruptedException {
 
         Checker.notNull(cmd, "Command is null.");
@@ -74,11 +86,9 @@ public class Proc {
         for (Map.Entry<String, String> entry : environment.entrySet()) {
             envp[count++] = entry.getKey() + "=" + entry.getValue();
         }
-redirectSreamAsync(process.getInputStream(), out);
+        redirectSreamAsync(process.getInputStream(), out);
         redirectSreamAsync(process.getErrorStream(), errors);
         process = Runtime.getRuntime().exec(sb.toString(), envp);
-
-        
 
         this.returnCode = process.waitFor();
     }
@@ -97,6 +107,34 @@ redirectSreamAsync(process.getInputStream(), out);
                 Logger.getAnonymousLogger().log(Level.WARNING, null, ex);
             }
         });
+    }
+
+    private String createCmdSh(String cmd) {
+        String cmdFile = "tmp/cmd.sh";
+        try {
+            Files.write(Paths.get(cmdFile), cmd.getBytes());
+        } catch (IOException ex) {
+            Logger.getLogger(Proc.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        chmodCmd(cmdFile);
+        return cmdFile;
+    }
+
+    private void chmodCmd(String cmdFile) {
+        //  String cmd = null;
+        if (OS.isWindows()) {
+            LinkedOSLibrary linkedLibrary
+                    = (LinkedOSLibrary) Native.loadLibrary("c", LinkedOSLibrary.class);
+            linkedLibrary.chmod(cmdFile, 0777);
+        } else if (OS.isLinux()) {
+            File file = new File(cmdFile);
+            file.setReadable(true, false);
+            file.setWritable(true, false);
+            file.setExecutable(true, false);
+        } else {
+            System.out.println("OS not found");
+        }
+        // return cmd;
     }
 
     public int waitFor() throws InterruptedException {
@@ -170,4 +208,9 @@ redirectSreamAsync(process.getInputStream(), out);
     public int getReturnCode() {
         return returnCode;
     }
+}
+
+interface LinkedOSLibrary extends Library {
+
+    public int chmod(String path, int mode);
 }
