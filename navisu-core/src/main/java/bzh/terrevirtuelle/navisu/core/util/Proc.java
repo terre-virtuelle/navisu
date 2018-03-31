@@ -4,6 +4,7 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,6 +43,8 @@ public class Proc {
     protected OutputStream errors;
     protected Process process;
     protected int returnCode;
+    protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
+    protected static Properties properties;
 
     public Proc() {
         this.args = new LinkedList<>();
@@ -50,6 +54,12 @@ public class Proc {
         try {
             errors = new FileOutputStream("errors.log", true);
         } catch (FileNotFoundException ex) {
+            Logger.getLogger(Proc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        properties = new Properties();
+        try {
+            properties.load(new FileInputStream(CONFIG_FILE_NAME));
+        } catch (IOException ex) {
             Logger.getLogger(Proc.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -109,8 +119,12 @@ public class Proc {
         });
     }
 
+    public static String getProperty(String property) {
+        return properties.getProperty(property);
+    }
+
     private String createCmdSh(String cmd) {
-        String cmdFile = "tmp/cmd.sh";
+        String cmdFile = "cmd/cmd.sh";
         try {
             Files.write(Paths.get(cmdFile), cmd.getBytes());
         } catch (IOException ex) {
@@ -121,7 +135,6 @@ public class Proc {
     }
 
     private void chmodCmd(String cmdFile) {
-        //  String cmd = null;
         if (OS.isWindows()) {
             LinkedOSLibrary linkedLibrary
                     = (LinkedOSLibrary) Native.loadLibrary("c", LinkedOSLibrary.class);
@@ -134,7 +147,6 @@ public class Proc {
         } else {
             System.out.println("OS not found");
         }
-        // return cmd;
     }
 
     public int waitFor() throws InterruptedException {
@@ -154,6 +166,8 @@ public class Proc {
         Builder setErr(OutputStream err);
 
         Proc exec() throws IOException, InterruptedException;
+
+        Proc execSh() throws IOException, InterruptedException;
 
         Proc exec(Map<String, String> env) throws IOException, InterruptedException;
     }
@@ -194,6 +208,13 @@ public class Proc {
 
         @Override
         public Proc exec() throws IOException, InterruptedException {
+            this.proc.exec();
+            return this.proc;
+        }
+
+        @Override
+        public Proc execSh() throws IOException, InterruptedException {
+            this.proc.cmd = proc.createCmdSh(this.proc.cmd);
             this.proc.exec();
             return this.proc;
         }

@@ -5,9 +5,12 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
 
+import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -43,10 +46,12 @@ public class DepareView
 
     protected double val1;
     protected double val2;
+    protected ShapefileObjectServices shapefileObjectServices;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
-    public DepareView(RenderableLayer layer) {
+    public DepareView(ShapefileObjectServices shapefileObjectServices, RenderableLayer layer) {
         super(layer);
+        this.shapefileObjectServices = shapefileObjectServices;
     }
 
     public void display(Shapefile shp) {
@@ -66,8 +71,8 @@ public class DepareView
         sideAttrs.setEnableLighting(true);
         int altitudeMode = WorldWind.CONSTANT;
 
-        //  List<Polygon> polygons = new ArrayList<>();
         List<Path> paths = new ArrayList<>();
+        List<Polygon> polygons = new ArrayList<>();
         while (shp.hasNext()) {
             try {
                 record = shp.nextRecord();
@@ -77,9 +82,11 @@ public class DepareView
                         entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
                             if (e.getKey().equalsIgnoreCase("drval1")) {
                                 val1 = (Double) e.getValue();
+
                             }
                             if (e.getKey().equalsIgnoreCase("drval2")) {
                                 val2 = (Double) e.getValue();
+
                             }
                             color = defineColor(val1, val2);
                         });
@@ -89,15 +96,29 @@ public class DepareView
                     }
 
                     createPolygon(record);
+                    shape.setValue("drval1", val1);
+                    shape.setValue("drval2", val2);
                     setPolygonAttributes(shape, color);
-                    layer.addRenderable(shape);
-                   // Polygon p;
+                    //  layer.addRenderable(shape);
+                    /*
                     Path p;
                     for (int i = 0; i < shape.getBuffer().size(); i++) {
                         p = new Path(shape.getBuffer().subBuffer(i).getPositions());
                         p.setAltitudeMode(altitudeMode);
-                        // polygons.add(p);
                         paths.add(p);
+                    }
+                     */
+                    Polygon p;
+                    for (int i = 0; i < shape.getBuffer().size(); i++) {
+                        p = new Polygon(shape.getBuffer().subBuffer(i).getPositions());
+                        //  System.out.println(" " + shape.getValue("drval1"));
+                        //  p.setValue("drval1", shape.getValue("drval1"));
+                        // p.setValue("drval2", shape.getValue("drval2"));
+                        p.setValue(AVKey.SHORT_DESCRIPTION, ((Double) shape.getValue("drval1")).toString());
+                        p.setValue(AVKey.BALLOON_TEXT, ((Double) shape.getValue("drval2")).toString());
+
+                        p.setAltitudeMode(altitudeMode);
+                        polygons.add(p);
                     }
                 }
             } catch (Exception ex) {
@@ -106,50 +127,44 @@ public class DepareView
         }
         wwd.redrawNow();
         /*
-        System.out.println("polygons : " + polygons.size());
-        Polygon[] polygonArray = new Polygon[polygons.size()];
-        for(int i = 0; i < polygons.size(); i++){
-            polygonArray[i]=polygons.get(i);
-        }
-
-        try {
-            Writer stringWriter = new StringWriter();
-            // Create a document builder that will write KML to the StringWriter
-            KMLDocumentBuilder kmlBuilder = new KMLDocumentBuilder(stringWriter);
-            System.out.println("kmlBuilder : " + kmlBuilder);
-            kmlBuilder.writeObjects(polygonArray);
-            kmlBuilder.close();
-            // Get the exported document as a string
-            String xmlString = stringWriter.toString();
-            // Set up a transformer to pretty-print the XML
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-            // Write the pretty-printed document to stdout
-            transformer.transform(new StreamSource(new StringReader(xmlString)), new StreamResult(new File("output.kml")));
-        } catch (IOException | IllegalArgumentException | XMLStreamException | TransformerException ex) {
-            Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-         */
         Path[] pathArray = new Path[paths.size()];
         for (int i = 0; i < paths.size(); i++) {
             pathArray[i] = paths.get(i);
         }
-
+         */
+        Polygon[] array = new Polygon[polygons.size()];
+        for (int i = 0; i < polygons.size(); i++) {
+            array[i] = polygons.get(i);
+        }
+        /*
+      ogr2ogr -f 'ESRI Shapefile' output.shp output.kml
+      ogr2ogr outfileSimplify.shp depare.shp -simplify 0.0001  //maxi
+         */
         try {
             Writer stringWriter = new StringWriter();
-            // Create a document builder that will write KML to the StringWriter
             KMLDocumentBuilder kmlBuilder = new KMLDocumentBuilder(stringWriter);
-            System.out.println("kmlBuilder : " + kmlBuilder);
-            kmlBuilder.writeObjects(pathArray);
+            kmlBuilder.writeObjects(array);
             kmlBuilder.close();
             String xmlString = stringWriter.toString();
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-            transformer.transform(new StreamSource(new StringReader(xmlString)), new StreamResult(new File("output.kml")));
+            transformer.transform(new StreamSource(new StringReader(xmlString)), new StreamResult(new File("cmd/output.kml")));
         } catch (IOException | IllegalArgumentException | XMLStreamException | TransformerException ex) {
             Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+
+        String path = Proc.getProperty("gdalPath");
+        String command = path + "/ogr2ogr -f 'ESRI Shapefile' cmd/output.shp cmd/output.kml \n"
+                + path + "/ogr2ogr cmd/outfileSimplify.shp cmd/depare.shp -simplify 0.0001";
+        try {
+            Proc.BUILDER.create()
+                    .setCmd(command)
+                    .execSh();
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        shapefileObjectServices.openFile("cmd/outfileSimplify.shp");
+        System.out.println("  "+shapefileObjectServices.getShapefile());
     }
 }

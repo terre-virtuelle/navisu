@@ -5,13 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.database.relational.impl;
 
-import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.database.relational.Database;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
-import com.sun.jna.Library;
-import com.sun.jna.Native;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -265,7 +261,7 @@ public class DatabaseImpl
         Map<String, String> environment = new HashMap<>(System.getenv());
         String options = System.getProperty("user.dir") + "/gdal/data";
         environment.put("GDAL_DATA", options);
-        String cmd = startCmd(path, "/shp2pgsql");
+        String cmd = path + "/shp2pgsql";
 
         //Search all different tables
         tableSet = new HashSet<>();
@@ -402,16 +398,16 @@ public class DatabaseImpl
             userDirPath = System.getProperty("user.dir");
             String path = properties.getProperty("gdalPath");
             String cmd = "/ogr2ogr";
-            cmd = startCmd(path, cmd);
+            cmd = path + cmd;
             if (path == null) {
                 //alarm
             }
-            String command = createCmdSh(table, attributes, cmd, databaseName, user, passwd,
+            String command = createCmdSpatialDBToShapefile(table, attributes, cmd, databaseName, user, passwd,
                     latMin, lonMin, latMax, lonMax);
 
             Proc.BUILDER.create()
-                    .setCmd(userDirPath + "/" + command)
-                    .exec();
+                    .setCmd(command)
+                    .execSh();
 
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
@@ -419,21 +415,7 @@ public class DatabaseImpl
         return userDirPath + "/cmd/" + table + ".shp";
     }
 
-    private String startCmd(String path, String command) {
-        String cmd = null;
-        if (OS.isWindows()) {
-            cmd = path + command;
-        } else if (OS.isLinux()) {
-            cmd = path + command;
-        } else if (OS.isMac()) {
-            cmd = path + command;
-        } else {
-            System.out.println("OS not found");
-        }
-        return cmd;
-    }
-
-    private String createCmdSh(String table, String attributes,
+    private String createCmdSpatialDBToShapefile(String table, String attributes,
             String cmd,
             String databaseName, String user, String passwd,
             double latMin, double lonMin, double latMax, double lonMax) {
@@ -455,36 +437,6 @@ public class DatabaseImpl
                 + Double.toString(lonMin) + " " + Double.toString(latMin) + " "
                 + Double.toString(lonMax) + " " + Double.toString(latMax) + " "
                 + "cmd/" + table + ".shp cmd/" + "tmp.shp";
-
-        String cmdFile = "cmd/cmd.sh";
-        try {
-            Files.write(Paths.get(cmdFile), command.getBytes());
-        } catch (IOException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        chmodCmd(cmdFile);
-        return cmdFile;
+        return command;
     }
-
-    private String chmodCmd(String cmdFile) {
-        String cmd = null;
-        if (OS.isWindows()) {
-            LinkedOSLibrary linkedLibrary
-                    = (LinkedOSLibrary) Native.loadLibrary("c", LinkedOSLibrary.class);
-            linkedLibrary.chmod(cmdFile, 0777);
-        } else if (OS.isLinux()) {
-            File file = new File(cmdFile);
-            file.setReadable(true,false);
-            file.setWritable(true,false);
-            file.setExecutable(true,false);
-        } else {
-            System.out.println("OS not found");
-        }
-        return cmd;
-    }
-}
-
-interface LinkedOSLibrary extends Library {
-
-    public int chmod(String path, int mode);
 }

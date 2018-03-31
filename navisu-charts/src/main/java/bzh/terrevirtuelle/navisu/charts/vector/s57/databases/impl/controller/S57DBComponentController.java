@@ -25,6 +25,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonVie
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWindow;
@@ -90,6 +91,7 @@ public class S57DBComponentController
     protected DatabaseServices databaseServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected TopologyServices topologyServices;
+    protected ShapefileObjectServices shapefileObjectServices;
     private final String FXML = "s57DBController.fxml";
 
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
@@ -284,7 +286,8 @@ public class S57DBComponentController
             S57ChartComponentServices s57ChartComponentServices,
             DatabaseServices databaseServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
-            TopologyServices topologyServices) {
+            TopologyServices topologyServices,
+            ShapefileObjectServices shapefileObjectServices) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -304,6 +307,7 @@ public class S57DBComponentController
         this.databaseServices = databaseServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.topologyServices = topologyServices;
+        this.shapefileObjectServices=shapefileObjectServices;
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
         bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
@@ -536,7 +540,7 @@ public class S57DBComponentController
 
         if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
             guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
-                new DepareView(depareLayer).display(new DepareDbLoader(databaseServices,
+                new DepareView(shapefileObjectServices, depareLayer).display(new DepareDbLoader(databaseServices,
                         databaseTF.getText(),
                         USER,
                         PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
