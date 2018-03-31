@@ -42,6 +42,7 @@ public class SingleAREA_ShapefileLoader
     private List<List<String>> dbList;
     private Map<String, Integer> keys;
     int i = 0;
+    private Shapefile shp;
 
     public SingleAREA_ShapefileLoader(List<List<String>> dbList, Map<String, Integer> keys) {
         this.dbList = dbList;
@@ -54,6 +55,7 @@ public class SingleAREA_ShapefileLoader
     @Override
     protected void addRenderablesForPolygons(Shapefile shp, List<Layer> layers) {
         RenderableLayer layer = new RenderableLayer();
+        this.shp = shp;
         layers.add(layer);
         while (shp.hasNext()) {
             try {
@@ -68,6 +70,7 @@ public class SingleAREA_ShapefileLoader
                                 color = new Color((int) (Math.random() * 255),
                                         (int) (Math.random() * 255), (int) (Math.random() * 255));
                             }
+                            // System.out.println("e.getKey() : " + e.getKey());
                         });
                     }
                     if (!Shapefile.isPolygonType(record.getShapeType())) {
@@ -96,7 +99,7 @@ public class SingleAREA_ShapefileLoader
                 record.getCompoundPointBuffer());
 
         shape.setAttributes(attrs);
-        System.out.println("attrs : " + shape.getAttributes());
+        //  System.out.println("attrs : " + shape.getAttributes());
         shape.setWindingRule(AVKey.CLOCKWISE);
         shape.setPolygonRingGroups(new int[]{0});
 
@@ -131,4 +134,9 @@ public class SingleAREA_ShapefileLoader
     protected void createValues(SurfacePolygons shape) {
         entries = record.getAttributes().getEntries();
     }
+
+    public Shapefile getShapefile() {
+        return shp;
+    }
+
 }

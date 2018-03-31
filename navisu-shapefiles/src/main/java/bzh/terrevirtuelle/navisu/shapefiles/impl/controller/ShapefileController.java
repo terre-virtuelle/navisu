@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.shapefiles.impl.controller;
 
 import bzh.terrevirtuelle.navisu.shapefiles.impl.controller.loader.SingleAREA_ShapefileLoader;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.io.File;
@@ -23,7 +24,8 @@ public class ShapefileController {
     private static final ShapefileController INSTANCE;
     protected String path;
     private List<Layer> layers;
-    
+    protected SingleAREA_ShapefileLoader shapefileLoader;
+
     static {
         INSTANCE = new ShapefileController();
     }
@@ -50,8 +52,12 @@ public class ShapefileController {
         this.path = path;
         RenderableLayer layer = new RenderableLayer();
         layer.setName("SHP");
-        SingleAREA_ShapefileLoader shapefileLoader = new SingleAREA_ShapefileLoader(dbList, keys);
+        shapefileLoader = new SingleAREA_ShapefileLoader(dbList, keys);
         layers = shapefileLoader.createLayersFromSource(new File(path));
         return layers;
+    }
+
+    public Shapefile getShapefile() {
+        return shapefileLoader.getShapefile();
     }
 }

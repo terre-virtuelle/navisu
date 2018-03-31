@@ -19,6 +19,7 @@ import com.linuxense.javadbf.DBFField;
 import com.linuxense.javadbf.DBFReader;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.layers.Layer;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -52,6 +53,7 @@ public class ShapefileObjectImpl
     protected List<Layer> layers;
     protected static final Logger LOGGER = Logger.getLogger(ShapefileObjectImpl.class.getName());
     protected WorldWindow wwd;
+    protected ShapefileController shapefileController;
 
     @Override
     public void openFile(String file) {
@@ -86,7 +88,7 @@ public class ShapefileObjectImpl
         String[] tab = fileName.split("\\.");
         String dbFileName = tab[0];
         dbFileName += ".dbf";
-        
+
         try {
             InputStream inputStream = new FileInputStream(dbFileName);
             reader = new DBFReader(inputStream);
@@ -95,9 +97,9 @@ public class ShapefileObjectImpl
                 DBFField field = reader.getField(i);
                 keys.put(field.getName().trim(), i);
             }
-            
+
             Object[] rowObjects;
-            
+
             while ((rowObjects = reader.nextRecord()) != null) {
                 List<String> tmp = new ArrayList<>();
                 for (Object rowObject : rowObjects) {
@@ -108,9 +110,9 @@ public class ShapefileObjectImpl
         } catch (DBFException | FileNotFoundException ex) {
             Logger.getLogger(ShapefileObjectImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-      
+
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
-        ShapefileController shapefileController = ShapefileController.getInstance();
+        shapefileController = ShapefileController.getInstance();
         if (!dbList.isEmpty()) {
             layers = shapefileController.init(fileName, keys, dbList);
         } else {
@@ -123,6 +125,10 @@ public class ShapefileObjectImpl
         }).forEach((l) -> {
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
         });
+    }
+
+    public Shapefile getShapefile() {
+        return shapefileController.getShapefile();
     }
 
     @Override
