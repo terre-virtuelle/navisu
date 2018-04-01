@@ -112,7 +112,7 @@ public class ShapefileObjectImpl
         }
 
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
-        shapefileController = ShapefileController.getInstance();
+        
         if (!dbList.isEmpty()) {
             layers = shapefileController.init(fileName, keys, dbList);
         } else {
@@ -127,10 +127,13 @@ public class ShapefileObjectImpl
         });
     }
 
+    @Override
     public Shapefile getShapefile() {
         return shapefileController.getShapefile();
     }
 
+     
+    
     @Override
     public String getName() {
         return NAME;
@@ -178,7 +181,8 @@ public class ShapefileObjectImpl
 
     @Override
     public void componentStarted() {
-        /* Nothing to do here */ }
+        /* Nothing to do here */ 
+    shapefileController = ShapefileController.getInstance();}
 
     @Override
     public void componentStopped() {

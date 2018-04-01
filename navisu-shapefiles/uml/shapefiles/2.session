@@ -1,0 +1,17 @@
+window_sizes 1280 1000 300 900 682 82
+diagrams
+  active  classdiagram_ref 128002 // shp
+    974 844 100 4 36 0
+end
+show_stereotypes
+selected class_ref 128898 // ShapefileController
+open
+  classview_ref 128002 // shp
+  classview_ref 128130 // shapefiles
+  deploymentview_ref 128002 // shapefiles
+  classview_ref 128386 // impl
+  classview_ref 128514 // controller
+  classview_ref 128642 // loader
+  deploymentview_ref 128386 // loader
+end
+end

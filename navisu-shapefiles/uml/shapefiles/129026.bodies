@@ -1,0 +1,75 @@
+class SingleAREA_ShapefileLoader
+!!!133122.java!!!	SingleAREA_ShapefileLoader(inout dbList : List<List<String>>, inout keys : Map<String, Integer>)
+        this.dbList = dbList;
+        this.keys = keys;
+!!!133378.java!!!	addRenderablesForPolygons(inout shp : Shapefile, inout layers : List<Layer>) : void
+        RenderableLayer layer = new RenderableLayer();
+        this.shp = shp;
+        layers.add(layer);
+        while (shp.hasNext()) {
+            try {
+                record = shp.nextRecord();
+                if (record != null) {
+                    if (record.getAttributes() != null) {
+                        entries = record.getAttributes().getEntries();
+                        entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
+                            if (e.getKey().equals("TYPEVALE")) {
+                                color = NFD_COLOUR.ATT.get(((String) e.getValue()).trim());
+                            } else {
+                                color = new Color((int) (Math.random() * 255),
+                                        (int) (Math.random() * 255), (int) (Math.random() * 255));
+                            }
+                            // System.out.println("e.getKey() : " + e.getKey());
+                        });
+                    }
+                    if (!Shapefile.isPolygonType(record.getShapeType())) {
+                        continue;
+                    }
+                    color = new Color((int) (Math.random() * 255),
+                            (int) (Math.random() * 255), (int) (Math.random() * 255));
+                    ShapeAttributes attrs = this.createPolygonAttributes(color);
+                    this.createPolygon(record, attrs, layer);
+
+                    label = "";
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(SingleAREA_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+!!!133506.java!!!	createPolygon(inout record : ShapefileRecord, inout attrs : ShapeAttributes, inout layer : RenderableLayer) : void
+        this.record = record;
+        shape = new SurfacePolygons(
+                Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
+                record.getCompoundPointBuffer());
+
+        shape.setAttributes(attrs);
+        //  System.out.println("attrs : " + shape.getAttributes());
+        shape.setWindingRule(AVKey.CLOCKWISE);
+        shape.setPolygonRingGroups(new int[]{0});
+
+        ShapeAttributes highlightAttributes = new BasicShapeAttributes(attrs);
+        highlightAttributes.setOutlineOpacity(1);
+        highlightAttributes.setDrawInterior(true);
+        highlightAttributes.setInteriorMaterial(new Material(Color.WHITE));
+        highlightAttributes.setInteriorOpacity(.5);
+        highlightAttributes.setEnableLighting(true);
+
+        shape.setHighlightAttributes(highlightAttributes);
+
+        layer.addRenderable(shape);
+        i++;
+!!!133634.java!!!	createPolygons(inout shp : Shapefile, inout layer : RenderableLayer) : List<SurfacePolygons>
+        return null;
+!!!133762.java!!!	createPolygonAttributes(inout color : Color) : ShapeAttributes
+
+        ShapeAttributes normalAttributes = new BasicShapeAttributes();
+        normalAttributes.setDrawInterior(true);
+        normalAttributes.setInteriorMaterial(new Material(color));
+        normalAttributes.setDrawOutline(true);
+        normalAttributes.setOutlineMaterial(new Material(Color.BLACK));
+        normalAttributes.setEnableLighting(true);
+        return normalAttributes;
+!!!133890.java!!!	createValues(inout shape : SurfacePolygons) : void
+        entries = record.getAttributes().getEntries();
+!!!134018.java!!!	getShapefile() : Shapefile
+        return shp;

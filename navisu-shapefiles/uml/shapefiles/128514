@@ -1,0 +1,791 @@
+format 76
+"loader" // shapefiles::impl::controller::loader
+  revision 1
+  modified_by 2 "serge"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  java_dir "Z:/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-shapefiles/src/main/java/bzh/terrevirtuelle/navisu/shapefiles/impl/controller/loader/"
+  java_package "bzh.terrevirtuelle.navisu.shapefiles.impl.controller.loader"
+  classview 128642 "loader"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 129026 "SingleAREA_ShapefileLoader"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge Morvan
+@date 4 juin 2014 NaVisu project"
+      classrelation 129154 // <generalisation>
+	relation 129154 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129154 // <generalisation>
+	  b parent class_ref 129154 // ShapefileLoader
+      end
+
+      attribute 129666 "record"
+	private explicit_type "ShapefileRecord"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129794 "entries"
+	private explicit_type "Map.Entry<String, Object>"
+	stereotype "Set"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129922 "color"
+	private explicit_type "Color"
+	init_value " Color.RED"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130050 "opacity"
+	private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130178 "objname"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130306 "shape"
+	private explicit_type "SurfacePolygons"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130434 "label"
+	private explicit_type "String"
+	init_value " \"\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130562 "dbList"
+	private explicit_type "List<String>"
+	stereotype "List"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130690 "keys"
+	private explicit_type "String, Integer"
+	stereotype "Map"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130818 "i"
+	package explicit_type "int"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130946 "shp"
+	private explicit_type "Shapefile"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 133122 "SingleAREA_ShapefileLoader"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "dbList" explicit_type "List<List<String>>"
+	  param inout name "keys" explicit_type "Map<String, Integer>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133250 "SingleAREA_ShapefileLoader"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133378 "addRenderablesForPolygons"
+	protected explicit_return_type "void"
+	nparams 2
+	  param inout name "shp" explicit_type "Shapefile"
+	  param inout name "layers" explicit_type "List<Layer>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 133506 "createPolygon"
+	protected explicit_return_type "void"
+	nparams 3
+	  param inout name "record" explicit_type "ShapefileRecord"
+	  param inout name "attrs" explicit_type "ShapeAttributes"
+	  param inout name "layer" explicit_type "RenderableLayer"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 133634 "createPolygons"
+	public explicit_return_type "List<SurfacePolygons>"
+	nparams 2
+	  param inout name "shp" explicit_type "Shapefile"
+	  param inout name "layer" explicit_type "RenderableLayer"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133762 "createPolygonAttributes"
+	protected explicit_return_type "ShapeAttributes"
+	nparams 1
+	  param inout name "color" explicit_type "Color"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133890 "createValues"
+	protected explicit_return_type "void"
+	nparams 1
+	  param inout name "shape" explicit_type "SurfacePolygons"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 134018 "getShapefile"
+	public explicit_return_type "Shapefile"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129154 "ShapefileLoader"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "Converts Shapefile geometry into World Wind renderable objects. Shapefile
+geometries are mapped to World Wind objects as follows: <table>
+<tr><th>Shapefile Geometry</th><th>World Wind Object</th></tr> <tr><td>Point</td><td>{@link
+gov.nasa.worldwind.render.WWIcon}</td></tr> <tr><td>MultiPoint</td><td>List
+of {@link
+gov.nasa.worldwind.render.WWIcon}</td></tr>
+<tr><td>Polyline</td><td>{@link gov.nasa.worldwind.render.SurfacePolylines}</td></tr>
+<tr><td>Polygon</td><td>{@link gov.nasa.worldwind.render.SurfacePolygons}</td></tr>
+</table>
+<p/>
+Shapefiles do not contain a standard definition for color and other visual
+attributes. Though some Shapefiles contain color information in each record's
+key-value attributes, ShapefileLoader does not attempt to interpret that
+information. Instead, the World Wind renderable objects created by
+ShapefileLoader are assigned a random color. Callers can replace or extend
+this behavior by defining a subclass of ShapefileLoader and overriding the
+following methods: <ul>
+<li>{@link #createPointAttributes(gov.nasa.worldwind.formats.shapefile.ShapefileRecord)}</li>
+<li>{@link #createPolylineAttributes(gov.nasa.worldwind.formats.shapefile.ShapefileRecord)}</li> <li>{@link
+#createPolygonAttributes(gov.nasa.worldwind.formats.shapefile.ShapefileRecord)}</li></ul>.
+
+@author dcollins
+@version $Id: ShapefileLoader.java 1532 2013-08-06 23:54:50Z dcollins $"
+      attribute 129282 "randomAttrs"
+	class_attribute const_attribute protected explicit_type "RandomShapeAttributes"
+	init_value " new RandomShapeAttributes()"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129410 "numPolygonsPerLayer"
+	protected explicit_type "int"
+	init_value " 5000"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "Indicates the maximum number of polygons to place in a layer before
+creating an additional layer.
+"
+      end
+
+      attribute 129538 "entries"
+	protected explicit_type "Map.Entry<String, Object>"
+	stereotype "Set"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 130690 "ShapefileLoader"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Constructs a ShapefileLoader, but otherwise does nothing."
+      end
+
+      operation 130818 "createLayerFromSource"
+	public explicit_return_type "Layer"
+	nparams 1
+	  param inout name "source" explicit_type "Object"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Creates a {@link gov.nasa.worldwind.layers.Layer} from a general
+Shapefile source. The source type may be one of the following: <ul>
+<li>{@link java.io.InputStream}</li> <li>{@link java.net.URL}</li> <li>{@link
+java.io.File}</li> <li>{@link String} containing a valid URL description
+or a file or resource name available on the classpath.</li> </ul>
+
+@param source the source of the Shapefile.
+
+@return a Layer that renders the Shapefile's contents on the surface of
+the Globe.
+
+@throws IllegalArgumentException if the source is null or an empty
+string, or if the Shapefile's primitive type is unrecognized."
+      end
+
+      operation 130946 "createLayersFromSource"
+	public explicit_return_type "List<Layer>"
+	nparams 1
+	  param inout name "source" explicit_type "Object"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Creates a list of {@link gov.nasa.worldwind.layers.Layer}s containing
+shapes from a Shapefile.
+<p/>
+For polygon shapes, the maximum number of polygons to add to a layer can
+be specified. By default it's 5000. If there are more polygons in the
+shapefile than the maximum, new layers are created as needed, with each
+holding no more than the maximum. All but the first layer is disabled to
+avoid bogging down the display trying to render an excessive number of
+shapes. The application can enable the layers selectively to maintain
+performance.
+<p/>
+The source type may be one of the following: <ul>
+<li>{@link java.io.InputStream}</li> <li>{@link
+java.net.URL}</li> <li>{@link java.io.File}</li> <li>{@link String}
+containing a valid URL description or a file or resource name available
+on the classpath.</li> </ul>
+
+@param source the source of the Shapefile.
+
+@return a Layer that renders the Shapefile's contents on the surface of
+the Globe.
+
+@throws IllegalArgumentException if the source is null or an empty
+string, or if the Shapefile's primitive type is unrecognized."
+      end
+
+      operation 131074 "createLayerFromShapefile"
+	public explicit_return_type "Layer"
+	nparams 1
+	  param inout name "shp" explicit_type "Shapefile"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Creates a {@link gov.nasa.worldwind.layers.Layer} from a general
+Shapefile.
+
+@param shp the Shapefile to create a layer for.
+
+@return a Layer that renders the Shapefile's contents on the surface of
+the Globe.
+
+@throws IllegalArgumentException if the Shapefile is null, or if the
+Shapefile's primitive type is unrecognized."
+      end
+
+      operation 131202 "createLayersFromShapefile"
+	public explicit_return_type "List<Layer>"
+	nparams 1
+	  param inout name "shp" explicit_type "Shapefile"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Creates a list of {@link gov.nasa.worldwind.layers.Layer}s containing
+shapes from a Shapefile.
+<p/>
+For polygon shapes, the maximum number of polygons to add to a layer can
+be specified. By default it's 5000. If there are more polygons in the
+shapefile than the maximum, new layers are created as needed, with each
+holding no more than the maximum. All but the first layer is disabled to
+avoid bogging down the display trying to render an excessive number of
+shapes. The application can enable the layers selectively to maintain
+performance.
+<p/>
+
+@param shp the source of the Shapefile.
+
+@return a Layer that renders the Shapefile's contents on the surface of
+the Globe.
+
+@throws IllegalArgumentException if the shapefile is null or an empty
+string, or if the Shapefile's primitive type is unrecognized."
+      end
+
+      operation 131330 "getNumPolygonsPerLayer"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Indicates the maximum number of polygon renderables to place in a single
+layer. If this limit is exceeded an additional layer is added.
+
+@return the maximum number of polygons to place in a layer."
+      end
+
+      operation 131458 "setNumPolygonsPerLayer"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "numPolygonsPerLayer" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Specifies the maximum number of polygon renderables to place in a single
+layer. If this limit is exceeded an additional layer is added.
+
+@param numPolygonsPerLayer the maximum number of polygons to place in a
+layer.
+
+@throws IllegalArgumentException if the number is less than 1."
+      end
+
+      operation 131586 "addRenderablesForPoints"
+	protected explicit_return_type "void"
+	nparams 2
+	  param inout name "shp" explicit_type "Shapefile"
+	  param inout name "layer" explicit_type "RenderableLayer"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "**************************************************************//
+********************  Geometry Conversion  *******************//
+**************************************************************//"
+      end
+
+      operation 131714 "addRenderablesForMultiPoints"
+	protected explicit_return_type "void"
+	nparams 2
+	  param inout name "shp" explicit_type "Shapefile"
+	  param inout name "layer" explicit_type "RenderableLayer"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131842 "addRenderablesForPolylines"
+	protected explicit_return_type "void"
+	nparams 2
+	  param inout name "shp" explicit_type "Shapefile"
+	  param inout name "layer" explicit_type "RenderableLayer"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131970 "addRenderablesForPolygons"
+	protected explicit_return_type "void"
+	nparams 2
+	  param inout name "shp" explicit_type "Shapefile"
+	  param inout name "layers" explicit_type "List<Layer>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Creates renderables for all the polygons in the shapefile. Polygon is the
+only shape that potentially returns a more than one layer, which it does
+when the polygons per layer limit is exceeded.
+
+@param shp the shapefile to read
+@param layers a list in which to place the layers created. May not be
+null."
+      end
+
+      operation 132098 "createPoint"
+	protected explicit_return_type "Renderable"
+	nparams 4
+	  param inout name "record" explicit_type "ShapefileRecord"
+	  param in name "latDegrees" explicit_type "double"
+	  param in name "lonDegrees" explicit_type "double"
+	  param inout name "attrs" explicit_type "PointPlacemarkAttributes"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings({\"UnusedDeclaration\"})
+"
+	
+	
+	
+	comment "**************************************************************//
+********************  Primitive Geometry Construction  *******//
+**************************************************************//"
+      end
+
+      operation 132226 "createPolyline"
+	protected explicit_return_type "Renderable"
+	nparams 2
+	  param inout name "record" explicit_type "ShapefileRecord"
+	  param inout name "attrs" explicit_type "ShapeAttributes"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132354 "createPolyline"
+	protected explicit_return_type "Renderable"
+	nparams 2
+	  param inout name "shp" explicit_type "Shapefile"
+	  param inout name "attrs" explicit_type "ShapeAttributes"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132482 "createPolygon"
+	protected explicit_return_type "void"
+	nparams 3
+	  param inout name "record" explicit_type "ShapefileRecord"
+	  param inout name "attrs" explicit_type "ShapeAttributes"
+	  param inout name "layer" explicit_type "RenderableLayer"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132610 "getHeight"
+	protected explicit_return_type "Double"
+	nparams 1
+	  param inout name "record" explicit_type "ShapefileRecord"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the height of a record.
+
+@param record shape for which to find height
+
+@return the height of the shape, or {@code null} if there is no height."
+      end
+
+      operation 132738 "createPointAttributes"
+	protected explicit_return_type "PointPlacemarkAttributes"
+	nparams 1
+	  param inout name "record" explicit_type "ShapefileRecord"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings({\"UnusedDeclaration\"})
+"
+	
+	
+	
+	comment "**************************************************************//
+********************  Attribute Construction  ****************//
+**************************************************************//"
+      end
+
+      operation 132866 "createPolylineAttributes"
+	protected explicit_return_type "ShapeAttributes"
+	nparams 1
+	  param inout name "record" explicit_type "ShapefileRecord"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings({\"UnusedDeclaration\"})
+"
+	
+	
+	
+      end
+
+      operation 132994 "createPolygonAttributes"
+	protected explicit_return_type "ShapeAttributes"
+	nparams 1
+	  param inout name "record" explicit_type "ShapefileRecord"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings({\"UnusedDeclaration\"})
+"
+	
+	
+	
+      end
+    end
+  end
+
+  deploymentview 128386 "loader"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 128514 "ShapefileLoader"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.core.util.shapefile.RandomShapeAttributes;
+import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.formats.shapefile.*;
+import gov.nasa.worldwind.geom.*;
+import gov.nasa.worldwind.layers.*;
+import gov.nasa.worldwind.render.*;
+import gov.nasa.worldwind.util.*;
+import java.util.*;
+${definition}"
+      associated_classes
+	class_ref 129154 // ShapefileLoader
+      end
+      comment "Copyright (C) 2012 United States Government as represented by the Administrator of the
+National Aeronautics and Space Administration.
+All Rights Reserved."
+    end
+
+    artifact 128642 "SingleAREA_ShapefileLoader"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.charts.vector.ndf.view.NFD_COLOUR;
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
+import gov.nasa.worldwind.geom.Sector;
+import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfacePolygons;
+import java.awt.Color;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+${definition}"
+      associated_classes
+	class_ref 129026 // SingleAREA_ShapefileLoader
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+  end
+end

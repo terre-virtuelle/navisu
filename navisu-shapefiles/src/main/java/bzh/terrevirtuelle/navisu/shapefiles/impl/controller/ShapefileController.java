@@ -32,6 +32,7 @@ public class ShapefileController {
 
     private ShapefileController() {
         this.layers = new ArrayList<>();
+        shapefileLoader = new SingleAREA_ShapefileLoader();
     }
 
     public static ShapefileController getInstance() {
@@ -42,7 +43,7 @@ public class ShapefileController {
         this.path = path;
         RenderableLayer layer = new RenderableLayer();
         layer.setName("SHP");
-        SingleAREA_ShapefileLoader shapefileLoader = new SingleAREA_ShapefileLoader();
+        
         layers = shapefileLoader.createLayersFromSource(new File(path));
         return layers;
     }

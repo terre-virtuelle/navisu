@@ -1,0 +1,22 @@
+class ShapefileController
+!!!130050.java!!!	ShapefileController()
+        this.layers = new ArrayList<>();
+!!!130178.java!!!	getInstance() : ShapefileController
+        return INSTANCE;
+!!!130306.java!!!	init(in path : String) : List<Layer>
+        this.path = path;
+        RenderableLayer layer = new RenderableLayer();
+        layer.setName("SHP");
+        shapefileLoader = new SingleAREA_ShapefileLoader();
+        layers = shapefileLoader.createLayersFromSource(new File(path));
+        return layers;
+!!!130434.java!!!	init(in path : String, inout keys : Map<String, Integer>, inout dbList : List<List<String>>) : List<Layer>
+
+        this.path = path;
+        RenderableLayer layer = new RenderableLayer();
+        layer.setName("SHP");
+        shapefileLoader = new SingleAREA_ShapefileLoader(dbList, keys);
+        layers = shapefileLoader.createLayersFromSource(new File(path));
+        return layers;
+!!!130562.java!!!	getShapefile() : Shapefile
+        return shapefileLoader.getShapefile();

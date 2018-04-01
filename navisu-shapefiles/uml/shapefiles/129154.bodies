@@ -1,0 +1,294 @@
+class ShapefileLoader
+!!!130818.java!!!	createLayerFromSource(inout source : Object) : Layer
+        if (WWUtil.isEmpty(source)) {
+            String message = Logging.getMessage("nullValue.SourceIsNull");
+            Logging.logger().severe(message);
+            throw new IllegalArgumentException(message);
+        }
+
+        Shapefile shp = null;
+        Layer layer = null;
+        try {
+            shp = new Shapefile(source);
+            layer = this.createLayerFromShapefile(shp);
+        } finally {
+            WWIO.closeStream(shp, source.toString());
+        }
+
+        return layer;
+!!!130946.java!!!	createLayersFromSource(inout source : Object) : List<Layer>
+        if (WWUtil.isEmpty(source)) {
+            String message = Logging.getMessage("nullValue.SourceIsNull");
+            Logging.logger().severe(message);
+            throw new IllegalArgumentException(message);
+        }
+
+        Shapefile shp = null;
+        //  System.out.println("source " + source);
+        try {
+            shp = new Shapefile(source);
+            return this.createLayersFromShapefile(shp);
+        } finally {
+            WWIO.closeStream(shp, source.toString());
+        }
+!!!131074.java!!!	createLayerFromShapefile(inout shp : Shapefile) : Layer
+        if (shp == null) {
+            String message = Logging.getMessage("nullValue.ShapefileIsNull");
+            Logging.logger().severe(message);
+            throw new IllegalArgumentException(message);
+        }
+
+        Layer layer = null;
+        if (Shapefile.isPointType(shp.getShapeType())) {
+            layer = new RenderableLayer();
+            this.addRenderablesForPoints(shp, (RenderableLayer) layer);
+        } else if (Shapefile.isMultiPointType(shp.getShapeType())) {
+            layer = new RenderableLayer();
+            this.addRenderablesForMultiPoints(shp, (RenderableLayer) layer);
+        } else if (Shapefile.isPolylineType(shp.getShapeType())) {
+            layer = new RenderableLayer();
+            this.addRenderablesForPolylines(shp, (RenderableLayer) layer);
+        } else if (Shapefile.isPolygonType(shp.getShapeType())) {
+            List<Layer> layers = new ArrayList<>();
+            this.addRenderablesForPolygons(shp, layers);
+            layer = layers.get(0);
+        } else {
+            Logging.logger().warning(Logging.getMessage("generic.UnrecognizedShapeType", shp.getShapeType()));
+        }
+
+        return layer;
+!!!131202.java!!!	createLayersFromShapefile(inout shp : Shapefile) : List<Layer>
+        if (shp == null) {
+            String message = Logging.getMessage("nullValue.ShapefileIsNull");
+            Logging.logger().severe(message);
+            throw new IllegalArgumentException(message);
+        }
+
+        List<Layer> layers = new ArrayList<>();
+
+        if (Shapefile.isPointType(shp.getShapeType())) {
+            Layer layer = new RenderableLayer();
+            this.addRenderablesForPoints(shp, (RenderableLayer) layer);
+            // System.out.println("isPointType");
+            layers.add(layer);
+        } else if (Shapefile.isMultiPointType(shp.getShapeType())) {
+            Layer layer = new RenderableLayer();
+            this.addRenderablesForMultiPoints(shp, (RenderableLayer) layer);
+            //   System.out.println("isMultiPointType");
+            layers.add(layer);
+        } else if (Shapefile.isPolylineType(shp.getShapeType())) {
+            Layer layer = new RenderableLayer();
+            this.addRenderablesForPolylines(shp, (RenderableLayer) layer);
+            //  System.out.println("isPolylineType");
+            layers.add(layer);
+        } else if (Shapefile.isPolygonType(shp.getShapeType())) {
+            //   System.out.println("isPolygonType");
+            this.addRenderablesForPolygons(shp, layers);
+        } else {
+            Logging.logger().warning(Logging.getMessage("generic.UnrecognizedShapeType", shp.getShapeType()));
+        }
+
+        return layers;
+!!!131330.java!!!	getNumPolygonsPerLayer() : int
+        return this.numPolygonsPerLayer;
+!!!131458.java!!!	setNumPolygonsPerLayer(in numPolygonsPerLayer : int) : void
+        if (numPolygonsPerLayer < 1) {
+            String message = Logging.getMessage("generic.InvalidSize", numPolygonsPerLayer);
+            Logging.logger().severe(message);
+            throw new IllegalArgumentException(message);
+        }
+
+        this.numPolygonsPerLayer = numPolygonsPerLayer;
+!!!131586.java!!!	addRenderablesForPoints(inout shp : Shapefile, inout layer : RenderableLayer) : void
+        //  PointPlacemarkAttributes attrs = this.createPointAttributes(null);
+
+        while (shp.hasNext()) {
+            ShapefileRecord record = shp.nextRecord();
+            PointPlacemarkAttributes attrs = this.createPointAttributes(record);
+            if (!Shapefile.isPointType(record.getShapeType())) {
+                continue;
+            }
+
+            double[] point = ((ShapefileRecordPoint) record).getPoint();
+            layer.addRenderable(this.createPoint(record, point[1], point[0], attrs));
+        }
+!!!131714.java!!!	addRenderablesForMultiPoints(inout shp : Shapefile, inout layer : RenderableLayer) : void
+        // PointPlacemarkAttributes attrs = this.createPointAttributes(null);
+
+        while (shp.hasNext()) {
+            ShapefileRecord record = shp.nextRecord();
+            //   System.out.println("record " + record.getAttributes().getEntries());
+
+            //   System.out.println("");
+            PointPlacemarkAttributes attrs = this.createPointAttributes(record);
+            if (!Shapefile.isMultiPointType(record.getShapeType())) {
+                continue;
+            }
+
+            Iterable<double[]> iterable = ((ShapefileRecordMultiPoint) record).getPoints(0);
+
+            for (double[] point : iterable) {
+                layer.addRenderable(this.createPoint(record, point[1], point[0], attrs));
+            }
+        }
+!!!131842.java!!!	addRenderablesForPolylines(inout shp : Shapefile, inout layer : RenderableLayer) : void
+        // Reads all records from the Shapefile, but ignores each records unique information. We do this to create one
+        // WWJ object representing the entire shapefile, which as of 8/10/2010 is required to display very large
+        // polyline Shapefiles. To create one WWJ object for each Shapefile record, replace this method's contents with
+        // the following:
+        //
+        //Sélection posible
+        while (shp.hasNext()) {
+            ShapefileRecord record = shp.nextRecord();
+
+            if (!Shapefile.isPolylineType(record.getShapeType())) {
+                continue;
+            }
+
+            ShapeAttributes attrs = this.createPolylineAttributes(record);
+            layer.addRenderable(this.createPolyline(record, attrs));
+            //  System.out.println(layer.getRenderables());
+        }
+
+        // Une seule Shapefile pas de sélection possible
+/*
+         while (shp.hasNext()) {
+         ShapefileRecord record = shp.nextRecord();
+         System.out.println("record " + record.getAttributes().getEntries());
+         }
+       
+         ShapeAttributes attrs = this.createPolylineAttributes(null);
+         layer.addRenderable(this.createPolyline(shp, attrs));
+         */
+!!!131970.java!!!	addRenderablesForPolygons(inout shp : Shapefile, inout layers : List<Layer>) : void
+        RenderableLayer layer = new RenderableLayer();
+        layers.add(layer);
+
+        int recordNumber = 0;
+        while (shp.hasNext()) {
+            try {
+                ShapefileRecord record = shp.nextRecord();
+                //   System.out.println("record " + record);
+                recordNumber = record.getRecordNumber();
+
+                if (!Shapefile.isPolygonType(record.getShapeType())) {
+                    continue;
+                }
+
+                ShapeAttributes attrs = this.createPolygonAttributes(record);
+                this.createPolygon(record, attrs, layer);
+
+                if (layer.getNumRenderables() > this.numPolygonsPerLayer) {
+                    layer = new RenderableLayer();
+                    layer.setEnabled(false);
+                    layers.add(layer);
+                }
+            } catch (Exception e) {
+                // Logging.logger().warning(Logging.getMessage("SHP.ExceptionAttemptingToConvertShapefileRecord",
+                //        recordNumber, e));
+                // continue with the remaining records
+            }
+        }
+!!!132098.java!!!	createPoint(inout record : ShapefileRecord, in latDegrees : double, in lonDegrees : double, inout attrs : PointPlacemarkAttributes) : Renderable
+        PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
+        placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
+        placemark.setAttributes(attrs);
+       
+        String txt = "";
+        entries = record.getAttributes().getEntries();
+        
+
+        for (Map.Entry<String, Object> m : entries) {
+            txt += String.format("%1$-1s", m.getKey() + " : " + m.getValue() + "\n");
+        }
+        placemark.setValue(AVKey.DISPLAY_NAME, txt);
+        return placemark;
+!!!132226.java!!!	createPolyline(inout record : ShapefileRecord, inout attrs : ShapeAttributes) : Renderable
+        SurfacePolylines shape = new SurfacePolylines(
+                Sector.fromDegrees(((ShapefileRecordPolyline) record).getBoundingRectangle()),
+                record.getCompoundPointBuffer());
+        shape.setAttributes(attrs);
+
+        return shape;
+!!!132354.java!!!	createPolyline(inout shp : Shapefile, inout attrs : ShapeAttributes) : Renderable
+
+        SurfacePolylines shape = new SurfacePolylines(Sector.fromDegrees(shp.getBoundingRectangle()),
+                shp.getPointBuffer());
+        shape.setAttributes(attrs);
+
+        return shape;
+!!!132482.java!!!	createPolygon(inout record : ShapefileRecord, inout attrs : ShapeAttributes, inout layer : RenderableLayer) : void
+        Double height = this.getHeight(record);
+        if (height != null) // create extruded polygons
+        {
+            ExtrudedPolygon ep = new ExtrudedPolygon(height);
+            ep.setAttributes(attrs);
+            layer.addRenderable(ep);
+
+            for (int i = 0; i < record.getNumberOfParts(); i++) {
+                // Although the shapefile spec says that inner and outer boundaries can be listed in any order, it's
+                // assumed here that inner boundaries are at least listed adjacent to their outer boundary, either
+                // before or after it. The below code accumulates inner boundaries into the extruded polygon until an
+                // outer boundary comes along. If the outer boundary comes before the inner boundaries, the inner
+                // boundaries are added to the polygon until another outer boundary comes along, at which point a new
+                // extruded polygon is started.
+
+                VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
+                if (WWMath.computeWindingOrderOfLocations(buffer.getLocations()).equals(AVKey.CLOCKWISE)) {
+                    if (!ep.getOuterBoundary().iterator().hasNext()) // has no outer boundary yet
+                    {
+                        ep.setOuterBoundary(buffer.getLocations());
+                    } else {
+                        ep = new ExtrudedPolygon();
+                        ep.setAttributes(attrs);
+                        ep.setOuterBoundary(record.getCompoundPointBuffer().getLocations());
+                        layer.addRenderable(ep);
+                    }
+                } else {
+                    ep.addInnerBoundary(buffer.getLocations());
+                }
+            }
+        } else // create surface polygons
+        {
+            SurfacePolygons shape = new SurfacePolygons(
+                    Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
+                    record.getCompoundPointBuffer());
+            shape.setAttributes(attrs);
+            // Configure the SurfacePolygons as a single large polygon.
+            // Configure the SurfacePolygons to correctly interpret the Shapefile polygon record. Shapefile polygons may
+            // have rings defining multiple inner and outer boundaries. Each ring's winding order defines whether it's an
+            // outer boundary or an inner boundary: outer boundaries have a clockwise winding order. However, the
+            // arrangement of each ring within the record is not significant; inner rings can precede outer rings and vice
+            // versa.
+            //
+            // By default, SurfacePolygons assumes that the sub-buffers are arranged such that each outer boundary precedes
+            // a set of corresponding inner boundaries. SurfacePolygons traverses the sub-buffers and tessellates a new
+            // polygon each  time it encounters an outer boundary. Outer boundaries are sub-buffers whose winding order
+            // matches the SurfacePolygons' windingRule property.
+            //
+            // This default behavior does not work with Shapefile polygon records, because the sub-buffers of a Shapefile
+            // polygon record can be arranged arbitrarily. By calling setPolygonRingGroups(new int[]{0}), the
+            // SurfacePolygons interprets all sub-buffers as boundaries of a single tessellated shape, and configures the
+            // GLU tessellator's winding rule to correctly interpret outer and inner boundaries (in any arrangement)
+            // according to their winding order. We set the SurfacePolygons' winding rule to clockwise so that sub-buffers
+            // with a clockwise winding ordering are interpreted as outer boundaries.
+            shape.setWindingRule(AVKey.CLOCKWISE);
+            shape.setPolygonRingGroups(new int[]{0});
+            shape.setPolygonRingGroups(new int[]{0});
+            layer.addRenderable(shape);
+        }
+!!!132610.java!!!	getHeight(inout record : ShapefileRecord) : Double
+        return ShapefileUtils.extractHeightAttribute(record);
+!!!132738.java!!!	createPointAttributes(inout record : ShapefileRecord) : PointPlacemarkAttributes
+        //  System.out.println("createPointAttributes " + record.getAttributes().getEntries());
+
+        return randomAttrs.nextPointAttributes();
+!!!132866.java!!!	createPolylineAttributes(inout record : ShapefileRecord) : ShapeAttributes
+        if (record != null) {
+            //  System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
+        }
+        return randomAttrs.nextPolylineAttributes();
+!!!132994.java!!!	createPolygonAttributes(inout record : ShapefileRecord) : ShapeAttributes
+        //  System.out.println(record.getAttributes().getEntries());
+        return randomAttrs.nextPolygonAttributes();
+

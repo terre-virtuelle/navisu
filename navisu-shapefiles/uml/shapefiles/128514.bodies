@@ -1,0 +1,96 @@
+class ShapefileObjectImpl
+!!!128386.java!!!	openFile(in file : String) : void
+        this.open(null, file);
+!!!128514.java!!!	canOpen(in file : String) : boolean
+        boolean canOpen = false;
+
+        if (file.toLowerCase().endsWith(EXTENSION_0)) {
+            canOpen = true;
+        }
+
+        return canOpen;
+!!!128642.java!!!	open(inout progressHandle : ProgressHandle, inout  : String...files) : void
+        for (String file : files) {
+            this.handleOpenFile(progressHandle, file);
+        }
+!!!128770.java!!!	handleOpenFile(inout pHandle : ProgressHandle, in fileName : String) : void
+        List<List<String>> dbList;
+        DBFReader reader;
+        Map<String, Integer> keys;
+        dbList = new ArrayList<>();
+        keys = new HashMap<>();
+        String[] tab = fileName.split("\\.");
+        String dbFileName = tab[0];
+        dbFileName += ".dbf";
+
+        try {
+            InputStream inputStream = new FileInputStream(dbFileName);
+            reader = new DBFReader(inputStream);
+            int numberOfFields = reader.getFieldCount();
+            for (int i = 0; i < numberOfFields; i++) {
+                DBFField field = reader.getField(i);
+                keys.put(field.getName().trim(), i);
+            }
+
+            Object[] rowObjects;
+
+            while ((rowObjects = reader.nextRecord()) != null) {
+                List<String> tmp = new ArrayList<>();
+                for (Object rowObject : rowObjects) {
+                    tmp.add(rowObject.toString());
+                }
+                dbList.add(tmp);
+            }
+        } catch (DBFException | FileNotFoundException ex) {
+            Logger.getLogger(ShapefileObjectImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
+        shapefileController = ShapefileController.getInstance();
+        if (!dbList.isEmpty()) {
+            layers = shapefileController.init(fileName, keys, dbList);
+        } else {
+            layers = shapefileController.init(fileName);
+        }
+        layers.stream().filter((l) -> (l != null)).map((l) -> {
+            String name = l.getName();
+            geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
+            return l;
+        }).forEach((l) -> {
+            layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
+        });
+!!!128898.java!!!	getShapefile() : Shapefile
+        return shapefileController.getShapefile();
+!!!129026.java!!!	getName() : String
+        return NAME;
+!!!129154.java!!!	getExtensions() : String
+        return new String[]{"*" + EXTENSION_0};
+!!!129282.java!!!	componentInitiated() : void
+        layerTreeServices.createGroup(GROUP);
+        wwd = GeoWorldWindViewImpl.getWW();
+        wwd.addPositionListener((PositionEvent event) -> {
+            float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
+            if (altitude >= 3000) {
+                clip();
+            } else {
+                unClip();
+            }
+        });
+!!!129410.java!!!	clip() : void
+        if (layers != null) {
+            layers.stream().filter((l) -> (l.getName().contains(NAME))).forEach((l) -> {
+                l.setEnabled(false);
+            });
+        }
+!!!129538.java!!!	unClip() : void
+        if (layers != null) {
+            layers.stream().filter((l) -> (l.getName().contains(NAME))).forEach((l) -> {
+                l.setEnabled(true);
+            });
+        }
+!!!129666.java!!!	getDriver() : Driver
+        return this;
+!!!129794.java!!!	componentStarted() : void
+        /* Nothing to do here */
+!!!129922.java!!!	componentStopped() : void
+        /* Nothing to do here */
