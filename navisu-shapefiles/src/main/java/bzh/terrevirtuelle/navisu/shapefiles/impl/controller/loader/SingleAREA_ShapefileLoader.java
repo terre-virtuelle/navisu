@@ -14,9 +14,12 @@ import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.ExtrudedPolygon;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
+import gov.nasa.worldwind.util.VecBuffer;
+import gov.nasa.worldwind.util.WWMath;
 import java.awt.Color;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +46,7 @@ public class SingleAREA_ShapefileLoader
     private Map<String, Integer> keys;
     int i = 0;
     private Shapefile shp;
-
+Double height;
     public SingleAREA_ShapefileLoader(List<List<String>> dbList, Map<String, Integer> keys) {
         this.dbList = dbList;
         this.keys = keys;
@@ -94,26 +97,30 @@ public class SingleAREA_ShapefileLoader
             ShapeAttributes attrs,
             RenderableLayer layer) {
         this.record = record;
-        shape = new SurfacePolygons(
-                Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
-                record.getCompoundPointBuffer());
+        // = this.getHeight(record);
+        
+        
+            shape = new SurfacePolygons(
+                    Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
+                    record.getCompoundPointBuffer());
 
-        shape.setAttributes(attrs);
-        //  System.out.println("attrs : " + shape.getAttributes());
-        shape.setWindingRule(AVKey.CLOCKWISE);
-        shape.setPolygonRingGroups(new int[]{0});
+            shape.setAttributes(attrs);
+            //  System.out.println("attrs : " + shape.getAttributes());
+            shape.setWindingRule(AVKey.CLOCKWISE);
+            shape.setPolygonRingGroups(new int[]{0});
 
-        ShapeAttributes highlightAttributes = new BasicShapeAttributes(attrs);
-        highlightAttributes.setOutlineOpacity(1);
-        highlightAttributes.setDrawInterior(true);
-        highlightAttributes.setInteriorMaterial(new Material(Color.WHITE));
-        highlightAttributes.setInteriorOpacity(.5);
-        highlightAttributes.setEnableLighting(true);
+            ShapeAttributes highlightAttributes = new BasicShapeAttributes(attrs);
+            highlightAttributes.setOutlineOpacity(1);
+            highlightAttributes.setDrawInterior(true);
+            highlightAttributes.setInteriorMaterial(new Material(Color.WHITE));
+            highlightAttributes.setInteriorOpacity(.5);
+            highlightAttributes.setEnableLighting(true);
 
-        shape.setHighlightAttributes(highlightAttributes);
+            shape.setHighlightAttributes(highlightAttributes);
 
-        layer.addRenderable(shape);
-        i++;
+            layer.addRenderable(shape);
+            i++;
+        
     }
 
     public List<SurfacePolygons> createPolygons(Shapefile shp, RenderableLayer layer) {

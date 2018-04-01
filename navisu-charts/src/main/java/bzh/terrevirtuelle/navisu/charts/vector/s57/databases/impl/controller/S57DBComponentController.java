@@ -133,6 +133,10 @@ public class S57DBComponentController
     @FXML
     public TextField objectsTF;
     @FXML
+    public TextField depthMagnificationTF;
+    @FXML
+    public TextField simplifyTF;
+    @FXML
     public Label latMinLabel;
     @FXML
     public Label lonMinLabel;
@@ -185,6 +189,7 @@ public class S57DBComponentController
     protected double lon0;
     protected double lat1;
     protected double lon1;
+    protected double simplify;
     protected Connection connection;
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
     protected Map<Pair<Double, Double>, String> marsysMap = new HashMap<>();
@@ -552,7 +557,9 @@ public class S57DBComponentController
 
         if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
             guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
-                new DepareView(shapefileObjectServices, depareLayer, simpleDepareLayer, depare3DLayer).display(new DepareDbLoader(databaseServices,
+                new DepareView(shapefileObjectServices,
+                        depareLayer, simpleDepareLayer, depare3DLayer,
+                        simplify).display(new DepareDbLoader(databaseServices,
                         databaseTF.getText(),
                         USER,
                         PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));

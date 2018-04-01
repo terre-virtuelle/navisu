@@ -11,10 +11,13 @@ import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.ExtrudedPolygon;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
+import gov.nasa.worldwind.util.VecBuffer;
+import gov.nasa.worldwind.util.WWMath;
 import java.awt.Color;
 import java.util.Map;
 import java.util.Set;
@@ -25,26 +28,78 @@ import java.util.Set;
  */
 public class PolygonView {
 
-    protected RenderableLayer layer;
     protected Polygon polygon;
     protected String label;
     protected Color color;
     protected ShapefileRecord record;
     protected Set<Map.Entry<String, Object>> entries;
     protected SurfacePolygons shape;
+    protected double height;
+    ShapeAttributes capAttrs = new BasicShapeAttributes();
+    ShapeAttributes sideAttrs = new BasicShapeAttributes();
 
-    public PolygonView(RenderableLayer layer) {
-        this.layer = layer;
+    public PolygonView() {
+
+        capAttrs.setDrawOutline(true);
+        capAttrs.setDrawInterior(true);
+        capAttrs.setOutlineMaterial(Material.BLUE);
+        capAttrs.setInteriorMaterial(Material.CYAN);
+        capAttrs.setEnableLighting(true);
+
+        sideAttrs.setOutlineWidth(3);
+        sideAttrs.setDrawOutline(true);
+        sideAttrs.setDrawInterior(true);
+        sideAttrs.setOutlineMaterial(Material.BLUE);
+        sideAttrs.setInteriorMaterial(Material.BLUE);
+        sideAttrs.setEnableLighting(true);
     }
 
-    protected void createPolygon(ShapefileRecord record) {
+    protected void createPolygon(RenderableLayer layer, ShapefileRecord record, boolean isHeight) {
         this.record = record;
-        shape = new SurfacePolygons(
-                Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
-                record.getCompoundPointBuffer());
-        shape.setWindingRule(AVKey.CLOCKWISE);
-        shape.setPolygonRingGroups(new int[]{0});
-        
+        if (isHeight == true) {
+            if (record.getAttributes() != null) {
+                entries = record.getAttributes().getEntries();
+                entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
+                    if (e.getKey().equalsIgnoreCase("drval2")) {
+                        height = 40 * (50 - (Double) e.getValue());
+                    }
+                });
+            }
+
+            if (height != 0) // create extruded polygons
+            {
+                ExtrudedPolygon ep = new ExtrudedPolygon(height);
+                ep.setCapAttributes(capAttrs);
+                ep.setSideAttributes(sideAttrs);
+                layer.addRenderable(ep);
+
+                for (int i = 0; i < record.getNumberOfParts(); i++) {
+
+                    VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
+                    if (WWMath.computeWindingOrderOfLocations(buffer.getLocations()).equals(AVKey.CLOCKWISE)) {
+                        if (!ep.getOuterBoundary().iterator().hasNext()) // has no outer boundary yet
+                        {
+                            ep.setOuterBoundary(buffer.getLocations());
+                        } else {
+                            ep = new ExtrudedPolygon();
+                            //  ep.setAttributes(attrs);
+                            ep.setOuterBoundary(record.getCompoundPointBuffer().getLocations());
+                            layer.addRenderable(ep);
+                        }
+                    } else {
+                        ep.addInnerBoundary(buffer.getLocations());
+                    }
+                }
+            }
+        } else // create surface polygons
+        {
+            shape = new SurfacePolygons(
+                    Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
+                    record.getCompoundPointBuffer());
+            shape.setWindingRule(AVKey.CLOCKWISE);
+            shape.setPolygonRingGroups(new int[]{0});
+            layer.addRenderable(shape);
+        }
     }
 
     protected void setPolygonAttributes(SurfacePolygons shape, Color color) {

@@ -410,6 +410,7 @@ public class ShapefileLoader {
 
     protected void createPolygon(ShapefileRecord record, ShapeAttributes attrs, RenderableLayer layer) {
         Double height = this.getHeight(record);
+       
         if (height != null) // create extruded polygons
         {
             ExtrudedPolygon ep = new ExtrudedPolygon(height);
