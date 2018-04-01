@@ -12,12 +12,16 @@ import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfacePolygons;
+import gov.nasa.worldwind.util.Logging;
+import gov.nasa.worldwind.util.WWUtil;
 import gov.nasa.worldwindx.examples.kml.KMLDocumentBuilder;
 import java.io.File;
 import java.io.IOException;
@@ -46,100 +50,127 @@ public class DepareView
 
     protected double val1;
     protected double val2;
+    protected RenderableLayer simpleDeparelayer;
+    protected RenderableLayer depare3DLayer;
     protected ShapefileObjectServices shapefileObjectServices;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
+    List<Path> paths = new ArrayList<>();
+    List<Polygon> polygons = new ArrayList<>();
+    List<SurfacePolygons> surfacePolygons = new ArrayList<>();
+    ShapeAttributes capAttrs = new BasicShapeAttributes();
+    ShapeAttributes sideAttrs = new BasicShapeAttributes();
+    int altitudeMode = WorldWind.CONSTANT;
 
-    public DepareView(ShapefileObjectServices shapefileObjectServices, RenderableLayer layer) {
+    public DepareView(ShapefileObjectServices shapefileObjectServices,
+            RenderableLayer layer, RenderableLayer simpleDeparelayer, RenderableLayer depare3DLayer) {
         super(layer);
+        this.simpleDeparelayer = simpleDeparelayer;
+        this.depare3DLayer = depare3DLayer;
         this.shapefileObjectServices = shapefileObjectServices;
-    }
-
-    public void display(Shapefile shp) {
-        ShapeAttributes capAttrs = new BasicShapeAttributes();
         capAttrs.setDrawOutline(true);
         capAttrs.setDrawInterior(true);
         capAttrs.setOutlineMaterial(Material.BLUE);
         capAttrs.setInteriorMaterial(Material.CYAN);
         capAttrs.setEnableLighting(true);
 
-        ShapeAttributes sideAttrs = new BasicShapeAttributes();
         sideAttrs.setOutlineWidth(3);
         sideAttrs.setDrawOutline(true);
         sideAttrs.setDrawInterior(true);
         sideAttrs.setOutlineMaterial(Material.BLUE);
         sideAttrs.setInteriorMaterial(Material.BLUE);
         sideAttrs.setEnableLighting(true);
-        int altitudeMode = WorldWind.CONSTANT;
+    }
 
-        List<Path> paths = new ArrayList<>();
-        List<Polygon> polygons = new ArrayList<>();
+    public void display(Shapefile shp) {
+
         while (shp.hasNext()) {
             try {
                 record = shp.nextRecord();
-                if (record != null) {
-                    if (record.getAttributes() != null) {
-                        entries = record.getAttributes().getEntries();
-                        entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
-                            if (e.getKey().equalsIgnoreCase("drval1")) {
-                                val1 = (Double) e.getValue();
-
-                            }
-                            if (e.getKey().equalsIgnoreCase("drval2")) {
-                                val2 = (Double) e.getValue();
-
-                            }
-                            color = defineColor(val1, val2);
-                        });
-                    }
-                    if (!Shapefile.isPolygonType(record.getShapeType())) {
-                        continue;
-                    }
-
-                    createPolygon(record);
-                    shape.setValue("drval1", val1);
-                    shape.setValue("drval2", val2);
-                    setPolygonAttributes(shape, color);
-                    //  layer.addRenderable(shape);
-                    /*
-                    Path p;
-                    for (int i = 0; i < shape.getBuffer().size(); i++) {
-                        p = new Path(shape.getBuffer().subBuffer(i).getPositions());
-                        p.setAltitudeMode(altitudeMode);
-                        paths.add(p);
-                    }
-                     */
-                    Polygon p;
-                    for (int i = 0; i < shape.getBuffer().size(); i++) {
-                        p = new Polygon(shape.getBuffer().subBuffer(i).getPositions());
-                        //  System.out.println(" " + shape.getValue("drval1"));
-                        //  p.setValue("drval1", shape.getValue("drval1"));
-                        // p.setValue("drval2", shape.getValue("drval2"));
-                        p.setValue(AVKey.SHORT_DESCRIPTION, ((Double) shape.getValue("drval1")).toString());
-                        p.setValue(AVKey.BALLOON_TEXT, ((Double) shape.getValue("drval2")).toString());
-
-                        p.setAltitudeMode(altitudeMode);
-                        polygons.add(p);
-                    }
+                createSurfacePolygons(record, layer);
+                if (!Shapefile.isPolygonType(record.getShapeType())) {
+                    continue;
+                }
+                Polygon p;
+                for (int i = 0; i < shape.getBuffer().size(); i++) {
+                    p = new Polygon(shape.getBuffer().subBuffer(i).getPositions());
+                    p.setValue(AVKey.SHORT_DESCRIPTION, ((Double) shape.getValue("drval1")).toString());
+                    p.setValue(AVKey.BALLOON_TEXT, ((Double) shape.getValue("drval2")).toString());
+                    p.setAltitudeMode(altitudeMode);
+                    polygons.add(p);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
         wwd.redrawNow();
-        /*
-        Path[] pathArray = new Path[paths.size()];
-        for (int i = 0; i < paths.size(); i++) {
-            pathArray[i] = paths.get(i);
-        }
-         */
         Polygon[] array = new Polygon[polygons.size()];
         for (int i = 0; i < polygons.size(); i++) {
             array[i] = polygons.get(i);
         }
-        /*
-      ogr2ogr -f 'ESRI Shapefile' output.shp output.kml
-      ogr2ogr outfileSimplify.shp depare.shp -simplify 0.0001  //maxi
-         */
+
+        creatKML(array);
+
+        String path = Proc.getProperty("gdalPath");
+        String command = path + "/ogr2ogr -f 'ESRI Shapefile' cmd/output.shp cmd/output.kml \n"
+                + path + "/ogr2ogr cmd/outfileSimplify.shp cmd/depare.shp -simplify 0.001";
+        try {
+            Proc.BUILDER.create()
+                    .setCmd(command)
+                    .execSh();
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        
+        Shapefile simplifiedShape = new Shapefile("cmd/outfileSimplify.shp");
+
+        while (simplifiedShape.hasNext()) {
+            try {
+                record = simplifiedShape.nextRecord();
+                createSurfacePolygons(record, simpleDeparelayer);
+            } catch (Exception ex) {
+                Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+        wwd.redrawNow();
+    }
+
+    protected void createSurfacePolygons(ShapefileRecord record, RenderableLayer layer) {
+        if (record != null) {
+            if (record.getAttributes() != null) {
+                entries = record.getAttributes().getEntries();
+                entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
+                    if (e.getKey().equalsIgnoreCase("drval1")) {
+                        val1 = (Double) e.getValue();
+                    }
+                    if (e.getKey().equalsIgnoreCase("drval2")) {
+                        val2 = (Double) e.getValue();
+                    }
+                    color = defineColor(val1, val2);
+                });
+            }
+            createPolygon(record);
+            shape.setValue("drval1", val1);
+            shape.setValue("drval2", val2);
+            shape.setValue(AVKey.DISPLAY_NAME,
+                   "["+ Double.toString(val1) + ", " + Double.toString(val2)+"]" );
+
+            setPolygonAttributes(shape, color);
+            surfacePolygons.add(shape);
+
+            layer.addRenderable(shape);
+        }
+    }
+
+    protected Shapefile createShapeFileFromSource(Object source) {
+        if (WWUtil.isEmpty(source)) {
+            String message = Logging.getMessage("nullValue.SourceIsNull");
+            Logging.logger().severe(message);
+            throw new IllegalArgumentException(message);
+        }
+        return new Shapefile(source);
+    }
+
+    protected void creatKML(Polygon[] array) {
         try {
             Writer stringWriter = new StringWriter();
             KMLDocumentBuilder kmlBuilder = new KMLDocumentBuilder(stringWriter);
@@ -153,18 +184,5 @@ public class DepareView
         } catch (IOException | IllegalArgumentException | XMLStreamException | TransformerException ex) {
             Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-
-        String path = Proc.getProperty("gdalPath");
-        String command = path + "/ogr2ogr -f 'ESRI Shapefile' cmd/output.shp cmd/output.kml \n"
-                + path + "/ogr2ogr cmd/outfileSimplify.shp cmd/depare.shp -simplify 0.0001";
-        try {
-            Proc.BUILDER.create()
-                    .setCmd(command)
-                    .execSh();
-        } catch (IOException | InterruptedException ex) {
-            Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-        shapefileObjectServices.openFile("cmd/outfileSimplify.shp");
-        System.out.println("  "+shapefileObjectServices.getShapefile());
     }
 }

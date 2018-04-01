@@ -157,6 +157,8 @@ public class S57DBComponentController
     protected static final String BUOYAGE_LAYER = "BUOYAGE";
     protected static final String HARBOUR_LAYER = "HARBOUR";
     protected static final String DEPARE_LAYER = "DEPARE";
+    protected static final String DEPARE_3D_LAYER = "DEPARE_3D";
+    protected static final String DEPARE_SIMPLE_LAYER = "DEPARE_SIMPLE";
     protected static final String AREA_LAYER = "AREA";
     protected static final String BUILDING_LAYER = "BUILDING";
     protected static final String EARTH_LAYER = "EARTH";
@@ -169,6 +171,8 @@ public class S57DBComponentController
     protected RenderableLayer buoyageLayer;
     protected RenderableLayer harbourLayer;
     protected RenderableLayer depareLayer;
+    protected RenderableLayer simpleDepareLayer;
+    protected RenderableLayer depare3DLayer;
     protected RenderableLayer areaLayer;
     protected RenderableLayer buildingLayer;
     protected RenderableLayer earthLayer;
@@ -307,11 +311,13 @@ public class S57DBComponentController
         this.databaseServices = databaseServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.topologyServices = topologyServices;
-        this.shapefileObjectServices=shapefileObjectServices;
+        this.shapefileObjectServices = shapefileObjectServices;
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
         bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
         depareLayer = layersManagerServices.getLayer(GROUP_0, DEPARE_LAYER);
+        depare3DLayer = layersManagerServices.getLayer(GROUP_0, DEPARE_3D_LAYER);
+        simpleDepareLayer = layersManagerServices.getLayer(GROUP_0, DEPARE_SIMPLE_LAYER);
         buoyageLayer = layersManagerServices.getLayer(GROUP_0, BUOYAGE_LAYER);
         harbourLayer = layersManagerServices.getLayer(GROUP_0, HARBOUR_LAYER);
         areaLayer = layersManagerServices.getLayer(GROUP_0, AREA_LAYER);
@@ -415,6 +421,12 @@ public class S57DBComponentController
             }
             if (harbourLayer.getNumRenderables() != 0) {
                 harbourLayer.removeAllRenderables();
+            }
+            if (depare3DLayer.getNumRenderables() != 0) {
+                depare3DLayer.removeAllRenderables();
+            }
+            if (simpleDepareLayer.getNumRenderables() != 0) {
+                simpleDepareLayer.removeAllRenderables();
             }
             if (depareLayer.getNumRenderables() != 0) {
                 depareLayer.removeAllRenderables();
@@ -540,7 +552,7 @@ public class S57DBComponentController
 
         if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
             guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
-                new DepareView(shapefileObjectServices, depareLayer).display(new DepareDbLoader(databaseServices,
+                new DepareView(shapefileObjectServices, depareLayer, simpleDepareLayer, depare3DLayer).display(new DepareDbLoader(databaseServices,
                         databaseTF.getText(),
                         USER,
                         PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
@@ -607,7 +619,7 @@ public class S57DBComponentController
             guiAgentServices.getJobsManager().newJob("Load contours", (progressHandle) -> {
                 try {
                     new DephContourView(topologyServices, harbourLayer, "DEPCNT")
-                            .display(new DepthContourDbLoader(connection, "DEPCNT")
+                            .createSurfacePolygons(new DepthContourDbLoader(connection, "DEPCNT")
                                     .retrieveIn(latMin, lonMin, latMax, lonMax));
                 } catch (SQLException ex) {
                     Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
