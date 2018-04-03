@@ -87,6 +87,7 @@ public class S57DBComponentImpl
                 controller = new S57DBComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
                         guiAgentServices,
                         layersManagerServices,
+                        layerTreeServices,
                         s57ChartComponentServices,
                         databaseServices,
                         instrumentDriverManagerServices,

@@ -5,9 +5,14 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
 
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
+import com.vividsolutions.jts.geom.GeometryFactory;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -19,6 +24,8 @@ import gov.nasa.worldwind.render.SurfacePolygons;
 import gov.nasa.worldwind.util.VecBuffer;
 import gov.nasa.worldwind.util.WWMath;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,8 +42,11 @@ public class PolygonView {
     protected Set<Map.Entry<String, Object>> entries;
     protected SurfacePolygons shape;
     protected double height;
-    ShapeAttributes capAttrs = new BasicShapeAttributes();
-    ShapeAttributes sideAttrs = new BasicShapeAttributes();
+    protected ShapeAttributes capAttrs = new BasicShapeAttributes();
+    protected ShapeAttributes sideAttrs = new BasicShapeAttributes();
+    int s = 0;
+    protected List<com.vividsolutions.jts.geom.Polygon> jtsPolygons;
+    protected GeometryFactory geometryFactory;
 
     public PolygonView() {
 
@@ -52,16 +62,20 @@ public class PolygonView {
         sideAttrs.setOutlineMaterial(Material.BLUE);
         sideAttrs.setInteriorMaterial(Material.BLUE);
         sideAttrs.setEnableLighting(true);
+
+        jtsPolygons = new ArrayList<>();
+        geometryFactory = new GeometryFactory();
     }
 
-    protected void createPolygon(RenderableLayer layer, ShapefileRecord record, boolean isHeight) {
+    protected void createPolygon(RenderableLayer layer, ShapefileRecord record,
+            boolean isHeight, double magnify, double maxHeight) {
         this.record = record;
         if (isHeight == true) {
             if (record.getAttributes() != null) {
                 entries = record.getAttributes().getEntries();
                 entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
                     if (e.getKey().equalsIgnoreCase("drval2")) {
-                        height = 40 * (50 - (Double) e.getValue());
+                        height = magnify * (maxHeight - (Double) e.getValue());
                     }
                 });
             }
@@ -99,6 +113,25 @@ public class PolygonView {
             shape.setWindingRule(AVKey.CLOCKWISE);
             shape.setPolygonRingGroups(new int[]{0});
             layer.addRenderable(shape);
+            /*
+            Iterable<? extends LatLon> locations = shape.getLocations();
+            s = 0;
+            for (LatLon ll : locations) {
+                ++s;
+            }
+            Coordinate[] coordinates = new Coordinate[s];
+            int i = 0;
+            for (LatLon ll : locations) {
+                coordinates[i] = new Coordinate(ll.getLongitude().getDegrees(),
+                        ll.getLatitude().getDegrees(), 0.0);
+                i++;
+            }
+            coordinates[i - 1].x = coordinates[0].x;
+            coordinates[i - 1].y = coordinates[0].y;
+            coordinates[i - 1].z = 0.0;
+            com.vividsolutions.jts.geom.Polygon p = geometryFactory.createPolygon(coordinates);
+            jtsPolygons.add(p);
+             */
         }
     }
 
@@ -118,7 +151,12 @@ public class PolygonView {
         highlightAttributes.setInteriorMaterial(new Material(Color.WHITE));
         highlightAttributes.setInteriorOpacity(.5);
         highlightAttributes.setEnableLighting(true);
+
         shape.setHighlightAttributes(highlightAttributes);
+    }
+
+    public List<com.vividsolutions.jts.geom.Polygon> getJtsPolygons() {
+        return jtsPolygons;
     }
 
     protected Color defineColor(double val1, double val2) {

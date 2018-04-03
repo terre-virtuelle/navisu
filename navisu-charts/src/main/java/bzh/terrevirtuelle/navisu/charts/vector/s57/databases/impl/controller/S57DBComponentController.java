@@ -15,12 +15,14 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponent
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DaymarDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepareDbLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepthContourDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.PontonDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DaymarView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DepareView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DephContourView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
@@ -39,11 +41,17 @@ import java.util.logging.Logger;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.util.measure.MeasureTool;
 import gov.nasa.worldwind.util.measure.MeasureToolController;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
@@ -62,6 +70,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -149,14 +158,19 @@ public class S57DBComponentController
     public TextField hostnameTF;
     @FXML
     public TextField encPortDBTF;
+    @FXML
+    public CheckBox showElevationCB;
 
     protected Map<String, String> acronyms;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected MeasureTool measureTool;
     protected final Set<S57Controller> s57Controllers = new HashSet<>();
     protected boolean first = true;
+
     protected static final String GROUP_0 = "S57 charts";
-    protected static final String GROUP_1 = "BATHYMETRY";
+    protected static final String GROUP_1 = "S57Stl";
+    protected static final String GROUP_2 = "3D";
+
     protected static final String BATHYMETRY_LAYER = "BATHYMETRY";
     protected static final String BUOYAGE_LAYER = "BUOYAGE";
     protected static final String HARBOUR_LAYER = "HARBOUR";
@@ -189,7 +203,7 @@ public class S57DBComponentController
     protected double lon0;
     protected double lat1;
     protected double lon1;
-    protected double simplify;
+
     protected Connection connection;
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
     protected Map<Pair<Double, Double>, String> marsysMap = new HashMap<>();
@@ -292,6 +306,7 @@ public class S57DBComponentController
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
             LayersManagerServices layersManagerServices,
+            LayerTreeServices layerTreeServices,
             S57ChartComponentServices s57ChartComponentServices,
             DatabaseServices databaseServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
@@ -313,12 +328,15 @@ public class S57DBComponentController
         this.guiAgentServices = guiAgentServices;
         // this.s57ChartComponentServices = s57ChartComponentServices;
         this.layersManagerServices = layersManagerServices;
+        this.layerTreeServices = layerTreeServices;
         this.databaseServices = databaseServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.topologyServices = topologyServices;
         this.shapefileObjectServices = shapefileObjectServices;
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
+
+        //layerTreeServices.createGroup(GROUP_2);
         bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
         depareLayer = layersManagerServices.getLayer(GROUP_0, DEPARE_LAYER);
         depare3DLayer = layersManagerServices.getLayer(GROUP_0, DEPARE_3D_LAYER);
@@ -547,6 +565,25 @@ public class S57DBComponentController
     public void retrieveIn(String object, double latMin, double lonMin,
             double latMax, double lonMax) {
 
+        ShapeAttributes normalAttributes = new BasicShapeAttributes();
+        normalAttributes.setOutlineMaterial(Material.RED);
+        normalAttributes.setOutlineOpacity(0.5);
+        normalAttributes.setOutlineWidth(2);
+        normalAttributes.setDrawOutline(true);
+        normalAttributes.setDrawInterior(false);
+        // Create a polygon, set some of its properties and set its attributes.
+        ArrayList<Position> pathPositions = new ArrayList<>();
+        pathPositions.add(Position.fromDegrees(lat0, lon0, 100));
+        pathPositions.add(Position.fromDegrees(lat0, lon1, 100));
+        pathPositions.add(Position.fromDegrees(lat1, lon1, 100));
+        pathPositions.add(Position.fromDegrees(lat1, lon0, 100));
+        pathPositions.add(Position.fromDegrees(lat0, lon0, 100));
+
+        Polygon pgon = new Polygon(pathPositions);
+        pgon.setAttributes(normalAttributes);
+        depare3DLayer.addRenderable(pgon);
+        wwd.redrawNow();
+
         //Define TopMak for all buoyages, default is 0 : no topmark
         TopmarDbLoader topmarDbLoader = new TopmarDbLoader(connection);
         topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
@@ -559,10 +596,13 @@ public class S57DBComponentController
             guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
                 new DepareView(shapefileObjectServices,
                         depareLayer, simpleDepareLayer, depare3DLayer,
-                        simplify).display(new DepareDbLoader(databaseServices,
-                        databaseTF.getText(),
-                        USER,
-                        PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
+                        Double.valueOf(simplifyTF.getText()),
+                        Double.valueOf(depthMagnificationTF.getText()),
+                        showElevationCB.isSelected())
+                        .display(new DepareDbLoader(databaseServices,
+                                databaseTF.getText(),
+                                USER,
+                                PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
             });
         }
 
@@ -633,7 +673,7 @@ public class S57DBComponentController
                 }
             });
         }
-         */
+       */  
     }
 
 }

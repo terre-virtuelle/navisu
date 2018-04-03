@@ -16,6 +16,7 @@ dest/
 ##################
 privateData/
 private/
+cmd/
 
 #Logs and errors
 ##################
