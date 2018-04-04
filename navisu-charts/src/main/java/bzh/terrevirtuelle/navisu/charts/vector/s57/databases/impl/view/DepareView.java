@@ -7,17 +7,16 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
 
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.PrecisionModel;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
-import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
@@ -48,47 +47,53 @@ import javax.xml.transform.stream.StreamSource;
  */
 public class DepareView
         extends PolygonView {
-
+    
     protected double val1;
     protected double val2;
     protected RenderableLayer layer;
     protected RenderableLayer simpleDeparelayer;
     protected RenderableLayer depare3DLayer;
     protected ShapefileObjectServices shapefileObjectServices;
+    protected JTSServices jtsServices;
+    protected TopologyServices topologyServices;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected List<Path> paths = new ArrayList<>();
     protected List<Polygon> polygons = new ArrayList<>();
     // protected List<ExtrudedPolygon> polygons = new ArrayList<>();
     protected List<SurfacePolygons> surfacePolygons = new ArrayList<>();
-
+    
     int altitudeMode = WorldWind.RELATIVE_TO_GROUND;
     double simplify;
     double magnify;
     double maxHeight = 0.0;
-    boolean showElevation;
-
+    boolean createElevation;
+    
     public DepareView(ShapefileObjectServices shapefileObjectServices,
+            JTSServices jtsServices,
+            TopologyServices topologyServices,
             RenderableLayer layer, RenderableLayer simpleDeparelayer, RenderableLayer depare3DLayer,
             double simplify, double magnify, boolean showElevation) {
         this.shapefileObjectServices = shapefileObjectServices;
+        this.jtsServices = jtsServices;
+        this.topologyServices = topologyServices;
         this.layer = layer;
         this.simpleDeparelayer = simpleDeparelayer;
         this.depare3DLayer = depare3DLayer;
         this.simplify = simplify;
         this.magnify = magnify;
-        this.showElevation = showElevation;
+        this.createElevation = showElevation;
     }
-
+    
     public void display(Shapefile shp) {
-
+        
         while (shp.hasNext()) {
             try {
                 record = shp.nextRecord();
-                createSurfacePolygons(record, layer, false);
+                createSurfacePolygons(record, layer, false, false);
                 if (!Shapefile.isPolygonType(record.getShapeType())) {
                     continue;
                 }
-
+                
                 Polygon p;
                 for (int i = 0; i < shape.getBuffer().size(); i++) {
                     p = new Polygon(shape.getBuffer().subBuffer(i).getPositions());
@@ -102,14 +107,14 @@ public class DepareView
                 Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-
+        
         Polygon[] array = new Polygon[polygons.size()];
         for (int i = 0; i < polygons.size(); i++) {
             array[i] = polygons.get(i);
         }
-
+        
         creatKML(array);
-
+        
         String path = Proc.getProperty("gdalPath");
         String command = path + "/ogr2ogr -f 'ESRI Shapefile' cmd/output.shp cmd/output.kml \n"
                 + path + "/ogr2ogr cmd/outfileSimplify.shp cmd/depare.shp -simplify " + simplify;
@@ -120,51 +125,40 @@ public class DepareView
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-
+        
         Shapefile simplifiedShape = new Shapefile("cmd/outfileSimplify.shp");
-
+        
         while (simplifiedShape.hasNext()) {
             try {
                 record = simplifiedShape.nextRecord();
-                createSurfacePolygons(record, simpleDeparelayer, false);
-                if (showElevation) {
-                    createSurfacePolygons(record, depare3DLayer, true);
+                createSurfacePolygons(record, simpleDeparelayer, false, true);
+                if (createElevation) {
+                    createSurfacePolygons(record, depare3DLayer, true, false);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-        wwd.redrawNow();
-        /*
-        com.vividsolutions.jts.geom.Polygon[] geoTab = jtsPolygons.toArray(new com.vividsolutions.jts.geom.Polygon[0]);
-
-        int i = 0;
-        for (com.vividsolutions.jts.geom.Polygon p : jtsPolygons) {
-            geoTab[i] = jtsPolygons.get(i);
-            i++;
-        }
-
-        MultiPolygon geometryCollection = new MultiPolygon(geoTab, new PrecisionModel(), 4326);
         
-        Coordinate[] coord = geometryCollection.getBoundary().getCoordinates();
-        ArrayList<Position> pathPositions = new ArrayList<Position>();
-        for (Coordinate c : coord) {
-            pathPositions.add(new Position(Angle.fromDegrees(c.y), Angle.fromDegrees(c.x), 100.0));
-        }
-
-            Path path0 = new Path(pathPositions);
-           // path0.setAttributes(attrs);
-            path0.setVisible(true);
-            path0.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-            path0.setPathType(AVKey.GREAT_CIRCLE);
-            layer.addRenderable(path0);
-         */
+        // Concave hull for connectivity with socle
+        List<Point3D> point3DList = new ArrayList<>();
+        latLonSet.forEach((ll) -> {
+            point3DList.add(new Point3D(ll.getLatitude().getDegrees(),
+                    ll.getLongitude().getDegrees(), 50.0));
+        });
+                
+        Geometry geom = jtsServices.getConcaveHull(point3DList, 0.01);
+        Polygon polygonBoundary = topologyServices.jtsPolygonToWwjPolygon(geom);
+        simpleDeparelayer.addRenderable(polygonBoundary);
+        
+        wwd.redrawNow();
+        
     }
-
-    protected void createSurfacePolygons(ShapefileRecord record, RenderableLayer layer, boolean isHeight) {
-
+    
+    protected void createSurfacePolygons(ShapefileRecord record, RenderableLayer layer, boolean isHeight, boolean simp) {
+        
         if (record != null) {
-
+            
             if (record.getAttributes() != null) {
                 entries = record.getAttributes().getEntries();
                 entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
@@ -180,8 +174,8 @@ public class DepareView
                     color = defineColor(val1, val2);
                 });
             }
-
-            createPolygon(layer, record, isHeight, magnify, maxHeight);
+            
+            createPolygon(layer, record, isHeight, magnify, maxHeight, simp);
             shape.setValue("drval1", val1);
             shape.setValue("drval2", val2);
             shape.setValue(AVKey.DISPLAY_NAME,
@@ -190,7 +184,7 @@ public class DepareView
             surfacePolygons.add(shape);
         }
     }
-
+    
     protected Shapefile createShapeFileFromSource(Object source) {
         if (WWUtil.isEmpty(source)) {
             String message = Logging.getMessage("nullValue.SourceIsNull");
@@ -200,7 +194,7 @@ public class DepareView
         Shapefile shp = new Shapefile(source);
         return shp;
     }
-
+    
     protected void creatKML(Polygon[] array) {
         try {
             Writer stringWriter = new StringWriter();

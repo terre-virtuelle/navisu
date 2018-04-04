@@ -97,7 +97,7 @@
                               <TextField fx:id="simplifyTF" alignment="CENTER_RIGHT" promptText="0.00001" text="0.0001" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                               <Label text="Depth magnification" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
                               <TextField fx:id="depthMagnificationTF" alignment="CENTER_RIGHT" text="10.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                              <CheckBox fx:id="showElevationCB" mnemonicParsing="false" selected="true" text="Show elevation" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                              <CheckBox fx:id="createElevationCB" mnemonicParsing="false" selected="true" text="Create elevation" GridPane.columnIndex="4" GridPane.rowIndex="6" />
                                         </children>
                                     </GridPane>
                                 </children>

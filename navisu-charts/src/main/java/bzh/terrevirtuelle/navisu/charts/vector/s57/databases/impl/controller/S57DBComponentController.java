@@ -27,6 +27,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonVie
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
@@ -100,6 +101,7 @@ public class S57DBComponentController
     protected DatabaseServices databaseServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected TopologyServices topologyServices;
+    protected JTSServices jtsServices;
     protected ShapefileObjectServices shapefileObjectServices;
     private final String FXML = "s57DBController.fxml";
 
@@ -159,7 +161,7 @@ public class S57DBComponentController
     @FXML
     public TextField encPortDBTF;
     @FXML
-    public CheckBox showElevationCB;
+    public CheckBox createElevationCB;
 
     protected Map<String, String> acronyms;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
@@ -311,6 +313,7 @@ public class S57DBComponentController
             DatabaseServices databaseServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
             TopologyServices topologyServices,
+            JTSServices jtsServices,
             ShapefileObjectServices shapefileObjectServices) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
@@ -326,12 +329,12 @@ public class S57DBComponentController
         view.getStylesheets().add(uri);
         this.component = component;
         this.guiAgentServices = guiAgentServices;
-        // this.s57ChartComponentServices = s57ChartComponentServices;
         this.layersManagerServices = layersManagerServices;
         this.layerTreeServices = layerTreeServices;
         this.databaseServices = databaseServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.topologyServices = topologyServices;
+        this.jtsServices=jtsServices;
         this.shapefileObjectServices = shapefileObjectServices;
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
@@ -595,10 +598,12 @@ public class S57DBComponentController
         if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
             guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
                 new DepareView(shapefileObjectServices,
+                        jtsServices,
+                        topologyServices,
                         depareLayer, simpleDepareLayer, depare3DLayer,
                         Double.valueOf(simplifyTF.getText()),
                         Double.valueOf(depthMagnificationTF.getText()),
-                        showElevationCB.isSelected())
+                        createElevationCB.isSelected())
                         .display(new DepareDbLoader(databaseServices,
                                 databaseTF.getText(),
                                 USER,

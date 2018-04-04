@@ -13,11 +13,13 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
 import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.ExtrudedPolygon;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
@@ -25,6 +27,7 @@ import gov.nasa.worldwind.util.VecBuffer;
 import gov.nasa.worldwind.util.WWMath;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,9 +47,9 @@ public class PolygonView {
     protected double height;
     protected ShapeAttributes capAttrs = new BasicShapeAttributes();
     protected ShapeAttributes sideAttrs = new BasicShapeAttributes();
-    int s = 0;
-    protected List<com.vividsolutions.jts.geom.Polygon> jtsPolygons;
-    protected GeometryFactory geometryFactory;
+    protected List<PointPlacemark> pointPlacemarks;
+    PointPlacemark pointPlacemark;
+    protected Set<LatLon> latLonSet;
 
     public PolygonView() {
 
@@ -63,12 +66,12 @@ public class PolygonView {
         sideAttrs.setInteriorMaterial(Material.BLUE);
         sideAttrs.setEnableLighting(true);
 
-        jtsPolygons = new ArrayList<>();
-        geometryFactory = new GeometryFactory();
+        pointPlacemarks = new ArrayList<>();
+        latLonSet = new HashSet<>();
     }
 
     protected void createPolygon(RenderableLayer layer, ShapefileRecord record,
-            boolean isHeight, double magnify, double maxHeight) {
+            boolean isHeight, double magnify, double maxHeight, boolean simp) {
         this.record = record;
         if (isHeight == true) {
             if (record.getAttributes() != null) {
@@ -113,26 +116,26 @@ public class PolygonView {
             shape.setWindingRule(AVKey.CLOCKWISE);
             shape.setPolygonRingGroups(new int[]{0});
             layer.addRenderable(shape);
-            /*
-            Iterable<? extends LatLon> locations = shape.getLocations();
-            s = 0;
-            for (LatLon ll : locations) {
-                ++s;
+            if (simp == true) {
+                if (record.getAttributes() != null) {
+                    entries = record.getAttributes().getEntries();
+                    entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
+                        Iterable<? extends LatLon> locations = shape.getLocations();
+                        for (LatLon ll : locations) {
+                            latLonSet.add(ll);
+                        }
+                    });
+                }
             }
-            Coordinate[] coordinates = new Coordinate[s];
-            int i = 0;
-            for (LatLon ll : locations) {
-                coordinates[i] = new Coordinate(ll.getLongitude().getDegrees(),
-                        ll.getLatitude().getDegrees(), 0.0);
-                i++;
-            }
-            coordinates[i - 1].x = coordinates[0].x;
-            coordinates[i - 1].y = coordinates[0].y;
-            coordinates[i - 1].z = 0.0;
-            com.vividsolutions.jts.geom.Polygon p = geometryFactory.createPolygon(coordinates);
-            jtsPolygons.add(p);
-             */
         }
+    }
+
+    public Set<LatLon> getLatLonSet() {
+        return latLonSet;
+    }
+
+    public List<PointPlacemark> getPointPlacemarks() {
+        return pointPlacemarks;
     }
 
     protected void setPolygonAttributes(SurfacePolygons shape, Color color) {
@@ -153,10 +156,6 @@ public class PolygonView {
         highlightAttributes.setEnableLighting(true);
 
         shape.setHighlightAttributes(highlightAttributes);
-    }
-
-    public List<com.vividsolutions.jts.geom.Polygon> getJtsPolygons() {
-        return jtsPolygons;
     }
 
     protected Color defineColor(double val1, double val2) {
