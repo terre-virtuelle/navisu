@@ -37,19 +37,21 @@ public interface TopologyServices
 
     String wwjSurfacePolylinesToWktWithCoalescence(List<SurfacePolylines> polylines);
 
+    Geometry wwjPolygonToJtsGeometry(Polygon polygon);
+
+    String wwjLocationsToWKT(Iterable<? extends LatLon> locations);
+
     Pair<Double, Double> wtkGetCentroid(String wkt);
 
     Polygon wktPolygonToWwjPolygon(String geometry);
+    
+    Polygon jtsPolygonToWwjPolygon(Geometry geometry);
 
     Polygon wktMultiPolygonToWwjPolygon(String geometry);
 
     Polygon wktPolygonToWwjPolygon(Geometry geometry);
 
-    Geometry wwjPolygonToJtsGeometry(Polygon polygon);
-
     List<Position> wktPolygonToPositions(String geometry);
-
-    String wwjLocationsToWKT(Iterable<? extends LatLon> locations);
 
     Polygon wktMultiLineToWwjPolygon(String geometry);
 
