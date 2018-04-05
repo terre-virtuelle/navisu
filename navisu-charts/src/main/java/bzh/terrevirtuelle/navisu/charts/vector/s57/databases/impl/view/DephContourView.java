@@ -26,8 +26,9 @@ import java.util.List;
  *
  * @author serge
  */
-public class DephContourView {
-
+public class DephContourView
+        extends PolygonView {
+    
     protected TopologyServices topologyServices;
     protected RenderableLayer layer;
     protected Path path;
@@ -36,17 +37,17 @@ public class DephContourView {
     protected String label;
     protected float val;
     protected Color color;
-
+    
     public DephContourView(TopologyServices topologyServices, RenderableLayer layer, String acronym) {
         this.topologyServices = topologyServices;
         this.acronym = acronym;
         this.layer = layer;
         //  GeometryClipper GeometryClipper;
     }
-
+    
     @SuppressWarnings("unchecked")
     public void display(List<DepthContour> depthContours) throws SQLException {
-
+        List<Path> paths = new ArrayList<>();
         for (DepthContour d : depthContours) {
             String s = d.getGeom();
             s = s.replace("LINESTRING(", "");
@@ -67,14 +68,15 @@ public class DephContourView {
             attrs.setOutlineMaterial(new Material(color));
             path.setAttributes(attrs);
             path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-            layer.addRenderable(path);  
+            paths.add(path);
         }
+        layer.addRenderables(paths);
         wwd.redrawNow();
     }
-
+    
     private Color defineColor(double val1) {
         color = new Color(159, 215, 247);
-
+        
         if (val1 == -9.0 && val1 <= 0.0) {
             color = new Color(151, 199, 0);
         }
@@ -128,6 +130,6 @@ public class DephContourView {
          }
          */
         return color;
-
+        
     }
 }

@@ -27,10 +27,12 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonVie
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
+import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.WorldWindow;
 import java.io.IOException;
 import java.util.HashMap;
@@ -102,7 +104,9 @@ public class S57DBComponentController
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected TopologyServices topologyServices;
     protected JTSServices jtsServices;
+    protected DelaunayServices delaunayServices;
     protected ShapefileObjectServices shapefileObjectServices;
+    protected DisplayServices displayServices;
     private final String FXML = "s57DBController.fxml";
 
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
@@ -314,7 +318,8 @@ public class S57DBComponentController
             InstrumentDriverManagerServices instrumentDriverManagerServices,
             TopologyServices topologyServices,
             JTSServices jtsServices,
-            ShapefileObjectServices shapefileObjectServices) {
+            ShapefileObjectServices shapefileObjectServices,
+            DisplayServices displayServices) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -334,8 +339,9 @@ public class S57DBComponentController
         this.databaseServices = databaseServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.topologyServices = topologyServices;
-        this.jtsServices=jtsServices;
+        this.jtsServices = jtsServices;
         this.shapefileObjectServices = shapefileObjectServices;
+        this.displayServices = displayServices;
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
 
@@ -483,7 +489,16 @@ public class S57DBComponentController
             }
             connection = databaseServices.connect(databaseTF.getText(),
                     "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
-            retrieveIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
+            if (lat0 != 0 && lon0 != 0 && lat1 != 0 && lon1 != 0) {
+                retrieveIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Lat and Lon fields must be filled \n"
+                        + "Range latitude : -90° <= Latitude <= 90° \n"
+                        + "Range longitude : -180° <= Longitude <= 180°");
+                alert.show();
+            }
         });
 
     }
@@ -600,6 +615,9 @@ public class S57DBComponentController
                 new DepareView(shapefileObjectServices,
                         jtsServices,
                         topologyServices,
+                        delaunayServices,
+                        displayServices,
+                        latMin, lonMin, latMax, lonMax,
                         depareLayer, simpleDepareLayer, depare3DLayer,
                         Double.valueOf(simplifyTF.getText()),
                         Double.valueOf(depthMagnificationTF.getText()),
@@ -665,20 +683,21 @@ public class S57DBComponentController
                     .display(new PontonDbLoader(connection, "PONTON")
                             .retrieveIn(latMin, lonMin, latMax, lonMax));
         }
-
         /*
         if (object.trim().equals("ALL") || object.trim().equals("DEPCNT")) {
             guiAgentServices.getJobsManager().newJob("Load contours", (progressHandle) -> {
                 try {
                     new DephContourView(topologyServices, harbourLayer, "DEPCNT")
-                            .createSurfacePolygons(new DepthContourDbLoader(connection, "DEPCNT")
-                                    .retrieveIn(latMin, lonMin, latMax, lonMax));
-                } catch (SQLException ex) {
+                            .display(
+                new DepthContourDbLoader(connection, "DEPCNT")
+                        .retrieveIn(latMin, lonMin, latMax, lonMax));
+                  } catch (SQLException ex) {
                     Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                 }
+                 
             });
         }
-       */  
+         */
     }
 
 }

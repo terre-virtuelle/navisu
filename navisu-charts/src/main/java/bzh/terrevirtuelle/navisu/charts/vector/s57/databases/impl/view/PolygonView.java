@@ -110,6 +110,7 @@ public class PolygonView {
             }
         } else // create surface polygons
         {
+            
             shape = new SurfacePolygons(
                     Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
                     record.getCompoundPointBuffer());
@@ -117,17 +118,32 @@ public class PolygonView {
             shape.setPolygonRingGroups(new int[]{0});
             layer.addRenderable(shape);
             if (simp == true) {
+                height=1;
                 if (record.getAttributes() != null) {
                     entries = record.getAttributes().getEntries();
                     entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
-                        Iterable<? extends LatLon> locations = shape.getLocations();
-                        for (LatLon ll : locations) {
-                            latLonSet.add(ll);
+                        if (e.getKey().equalsIgnoreCase("drval1")) {
+                            height = (Double) e.getValue();
                         }
                     });
                 }
+                if (height < 0) {
+                    if (record.getAttributes() != null) {
+                        entries = record.getAttributes().getEntries();
+                        entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
+                            Iterable<? extends LatLon> locations = shape.getLocations();
+                            for (LatLon ll : locations) {
+                                latLonSet.add(ll);
+                            }
+                        });
+                    }
+                }
             }
         }
+    }
+
+    public double getHeight() {
+        return height;
     }
 
     public Set<LatLon> getLatLonSet() {

@@ -8,16 +8,18 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
-import com.vividsolutions.jts.geom.Geometry;
+import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolygons;
@@ -47,7 +49,7 @@ import javax.xml.transform.stream.StreamSource;
  */
 public class DepareView
         extends PolygonView {
-    
+
     protected double val1;
     protected double val2;
     protected RenderableLayer layer;
@@ -56,26 +58,40 @@ public class DepareView
     protected ShapefileObjectServices shapefileObjectServices;
     protected JTSServices jtsServices;
     protected TopologyServices topologyServices;
+    protected DelaunayServices delaunayServices;
+    protected DisplayServices displayServices;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected List<Path> paths = new ArrayList<>();
     protected List<Polygon> polygons = new ArrayList<>();
-    // protected List<ExtrudedPolygon> polygons = new ArrayList<>();
     protected List<SurfacePolygons> surfacePolygons = new ArrayList<>();
-    
+
     int altitudeMode = WorldWind.RELATIVE_TO_GROUND;
+    protected double latMin;
+    protected double lonMin;
+    protected double latMax;
+    protected double lonMax;
     double simplify;
     double magnify;
     double maxHeight = 0.0;
     boolean createElevation;
-    
+
     public DepareView(ShapefileObjectServices shapefileObjectServices,
             JTSServices jtsServices,
             TopologyServices topologyServices,
+            DelaunayServices delaunayServices,
+            DisplayServices displayServices,
+            double latMin, double lonMin, double latMax, double lonMax,
             RenderableLayer layer, RenderableLayer simpleDeparelayer, RenderableLayer depare3DLayer,
             double simplify, double magnify, boolean showElevation) {
         this.shapefileObjectServices = shapefileObjectServices;
         this.jtsServices = jtsServices;
         this.topologyServices = topologyServices;
+        this.delaunayServices = delaunayServices;
+        this.displayServices = displayServices;
+        this.latMin = latMin;
+        this.lonMin = lonMin;
+        this.latMax = latMax;
+        this.lonMax = lonMax;
         this.layer = layer;
         this.simpleDeparelayer = simpleDeparelayer;
         this.depare3DLayer = depare3DLayer;
@@ -83,9 +99,9 @@ public class DepareView
         this.magnify = magnify;
         this.createElevation = showElevation;
     }
-    
+
     public void display(Shapefile shp) {
-        
+
         while (shp.hasNext()) {
             try {
                 record = shp.nextRecord();
@@ -93,7 +109,7 @@ public class DepareView
                 if (!Shapefile.isPolygonType(record.getShapeType())) {
                     continue;
                 }
-                
+
                 Polygon p;
                 for (int i = 0; i < shape.getBuffer().size(); i++) {
                     p = new Polygon(shape.getBuffer().subBuffer(i).getPositions());
@@ -107,14 +123,15 @@ public class DepareView
                 Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-        
+
+        //Create kml output.kml file
         Polygon[] array = new Polygon[polygons.size()];
         for (int i = 0; i < polygons.size(); i++) {
             array[i] = polygons.get(i);
         }
-        
         creatKML(array);
-        
+
+        //Simplify data and create depare.shp
         String path = Proc.getProperty("gdalPath");
         String command = path + "/ogr2ogr -f 'ESRI Shapefile' cmd/output.shp cmd/output.kml \n"
                 + path + "/ogr2ogr cmd/outfileSimplify.shp cmd/depare.shp -simplify " + simplify;
@@ -125,9 +142,10 @@ public class DepareView
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        
+
+        //Create objectShapefile with data simplified
+        //Create extruded polygons with data simplified
         Shapefile simplifiedShape = new Shapefile("cmd/outfileSimplify.shp");
-        
         while (simplifiedShape.hasNext()) {
             try {
                 record = simplifiedShape.nextRecord();
@@ -139,26 +157,47 @@ public class DepareView
                 Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-        
+/*
+        Point3D[][] grid = delaunayServices.toGrid(latMin, lonMin, latMax, lonMax, 10, 10, 10);
+        List<Point3D> lats = new ArrayList<>();
+        List<Point3D> lons = new ArrayList<>();
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+
+            }
+        }
+*/
+       // displayServices.displayGrid(lats, lons, Material.MAGENTA, layer);
+        /* 
         // Concave hull for connectivity with socle
         List<Point3D> point3DList = new ArrayList<>();
         latLonSet.forEach((ll) -> {
             point3DList.add(new Point3D(ll.getLatitude().getDegrees(),
-                    ll.getLongitude().getDegrees(), 50.0));
+                    ll.getLongitude().getDegrees(), maxHeight*magnify));
         });
-                
-        Geometry geom = jtsServices.getConcaveHull(point3DList, 0.01);
-        Polygon polygonBoundary = topologyServices.jtsPolygonToWwjPolygon(geom);
+      
+        Geometry geom = jtsServices.getConcaveHull(point3DList, 0.001);//0.01 Threshold a préciser
+        Polygon polygonBoundary = topologyServices.jtsPolygonToWwjPolygon(geom, maxHeight*magnify);
+       
+        ShapeAttributes normalAttributes = new BasicShapeAttributes();
+        normalAttributes.setOutlineMaterial(Material.RED);
+        normalAttributes.setOutlineOpacity(0.5);
+        normalAttributes.setOutlineWidth(2);
+        normalAttributes.setDrawOutline(true);
+        normalAttributes.setDrawInterior(false);
+        polygonBoundary.setAttributes(normalAttributes);
+        
         simpleDeparelayer.addRenderable(polygonBoundary);
-        
+         */
         wwd.redrawNow();
-        
+
     }
-    
+
     protected void createSurfacePolygons(ShapefileRecord record, RenderableLayer layer, boolean isHeight, boolean simp) {
-        
+
         if (record != null) {
-            
+
             if (record.getAttributes() != null) {
                 entries = record.getAttributes().getEntries();
                 entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
@@ -174,7 +213,7 @@ public class DepareView
                     color = defineColor(val1, val2);
                 });
             }
-            
+
             createPolygon(layer, record, isHeight, magnify, maxHeight, simp);
             shape.setValue("drval1", val1);
             shape.setValue("drval2", val2);
@@ -184,7 +223,7 @@ public class DepareView
             surfacePolygons.add(shape);
         }
     }
-    
+
     protected Shapefile createShapeFileFromSource(Object source) {
         if (WWUtil.isEmpty(source)) {
             String message = Logging.getMessage("nullValue.SourceIsNull");
@@ -194,7 +233,7 @@ public class DepareView
         Shapefile shp = new Shapefile(source);
         return shp;
     }
-    
+
     protected void creatKML(Polygon[] array) {
         try {
             Writer stringWriter = new StringWriter();

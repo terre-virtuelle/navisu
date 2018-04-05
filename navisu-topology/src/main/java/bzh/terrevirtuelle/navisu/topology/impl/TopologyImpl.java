@@ -304,11 +304,11 @@ public class TopologyImpl
     }
 
     @Override
-    public Polygon jtsPolygonToWwjPolygon(Geometry geometry) {
+    public Polygon jtsPolygonToWwjPolygon(Geometry geometry, double height) {
         Coordinate[] coordinates = geometry.getCoordinates();
         List<Position> positions = new ArrayList<>();
         for (Coordinate c : coordinates) {
-            positions.add(new Position(Angle.fromDegrees(c.y), Angle.fromDegrees(c.x), 100.0));
+            positions.add(new Position(Angle.fromDegrees(c.y), Angle.fromDegrees(c.x), height));
         }
         Polygon polygon = new Polygon(positions);
         return polygon;

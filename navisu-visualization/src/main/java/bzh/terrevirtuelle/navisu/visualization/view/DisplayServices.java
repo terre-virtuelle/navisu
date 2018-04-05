@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.visualization.view;
 
-import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import com.vividsolutions.jts.geom.Geometry;
@@ -23,8 +22,9 @@ import org.capcaval.c3.component.ComponentService;
 public interface DisplayServices
         extends ComponentService {
 
-    // InstrumentDriver getDriver();
     void displayPoints3D(List<Point3D> points, RenderableLayer layer);
+
+    void displayGrid(List<List<Point3D>> latLons, Material material, RenderableLayer layer);
 
     void displayPlane(double minLat, double minLon, double maxLat, double maxLon, double height,
             Material material, RenderableLayer l);

@@ -45,7 +45,7 @@ public interface TopologyServices
 
     Polygon wktPolygonToWwjPolygon(String geometry);
     
-    Polygon jtsPolygonToWwjPolygon(Geometry geometry);
+    Polygon jtsPolygonToWwjPolygon(Geometry geometry, double height);
 
     Polygon wktMultiPolygonToWwjPolygon(String geometry);
 

@@ -25,9 +25,11 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.S57DBComponentServi
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -58,7 +60,11 @@ public class S57DBComponentImpl
     @UsedService
     JTSServices jtsServices;
     @UsedService
+    DelaunayServices delaunayServices;
+    @UsedService
     ShapefileObjectServices shapefileObjectServices;
+    @UsedService
+    DisplayServices displayServices;
 
     ComponentManager cm;
     ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
@@ -96,7 +102,8 @@ public class S57DBComponentImpl
                         instrumentDriverManagerServices,
                         topologyServices,
                         jtsServices,
-                        shapefileObjectServices);
+                        shapefileObjectServices,
+                displayServices);
                 controller.setVisible(true);
             }
         }
