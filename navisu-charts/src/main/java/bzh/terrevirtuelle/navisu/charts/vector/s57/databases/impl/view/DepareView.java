@@ -13,15 +13,19 @@ import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
+import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
 import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwind.util.WWUtil;
@@ -157,7 +161,7 @@ public class DepareView
                 Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-/*
+        /*
         Point3D[][] grid = delaunayServices.toGrid(latMin, lonMin, latMax, lonMax, 10, 10, 10);
         List<Point3D> lats = new ArrayList<>();
         List<Point3D> lons = new ArrayList<>();
@@ -167,19 +171,22 @@ public class DepareView
 
             }
         }
-*/
-       // displayServices.displayGrid(lats, lons, Material.MAGENTA, layer);
-        /* 
+         */
+        // displayServices.displayGrid(lats, lons, Material.MAGENTA, layer);
+
         // Concave hull for connectivity with socle
+        /*
         List<Point3D> point3DList = new ArrayList<>();
         latLonSet.forEach((ll) -> {
             point3DList.add(new Point3D(ll.getLatitude().getDegrees(),
-                    ll.getLongitude().getDegrees(), maxHeight*magnify));
+                    ll.getLongitude().getDegrees(), maxHeight * magnify));
         });
-      
+
+        // delaunayServices.getTriangulation(point3DList);
+        // System.out.println(delaunay);
         Geometry geom = jtsServices.getConcaveHull(point3DList, 0.001);//0.01 Threshold a préciser
-        Polygon polygonBoundary = topologyServices.jtsPolygonToWwjPolygon(geom, maxHeight*magnify);
-       
+        Polygon polygonBoundary = topologyServices.jtsPolygonToWwjPolygon(geom, maxHeight * magnify);
+
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setOutlineMaterial(Material.RED);
         normalAttributes.setOutlineOpacity(0.5);
@@ -187,8 +194,28 @@ public class DepareView
         normalAttributes.setDrawOutline(true);
         normalAttributes.setDrawInterior(false);
         polygonBoundary.setAttributes(normalAttributes);
-        
+
         simpleDeparelayer.addRenderable(polygonBoundary);
+        Iterable<? extends LatLon> positions = polygonBoundary.getOuterBoundary();
+        /*
+               List<Position> positions = new ArrayList<>();
+        latLonSet.forEach((ll) -> {
+            positions.add(new Position(ll.getLatitude(),
+                    ll.getLongitude(), maxHeight*magnify));
+        });
+        
+        System.out.println(positions);
+         */
+ /*
+        Polygon polygon = new Polygon(positions);
+        ShapeAttributes normalAttributes = new BasicShapeAttributes();
+        normalAttributes.setOutlineMaterial(Material.RED);
+      //  normalAttributes.setInteriorMaterial(Material.RED);
+        normalAttributes.setOutlineOpacity(0.5);
+        normalAttributes.setOutlineWidth(2);
+        normalAttributes.setDrawOutline(true);
+        normalAttributes.setDrawInterior(false);
+        simpleDeparelayer.addRenderable(polygon);
          */
         wwd.redrawNow();
 

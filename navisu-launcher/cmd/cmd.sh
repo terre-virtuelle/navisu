@@ -1,2 +1,1 @@
-/usr/bin/ogr2ogr -f 'ESRI Shapefile' cmd/output.shp cmd/output.kml 
-/usr/bin/ogr2ogr cmd/outfileSimplify.shp cmd/depare.shp -simplify 1.0E-4
+/usr/bin/gdal_translate -b 1 /home/serge/Data/cartography/pilotCharts/12NAW.kap /home/serge/Data/cartography/pilotCharts/12NAW.kap.tif

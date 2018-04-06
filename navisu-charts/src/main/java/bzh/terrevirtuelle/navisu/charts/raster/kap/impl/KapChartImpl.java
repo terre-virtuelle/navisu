@@ -146,7 +146,7 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
     }
 
     private String createCmdSh(String cmd) {
-        String cmdFile = "tmp/cmd.sh";
+        String cmdFile = "cmd/cmd.sh";
         try {
             Files.write(Paths.get(cmdFile), cmd.getBytes());
         } catch (IOException ex) {

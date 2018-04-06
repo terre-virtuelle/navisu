@@ -319,7 +319,8 @@ public class S57DBComponentController
             TopologyServices topologyServices,
             JTSServices jtsServices,
             ShapefileObjectServices shapefileObjectServices,
-            DisplayServices displayServices) {
+            DisplayServices displayServices,
+            DelaunayServices delaunayServices) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -342,6 +343,7 @@ public class S57DBComponentController
         this.jtsServices = jtsServices;
         this.shapefileObjectServices = shapefileObjectServices;
         this.displayServices = displayServices;
+        this.delaunayServices=delaunayServices;
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
 

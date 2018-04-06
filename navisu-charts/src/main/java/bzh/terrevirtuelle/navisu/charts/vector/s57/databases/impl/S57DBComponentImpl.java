@@ -103,7 +103,8 @@ public class S57DBComponentImpl
                         topologyServices,
                         jtsServices,
                         shapefileObjectServices,
-                displayServices);
+                        displayServices,
+                        delaunayServices);
                 controller.setVisible(true);
             }
         }

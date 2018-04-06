@@ -553,7 +553,7 @@ public class S57ChartComponentImpl
     }
 
     private String createCmdSh(String cmd) {
-        String cmdFile = "tmp/cmd.sh";
+        String cmdFile = "cmd/cmd.sh";
         try {
             Files.write(Paths.get(cmdFile), cmd.getBytes());
         } catch (IOException ex) {
