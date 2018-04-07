@@ -5,15 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
-import com.vividsolutions.jts.geom.GeometryFactory;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
 import gov.nasa.worldwind.geom.LatLon;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -117,6 +112,7 @@ public class PolygonView {
             shape.setWindingRule(AVKey.CLOCKWISE);
             shape.setPolygonRingGroups(new int[]{0});
             layer.addRenderable(shape);
+          /*
             if (simp == true) {
                 height=1;
                 if (record.getAttributes() != null) {
@@ -139,6 +135,7 @@ public class PolygonView {
                     }
                 }
             }
+            */
         }
     }
 

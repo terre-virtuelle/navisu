@@ -1,1 +1,1 @@
-/usr/bin/gdal_translate -b 1 /home/serge/Data/cartography/pilotCharts/12NAW.kap /home/serge/Data/cartography/pilotCharts/12NAW.kap.tif
+/usr/bin/gdal_translate -b 1 /home/serge/Data/cartography/pilotCharts/1NA0C.kap /home/serge/Data/cartography/pilotCharts/1NA0C.kap.tif
