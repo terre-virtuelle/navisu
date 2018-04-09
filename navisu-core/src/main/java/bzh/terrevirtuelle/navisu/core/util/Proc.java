@@ -52,6 +52,7 @@ public class Proc {
         this.out = System.out;
         this.err = System.err;
         try {
+            out = new FileOutputStream("navisu.log", true);
             errors = new FileOutputStream("errors.log", true);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Proc.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,7 +61,7 @@ public class Proc {
         try {
             properties.load(new FileInputStream(CONFIG_FILE_NAME));
         } catch (IOException ex) {
-            Logger.getLogger(Proc.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Proc.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
@@ -72,7 +73,7 @@ public class Proc {
         args.stream().forEach((arg) -> {
             sb.append(arg).append(SPACE);
         });
-      //  System.out.println("exec : " + sb);
+        //  System.out.println("exec : " + sb);
         process = Runtime.getRuntime().exec(sb.toString());
 
         redirectSreamAsync(process.getInputStream(), out);
@@ -90,16 +91,16 @@ public class Proc {
         args.stream().forEach((arg) -> {
             sb.append(arg).append(SPACE);
         });
-      //  System.out.println("cmd : " + sb);
+        //  System.out.println("cmd : " + sb);
         String[] envp = new String[environment.size()];
         int count = 0;
         for (Map.Entry<String, String> entry : environment.entrySet()) {
             envp[count++] = entry.getKey() + "=" + entry.getValue();
         }
+        process = Runtime.getRuntime().exec(sb.toString(), envp);
         redirectSreamAsync(process.getInputStream(), out);
         redirectSreamAsync(process.getErrorStream(), errors);
-        process = Runtime.getRuntime().exec(sb.toString(), envp);
-
+        
         this.returnCode = process.waitFor();
     }
 
@@ -135,18 +136,10 @@ public class Proc {
     }
 
     private void chmodCmd(String cmdFile) {
-        if (OS.isWindows()) {
-            LinkedOSLibrary linkedLibrary
-                    = (LinkedOSLibrary) Native.loadLibrary("c", LinkedOSLibrary.class);
-            linkedLibrary.chmod(cmdFile, 0777);
-        } else if (OS.isLinux()) {
-            File file = new File(cmdFile);
-            file.setReadable(true, false);
-            file.setWritable(true, false);
-            file.setExecutable(true, false);
-        } else {
-            System.out.println("OS not found");
-        }
+        File file = new File(cmdFile);
+        file.setReadable(true, false);
+        file.setWritable(true, false);
+        file.setExecutable(true, false);
     }
 
     public int waitFor() throws InterruptedException {

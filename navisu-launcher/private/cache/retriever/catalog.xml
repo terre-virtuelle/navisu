@@ -3,4 +3,5 @@
     <system systemId="http://www.web3d.org/specifications/x3d-3.0.xsd" uri="www.web3d.org/specifications/x3d-3.0.xsd"/>
     <system systemId="http://www.web3d.org/specifications/x3d-3.0-Web3dExtensionsPublic.xsd" uri="www.web3d.org/specifications/x3d-3.0-Web3dExtensionsPublic.xsd"/>
     <system systemId="http://www.web3d.org/specifications/x3d-3.0-Web3dExtensionsPrivate.xsd" uri="www.web3d.org/specifications/x3d-3.0-Web3dExtensionsPrivate.xsd"/>
+    <system systemId="http://earth.google.com/kml/2.0" uri="earth.google.com/kml/2.0.xml"/>
 </catalog>

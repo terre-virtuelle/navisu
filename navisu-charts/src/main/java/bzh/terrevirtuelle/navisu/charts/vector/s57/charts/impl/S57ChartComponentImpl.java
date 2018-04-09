@@ -60,7 +60,6 @@ import de.micromata.opengis.kml.v_2_2_0.Kml;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import gov.nasa.worldwind.render.SurfacePolylines;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Properties;
 import java.util.stream.Stream;
 

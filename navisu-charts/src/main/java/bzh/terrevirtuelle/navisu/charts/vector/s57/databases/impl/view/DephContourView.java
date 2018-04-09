@@ -17,6 +17,7 @@ import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfacePolygons;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.List;
  */
 public class DephContourView
         extends PolygonView {
-    
+
     protected TopologyServices topologyServices;
     protected RenderableLayer layer;
     protected Path path;
@@ -37,14 +38,14 @@ public class DephContourView
     protected String label;
     protected float val;
     protected Color color;
-    
+
     public DephContourView(TopologyServices topologyServices, RenderableLayer layer, String acronym) {
         this.topologyServices = topologyServices;
         this.acronym = acronym;
         this.layer = layer;
         //  GeometryClipper GeometryClipper;
     }
-    
+
     @SuppressWarnings("unchecked")
     public void display(List<DepthContour> depthContours) throws SQLException {
         List<Path> paths = new ArrayList<>();
@@ -73,10 +74,29 @@ public class DephContourView
         layer.addRenderables(paths);
         wwd.redrawNow();
     }
-    
+
+    @Override
+    protected void setPolygonAttributes(SurfacePolygons shape, Color color) {
+
+        normalAttributes.setDrawInterior(true);
+        normalAttributes.setInteriorMaterial(new Material(color));
+        normalAttributes.setDrawOutline(true);
+        normalAttributes.setOutlineMaterial(new Material(Color.BLACK));
+        normalAttributes.setEnableLighting(true);
+        shape.setAttributes(normalAttributes);
+
+        highlightAttributes.setOutlineOpacity(1);
+        highlightAttributes.setDrawInterior(true);
+        highlightAttributes.setInteriorMaterial(new Material(Color.WHITE));
+        highlightAttributes.setInteriorOpacity(.5);
+        highlightAttributes.setEnableLighting(true);
+
+        shape.setHighlightAttributes(highlightAttributes);
+    }
+
     private Color defineColor(double val1) {
         color = new Color(159, 215, 247);
-        
+
         if (val1 == -9.0 && val1 <= 0.0) {
             color = new Color(151, 199, 0);
         }
@@ -130,6 +150,6 @@ public class DephContourView
          }
          */
         return color;
-        
+
     }
 }

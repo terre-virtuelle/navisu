@@ -97,6 +97,10 @@ public class ToolsComponentController
     @FXML
     public TextField psqlTF;
     @FXML
+    public TextField gdalTF;
+    @FXML
+    public TextField ulhyssesTF;
+    @FXML
     public TextField countryTF;
     @FXML
     public TextField dataS57CatalogTF;
@@ -108,6 +112,10 @@ public class ToolsComponentController
     public Button encButton;
     @FXML
     public Button psqlButton;
+    @FXML
+    public Button gdalButton;
+    @FXML
+    public Button ulhyssesButton;
     @FXML
     public ChoiceBox<String> catalogCB;
     @FXML
@@ -123,6 +131,8 @@ public class ToolsComponentController
 
     String encPath;
     String psqlPath;
+    String gdalPath;
+    String ulhyssesPath;
     String countryPath;
 
     private ObservableList<String> catalogCbData = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
@@ -207,11 +217,18 @@ public class ToolsComponentController
         if (p != null) {
             psqlTF.setText(p);
         }
-
+        p = properties.getProperty("gdalPath");
+        if (p != null) {
+            gdalTF.setText(p);
+        }
+        p = properties.getProperty("ulhyssesPath");
+        if (p != null) {
+            ulhyssesTF.setText(p);
+        }
         try {
             properties.store(new FileOutputStream(CONFIG_FILE_NAME), null);
         } catch (IOException ex) {
-            Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
 
         catalogCB.setItems(catalogCbData);
@@ -256,6 +273,8 @@ public class ToolsComponentController
             if (encDBTab.isSelected()) {
                 encPath = encHomeTF.getText();
                 psqlPath = psqlTF.getText();
+                gdalPath = gdalTF.getText();
+                ulhyssesPath = ulhyssesTF.getText();
                 saveUser();
             }
 
@@ -287,7 +306,12 @@ public class ToolsComponentController
         psqlButton.setOnMouseClicked((MouseEvent event) -> {
             openDir(psqlTF);
         });
-
+        gdalButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(gdalTF);
+        });
+        ulhyssesButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(ulhyssesTF);
+        });
     }
 
     private void saveUser() {
@@ -295,6 +319,8 @@ public class ToolsComponentController
         try (OutputStream output = new FileOutputStream(CONFIG_FILE_NAME)) {
             properties.setProperty("encDir", encPath);
             properties.setProperty("psqlPath", psqlPath);
+            properties.setProperty("gdalPath", gdalPath);
+            properties.setProperty("ulhyssesPath", ulhyssesPath);
             properties.store(output, null);
             output.close();
 
@@ -306,7 +332,6 @@ public class ToolsComponentController
 
     public void openFile(TextField tf) {
         this.fileChooser = new FileChooser();
-
         this.fileChooser.setTitle(tr("popup.fileChooser.open"));
         String userInitialDirectory = System.getProperty("user.home");
         this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
@@ -319,7 +344,6 @@ public class ToolsComponentController
     }
 
     public void openDir(TextField tf) {
-
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle(tr("popup.fileChooser.open"));
         String userInitialDirectory = System.getProperty("user.home");
@@ -330,17 +354,5 @@ public class ToolsComponentController
         } else {
             tf.setText(selectedDirectory.getAbsolutePath());
         }
-    }
-
-    private String startCmd() {
-        String cmd = null;
-        if (OS.isWindows()) {
-            cmd = psqlPath;
-        } else if (OS.isLinux()) {
-            cmd = psqlPath;
-        } else {
-            System.out.println("OS not found");
-        }
-        return cmd;
     }
 }

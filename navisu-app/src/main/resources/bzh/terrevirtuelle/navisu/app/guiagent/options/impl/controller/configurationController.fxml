@@ -46,7 +46,7 @@
                                     <content>
                                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
                                             <children>
-                                                <GridPane layoutX="1.0" prefHeight="318.0" prefWidth="531.0" styleClass="tab-conteneur">
+                                                <GridPane layoutX="1.0" prefHeight="386.0" prefWidth="531.0" styleClass="tab-conteneur">
                                                     <columnConstraints>
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />
@@ -61,8 +61,9 @@
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                     </rowConstraints>
                                                     <opaqueInsets>
                                                         <Insets />
@@ -80,12 +81,15 @@
                                                         <Button fx:id="allCPathButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                                         <Button fx:id="luceneButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                                         <Button fx:id="buildIndexButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Build Index" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                          <Label prefHeight="15.0" prefWidth="156.0" text="psql Path" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                          <Label prefHeight="15.0" prefWidth="59.0" text="gdal Path" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                          <TextField fx:id="psqlTF" prefWidth="80.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                                          <TextField fx:id="gdalTF" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                                          <Button fx:id="psqlButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                                          <Button fx:id="gdalButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                                                        <Label prefHeight="15.0" prefWidth="156.0" text="psql Path" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                        <Label prefHeight="15.0" prefWidth="59.0" text="gdal Path" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                        <TextField fx:id="psqlTF" prefWidth="80.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                                        <TextField fx:id="gdalTF" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                                                        <Button fx:id="psqlButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                                        <Button fx:id="gdalButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                                                        <Label prefHeight="15.0" prefWidth="120.0" text="ulhyssesPath" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                                        <TextField fx:id="ulhyssesTF" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                                                        <Button fx:id="ulhyssesButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="8" />
                                                     </children>
                                                 </GridPane>
                                             </children>
@@ -359,30 +363,30 @@
                                         </AnchorPane>
                                     </content>
                                 </Tab>
-                        <Tab fx:id="templateTab" text="Template">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <GridPane layoutY="7.0" prefHeight="250.0" prefWidth="533.0" styleClass="tab-conteneur">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="259.0" minWidth="10.0" prefWidth="191.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="415.0" minWidth="10.0" prefWidth="342.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <Label text="Navisu legacy" GridPane.columnIndex="1" />
-                                          <Label layoutX="201.0" layoutY="62.0" text="Shades of grey" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Button mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="template1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                                          <Button layoutX="71.0" layoutY="38.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="template2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </Tab>
+                                <Tab fx:id="templateTab" text="Template">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                            <children>
+                                                <GridPane layoutY="7.0" prefHeight="250.0" prefWidth="533.0" styleClass="tab-conteneur">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="259.0" minWidth="10.0" prefWidth="191.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="415.0" minWidth="10.0" prefWidth="342.0" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <Label text="Navisu legacy" GridPane.columnIndex="1" />
+                                                        <Label layoutX="201.0" layoutY="62.0" text="Shades of grey" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                        <Button mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="template1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                                        <Button layoutX="71.0" layoutY="38.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="template2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                                    </children>
+                                                </GridPane>
+                                            </children>
+                                        </AnchorPane>
+                                    </content>
+                                </Tab>
                             </tabs>
                         </TabPane>
                         <GridPane maxHeight="50.0" maxWidth="600.0" prefHeight="27.0" prefWidth="533.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2">
@@ -407,9 +411,9 @@
                 </GridPane>
             </children>
         </Pane>
-      <Pane layoutX="10.0" layoutY="10.0" prefHeight="45.0" prefWidth="45.0" styleClass="logo" />
+        <Pane layoutX="10.0" layoutY="10.0" prefHeight="45.0" prefWidth="45.0" styleClass="logo" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="658.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="569.0" />
         <Text layoutX="246.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="Options" textAlignment="CENTER" wrappingWidth="76.50146484375" />
-      <Button fx:id="quit" layoutX="500.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
+        <Button fx:id="quit" layoutX="500.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
     </children>
 </fx:root>

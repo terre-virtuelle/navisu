@@ -587,6 +587,22 @@ public class AppMain extends Application {
             wwd.getView().setEyePosition(Position.fromDegrees(location.getLatitude(), location.getLongitude(), 15000));
         }
          */
+        /*
+         /*
+       // Test load all S57 from one category of scale in DB
+        String ENC_HOME = "/home/serge/Data/cartography/data/ENC/FR";
+        String S57_DB = "s57NP5DB";
+        String country = "FR";
+        String version = "000";
+        String EPSG = "4326";
+        //List files filtered
+        List<Path> paths = chartS57ComponentServices.getFilePaths(ENC_HOME, DATA_S57_CATALOG_5, country, version);
+        //Create files at data/shp/... first, with ogr2ogr
+        //Load in DB with ogr2ogr
+        chartS57ComponentServices.loadDataBase(paths, S57_DB, EPSG);
+        */
+        
+        
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");

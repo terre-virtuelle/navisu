@@ -13,7 +13,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.SerialDeviceOption;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.UserOption;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.UserOptionBuilder;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ConfigurationComponentImpl;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.tests.OptionsEventTest;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
@@ -112,6 +111,8 @@ public class ConfigurationComponentController
     @FXML
     public TextField gdalTF;
     @FXML
+    public TextField ulhyssesTF;
+    @FXML
     public Button s57Button;
     @FXML
     public Button allCPathButton;
@@ -123,6 +124,8 @@ public class ConfigurationComponentController
     public Button psqlButton;
     @FXML
     public Button gdalButton;
+    @FXML
+    public Button ulhyssesButton;
 
     /* Own ship controls */
     @FXML
@@ -202,6 +205,7 @@ public class ConfigurationComponentController
     String allCountriesIndexPath;
     String psqlPath;
     String gdalPath;
+    String ulhyssesPath;
 
     String s57PathOld;
     String darkSkyKeyOld;
@@ -209,6 +213,7 @@ public class ConfigurationComponentController
     String allCountriesIndexPathOld;
     String psqlPathOld;
     String gdalPathOld;
+    String ulhyssesPathOld;
 
     String name;
     String mmsi;
@@ -335,8 +340,12 @@ public class ConfigurationComponentController
         if (tmp != null) {
             gdalTF.setText(tmp);
         }
-       //  OptionsEventTest optionsEventTest = new OptionsEventTest();
-       //   optionsEventTest.subscribe();
+        tmp = properties.getProperty("ulhyssesPath");
+        if (tmp != null) {
+            ulhyssesTF.setText(tmp);
+        }
+        //  OptionsEventTest optionsEventTest = new OptionsEventTest();
+        //   optionsEventTest.subscribe();
     }
 
     @SuppressWarnings("unchecked")
@@ -359,6 +368,7 @@ public class ConfigurationComponentController
         allCountriesIndexTF.setText(properties.getProperty("luceneAllCountriesIndexPath"));
         psqlTF.setText(properties.getProperty("psqlPath"));
         gdalTF.setText(properties.getProperty("gdalPath"));
+        ulhyssesTF.setText(properties.getProperty("ulhyssesPath"));
 
         darkSkyKeyOld = darkSkyTF.getText();
         s57PathOld = s57TF.getText();
@@ -366,6 +376,7 @@ public class ConfigurationComponentController
         allCountriesIndexPathOld = allCountriesIndexTF.getText();
         psqlPathOld = psqlTF.getText();
         gdalPathOld = gdalTF.getText();
+        ulhyssesPathOld = ulhyssesTF.getText();
 
         nameTF.setText(properties.getProperty("name"));
         mmsiTF.setText(properties.getProperty("mmsi"));
@@ -423,6 +434,7 @@ public class ConfigurationComponentController
                 allCountriesIndexPath = allCountriesIndexTF.getText();
                 psqlPath = psqlTF.getText();
                 gdalPath = gdalTF.getText();
+                ulhyssesPath=ulhyssesTF.getText();
                 saveUser();
             }
             if (ownerShipTab.isSelected()) {
@@ -458,6 +470,7 @@ public class ConfigurationComponentController
                 allCountriesIndexPath = allCountriesIndexTF.getText();
                 psqlPath = psqlTF.getText();
                 gdalPath = gdalTF.getText();
+                ulhyssesPath=ulhyssesTF.getText();
                 saveUser();
             }
             if (ownerShipTab.isSelected()) {
@@ -588,6 +601,9 @@ public class ConfigurationComponentController
         gdalButton.setOnMouseClicked((MouseEvent event) -> {
             openDir(gdalTF);
         });
+        ulhyssesButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(ulhyssesTF);
+        });
 
         /*
           Init devicesTab
@@ -691,6 +707,7 @@ public class ConfigurationComponentController
             properties.setProperty("luceneAllCountriesIndexPath", allCountriesIndexPath);
             properties.setProperty("psqlPath", psqlPath);
             properties.setProperty("gdalPath", gdalPath);
+            properties.setProperty("ulhyssesPath", ulhyssesPath);
             properties.store(output, null);
             output.close();
 

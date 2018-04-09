@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
@@ -143,7 +144,7 @@ public class S57GlobalCatalogController
                                             component.loadFile(filepath.toString());
                                         }
                                     }
-                                     */
+                                    */ 
                                     component.loadFile(filepath.toString());
                                     s57Chart = new S57Chart();
                                     String number = filepathToNumber(filepath.toString());

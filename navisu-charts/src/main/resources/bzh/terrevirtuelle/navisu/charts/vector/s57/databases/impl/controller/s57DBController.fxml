@@ -157,7 +157,7 @@
                         </Label>
                             </children>
                         </GridPane>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="S57 Databases" textAlignment="CENTER" wrappingWidth="323.50146484375" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="Select S57 objects from databases" wrappingWidth="350.50146484375" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                           <Button fx:id="helpButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Help" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
                      <GridPane.margin>
                         <Insets right="70.0" />

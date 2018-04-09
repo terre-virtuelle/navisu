@@ -43,9 +43,12 @@ public class ToolsComponentImpl
 
     @Override
     public void on(String... files) {
+        
+        
         String[] cmd = files;
         if (cmd != null) {
             componentKeyName = cmd[0];
+            System.out.println("componentKeyName : "+componentKeyName);
             if (cmd[0].equals(COMPONENT_KEY_NAME_0) || cmd[0].equals(COMPONENT_KEY_NAME_1)) {
                 controller = new ToolsComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
                         guiAgentServices, s57ChartComponentServices, 
