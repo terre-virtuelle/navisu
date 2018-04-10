@@ -81,19 +81,18 @@ public class ToolsComponentController
     @FXML
     public Pane viewPane;
     @FXML
-    public TabPane toolsTabPane;
+    public TabPane databaseTabPane;
     @FXML
     public Button quit;
-    @FXML
-    public Button saveButton;
+
     @FXML
     public Button helpButton;
 
     /* enc controls */
     @FXML
-    public Tab encDBTab;
+    public Tab s57Tab;
     @FXML
-    public TextField encHomeTF;
+    public TextField s57TF;
     @FXML
     public TextField psqlTF;
     @FXML
@@ -103,13 +102,11 @@ public class ToolsComponentController
     @FXML
     public TextField countryTF;
     @FXML
-    public TextField dataS57CatalogTF;
+    public TextField catalogTF;
     @FXML
-    public TextField dataBaseNameTF;
+    public TextField s57DatabaseTF;
     @FXML
-    public TextField epsgTF;
-    @FXML
-    public Button encButton;
+    public Button s57Button;
     @FXML
     public Button psqlButton;
     @FXML
@@ -121,24 +118,37 @@ public class ToolsComponentController
     @FXML
     public ChoiceBox<String> countryCB;
     @FXML
-    public ChoiceBox<String> epsgCB;
+    public Button createButton;
 
-    private String encDataBaseName;
+    protected String s57Path;
+    protected String psqlPath;
+    protected String gdalPath;
+    protected String ulhyssesPath;
+    protected String countryPath;
+    protected String s7DataBaseName;
 
     /* Bathy controls */
     @FXML
-    public Tab bathyDBTab;
+    public Tab bathyTab;
+    @FXML
+    public TextField psqlTF1;
+    @FXML
+    public Button psqlButton1;
+    @FXML
+    public TextField bathyDataTF;
+    @FXML
+    public Button bathyDataButton;
+    @FXML
+    public TextField bathyDatabaseNameTF;
+    @FXML
+    public Button createButton1;
 
-    String encPath;
-    String psqlPath;
-    String gdalPath;
-    String ulhyssesPath;
-    String countryPath;
+    protected String bathyDataBaseName;
+    protected String bathyData;
 
     private ObservableList<String> catalogCbData = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
     private ObservableList<String> countryCbData = FXCollections.observableArrayList("FR", "ALL", "CA", "DE", "KR", "NO", "PE",
             "PH", "PT", "RU", "TR", "US", "ZA");
-    private ObservableList<String> epsgCbData = FXCollections.observableArrayList("4326", "2154");
     protected FileChooser fileChooser;
 
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
@@ -191,15 +201,15 @@ public class ToolsComponentController
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        /* Init userTab and ownerShipTab 
+        /* Init s57Tab and databaseTab 
            Values are store in CONFIG_FILE_NAME 
            properties file
          */
         if (componentKeyName.equals(COMPONENT_KEY_NAME_0)) {
-            toolsTabPane.getSelectionModel().select(encDBTab);
+            databaseTabPane.getSelectionModel().select(s57Tab);
         } else {
             if (componentKeyName.equals(COMPONENT_KEY_NAME_1)) {
-                toolsTabPane.getSelectionModel().select(bathyDBTab);
+                databaseTabPane.getSelectionModel().select(bathyTab);
             }
         }
         properties = new Properties();
@@ -209,13 +219,14 @@ public class ToolsComponentController
             Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
 
-        String p = properties.getProperty("encDir");
+        String p = properties.getProperty("s57ChartsDir");
         if (p != null) {
-            encHomeTF.setText(p);
+            s57TF.setText(p);
         }
         p = properties.getProperty("psqlPath");
         if (p != null) {
             psqlTF.setText(p);
+            psqlTF1.setText(p);
         }
         p = properties.getProperty("gdalPath");
         if (p != null) {
@@ -225,6 +236,10 @@ public class ToolsComponentController
         if (p != null) {
             ulhyssesTF.setText(p);
         }
+        p = properties.getProperty("bathyData");
+        if (p != null) {
+            bathyDataTF.setText(p);
+        }
         try {
             properties.store(new FileOutputStream(CONFIG_FILE_NAME), null);
         } catch (IOException ex) {
@@ -233,18 +248,15 @@ public class ToolsComponentController
 
         catalogCB.setItems(catalogCbData);
         catalogCB.getSelectionModel().select("5");
-        dataS57CatalogTF.setText("ENC_NP5.kml");
-        dataBaseNameTF.setText("s57NP5DB");
+        catalogTF.setText("ENC_NP5.kml");
+        s57DatabaseTF.setText("s57NP5DB");
         catalogCB.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((ObservableValue<? extends String> observable,
-                        String oldValue, String newValue)
-                        -> {
-                    dataS57CatalogTF.setText("ENC_NP"
-                            + newValue
-                            + ".kml");
-                    encDataBaseName = "s57NP" + newValue + "DB";
-                    dataBaseNameTF.setText(encDataBaseName);
+                        String oldValue, String newValue) -> {
+                    catalogTF.setText("ENC_NP" + newValue + ".kml");
+                    s7DataBaseName = "s57NP" + newValue + "DB";
+                    s57DatabaseTF.setText(s7DataBaseName);
                 });
 
         countryCB.setItems(countryCbData);
@@ -256,55 +268,77 @@ public class ToolsComponentController
                         String oldValue, String newValue)
                         -> countryTF.setText(newValue));
 
-        epsgCB.setItems(epsgCbData);
-        epsgCB.getSelectionModel().select("4326");
-        epsgTF.setText("4326");
-        epsgCB.getSelectionModel()
-                .selectedItemProperty()
-                .addListener((ObservableValue<? extends String> observable,
-                        String oldValue, String newValue)
-                        -> epsgTF.setText(newValue));
-
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
         });
 
-        saveButton.setOnMouseClicked((MouseEvent event) -> {
-            if (encDBTab.isSelected()) {
-                encPath = encHomeTF.getText();
+        createButton.setOnMouseClicked((MouseEvent event) -> {
+            if (s57Tab.isSelected()) {
+                s57Path = s57TF.getText();
                 psqlPath = psqlTF.getText();
                 gdalPath = gdalTF.getText();
                 ulhyssesPath = ulhyssesTF.getText();
-                saveUser();
+                saveConfiguration();
+                /*createDB*/
             }
 
-            encDataBaseName = dataBaseNameTF.getText();
-            guiAgentServices.getJobsManager().newJob("Load DB : " + encDataBaseName, (progressHandle) -> {
-                System.out.println("dataS57CatalogTF.getText() : " + dataS57CatalogTF.getText());
-                String shpDir = s57ChartComponentServices.s57FromCatalogToShapeFile(encHomeTF.getText(),
-                        ENC_CATALOG_HOME + dataS57CatalogTF.getText(),
+            s7DataBaseName = s57DatabaseTF.getText();
+            guiAgentServices.getJobsManager().newJob("Load DB : " + s7DataBaseName, (progressHandle) -> {
+                System.out.println("dataS57CatalogTF.getText() : " + catalogTF.getText());
+                String shpDir = s57ChartComponentServices.s57FromCatalogToShapeFile(s57TF.getText(),
+                        ENC_CATALOG_HOME + catalogTF.getText(),
                         countryTF.getText(),
-                        epsgTF.getText());
-                String sqlDir = databaseServices.shapeFileToSql(psqlPath, shpDir, epsgTF.getText());
-                databaseServices.sqlToSpatialDB(encDataBaseName, USER, PASSWD, sqlDir, psqlTF.getText() + "/psql");
+                        "4326");
+                String sqlDir = databaseServices.shapeFileToSql(psqlPath, shpDir, "4326");
+                databaseServices.sqlToSpatialDB(s7DataBaseName, USER, PASSWD, sqlDir, psqlTF.getText() + "/psql");
                 instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             });
         });
 
-        helpButton.setOnMouseClicked((MouseEvent event) -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Options");
-            alert.setHeaderText("Données utilisateur");
-            Text s = new Text("    S57ChartsDir : chemin de la racine des cartes S57 \n");
-            s.setWrappingWidth(650);
-            alert.getDialogPane().setContent(s);
-            alert.show();
+        createButton1.setOnMouseClicked((MouseEvent event) -> {
+
+            if (bathyTab.isSelected()) {
+                psqlPath = psqlTF.getText();
+                saveConfiguration();
+            }
+            /*
+            s7DataBaseName = s57DatabaseTF.getText();
+            guiAgentServices.getJobsManager().newJob("Load DB : " + s7DataBaseName, (progressHandle) -> {
+                System.out.println("dataS57CatalogTF.getText() : " + catalogTF.getText());
+                String shpDir = s57ChartComponentServices.s57FromCatalogToShapeFile(s57TF.getText(),
+                        ENC_CATALOG_HOME + catalogTF.getText(),
+                        countryTF.getText(),
+                        "4326");
+                String sqlDir = databaseServices.shapeFileToSql(psqlPath, shpDir, "4326");
+                databaseServices.sqlToSpatialDB(s7DataBaseName, USER, PASSWD, sqlDir, psqlTF.getText() + "/psql");
+                instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
+            });
+             */
         });
-        encButton.setOnMouseClicked((MouseEvent event) -> {
-            openDir(encHomeTF);
+
+        helpButton.setOnMouseClicked((MouseEvent event) -> {
+            if (s57Tab.isSelected()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Options");
+                alert.setHeaderText("Données utilisateur");
+                Text s = new Text("    S57ChartsDir : chemin de la racine des cartes S57 \n");
+                s.setWrappingWidth(650);
+                alert.getDialogPane().setContent(s);
+                alert.show();
+            } else {
+                if (bathyTab.isSelected()) {
+
+                }
+            }
+        });
+        s57Button.setOnMouseClicked((MouseEvent event) -> {
+            openDir(s57TF);
         });
         psqlButton.setOnMouseClicked((MouseEvent event) -> {
             openDir(psqlTF);
+        });
+        psqlButton1.setOnMouseClicked((MouseEvent event) -> {
+            openDir(psqlTF1);
         });
         gdalButton.setOnMouseClicked((MouseEvent event) -> {
             openDir(gdalTF);
@@ -312,12 +346,16 @@ public class ToolsComponentController
         ulhyssesButton.setOnMouseClicked((MouseEvent event) -> {
             openDir(ulhyssesTF);
         });
+        bathyDataButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(bathyDataTF);
+        });
     }
 
-    private void saveUser() {
+    private void saveConfiguration() {
 
         try (OutputStream output = new FileOutputStream(CONFIG_FILE_NAME)) {
-            properties.setProperty("encDir", encPath);
+            properties.setProperty("s57ChartsDir", s57Path);
+//            properties.setProperty("bathyData", bathyData);
             properties.setProperty("psqlPath", psqlPath);
             properties.setProperty("gdalPath", gdalPath);
             properties.setProperty("ulhyssesPath", ulhyssesPath);
