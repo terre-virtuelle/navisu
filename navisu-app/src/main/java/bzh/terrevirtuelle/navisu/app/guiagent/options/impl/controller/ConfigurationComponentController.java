@@ -180,6 +180,9 @@ public class ConfigurationComponentController
     public ChoiceBox<String> stopBitsCB;
     @FXML
     public ChoiceBox<String> parityCB;
+    /*
+    Manque des TF
+     */
     @FXML
     public TableView<SerialDeviceOption> connectionsTV;
     @FXML
@@ -404,21 +407,21 @@ public class ConfigurationComponentController
             Logger.getLogger(ConfigurationComponentController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        nameOld = nameTF.getText().trim();
-        mmsiOld = mmsiTF.getText().trim();
-        countryOld = countryTF.getText().trim();
-        lengthOld = lengthTF.getText().trim();
-        widthOld = widthTF.getText().trim();
-        draughtOld = shipTypeTF.getText().trim();
-        shipTypeOld = draughtTF.getText().trim();
-        navigationalStatusOld = navigationalStatusTF.getText().trim();
-        callSignOld = callSignTF.getText().trim();
-        latitudeOld = latitudeTF.getText().trim();
-        longitudeOld = longitudeTF.getText().trim();
-        cogOld = cogTF.getText().trim();
-        sogOld = sogTF.getText().trim();
-        daeModelPathOld = daeModelPathTF.getText().trim();
-        scaleOld = scaleTF.getText().trim();
+        nameOld = nameTF.getText();
+        mmsiOld = mmsiTF.getText();
+        countryOld = countryTF.getText();
+        lengthOld = lengthTF.getText();
+        widthOld = widthTF.getText();
+        draughtOld = shipTypeTF.getText();
+        shipTypeOld = draughtTF.getText();
+        navigationalStatusOld = navigationalStatusTF.getText();
+        callSignOld = callSignTF.getText();
+        latitudeOld = latitudeTF.getText();
+        longitudeOld = longitudeTF.getText();
+        cogOld = cogTF.getText();
+        sogOld = sogTF.getText();
+        daeModelPathOld = daeModelPathTF.getText();
+        scaleOld = scaleTF.getText();
 
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
@@ -434,7 +437,7 @@ public class ConfigurationComponentController
                 allCountriesIndexPath = allCountriesIndexTF.getText();
                 psqlPath = psqlTF.getText();
                 gdalPath = gdalTF.getText();
-                ulhyssesPath=ulhyssesTF.getText();
+                ulhyssesPath = ulhyssesTF.getText();
                 saveUser();
             }
             if (ownerShipTab.isSelected()) {
@@ -470,7 +473,7 @@ public class ConfigurationComponentController
                 allCountriesIndexPath = allCountriesIndexTF.getText();
                 psqlPath = psqlTF.getText();
                 gdalPath = gdalTF.getText();
-                ulhyssesPath=ulhyssesTF.getText();
+                ulhyssesPath = ulhyssesTF.getText();
                 saveUser();
             }
             if (ownerShipTab.isSelected()) {
@@ -701,13 +704,27 @@ public class ConfigurationComponentController
 
     private void saveUser() {
         try (OutputStream output = new FileOutputStream(CONFIG_FILE_NAME)) {
-            properties.setProperty("s57ChartsDir", s57Path);
-            properties.setProperty("darkSkyApiKey", darkSkyKey);
-            properties.setProperty("allCountriesPath", allCountriesPath);
-            properties.setProperty("luceneAllCountriesIndexPath", allCountriesIndexPath);
-            properties.setProperty("psqlPath", psqlPath);
-            properties.setProperty("gdalPath", gdalPath);
-            properties.setProperty("ulhyssesPath", ulhyssesPath);
+            if (s57Path != null) {
+                properties.setProperty("s57ChartsDir", s57Path);
+            }
+            if (darkSkyKey != null) {
+                properties.setProperty("darkSkyApiKey", darkSkyKey);
+            }
+            if (allCountriesPath != null) {
+                properties.setProperty("allCountriesPath", allCountriesPath);
+            }
+            if (allCountriesIndexPath != null) {
+                properties.setProperty("luceneAllCountriesIndexPath", allCountriesIndexPath);
+            }
+            if (psqlPath != null) {
+                properties.setProperty("psqlPath", psqlPath);
+            }
+            if (gdalPath != null) {
+                properties.setProperty("gdalPath", gdalPath);
+            }
+            if (ulhyssesPath != null) {
+                properties.setProperty("ulhyssesPath", ulhyssesPath);
+            }
             properties.store(output, null);
             output.close();
 
@@ -725,21 +742,51 @@ public class ConfigurationComponentController
 
     private void saveOwnerShip() {
         try (OutputStream output = new FileOutputStream(CONFIG_FILE_NAME)) {
-            properties.setProperty("name", name);
-            properties.setProperty("mmsi", mmsi);
-            properties.setProperty("country", country);
-            properties.setProperty("length", length);
-            properties.setProperty("width", width);
-            properties.setProperty("draught", draught);
-            properties.setProperty("shipType", shipType);
-            properties.setProperty("navigationalStatus", navigationalStatus);
-            properties.setProperty("callSign", callSign);
-            properties.setProperty("latitude", latitude);
-            properties.setProperty("longitude", longitude);
-            properties.setProperty("cog", cog);
-            properties.setProperty("sog", sog);
-            properties.setProperty("daeModelPath", daeModelPath);
-            properties.setProperty("scale", modelScale);
+            if (name != null) {
+                properties.setProperty("name", name);
+            }
+            if (mmsi != null) {
+                properties.setProperty("mmsi", mmsi);
+            }
+            if (country != null) {
+                properties.setProperty("country", country);
+            }
+            if (length != null) {
+                properties.setProperty("length", length);
+            }
+            if (width != null) {
+                properties.setProperty("width", width);
+            }
+            if (draught != null) {
+                properties.setProperty("draught", draught);
+            }
+            if (shipType != null) {
+                properties.setProperty("shipType", shipType);
+            }
+            if (navigationalStatus != null) {
+                properties.setProperty("navigationalStatus", navigationalStatus);
+            }
+            if (callSign != null) {
+                properties.setProperty("callSign", callSign);
+            }
+            if (latitude != null) {
+                properties.setProperty("latitude", latitude);
+            }
+            if (longitude != null) {
+                properties.setProperty("longitude", longitude);
+            }
+            if (cog != null) {
+                properties.setProperty("cog", cog);
+            }
+            if (sog != null) {
+                properties.setProperty("sog", sog);
+            }
+            if (daeModelPath != null) {
+                properties.setProperty("daeModelPath", daeModelPath);
+            }
+            if (modelScale != null) {
+                properties.setProperty("scale", modelScale);
+            }
             properties.store(output, null);
             output.close();
 
