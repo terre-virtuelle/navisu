@@ -108,7 +108,7 @@ public class S57GlobalCatalogImpl
             Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, "Erreur lecture : config/config.properties", ex);
         }
         String userS57ChartsDirectory = properties.getProperty("s57ChartsDir");
-        if (!"".equals(userS57ChartsDirectory)) {
+        if (userS57ChartsDirectory!=null && !"".equals(userS57ChartsDirectory)) {
             String[] userS57ChartsDirectories = userS57ChartsDirectory.split(",");
             int l = userS57ChartsDirectories.length;
             for (int i = 0; i < l; i++) {

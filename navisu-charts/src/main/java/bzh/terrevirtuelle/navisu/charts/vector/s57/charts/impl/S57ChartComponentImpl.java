@@ -505,10 +505,10 @@ public class S57ChartComponentImpl
             new File("data/shp/shp_" + j).mkdir();
             try {
                 String command = cmd
-                        + "-skipfailures "
-                        + "-overwrite "
-                        + "-nlt PROMOTE_TO_MULTI"
-                        + "data/shp/shp_" + j + " "
+                        + " -skipfailures "
+                        + " -overwrite "
+                        + " -nlt PROMOTE_TO_MULTI"
+                        + " data/shp/shp_" + j + " "
                         + tmp.toString();
 
                 String command1 = createCmdSh(command);
@@ -516,7 +516,7 @@ public class S57ChartComponentImpl
                         .setCmd(command1)
                         .setOut(System.out)
                         .setErr(System.err)
-                        .exec(environment);
+                        .exec();
             } catch (IOException | InterruptedException e) {
                 LOGGER.log(Level.SEVERE, e.toString(), e);
             }
