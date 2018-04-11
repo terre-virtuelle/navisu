@@ -8,8 +8,8 @@ package bzh.terrevirtuelle.navisu.tools.impl.controller;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
+import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -61,6 +61,7 @@ public class ToolsComponentController
     protected GuiAgentServices guiAgentServices;
     protected S57ChartComponentServices s57ChartComponentServices;
     protected DatabaseServices databaseServices;
+    protected BathymetryDBServices bathymetryDBServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
 
     private final String FXML = "toolsController.fxml";
@@ -143,7 +144,7 @@ public class ToolsComponentController
     @FXML
     public Button createButton1;
 
-    protected String bathyDataBaseName;
+    // protected String bathyDataBaseName;
     protected String bathyData;
 
     private ObservableList<String> catalogCbData = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
@@ -154,6 +155,7 @@ public class ToolsComponentController
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
     private final String COMPONENT_KEY_NAME_1 = "DbBathy";
     private final String ENC_CATALOG_HOME = "data/charts/vector/s57/catalog/";
+    private final String BATHY_SHOM_DB_NAME = "BathyShomDB";
     private String componentKeyName;
 
     /**
@@ -173,6 +175,7 @@ public class ToolsComponentController
             GuiAgentServices guiAgentServices,
             S57ChartComponentServices s57ChartComponentServices,
             DatabaseServices databaseServices,
+            BathymetryDBServices bathymetryDBServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
@@ -190,6 +193,7 @@ public class ToolsComponentController
         this.guiAgentServices = guiAgentServices;
         this.s57ChartComponentServices = s57ChartComponentServices;
         this.databaseServices = databaseServices;
+        this.bathymetryDBServices = bathymetryDBServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
@@ -218,6 +222,7 @@ public class ToolsComponentController
         } catch (IOException ex) {
             Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+        bathyDatabaseNameTF.setText(BATHY_SHOM_DB_NAME);
 
         String p = properties.getProperty("s57ChartsDir");
         if (p != null) {
@@ -279,12 +284,11 @@ public class ToolsComponentController
                 gdalPath = gdalTF.getText();
                 ulhyssesPath = ulhyssesTF.getText();
                 saveConfiguration();
-                /*createDB*/
             }
 
             s7DataBaseName = s57DatabaseTF.getText();
             guiAgentServices.getJobsManager().newJob("Load DB : " + s7DataBaseName, (progressHandle) -> {
-                System.out.println("dataS57CatalogTF.getText() : " + catalogTF.getText());
+                // System.out.println("dataS57CatalogTF.getText() : " + catalogTF.getText());
                 String shpDir = s57ChartComponentServices.s57FromCatalogToShapeFile(s57TF.getText(),
                         ENC_CATALOG_HOME + catalogTF.getText(),
                         countryTF.getText(),
@@ -301,19 +305,14 @@ public class ToolsComponentController
                 psqlPath = psqlTF.getText();
                 saveConfiguration();
             }
-            /*
-            s7DataBaseName = s57DatabaseTF.getText();
-            guiAgentServices.getJobsManager().newJob("Load DB : " + s7DataBaseName, (progressHandle) -> {
-                System.out.println("dataS57CatalogTF.getText() : " + catalogTF.getText());
-                String shpDir = s57ChartComponentServices.s57FromCatalogToShapeFile(s57TF.getText(),
-                        ENC_CATALOG_HOME + catalogTF.getText(),
-                        countryTF.getText(),
-                        "4326");
-                String sqlDir = databaseServices.shapeFileToSql(psqlPath, shpDir, "4326");
-                databaseServices.sqlToSpatialDB(s7DataBaseName, USER, PASSWD, sqlDir, psqlTF.getText() + "/psql");
-                instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
+
+            bathyData = bathyDataTF.getText();
+            guiAgentServices.getJobsManager().newJob("Load DB : " + BATHY_SHOM_DB_NAME, (progressHandle) -> {
+                bathymetryDBServices.connect(BATHY_SHOM_DB_NAME, "localhost", "jdbc:postgresql://",
+                        "5432", "org.postgresql.Driver", "admin", "admin");
+                bathymetryDBServices.create(bathyData);
+               // bathymetryDBServices.createIndex();
             });
-             */
         });
 
         helpButton.setOnMouseClicked((MouseEvent event) -> {
@@ -347,18 +346,28 @@ public class ToolsComponentController
             openDir(ulhyssesTF);
         });
         bathyDataButton.setOnMouseClicked((MouseEvent event) -> {
-            openDir(bathyDataTF);
+            openFile(bathyDataTF);
         });
     }
 
     private void saveConfiguration() {
 
         try (OutputStream output = new FileOutputStream(CONFIG_FILE_NAME)) {
-            properties.setProperty("s57ChartsDir", s57Path);
-//            properties.setProperty("bathyData", bathyData);
-            properties.setProperty("psqlPath", psqlPath);
-            properties.setProperty("gdalPath", gdalPath);
-            properties.setProperty("ulhyssesPath", ulhyssesPath);
+            if (s57Path != null) {
+                properties.setProperty("s57ChartsDir", s57Path);
+            }
+            if (bathyData != null) {
+                properties.setProperty("bathyData", bathyData);
+            }
+            if (psqlPath != null) {
+                properties.setProperty("psqlPath", psqlPath);
+            }
+            if (gdalPath != null) {
+                properties.setProperty("gdalPath", gdalPath);
+            }
+            if (ulhyssesPath != null) {
+                properties.setProperty("ulhyssesPath", ulhyssesPath);
+            }
             properties.store(output, null);
             output.close();
 

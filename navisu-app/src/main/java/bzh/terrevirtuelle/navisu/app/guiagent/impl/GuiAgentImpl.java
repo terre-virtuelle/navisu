@@ -110,7 +110,6 @@ public class GuiAgentImpl
     protected Position pos;
     protected Text label;
     protected String modstyle;
-    
 
     public GuiAgentImpl() {
         this.wwd = GeoWorldWindViewImpl.getWW();
@@ -122,20 +121,22 @@ public class GuiAgentImpl
         this.width = width;
         this.height = height;
         this.stage = stage;
-        
-        /**********************************************
-        double screenwidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        //System.out.println(" ********!!!!!!!!! largeur écran : " + screenwidth);
-        double screenheight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        //System.out.println(" ********!!!!!!!!! hauteur écran : " + screenheight);
-        
-        double percentx = 1;
-        double percenty = 1;
-        width = (int) (screenwidth * percentx);
-        //System.out.println(" !!!!!!******* largeur fenêtre : " + width);
-        height = (int) (screenheight * percenty);
-        //System.out.println(" !!!!!!******* hauteur fenêtre : " + height);
-        */
+
+        /**
+         * ********************************************
+         * double screenwidth =
+         * java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+         * //System.out.println(" ********!!!!!!!!! largeur écran : " +
+         * screenwidth); double screenheight =
+         * java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+         * //System.out.println(" ********!!!!!!!!! hauteur écran : " +
+         * screenheight);
+         *
+         * double percentx = 1; double percenty = 1; width = (int) (screenwidth
+         * * percentx); //System.out.println(" !!!!!!******* largeur fenêtre : "
+         * + width); height = (int) (screenheight * percenty);
+         * //System.out.println(" !!!!!!******* hauteur fenêtre : " + height);
+         */
         stage.setResizable(true);
         //stage.setFullScreen(true);
         label = new Text();
@@ -194,9 +195,11 @@ public class GuiAgentImpl
                     }
                     Platform.runLater(() -> {
                         label.setText(
-                                "        Altitude : " + aText
-                                + "        Latitude : " + pos.getLatitude().toFormattedDMSString()
-                                + "        Longitude : " + pos.getLongitude().toFormattedDMSString());
+                                " Altitude : " + aText
+                                + " Latitude : " + pos.getLatitude().toFormattedDMSString()
+                                + "  (" + pos.getLatitude().toDecimalDegreesString(4) + ")"
+                                + " Longitude : " + pos.getLongitude().toFormattedDMSString()
+                                + "  (" + pos.getLongitude().toDecimalDegreesString(4) + ")");
                     });
                     wwd.redrawNow();
                 }
