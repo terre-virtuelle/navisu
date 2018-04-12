@@ -15,12 +15,14 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponent
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DaymarDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepareDbLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepthContourDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.PontonDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDbLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DaymarView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DepareView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DephContourView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
@@ -340,7 +342,7 @@ public class S57DBComponentController
         this.jtsServices = jtsServices;
         this.shapefileObjectServices = shapefileObjectServices;
         this.displayServices = displayServices;
-        this.delaunayServices=delaunayServices;
+        this.delaunayServices = delaunayServices;
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
 
@@ -609,25 +611,6 @@ public class S57DBComponentController
         MnsysDbLoader mnsysDbLoader = new MnsysDbLoader(connection);
         marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
-        if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
-            guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
-                new DepareView(shapefileObjectServices,
-                        jtsServices,
-                        topologyServices,
-                        delaunayServices,
-                        displayServices,
-                        latMin, lonMin, latMax, lonMax,
-                        depareLayer, simpleDepareLayer, depare3DLayer,
-                        Double.valueOf(simplifyTF.getText()),
-                        Double.valueOf(depthMagnificationTF.getText()),
-                        createElevationCB.isSelected())
-                        .display(new DepareDbLoader(databaseServices,
-                                databaseTF.getText(),
-                                USER,
-                                PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
-            });
-        }
-
         if (object.trim().equals("ALL") || object.trim().equals("BUOYAGE")) {
             //Create a loader for BeaconCardinal, Retrieve all BeaconCardinals in a rectangle latMin, lonMin, latMax, lonMax
             BuoyageDbLoader buoyageDbLoader = new BuoyageDbLoader(connection, "BCNCAR", marsysMap);
@@ -682,22 +665,27 @@ public class S57DBComponentController
                     .display(new PontonDbLoader(connection, "PONTON")
                             .retrieveIn(latMin, lonMin, latMax, lonMax));
         }
-      
-        /*
-        if (object.trim().equals("ALL") || object.trim().equals("DEPCNT")) {
-            guiAgentServices.getJobsManager().newJob("Load contours", (progressHandle) -> {
-                try {
-                    new DephContourView(topologyServices, harbourLayer, "DEPCNT")
-                            .display(
-                new DepthContourDbLoader(connection, "DEPCNT")
-                        .retrieveIn(latMin, lonMin, latMax, lonMax));
-                  } catch (SQLException ex) {
-                    Logger.getLogger(S57DBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-                }
-                 
+        if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
+            guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
+                new DepareView( latMin, lonMin, latMax, lonMax,
+                        depareLayer, simpleDepareLayer, depare3DLayer,
+                        Double.valueOf(simplifyTF.getText()),
+                        Double.valueOf(depthMagnificationTF.getText()),
+                        createElevationCB.isSelected())
+                        .display(new DepareDbLoader(databaseServices,
+                                databaseTF.getText(),
+                                USER,
+                                PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
             });
         }
-         */
+        if (object.trim().equals("ALL") || object.trim().equals("DEPCNT")) {
+            guiAgentServices.getJobsManager().newJob("Load contours", (progressHandle) -> {
+                new DephContourView(depareLayer)
+                        .display((new DepthContourDbLoader(databaseServices,
+                        databaseTF.getText(),
+                        USER,
+                        PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax)));
+            });
+        }
     }
-
 }

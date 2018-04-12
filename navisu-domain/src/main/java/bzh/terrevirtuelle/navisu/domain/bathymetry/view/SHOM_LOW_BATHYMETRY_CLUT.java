@@ -11,39 +11,42 @@ import java.util.Set;
 
 public class SHOM_LOW_BATHYMETRY_CLUT {
 
-    static final private List<Range> ranges;
+    static final private List<Range> RANGES;
     static final public double MAX = 10000.0;
 
     static {
-        ranges = new ArrayList<>();
-        ranges.add(Range.closedOpen(0.0, 2.5));
-        ranges.add(Range.closedOpen(2.5, 5.0));
-        ranges.add(Range.closedOpen(5.0, 7.5));
-        ranges.add(Range.closedOpen(7.5, 10.0));
-        ranges.add(Range.closedOpen(10.0, 20.0));
-        ranges.add(Range.closedOpen(20.0, 30.0));
-        ranges.add(Range.closedOpen(30.0, 40.0));
-        ranges.add(Range.closed(40.0, 50.0));
-        ranges.add(Range.closed(50.0, MAX));
+        RANGES = new ArrayList<>();
+        RANGES.add(Range.closedOpen(-15.0, 0.0));
+        RANGES.add(Range.closedOpen(0.0, 2.5));
+        RANGES.add(Range.closedOpen(2.5, 5.0));
+        RANGES.add(Range.closedOpen(5.0, 7.5));
+        RANGES.add(Range.closedOpen(7.5, 10.0));
+        RANGES.add(Range.closedOpen(10.0, 20.0));
+        RANGES.add(Range.closedOpen(20.0, 30.0));
+        RANGES.add(Range.closedOpen(30.0, 40.0));
+        RANGES.add(Range.closed(40.0, 50.0));
+        RANGES.add(Range.closed(50.0, MAX));
     }
     private static final Map<Integer, Color> ATT = Collections.unmodifiableMap(new HashMap<Integer, Color>() {
         {
-            put(0, new Color(238, 105, 112));
-            put(1, new Color(242, 84, 104));
-            put(2, new Color(238, 52, 83));
-            put(3, new Color(236, 21, 58));
-            put(4, new Color(211, 51, 67));
-            put(5, new Color(244, 42, 55));
-            put(6, new Color(206, 138, 72));
-            put(7, new Color(209, 184, 69));
-            put(8, new Color(248, 255, 25));
+            put(0, new Color(Integer.decode("#97C700")));
+            put(1, new Color(Integer.decode("#00AAFF")));
+            put(2, new Color(Integer.decode("#1CB3FF")));
+            put(3, new Color(Integer.decode("#39BDFF")));
+            put(4, new Color(Integer.decode("#55C6FF")));
+            put(5, new Color(Integer.decode("#71D0FF")));
+            put(6, new Color(Integer.decode("#8ED9FF")));
+            put(7, new Color(Integer.decode("#AAE3FF")));
+            put(8, new Color(Integer.decode("#C6ECFF")));
+            put(9, new Color(Integer.decode("#E3F6FF")));
+            put(10, new Color(Integer.decode("#FFFFFF")));
         }
     });
 
     @SuppressWarnings("unchecked")
     public static Color getColor(double data) {
-        for (int i = 0; i < ranges.size(); i++) {
-            if (ranges.get(i).contains(data)) {
+        for (int i = 0; i < RANGES.size(); i++) {
+            if (RANGES.get(i).contains(data)) {
                 return SHOM_LOW_BATHYMETRY_CLUT.ATT.get(i);
             }
         }

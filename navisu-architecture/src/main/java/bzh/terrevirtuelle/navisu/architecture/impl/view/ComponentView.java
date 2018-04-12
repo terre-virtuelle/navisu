@@ -10,8 +10,10 @@ import java.awt.Image;
 import java.awt.Point;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import org.netbeans.api.visual.vmd.VMDGraphScene;
 import org.netbeans.api.visual.vmd.VMDNodeWidget;
+import org.netbeans.api.visual.widget.ComponentWidget;
 
 /**
  *
@@ -48,15 +50,18 @@ public class ComponentView {
         this.glyphs = glyphs;
         nodeID = component.getName();
     }
-    
+    @SuppressWarnings("unchecked")
     public void setScene(VMDGraphScene scene) {
         this.scene = scene;
-        //   System.out.println("scene : " + scene);
+     //   System.out.println("scene : " + scene);
         widget = (VMDNodeWidget) this.scene.addNode(nodeID);
+     //   System.out.println("nodeID : " + nodeID);
         widget.setPreferredLocation(new Point(x, y));
         widget.setNodeProperties(image, nodeID, component.getModule(), glyphs);
+        ComponentWidget componentWidget = new ComponentWidget (scene, new JComboBox (new String[] { "First", "Second", "Third" }));
+        widget.addChild(componentWidget);
         scene.addPin(nodeID, nodeID + VMDGraphScene.PIN_ID_DEFAULT_SUFFIX);
-        // System.out.println("nodeID : " + nodeID);
+      //  System.out.println("nodeID : " + nodeID);
         
     }
     

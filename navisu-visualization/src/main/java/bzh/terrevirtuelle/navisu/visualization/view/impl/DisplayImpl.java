@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.visualization.view.impl;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.lut.Clut;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.visualization.view.Display;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
@@ -15,7 +16,6 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -24,6 +24,7 @@ import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.capcaval.c3.component.ComponentState;
 
 /**
@@ -32,28 +33,28 @@ import org.capcaval.c3.component.ComponentState;
  */
 public class DisplayImpl
         implements Display, DisplayServices, ComponentState {
-    
+
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected RenderableLayer layer;
     protected DisplayController displayController;
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public void componentInitiated() {
     }
-    
+
     @Override
     public void componentStarted() {
     }
-    
+
     @Override
     public void componentStopped() {
     }
-    
+
     @Override
     public void displayPoints3D(List<Point3D> points, RenderableLayer layer) {
     }
-    
+
     @Override
     public void displayGrid(List<List<Point3D>> latLons, Material material, RenderableLayer layer) {
         List<List<Position>> posLatLons = new ArrayList<>();
@@ -66,9 +67,9 @@ public class DisplayImpl
         for (int i = 0; i < lats.size(); i++) {
             layer.addRenderables(pathLatLonS.get(i));
         }
-        */
+         */
     }
-    
+
     @Override
     public void displayPlane(double minLat, double minLon, double maxLat, double maxLon, double height,
             Material material, RenderableLayer l) {
@@ -80,7 +81,7 @@ public class DisplayImpl
         pathPositions.add(Position.fromDegrees(minLat, minLon, height));
         l.addRenderable(createPath(pathPositions, material));
     }
-    
+
     @Override
     public void displayTriangle(Triangle_dt t,
             double height, double verticalExaggeration,
@@ -105,7 +106,7 @@ public class DisplayImpl
             l.addRenderable(p);
         }
     }
-    
+
     @Override
     public void displayDelaunay(List<Triangle_dt> triangles,
             double height, double verticalExaggeration,
@@ -140,12 +141,12 @@ public class DisplayImpl
                 }
         ).forEachOrdered(
                 (_item) -> {
-                    
+
                 }
         );
         wwd.redrawNow();
     }
-    
+
     @Override
     public void displayConcaveHull(Geometry concaveHull,
             double height, double verticalExaggeration,
@@ -161,7 +162,7 @@ public class DisplayImpl
         l.addRenderable(createPath(pathPositions1, material));
         wwd.redrawNow();
     }
-    
+
     @Override
     public Path createPath(List<Position> pathPositions, Material material) {
         Path p = new Path(pathPositions);
@@ -172,5 +173,12 @@ public class DisplayImpl
         p.setAttributes(attrs0);
         return p;
     }
-    
+
+    @Override
+    public Map<Double, Material> createCLUT(String fileName) {
+        Clut clut = new Clut(fileName);
+        System.out.println(clut.getContent());
+        return null;
+    }
+
 }

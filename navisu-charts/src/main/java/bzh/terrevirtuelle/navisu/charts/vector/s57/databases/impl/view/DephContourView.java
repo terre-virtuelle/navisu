@@ -5,151 +5,85 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
 
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
-import bzh.terrevirtuelle.navisu.topology.TopologyServices;
-import gov.nasa.worldwind.WorldWind;
-import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.Position;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT;
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
-import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwind.render.SurfacePolygons;
-import java.awt.Color;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author serge
  */
 public class DephContourView
-        extends PolygonView {
+        extends PolylineView {
 
-    protected TopologyServices topologyServices;
     protected RenderableLayer layer;
     protected Path path;
-    protected String acronym;
-    protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
-    protected String label;
-    protected float val;
-    protected Color color;
+    protected List<Path> paths;
+    protected double val;
 
-    public DephContourView(TopologyServices topologyServices, RenderableLayer layer, String acronym) {
-        this.topologyServices = topologyServices;
-        this.acronym = acronym;
+    public DephContourView(RenderableLayer layer) {
         this.layer = layer;
-        //  GeometryClipper GeometryClipper;
+        paths = new ArrayList<>();
     }
 
-    @SuppressWarnings("unchecked")
-    public void display(List<DepthContour> depthContours) throws SQLException {
-        List<Path> paths = new ArrayList<>();
-        for (DepthContour d : depthContours) {
-            String s = d.getGeom();
-            s = s.replace("LINESTRING(", "");
-            s = s.replace(")", "");
-            String[] tab0 = s.split(",");
-            int l = tab0.length;
-            List<Position> positions = new ArrayList<>();
-            for (int j = 0; j < l; j++) {
-                String[] latLon = tab0[j].trim().split(" ");
-                String lat = latLon[1];
-                String lon = latLon[0];
-                positions.add(new Position(Angle.fromDegrees(Double.parseDouble(lat)),
-                        Angle.fromDegrees(Double.parseDouble(lon)), 5));
+    public void display(Shapefile shp) {
+
+        while (shp.hasNext()) {
+            try {
+                //Create classical chart
+                record = shp.nextRecord();
+                createSurfacePolylines(record, layer);
+                /*
+                Path p;
+                for (int i = 0; i < shape.getBuffer().size(); i++) {
+                    p = new Path(shape.getBuffer().subBuffer(i).getPositions());
+                    p.setValue(AVKey.SHORT_DESCRIPTION, ((Double) shape.getValue("valdco")).toString());
+                    p.setValue(AVKey.ABOVE_MEAN_SEA_LEVEL, ((Double) shape.getValue("valdco")).toString());
+                    p.setAltitudeMode(altitudeMode);
+                    paths.add(p);
+                
+                }
+                 */
+            } catch (Exception ex) {
+                Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
-            path = new Path(positions);
-            color = defineColor(Double.parseDouble(d.getValueOfDepthContour()));
-            ShapeAttributes attrs = new BasicShapeAttributes();
-            attrs.setOutlineMaterial(new Material(color));
-            path.setAttributes(attrs);
-            path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-            paths.add(path);
         }
-        layer.addRenderables(paths);
+
+        //Create kml output.kml file
+        /*
+        Path[] array = new Path[paths.size()];
+        for (int i = 0; i < paths.size(); i++) {
+            array[i] = paths.get(i);
+        }
+        creatKML(array);
+         */
         wwd.redrawNow();
     }
 
-    @Override
-    protected void setPolygonAttributes(SurfacePolygons shape, Color color) {
+    protected void createSurfacePolylines(ShapefileRecord record, RenderableLayer layer) {
 
-        normalAttributes.setDrawInterior(true);
-        normalAttributes.setInteriorMaterial(new Material(color));
-        normalAttributes.setDrawOutline(true);
-        normalAttributes.setOutlineMaterial(new Material(Color.BLACK));
-        normalAttributes.setEnableLighting(true);
-        shape.setAttributes(normalAttributes);
-
-        highlightAttributes.setOutlineOpacity(1);
-        highlightAttributes.setDrawInterior(true);
-        highlightAttributes.setInteriorMaterial(new Material(Color.WHITE));
-        highlightAttributes.setInteriorOpacity(.5);
-        highlightAttributes.setEnableLighting(true);
-
-        shape.setHighlightAttributes(highlightAttributes);
-    }
-
-    private Color defineColor(double val1) {
-        color = new Color(159, 215, 247);
-
-        if (val1 == -9.0 && val1 <= 0.0) {
-            color = new Color(151, 199, 0);
+        if (record != null) {
+            if (record.getAttributes() != null) {
+                entries = record.getAttributes().getEntries();
+                entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
+                    if (e.getKey().equalsIgnoreCase("valdco")) {
+                        val = (Double) e.getValue();
+                    }
+                    color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val);
+                });
+            }
+            createPolyline(record);
+            shape.setValue("valdco", val);
+            shape.setValue(AVKey.DISPLAY_NAME, Double.toString(val));
+            setPolylineAttributes(color);
+            layer.addRenderable(shape);
         }
-        if (val1 >= -14.0 && val1 <= 0.0) {
-            color = new Color(151, 199, 0);
-        }
-        if (val1 >= 0.0 && val1 <= 12.0) {
-            color = new Color(91, 175, 247);
-        }
-        if (val1 >= 0.0 && val1 <= 8.0) {
-            //color = new Color(31, 175, 247);
-            color = new Color(115, 182, 239);
-        }
-        if (val1 >= 0.0 && val1 <= 3.0) {
-            color = new Color(31, 175, 247);
-        }
-        if (val1 == 5.0 && val1 <= 10.0) {
-            color = new Color(159, 215, 247);
-        }
-        if (val1 >= 5.0 && val1 <= 25.0) {//20.0
-            color = new Color(159, 215, 247);
-        }
-        if (val1 == 10.0 && val1 <= 20.0) {
-            color = new Color(247, 247, 247);
-        }
-        if (val1 == 10.0 && val1 <= 30.0) {
-            color = new Color(247, 247, 247);
-        }
-        if (val1 == 20.0 && val1 <= 30.0) {
-            color = new Color(247, 247, 247);
-        }
-        if (val1 >= 15.0 && val1 <= 50.0) {
-            color = new Color(129, 195, 226);
-        }
-        if (val1 == 30.0 && val1 <= 50.0) {
-            color = new Color(247, 247, 247);
-        }
-        if (val1 == 50.0 && val1 <= 5000.0) {
-            color = new Color(247, 247, 247);
-        }
-        if (val1 >= 20.0 && val1 <= 5000.0) {
-            color = new Color(247, 247, 247);
-        }
-        if (val1 >= 100.0) {
-            color = new Color(247, 247, 247);
-        }
-        // pour une mer bleue, en mode nav
-        /* 
-         if (val >= -20.0 && val2 <= 5000.0) {
-         color = new Color(10, 38, 51);
-         }
-         */
-        return color;
-
     }
 }

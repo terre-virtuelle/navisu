@@ -13,14 +13,11 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.ExtrudedPolygon;
 import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
 import gov.nasa.worldwind.util.VecBuffer;
 import gov.nasa.worldwind.util.WWMath;
 import java.awt.Color;
-import java.util.Map;
-import java.util.Set;
 
 /**
  *
@@ -29,16 +26,11 @@ import java.util.Set;
 public abstract class PolygonView
         extends ShapeFileView {
 
-    protected Polygon polygon;
-    protected String label;
-    protected Color color;
-    protected ShapefileRecord record;
-    protected Set<Map.Entry<String, Object>> entries;
+    
     protected SurfacePolygons shape;
     protected double height;
     protected ShapeAttributes capAttrs = new BasicShapeAttributes();
     protected ShapeAttributes sideAttrs = new BasicShapeAttributes();
-    
 
     public PolygonView() {
 
@@ -60,7 +52,7 @@ public abstract class PolygonView
             if (height != 0) // create extruded polygons
             {
                 ExtrudedPolygon ep = new ExtrudedPolygon(height);
-                setExtrudedPolygonAttributes(ep);
+                setExtrudedPolygonAttributes(ep, color);
 
                 layer.addRenderable(ep);
 
@@ -73,7 +65,6 @@ public abstract class PolygonView
                             ep.setOuterBoundary(buffer.getLocations());
                         } else {
                             ep = new ExtrudedPolygon();
-                            //  ep.setAttributes(attrs);
                             ep.setOuterBoundary(record.getCompoundPointBuffer().getLocations());
                             layer.addRenderable(ep);
                         }
@@ -88,12 +79,35 @@ public abstract class PolygonView
                     record.getCompoundPointBuffer());
             shape.setWindingRule(AVKey.CLOCKWISE);
             shape.setPolygonRingGroups(new int[]{0});
-            layer.addRenderable(shape);
         }
     }
 
-    protected abstract void setPolygonAttributes(SurfacePolygons shape, Color color);
+    protected void setPolygonAttributes(Color col) {
+        ShapeAttributes normAttributes = new BasicShapeAttributes();
+        normAttributes.setDrawInterior(true);
+        normAttributes.setInteriorMaterial(new Material(col));
+        normAttributes.setDrawOutline(true);
+        normAttributes.setOutlineMaterial(new Material(Color.BLACK));
+        normAttributes.setEnableLighting(true);
+        shape.setAttributes(normAttributes);
 
-    protected  void setExtrudedPolygonAttributes(ExtrudedPolygon ep){}
+        shape.setHighlightAttributes(highlightAttributes);
+    }
 
+    protected void setExtrudedPolygonAttributes(ExtrudedPolygon ep, Color color) {
+        capAttrs.setDrawOutline(true);
+        capAttrs.setDrawInterior(true);
+        capAttrs.setOutlineMaterial(Material.BLUE);
+        capAttrs.setInteriorMaterial(new Material(color));
+        capAttrs.setEnableLighting(true);
+        ep.setCapAttributes(capAttrs);
+
+        sideAttrs.setOutlineWidth(3);
+        sideAttrs.setDrawOutline(true);
+        sideAttrs.setDrawInterior(true);
+        sideAttrs.setOutlineMaterial(Material.BLUE);
+        sideAttrs.setInteriorMaterial(new Material(color));
+        sideAttrs.setEnableLighting(true);
+        ep.setSideAttributes(sideAttrs);
+    }
 }

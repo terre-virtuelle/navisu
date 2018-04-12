@@ -13,6 +13,7 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import java.util.List;
+import java.util.Map;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -42,4 +43,5 @@ public interface DisplayServices
 
     Path createPath(List<Position> pathPositions, Material material);
 
+    Map<Double, Material> createCLUT(String fileName);
 }

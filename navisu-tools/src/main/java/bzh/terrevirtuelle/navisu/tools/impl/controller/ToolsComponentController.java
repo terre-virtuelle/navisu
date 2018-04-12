@@ -167,6 +167,7 @@ public class ToolsComponentController
      * @param guiAgentServices
      * @param s57ChartComponentServices
      * @param databaseServices
+     * @param bathymetryDBServices
      * @param instrumentDriverManagerServices
      */
     @SuppressWarnings("unchecked")
