@@ -133,5 +133,5 @@ public interface DatabaseServices
     String spatialDBToShapefile(String table, String attributes, 
             String databaseName,
             String user, String passwd,
-            double latMin, double lonMin, double latMax, double lonMax);
+            double latMin, double lonMin, double latMax, double lonMax, boolean clip);
 }
