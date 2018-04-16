@@ -57,6 +57,8 @@
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                     </rowConstraints>
                                                     <opaqueInsets>
                                                         <Insets />
@@ -83,7 +85,11 @@
                                           <TextField fx:id="countryTF" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                           <ChoiceBox fx:id="countryCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                           <Label prefHeight="15.0" prefWidth="148.0" text="Configuration" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                                  <Button fx:id="createButton" maxWidth="109.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Create" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+                                                  <Button fx:id="createButton" maxWidth="109.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Create" GridPane.columnIndex="3" GridPane.rowIndex="11" />
+                                          <Label prefHeight="15.0" prefWidth="155.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                          <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                                          <TextField text="admin" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                                          <Label prefHeight="15.0" prefWidth="150.0" text="Password" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                                                     </children>
                                                 </GridPane>
                                             </children>

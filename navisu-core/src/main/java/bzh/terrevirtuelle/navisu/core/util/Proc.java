@@ -73,7 +73,7 @@ public class Proc {
         args.stream().forEach((arg) -> {
             sb.append(arg).append(SPACE);
         });
-        System.out.println("exec : " + sb);
+      //  System.out.println("exec : " + sb);
         process = Runtime.getRuntime().exec(sb.toString());
 
         redirectSreamAsync(process.getInputStream(), out);
