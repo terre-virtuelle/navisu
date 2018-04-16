@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.topology.impl;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.topology.Topology;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import com.google.common.collect.Range;
 import com.vividsolutions.jts.algorithm.Centroid;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.CoordinateList;
@@ -225,26 +226,31 @@ public class TopologyImpl
         String[] posTab0 = tmp.split(",");
         List<Position> positions = new ArrayList<>();
         for (String s : posTab0) {
-            String[] posTab1 = s.split("\\s+");
-            positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1])),
-                    Angle.fromDegrees(Double.valueOf(posTab1[0])), height));
+            String[] posTab1 = s.trim().split("\\s+");
+            if (posTab1.length != 0) {
+                try {
+                    positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1].trim())),
+                            Angle.fromDegrees(Double.valueOf(posTab1[0].trim())), height));
+                } catch (NumberFormatException e) {
+                    System.out.println("posTab1 : " + posTab1.length);
+                    
+                }
+            }
         }
         return new Path(positions);
     }
 
     @Override
     public Polygon wktMultiPolygonToWwjPolygon(String geometry) {
-        //  System.out.println("geometry : " + geometry);
         String tmp = geometry.replace("MULTIPOLYGON(((", "");
         tmp = tmp.replace(")))", "");
         tmp = tmp.replace(")", "");
         tmp = tmp.replace("(", "");
-        //   System.out.println("tmp : " + tmp);
+
         String[] posTab0 = tmp.split(",");
         List<Position> positions = new ArrayList<>();
         for (String s : posTab0) {
             String[] posTab1 = s.split("\\s+");
-            //  System.out.println(posTab1[0] + " " + posTab1[1]);
             positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1])),
                     Angle.fromDegrees(Double.valueOf(posTab1[0])), 10.0));
         }
@@ -366,5 +372,46 @@ public class TopologyImpl
             geometryFiltered = null;
         }
         return geometryFiltered;
+    }
+
+    @Override
+    public List<Polygon> wktMultiLineToWwjMultiPolygon(String geometry) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<String> clipWKTMultiString(List<String> data, double latMin, double lonMin, double latMax, double lonMax) {
+        Range rangeLat = Range.closed(latMin, latMax);
+        Range rangeLon = Range.closed(lonMin, lonMax);
+
+        List<String> multiString = new ArrayList<>();
+        List<String> tmp = new ArrayList<>();
+        for (String s : data) {
+            tmp.clear();
+            s = s.replace("MULTILINESTRING((", "");
+            s = s.replace("))", "");
+            String[] tab = s.split(",");
+            for (String ss : tab) {
+                String[] tab1 = ss.trim().split("\\s+");
+                if (tab1.length != 0) {
+                    if (rangeLat.contains(Double.valueOf(tab1[1]))
+                            && rangeLon.contains(Double.valueOf(tab1[0]))) {
+                        tmp.add(tab1[0] + " " + tab1[1]);
+                    }
+                }
+            }
+            if (!tmp.isEmpty()) {
+
+                String sss = "MULTILINESTRING((";
+                for (int i = 0; i < tmp.size() - 1; i++) {
+                    sss += tmp.get(i) + ", ";
+                }
+                sss += tmp.get(tmp.size() - 1);
+                sss += "))";
+                multiString.add(sss);
+            }
+        }
+        return multiString;
     }
 }
