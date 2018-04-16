@@ -1,41 +1,42 @@
 /*
- * Copyright (C) 2012 United States Government as represented by the Administrator of the
- * National Aeronautics and Space Administration.
- * All Rights Reserved.
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
 
-import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
-import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolyline;
-import gov.nasa.worldwind.geom.Sector;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwind.render.SurfacePolylines;
-import java.awt.Color;
 
+/**
+ *
+ * @author serge
+ */
 public class PolylineView
-        extends ShapeFileView {
+        implements PolyGeomView {
 
-    protected SurfacePolylines shape;
+    protected TopologyServices topologyServices;
+    protected RenderableLayer layer;
+    protected Path path;
+    protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
+    protected String label;
 
-    public PolylineView() {
+    public PolylineView(TopologyServices topologyServices, RenderableLayer layer) {
+        this.topologyServices = topologyServices;
+        this.layer = layer;
     }
 
-    protected void createPolyline(ShapefileRecord record) {
-        shape = new SurfacePolylines(
-                Sector.fromDegrees(((ShapefileRecordPolyline) record).getBoundingRectangle()),
-                record.getCompoundPointBuffer());
-    }
-
-    protected void setPolylineAttributes(Color col) {
-        ShapeAttributes normAttributes = new BasicShapeAttributes();
-        normAttributes.setDrawOutline(true);
-        normAttributes.setOutlineMaterial(new Material(col));
-        normAttributes.setEnableLighting(true);
-        shape.setAttributes(normAttributes);
-
-        shape.setHighlightAttributes(highlightAttributes);
+    @SuppressWarnings("unchecked")
+    @Override
+    public void display(String geometries, ShapeAttributes attrs) {
+            path = topologyServices.wktMultiLineToWwjPath(geometries, 1.0);
+            path.setAttributes(attrs);
+            path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+            layer.addRenderable(path);
     }
 }

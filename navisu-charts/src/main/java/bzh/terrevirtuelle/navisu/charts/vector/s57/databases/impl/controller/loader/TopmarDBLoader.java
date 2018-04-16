@@ -20,16 +20,32 @@ import org.postgis.PGgeometry;
 /**
  *
  * @author serge
+ * @date 24 fev 2018 NaVisu project
  */
-public class MnsysDbLoader {
-    protected static final Logger LOGGER = Logger.getLogger(MnsysDbLoader.class.getName());
-    protected Map<Pair<Double, Double>, String> marsysMap;
+public class TopmarDBLoader {
+
+    protected static final Logger LOGGER = Logger.getLogger(TopmarDBLoader.class.getName());
+    protected Map<Pair<Double, Double>, String> topMarksMap;
     protected Connection connection;
 
-    public MnsysDbLoader(Connection connection) {
+    /**
+     *
+     * @param connection
+     */
+    public TopmarDBLoader(Connection connection) {
         this.connection = connection;
-        marsysMap=new HashMap<>();
+        this.topMarksMap = new HashMap<>();
     }
+
+    /**
+     * Check  sector latMin, lonMin, latMax, lonMax
+     * for TopMark on buoyage
+     * @param latMin
+     * @param lonMin
+     * @param latMax
+     * @param lonMax
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public Map<Pair<Double, Double>, String> retrieveIn(double latMin, double lonMin,
             double latMax, double lonMax) {
@@ -37,19 +53,19 @@ public class MnsysDbLoader {
         ResultSet r;
         if (connection != null) {
             try {
-                String request = S57_REQUEST_MAP.get("M_NSYS");
+                String request = S57_REQUEST_MAP.get("TOPMAR");
                 request += "(" + lonMin + ", " + latMin + ", "
                         + lonMax + ", " + latMax + ", "
                         + "4326);";
                 r = connection.createStatement().executeQuery(request);
                 while (r.next()) {
-                    String marsys = r.getString(2);
-                    if (marsys == null || marsys.equals("9") || marsys.equals("10")) {
-                        marsys = "0";
+                    String tm = r.getString(2);
+                    if (tm == null) {
+                        tm = "0";
                     }
                     geom = (PGgeometry) r.getObject(1);
-                    marsysMap.put(new Pair(geom.getGeometry().getFirstPoint().getY(),
-                            geom.getGeometry().getFirstPoint().getX()), marsys);
+                    topMarksMap.put(new Pair(geom.getGeometry().getFirstPoint().getY(),
+                            geom.getGeometry().getFirstPoint().getX()), tm);
                 }
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
@@ -60,6 +76,6 @@ public class MnsysDbLoader {
                 alert.setHeaderText("Database connection fail");
                 alert.show();
         }
-        return marsysMap;
+        return topMarksMap;
     }
 }

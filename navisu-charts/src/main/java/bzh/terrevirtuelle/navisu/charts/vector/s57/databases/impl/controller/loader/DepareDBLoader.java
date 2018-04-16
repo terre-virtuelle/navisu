@@ -12,11 +12,11 @@ import gov.nasa.worldwind.formats.shapefile.Shapefile;
  * @date 28/02/2018
  * @author serge
  */
-public class DepareDbLoader
-        extends DBLoader {
+public class DepareDBLoader
+        extends ShapefileDBLoader {
 
-    public DepareDbLoader(DatabaseServices databaseServices, String databaseName, String user, String passwd) {
-        super(databaseServices, databaseName, user, passwd);
+    public DepareDBLoader(DatabaseServices databaseServices, String databaseName, String user, String passwd) {
+        super(databaseServices, databaseName, user, passwd, true);
     }
 
     @SuppressWarnings("unchecked")

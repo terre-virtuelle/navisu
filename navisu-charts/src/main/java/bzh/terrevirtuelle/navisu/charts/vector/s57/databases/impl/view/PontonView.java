@@ -7,12 +7,10 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
-import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.awt.Color;
 import java.util.List;
@@ -23,30 +21,32 @@ import java.util.List;
  */
 public class PontonView {
 
+    PolyGeomView polyView;
     protected TopologyServices topologyServices;
     protected RenderableLayer layer;
-    protected Path path;
-    protected String acronym;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
-    protected String label;
 
-    public PontonView(TopologyServices topologyServices, RenderableLayer layer, String acronym) {
+    public PontonView(TopologyServices topologyServices, RenderableLayer layer) {
         this.topologyServices = topologyServices;
-        this.acronym = acronym;
         this.layer = layer;
     }
 
     @SuppressWarnings("unchecked")
     public void display(List<String> geometries) {
-        ShapeAttributes attrs = new BasicShapeAttributes();
-        attrs.setOutlineMaterial(new Material(Color.LIGHT_GRAY));
-        attrs.setOutlineWidth(2d);
-
+        ShapeAttributes normAttributes = new BasicShapeAttributes();
+        normAttributes.setOutlineMaterial(new Material(Color.WHITE));
+        normAttributes.setOutlineWidth(3.0);
+        normAttributes.setEnableLighting(true);
         for (String s : geometries) {
-            path = topologyServices.wktMultiLineToWwjPath(s, 5.0);
-            path.setAttributes(attrs);
-            path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-            layer.addRenderable(path);
+            if (s.contains("MULTILINESTRING")) {
+                polyView = new PolylineView(topologyServices, layer);
+                polyView.display(s, normAttributes);
+            }
+            if (s.contains("MULTIPOLYGON")) {
+                System.out.println("s : " + s);
+                polyView = new PolygonView(topologyServices, layer);
+                polyView.display(s, normAttributes);
+            }
         }
         wwd.redrawNow();
     }

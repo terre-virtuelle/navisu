@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  * @author serge
  */
 public class DepareView
-        extends PolygonView {
+        extends ShapefilePolygonView {
 
     protected double val1;
     protected double val2;

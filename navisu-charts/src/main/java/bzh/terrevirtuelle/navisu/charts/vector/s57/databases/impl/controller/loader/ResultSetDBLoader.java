@@ -6,21 +6,18 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
-import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDbLoader.LOGGER;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader.LOGGER;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import javafx.scene.control.Alert;
-import org.postgis.PGgeometry;
 
 /**
  *
  * @author serge
  */
-public class PontonDbLoader {
+public class ResultSetDBLoader {
 
     
     protected Connection connection;
@@ -30,31 +27,24 @@ public class PontonDbLoader {
     protected double lat;
     protected double lon;
 
-    public PontonDbLoader( Connection connection, String acronym) {
+    
+    public ResultSetDBLoader(Connection connection, String acronym) {
         this.connection = connection;
         this.acronym = acronym;
-
     }
 
     @SuppressWarnings("unchecked")
-    public List<String> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
-        List<String> polygons = new ArrayList<>();
-        PGgeometry geom;
-
+    public ResultSet retrieveResultSetIn(double latMin, double lonMin, double latMax, double lonMax) {
+       
         if (connection != null) {
             try {
                 request = S57_REQUEST_MAP.get(acronym);
                 request += "(" + lonMin + ", " + latMin + ", "
                         + lonMax + ", " + latMax + ", "
                         + "4326);";
-
                 resultSet = connection
                         .createStatement()
                         .executeQuery(request);
-
-                while (resultSet.next()) {
-                    polygons.add(resultSet.getString(1));
-                }
 
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
@@ -65,7 +55,7 @@ public class PontonDbLoader {
             alert.setHeaderText("Database connection fail");
             alert.show();
         }
-        return polygons;
+        return resultSet;
     }
 
 }

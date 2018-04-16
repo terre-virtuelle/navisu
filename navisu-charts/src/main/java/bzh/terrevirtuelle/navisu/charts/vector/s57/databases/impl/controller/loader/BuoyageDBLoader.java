@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.BUOYAGE_ShapefileLoader;
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
-import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDbLoader.LOGGER;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader.LOGGER;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE;
 import bzh.terrevirtuelle.navisu.util.Pair;
@@ -26,9 +26,9 @@ import org.postgis.PGgeometry;
  *
  * @author serge
  */
-public class DaymarDbLoader {
+public class BuoyageDBLoader {
 
-    protected final String PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
+    protected final String BUOYAGE_PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
     protected Connection connection;
     protected String acronym;
     protected Buoyage buoyage;
@@ -39,7 +39,7 @@ public class DaymarDbLoader {
     protected double lon;
     protected ResultSet resultSet;
 
-    public DaymarDbLoader(Connection connection, String acronym,
+    public BuoyageDBLoader(Connection connection, String acronym,
             Map<Pair<Double, Double>, String> marsysMap) {
         this.connection = connection;
         this.acronym = acronym;
@@ -47,11 +47,10 @@ public class DaymarDbLoader {
 
         String className = BUOYAGE.ATT.get(acronym);
         try {
-            claz = Class.forName(PATH + "." + className);
+            claz = Class.forName(BUOYAGE_PATH + "." + className);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -111,14 +110,8 @@ public class DaymarDbLoader {
                     buoyage.setColourPattern(colPat);
 
                     buoyage.setId(resultSet.getLong("rcid"));
-
-                    String natcon = resultSet.getString("natcon");
-                    if (natcon == null) {
-                        natcon = "0";
-                    }
-                    buoyage.setNatureOfConstruction(natcon);
                     
-                    String cat = resultSet.getString("catspm");
+                    String cat = resultSet.getString(7);
                     if (cat == null) {
                         cat = "0";
                     }

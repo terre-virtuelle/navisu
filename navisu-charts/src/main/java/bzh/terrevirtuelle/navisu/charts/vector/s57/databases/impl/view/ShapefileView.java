@@ -40,7 +40,7 @@ import javax.xml.transform.stream.StreamSource;
  *
  * @author serge
  */
-public class ShapeFileView {
+public class ShapefileView {
 
     protected String label;
     protected Color color = Color.CYAN;
@@ -54,10 +54,10 @@ public class ShapeFileView {
     protected double latMax;
     protected double lonMax;
 
-    public ShapeFileView() {
+    public ShapefileView() {
         highlightAttributes.setOutlineOpacity(1);
         highlightAttributes.setDrawInterior(true);
-        highlightAttributes.setInteriorMaterial(new Material(Color.WHITE));
+        highlightAttributes.setInteriorMaterial(new Material(Color.RED));
         highlightAttributes.setInteriorOpacity(.5);
         highlightAttributes.setEnableLighting(true);
     }
@@ -84,7 +84,7 @@ public class ShapeFileView {
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
             transformer.transform(new StreamSource(new StringReader(xmlString)), new StreamResult(new File("cmd/output.kml")));
         } catch (IOException | IllegalArgumentException | XMLStreamException | TransformerException ex) {
-            Logger.getLogger(ShapeFileView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(ShapefileView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
@@ -100,7 +100,7 @@ public class ShapeFileView {
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
             transformer.transform(new StreamSource(new StringReader(xmlString)), new StreamResult(new File("cmd/output.kml")));
         } catch (IOException | IllegalArgumentException | XMLStreamException | TransformerException ex) {
-            Logger.getLogger(ShapeFileView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(ShapefileView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 }
