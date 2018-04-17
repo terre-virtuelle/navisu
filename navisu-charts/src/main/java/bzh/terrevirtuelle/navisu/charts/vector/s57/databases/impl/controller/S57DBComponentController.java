@@ -674,7 +674,7 @@ public class S57DBComponentController
         if (object.trim().equals("ALL") || object.trim().equals("PONTON")) {
             new PontonView(topologyServices, harbourLayer)
                     .display(new PontonDBLoader(connection, "PONTON")
-                            .retrieveIn(latMin, lonMin, latMax, lonMax));
+                            .retrieveGeometriesIn(latMin, lonMin, latMax, lonMax));
         }
         if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
             guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
@@ -693,21 +693,21 @@ public class S57DBComponentController
             guiAgentServices.getJobsManager().newJob("Load contours", (progressHandle) -> {
                 new DephContourView(topologyServices, depareLayer)
                         .display(new DepthContourDBLoader(topologyServices, connection, "DEPCNT")
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
+                                .retrieveGeometriesIn(latMin, lonMin, latMax, lonMax));
             });
         }
         if (object.trim().equals("ALL") || object.trim().equals("COALNE")) {
             guiAgentServices.getJobsManager().newJob("Load coastaline", (progressHandle) -> {
                 new CoastalineView(topologyServices, harbourLayer)
                         .display(new CoastalineDBLoader(connection, "COALNE")
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
+                                .retrieveGeometriesIn(latMin, lonMin, latMax, lonMax));
             });
         }
         if (object.trim().equals("ALL") || object.trim().equals("SLCONS")) {
             guiAgentServices.getJobsManager().newJob("Load shore line construction", (progressHandle) -> {
                 new ShorelineConstructionView(topologyServices, harbourLayer)
                         .display(new ShorelineConstructionDBLoader(connection, "SLCONS")
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
+                                .retrieveGeometriesIn(latMin, lonMin, latMax, lonMax));
             });
         }
     }

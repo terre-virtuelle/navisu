@@ -13,5 +13,6 @@ import gov.nasa.worldwind.render.ShapeAttributes;
  */
 public interface PolyGeomView {
 
-    void display(String geometries, ShapeAttributes attrs);
+    default void display(String geometries, ShapeAttributes attrs, ShapeAttributes hattrs){}
+    default void display(String geometries, ShapeAttributes attrs){}
 }

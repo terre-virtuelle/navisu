@@ -33,9 +33,10 @@ public class PolylineView
 
     @SuppressWarnings("unchecked")
     @Override
-    public void display(String geometries, ShapeAttributes attrs) {
+    public void display(String geometries, ShapeAttributes attrs, ShapeAttributes hattrs) {
             path = topologyServices.wktMultiLineToWwjPath(geometries, 1.0);
             path.setAttributes(attrs);
+            path.setHighlightAttributes(hattrs);
             path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
             layer.addRenderable(path);
     }

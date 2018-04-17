@@ -34,13 +34,21 @@ public class DephContourView {
     @SuppressWarnings("unchecked")
     public void display(List<String> geometries) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();
-        normAttributes.setOutlineMaterial(new Material(Color.WHITE));
+        normAttributes.setOutlineMaterial(new Material(Color.GREEN));
         normAttributes.setOutlineWidth(3.0);
         normAttributes.setEnableLighting(true);
+
+        ShapeAttributes highlightAttributes = new BasicShapeAttributes(normAttributes);
+        highlightAttributes.setOutlineOpacity(1);
+      //  highlightAttributes.setDrawInterior(true);
+        highlightAttributes.setOutlineMaterial(new Material(Color.RED));
+        
+        highlightAttributes.setEnableLighting(true);
+
         for (String s : geometries) {
             if (s.contains("MULTILINESTRING")) {
                 polyView = new PolylineView(topologyServices, layer);
-                polyView.display(s, normAttributes);
+                polyView.display(s, normAttributes, highlightAttributes);
             }
         }
         wwd.redrawNow();

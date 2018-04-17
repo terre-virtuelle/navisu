@@ -24,7 +24,7 @@ public class CoastalineDBLoader
     }
 
     @SuppressWarnings("unchecked")
-    public List<String> retrieveIn(double latMin, double lonMin,
+    public List<String> retrieveGeometriesIn(double latMin, double lonMin,
             double latMax, double lonMax) {
         List<String> polyString = new ArrayList<>();
 

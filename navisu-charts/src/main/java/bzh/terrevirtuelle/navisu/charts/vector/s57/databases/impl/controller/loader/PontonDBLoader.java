@@ -24,7 +24,7 @@ public class PontonDBLoader
     }
 
     @SuppressWarnings("unchecked")
-    public List<String> retrieveIn(double latMin, double lonMin,
+    public List<String> retrieveGeometriesIn(double latMin, double lonMin,
             double latMax, double lonMax) {
         List<String> polyString = new ArrayList<>();
 
@@ -36,6 +36,7 @@ public class PontonDBLoader
         } catch (SQLException ex) {
             Logger.getLogger(PontonDBLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return polyString;
     }
 }
