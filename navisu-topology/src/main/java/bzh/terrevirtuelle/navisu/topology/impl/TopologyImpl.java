@@ -221,8 +221,13 @@ public class TopologyImpl
 
     @Override
     public Path wktMultiLineToWwjPath(String geometry, double height) {
+       // System.out.println("geometry : " + geometry);
         String tmp = geometry.replace("MULTILINESTRING((", "");
+        tmp = tmp.replace("MULTILINESTRING ((", "");
         tmp = tmp.replace("))", "");
+        tmp = tmp.replace(")", "");
+        tmp = tmp.replace("(", "");
+      //  System.out.println("tmp : " + tmp);
         String[] posTab0 = tmp.split(",");
         List<Position> positions = new ArrayList<>();
         for (String s : posTab0) {
@@ -232,7 +237,7 @@ public class TopologyImpl
                     positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1].trim())),
                             Angle.fromDegrees(Double.valueOf(posTab1[0].trim())), height));
                 } catch (NumberFormatException e) {
-                    System.out.println("posTab1 : " + posTab1.length);
+                    System.out.println("posTab1 : " + posTab1[0] + " "+ posTab1[1]);
                     
                 }
             }
