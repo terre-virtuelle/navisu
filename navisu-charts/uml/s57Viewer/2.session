@@ -1,0 +1,15 @@
+window_sizes 1200 896 378 816 682 82
+diagrams
+  active  classdiagram_ref 128002 // s57Viewer
+    816 740 100 4 36 0
+end
+show_stereotypes
+selected class_ref 131586 // DaymarView
+open
+  classview_ref 128002 // databases
+  classview_ref 128386 // controller
+  classview_ref 128642 // loader
+  classview_ref 128514 // view
+  classview_ref 128770 // s57Viewer
+end
+end

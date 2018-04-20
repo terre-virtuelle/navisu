@@ -1,0 +1,24 @@
+class CoastlineDBLoader
+!!!131842.java!!!	CoastlineDBLoader(inout connection : Connection, in acronym : String)
+        super(connection, acronym);
+!!!131970.java!!!	retrieveGeometriesIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : List<String>
+        geometry = super.retrieveGeometriesIn(latMin, lonMin, latMax, lonMax);
+        if (geometry != null) {
+            geometry = topologyServices.clipWKTMultiString(geometry, latMin, lonMin, latMax, lonMax);
+        }
+        return geometry;
+!!!132098.java!!!	retrieveObjectsIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : List<? extends Geo>
+        geometry = new ArrayList<>();
+        objects = new ArrayList<>();
+
+        resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
+        try {
+            while (resultSet.next()) {
+                Coastline object = new Coastline();
+                object.setGeom(resultSet.getString(1));
+                objects.add(object);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DepthContourDBLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return objects;

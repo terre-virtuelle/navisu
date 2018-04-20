@@ -1,0 +1,101 @@
+class DaymarDBLoader
+!!!132226.java!!!	DaymarDBLoader(inout connection : Connection, in acronym : String, inout marsysMap : Map<Pair<Double, Double>, String>)
+        this.connection = connection;
+        this.acronym = acronym;
+        this.marsysMap = marsysMap;
+
+        String className = BUOYAGE.ATT.get(acronym);
+        try {
+            claz = Class.forName(PATH + "." + className);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+!!!132354.java!!!	retrieveIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : List<Buoyage>
+        List<Buoyage> buoyages = new ArrayList<>();
+        PGgeometry geom;
+
+        if (connection != null) {
+            try {
+                request = S57_REQUEST_MAP.get(acronym);
+                request += "(" + lonMin + ", " + latMin + ", "
+                        + lonMax + ", " + latMax + ", "
+                        + "4326);";
+
+                resultSet = connection
+                        .createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)
+                        .executeQuery(request);
+
+                while (resultSet.next()) {
+                    try {
+                        buoyage = (Buoyage) claz.newInstance();
+                    } catch (InstantiationException | IllegalAccessException ex) {
+                        Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                    }
+                    String tmp = resultSet.getString("objnam");
+                    String name = "";
+                    if (tmp != null) {
+                        name = tmp;
+                    }
+                    buoyage.setObjectName(name);
+
+                    geom = (PGgeometry) resultSet.getObject("geom");
+                    lat = geom.getGeometry().getFirstPoint().getY();
+                    lon = geom.getGeometry().getFirstPoint().getX();
+                    buoyage.setLatitude(lat);
+                    buoyage.setLongitude(lon);
+
+                    tmp = resultSet.getString(3);
+                    String shp = "0";
+                    if (tmp != null) {
+                        shp = tmp;
+                    }
+                    buoyage.setShape(shp);
+
+                    tmp = resultSet.getString("colour");
+                    String col = "0";
+                    if (tmp != null) {
+                        col = tmp;
+                    }
+                    buoyage.setColour(col);
+
+                    tmp = resultSet.getString("colpat");
+                    String colPat = "0";
+                    if (tmp != null) {
+                        colPat = tmp;
+                    }
+                    buoyage.setColourPattern(colPat);
+
+                    buoyage.setId(resultSet.getLong("rcid"));
+
+                    String natcon = resultSet.getString("natcon");
+                    if (natcon == null) {
+                        natcon = "0";
+                    }
+                    buoyage.setNatureOfConstruction(natcon);
+                    
+                    String cat = resultSet.getString("catspm");
+                    if (cat == null) {
+                        cat = "0";
+                    }
+                    buoyage.setCategoryOfMark(cat);
+
+                    String ma = marsysMap.get(new Pair(lat, lon));
+                    if (ma == null) {
+                        ma = "1";
+                    }
+                    buoyage.setMarsys(ma);
+
+                    buoyages.add(buoyage);
+                }
+
+            } catch (SQLException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Database connection fail");
+            alert.show();
+        }
+        return buoyages;

@@ -1,0 +1,51 @@
+class S57DBComponentImpl
+!!!128770.java!!!	componentInitiated() : void
+        wwd = GeoWorldWindViewImpl.getWW();
+!!!128898.java!!!	on(inout  : String...files) : void
+        String[] cmd = files;
+        if (cmd != null) {
+            componentKeyName = cmd[0];
+            if (cmd[0].equals(COMPONENT_KEY_NAME_0)) {
+                controller = new S57DBComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
+                        guiAgentServices,
+                        layersManagerServices,
+                        layerTreeServices,
+                        s57ChartComponentServices,
+                        databaseServices,
+                        instrumentDriverManagerServices,
+                        topologyServices,
+                        jtsServices,
+                        shapefileObjectServices,
+                        displayServices,
+                        delaunayServices);
+                controller.setVisible(true);
+            }
+        }
+!!!129026.java!!!	off() : void
+        if (controller != null) {
+            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller);
+            guiAgentServices.getRoot().getChildren().remove(controller);
+            controller.setVisible(false);
+        }
+!!!129154.java!!!	canOpen(in category : String) : boolean
+        boolean canOpen = false;
+
+        if (category.equals(COMPONENT_KEY_NAME_0)) {
+            canOpen = true;
+        }
+        return canOpen;
+!!!129282.java!!!	handleOpenFile(inout pHandle : ProgressHandle, in fileName : String) : void
+
+!!!129410.java!!!	getDriver() : InstrumentDriver
+        return this;
+!!!129538.java!!!	componentStarted() : void
+
+!!!129666.java!!!	componentStopped() : void
+
+!!!129794.java!!!	getConnnection(in database : String, in user : String, in passwd : String) : Connection
+        return controller.getConnection();
+!!!129922.java!!!	getS57Objects(inout t : Geo, in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : List<? extends Geo>
+  
+    return controller.getS57Objects(t,  latMin,  lonMin,  latMax,  lonMax);
+!!!130050.java!!!	getS57Objects(inout t : List<? extends Geo>, in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : List<List<? extends Geo>>
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

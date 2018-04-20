@@ -24,12 +24,13 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.S57DBComponent;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.S57DBComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
+import java.sql.Connection;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -71,10 +72,8 @@ public class S57DBComponentImpl
 
     private final String COMPONENT_KEY_NAME_0 = "ReqDbS57";
     private String componentKeyName;
-
     protected S57DBComponentController controller;
     protected Layer layer;
-
     protected static final Logger LOGGER = Logger.getLogger(S57DBComponentImpl.class.getName());
     protected WorldWindow wwd;
     protected String userDirPath = null;
@@ -150,9 +149,22 @@ public class S57DBComponentImpl
     }
 
     @Override
-    public List<Buoyage> getBuoyage(String database, String user, String passwd,
-            Buoyage buoy, double lat0, double lon0, double lat1, double lon1) {
+    public Connection getConnnection(String database, String user, String passwd) {
+        return controller.getConnection();
+    }
+
+
+    @Override
+    public List<? extends Geo> getS57Objects(Geo t, double latMin, double lonMin, double latMax, double lonMax) {
+  
+    return controller.getS57Objects(t,  latMin,  lonMin,  latMax,  lonMax);
+    }
+
+    @Override
+    public List<List<? extends Geo>> getS57Objects(List<? extends Geo> t, double latMin, double lonMin, double latMax, double lonMax) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
 
 }

@@ -1,0 +1,31 @@
+class DepthContourDBLoader
+!!!133378.java!!!	DepthContourDBLoader(inout topologyServices : TopologyServices, inout connection : Connection)
+        super(topologyServices, connection, "DepthContour");
+!!!133506.java!!!	retrieveGeometriesIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : List<String>
+        geometry = super.retrieveGeometriesIn(latMin, lonMin, latMax, lonMax);
+        if (geometry != null) {
+            geometry = topologyServices.clipWKTMultiString(geometry, latMin, lonMin, latMax, lonMax);
+        }
+        return geometry;
+!!!133634.java!!!	retrieveObjectsIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : List<? extends Geo>
+        objects = new ArrayList<>();
+        String geom = "";
+        resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
+        DepthContour object;
+        try {
+            while (resultSet.next()) {
+                object = new DepthContour();
+                geom = resultSet.getString(1);
+                if (geom != null) {
+                    geom = topologyServices.clipWKTMultiString(geom, latMin, lonMin, latMax, lonMax);
+                    object.setGeom(geom);
+                    object.setValueOfDepthContour(Double.toString(resultSet.getDouble(2)));
+                    object.getLabels().put("DEPCNT","DepthContour");
+                    object.getLabels().put("VALDCO",Double.toString(resultSet.getDouble(2))+" m");
+                    objects.add(object);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DepthContourDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        return objects;

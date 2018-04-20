@@ -5,6 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Pontoon;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.ShorelineConstruction;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,24 +23,31 @@ import java.util.logging.Logger;
 public class ShorelineConstructionDBLoader
             extends ResultSetDBLoader {
 
-    public ShorelineConstructionDBLoader(Connection connection, String acronym) {
-        super(connection, acronym);
+    public ShorelineConstructionDBLoader(TopologyServices topologyServices,
+            Connection connection) {
+        super(topologyServices, connection, "Pontoon");
     }
 
-    @SuppressWarnings("unchecked")
-    public List<String> retrieveGeometriesIn(double latMin, double lonMin,
-            double latMax, double lonMax) {
-        List<String> polyString = new ArrayList<>();
-
+    @Override
+    public List<? extends Geo> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
+        objects = new ArrayList<>();
+        String geom = "";
         resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
+        ShorelineConstruction object;
         try {
             while (resultSet.next()) {
-                polyString.add(resultSet.getString(1));
+                object = new ShorelineConstruction();
+                geom = resultSet.getString(1);
+                if (geom != null&& geom.contains("MULTILINESTRING")) {
+                    geom = topologyServices.clipWKTMultiLineString(geom, latMin, lonMin, latMax, lonMax);
+                    object.setGeom(geom);
+                    object.getLabels().put("SLCONS","ShorelineConstruction");
+                    objects.add(object);
+                }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ShorelineConstructionDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(PontoonDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        return polyString;
+        return objects;
     }
-
 }

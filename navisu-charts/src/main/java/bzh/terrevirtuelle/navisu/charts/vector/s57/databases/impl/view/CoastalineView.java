@@ -37,7 +37,7 @@ public class CoastalineView
        //Clip 
         for (String s : geometries) {
             polyView = new PolylineView(topologyServices, layer);
-            polyView.display(s, normAttributes);
+           // polyView.display(s, normAttributes);
         }
     }
 

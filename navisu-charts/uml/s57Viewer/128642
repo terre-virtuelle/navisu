@@ -1,0 +1,1522 @@
+format 76
+"loader" // databases::impl::controller::loader
+  revision 1
+  modified_by 2 "serge"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  java_dir "Z:/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-charts/src/main/java/bzh/terrevirtuelle/navisu/charts/vector/s57/databases/impl/controller/loader/"
+  java_package "bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader"
+  classview 128642 "loader"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 129282 "DepthContourDBLoader"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "@date 28/02/2018
+@author serge"
+      classrelation 129922 // <generalisation>
+	relation 129922 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129922 // <generalisation>
+	  b parent class_ref 129922 // ResultSetDBLoader
+      end
+
+      operation 133378 "DepthContourDBLoader"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "topologyServices" explicit_type "TopologyServices"
+	  param inout name "connection" explicit_type "Connection"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133506 "retrieveGeometriesIn"
+	public explicit_return_type "List<String>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 133634 "retrieveObjectsIn"
+	public explicit_return_type "List<? extends Geo>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 129666 "BuoyageDBLoader"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author serge"
+      attribute 142338 "BUOYAGE_PATH"
+	const_attribute protected explicit_type "String"
+	init_value " \"bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 142466 "connection"
+	protected explicit_type "Connection"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 142594 "acronym"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 142722 "buoyage"
+	protected explicit_type "Buoyage"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 142850 "request"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 142978 "claz"
+	protected explicit_type "Class"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 143106 "marsysMap"
+	protected explicit_type "Pair<Double, Double>, String"
+	stereotype "Map"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 143234 "lat"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 143362 "lon"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 143490 "resultSet"
+	protected explicit_type "ResultSet"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 130946 "BuoyageDBLoader"
+	public explicit_return_type ""
+	nparams 3
+	  param inout name "connection" explicit_type "Connection"
+	  param in name "acronym" explicit_type "String"
+	  param inout name "marsysMap" explicit_type "Map<Pair<Double, Double>, String>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131074 "retrieveIn"
+	public explicit_return_type "List<Buoyage>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+      end
+    end
+
+    class 129794 "CoastlineDBLoader"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author serge"
+      classrelation 129666 // <generalisation>
+	relation 129666 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129666 // <generalisation>
+	  b parent class_ref 129922 // ResultSetDBLoader
+      end
+
+      operation 131842 "CoastlineDBLoader"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "connection" explicit_type "Connection"
+	  param in name "acronym" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131970 "retrieveGeometriesIn"
+	public explicit_return_type "List<String>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 132098 "retrieveObjectsIn"
+	public explicit_return_type "List<? extends Geo>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 129922 "ResultSetDBLoader"
+      abstract visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author serge"
+      attribute 143618 "topologyServices"
+	protected explicit_type "TopologyServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 143746 "connection"
+	protected explicit_type "Connection"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 143874 "request"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 144002 "resultSet"
+	protected explicit_type "ResultSet"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 144130 "acronym"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 144258 "lat"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 144386 "lon"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 144514 "geometry"
+	protected explicit_type "String"
+	stereotype "List"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 144642 "objects"
+	protected explicit_type "Geo"
+	stereotype "List"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 131202 "ResultSetDBLoader"
+	public explicit_return_type ""
+	nparams 3
+	  param inout name "topologyServices" explicit_type "TopologyServices"
+	  param inout name "connection" explicit_type "Connection"
+	  param in name "acronym" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131330 "ResultSetDBLoader"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "connection" explicit_type "Connection"
+	  param in name "acronym" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131458 "retrieveGeometriesIn"
+	public explicit_return_type "List<String>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+      end
+
+      operation 131586 "retrieveObjectsIn"
+	abstract package explicit_return_type "List<? extends Geo>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131714 "retrieveResultSetIn"
+	public explicit_return_type "ResultSet"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+      end
+    end
+
+    class 130050 "DaymarDBLoader"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author serge"
+      attribute 144770 "PATH"
+	const_attribute protected explicit_type "String"
+	init_value " \"bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 144898 "connection"
+	protected explicit_type "Connection"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 145026 "acronym"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 145154 "buoyage"
+	protected explicit_type "Buoyage"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 145282 "request"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 145410 "claz"
+	protected explicit_type "Class"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 145538 "marsysMap"
+	protected explicit_type "Pair<Double, Double>, String"
+	stereotype "Map"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 145666 "lat"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 145794 "lon"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 145922 "resultSet"
+	protected explicit_type "ResultSet"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 132226 "DaymarDBLoader"
+	public explicit_return_type ""
+	nparams 3
+	  param inout name "connection" explicit_type "Connection"
+	  param in name "acronym" explicit_type "String"
+	  param inout name "marsysMap" explicit_type "Map<Pair<Double, Double>, String>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132354 "retrieveIn"
+	public explicit_return_type "List<Buoyage>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+      end
+    end
+
+    class 130178 "DepareDBLoader"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "@date 28/02/2018
+@author serge"
+      classrelation 129794 // <generalisation>
+	relation 129794 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129794 // <generalisation>
+	  b parent class_ref 130306 // ShapefileDBLoader
+      end
+
+      operation 133122 "DepareDBLoader"
+	public explicit_return_type ""
+	nparams 4
+	  param inout name "databaseServices" explicit_type "DatabaseServices"
+	  param in name "databaseName" explicit_type "String"
+	  param in name "user" explicit_type "String"
+	  param in name "passwd" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133250 "retrieveIn"
+	public explicit_return_type "Shapefile"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+      end
+    end
+
+    class 130306 "ShapefileDBLoader"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author serge"
+      attribute 146050 "databaseServices"
+	protected explicit_type "DatabaseServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 146178 "databaseName"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 146306 "user"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 146434 "passwd"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 146562 "connection"
+	protected explicit_type "Connection"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 146690 "request"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 146818 "resultSet"
+	protected explicit_type "ResultSet"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 146946 "acronym"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 147074 "lat"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 147202 "lon"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 147330 "clip"
+	protected explicit_type "boolean"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 132482 "ShapefileDBLoader"
+	public explicit_return_type ""
+	nparams 5
+	  param inout name "databaseServices" explicit_type "DatabaseServices"
+	  param in name "databaseName" explicit_type "String"
+	  param in name "user" explicit_type "String"
+	  param in name "passwd" explicit_type "String"
+	  param inout name "clip" explicit_type "boolean"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132610 "ShapefileDBLoader"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "connection" explicit_type "Connection"
+	  param in name "acronym" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132738 "retrieveIn"
+	public explicit_return_type "Shapefile"
+	nparams 6
+	  param in name "table" explicit_type "String"
+	  param in name "attributes" explicit_type "String"
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}, ${t5} ${p5}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+      end
+
+      operation 132866 "retrieveResultSetIn"
+	public explicit_return_type "ResultSet"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+      end
+
+      operation 132994 "createShapefileFromSource"
+	public explicit_return_type "Shapefile"
+	nparams 1
+	  param inout name "source" explicit_type "Object"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 130434 "MnsysDBLoader"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author serge"
+      attribute 147458 "LOGGER"
+	class_attribute const_attribute protected explicit_type "Logger"
+	init_value " Logger.getLogger(MnsysDBLoader.class.getName())"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 147586 "marsysMap"
+	protected explicit_type "Pair<Double, Double>, String"
+	stereotype "Map"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 147714 "connection"
+	protected explicit_type "Connection"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 133762 "MnsysDBLoader"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "connection" explicit_type "Connection"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133890 "retrieveIn"
+	public explicit_return_type "Map<Pair<Double, Double>, String>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+      end
+    end
+
+    class 130562 "PontoonDBLoader"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author serge"
+      classrelation 130050 // <generalisation>
+	relation 130050 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130050 // <generalisation>
+	  b parent class_ref 129922 // ResultSetDBLoader
+      end
+
+      operation 134018 "PontoonDBLoader"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "connection" explicit_type "Connection"
+	  param in name "acronym" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 134146 "retrieveGeometriesIn"
+	public explicit_return_type "List<String>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 134274 "retrieveObjectsIn"
+	public explicit_return_type "List<? extends Geo>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 130690 "ShorelineConstructionDBLoader"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author serge"
+      classrelation 130178 // <generalisation>
+	relation 130178 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130178 // <generalisation>
+	  b parent class_ref 129922 // ResultSetDBLoader
+      end
+
+      operation 134402 "ShorelineConstructionDBLoader"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "connection" explicit_type "Connection"
+	  param in name "acronym" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 134530 "retrieveGeometriesIn"
+	public explicit_return_type "List<String>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 134658 "retrieveObjectsIn"
+	public explicit_return_type "List<? extends Geo>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 130818 "TopmarDBLoader"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author serge
+@date 24 fev 2018 NaVisu project"
+      attribute 147842 "LOGGER"
+	class_attribute const_attribute protected explicit_type "Logger"
+	init_value " Logger.getLogger(TopmarDBLoader.class.getName())"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 147970 "topMarksMap"
+	protected explicit_type "Pair<Double, Double>, String"
+	stereotype "Map"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 148098 "connection"
+	protected explicit_type "Connection"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 134786 "TopmarDBLoader"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "connection" explicit_type "Connection"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "
+@param connection"
+      end
+
+      operation 134914 "retrieveIn"
+	public explicit_return_type "Map<Pair<Double, Double>, String>"
+	nparams 4
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+	comment "Check  sector latMin, lonMin, latMax, lonMax
+for TopMark on buoyage
+@param latMin
+@param lonMin
+@param latMax
+@param lonMax
+@return"
+      end
+    end
+  end
+
+  deploymentview 128386 "loader"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 128642 "BuoyageDBLoader"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.BUOYAGE_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE;
+import bzh.terrevirtuelle.navisu.util.Pair;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import org.postgis.PGgeometry;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader.LOGGER;
+${definition}"
+      associated_classes
+	class_ref 129666 // BuoyageDBLoader
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 128770 "ResultSetDBLoader"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader.LOGGER;
+${definition}"
+      associated_classes
+	class_ref 129922 // ResultSetDBLoader
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 128898 "CoastlineDBLoader"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Coastline;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader.LOGGER;
+${definition}"
+      associated_classes
+	class_ref 129794 // CoastlineDBLoader
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 129026 "DaymarDBLoader"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.BUOYAGE_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE;
+import bzh.terrevirtuelle.navisu.util.Pair;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import org.postgis.PGgeometry;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader.LOGGER;
+${definition}"
+      associated_classes
+	class_ref 130050 // DaymarDBLoader
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 129154 "ShapefileDBLoader"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import gov.nasa.worldwind.util.Logging;
+import gov.nasa.worldwind.util.WWUtil;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import javafx.scene.control.Alert;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader.LOGGER;
+${definition}"
+      associated_classes
+	class_ref 130306 // ShapefileDBLoader
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 129282 "DepareDBLoader"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader.LOGGER;
+${definition}"
+      associated_classes
+	class_ref 130178 // DepareDBLoader
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 129410 "DepthContourDBLoader"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+${definition}"
+      associated_classes
+	class_ref 129282 // DepthContourDBLoader
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 129538 "MnsysDBLoader"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.util.Pair;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import org.postgis.PGgeometry;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
+${definition}"
+      associated_classes
+	class_ref 130434 // MnsysDBLoader
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 129666 "PontoonDBLoader"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Pontoon;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+${definition}"
+      associated_classes
+	class_ref 130562 // PontoonDBLoader
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 129794 "ShorelineConstructionDBLoader"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.ShorelineConstruction;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+${definition}"
+      associated_classes
+	class_ref 130690 // ShorelineConstructionDBLoader
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 129922 "TopmarDBLoader"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.util.Pair;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import org.postgis.PGgeometry;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
+${definition}"
+      associated_classes
+	class_ref 130818 // TopmarDBLoader
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+  end
+end

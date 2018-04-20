@@ -1,0 +1,56 @@
+class ResultSetDBLoader
+!!!131202.java!!!	ResultSetDBLoader(inout topologyServices : TopologyServices, inout connection : Connection, in acronym : String)
+        this.topologyServices = topologyServices;
+        this.connection = connection;
+        this.acronym = acronym;
+!!!131330.java!!!	ResultSetDBLoader(inout connection : Connection, in acronym : String)
+        this.connection = connection;
+        this.acronym = acronym;
+!!!131458.java!!!	retrieveGeometriesIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : List<String>
+
+        geometry = new ArrayList<>();
+
+        resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
+        try {
+            while (resultSet.next()) {
+                geometry.add(resultSet.getString(1));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ResultSetDBLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return geometry;
+!!!131714.java!!!	retrieveResultSetIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : ResultSet
+       
+        if (connection != null) {
+            try {
+                
+                request = S57_REQUEST_MAP.get(acronym);
+                request += "(" + lonMin + ", " + latMin + ", "
+                        + lonMax + ", " + latMax + ", "
+                        + "4326);";
+                /*
+                request = "SELECT "
+                        + "ST_AsText("
+                        + "ST_Intersection("
+                        + "ST_GeomFromText(POLYGON ((-4.61, 48.21, -4.3, 48.42))),"
+                        + " SELECT geom FROM depcnt "
+                        + " WHERE geom && ST_MakeEnvelope(-4.61, 48.21, -4.3, 48.42, 4326)"
+                        + ")"
+                        + ");";
+*/
+                resultSet = connection
+                        .createStatement()
+                        .executeQuery(request);
+
+            } catch (SQLException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Database connection fail");
+            alert.show();
+        }
+        System.out.println(resultSet);
+        return resultSet;

@@ -1,7 +1,8 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import java.sql.Connection;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
@@ -20,6 +21,11 @@ public interface S57DBComponentServices
 
     InstrumentDriver getDriver();
 
-    List<Buoyage> getBuoyage(String database, String user, String passwd,
-            Buoyage buoyage, double lat0, double lon0, double lat1, double lon1);
+    Connection getConnnection(String database, String user, String passwd);
+
+    List<? extends Geo> getS57Objects(Geo t, 
+            double latMin, double lonMin, double latMax, double lonMax);
+
+    List<List<? extends Geo>> getS57Objects(List<? extends Geo> t, 
+            double latMin, double lonMin, double latMax, double lonMax);
 }

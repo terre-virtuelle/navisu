@@ -1,0 +1,24 @@
+class PontoonDBLoader
+!!!134018.java!!!	PontoonDBLoader(inout connection : Connection, in acronym : String)
+        super(connection, acronym);
+!!!134146.java!!!	retrieveGeometriesIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : List<String>
+        geometry = super.retrieveGeometriesIn(latMin, lonMin, latMax, lonMax);
+        if (geometry != null) {
+            geometry = topologyServices.clipWKTMultiString(geometry, latMin, lonMin, latMax, lonMax);
+        }
+        return geometry;
+!!!134274.java!!!	retrieveObjectsIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : List<? extends Geo>
+        geometry = new ArrayList<>();
+        objects = new ArrayList<>();
+
+        resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
+        try {
+            while (resultSet.next()) {
+                Pontoon object = new Pontoon();
+                object.setGeom(resultSet.getString(1));
+                objects.add(object);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DepthContourDBLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return objects;

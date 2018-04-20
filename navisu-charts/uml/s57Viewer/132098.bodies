@@ -1,0 +1,19 @@
+class PolylineView
+!!!137858.java!!!	PolylineView(inout topologyServices : TopologyServices, inout layer : RenderableLayer)
+        this.topologyServices = topologyServices;
+        this.layer = layer;
+!!!137986.java!!!	display(in geometry : String, inout attrs : ShapeAttributes, inout hattrs : ShapeAttributes, inout labels : Map<String, String>) : void
+        path = topologyServices.wktMultiLineToWwjPath(geometry, 1.0);
+        path.setAttributes(attrs);
+        path.setHighlightAttributes(hattrs);
+        path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+
+        if (labels != null) {
+            labels.keySet().forEach((key) -> {
+                tmp = String.format("%-30s", key + ": " + labels.get(key));
+                label += tmp + "\n";
+            });
+            path.setValue(AVKey.DISPLAY_NAME, label);
+        }
+        //Le formatage n'est pas respecté dans le DISPLAY_NAME
+        layer.addRenderable(path);

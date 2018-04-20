@@ -1,338 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller;
-
-import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.CoastlineDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DaymarDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepareDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepthContourDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.PontoonDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.ShorelineConstructionDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.BuoyageView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.CoastalineView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DaymarView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DepareView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.S57Viewer;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.ShorelineConstructionView;
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
-import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
-import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
-import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
-import bzh.terrevirtuelle.navisu.topology.TopologyServices;
-import bzh.terrevirtuelle.navisu.util.Pair;
-import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
-import gov.nasa.worldwind.WorldWindow;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
-import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.Polygon;
-import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwind.util.measure.MeasureTool;
-import gov.nasa.worldwind.util.measure.MeasureToolController;
-import java.net.URL;
-import java.nio.file.Paths;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
-import java.util.ResourceBundle;
-import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
-
-/**
- * @author Serge Morvan
- * @date 14/02/2018 12:49
- */
-public class S57DBComponentController
-        extends Widget2DController
-        implements Initializable {
-
-    protected S57DBComponentImpl component;
-    private String componentKeyName;
-    protected static final Logger LOGGER = Logger.getLogger(S57DBComponentController.class.getName());
-    protected GuiAgentServices guiAgentServices;
-    protected LayerTreeServices layerTreeServices;
-    protected LayersManagerServices layersManagerServices;
-    protected DatabaseServices databaseServices;
-    protected InstrumentDriverManagerServices instrumentDriverManagerServices;
-    protected TopologyServices topologyServices;
-    protected JTSServices jtsServices;
-    protected DelaunayServices delaunayServices;
-    protected ShapefileObjectServices shapefileObjectServices;
-    protected DisplayServices displayServices;
-    private final String FXML = "s57DBController.fxml";
-
-    protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
-    protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
-    protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
-    private final String USER = "admin";
-    private final String PASSWD = "admin";
-    protected Properties properties;
-    private static final String NAME = "S57DB";
-
-    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
-    protected String viewgroupstyle = "configuration.css";
-
-    /* Common controls */
-    @FXML
-    public Group view;
-    @FXML
-    public Pane viewPane;
-    /*@FXML
-    public TabPane toolsTabPane;*/
-    @FXML
-    public Button quit;
-    @FXML
-    public Button requestButton;
-    @FXML
-    public Button helpButton;
-    @FXML
-    public ChoiceBox<String> databasesCB;
-    @FXML
-    public ChoiceBox<String> objectsCB;
-    @FXML
-    public Button latLonButton;
-    @FXML
-    public Button interactiveButton;
-    @FXML
-    public Button selectedButton;
-    @FXML
-    public TextField databaseTF;
-    @FXML
-    public TextField objectsTF;
-    @FXML
-    public TextField depthMagnificationTF;
-    @FXML
-    public TextField simplifyTF;
-    @FXML
-    public Label latMinLabel;
-    @FXML
-    public Label lonMinLabel;
-    @FXML
-    public Label latMaxLabel;
-    @FXML
-    public Label lonMaxLabel;
-
-    @FXML
-    public TextField hostnameTF;
-    @FXML
-    public TextField encPortDBTF;
-    @FXML
-    public CheckBox createElevationCB;
-
-    protected Map<String, String> acronyms;
-    protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
-    protected MeasureTool measureTool;
-    protected final Set<S57Controller> s57Controllers = new HashSet<>();
-    protected boolean first = true;
-
-    protected static final String GROUP_0 = "S57 charts";
-    protected static final String GROUP_1 = "S57Stl";
-    protected static final String GROUP_2 = "3D";
-
-    protected static final String BATHYMETRY_LAYER = "BATHYMETRY";
-    protected static final String BUOYAGE_LAYER = "BUOYAGE";
-    protected static final String HARBOUR_LAYER = "HARBOUR";
-    protected static final String DEPARE_LAYER = "DEPARE";
-    protected static final String DEPARE_3D_LAYER = "DEPARE_3D";
-    protected static final String DEPARE_SIMPLE_LAYER = "DEPARE_SIMPLE";
-    protected static final String AREA_LAYER = "AREA";
-    protected static final String BUILDING_LAYER = "BUILDING";
-    protected static final String EARTH_LAYER = "EARTH";
-    protected static final String NAVIGATION_LAYER = "NAVIGATION";
-    protected static final String DANGERS_LAYER = "DANGERS";
-    protected static final String CBLSUB_LAYER = "CBLSUB";
-    protected static final String LIGHTS_LAYER = "LIGHTS";
-    protected static final String LIGHTS_SECTORS_LAYER = "LIGHTS_SECTORS";
-    protected RenderableLayer bathymetryLayer;
-    protected RenderableLayer buoyageLayer;
-    protected RenderableLayer harbourLayer;
-    protected RenderableLayer depareLayer;
-    protected RenderableLayer simpleDepareLayer;
-    protected RenderableLayer depare3DLayer;
-    protected RenderableLayer areaLayer;
-    protected RenderableLayer buildingLayer;
-    protected RenderableLayer earthLayer;
-    protected RenderableLayer navigationLayer;
-    protected RenderableLayer dangersLayer;
-    protected RenderableLayer cblsubLayer;
-    protected RenderableLayer lightsLayer;
-    protected RenderableLayer lightsSectorsLayer;
-    protected double lat0;
-    protected double lon0;
-    protected double lat1;
-    protected double lon1;
-    protected S57Viewer s57Viewer;
-    List<? extends Geo> objects;
-    protected Connection connection;
-    protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
-    protected Map<Pair<Double, Double>, String> marsysMap = new HashMap<>();
-    protected ObservableList<String> dbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
-    /*
-    private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
-            "ACHARE : AnchorageArea",
-            "DOCARE : DockArea",
-            "DRGARE : DredgedArea",
-            "FAIRWY : Fairway",
-            "LAKARE : Lake",
-            "LIGHTS : Light",
-            "LNDMRK : Landmark"
-            "MIPARE : MilitaryPracticeArea",
-            "NAVLNE : NavigationLine",
-            "OBSTRN : NavigationalSystemOfMarks",
-            "RESARE : RestrictedArea",
-            "SEAARE : SeaAreaNamedWaterArea",
-            
-            "SOUNDG : Sounding",
-            "TOPMAR : Topmark",
-            "TSSBND : TrafficSeparationSchemeBoundary",
-            "UNSARE : UnsurveyedArea",
-            "UWTROC : UnderwaterAwashRock",
-            "WRECKS : Wreck");
-     */
-    private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
-            "ALL : All S57 objects",
-            "BUOYAGE : All buoyage",
-            "PONTON : Pontoon",
-            "DEPARE : DepthArea",
-            "DEPCNT : DepthContour",
-            "COALNE : Coastaline",
-            "SLCONS : ShorelineConstruction"
-    );
-    public static final Map<String, String> S57_REQUEST_MAP = Collections.unmodifiableMap(new HashMap<String, String>() {
-        {
-            put("TOPMAR", "SELECT geom, topshp "
-                    + " FROM topmar "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("M_NSYS", "SELECT geom, marsys "
-                    + " FROM m_nsys "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BCNCAR", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, catcam "
-                    + " FROM bcncar "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BCNLAT", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, catlam "
-                    + " FROM bcnlat "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BCNISD", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, status"
-                    + " FROM bcnisd  "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BCNSAW", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, status"
-                    + " FROM bcnsaw "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BCNSPP", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, catspm"
-                    + " FROM bcnspp "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BCNISD", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, status"
-                    + " FROM bcnisd "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BOYCAR", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catcam"
-                    + " FROM boycar "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BOYINB", "SELECT objnam, geom, boyshp, colour, colpat, rcid, status"
-                    + " FROM boyinb "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BOYISD", "SELECT objnam, geom, boyshp, colour, colpat, rcid, status"
-                    + " FROM boyisd "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BOYLAT", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catlam"
-                    + " FROM boylat"
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BOYSAW", "SELECT objnam, geom, boyshp, colour, colpat, rcid, status"
-                    + " FROM boysaw "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BOYSPP", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catspm"
-                    + " FROM boyspp"
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("DAYMAR", "SELECT objnam, geom, topshp, colour, colpat, rcid, catspm, natcon"
-                    + " FROM daymar"
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("MORFAC", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catmor"
-                    + " FROM morfac"
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("Pontoon", "SELECT  ST_AsText(geom)"
-                    + " FROM ponton"
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("DEPARE", "SELECT  ST_AsText(geom), drval1, drval2"
-                    + " FROM depare"
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("DepthContour", "SELECT  ST_AsText(geom), valdco"
-                    + " FROM depcnt"
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("Coastline", "SELECT  ST_AsText(geom), elevat"
-                    + " FROM coalne"
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("ShorelineConstruction", "SELECT  ST_AsText(geom)"
-                    + " FROM slcons"
-                    + " WHERE geom && ST_MakeEnvelope");
-        }
-    ;
-
-    });
-    
-    public S57DBComponentController(S57DBComponentImpl component, String componentKeyName,
-            KeyCode keyCode, KeyCombination.Modifier keyCombination,
-            GuiAgentServices guiAgentServices,
-            LayersManagerServices layersManagerServices,
-            LayerTreeServices layerTreeServices,
-            S57ChartComponentServices s57ChartComponentServices,
-            DatabaseServices databaseServices,
-            InstrumentDriverManagerServices instrumentDriverManagerServices,
-            TopologyServices topologyServices,
-            JTSServices jtsServices,
-            ShapefileObjectServices shapefileObjectServices,
-            DisplayServices displayServices,
-            DelaunayServices delaunayServices) {
+class S57DBComponentController
+!!!130178.java!!!	S57DBComponentController(inout component : S57DBComponentImpl, in componentKeyName : String, inout keyCode : KeyCode, inout keyCombination : KeyCombination.Modifier, inout guiAgentServices : GuiAgentServices, inout layersManagerServices : LayersManagerServices, inout layerTreeServices : LayerTreeServices, inout s57ChartComponentServices : S57ChartComponentServices, inout databaseServices : DatabaseServices, inout instrumentDriverManagerServices : InstrumentDriverManagerServices, inout topologyServices : TopologyServices, inout jtsServices : JTSServices, inout shapefileObjectServices : ShapefileObjectServices, inout displayServices : DisplayServices, inout delaunayServices : DelaunayServices)
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -374,10 +41,7 @@ public class S57DBComponentController
         cblsubLayer = layersManagerServices.getLayer(GROUP_0, CBLSUB_LAYER);
         lightsLayer = layersManagerServices.getLayer(GROUP_0, LIGHTS_LAYER);
         lightsSectorsLayer = layersManagerServices.getLayer(GROUP_0, LIGHTS_SECTORS_LAYER);
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+!!!130306.java!!!	initialize(inout location : URL, inout resources : ResourceBundle) : void
         databasesCB.setItems(dbCbData);
         databasesCB.getSelectionModel().select("s57NP5DB");
         databaseTF.setText("s57NP5DB");
@@ -515,9 +179,7 @@ public class S57DBComponentController
             }
         });
 
-    }
-
-    private void initSelectedZone() {
+!!!130434.java!!!	initSelectedZone() : void
 
         Dialog dialog = new Dialog<>();
         dialog.setTitle("Create Area");
@@ -592,10 +254,7 @@ public class S57DBComponentController
         });
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
         dialog.showAndWait();
-    }
-
-    public void retrieveIn(String object, double latMin, double lonMin,
-            double latMax, double lonMax) {
+!!!130562.java!!!	retrieveIn(in object : String, in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : void
 
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setOutlineMaterial(Material.RED);
@@ -673,7 +332,11 @@ public class S57DBComponentController
                     .display(new BuoyageDBLoader(connection, "MORFAC", marsysMap)
                             .retrieveIn(latMin, lonMin, latMax, lonMax));
         }
-
+        if (object.trim().equals("ALL") || object.trim().equals("PONTON")) {
+            new PontonView(topologyServices, harbourLayer)
+                    .display(new PontoonDBLoader(connection, "PONTON")
+                            .retrieveGeometriesIn(latMin, lonMin, latMax, lonMax));
+        }
         if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
             guiAgentServices.getJobsManager().newJob("Load depth area", (progressHandle) -> {
                 new DepareView(latMin, lonMin, latMax, lonMax,
@@ -695,52 +358,26 @@ public class S57DBComponentController
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
-
+                wwd.redrawNow();
             });
         }
         if (object.trim().equals("ALL") || object.trim().equals("COALNE")) {
             guiAgentServices.getJobsManager().newJob("Load coastaline", (progressHandle) -> {
-                objects = new CoastlineDBLoader(topologyServices, connection)
-                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57Viewer(topologyServices, depareLayer);
-                objects.forEach((g) -> {
-                    s57Viewer.display(g);
-                });
-
-            });
-        }
-        if (object.trim().equals("ALL") || object.trim().equals("PONTON")) {
-            guiAgentServices.getJobsManager().newJob("Load coastaline", (progressHandle) -> {
-                objects = new PontoonDBLoader(topologyServices, connection)
-                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57Viewer(topologyServices, depareLayer);
-                objects.forEach((g) -> {
-                    s57Viewer.display(g);
-                });
-
+                new CoastalineView(topologyServices, harbourLayer)
+                        .display(new CoastlineDBLoader(connection, "COALNE")
+                                .retrieveGeometriesIn(latMin, lonMin, latMax, lonMax));
             });
         }
         if (object.trim().equals("ALL") || object.trim().equals("SLCONS")) {
             guiAgentServices.getJobsManager().newJob("Load shore line construction", (progressHandle) -> {
-                objects = new ShorelineConstructionDBLoader(topologyServices, connection)
-                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57Viewer(topologyServices, depareLayer);
-                objects.forEach((g) -> {
-                    s57Viewer.display(g);
-                });
-
+                new ShorelineConstructionView(topologyServices, harbourLayer)
+                        .display(new ShorelineConstructionDBLoader(connection, "SLCONS")
+                                .retrieveGeometriesIn(latMin, lonMin, latMax, lonMax));
             });
         }
-        wwd.redrawNow();
-    }
-
-    public Connection getConnection() {
+!!!130690.java!!!	getConnection() : Connection
         return connection;
-    }
-
-    public List<? extends Geo> getS57Objects(Geo t, double latMin, double lonMin, double latMax, double lonMax) {
+!!!130818.java!!!	getS57Objects(inout t : Geo, in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : List<? extends Geo>
         //Faire une Map avec les classes et les loader
 
         return null;
-    }
-}

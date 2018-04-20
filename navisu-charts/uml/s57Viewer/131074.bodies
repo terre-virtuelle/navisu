@@ -1,0 +1,13 @@
+class CoastalineView
+!!!136194.java!!!	CoastalineView(inout topologyServices : TopologyServices, inout layer : RenderableLayer)
+        this.topologyServices = topologyServices;
+        this.layer = layer;
+!!!136322.java!!!	display(inout geometries : List<String>) : void
+        ShapeAttributes normAttributes = new BasicShapeAttributes();
+        normAttributes.setOutlineMaterial(new Material(Color.WHITE));
+        normAttributes.setEnableLighting(true);
+       //Clip 
+        for (String s : geometries) {
+            polyView = new PolylineView(topologyServices, layer);
+           // polyView.display(s, normAttributes);
+        }

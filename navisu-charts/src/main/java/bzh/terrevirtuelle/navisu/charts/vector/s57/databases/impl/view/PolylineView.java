@@ -9,9 +9,11 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import java.util.Map;
 
 /**
  *
@@ -24,7 +26,8 @@ public class PolylineView
     protected RenderableLayer layer;
     protected Path path;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
-    protected String label;
+    String label = "";
+    String tmp = "";
 
     public PolylineView(TopologyServices topologyServices, RenderableLayer layer) {
         this.topologyServices = topologyServices;
@@ -33,11 +36,22 @@ public class PolylineView
 
     @SuppressWarnings("unchecked")
     @Override
-    public void display(String geometries, ShapeAttributes attrs, ShapeAttributes hattrs) {
-            path = topologyServices.wktMultiLineToWwjPath(geometries, 1.0);
-            path.setAttributes(attrs);
-            path.setHighlightAttributes(hattrs);
-            path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-            layer.addRenderable(path);
+    public void display(String geometry,
+            ShapeAttributes attrs, ShapeAttributes hattrs,
+            Map<String, String> labels) {
+        path = topologyServices.wktMultiLineToWwjPath(geometry, 1.0);
+        path.setAttributes(attrs);
+        path.setHighlightAttributes(hattrs);
+        path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+
+        if (labels != null) {
+            labels.keySet().forEach((key) -> {
+                tmp = String.format("%-30s", key + ": " + labels.get(key));
+                label += tmp + "\n";
+            });
+            path.setValue(AVKey.DISPLAY_NAME, label);
+        }
+        //Le formatage n'est pas respecté dans le DISPLAY_NAME
+        layer.addRenderable(path);
     }
 }

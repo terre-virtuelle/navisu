@@ -1,0 +1,21 @@
+class PontonView
+!!!138114.java!!!	PontonView(inout topologyServices : TopologyServices, inout layer : RenderableLayer)
+        this.topologyServices = topologyServices;
+        this.layer = layer;
+!!!138242.java!!!	display(inout geometries : List<String>) : void
+        ShapeAttributes normAttributes = new BasicShapeAttributes();
+        normAttributes.setOutlineMaterial(new Material(Color.WHITE));
+        normAttributes.setOutlineWidth(3.0);
+        normAttributes.setEnableLighting(true);
+        for (String s : geometries) {
+            if (s.contains("MULTILINESTRING")) {
+                polyView = new PolylineView(topologyServices, layer);
+              //  polyView.display(s, normAttributes);
+            }
+            if (s.contains("MULTIPOLYGON")) {
+                System.out.println("s : " + s);
+                polyView = new PolygonView(topologyServices, layer);
+              //  polyView.display(s, normAttributes);
+            }
+        }
+        wwd.redrawNow();

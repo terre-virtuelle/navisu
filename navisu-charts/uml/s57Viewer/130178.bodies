@@ -1,0 +1,5 @@
+class DepareDBLoader
+!!!133122.java!!!	DepareDBLoader(inout databaseServices : DatabaseServices, in databaseName : String, in user : String, in passwd : String)
+        super(databaseServices, databaseName, user, passwd, true);
+!!!133250.java!!!	retrieveIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : Shapefile
+        return retrieveIn("depare", "geom,drval1,drval2", latMin, lonMin, latMax, lonMax);

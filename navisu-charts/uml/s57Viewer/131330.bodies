@@ -1,0 +1,43 @@
+class ShapefileView
+!!!135298.java!!!	ShapefileView()
+        highlightAttributes.setOutlineOpacity(1);
+        highlightAttributes.setDrawInterior(true);
+        highlightAttributes.setInteriorMaterial(new Material(Color.RED));
+        highlightAttributes.setInteriorOpacity(.5);
+        highlightAttributes.setEnableLighting(true);
+!!!135426.java!!!	createShapeFileFromSource(inout source : Object) : Shapefile
+        if (WWUtil.isEmpty(source)) {
+            String message = Logging.getMessage("nullValue.SourceIsNull");
+            Logging.logger().severe(message);
+            throw new IllegalArgumentException(message);
+        }
+        Shapefile shp = new Shapefile(source);
+        return shp;
+!!!135554.java!!!	creatKML(inout array : Polygon) : void
+        try {
+            Writer stringWriter = new StringWriter();
+            KMLDocumentBuilder kmlBuilder = new KMLDocumentBuilder(stringWriter);
+            kmlBuilder.writeObjects(array);
+            kmlBuilder.close();
+            String xmlString = stringWriter.toString();
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            transformer.transform(new StreamSource(new StringReader(xmlString)), new StreamResult(new File("cmd/output.kml")));
+        } catch (IOException | IllegalArgumentException | XMLStreamException | TransformerException ex) {
+            Logger.getLogger(ShapefileView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+!!!135682.java!!!	creatKML(inout array : Path) : void
+        try {
+            Writer stringWriter = new StringWriter();
+            KMLDocumentBuilder kmlBuilder = new KMLDocumentBuilder(stringWriter);
+            kmlBuilder.writeObjects(array);
+            kmlBuilder.close();
+            String xmlString = stringWriter.toString();
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            transformer.transform(new StreamSource(new StringReader(xmlString)), new StreamResult(new File("cmd/output.kml")));
+        } catch (IOException | IllegalArgumentException | XMLStreamException | TransformerException ex) {
+            Logger.getLogger(ShapefileView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }

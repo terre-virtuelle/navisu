@@ -1,0 +1,9 @@
+class PolygonView
+!!!137602.java!!!	PolygonView(inout topologyServices : TopologyServices, inout layer : RenderableLayer)
+        this.topologyServices = topologyServices;
+        this.layer = layer;
+!!!137730.java!!!	display(in geometries : String, inout attrs : ShapeAttributes) : void
+            path = topologyServices.wktMultiPolygonToWwjPolygon(geometries);
+            path.setAttributes(attrs);
+            path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+            layer.addRenderable(path);

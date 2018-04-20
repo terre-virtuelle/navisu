@@ -1,0 +1,33 @@
+class S57Viewer
+!!!138370.java!!!	S57Viewer(inout topologyServices : TopologyServices, inout layer : RenderableLayer)
+        this.topologyServices = topologyServices;
+        this.layer = layer;
+
+        normAttributes = new BasicShapeAttributes();
+        normAttributes.setOutlineMaterial(new Material(Color.BLACK));
+        normAttributes.setOutlineWidth(1.0);
+        normAttributes.setEnableLighting(true);
+
+        highlightAttributes = new BasicShapeAttributes(normAttributes);
+        highlightAttributes.setOutlineOpacity(1);
+        highlightAttributes.setOutlineMaterial(new Material(Color.BLUE));
+        highlightAttributes.setEnableLighting(true);
+!!!138498.java!!!	S57Viewer(inout topologyServices : TopologyServices, inout layer : RenderableLayer, inout normAttributes : ShapeAttributes, inout highlightAttributes : ShapeAttributes)
+        this.topologyServices = topologyServices;
+        this.layer = layer;
+        this.normAttributes = normAttributes;
+        this.highlightAttributes = highlightAttributes;
+!!!138626.java!!!	display(inout object : Geo, inout normAttributes : ShapeAttributes, inout highlightAttributes : ShapeAttributes) : void
+        String geometry = object.getGeom();
+        if (geometry.contains("MULTILINESTRING")) {
+            polyView = new PolylineView(topologyServices, layer);
+            polyView.display(geometry, normAttributes, highlightAttributes, object.getLabels());
+        }
+        wwd.redrawNow();
+!!!138754.java!!!	display(inout object : Geo) : void
+        String geometry = object.getGeom();
+        if (geometry.contains("MULTILINESTRING")) {
+            polyView = new PolylineView(topologyServices, layer);
+            polyView.display(geometry, normAttributes, highlightAttributes, object.getLabels());
+        }
+       

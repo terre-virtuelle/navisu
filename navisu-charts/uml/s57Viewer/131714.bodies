@@ -1,0 +1,124 @@
+class DepareView
+!!!137218.java!!!	DepareView(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double, inout layer : RenderableLayer, inout simpleDeparelayer : RenderableLayer, inout depare3DLayer : RenderableLayer, in simplify : double, in magnify : double, inout showElevation : boolean)
+        this.latMin = latMin;
+        this.lonMin = lonMin;
+        this.latMax = latMax;
+        this.lonMax = lonMax;
+        this.layer = layer;
+        this.simpleDeparelayer = simpleDeparelayer;
+        this.depare3DLayer = depare3DLayer;
+        this.simplify = simplify;
+        this.magnify = magnify;
+        this.createElevation = showElevation;
+!!!137346.java!!!	display(inout shp : Shapefile) : void
+
+        while (shp.hasNext()) {
+            try {
+                //Create classical chart
+                record = shp.nextRecord();
+                createSurfacePolygons(record, layer, false, false);
+                if (!Shapefile.isPolygonType(record.getShapeType())) {
+                    continue;
+                }
+
+                Polygon p;
+                for (int i = 0; i < shape.getBuffer().size(); i++) {
+                    p = new Polygon(shape.getBuffer().subBuffer(i).getPositions());
+                    p.setValue(AVKey.SHORT_DESCRIPTION, ((Double) shape.getValue("drval1")).toString());
+                    p.setValue(AVKey.BALLOON_TEXT, ((Double) shape.getValue("drval2")).toString());
+                    p.setValue(AVKey.ABOVE_MEAN_SEA_LEVEL, ((Double) shape.getValue("drval2")).toString());
+                    p.setAltitudeMode(altitudeMode);
+                    polygons.add(p);
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+
+        //Create kml output.kml file
+        Polygon[] array = new Polygon[polygons.size()];
+        for (int i = 0; i < polygons.size(); i++) {
+            array[i] = polygons.get(i);
+        }
+        creatKML(array);
+
+        //Simplify data and create depare.shp
+        String path = Proc.getProperty("gdalPath");
+        String command = path + "/ogr2ogr -f 'ESRI Shapefile' cmd/output.shp cmd/output.kml \n"
+                + path + "/ogr2ogr cmd/outfileSimplify.shp cmd/depare.shp -simplify " + simplify;
+        try {
+            Proc.BUILDER.create()
+                    .setCmd(command)
+                    .execSh();
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+
+        //Create objectShapefile with data simplified
+        //Create extruded polygons with data simplified
+        Shapefile simplifiedShape = new Shapefile("cmd/outfileSimplify.shp");
+        while (simplifiedShape.hasNext()) {
+            try {
+                record = simplifiedShape.nextRecord();
+                createSurfacePolygons(record, simpleDeparelayer, false, true);
+                if (createElevation) {
+                    createSurfacePolygons(record, depare3DLayer, true, false);
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+
+        wwd.redrawNow();
+
+        /*
+        //Test lancement Ulhysses
+        String ulhyssesPath = "/opt/ULHYSSES/app/";
+        command
+                = "cd " + ulhyssesPath + " \n"
+                + "java "
+                + "-Dlog4j.configuration=file:" + ulhyssesPath + "conf-tools/toolsLog4j.properties "
+                + "-Xmx14g -Xms1024m -jar " + ulhyssesPath + "ULHYSSES.jar "
+                + "--outputDirectory=" + System.getProperty("user.dir")+"/cmd "
+                + "--inputFile=/home/serge/Data/navisu/arnaud/testBathy_RADE_100_xyz.csv "
+                + "--compilationScale=1000 --fileType=0 --isoValues='0;2;4;6;8;10;12;14;16;18;20' "
+                + "--codeAgency=4G --baseName=0001";
+
+        try {
+            Proc.BUILDER.create()
+                    .setCmd(command)
+                    .execSh();
+            
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+         */
+!!!137474.java!!!	createSurfacePolygons(inout record : ShapefileRecord, inout layer : RenderableLayer, inout isHeight : boolean, inout simp : boolean) : void
+
+        if (record != null) {
+            if (record.getAttributes() != null) {
+                //Calculate depth max
+                entries = record.getAttributes().getEntries();
+                entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
+
+                    if (e.getKey().equalsIgnoreCase("drval1")) {
+                        val1 = (Double) e.getValue();
+                    }
+                    if (e.getKey().equalsIgnoreCase("drval2")) {
+                        val2 = (Double) e.getValue();
+                        if (val2 > maxHeight) {
+                            maxHeight = val2;
+                        }
+                    }
+                     color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val1);
+                });
+            }
+
+            createPolygon(layer, record, isHeight, magnify, maxHeight, simp);
+            shape.setValue("drval1", val1);
+            shape.setValue("drval2", val2);
+            shape.setValue(AVKey.DISPLAY_NAME,
+                    "[" + Double.toString(val1) + ", " + Double.toString(val2) + "]");
+            setPolygonAttributes(color);
+            layer.addRenderable(shape);
+        }

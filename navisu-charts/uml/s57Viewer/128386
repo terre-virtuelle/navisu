@@ -1,0 +1,1437 @@
+format 76
+"controller" // databases::impl::controller
+  revision 1
+  modified_by 2 "serge"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  java_dir "Z:/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-charts/src/main/java/bzh/terrevirtuelle/navisu/charts/vector/s57/databases/impl/controller/"
+  java_package "bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller"
+  classview 128386 "controller"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 128898 "S57DBComponentController"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "@author Serge Morvan
+@date 14/02/2018 12:49"
+      classrelation 129154 // <generalisation>
+	relation 129154 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129154 // <generalisation>
+	  b parent class_ref 129410 // Widget2DController
+      end
+
+      classrelation 129282 // <realization>
+	relation 129282 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129282 // <realization>
+	  b parent class_ref 129538 // Initializable
+      end
+
+      classrelation 129410 // component (<unidirectional association>)
+	relation 129410 --->
+	  a role_name "component" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129410 // component (<unidirectional association>)
+	  b parent class_ref 128514 // S57DBComponentImpl
+      end
+
+      attribute 130818 "componentKeyName"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130946 "LOGGER"
+	class_attribute const_attribute protected explicit_type "Logger"
+	init_value " Logger.getLogger(S57DBComponentController.class.getName())"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131074 "guiAgentServices"
+	protected explicit_type "GuiAgentServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131202 "layerTreeServices"
+	protected explicit_type "LayerTreeServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131330 "layersManagerServices"
+	protected explicit_type "LayersManagerServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131458 "databaseServices"
+	protected explicit_type "DatabaseServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131586 "instrumentDriverManagerServices"
+	protected explicit_type "InstrumentDriverManagerServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131714 "topologyServices"
+	protected explicit_type "TopologyServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131842 "jtsServices"
+	protected explicit_type "JTSServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131970 "delaunayServices"
+	protected explicit_type "DelaunayServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132098 "shapefileObjectServices"
+	protected explicit_type "ShapefileObjectServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132226 "displayServices"
+	protected explicit_type "DisplayServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132354 "FXML"
+	const_attribute private explicit_type "String"
+	init_value " \"s57DBController.fxml\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132482 "CONFIG_FILE_NAME"
+	protected explicit_type "String"
+	init_value " System.getProperty(\"user.home\") + \"/.navisu/config/config.properties\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132610 "ALARM_SOUND"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"/data/sounds/pling.wav\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132738 "DATA_PATH"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " System.getProperty(\"user.dir\").replace(\"\\\\\", \"/\")"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132866 "USER"
+	const_attribute private explicit_type "String"
+	init_value " \"admin\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132994 "PASSWD"
+	const_attribute private explicit_type "String"
+	init_value " \"admin\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 133122 "properties"
+	protected explicit_type "Properties"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 133250 "NAME"
+	class_attribute const_attribute private explicit_type "String"
+	init_value " \"S57DB\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 133378 "CSS_STYLE_PATH"
+	class_attribute const_attribute private explicit_type "String"
+	init_value " Paths.get(System.getProperty(\"user.dir\") + \"/css/\").toUri().toString()"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 133506 "viewgroupstyle"
+	protected explicit_type "String"
+	init_value " \"configuration.css\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 133634 "view"
+	public explicit_type "Group"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment " Common controls "
+      end
+
+      attribute 133762 "viewPane"
+	public explicit_type "Pane"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 133890 "quit"
+	public explicit_type "Button"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "@FXML
+public TabPane toolsTabPane;"
+      end
+
+      attribute 134018 "requestButton"
+	public explicit_type "Button"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 134146 "helpButton"
+	public explicit_type "Button"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 134274 "databasesCB"
+	public explicit_type "String"
+	stereotype "ChoiceBox"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 134402 "objectsCB"
+	public explicit_type "String"
+	stereotype "ChoiceBox"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 134530 "latLonButton"
+	public explicit_type "Button"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 134658 "interactiveButton"
+	public explicit_type "Button"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 134786 "selectedButton"
+	public explicit_type "Button"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 134914 "databaseTF"
+	public explicit_type "TextField"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 135042 "objectsTF"
+	public explicit_type "TextField"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 135170 "depthMagnificationTF"
+	public explicit_type "TextField"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 135298 "simplifyTF"
+	public explicit_type "TextField"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 135426 "latMinLabel"
+	public explicit_type "Label"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 135554 "lonMinLabel"
+	public explicit_type "Label"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 135682 "latMaxLabel"
+	public explicit_type "Label"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 135810 "lonMaxLabel"
+	public explicit_type "Label"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 135938 "hostnameTF"
+	public explicit_type "TextField"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 136066 "encPortDBTF"
+	public explicit_type "TextField"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 136194 "createElevationCB"
+	public explicit_type "CheckBox"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 136322 "acronyms"
+	protected explicit_type "String, String"
+	stereotype "Map"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 136450 "wwd"
+	protected explicit_type "WorldWindow"
+	init_value " GeoWorldWindViewImpl.getWW()"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 136578 "measureTool"
+	protected explicit_type "MeasureTool"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 136706 "s57Controllers"
+	const_attribute protected explicit_type "S57Controller"
+	init_value " new HashSet<>()"
+	stereotype "Set"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 136834 "first"
+	protected explicit_type "boolean"
+	init_value " true"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 136962 "GROUP_0"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"S57 charts\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 137090 "GROUP_1"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"S57Stl\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 137218 "GROUP_2"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"3D\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 137346 "BATHYMETRY_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"BATHYMETRY\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 137474 "BUOYAGE_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"BUOYAGE\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 137602 "HARBOUR_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"HARBOUR\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 137730 "DEPARE_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"DEPARE\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 137858 "DEPARE_3D_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"DEPARE_3D\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 137986 "DEPARE_SIMPLE_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"DEPARE_SIMPLE\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 138114 "AREA_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"AREA\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 138242 "BUILDING_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"BUILDING\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 138370 "EARTH_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"EARTH\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 138498 "NAVIGATION_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"NAVIGATION\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 138626 "DANGERS_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"DANGERS\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 138754 "CBLSUB_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"CBLSUB\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 138882 "LIGHTS_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"LIGHTS\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 139010 "LIGHTS_SECTORS_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"LIGHTS_SECTORS\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 139138 "bathymetryLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 139266 "buoyageLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 139394 "harbourLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 139522 "depareLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 139650 "simpleDepareLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 139778 "depare3DLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 139906 "areaLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 140034 "buildingLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 140162 "earthLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 140290 "navigationLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 140418 "dangersLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 140546 "cblsubLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 140674 "lightsLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 140802 "lightsSectorsLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 140930 "lat0"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141058 "lon0"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141186 "lat1"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141314 "lon1"
+	protected explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 129538 // s57Viewer (<unidirectional association>)
+	relation 129538 --->
+	  a role_name "s57Viewer" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129538 // s57Viewer (<unidirectional association>)
+	  b parent class_ref 129154 // S57Viewer
+      end
+
+      attribute 141442 "objects"
+	package explicit_type "? extends Geo"
+	stereotype "List"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141570 "connection"
+	protected explicit_type "Connection"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141698 "topMarkMap"
+	protected explicit_type "Pair<Double, Double>, String"
+	init_value " new HashMap<>()"
+	stereotype "Map"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141826 "marsysMap"
+	protected explicit_type "Pair<Double, Double>, String"
+	init_value " new HashMap<>()"
+	stereotype "Map"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141954 "dbCbData"
+	protected explicit_type "String"
+	init_value " FXCollections.observableArrayList(\"s57NP1DB\", \"s57NP2DB\", \"s57NP3DB\", \"s57NP4DB\", \"s57NP5DB\", \"s57NP6DB\")"
+	stereotype "ObservableList"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 142082 "objectsCbData"
+	private explicit_type "String"
+	init_value " FXCollections.observableArrayList(
+            \"ALL : All S57 objects\",
+            \"BUOYAGE : All buoyage\",
+            \"PONTON : Pontoon\",
+            \"DEPARE : DepthArea\",
+            \"DEPCNT : DepthContour\",
+            \"COALNE : Coastaline\",
+            \"SLCONS : ShorelineConstruction\"
+    )"
+	stereotype "ObservableList"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
+\"ACHARE : AnchorageArea\",
+\"DOCARE : DockArea\",
+\"DRGARE : DredgedArea\",
+\"FAIRWY : Fairway\",
+\"LAKARE : Lake\",
+\"LIGHTS : Light\",
+\"LNDMRK : Landmark\"
+\"MIPARE : MilitaryPracticeArea\",
+\"NAVLNE : NavigationLine\",
+\"OBSTRN : NavigationalSystemOfMarks\",
+\"RESARE : RestrictedArea\",
+\"SEAARE : SeaAreaNamedWaterArea\",
+
+\"SOUNDG : Sounding\",
+\"TOPMAR : Topmark\",
+\"TSSBND : TrafficSeparationSchemeBoundary\",
+\"UNSARE : UnsurveyedArea\",
+\"UWTROC : UnderwaterAwashRock\",
+\"WRECKS : Wreck\");
+"
+      end
+
+      attribute 142210 "S57_REQUEST_MAP"
+	class_attribute const_attribute public explicit_type "String, String"
+	init_value " Collections.unmodifiableMap(new HashMap<String, String>() {
+        {
+            put(\"TOPMAR\", \"SELECT geom, topshp \"
+                    + \" FROM topmar \"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"M_NSYS\", \"SELECT geom, marsys \"
+                    + \" FROM m_nsys \"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"BCNCAR\", \"SELECT objnam, geom, bcnshp, colour, colpat, rcid, catcam \"
+                    + \" FROM bcncar \"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"BCNLAT\", \"SELECT objnam, geom, bcnshp, colour, colpat, rcid, catlam \"
+                    + \" FROM bcnlat \"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"BCNISD\", \"SELECT objnam, geom, bcnshp, colour, colpat, rcid, status\"
+                    + \" FROM bcnisd  \"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"BCNSAW\", \"SELECT objnam, geom, bcnshp, colour, colpat, rcid, status\"
+                    + \" FROM bcnsaw \"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"BCNSPP\", \"SELECT objnam, geom, bcnshp, colour, colpat, rcid, catspm\"
+                    + \" FROM bcnspp \"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"BCNISD\", \"SELECT objnam, geom, bcnshp, colour, colpat, rcid, status\"
+                    + \" FROM bcnisd \"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"BOYCAR\", \"SELECT objnam, geom, boyshp, colour, colpat, rcid, catcam\"
+                    + \" FROM boycar \"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"BOYINB\", \"SELECT objnam, geom, boyshp, colour, colpat, rcid, status\"
+                    + \" FROM boyinb \"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"BOYISD\", \"SELECT objnam, geom, boyshp, colour, colpat, rcid, status\"
+                    + \" FROM boyisd \"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"BOYLAT\", \"SELECT objnam, geom, boyshp, colour, colpat, rcid, catlam\"
+                    + \" FROM boylat\"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"BOYSAW\", \"SELECT objnam, geom, boyshp, colour, colpat, rcid, status\"
+                    + \" FROM boysaw \"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"BOYSPP\", \"SELECT objnam, geom, boyshp, colour, colpat, rcid, catspm\"
+                    + \" FROM boyspp\"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"DAYMAR\", \"SELECT objnam, geom, topshp, colour, colpat, rcid, catspm, natcon\"
+                    + \" FROM daymar\"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"MORFAC\", \"SELECT objnam, geom, boyshp, colour, colpat, rcid, catmor\"
+                    + \" FROM morfac\"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"PONTON\", \"SELECT  ST_AsText(geom)\"
+                    + \" FROM ponton\"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"DEPARE\", \"SELECT  ST_AsText(geom), drval1, drval2\"
+                    + \" FROM depare\"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"DepthContour\", \"SELECT  ST_AsText(geom), valdco\"
+                    + \" FROM depcnt\"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"COALNE\", \"SELECT  ST_AsText(geom), elevat\"
+                    + \" FROM coalne\"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+            put(\"SLCONS\", \"SELECT  ST_AsText(geom)\"
+                    + \" FROM slcons\"
+                    + \" WHERE geom && ST_MakeEnvelope\");
+        }
+    ;
+
+    })"
+	stereotype "Map"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 130178 "S57DBComponentController"
+	public explicit_return_type ""
+	nparams 15
+	  param inout name "component" type class_ref 128514 // S57DBComponentImpl
+	  param in name "componentKeyName" explicit_type "String"
+	  param inout name "keyCode" explicit_type "KeyCode"
+	  param inout name "keyCombination" explicit_type "KeyCombination.Modifier"
+	  param inout name "guiAgentServices" explicit_type "GuiAgentServices"
+	  param inout name "layersManagerServices" explicit_type "LayersManagerServices"
+	  param inout name "layerTreeServices" explicit_type "LayerTreeServices"
+	  param inout name "s57ChartComponentServices" explicit_type "S57ChartComponentServices"
+	  param inout name "databaseServices" explicit_type "DatabaseServices"
+	  param inout name "instrumentDriverManagerServices" explicit_type "InstrumentDriverManagerServices"
+	  param inout name "topologyServices" explicit_type "TopologyServices"
+	  param inout name "jtsServices" explicit_type "JTSServices"
+	  param inout name "shapefileObjectServices" explicit_type "ShapefileObjectServices"
+	  param inout name "displayServices" explicit_type "DisplayServices"
+	  param inout name "delaunayServices" explicit_type "DelaunayServices"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}, ${t5} ${p5}, ${t6} ${p6}, ${t7} ${p7}, ${t8} ${p8}, ${t9} ${p9}, ${t10} ${p10}, ${t11} ${p11}, ${t12} ${p12}, ${t13} ${p13}, ${t14} ${p14}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130306 "initialize"
+	public explicit_return_type "void"
+	nparams 2
+	  param inout name "location" explicit_type "URL"
+	  param inout name "resources" explicit_type "ResourceBundle"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 130434 "initSelectedZone"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130562 "retrieveIn"
+	public explicit_return_type "void"
+	nparams 5
+	  param in name "object" explicit_type "String"
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130690 "getConnection"
+	public explicit_return_type "Connection"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130818 "getS57Objects"
+	public explicit_return_type "List<? extends Geo>"
+	nparams 5
+	  param inout name "t" explicit_type "Geo"
+	  param in name "latMin" explicit_type "double"
+	  param in name "lonMin" explicit_type "double"
+	  param in name "latMax" explicit_type "double"
+	  param in name "lonMax" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129026 "DephContourDBController"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author serge
+@date Apr 18, 2018"
+      classrelation 128898 // dephContourView (<unidirectional association>)
+	relation 128898 --->
+	  a role_name "dephContourView" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128898 // dephContourView (<unidirectional association>)
+	  b parent class_ref 129154 // S57Viewer
+      end
+
+      classrelation 129026 // depthContourDBLoader (<unidirectional association>)
+	relation 129026 --->
+	  a role_name "depthContourDBLoader" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129026 // depthContourDBLoader (<unidirectional association>)
+	  b parent class_ref 129282 // DepthContourDBLoader
+      end
+    end
+  end
+
+  package_ref 128642 // loader
+
+  deploymentview 128258 "controller"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 128386 "DephContourDBController"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepthContourDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.S57Viewer;
+${definition}"
+      associated_classes
+	class_ref 129026 // DephContourDBController
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 128514 "S57DBComponentController"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.CoastlineDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DaymarDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepareDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepthContourDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.PontoonDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.ShorelineConstructionDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.BuoyageView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.CoastalineView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DaymarView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DepareView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.S57Viewer;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.ShorelineConstructionView;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
+import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
+import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import bzh.terrevirtuelle.navisu.util.Pair;
+import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
+import gov.nasa.worldwind.WorldWindow;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.util.measure.MeasureTool;
+import gov.nasa.worldwind.util.measure.MeasureToolController;
+import java.net.URL;
+import java.nio.file.Paths;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
+import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+${definition}"
+      associated_classes
+	class_ref 128898 // S57DBComponentController
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+  end
+end

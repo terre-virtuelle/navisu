@@ -40,12 +40,12 @@ public class PontonView {
         for (String s : geometries) {
             if (s.contains("MULTILINESTRING")) {
                 polyView = new PolylineView(topologyServices, layer);
-                polyView.display(s, normAttributes);
+              //  polyView.display(s, normAttributes);
             }
             if (s.contains("MULTIPOLYGON")) {
                 System.out.println("s : " + s);
                 polyView = new PolygonView(topologyServices, layer);
-                polyView.display(s, normAttributes);
+              //  polyView.display(s, normAttributes);
             }
         }
         wwd.redrawNow();

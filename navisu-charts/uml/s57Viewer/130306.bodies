@@ -1,0 +1,48 @@
+class ShapefileDBLoader
+!!!132482.java!!!	ShapefileDBLoader(inout databaseServices : DatabaseServices, in databaseName : String, in user : String, in passwd : String, inout clip : boolean)
+        this.databaseServices = databaseServices;
+        this.databaseName = databaseName;
+        this.user = user;
+        this.passwd = passwd;
+        this.clip = clip;
+!!!132610.java!!!	ShapefileDBLoader(inout connection : Connection, in acronym : String)
+        this.connection = connection;
+        this.acronym = acronym;
+!!!132738.java!!!	retrieveIn(in table : String, in attributes : String, in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : Shapefile
+        String fileName = databaseServices.spatialDBToShapefile(table, attributes,
+                databaseName,
+                user, passwd,
+                latMin, lonMin, latMax, lonMax, clip);
+        return createShapefileFromSource(fileName);
+!!!132866.java!!!	retrieveResultSetIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : ResultSet
+
+        if (connection != null) {
+            try {
+                request = S57_REQUEST_MAP.get(acronym);
+                request += "(" + lonMin + ", " + latMin + ", "
+                        + lonMax + ", " + latMax + ", "
+                        + "4326);";
+
+                resultSet = connection
+                        .createStatement()
+                        .executeQuery(request);
+
+            } catch (SQLException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Database connection fail");
+            alert.show();
+        }
+        return resultSet;
+!!!132994.java!!!	createShapefileFromSource(inout source : Object) : Shapefile
+        if (WWUtil.isEmpty(source)) {
+            String message = Logging.getMessage("nullValue.SourceIsNull");
+            Logging.logger().severe(message);
+            throw new IllegalArgumentException(message);
+        }
+        Shapefile shp = new Shapefile(source);
+
+        return shp;

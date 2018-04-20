@@ -1,0 +1,33 @@
+class MnsysDBLoader
+!!!133762.java!!!	MnsysDBLoader(inout connection : Connection)
+        this.connection = connection;
+        marsysMap=new HashMap<>();
+!!!133890.java!!!	retrieveIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : Map<Pair<Double, Double>, String>
+        PGgeometry geom;
+        ResultSet r;
+        if (connection != null) {
+            try {
+                String request = S57_REQUEST_MAP.get("M_NSYS");
+                request += "(" + lonMin + ", " + latMin + ", "
+                        + lonMax + ", " + latMax + ", "
+                        + "4326);";
+                r = connection.createStatement().executeQuery(request);
+                while (r.next()) {
+                    String marsys = r.getString(2);
+                    if (marsys == null || marsys.equals("9") || marsys.equals("10")) {
+                        marsys = "0";
+                    }
+                    geom = (PGgeometry) r.getObject(1);
+                    marsysMap.put(new Pair(geom.getGeometry().getFirstPoint().getY(),
+                            geom.getGeometry().getFirstPoint().getX()), marsys);
+                }
+            } catch (SQLException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Database connection fail");
+                alert.show();
+        }
+        return marsysMap;

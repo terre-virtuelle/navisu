@@ -1,0 +1,13 @@
+class ShapefilePolylineView
+!!!135938.java!!!	createPolyline(inout record : ShapefileRecord) : void
+        shape = new SurfacePolylines(
+                Sector.fromDegrees(((ShapefileRecordPolyline) record).getBoundingRectangle()),
+                record.getCompoundPointBuffer());
+!!!136066.java!!!	setPolylineAttributes(inout col : Color) : void
+        ShapeAttributes normAttributes = new BasicShapeAttributes();
+        normAttributes.setDrawOutline(true);
+        normAttributes.setOutlineMaterial(new Material(col));
+        normAttributes.setEnableLighting(true);
+        shape.setAttributes(normAttributes);
+
+        shape.setHighlightAttributes(highlightAttributes);

@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
 
 import gov.nasa.worldwind.render.ShapeAttributes;
+import java.util.Map;
 
 /**
  *
@@ -13,6 +14,7 @@ import gov.nasa.worldwind.render.ShapeAttributes;
  */
 public interface PolyGeomView {
 
-    default void display(String geometries, ShapeAttributes attrs, ShapeAttributes hattrs){}
-    default void display(String geometries, ShapeAttributes attrs){}
+    default void display(String geometries, 
+            ShapeAttributes attrs, ShapeAttributes hattrs,
+            Map<String,String> labels){}
 }

@@ -32,7 +32,7 @@ public class PolygonView
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+ //   @Override
     public void display(String geometries, ShapeAttributes attrs) {
             path = topologyServices.wktMultiPolygonToWwjPolygon(geometries);
             path.setAttributes(attrs);

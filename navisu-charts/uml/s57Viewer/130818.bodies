@@ -1,0 +1,33 @@
+class TopmarDBLoader
+!!!134786.java!!!	TopmarDBLoader(inout connection : Connection)
+        this.connection = connection;
+        this.topMarksMap = new HashMap<>();
+!!!134914.java!!!	retrieveIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : Map<Pair<Double, Double>, String>
+        PGgeometry geom;
+        ResultSet r;
+        if (connection != null) {
+            try {
+                String request = S57_REQUEST_MAP.get("TOPMAR");
+                request += "(" + lonMin + ", " + latMin + ", "
+                        + lonMax + ", " + latMax + ", "
+                        + "4326);";
+                r = connection.createStatement().executeQuery(request);
+                while (r.next()) {
+                    String tm = r.getString(2);
+                    if (tm == null) {
+                        tm = "0";
+                    }
+                    geom = (PGgeometry) r.getObject(1);
+                    topMarksMap.put(new Pair(geom.getGeometry().getFirstPoint().getY(),
+                            geom.getGeometry().getFirstPoint().getX()), tm);
+                }
+            } catch (SQLException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Database connection fail");
+                alert.show();
+        }
+        return topMarksMap;

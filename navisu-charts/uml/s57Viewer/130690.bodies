@@ -1,0 +1,24 @@
+class ShorelineConstructionDBLoader
+!!!134402.java!!!	ShorelineConstructionDBLoader(inout connection : Connection, in acronym : String)
+        super(connection, acronym);
+!!!134530.java!!!	retrieveGeometriesIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : List<String>
+        geometry = super.retrieveGeometriesIn(latMin, lonMin, latMax, lonMax);
+        if (geometry != null) {
+            geometry = topologyServices.clipWKTMultiString(geometry, latMin, lonMin, latMax, lonMax);
+        }
+        return geometry;
+!!!134658.java!!!	retrieveObjectsIn(in latMin : double, in lonMin : double, in latMax : double, in lonMax : double) : List<? extends Geo>
+        geometry = new ArrayList<>();
+        objects = new ArrayList<>();
+
+        resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
+        try {
+            while (resultSet.next()) {
+                ShorelineConstruction object = new ShorelineConstruction();
+                object.setGeom(resultSet.getString(1));
+                objects.add(object);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DepthContourDBLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return objects;

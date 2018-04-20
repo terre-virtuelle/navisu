@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Pontoon;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -16,15 +16,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @date 28/02/2018
+ *
  * @author serge
  */
-public class DepthContourDBLoader
+public class PontoonDBLoader
         extends ResultSetDBLoader {
 
-    public DepthContourDBLoader(TopologyServices topologyServices,
+    public PontoonDBLoader(TopologyServices topologyServices,
             Connection connection) {
-        super(topologyServices, connection, "DepthContour");
+        super(topologyServices, connection, "Pontoon");
     }
 
     @Override
@@ -32,22 +32,20 @@ public class DepthContourDBLoader
         objects = new ArrayList<>();
         String geom = "";
         resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
-        DepthContour object;
+        Pontoon object;
         try {
             while (resultSet.next()) {
-                object = new DepthContour();
+                object = new Pontoon();
                 geom = resultSet.getString(1);
-                if (geom != null) {
+                if (geom != null&& geom.contains("MULTILINESTRING")) {
                     geom = topologyServices.clipWKTMultiLineString(geom, latMin, lonMin, latMax, lonMax);
                     object.setGeom(geom);
-                    object.setValueOfDepthContour(Double.toString(resultSet.getDouble(2)));
-                    object.getLabels().put("DEPCNT","DepthContour");
-                    object.getLabels().put("VALDCO",Double.toString(resultSet.getDouble(2))+" m");
+                    object.getLabels().put("PONTON","Pontoon");
                     objects.add(object);
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DepthContourDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(PontoonDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return objects;
     }

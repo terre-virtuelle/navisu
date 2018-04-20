@@ -37,11 +37,11 @@ public class ShorelineConstructionView
         for (String s : geometries) {
             if (s.contains("MULTILINESTRING")) {
                 polyView = new PolylineView(topologyServices, layer);
-                polyView.display(s, normAttributes);
+              //  polyView.display(s, normAttributes);
             }
             if (s.contains("MULTIPOLYGON")) {
                 polyView = new PolygonView(topologyServices, layer);
-                polyView.display(s, normAttributes);
+               // polyView.display(s, normAttributes);
             }
         }
     }

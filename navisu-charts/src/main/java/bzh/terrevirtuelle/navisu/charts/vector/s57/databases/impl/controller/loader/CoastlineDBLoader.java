@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Coastline;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
@@ -16,15 +17,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @date 28/02/2018
+ *
  * @author serge
  */
-public class DepthContourDBLoader
+public class CoastlineDBLoader
         extends ResultSetDBLoader {
 
-    public DepthContourDBLoader(TopologyServices topologyServices,
+    public CoastlineDBLoader(TopologyServices topologyServices,
             Connection connection) {
-        super(topologyServices, connection, "DepthContour");
+        super(topologyServices, connection, "Coastline");
     }
 
     @Override
@@ -32,22 +33,20 @@ public class DepthContourDBLoader
         objects = new ArrayList<>();
         String geom = "";
         resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
-        DepthContour object;
+        Coastline object;
         try {
             while (resultSet.next()) {
-                object = new DepthContour();
+                object = new Coastline();
                 geom = resultSet.getString(1);
                 if (geom != null) {
                     geom = topologyServices.clipWKTMultiLineString(geom, latMin, lonMin, latMax, lonMax);
                     object.setGeom(geom);
-                    object.setValueOfDepthContour(Double.toString(resultSet.getDouble(2)));
-                    object.getLabels().put("DEPCNT","DepthContour");
-                    object.getLabels().put("VALDCO",Double.toString(resultSet.getDouble(2))+" m");
+                    object.getLabels().put("COALNE","Coastline");
                     objects.add(object);
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DepthContourDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(CoastlineDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return objects;
     }
