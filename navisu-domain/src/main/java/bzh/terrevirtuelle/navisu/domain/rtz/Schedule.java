@@ -180,4 +180,9 @@ public class Schedule {
         this.name = value;
     }
 
+    @Override
+    public String toString() {
+        return "Schedule{" + "manual=" + manual + ", calculated=" + calculated + ", extensions=" + extensions + ", id=" + id + ", name=" + name + '}';
+    }
+
 }

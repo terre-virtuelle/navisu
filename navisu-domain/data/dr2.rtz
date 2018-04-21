@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<route>
+    <routeInfo routeName="DR2-REVENGEN-HÖGUDD"/>
+    <waypoints>
+        <defaultWaypoint radius="0.30">
+            <leg portsideXTD="0.00" starboardXTD="0.00" safetyContour="30.00" safetyDepth="30.00" geometryType="Loxodrome"/>
+        </defaultWaypoint>
+        <waypoint id="1" name="BOARDING POINT">
+            <position lat="59.23114755" lon="19.06791355"/>
+        </waypoint>
+        <waypoint id="2" name="REVENGEN" radius="0.60">
+            <position lat="59.24108305" lon="19.04022958"/>
+            <leg portsideXTD="0.20" starboardXTD="0.20"/>
+        </waypoint>
+        <waypoint id="3" name="STÅNGEN" radius="0.60">
+            <position lat="59.26858883" lon="19.00291973"/>
+            <leg portsideXTD="0.20" starboardXTD="0.20"/>
+        </waypoint>
+        <waypoint id="4" name="SVÄNGEN" radius="0.60">
+            <position lat="59.27682198" lon="18.97544782"/>
+            <leg portsideXTD="0.10" starboardXTD="0.20"/>
+        </waypoint>
+        <waypoint id="5" name="HÖTTERSKÄR" radius="0.60">
+            <position lat="59.26275748" lon="18.92744152"/>
+            <leg portsideXTD="0.08" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="6" name="OXUDDEN" radius="0.50">
+            <position lat="59.27256377" lon="18.89506813"/>
+            <leg portsideXTD="0.05" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="7" name="SKÖTKOBB" radius="0.60">
+            <position lat="59.28451225" lon="18.89633737"/>
+            <leg portsideXTD="0.02" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="8" name="SAFETYCORRIDOR" radius="0.60">
+            <position lat="59.29183232" lon="18.89355753"/>
+            <leg portsideXTD="0.02" starboardXTD="0.02"/>
+        </waypoint>
+        <waypoint id="9" name="FARFARSGRUND" radius="0.40">
+            <position lat="59.29562337" lon="18.89212537"/>
+            <leg portsideXTD="0.03" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="10" name="SAFETYCORRIDOR" radius="0.60">
+            <position lat="59.29903097" lon="18.87879678"/>
+            <leg portsideXTD="0.03" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="11" name="GETHOLMEN" radius="0.60">
+            <position lat="59.30197278" lon="18.86759348"/>
+            <leg portsideXTD="0.03" starboardXTD="0.02"/>
+        </waypoint>
+        <waypoint id="12" name="VÄSTERSKATEN" radius="0.80">
+            <position lat="59.30458247" lon="18.84906215"/>
+            <leg portsideXTD="0.05" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="13" name="HASSELKOBBEN" radius="0.80">
+            <position lat="59.31124865" lon="18.82224938"/>
+            <leg portsideXTD="0.05" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="14" name="GASTHOLMSGRUND" radius="0.80">
+            <position lat="59.31833748" lon="18.80484153"/>
+            <leg portsideXTD="0.05" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="15" name="KANHOLMSFJÄRDEN VTS" radius="0.80">
+            <position lat="59.33475428" lon="18.79097145"/>
+            <leg portsideXTD="0.10" starboardXTD="0.10"/>
+        </waypoint>
+        <waypoint id="16" name="SAFETYCORRIDOR" radius="0.80">
+            <position lat="59.35964913" lon="18.76975033"/>
+            <leg portsideXTD="0.10" starboardXTD="0.10"/>
+        </waypoint>
+        <waypoint id="17" name="KLÖVHOLMEN" radius="1.00">
+            <position lat="59.36779202" lon="18.76270792"/>
+            <leg portsideXTD="0.07" starboardXTD="0.07"/>
+        </waypoint>
+        <waypoint id="18" name="INRE KANHOLMSGRUND" radius="0.80">
+            <position lat="59.37319233" lon="18.73073227"/>
+            <leg portsideXTD="0.03" starboardXTD="0.03"/>
+        </waypoint>
+        <waypoint id="19" name="BRANTEN" radius="0.80">
+            <position lat="59.37474507" lon="18.71386563"/>
+            <leg portsideXTD="0.04" starboardXTD="0.04"/>
+        </waypoint>
+        <waypoint id="20" name="SOLLENKROKA FYR" radius="0.80">
+            <position lat="59.37838593" lon="18.67653867"/>
+            <leg portsideXTD="0.04" starboardXTD="0.04"/>
+        </waypoint>
+        <waypoint id="21" name="SVARTVIKSKOBB" radius="0.80">
+            <position lat="59.37592198" lon="18.65958177"/>
+            <leg portsideXTD="0.04" starboardXTD="0.04"/>
+        </waypoint>
+        <waypoint id="22" name="ABBORRKROKEN" radius="0.80">
+            <position lat="59.37532720" lon="18.63006332"/>
+            <leg portsideXTD="0.04" starboardXTD="0.04"/>
+        </waypoint>
+        <waypoint id="23" name="KALVÖ" radius="0.60">
+            <position lat="59.37135167" lon="18.60608233"/>
+            <leg portsideXTD="0.04" starboardXTD="0.04"/>
+        </waypoint>
+        <waypoint id="24" name="YXSKÄRET" radius="0.80">
+            <position lat="59.38430532" lon="18.58057063"/>
+            <leg portsideXTD="0.10" starboardXTD="0.10"/>
+        </waypoint>
+        <waypoint id="25" name="RÅGHOLMEN" radius="0.80">
+            <position lat="59.39214702" lon="18.54911433"/>
+            <leg portsideXTD="0.04" starboardXTD="0.04"/>
+        </waypoint>
+        <waypoint id="26" name="NYVARP" radius="0.80">
+            <position lat="59.40845148" lon="18.52376350"/>
+            <leg portsideXTD="0.05" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="27" name="VALÖARNA 1" radius="0.80">
+            <position lat="59.42422400" lon="18.50451382"/>
+            <leg portsideXTD="0.10" starboardXTD="0.10"/>
+        </waypoint>
+        <waypoint id="28" name="VALEN" radius="0.80">
+            <position lat="59.43656885" lon="18.48415123"/>
+            <leg portsideXTD="0.10" starboardXTD="0.10"/>
+        </waypoint>
+        <waypoint id="29" name="Ö ÄLGÖGRUND" radius="0.80">
+            <position lat="59.44410440" lon="18.42076138"/>
+            <leg portsideXTD="0.10" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="30" name="TISTERÖ" radius="0.50">
+            <position lat="59.43864797" lon="18.36954610"/>
+            <leg portsideXTD="0.05" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="31" name="ELIDAS GRUND" radius="0.80">
+            <position lat="59.42175347" lon="18.39956448"/>
+            <leg portsideXTD="0.05" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="32" name="PUKHOLMEN" radius="0.80">
+            <position lat="59.40816825" lon="18.42193362"/>
+            <leg portsideXTD="0.10" starboardXTD="0.10"/>
+        </waypoint>
+        <waypoint id="33" name="OXDJUPET ENTRANCE (8kn)" radius="0.50">
+            <position lat="59.40226010" lon="18.43315905"/>
+            <leg portsideXTD="0.03" starboardXTD="0.03"/>
+        </waypoint>
+        <waypoint id="34" name="OFB (MELLAN FYRAR)" radius="0.50">
+            <position lat="59.39938495" lon="18.43880735"/>
+            <leg portsideXTD="0.03" starboardXTD="0.03"/>
+        </waypoint>
+        <waypoint id="35" name="OXDJUPET" radius="0.50">
+            <position lat="59.39541938" lon="18.44533265"/>
+            <leg portsideXTD="0.03" starboardXTD="0.03"/>
+        </waypoint>
+        <waypoint id="36" name="OXDJUPET 8KN SLUT" radius="0.50">
+            <position lat="59.38952883" lon="18.44572085"/>
+            <leg portsideXTD="0.05" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="37" name="TYNNINGÖUDD" radius="0.45">
+            <position lat="59.35172890" lon="18.44843410"/>
+            <leg portsideXTD="0.08" starboardXTD="0.08"/>
+        </waypoint>
+        <waypoint id="38" name="LG VTS" radius="0.80">
+            <position lat="59.36015745" lon="18.41786192"/>
+            <leg portsideXTD="0.08" starboardXTD="0.08"/>
+        </waypoint>
+        <waypoint id="39" name="LJUNGBERGSGARDEN" radius="0.80">
+            <position lat="59.36233868" lon="18.40982653"/>
+            <leg portsideXTD="0.05" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="40" name="SE BERGHOLMEN" radius="0.80">
+            <position lat="59.36831393" lon="18.39566673"/>
+            <leg portsideXTD="0.04" starboardXTD="0.04"/>
+        </waypoint>
+        <waypoint id="41" name="NW BERGHOLMEN" radius="0.80">
+            <position lat="59.37165963" lon="18.38203352"/>
+            <leg portsideXTD="0.04" starboardXTD="0.04"/>
+        </waypoint>
+        <waypoint id="42" name="SAFETYCORRIDOR" radius="0.80">
+            <position lat="59.37364573" lon="18.36660968"/>
+            <leg portsideXTD="0.04" starboardXTD="0.04"/>
+        </waypoint>
+        <waypoint id="43" name="TOBAKSGRUND" radius="0.80">
+            <position lat="59.37666423" lon="18.34237913"/>
+            <leg portsideXTD="0.08" starboardXTD="0.08"/>
+        </waypoint>
+        <waypoint id="44" name="SAFETYCORRIDOR" radius="0.80">
+            <position lat="59.37886920" lon="18.30943573"/>
+            <leg portsideXTD="0.08" starboardXTD="0.08"/>
+        </waypoint>
+        <waypoint id="45" name="GRANHOLMEN" radius="0.45">
+            <position lat="59.37985888" lon="18.29396237"/>
+            <leg portsideXTD="0.03" starboardXTD="0.03"/>
+        </waypoint>
+        <waypoint id="46" name="ST HÖGGARNSBANK" radius="0.80">
+            <position lat="59.37346195" lon="18.28221098"/>
+            <leg portsideXTD="0.04" starboardXTD="0.04"/>
+        </waypoint>
+        <waypoint id="47" name="L HÖGGARNSBANK" radius="0.80">
+            <position lat="59.36787117" lon="18.26955973"/>
+            <leg portsideXTD="0.04" starboardXTD="0.04"/>
+        </waypoint>
+        <waypoint id="48" name="ELFVIK" radius="0.80">
+            <position lat="59.36184138" lon="18.26041127"/>
+            <leg portsideXTD="0.04" starboardXTD="0.04"/>
+        </waypoint>
+        <waypoint id="49" name="KLIPPUDDEN" radius="0.80">
+            <position lat="59.34504973" lon="18.22611850"/>
+            <leg portsideXTD="0.05" starboardXTD="0.05"/>
+        </waypoint>
+        <waypoint id="50" name="HÖGUDD" radius="0.80">
+            <position lat="59.33650693" lon="18.20625533"/>
+            <leg portsideXTD="0.05" starboardXTD="0.05"/>
+        </waypoint>
+    </waypoints>
+    <schedules>
+        <schedule id="0" name="BaseCalc"/>
+        <schedule id="1" name="8,12,17">
+            <manual>
+                <scheduleElement waypointId="1" speed="12.50"/>
+                <scheduleElement waypointId="2" speed="17.00"/>
+                <scheduleElement waypointId="3" speed="17.00"/>
+                <scheduleElement waypointId="4" speed="17.00"/>
+                <scheduleElement waypointId="5" speed="17.00"/>
+                <scheduleElement waypointId="6" speed="17.00"/>
+                <scheduleElement waypointId="7" speed="12.00"/>
+                <scheduleElement waypointId="8" speed="12.00"/>
+                <scheduleElement waypointId="9" speed="12.00"/>
+                <scheduleElement waypointId="10" speed="12.00"/>
+                <scheduleElement waypointId="11" speed="12.00"/>
+                <scheduleElement waypointId="12" speed="12.00"/>
+                <scheduleElement waypointId="13" speed="12.00"/>
+                <scheduleElement waypointId="14" speed="17.00"/>
+                <scheduleElement waypointId="15" speed="17.00"/>
+                <scheduleElement waypointId="16" speed="17.00"/>
+                <scheduleElement waypointId="17" speed="17.00"/>
+                <scheduleElement waypointId="18" speed="17.00"/>
+                <scheduleElement waypointId="19" speed="17.00"/>
+                <scheduleElement waypointId="20" speed="12.00"/>
+                <scheduleElement waypointId="21" speed="12.00"/>
+                <scheduleElement waypointId="22" speed="12.00"/>
+                <scheduleElement waypointId="23" speed="12.00"/>
+                <scheduleElement waypointId="24" speed="12.00"/>
+                <scheduleElement waypointId="25" speed="12.00"/>
+                <scheduleElement waypointId="26" speed="12.00"/>
+                <scheduleElement waypointId="27" speed="12.00"/>
+                <scheduleElement waypointId="28" speed="12.00"/>
+                <scheduleElement waypointId="29" speed="12.00"/>
+                <scheduleElement waypointId="30" speed="12.00"/>
+                <scheduleElement waypointId="31" speed="12.00"/>
+                <scheduleElement waypointId="32" speed="12.00"/>
+                <scheduleElement waypointId="33" speed="12.00"/>
+                <scheduleElement waypointId="34" speed="8.00"/>
+                <scheduleElement waypointId="35" speed="8.00"/>
+                <scheduleElement waypointId="36" speed="8.00"/>
+                <scheduleElement waypointId="37" speed="12.00"/>
+                <scheduleElement waypointId="38" speed="12.00"/>
+                <scheduleElement waypointId="39" speed="8.00"/>
+                <scheduleElement waypointId="40" speed="8.00"/>
+                <scheduleElement waypointId="41" speed="8.00"/>
+                <scheduleElement waypointId="42" speed="12.00"/>
+                <scheduleElement waypointId="43" speed="12.00"/>
+                <scheduleElement waypointId="44" speed="12.00"/>
+                <scheduleElement waypointId="45" speed="12.00"/>
+                <scheduleElement waypointId="46" speed="12.00"/>
+                <scheduleElement waypointId="47" speed="12.00"/>
+                <scheduleElement waypointId="48" speed="12.00"/>
+                <scheduleElement waypointId="49" speed="12.00"/>
+                <scheduleElement waypointId="50" speed="12.00"/>
+            </manual>
+        </schedule>
+        <schedule id="2" name="12,5&amp;15kn">
+            <manual>
+                <scheduleElement waypointId="1" etd="2010-11-11T09:45:00Z" speed="12.50"/>
+                <scheduleElement waypointId="2" speed="14.00"/>
+                <scheduleElement waypointId="3" speed="15.00"/>
+                <scheduleElement waypointId="4" speed="15.00"/>
+                <scheduleElement waypointId="5" speed="15.00"/>
+                <scheduleElement waypointId="6" speed="15.00"/>
+                <scheduleElement waypointId="7" speed="12.50"/>
+                <scheduleElement waypointId="8" speed="12.50"/>
+                <scheduleElement waypointId="9" speed="12.50"/>
+                <scheduleElement waypointId="10" speed="12.50"/>
+                <scheduleElement waypointId="11" speed="12.50"/>
+                <scheduleElement waypointId="12" speed="12.50"/>
+                <scheduleElement waypointId="13" speed="12.50"/>
+                <scheduleElement waypointId="14" speed="15.00"/>
+                <scheduleElement waypointId="16" speed="15.00"/>
+                <scheduleElement waypointId="17" speed="15.00"/>
+                <scheduleElement waypointId="18" speed="15.00"/>
+                <scheduleElement waypointId="19" speed="15.00"/>
+                <scheduleElement waypointId="20" speed="12.50"/>
+                <scheduleElement waypointId="21" speed="12.50"/>
+                <scheduleElement waypointId="22" speed="12.50"/>
+                <scheduleElement waypointId="23" speed="12.50"/>
+                <scheduleElement waypointId="24" speed="12.50"/>
+                <scheduleElement waypointId="25" speed="12.50"/>
+                <scheduleElement waypointId="26" speed="12.50"/>
+                <scheduleElement waypointId="27" speed="12.50"/>
+                <scheduleElement waypointId="28" speed="12.50"/>
+                <scheduleElement waypointId="29" speed="12.50"/>
+                <scheduleElement waypointId="30" speed="12.50"/>
+                <scheduleElement waypointId="31" speed="12.50"/>
+                <scheduleElement waypointId="32" speed="12.50"/>
+                <scheduleElement waypointId="34" speed="8.50"/>
+                <scheduleElement waypointId="35" speed="8.50"/>
+                <scheduleElement waypointId="36" speed="8.50"/>
+                <scheduleElement waypointId="37" speed="12.50"/>
+                <scheduleElement waypointId="38" speed="12.50"/>
+                <scheduleElement waypointId="40" speed="8.50"/>
+                <scheduleElement waypointId="41" speed="8.50"/>
+                <scheduleElement waypointId="42" speed="12.50"/>
+                <scheduleElement waypointId="43" speed="12.50"/>
+                <scheduleElement waypointId="44" speed="12.50"/>
+                <scheduleElement waypointId="45" speed="12.50"/>
+                <scheduleElement waypointId="46" speed="12.50"/>
+                <scheduleElement waypointId="47" speed="12.50"/>
+                <scheduleElement waypointId="48" speed="12.50"/>
+                <scheduleElement waypointId="49" speed="12.50"/>
+                <scheduleElement waypointId="50" speed="12.50"/>
+            </manual>
+            <calculated>
+                <scheduleElement waypointId="2" eta="2010-11-11T09:49:28Z" etd="2010-11-11T09:49:28Z"/>
+                <scheduleElement waypointId="3" eta="2010-11-11T09:57:31Z" etd="2010-11-11T09:57:31Z"/>
+                <scheduleElement waypointId="4" eta="2010-11-11T10:01:31Z" etd="2010-11-11T10:01:31Z"/>
+                <scheduleElement waypointId="5" eta="2010-11-11T10:07:52Z" etd="2010-11-11T10:07:52Z"/>
+                <scheduleElement waypointId="6" eta="2010-11-11T10:12:30Z" etd="2010-11-11T10:12:30Z"/>
+                <scheduleElement waypointId="7" eta="2010-11-11T10:16:25Z" etd="2010-11-11T10:16:25Z"/>
+                <scheduleElement waypointId="8" eta="2010-11-11T10:18:01Z" etd="2010-11-11T10:18:01Z"/>
+                <scheduleElement waypointId="9" eta="2010-11-11T10:19:08Z" etd="2010-11-11T10:19:08Z"/>
+                <scheduleElement waypointId="10" eta="2010-11-11T10:21:20Z" etd="2010-11-11T10:21:20Z"/>
+                <scheduleElement waypointId="11" eta="2010-11-11T10:23:11Z" etd="2010-11-11T10:23:11Z"/>
+                <scheduleElement waypointId="12" eta="2010-11-11T10:26:01Z" etd="2010-11-11T10:26:01Z"/>
+                <scheduleElement waypointId="13" eta="2010-11-11T10:30:26Z" etd="2010-11-11T10:30:26Z"/>
+                <scheduleElement waypointId="14" eta="2010-11-11T10:33:10Z" etd="2010-11-11T10:33:10Z"/>
+                <scheduleElement waypointId="16" eta="2010-11-11T10:44:00Z" etd="2010-11-11T10:44:00Z"/>
+                <scheduleElement waypointId="17" eta="2010-11-11T10:46:08Z" etd="2010-11-11T10:46:08Z"/>
+                <scheduleElement waypointId="18" eta="2010-11-11T10:50:33Z" etd="2010-11-11T10:50:33Z"/>
+                <scheduleElement waypointId="19" eta="2010-11-11T10:52:23Z" etd="2010-11-11T10:52:23Z"/>
+                <scheduleElement waypointId="20" eta="2010-11-11T10:57:59Z" etd="2010-11-11T10:57:59Z"/>
+                <scheduleElement waypointId="21" eta="2010-11-11T11:00:35Z" etd="2010-11-11T11:00:35Z"/>
+                <scheduleElement waypointId="22" eta="2010-11-11T11:04:56Z" etd="2010-11-11T11:04:56Z"/>
+                <scheduleElement waypointId="23" eta="2010-11-11T11:08:39Z" etd="2010-11-11T11:08:39Z"/>
+                <scheduleElement waypointId="24" eta="2010-11-11T11:13:57Z" etd="2010-11-11T11:13:57Z"/>
+                <scheduleElement waypointId="25" eta="2010-11-11T11:18:37Z" etd="2010-11-11T11:18:37Z"/>
+                <scheduleElement waypointId="26" eta="2010-11-11T11:24:59Z" etd="2010-11-11T11:24:59Z"/>
+                <scheduleElement waypointId="27" eta="2010-11-11T11:30:26Z" etd="2010-11-11T11:30:26Z"/>
+                <scheduleElement waypointId="28" eta="2010-11-11T11:35:05Z" etd="2010-11-11T11:35:05Z"/>
+                <scheduleElement waypointId="29" eta="2010-11-11T11:44:39Z" etd="2010-11-11T11:44:39Z"/>
+                <scheduleElement waypointId="30" eta="2010-11-11T11:52:44Z" etd="2010-11-11T11:52:44Z"/>
+                <scheduleElement waypointId="31" eta="2010-11-11T11:59:31Z" etd="2010-11-11T11:59:31Z"/>
+                <scheduleElement waypointId="32" eta="2010-11-11T12:04:38Z" etd="2010-11-11T12:04:38Z"/>
+                <scheduleElement waypointId="34" eta="2010-11-11T12:08:55Z" etd="2010-11-11T12:08:55Z"/>
+                <scheduleElement waypointId="35" eta="2010-11-11T12:11:07Z" etd="2010-11-11T12:11:07Z"/>
+                <scheduleElement waypointId="36" eta="2010-11-11T12:13:37Z" etd="2010-11-11T12:13:37Z"/>
+                <scheduleElement waypointId="37" eta="2010-11-11T12:25:17Z" etd="2010-11-11T12:25:17Z"/>
+                <scheduleElement waypointId="38" eta="2010-11-11T12:30:57Z" etd="2010-11-11T12:30:57Z"/>
+                <scheduleElement waypointId="40" eta="2010-11-11T12:37:43Z" etd="2010-11-11T12:37:43Z"/>
+                <scheduleElement waypointId="41" eta="2010-11-11T12:40:11Z" etd="2010-11-11T12:40:11Z"/>
+                <scheduleElement waypointId="42" eta="2010-11-11T12:42:49Z" etd="2010-11-11T12:42:49Z"/>
+                <scheduleElement waypointId="43" eta="2010-11-11T12:47:38Z" etd="2010-11-11T12:47:38Z"/>
+                <scheduleElement waypointId="44" eta="2010-11-11T12:51:07Z" etd="2010-11-11T12:51:07Z"/>
+                <scheduleElement waypointId="45" eta="2010-11-11T12:53:37Z" etd="2010-11-11T12:53:37Z"/>
+                <scheduleElement waypointId="46" eta="2010-11-11T12:55:58Z" etd="2010-11-11T12:55:58Z"/>
+                <scheduleElement waypointId="47" eta="2010-11-11T12:58:26Z" etd="2010-11-11T12:58:26Z"/>
+                <scheduleElement waypointId="48" eta="2010-11-11T13:00:31Z" etd="2010-11-11T13:00:31Z"/>
+                <scheduleElement waypointId="49" eta="2010-11-11T13:07:39Z" etd="2010-11-11T13:07:39Z"/>
+                <scheduleElement waypointId="50" eta="2010-11-11T13:11:29Z"/>
+            </calculated>
+        </schedule>
+        <schedule id="3" name="12.5">
+            <manual>
+                <scheduleElement waypointId="1" etd="2010-11-25T06:15:00Z" speed="12.50"/>
+                <scheduleElement waypointId="2" speed="12.50"/>
+                <scheduleElement waypointId="3" speed="12.50"/>
+                <scheduleElement waypointId="4" speed="12.50"/>
+                <scheduleElement waypointId="5" speed="12.50"/>
+                <scheduleElement waypointId="6" speed="12.50"/>
+                <scheduleElement waypointId="7" speed="12.50"/>
+                <scheduleElement waypointId="8" speed="12.50"/>
+                <scheduleElement waypointId="9" speed="12.50"/>
+                <scheduleElement waypointId="10" speed="12.50"/>
+                <scheduleElement waypointId="11" speed="12.50"/>
+                <scheduleElement waypointId="12" speed="12.50"/>
+                <scheduleElement waypointId="13" speed="12.50"/>
+                <scheduleElement waypointId="14" speed="12.50"/>
+                <scheduleElement waypointId="15" speed="12.50"/>
+                <scheduleElement waypointId="16" speed="12.50"/>
+                <scheduleElement waypointId="17" speed="12.50"/>
+                <scheduleElement waypointId="18" speed="12.50"/>
+                <scheduleElement waypointId="19" speed="12.50"/>
+                <scheduleElement waypointId="20" speed="12.50"/>
+                <scheduleElement waypointId="21" speed="12.50"/>
+                <scheduleElement waypointId="22" speed="12.50"/>
+                <scheduleElement waypointId="23" speed="12.50"/>
+                <scheduleElement waypointId="24" speed="12.50"/>
+                <scheduleElement waypointId="25" speed="12.50"/>
+                <scheduleElement waypointId="26" speed="12.50"/>
+                <scheduleElement waypointId="27" speed="12.50"/>
+                <scheduleElement waypointId="28" speed="12.50"/>
+                <scheduleElement waypointId="29" speed="12.50"/>
+                <scheduleElement waypointId="30" speed="12.50"/>
+                <scheduleElement waypointId="31" speed="12.50"/>
+                <scheduleElement waypointId="32" speed="12.50"/>
+                <scheduleElement waypointId="34" speed="12.50"/>
+                <scheduleElement waypointId="35" speed="12.50"/>
+                <scheduleElement waypointId="36" speed="12.50"/>
+                <scheduleElement waypointId="37" speed="12.50"/>
+                <scheduleElement waypointId="38" speed="12.50"/>
+                <scheduleElement waypointId="39" speed="12.50"/>
+                <scheduleElement waypointId="40" speed="12.50"/>
+                <scheduleElement waypointId="41" speed="12.50"/>
+                <scheduleElement waypointId="42" speed="12.50"/>
+                <scheduleElement waypointId="43" speed="12.50"/>
+                <scheduleElement waypointId="44" speed="12.50"/>
+                <scheduleElement waypointId="45" speed="12.50"/>
+                <scheduleElement waypointId="46" speed="12.50"/>
+                <scheduleElement waypointId="47" speed="12.50"/>
+                <scheduleElement waypointId="48" speed="12.50"/>
+                <scheduleElement waypointId="49" speed="12.50"/>
+                <scheduleElement waypointId="50" speed="8.90"/>
+            </manual>
+            <calculated>
+                <scheduleElement waypointId="2" eta="2010-11-25T06:20:00Z" etd="2010-11-25T06:20:00Z"/>
+                <scheduleElement waypointId="3" eta="2010-11-25T06:29:39Z" etd="2010-11-25T06:29:39Z"/>
+                <scheduleElement waypointId="4" eta="2010-11-25T06:34:28Z" etd="2010-11-25T06:34:28Z"/>
+                <scheduleElement waypointId="5" eta="2010-11-25T06:42:05Z" etd="2010-11-25T06:42:05Z"/>
+                <scheduleElement waypointId="6" eta="2010-11-25T06:47:30Z" etd="2010-11-25T06:47:30Z"/>
+                <scheduleElement waypointId="7" eta="2010-11-25T06:50:57Z" etd="2010-11-25T06:50:57Z"/>
+                <scheduleElement waypointId="8" eta="2010-11-25T06:53:06Z" etd="2010-11-25T06:53:06Z"/>
+                <scheduleElement waypointId="9" eta="2010-11-25T06:54:13Z" etd="2010-11-25T06:54:13Z"/>
+                <scheduleElement waypointId="10" eta="2010-11-25T06:56:25Z" etd="2010-11-25T06:56:25Z"/>
+                <scheduleElement waypointId="11" eta="2010-11-25T06:58:17Z" etd="2010-11-25T06:58:17Z"/>
+                <scheduleElement waypointId="12" eta="2010-11-25T07:01:07Z" etd="2010-11-25T07:01:07Z"/>
+                <scheduleElement waypointId="13" eta="2010-11-25T07:05:31Z" etd="2010-11-25T07:05:31Z"/>
+                <scheduleElement waypointId="14" eta="2010-11-25T07:08:48Z" etd="2010-11-25T07:08:48Z"/>
+                <scheduleElement waypointId="15" eta="2010-11-25T07:13:58Z" etd="2010-11-25T07:13:58Z"/>
+                <scheduleElement waypointId="16" eta="2010-11-25T07:21:48Z" etd="2010-11-25T07:21:48Z"/>
+                <scheduleElement waypointId="17" eta="2010-11-25T07:24:22Z" etd="2010-11-25T07:24:22Z"/>
+                <scheduleElement waypointId="18" eta="2010-11-25T07:29:39Z" etd="2010-11-25T07:29:39Z"/>
+                <scheduleElement waypointId="19" eta="2010-11-25T07:31:52Z" etd="2010-11-25T07:31:52Z"/>
+                <scheduleElement waypointId="20" eta="2010-11-25T07:37:28Z" etd="2010-11-25T07:37:28Z"/>
+                <scheduleElement waypointId="21" eta="2010-11-25T07:40:04Z" etd="2010-11-25T07:40:04Z"/>
+                <scheduleElement waypointId="22" eta="2010-11-25T07:44:25Z" etd="2010-11-25T07:44:25Z"/>
+                <scheduleElement waypointId="23" eta="2010-11-25T07:48:08Z" etd="2010-11-25T07:48:08Z"/>
+                <scheduleElement waypointId="24" eta="2010-11-25T07:53:26Z" etd="2010-11-25T07:53:26Z"/>
+                <scheduleElement waypointId="25" eta="2010-11-25T07:58:36Z" etd="2010-11-25T07:58:36Z"/>
+                <scheduleElement waypointId="26" eta="2010-11-25T08:04:36Z" etd="2010-11-25T08:04:36Z"/>
+                <scheduleElement waypointId="27" eta="2010-11-25T08:09:58Z" etd="2010-11-25T08:09:58Z"/>
+                <scheduleElement waypointId="28" eta="2010-11-25T08:14:37Z" etd="2010-11-25T08:14:37Z"/>
+                <scheduleElement waypointId="29" eta="2010-11-25T08:24:12Z" etd="2010-11-25T08:24:12Z"/>
+                <scheduleElement waypointId="30" eta="2010-11-25T08:31:53Z" etd="2010-11-25T08:31:53Z"/>
+                <scheduleElement waypointId="31" eta="2010-11-25T08:38:28Z" etd="2010-11-25T08:38:28Z"/>
+                <scheduleElement waypointId="32" eta="2010-11-25T08:43:35Z" etd="2010-11-25T08:43:35Z"/>
+                <scheduleElement waypointId="34" eta="2010-11-25T08:47:08Z" etd="2010-11-25T08:47:08Z"/>
+                <scheduleElement waypointId="35" eta="2010-11-25T08:48:38Z" etd="2010-11-25T08:48:38Z"/>
+                <scheduleElement waypointId="36" eta="2010-11-25T08:50:20Z" etd="2010-11-25T08:50:20Z"/>
+                <scheduleElement waypointId="37" eta="2010-11-25T09:01:15Z" etd="2010-11-25T09:01:15Z"/>
+                <scheduleElement waypointId="38" eta="2010-11-25T09:06:23Z" etd="2010-11-25T09:06:23Z"/>
+                <scheduleElement waypointId="39" eta="2010-11-25T09:07:43Z" etd="2010-11-25T09:07:43Z"/>
+                <scheduleElement waypointId="40" eta="2010-11-25T09:10:26Z" etd="2010-11-25T09:10:26Z"/>
+                <scheduleElement waypointId="41" eta="2010-11-25T09:12:39Z" etd="2010-11-25T09:12:39Z"/>
+                <scheduleElement waypointId="42" eta="2010-11-25T09:15:00Z" etd="2010-11-25T09:15:00Z"/>
+                <scheduleElement waypointId="43" eta="2010-11-25T09:18:41Z" etd="2010-11-25T09:18:41Z"/>
+                <scheduleElement waypointId="44" eta="2010-11-25T09:23:34Z" etd="2010-11-25T09:23:34Z"/>
+                <scheduleElement waypointId="45" eta="2010-11-25T09:25:52Z" etd="2010-11-25T09:25:52Z"/>
+                <scheduleElement waypointId="46" eta="2010-11-25T09:28:24Z" etd="2010-11-25T09:28:24Z"/>
+                <scheduleElement waypointId="47" eta="2010-11-25T09:30:52Z" etd="2010-11-25T09:30:52Z"/>
+                <scheduleElement waypointId="48" eta="2010-11-25T09:33:04Z" etd="2010-11-25T09:33:04Z"/>
+                <scheduleElement waypointId="49" eta="2010-11-25T09:40:04Z" etd="2010-11-25T09:40:04Z"/>
+                <scheduleElement waypointId="50" eta="2010-11-25T09:45:27Z"/>
+            </calculated>
+        </schedule>
+        <schedule id="4" name="Schedule1">
+            <manual>
+                <scheduleElement waypointId="1" speed="12.50"/>
+                <scheduleElement waypointId="7" speed="12.00"/>
+                <scheduleElement waypointId="8" speed="12.00"/>
+                <scheduleElement waypointId="9" speed="12.00"/>
+                <scheduleElement waypointId="10" speed="12.00"/>
+                <scheduleElement waypointId="11" speed="12.00"/>
+                <scheduleElement waypointId="12" speed="12.00"/>
+                <scheduleElement waypointId="13" speed="12.00"/>
+                <scheduleElement waypointId="14" speed="12.00"/>
+                <scheduleElement waypointId="20" speed="12.00"/>
+                <scheduleElement waypointId="21" speed="12.00"/>
+                <scheduleElement waypointId="22" speed="12.00"/>
+                <scheduleElement waypointId="23" speed="12.00"/>
+                <scheduleElement waypointId="24" speed="12.00"/>
+                <scheduleElement waypointId="25" speed="12.00"/>
+                <scheduleElement waypointId="26" speed="12.00"/>
+                <scheduleElement waypointId="27" speed="12.00"/>
+                <scheduleElement waypointId="28" speed="12.00"/>
+                <scheduleElement waypointId="29" speed="12.00"/>
+                <scheduleElement waypointId="30" speed="12.00"/>
+                <scheduleElement waypointId="31" speed="12.00"/>
+                <scheduleElement waypointId="32" speed="12.00"/>
+                <scheduleElement waypointId="34" speed="8.00"/>
+                <scheduleElement waypointId="35" speed="8.00"/>
+                <scheduleElement waypointId="36" speed="8.00"/>
+                <scheduleElement waypointId="37" speed="12.00"/>
+                <scheduleElement waypointId="38" speed="12.00"/>
+                <scheduleElement waypointId="40" speed="8.00"/>
+                <scheduleElement waypointId="41" speed="8.00"/>
+                <scheduleElement waypointId="42" speed="12.00"/>
+                <scheduleElement waypointId="43" speed="12.00"/>
+                <scheduleElement waypointId="44" speed="12.00"/>
+                <scheduleElement waypointId="45" speed="12.00"/>
+                <scheduleElement waypointId="46" speed="12.00"/>
+                <scheduleElement waypointId="47" speed="12.00"/>
+                <scheduleElement waypointId="48" speed="12.00"/>
+                <scheduleElement waypointId="49" speed="12.00"/>
+                <scheduleElement waypointId="50" speed="12.00"/>
+            </manual>
+        </schedule>
+        <schedule id="5" name="8&amp;12kn">
+            <manual>
+                <scheduleElement waypointId="1" speed="12.50"/>
+                <scheduleElement waypointId="7" speed="12.00"/>
+                <scheduleElement waypointId="8" speed="12.00"/>
+                <scheduleElement waypointId="9" speed="12.00"/>
+                <scheduleElement waypointId="10" speed="12.00"/>
+                <scheduleElement waypointId="11" speed="12.00"/>
+                <scheduleElement waypointId="12" speed="12.00"/>
+                <scheduleElement waypointId="13" speed="12.00"/>
+                <scheduleElement waypointId="14" speed="12.00"/>
+                <scheduleElement waypointId="20" speed="12.00"/>
+                <scheduleElement waypointId="21" speed="12.00"/>
+                <scheduleElement waypointId="22" speed="12.00"/>
+                <scheduleElement waypointId="23" speed="12.00"/>
+                <scheduleElement waypointId="24" speed="12.00"/>
+                <scheduleElement waypointId="25" speed="12.00"/>
+                <scheduleElement waypointId="26" speed="12.00"/>
+                <scheduleElement waypointId="27" speed="12.00"/>
+                <scheduleElement waypointId="28" speed="12.00"/>
+                <scheduleElement waypointId="29" speed="12.00"/>
+                <scheduleElement waypointId="30" speed="12.00"/>
+                <scheduleElement waypointId="31" speed="12.00"/>
+                <scheduleElement waypointId="32" speed="12.00"/>
+                <scheduleElement waypointId="33" speed="12.00"/>
+                <scheduleElement waypointId="34" speed="8.00"/>
+                <scheduleElement waypointId="35" speed="8.00"/>
+                <scheduleElement waypointId="36" speed="8.00"/>
+                <scheduleElement waypointId="37" speed="12.00"/>
+                <scheduleElement waypointId="38" speed="12.00"/>
+                <scheduleElement waypointId="39" speed="8.00"/>
+                <scheduleElement waypointId="40" speed="8.00"/>
+                <scheduleElement waypointId="41" speed="8.00"/>
+                <scheduleElement waypointId="42" speed="12.00"/>
+                <scheduleElement waypointId="43" speed="12.00"/>
+                <scheduleElement waypointId="44" speed="12.00"/>
+                <scheduleElement waypointId="45" speed="12.00"/>
+                <scheduleElement waypointId="46" speed="12.00"/>
+                <scheduleElement waypointId="47" speed="12.00"/>
+                <scheduleElement waypointId="48" speed="12.00"/>
+                <scheduleElement waypointId="49" speed="12.00"/>
+                <scheduleElement waypointId="50" speed="12.00"/>
+            </manual>
+        </schedule>
+        <schedule id="6" name="11kn">
+            <manual>
+                <scheduleElement waypointId="1" etd="2010-10-18T23:25:00Z" speed="12.50"/>
+                <scheduleElement waypointId="2" speed="11.00"/>
+                <scheduleElement waypointId="3" speed="11.00"/>
+                <scheduleElement waypointId="4" speed="11.00"/>
+                <scheduleElement waypointId="5" speed="11.00"/>
+                <scheduleElement waypointId="6" speed="11.00"/>
+                <scheduleElement waypointId="7" speed="11.00"/>
+                <scheduleElement waypointId="8" speed="11.00"/>
+                <scheduleElement waypointId="9" speed="11.00"/>
+                <scheduleElement waypointId="10" speed="11.00"/>
+                <scheduleElement waypointId="11" speed="11.00"/>
+                <scheduleElement waypointId="12" speed="11.00"/>
+                <scheduleElement waypointId="13" speed="11.00"/>
+                <scheduleElement waypointId="14" speed="11.00"/>
+                <scheduleElement waypointId="16" speed="11.00"/>
+                <scheduleElement waypointId="17" speed="11.00"/>
+                <scheduleElement waypointId="18" speed="11.00"/>
+                <scheduleElement waypointId="19" speed="11.00"/>
+                <scheduleElement waypointId="20" speed="11.00"/>
+                <scheduleElement waypointId="21" speed="11.00"/>
+                <scheduleElement waypointId="22" speed="11.00"/>
+                <scheduleElement waypointId="23" speed="11.00"/>
+                <scheduleElement waypointId="24" speed="11.00"/>
+                <scheduleElement waypointId="25" speed="11.00"/>
+                <scheduleElement waypointId="26" speed="11.00"/>
+                <scheduleElement waypointId="27" speed="11.00"/>
+                <scheduleElement waypointId="28" speed="11.00"/>
+                <scheduleElement waypointId="29" speed="11.00"/>
+                <scheduleElement waypointId="30" speed="11.00"/>
+                <scheduleElement waypointId="31" speed="11.00"/>
+                <scheduleElement waypointId="32" speed="11.00"/>
+                <scheduleElement waypointId="34" speed="8.50"/>
+                <scheduleElement waypointId="35" speed="8.50"/>
+                <scheduleElement waypointId="36" speed="8.50"/>
+                <scheduleElement waypointId="37" speed="11.00"/>
+                <scheduleElement waypointId="38" speed="11.00"/>
+                <scheduleElement waypointId="40" speed="8.00"/>
+                <scheduleElement waypointId="41" speed="8.00"/>
+                <scheduleElement waypointId="42" speed="11.00"/>
+                <scheduleElement waypointId="43" speed="11.00"/>
+                <scheduleElement waypointId="44" speed="11.00"/>
+                <scheduleElement waypointId="45" speed="11.00"/>
+                <scheduleElement waypointId="46" speed="11.00"/>
+                <scheduleElement waypointId="47" speed="11.00"/>
+                <scheduleElement waypointId="48" speed="11.00"/>
+                <scheduleElement waypointId="49" speed="11.00"/>
+                <scheduleElement waypointId="50" speed="11.00"/>
+            </manual>
+            <calculated>
+                <scheduleElement waypointId="2" eta="2010-10-18T23:30:41Z" etd="2010-10-18T23:30:41Z"/>
+                <scheduleElement waypointId="3" eta="2010-10-18T23:41:39Z" etd="2010-10-18T23:41:39Z"/>
+                <scheduleElement waypointId="4" eta="2010-10-18T23:47:07Z" etd="2010-10-18T23:47:07Z"/>
+                <scheduleElement waypointId="5" eta="2010-10-18T23:55:47Z" etd="2010-10-18T23:55:47Z"/>
+                <scheduleElement waypointId="6" eta="2010-10-19T00:02:05Z" etd="2010-10-19T00:02:05Z"/>
+                <scheduleElement waypointId="7" eta="2010-10-19T00:06:32Z" etd="2010-10-19T00:06:32Z"/>
+                <scheduleElement waypointId="8" eta="2010-10-19T00:08:21Z" etd="2010-10-19T00:08:21Z"/>
+                <scheduleElement waypointId="9" eta="2010-10-19T00:09:37Z" etd="2010-10-19T00:09:37Z"/>
+                <scheduleElement waypointId="10" eta="2010-10-19T00:12:07Z" etd="2010-10-19T00:12:07Z"/>
+                <scheduleElement waypointId="11" eta="2010-10-19T00:14:14Z" etd="2010-10-19T00:14:14Z"/>
+                <scheduleElement waypointId="12" eta="2010-10-19T00:17:28Z" etd="2010-10-19T00:17:28Z"/>
+                <scheduleElement waypointId="13" eta="2010-10-19T00:22:28Z" etd="2010-10-19T00:22:28Z"/>
+                <scheduleElement waypointId="14" eta="2010-10-19T00:26:12Z" etd="2010-10-19T00:26:12Z"/>
+                <scheduleElement waypointId="16" eta="2010-10-19T00:40:58Z" etd="2010-10-19T00:40:58Z"/>
+                <scheduleElement waypointId="17" eta="2010-10-19T00:43:54Z" etd="2010-10-19T00:43:54Z"/>
+                <scheduleElement waypointId="18" eta="2010-10-19T00:49:54Z" etd="2010-10-19T00:49:54Z"/>
+                <scheduleElement waypointId="19" eta="2010-10-19T00:52:25Z" etd="2010-10-19T00:52:25Z"/>
+                <scheduleElement waypointId="20" eta="2010-10-19T00:58:46Z" etd="2010-10-19T00:58:46Z"/>
+                <scheduleElement waypointId="21" eta="2010-10-19T01:01:44Z" etd="2010-10-19T01:01:44Z"/>
+                <scheduleElement waypointId="22" eta="2010-10-19T01:06:40Z" etd="2010-10-19T01:06:40Z"/>
+                <scheduleElement waypointId="23" eta="2010-10-19T01:10:54Z" etd="2010-10-19T01:10:54Z"/>
+                <scheduleElement waypointId="24" eta="2010-10-19T01:16:55Z" etd="2010-10-19T01:16:55Z"/>
+                <scheduleElement waypointId="25" eta="2010-10-19T01:22:13Z" etd="2010-10-19T01:22:13Z"/>
+                <scheduleElement waypointId="26" eta="2010-10-19T01:29:27Z" etd="2010-10-19T01:29:27Z"/>
+                <scheduleElement waypointId="27" eta="2010-10-19T01:35:38Z" etd="2010-10-19T01:35:38Z"/>
+                <scheduleElement waypointId="28" eta="2010-10-19T01:40:56Z" etd="2010-10-19T01:40:56Z"/>
+                <scheduleElement waypointId="29" eta="2010-10-19T01:51:48Z" etd="2010-10-19T01:51:48Z"/>
+                <scheduleElement waypointId="30" eta="2010-10-19T02:00:59Z" etd="2010-10-19T02:00:59Z"/>
+                <scheduleElement waypointId="31" eta="2010-10-19T02:08:41Z" etd="2010-10-19T02:08:41Z"/>
+                <scheduleElement waypointId="32" eta="2010-10-19T02:14:30Z" etd="2010-10-19T02:14:30Z"/>
+                <scheduleElement waypointId="34" eta="2010-10-19T02:19:04Z" etd="2010-10-19T02:19:04Z"/>
+                <scheduleElement waypointId="35" eta="2010-10-19T02:21:16Z" etd="2010-10-19T02:21:16Z"/>
+                <scheduleElement waypointId="36" eta="2010-10-19T02:23:46Z" etd="2010-10-19T02:23:46Z"/>
+                <scheduleElement waypointId="37" eta="2010-10-19T02:37:01Z" etd="2010-10-19T02:37:01Z"/>
+                <scheduleElement waypointId="38" eta="2010-10-19T02:43:28Z" etd="2010-10-19T02:43:28Z"/>
+                <scheduleElement waypointId="40" eta="2010-10-19T02:50:39Z" etd="2010-10-19T02:50:39Z"/>
+                <scheduleElement waypointId="41" eta="2010-10-19T02:53:16Z" etd="2010-10-19T02:53:16Z"/>
+                <scheduleElement waypointId="42" eta="2010-10-19T02:56:16Z" etd="2010-10-19T02:56:16Z"/>
+                <scheduleElement waypointId="43" eta="2010-10-19T03:01:44Z" etd="2010-10-19T03:01:44Z"/>
+                <scheduleElement waypointId="44" eta="2010-10-19T03:05:42Z" etd="2010-10-19T03:05:42Z"/>
+                <scheduleElement waypointId="45" eta="2010-10-19T03:08:33Z" etd="2010-10-19T03:08:33Z"/>
+                <scheduleElement waypointId="46" eta="2010-10-19T03:11:12Z" etd="2010-10-19T03:11:12Z"/>
+                <scheduleElement waypointId="47" eta="2010-10-19T03:14:00Z" etd="2010-10-19T03:14:00Z"/>
+                <scheduleElement waypointId="48" eta="2010-10-19T03:16:23Z" etd="2010-10-19T03:16:23Z"/>
+                <scheduleElement waypointId="49" eta="2010-10-19T03:24:29Z" etd="2010-10-19T03:24:29Z"/>
+                <scheduleElement waypointId="50" eta="2010-10-19T03:28:50Z"/>
+            </calculated>
+        </schedule>
+    </schedules>
+    <extensions>
+        <extension name="ukccalc" manufacturer="Transas">
+            <ukc ref_id="1" draught="11"/>
+            <ukc ref_id="2" draught="11"/>
+            <ukc ref_id="3" draught="11"/>
+            <ukc ref_id="4" draught="11"/>
+            <ukc ref_id="5" draught="11"/>
+            <ukc ref_id="6" draught="11"/>
+            <ukc ref_id="7" draught="11"/>
+            <ukc ref_id="9" draught="11"/>
+            <ukc ref_id="11" draught="11"/>
+            <ukc ref_id="12" draught="11"/>
+            <ukc ref_id="13" draught="11"/>
+            <ukc ref_id="14" draught="11"/>
+            <ukc ref_id="17" draught="11"/>
+            <ukc ref_id="18" draught="11"/>
+            <ukc ref_id="19" draught="11"/>
+            <ukc ref_id="20" draught="11"/>
+            <ukc ref_id="21" draught="11"/>
+            <ukc ref_id="22" draught="11"/>
+            <ukc ref_id="23" draught="11"/>
+            <ukc ref_id="24" draught="11"/>
+            <ukc ref_id="25" draught="11"/>
+            <ukc ref_id="26" draught="11"/>
+            <ukc ref_id="27" draught="11"/>
+            <ukc ref_id="28" draught="11"/>
+            <ukc ref_id="29" draught="11"/>
+        </extension>
+    </extensions>
+</route>

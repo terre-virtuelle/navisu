@@ -127,4 +127,9 @@ public class Waypoints {
         this.extensions = value;
     }
 
+    @Override
+    public String toString() {
+        return "Waypoints{" + "defaultWaypoint=" + defaultWaypoint + ", waypoint=" + waypoint + ", extensions=" + extensions + '}';
+    }
+
 }

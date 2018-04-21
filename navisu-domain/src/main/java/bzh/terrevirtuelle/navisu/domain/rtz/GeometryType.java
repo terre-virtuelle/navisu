@@ -55,4 +55,9 @@ public enum GeometryType {
         throw new IllegalArgumentException(v);
     }
 
+    @Override
+    public String toString() {
+        return "GeometryType{" + "value=" + value + '}';
+    }
+
 }

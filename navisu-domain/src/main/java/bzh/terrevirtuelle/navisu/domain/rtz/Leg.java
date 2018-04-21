@@ -468,4 +468,9 @@ public class Leg {
         this.legNote2 = value;
     }
 
+    @Override
+    public String toString() {
+        return "Leg{" + "starboardXTD=" + starboardXTD + ", portsideXTD=" + portsideXTD + ", safetyContour=" + safetyContour + ", safetyDepth=" + safetyDepth + ", geometryType=" + geometryType + ", speedMin=" + speedMin + ", speedMax=" + speedMax + ", draughtForward=" + draughtForward + ", draughtAft=" + draughtAft + ", staticUKC=" + staticUKC + ", dynamicUKC=" + dynamicUKC + ", masthead=" + masthead + ", legReport=" + legReport + ", legInfo=" + legInfo + ", legNote1=" + legNote1 + ", legNote2=" + legNote2 + '}';
+    }
+
 }

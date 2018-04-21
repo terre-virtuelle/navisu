@@ -90,4 +90,9 @@ public class GMPoint {
         this.lon = value;
     }
 
+    @Override
+    public String toString() {
+        return "GMPoint{" + "lat=" + lat + ", lon=" + lon + '}';
+    }
+
 }

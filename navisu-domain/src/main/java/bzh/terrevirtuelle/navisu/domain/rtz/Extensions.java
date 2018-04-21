@@ -78,4 +78,9 @@ public class Extensions {
         return this.any;
     }
 
+    @Override
+    public String toString() {
+        return "Extensions{" + "any=" + any + '}';
+    }
+
 }

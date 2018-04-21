@@ -98,4 +98,9 @@ public class Calculated {
         this.extensions = value;
     }
 
+    @Override
+    public String toString() {
+        return "Calculated{" + "sheduleElement=" + sheduleElement + ", extensions=" + extensions + '}';
+    }
+
 }

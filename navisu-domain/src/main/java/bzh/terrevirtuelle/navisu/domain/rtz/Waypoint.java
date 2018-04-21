@@ -4,8 +4,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2018.03.03 at 04:05:58 PM CET 
 //
-
-
 package bzh.terrevirtuelle.navisu.domain.rtz;
 
 import java.math.BigDecimal;
@@ -17,12 +15,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for Waypoint complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for Waypoint complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="Waypoint">
  *   &lt;complexContent>
@@ -40,8 +40,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Waypoint", propOrder = {
@@ -68,11 +68,9 @@ public class Waypoint {
 
     /**
      * Gets the value of the position property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link GMPoint }
-     *     
+     *
+     * @return possible object is {@link GMPoint }
+     *
      */
     public GMPoint getPosition() {
         return position;
@@ -80,11 +78,9 @@ public class Waypoint {
 
     /**
      * Sets the value of the position property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link GMPoint }
-     *     
+     *
+     * @param value allowed object is {@link GMPoint }
+     *
      */
     public void setPosition(GMPoint value) {
         this.position = value;
@@ -92,11 +88,9 @@ public class Waypoint {
 
     /**
      * Gets the value of the leg property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Leg }
-     *     
+     *
+     * @return possible object is {@link Leg }
+     *
      */
     public Leg getLeg() {
         return leg;
@@ -104,11 +98,9 @@ public class Waypoint {
 
     /**
      * Sets the value of the leg property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Leg }
-     *     
+     *
+     * @param value allowed object is {@link Leg }
+     *
      */
     public void setLeg(Leg value) {
         this.leg = value;
@@ -116,11 +108,9 @@ public class Waypoint {
 
     /**
      * Gets the value of the extensions property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Extensions }
-     *     
+     *
+     * @return possible object is {@link Extensions }
+     *
      */
     public Extensions getExtensions() {
         return extensions;
@@ -128,11 +118,9 @@ public class Waypoint {
 
     /**
      * Sets the value of the extensions property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Extensions }
-     *     
+     *
+     * @param value allowed object is {@link Extensions }
+     *
      */
     public void setExtensions(Extensions value) {
         this.extensions = value;
@@ -140,11 +128,9 @@ public class Waypoint {
 
     /**
      * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is {@link BigInteger }
+     *
      */
     public BigInteger getId() {
         return id;
@@ -152,11 +138,9 @@ public class Waypoint {
 
     /**
      * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is {@link BigInteger }
+     *
      */
     public void setId(BigInteger value) {
         this.id = value;
@@ -164,11 +148,9 @@ public class Waypoint {
 
     /**
      * Gets the value of the revision property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is {@link BigInteger }
+     *
      */
     public BigInteger getRevision() {
         return revision;
@@ -176,11 +158,9 @@ public class Waypoint {
 
     /**
      * Sets the value of the revision property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is {@link BigInteger }
+     *
      */
     public void setRevision(BigInteger value) {
         this.revision = value;
@@ -188,11 +168,9 @@ public class Waypoint {
 
     /**
      * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getName() {
         return name;
@@ -200,11 +178,9 @@ public class Waypoint {
 
     /**
      * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setName(String value) {
         this.name = value;
@@ -212,11 +188,9 @@ public class Waypoint {
 
     /**
      * Gets the value of the radius property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     *
+     * @return possible object is {@link BigDecimal }
+     *
      */
     public BigDecimal getRadius() {
         return radius;
@@ -224,14 +198,25 @@ public class Waypoint {
 
     /**
      * Sets the value of the radius property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     *
+     * @param value allowed object is {@link BigDecimal }
+     *
      */
     public void setRadius(BigDecimal value) {
         this.radius = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Waypoint{"
+                + position != null ? "position=" + position : ""
+                        + leg != null ? ", leg=" + leg : ""
+                                + extensions != null ? ", extensions=" + extensions : ""
+                                        + id != null ? ", id=" + id : ""
+                                                + revision != null ? ", revision=" + revision : ""
+                                                        + name != null ? ", name=" + name : ""
+                                                                + radius != null ? ", radius=" + radius : ""
+                                                                        + '}';
     }
 
 }

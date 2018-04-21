@@ -4,27 +4,28 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2018.03.03 at 04:05:58 PM CET 
 //
-
-
 package bzh.terrevirtuelle.navisu.domain.rtz;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * 
- *         RTZ files contain a number of waypoints, followed with auxiliary schedules.
- *         You can add your own elements to the extension section of the RTZ document.
- *       
- * 
- * <p>Java class for Route complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
+ * RTZ files contain a number of waypoints, followed with auxiliary schedules.
+ * You can add your own elements to the extension section of the RTZ document.
+ *
+ *
+ * <p>
+ * Java class for Route complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="Route">
  *   &lt;complexContent>
@@ -40,8 +41,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Route", propOrder = {
@@ -50,6 +51,7 @@ import javax.xml.bind.annotation.XmlType;
     "schedules",
     "extensions"
 })
+@XmlRootElement
 public class Route {
 
     @XmlElement(required = true)
@@ -61,13 +63,14 @@ public class Route {
     @XmlAttribute(name = "version", required = true)
     protected String version;
 
+    public Route() {
+    }
+
     /**
      * Gets the value of the routeInfo property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link RouteInfo }
-     *     
+     *
+     * @return possible object is {@link RouteInfo }
+     *
      */
     public RouteInfo getRouteInfo() {
         return routeInfo;
@@ -75,11 +78,9 @@ public class Route {
 
     /**
      * Sets the value of the routeInfo property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link RouteInfo }
-     *     
+     *
+     * @param value allowed object is {@link RouteInfo }
+     *
      */
     public void setRouteInfo(RouteInfo value) {
         this.routeInfo = value;
@@ -87,11 +88,9 @@ public class Route {
 
     /**
      * Gets the value of the waypoints property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Waypoints }
-     *     
+     *
+     * @return possible object is {@link Waypoints }
+     *
      */
     public Waypoints getWaypoints() {
         return waypoints;
@@ -99,11 +98,9 @@ public class Route {
 
     /**
      * Sets the value of the waypoints property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Waypoints }
-     *     
+     *
+     * @param value allowed object is {@link Waypoints }
+     *
      */
     public void setWaypoints(Waypoints value) {
         this.waypoints = value;
@@ -111,11 +108,9 @@ public class Route {
 
     /**
      * Gets the value of the schedules property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Schedules }
-     *     
+     *
+     * @return possible object is {@link Schedules }
+     *
      */
     public Schedules getSchedules() {
         return schedules;
@@ -123,11 +118,9 @@ public class Route {
 
     /**
      * Sets the value of the schedules property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Schedules }
-     *     
+     *
+     * @param value allowed object is {@link Schedules }
+     *
      */
     public void setSchedules(Schedules value) {
         this.schedules = value;
@@ -135,11 +128,9 @@ public class Route {
 
     /**
      * Gets the value of the extensions property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Extensions }
-     *     
+     *
+     * @return possible object is {@link Extensions }
+     *
      */
     public Extensions getExtensions() {
         return extensions;
@@ -147,11 +138,9 @@ public class Route {
 
     /**
      * Sets the value of the extensions property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Extensions }
-     *     
+     *
+     * @param value allowed object is {@link Extensions }
+     *
      */
     public void setExtensions(Extensions value) {
         this.extensions = value;
@@ -159,11 +148,9 @@ public class Route {
 
     /**
      * Gets the value of the version property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getVersion() {
         if (version == null) {
@@ -175,14 +162,23 @@ public class Route {
 
     /**
      * Sets the value of the version property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setVersion(String value) {
         this.version = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Route{"
+                + routeInfo != null ? "routeInfo=" + routeInfo : ""
+                        + waypoints != null ? ", waypoints=" + waypoints : ""
+                                + schedules != null ? ", schedules=" + schedules : ""
+                                        + extensions != null ? ", extensions=" + extensions : ""
+                                                + version != null ? ", version=" + version : ""
+                                                        + '}';
     }
 
 }

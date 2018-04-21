@@ -120,4 +120,9 @@ public class DefaultWaypoint {
         this.radius = value;
     }
 
+    @Override
+    public String toString() {
+        return "DefaultWaypoint{" + "leg=" + leg + ", extensions=" + extensions + ", radius=" + radius + '}';
+    }
+
 }

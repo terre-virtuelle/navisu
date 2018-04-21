@@ -102,4 +102,9 @@ public class Manual {
         this.extensions = value;
     }
 
+    @Override
+    public String toString() {
+        return "Manual{" + "sheduleElement=" + sheduleElement + ", extensions=" + extensions + '}';
+    }
+
 }

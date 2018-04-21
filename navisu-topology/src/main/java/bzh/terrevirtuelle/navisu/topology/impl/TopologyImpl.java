@@ -221,13 +221,13 @@ public class TopologyImpl
 
     @Override
     public Path wktMultiLineToWwjPath(String geometry, double height) {
-       // System.out.println("geometry : " + geometry);
+        // System.out.println("geometry : " + geometry);
         String tmp = geometry.replace("MULTILINESTRING((", "");
         tmp = tmp.replace("MULTILINESTRING ((", "");
         tmp = tmp.replace("))", "");
         tmp = tmp.replace(")", "");
         tmp = tmp.replace("(", "");
-      //  System.out.println("tmp : " + tmp);
+        //  System.out.println("tmp : " + tmp);
         String[] posTab0 = tmp.split(",");
         List<Position> positions = new ArrayList<>();
         for (String s : posTab0) {
@@ -237,8 +237,8 @@ public class TopologyImpl
                     positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1].trim())),
                             Angle.fromDegrees(Double.valueOf(posTab1[0].trim())), height));
                 } catch (NumberFormatException e) {
-                    System.out.println("posTab1 : " + posTab1[0] + " "+ posTab1[1]);
-                    
+                    System.out.println("posTab1 : " + posTab1[0] + " " + posTab1[1]);
+
                 }
             }
         }
@@ -381,7 +381,7 @@ public class TopologyImpl
 
     @Override
     public List<Polygon> wktMultiLineToWwjMultiPolygon(String geometry) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @SuppressWarnings("unchecked")
@@ -418,5 +418,38 @@ public class TopologyImpl
             }
         }
         return multiString;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public String clipWKTMultiLineString(String data, double latMin, double lonMin, double latMax, double lonMax) {
+        Range rangeLat = Range.closed(latMin, latMax);
+        Range rangeLon = Range.closed(lonMin, lonMax);
+
+        List<String> tmp = new ArrayList<>();
+        String s = data;
+        s = s.replace("MULTILINESTRING((", "");
+        s = s.replace("))", "");
+        String[] tab = s.split(",");
+        for (String ss : tab) {
+            String[] tab1 = ss.trim().split("\\s+");
+            if (tab1.length != 0) {
+                if (rangeLat.contains(Double.valueOf(tab1[1]))
+                        && rangeLon.contains(Double.valueOf(tab1[0]))) {
+                    tmp.add(tab1[0] + " " + tab1[1]);
+                }
+            }
+        }
+        String result = "";
+        if (!tmp.isEmpty()) {
+
+            result = "MULTILINESTRING((";
+            for (int i = 0; i < tmp.size() - 1; i++) {
+                result += tmp.get(i) + ", ";
+            }
+            result += tmp.get(tmp.size() - 1);
+            result += "))";
+        }
+        return result;
     }
 }

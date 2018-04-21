@@ -98,4 +98,9 @@ public class Schedules {
         this.extensions = value;
     }
 
+    @Override
+    public String toString() {
+        return "Schedules{" + "schedule=" + schedule + ", extensions=" + extensions + '}';
+    }
+
 }

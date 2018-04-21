@@ -1,6 +1,8 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
@@ -15,14 +17,22 @@ public class S57Object implements Serializable {
     protected boolean spatial = false;
     @XmlTransient
     protected boolean dataSet = false;
-
+    @XmlTransient
+    protected Map<String, String> labels;
+    
     protected long id = 0;
 
     public S57Object(long id) {
         this.id = id;
+        labels=new HashMap<>();
     }
 
     public S57Object() {
+        labels=new HashMap<>();
+    }
+
+    public Map<String, String> getLabels() {
+        return labels;
     }
 
     public long getId() {

@@ -153,9 +153,10 @@ public interface TopologyServices
      * @return
      */
     Geometry filterWwjLatLonsWithGeometryJts(Geometry geometry, List<LatLon> pts);
-    
+
     /**
      * Clip a list of WKT Multiline with a rectangle
+     *
      * @param data
      * @param latMin
      * @param lonMin
@@ -164,5 +165,8 @@ public interface TopologyServices
      * @return List of WKT Multiline
      */
     List<String> clipWKTMultiString(List<String> data, double latMin, double lonMin,
-            double latMax, double lonMax );
+            double latMax, double lonMax);
+
+    String clipWKTMultiLineString(String data, double latMin, double lonMin,
+            double latMax, double lonMax);
 }

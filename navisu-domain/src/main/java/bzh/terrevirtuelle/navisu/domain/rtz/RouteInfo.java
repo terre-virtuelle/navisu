@@ -616,4 +616,30 @@ public class RouteInfo {
         this.routeChangesHistory = value;
     }
 
+    @Override
+    public String toString() {
+        return "RouteInfo{" + "extensions=" + extensions 
+                + ", routeName=" + routeName 
+                + ", routeAuthor=" + routeAuthor 
+                + ", routeStatus=" + routeStatus 
+                + ", validityPeriodStart=" + validityPeriodStart 
+                + ", validityPeriodStop=" + validityPeriodStop 
+                + ", vesselName=" 
+                + vesselName + ", vesselMMSI=" 
+                + vesselMMSI + ", vesselIMO=" 
+                + vesselIMO + ", vesselVoyage=" 
+                + vesselVoyage + ", vesselDisplacement=" 
+                + vesselDisplacement + ", vesselCargo=" 
+                + vesselCargo + ", vesselGM=" 
+                + vesselGM + ", optimizationMethod=" 
+                + optimizationMethod + ", vesselMaxRoll=" 
+                + vesselMaxRoll + ", vesselMaxWave=" 
+                + vesselMaxWave + ", vesselMaxWind=" 
+                + vesselMaxWind + ", vesselSpeedMax=" 
+                + vesselSpeedMax + ", vesselServiceMin=" 
+                + vesselServiceMin + ", vesselServiceMax=" 
+                + vesselServiceMax + ", routeChangesHistory=" 
+                + routeChangesHistory + '}';
+    }
+
 }

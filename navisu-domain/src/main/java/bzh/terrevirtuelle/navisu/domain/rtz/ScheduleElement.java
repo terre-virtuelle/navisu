@@ -699,4 +699,9 @@ public class ScheduleElement {
         this.note = value;
     }
 
+    @Override
+    public String toString() {
+        return "ScheduleElement{" + "extensions=" + extensions + ", waypointId=" + waypointId + ", etd=" + etd + ", etdWindowBefore=" + etdWindowBefore + ", etdWindowAfter=" + etdWindowAfter + ", eta=" + eta + ", etaWindowBefore=" + etaWindowBefore + ", etaWindowAfter=" + etaWindowAfter + ", stay=" + stay + ", speed=" + speed + ", speedWindow=" + speedWindow + ", windSpeed=" + windSpeed + ", windDirection=" + windDirection + ", currentSpeed=" + currentSpeed + ", currentDirection=" + currentDirection + ", windLoss=" + windLoss + ", waveLoss=" + waveLoss + ", totalLoss=" + totalLoss + ", rpm=" + rpm + ", pitch=" + pitch + ", fuel=" + fuel + ", relFuelSave=" + relFuelSave + ", absFuelSace=" + absFuelSace + ", note=" + note + '}';
+    }
+
 }
