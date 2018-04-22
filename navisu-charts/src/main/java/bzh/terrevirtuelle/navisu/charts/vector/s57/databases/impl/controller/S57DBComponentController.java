@@ -21,13 +21,10 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.PontoonDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.ShorelineConstructionDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.BuoyageView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.CoastalineView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DaymarView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.DepareView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.S57Viewer;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.PontonView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view.ShorelineConstructionView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.BuoyageView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DaymarView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57Viewer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
@@ -359,7 +356,6 @@ public class S57DBComponentController
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
 
-        //layerTreeServices.createGroup(GROUP_2);
         bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
         depareLayer = layersManagerServices.getLayer(GROUP_0, DEPARE_LAYER);
         depare3DLayer = layersManagerServices.getLayer(GROUP_0, DEPARE_3D_LAYER);

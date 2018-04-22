@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
+package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
@@ -23,7 +23,7 @@ import java.util.Map;
  *
  * @author serge
  */
-public class DaymarView {
+public class BuoyageView {
 
     protected RenderableLayer layer;
     protected List<Buoyage> buoyages;
@@ -36,9 +36,8 @@ public class DaymarView {
     protected double lon;
     protected String topMark;
     protected String label;
-    protected boolean dev = true;
 
-    public DaymarView(Map<Pair<Double, Double>, String> topMarkMap,
+    public BuoyageView(Map<Pair<Double, Double>, String> topMarkMap,
             RenderableLayer layer,
             String acronym) {
         this.topMarkMap = topMarkMap;
@@ -57,36 +56,36 @@ public class DaymarView {
             placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
             return buoyage;
         }).map((buoyage) -> {
-            if (dev) {
-                label = acronym + "_"
-                        + buoyage.getShape() + "_"
-                        + buoyage.getCategoryOfMark() + "_"
-                        + buoyage.getColour() + "_"
-                        + buoyage.getColourPattern() + "_"
-                        + buoyage.getNatureOfConstruction() + "_"
-                        + buoyage.getMarsys()
-                        + ".png";
-            } else {
-                label = buoyage.getClass().getSimpleName() + "\n"
-                        + buoyage.getObjectName() + "\n"
-                        + "Lat : " + new Float(lat).toString() + "\n"
-                        + "Lon : " + new Float(lon).toString();
-                buoyage.setLabel(label);
-            }
+            label = buoyage.getClass().getSimpleName() + "\n"
+                    + buoyage.getObjectName() + "\n"
+                    + "Lat : " + new Float(lat).toString() + "\n"
+                    + "Lon : " + new Float(lon).toString();
+            buoyage.setLabel(label);
             placemark.setValue(AVKey.DISPLAY_NAME, label);
             topMark = topMarkMap.get(new Pair(lat, lon));
             if (topMark == null) {
                 topMark = "0";
             }
-
-            String imageAddress = "img/daymarks_"
-                    + buoyage.getMarsys() + "/"
+           /* 
+            label =  buoyage.getMarsys() + "/" 
                     + acronym + "_"
                     + buoyage.getShape() + "_"
                     + buoyage.getCategoryOfMark() + "_"
                     + buoyage.getColour() + "_"
                     + buoyage.getColourPattern() + "_"
-                    + buoyage.getNatureOfConstruction() + "_"
+                    + topMark + "_"
+                    + buoyage.getMarsys()
+                    + ".png";
+            placemark.setValue(AVKey.DISPLAY_NAME, label);
+            */
+            String imageAddress = "img/buoyage_" 
+                    + buoyage.getMarsys() + "/" 
+                    + acronym + "_"
+                    + buoyage.getShape() + "_"
+                    + buoyage.getCategoryOfMark() + "_"
+                    + buoyage.getColour() + "_"
+                    + buoyage.getColourPattern() + "_"
+                    + topMark + "_"
                     + buoyage.getMarsys()
                     + ".png";
             buoyage.setImageAddress(imageAddress);

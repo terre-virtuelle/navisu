@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
+package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view;
 
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -17,14 +19,14 @@ import java.util.List;
  *
  * @author serge
  */
-public class CoastalineView
-        extends ShapefilePolylineView {
+public class PontonView {
 
     PolyGeomView polyView;
     protected TopologyServices topologyServices;
     protected RenderableLayer layer;
+    protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
-    public CoastalineView(TopologyServices topologyServices, RenderableLayer layer) {
+    public PontonView(TopologyServices topologyServices, RenderableLayer layer) {
         this.topologyServices = topologyServices;
         this.layer = layer;
     }
@@ -33,12 +35,19 @@ public class CoastalineView
     public void display(List<String> geometries) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();
         normAttributes.setOutlineMaterial(new Material(Color.WHITE));
+        normAttributes.setOutlineWidth(3.0);
         normAttributes.setEnableLighting(true);
-       //Clip 
         for (String s : geometries) {
-            polyView = new PolylineView(topologyServices, layer);
-           // polyView.display(s, normAttributes);
+            if (s.contains("MULTILINESTRING")) {
+                polyView = new PolylineView(topologyServices, layer);
+              //  polyView.display(s, normAttributes);
+            }
+            if (s.contains("MULTIPOLYGON")) {
+                System.out.println("s : " + s);
+                polyView = new PolygonView(topologyServices, layer);
+              //  polyView.display(s, normAttributes);
+            }
         }
+        wwd.redrawNow();
     }
-
 }

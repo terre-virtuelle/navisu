@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.view;
+package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
@@ -46,8 +46,8 @@ public class PolylineView
 
         if (labels != null) {
             labels.keySet().forEach((key) -> {
-                tmp = String.format("%-30s", key + ": " + labels.get(key));
-                label += tmp + "\n";
+                tmp = labels.get(key);
+                label += " " +tmp + "\n";
             });
             path.setValue(AVKey.DISPLAY_NAME, label);
         }

@@ -68,39 +68,13 @@ public abstract class ResultSetDBLoader {
 
     @SuppressWarnings("unchecked")
     public ResultSet retrieveResultSetIn(double latMin, double lonMin, double latMax, double lonMax) {
-       
+
         if (connection != null) {
-            try {  
+            try {
                 request = S57_REQUEST_MAP.get(className);
                 request += "(" + lonMin + ", " + latMin + ", "
                         + lonMax + ", " + latMax + ", "
                         + "4326);";
-              /*
-                SELECT  ST_AsText(geom), valdco FROM depcnt WHERE geom && ST_MakeEnvelope(-4.61, 48.21, -4.3, 48.42, 4326);
-                */
-               /* 
-                request = "SELECT "
-                        + "ST_AsText("
-                        + "ST_Intersection("
-                        + "\"POLYGON ((-4.61, 48.21, -4.3, 48.42))\","
-                        + " (SELECT geom FROM depcnt "
-                        + " WHERE geom && ST_MakeEnvelope(-4.61, 48.21, -4.3, 48.42, 4326))"
-                        + ")"
-                        + ");";
-*/
-                /*
-                SELECT st_intersection(carto_risque.geometry,zones_inondables.geometry) as geometry
-FROM carto_risques,zones_inondables
-WHERE st_intersects(carto_risque.geometry,zones_inondables.geometry)
-                */
-             /*   
-            request=   " SELECT ST_AsText( st_intersection(geom FROM depcnt,"
-                    + "WHERE geom && ST_MakeEnvelope(-4.61, 48.21, -4.3, 48.42, 4326)) as geometry);";
-
-             */   
-                
-                
-                
                 
                 resultSet = connection
                         .createStatement()
