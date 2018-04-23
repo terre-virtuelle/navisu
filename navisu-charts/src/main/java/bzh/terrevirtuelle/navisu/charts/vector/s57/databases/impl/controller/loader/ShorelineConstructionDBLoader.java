@@ -25,7 +25,7 @@ public class ShorelineConstructionDBLoader
 
     public ShorelineConstructionDBLoader(TopologyServices topologyServices,
             Connection connection) {
-        super(topologyServices, connection, "Pontoon");
+        super(topologyServices, connection, "ShorelineConstruction");
     }
 
     @Override

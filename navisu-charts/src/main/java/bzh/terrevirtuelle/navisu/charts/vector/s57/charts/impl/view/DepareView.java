@@ -82,8 +82,9 @@ public class DepareView
         for (int i = 0; i < polygons.size(); i++) {
             array[i] = polygons.get(i);
         }
+        
         creatKML(array);
-
+        
         //Simplify data and create depare.shp
         String path = Proc.getProperty("gdalPath");
         String command = path + "/ogr2ogr -f 'ESRI Shapefile' cmd/output.shp cmd/output.kml \n"

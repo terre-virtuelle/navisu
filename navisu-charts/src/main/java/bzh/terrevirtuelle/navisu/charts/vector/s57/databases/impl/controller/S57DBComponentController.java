@@ -24,7 +24,8 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DaymarView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57Viewer;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57View;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.NavigationLineDBLoader;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
@@ -210,7 +211,7 @@ public class S57DBComponentController
     protected double lon0;
     protected double lat1;
     protected double lon1;
-    protected S57Viewer s57Viewer;
+    protected S57View s57Viewer;
     List<? extends Geo> objects;
     protected Connection connection;
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
@@ -226,7 +227,7 @@ public class S57DBComponentController
             "LIGHTS : Light",
             "LNDMRK : Landmark"
             "MIPARE : MilitaryPracticeArea",
-            "NAVLNE : NavigationLine",
+           
             "OBSTRN : NavigationalSystemOfMarks",
             "RESARE : RestrictedArea",
             "SEAARE : SeaAreaNamedWaterArea",
@@ -245,7 +246,9 @@ public class S57DBComponentController
             "DEPARE : DepthArea",
             "DEPCNT : DepthContour",
             "COALNE : Coastaline",
-            "SLCONS : ShorelineConstruction"
+            "SLCONS : ShorelineConstruction",
+            "NAVLNE : NavigationLine",
+            "LNDMRK : Landmark"
     );
     public static final Map<String, String> S57_REQUEST_MAP = Collections.unmodifiableMap(new HashMap<String, String>() {
         {
@@ -311,6 +314,12 @@ public class S57DBComponentController
                     + " WHERE geom && ST_MakeEnvelope");
             put("ShorelineConstruction", "SELECT  ST_AsText(geom)"
                     + " FROM slcons"
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("NavigationLine", "SELECT  ST_AsText(geom), orient"
+                    + " FROM navlne"
+                    + " WHERE geom && ST_MakeEnvelope");
+            put("LNDMRK", "SELECT geom, objnam, catlmk, colour, colpat, rcid, status, convis, functn"
+                    + " FROM lndmrk "
                     + " WHERE geom && ST_MakeEnvelope");
         }
     ;
@@ -625,7 +634,7 @@ public class S57DBComponentController
             BuoyageDBLoader buoyageDbLoader = new BuoyageDBLoader(connection, "BCNCAR", marsysMap);
             List<Buoyage> buoyages = buoyageDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
-            //Create a S57Viewer for Buoyage,Display all buoyages retrieved
+            //Create a S57View for Buoyage,Display all buoyages retrieved
             BuoyageView buoyageView = new BuoyageView(topMarkMap, buoyageLayer, "BCNCAR");
             buoyageView.display(buoyages);
 
@@ -682,51 +691,73 @@ public class S57DBComponentController
                                 USER,
                                 PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
             });
+            wwd.redrawNow();
         }
         if (object.trim().equals("ALL") || object.trim().equals("DEPCNT")) {
             guiAgentServices.getJobsManager().newJob("Load contours", (progressHandle) -> {
                 objects = new DepthContourDBLoader(topologyServices, connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57Viewer(topologyServices, depareLayer);
+                s57Viewer = new S57View(topologyServices, depareLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
-
             });
+            wwd.redrawNow();
         }
         if (object.trim().equals("ALL") || object.trim().equals("COALNE")) {
             guiAgentServices.getJobsManager().newJob("Load coastaline", (progressHandle) -> {
                 objects = new CoastlineDBLoader(topologyServices, connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57Viewer(topologyServices, depareLayer);
+                s57Viewer = new S57View(topologyServices, depareLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
-
             });
+            wwd.redrawNow();
         }
         if (object.trim().equals("ALL") || object.trim().equals("PONTON")) {
             guiAgentServices.getJobsManager().newJob("Load coastaline", (progressHandle) -> {
                 objects = new PontoonDBLoader(topologyServices, connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57Viewer(topologyServices, depareLayer);
+                s57Viewer = new S57View(topologyServices, buildingLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
-
+                wwd.redrawNow();
             });
         }
         if (object.trim().equals("ALL") || object.trim().equals("SLCONS")) {
             guiAgentServices.getJobsManager().newJob("Load shore line construction", (progressHandle) -> {
                 objects = new ShorelineConstructionDBLoader(topologyServices, connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57Viewer(topologyServices, depareLayer);
+                s57Viewer = new S57View(topologyServices, buildingLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
-
+                wwd.redrawNow();
             });
         }
+        if (object.trim().equals("ALL") || object.trim().equals("NAVLNE")) {
+            guiAgentServices.getJobsManager().newJob("Load shore Navigation Line", (progressHandle) -> {
+                objects = new NavigationLineDBLoader(topologyServices, connection)
+                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                s57Viewer = new S57View(topologyServices, navigationLayer);
+                objects.forEach((g) -> {
+                    s57Viewer.display(g);
+                });
+                wwd.redrawNow();
+            });
+        }
+        // new BuoyageView(topMarkMap, buoyageLayer, "BCNISD")
+        //            .display(
+        /*
+        if (object.trim().equals("ALL") || object.trim().equals("LNDMRK")) {
+            guiAgentServices.getJobsManager().newJob("Load Landmarks", (progressHandle) -> {
+             //   objects = new BuoyageDBLoader(topologyServices, connection, marsysMap)
+             //           .retrieveIn(latMin, lonMin, latMax, lonMax);
+            });
+        }
+         */
         wwd.redrawNow();
     }
 

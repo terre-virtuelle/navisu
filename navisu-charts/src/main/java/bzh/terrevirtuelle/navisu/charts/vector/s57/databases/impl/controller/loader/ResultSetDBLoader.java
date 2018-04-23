@@ -58,7 +58,7 @@ public abstract class ResultSetDBLoader {
         } catch (SQLException ex) {
             Logger.getLogger(ResultSetDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        if (geometry != null) {
+        if (geometry != null && topologyServices != null) {
             geometry = topologyServices.clipWKTMultiString(geometry, latMin, lonMin, latMax, lonMax);
         }
         return geometry;
@@ -75,7 +75,7 @@ public abstract class ResultSetDBLoader {
                 request += "(" + lonMin + ", " + latMin + ", "
                         + lonMax + ", " + latMax + ", "
                         + "4326);";
-                
+
                 resultSet = connection
                         .createStatement()
                         .executeQuery(request);

@@ -41,7 +41,7 @@ public class DepthContourDBLoader
                     geom = topologyServices.clipWKTMultiLineString(geom, latMin, lonMin, latMax, lonMax);
                     object.setGeom(geom);
                     object.setValueOfDepthContour(Double.toString(resultSet.getDouble(2)));
-                    object.getLabels().put("",Double.toString(resultSet.getDouble(2))+" m");
+                    object.getLabels().put("", Double.toString(resultSet.getDouble(2)) + " m");
                     objects.add(object);
                 }
             }

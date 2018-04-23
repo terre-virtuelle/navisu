@@ -25,7 +25,7 @@ public class AppMain {
     public static void main(String[] args) {
         Route route = new Route();
         try {
-            route = ImportExportXML.imports(route, "data/dr2.rtz");
+            route = ImportExportXML.imports(route, "data/dr2_1.rtz");
             System.out.println(route);
             Waypoints waypoints = route.getWaypoints();
             List<Waypoint> wpList = waypoints.getWaypoint();

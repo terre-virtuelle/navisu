@@ -109,6 +109,6 @@ public class DaymarView {
         }).forEachOrdered((_item) -> {
             layer.addRenderable(placemark);
         });
-        wwd.redrawNow();
+      //  wwd.redrawNow();
     }
 }
