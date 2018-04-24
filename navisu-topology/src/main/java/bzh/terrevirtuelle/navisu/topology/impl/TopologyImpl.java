@@ -228,17 +228,19 @@ public class TopologyImpl
         tmp = tmp.replace(")", "");
         tmp = tmp.replace("(", "");
         //  System.out.println("tmp : " + tmp);
-        String[] posTab0 = tmp.split(",");
         List<Position> positions = new ArrayList<>();
-        for (String s : posTab0) {
-            String[] posTab1 = s.trim().split("\\s+");
-            if (posTab1.length != 0) {
-                try {
-                    positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1].trim())),
-                            Angle.fromDegrees(Double.valueOf(posTab1[0].trim())), height));
-                } catch (NumberFormatException e) {
-                    System.out.println("posTab1 : " + posTab1[0] + " " + posTab1[1]);
+        if (!tmp.contains("EMPTY")) {
+            String[] posTab0 = tmp.split(",");
+            for (String s : posTab0) {
+                String[] posTab1 = s.trim().split("\\s+");
+                if (posTab1.length != 0) {
+                    try {
+                        positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1].trim())),
+                                Angle.fromDegrees(Double.valueOf(posTab1[0].trim())), height));
+                    } catch (NumberFormatException e) {
+                        System.out.println("posTab1 : " + posTab1[0] + " " + posTab1[1]);
 
+                    }
                 }
             }
         }
