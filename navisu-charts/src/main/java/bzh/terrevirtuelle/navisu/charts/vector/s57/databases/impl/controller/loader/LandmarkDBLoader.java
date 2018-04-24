@@ -28,7 +28,7 @@ public class LandmarkDBLoader
     protected Map<Pair<Double, Double>, String> marsysMap;
 
     public LandmarkDBLoader(Connection connection,Map<Pair<Double, Double>, String> marsysMap) {
-        super(null, connection, "LNDMRK");
+        super(connection, "LNDMRK");
     }
 
     @SuppressWarnings("unchecked")

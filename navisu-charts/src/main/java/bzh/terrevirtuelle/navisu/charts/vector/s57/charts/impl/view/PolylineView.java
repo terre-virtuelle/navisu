@@ -47,7 +47,7 @@ public class PolylineView
         if (labels != null) {
             labels.keySet().forEach((key) -> {
                 tmp = labels.get(key);
-                label += " " +tmp + "\n";
+                label += " " + tmp + "\n";
             });
             path.setValue(AVKey.DISPLAY_NAME, label);
         }

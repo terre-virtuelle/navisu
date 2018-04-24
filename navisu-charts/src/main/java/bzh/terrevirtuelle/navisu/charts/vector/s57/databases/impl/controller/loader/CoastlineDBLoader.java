@@ -24,7 +24,7 @@ public class CoastlineDBLoader
 
     public CoastlineDBLoader(TopologyServices topologyServices,
             Connection connection) {
-        super(topologyServices, connection, "COALNE");
+        super(connection, "COALNE");
     }
 
     @Override

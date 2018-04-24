@@ -24,7 +24,6 @@ import javafx.scene.control.Alert;
  */
 public abstract class ResultSetDBLoader {
 
-    protected TopologyServices topologyServices;
     protected Connection connection;
     protected String request;
     protected ResultSet resultSet;
@@ -33,13 +32,6 @@ public abstract class ResultSetDBLoader {
     protected double lon;
     protected List<String> geometry;
     protected List<Geo> objects;
-
-    public ResultSetDBLoader(TopologyServices topologyServices,
-            Connection connection, String acronym) {
-        this.topologyServices = topologyServices;
-        this.connection = connection;
-        this.acronym = acronym;
-    }
 
     public ResultSetDBLoader(Connection connection, String acronym) {
         this.connection = connection;

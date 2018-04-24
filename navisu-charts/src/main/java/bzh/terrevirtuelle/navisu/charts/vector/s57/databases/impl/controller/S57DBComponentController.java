@@ -690,7 +690,7 @@ public class S57DBComponentController
                 });
             }
             if (object.trim().equals("ALL") || object.trim().equals("PONTON")) {
-                objects = new PontoonDBLoader(topologyServices, connection)
+                objects = new PontoonDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57View(topologyServices, buildingLayer);
                 objects.forEach((g) -> {
@@ -698,7 +698,7 @@ public class S57DBComponentController
                 });
             }
             if (object.trim().equals("ALL") || object.trim().equals("SLCONS")) {
-                objects = new ShorelineConstructionDBLoader(topologyServices, connection)
+                objects = new ShorelineConstructionDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57View(topologyServices, buildingLayer);
                 objects.forEach((g) -> {
@@ -706,7 +706,7 @@ public class S57DBComponentController
                 });
             }
             if (object.trim().equals("ALL") || object.trim().equals("NAVLNE")) {
-                objects = new NavigationLineDBLoader(topologyServices, connection)
+                objects = new NavigationLineDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57View(topologyServices, navigationLayer);
                 objects.forEach((g) -> {

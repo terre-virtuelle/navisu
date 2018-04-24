@@ -22,9 +22,8 @@ import java.util.logging.Logger;
 public class PontoonDBLoader
         extends ResultSetDBLoader {
 
-    public PontoonDBLoader(TopologyServices topologyServices,
-            Connection connection) {
-        super(topologyServices, connection, "PONTON");
+    public PontoonDBLoader(Connection connection) {
+        super(connection, "PONTON");
     }
 
     @Override

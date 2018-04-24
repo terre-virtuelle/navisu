@@ -23,9 +23,8 @@ import java.util.logging.Logger;
 public class ShorelineConstructionDBLoader
             extends ResultSetDBLoader {
 
-    public ShorelineConstructionDBLoader(TopologyServices topologyServices,
-            Connection connection) {
-        super(topologyServices, connection, "SLCONS");
+    public ShorelineConstructionDBLoader(Connection connection) {
+        super(connection, "SLCONS");
     }
 
     @Override

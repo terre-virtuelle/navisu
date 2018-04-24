@@ -22,9 +22,8 @@ import java.util.logging.Logger;
 public class NavigationLineDBLoader
         extends ResultSetDBLoader {
 
-    public NavigationLineDBLoader(TopologyServices topologyServices,
-            Connection connection) {
-        super(topologyServices, connection, "NAVLNE");
+    public NavigationLineDBLoader(Connection connection) {
+        super(connection, "NAVLNE");
     }
 
     @Override

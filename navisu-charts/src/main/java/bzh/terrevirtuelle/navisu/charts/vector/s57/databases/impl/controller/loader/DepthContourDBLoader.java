@@ -24,7 +24,7 @@ public class DepthContourDBLoader
 
     public DepthContourDBLoader(TopologyServices topologyServices,
             Connection connection) {
-        super(topologyServices, connection, "DEPCNT");
+        super(connection, "DEPCNT");
     }
 
     @Override
