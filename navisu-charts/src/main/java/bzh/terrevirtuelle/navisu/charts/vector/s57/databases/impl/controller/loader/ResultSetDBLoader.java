@@ -28,22 +28,22 @@ public abstract class ResultSetDBLoader {
     protected Connection connection;
     protected String request;
     protected ResultSet resultSet;
-    protected String className;
+    protected String acronym;
     protected double lat;
     protected double lon;
     protected List<String> geometry;
     protected List<Geo> objects;
 
     public ResultSetDBLoader(TopologyServices topologyServices,
-            Connection connection, String className) {
+            Connection connection, String acronym) {
         this.topologyServices = topologyServices;
         this.connection = connection;
-        this.className = className;
+        this.acronym = acronym;
     }
 
-    public ResultSetDBLoader(Connection connection, String className) {
+    public ResultSetDBLoader(Connection connection, String acronym) {
         this.connection = connection;
-        this.className = className;
+        this.acronym = acronym;
     }
 
     @SuppressWarnings("unchecked")
@@ -58,9 +58,6 @@ public abstract class ResultSetDBLoader {
         } catch (SQLException ex) {
             Logger.getLogger(ResultSetDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        if (geometry != null && topologyServices != null) {
-            geometry = topologyServices.clipWKTMultiString(geometry, latMin, lonMin, latMax, lonMax);
-        }
         return geometry;
     }
 
@@ -71,11 +68,15 @@ public abstract class ResultSetDBLoader {
 
         if (connection != null) {
             try {
-                request = S57_REQUEST_MAP.get(className);
+                request = "SELECT ST_AsText(ST_ClipByBox2D(geom, ST_MakeEnvelope";
                 request += "(" + lonMin + ", " + latMin + ", "
-                        + lonMax + ", " + latMax + ", "
-                        + "4326);";
-
+                        + lonMax + ", " + latMax + ", 4326)))";
+                String tmp = S57_REQUEST_MAP.get(acronym);
+                if (!tmp.trim().equals("")) {
+                    request += ", " + tmp;
+                }
+                request += " FROM " + acronym.toLowerCase() + " ;";
+               
                 resultSet = connection
                         .createStatement()
                         .executeQuery(request);

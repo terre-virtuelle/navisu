@@ -25,7 +25,7 @@ public class ShorelineConstructionDBLoader
 
     public ShorelineConstructionDBLoader(TopologyServices topologyServices,
             Connection connection) {
-        super(topologyServices, connection, "ShorelineConstruction");
+        super(topologyServices, connection, "SLCONS");
     }
 
     @Override
@@ -39,7 +39,6 @@ public class ShorelineConstructionDBLoader
                 object = new ShorelineConstruction();
                 geom = resultSet.getString(1);
                 if (geom != null&& geom.contains("MULTILINESTRING")) {
-                    geom = topologyServices.clipWKTMultiLineString(geom, latMin, lonMin, latMax, lonMax);
                     object.setGeom(geom);
                     object.getLabels().put("SLCONS","ShorelineConstruction");
                     objects.add(object);

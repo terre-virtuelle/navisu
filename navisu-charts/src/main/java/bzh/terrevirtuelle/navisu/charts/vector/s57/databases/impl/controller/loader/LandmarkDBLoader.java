@@ -28,7 +28,7 @@ public class LandmarkDBLoader
     protected Map<Pair<Double, Double>, String> marsysMap;
 
     public LandmarkDBLoader(Connection connection,Map<Pair<Double, Double>, String> marsysMap) {
-        super(null, connection, "Landmark");
+        super(null, connection, "LNDMRK");
     }
 
     @SuppressWarnings("unchecked")
@@ -129,7 +129,7 @@ public class LandmarkDBLoader
                 }
                 object.setObjectName(name);
 
-                object.getLabels().put("PONTON", "Pontoon");
+                object.getLabels().put("LNDMRK", "Landmark");
                 objects.add(object);
             }
         } catch (SQLException ex) {

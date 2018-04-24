@@ -24,29 +24,30 @@ public class NavigationLineDBLoader
 
     public NavigationLineDBLoader(TopologyServices topologyServices,
             Connection connection) {
-        super(topologyServices, connection, "NavigationLine");
+        super(topologyServices, connection, "NAVLNE");
     }
 
     @Override
     public List<? extends Geo> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
         objects = new ArrayList<>();
         String geom = "";
-        String orient="";
+        String orient = "";
         resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
         NavigationLine object;
         try {
             while (resultSet.next()) {
                 object = new NavigationLine();
                 geom = resultSet.getString(1);
-                orient=resultSet.getString(2);
+                orient = resultSet.getString(2);
                 if (geom != null && geom.contains("MULTILINESTRING")) {
-                    geom = topologyServices.clipWKTMultiLineString(geom, latMin, lonMin, latMax, lonMax);
                     object.setGeom(geom);
-                    object.setOrientation(geom);
-                    double o = Double.parseDouble(orient);
-                    o=(int)o;
-                    object.getLabels().put("ORIENT", Double.toString(o)+"°");
-                    objects.add(object);
+                    if (orient != null) {
+                        double o = Double.parseDouble(orient);
+                        o = (int) o;
+                        object.setOrientation(orient);
+                        object.getLabels().put("ORIENT", Double.toString(o) + "°");
+                        objects.add(object);
+                    }
                 }
             }
         } catch (SQLException ex) {

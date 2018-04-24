@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Coastline;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -25,7 +24,7 @@ public class CoastlineDBLoader
 
     public CoastlineDBLoader(TopologyServices topologyServices,
             Connection connection) {
-        super(topologyServices, connection, "Coastline");
+        super(topologyServices, connection, "COALNE");
     }
 
     @Override
@@ -39,7 +38,6 @@ public class CoastlineDBLoader
                 object = new Coastline();
                 geom = resultSet.getString(1);
                 if (geom != null) {
-                    geom = topologyServices.clipWKTMultiLineString(geom, latMin, lonMin, latMax, lonMax);
                     object.setGeom(geom);
                     object.getLabels().put("COALNE","Coastline");
                     objects.add(object);

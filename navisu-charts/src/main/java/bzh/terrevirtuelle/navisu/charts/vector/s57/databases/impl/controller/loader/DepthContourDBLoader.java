@@ -24,7 +24,7 @@ public class DepthContourDBLoader
 
     public DepthContourDBLoader(TopologyServices topologyServices,
             Connection connection) {
-        super(topologyServices, connection, "DepthContour");
+        super(topologyServices, connection, "DEPCNT");
     }
 
     @Override
@@ -38,7 +38,6 @@ public class DepthContourDBLoader
                 object = new DepthContour();
                 geom = resultSet.getString(1);
                 if (geom != null) {
-                    geom = topologyServices.clipWKTMultiLineString(geom, latMin, lonMin, latMax, lonMax);
                     object.setGeom(geom);
                     object.setValueOfDepthContour(Double.toString(resultSet.getDouble(2)));
                     object.getLabels().put("", Double.toString(resultSet.getDouble(2)) + " m");

@@ -108,6 +108,5 @@ public class BuoyageView {
         }).forEachOrdered((_item) -> {
             layer.addRenderable(placemark);
         });
-      //  wwd.redrawNow();
     }
 }

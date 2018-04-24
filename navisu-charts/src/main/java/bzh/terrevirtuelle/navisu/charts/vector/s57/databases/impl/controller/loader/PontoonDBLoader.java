@@ -24,7 +24,7 @@ public class PontoonDBLoader
 
     public PontoonDBLoader(TopologyServices topologyServices,
             Connection connection) {
-        super(topologyServices, connection, "Pontoon");
+        super(topologyServices, connection, "PONTON");
     }
 
     @Override
@@ -38,7 +38,6 @@ public class PontoonDBLoader
                 object = new Pontoon();
                 geom = resultSet.getString(1);
                 if (geom != null&& geom.contains("MULTILINESTRING")) {
-                    geom = topologyServices.clipWKTMultiLineString(geom, latMin, lonMin, latMax, lonMax);
                     object.setGeom(geom);
                     object.getLabels().put("PONTON","Pontoon");
                     objects.add(object);
