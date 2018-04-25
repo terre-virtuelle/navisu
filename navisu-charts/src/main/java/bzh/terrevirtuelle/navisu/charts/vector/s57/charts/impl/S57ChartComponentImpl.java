@@ -527,7 +527,7 @@ public class S57ChartComponentImpl
     private String startCmd(String command) {
         String cmd = null;
         if (OS.isWindows()) {
-            cmd = "gdal/win" + "/" + command;
+            cmd = "gdal\\win" + "\\" + command;
         } else if (OS.isLinux()) {
             cmd = properties.getProperty("gdalPath") + "/" + command;
         } else {
