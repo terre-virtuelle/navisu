@@ -593,7 +593,7 @@ public class S57DBComponentController
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setOutlineMaterial(Material.RED);
         normalAttributes.setOutlineOpacity(0.5);
-        normalAttributes.setOutlineWidth(2);
+        normalAttributes.setOutlineWidth(1);
         normalAttributes.setDrawOutline(true);
         normalAttributes.setDrawInterior(false);
         ShapeAttributes highlightAttributes = new BasicShapeAttributes(normalAttributes);
@@ -611,7 +611,7 @@ public class S57DBComponentController
 
         Polygon pgon = new Polygon(pathPositions);
         pgon.setAttributes(normalAttributes);
-        depare3DLayer.addRenderable(pgon);
+        depareLayer.addRenderable(pgon);
         wwd.redrawNow();
 
         //Define TopMak for all buoyages, default is 0 : no topmark
@@ -738,6 +738,7 @@ public class S57DBComponentController
                     s57Viewer.display(g, normalAttributes, highlightAttributes);
                 });
             }
+            depareLayer.removeRenderable(pgon);
             wwd.redrawNow();
         });
     }
