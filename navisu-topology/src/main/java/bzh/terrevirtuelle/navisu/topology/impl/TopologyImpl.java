@@ -221,7 +221,6 @@ public class TopologyImpl
 
     @Override
     public Path wktMultiLineToWwjPath(String geometry, double height) {
-        // System.out.println("geometry : " + geometry);
         String tmp = geometry.replace("MULTILINESTRING((", "");
         tmp = tmp.replace("MULTILINESTRING ((", "");
         tmp = tmp.replace("))", "");
