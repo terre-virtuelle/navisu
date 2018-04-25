@@ -67,7 +67,7 @@
                                         </opaqueInsets>
                                         <children>
                                             <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Database" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                                            <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Objects selected" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                                            <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Selected objects" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                                             <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="SELECTION MODE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
                                             <TextField fx:id="databaseTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                             <TextField fx:id="objectsTF" GridPane.columnIndex="3" GridPane.rowIndex="3" />

@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.NavigationLine;
-import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,17 +35,16 @@ public class NavigationLineDBLoader
         try {
             while (resultSet.next()) {
                 object = new NavigationLine();
-                geom = resultSet.getString(1);
-                orient = resultSet.getString(2);
-                if (geom != null && geom.contains("MULTILINESTRING")) {
-                    object.setGeom(geom);
-                    if (orient != null) {
-                        double o = Double.parseDouble(orient);
-                        o = (int) o;
-                        object.setOrientation(orient);
-                        object.getLabels().put("ORIENT", Double.toString(o) + "°");
-                        objects.add(object);
-                    }
+                geom = resultSet.getString("geom");
+                orient = resultSet.getString("orient");
+
+                object.setGeom(geom);
+                if (orient != null) {
+                    double o = Double.parseDouble(orient);
+                    o = (int) o;
+                    object.setOrientation(orient);
+                    object.getLabels().put("ORIENT", Double.toString(o) + "°");
+                    objects.add(object);
                 }
             }
         } catch (SQLException ex) {

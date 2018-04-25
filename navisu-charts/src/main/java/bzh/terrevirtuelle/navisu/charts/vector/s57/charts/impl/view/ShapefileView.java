@@ -57,7 +57,7 @@ public class ShapefileView {
     public ShapefileView() {
         highlightAttributes.setOutlineOpacity(1);
         highlightAttributes.setDrawInterior(true);
-        highlightAttributes.setInteriorMaterial(new Material(Color.GREEN));
+        highlightAttributes.setInteriorMaterial(new Material(new Color(47,77,88)));
         highlightAttributes.setInteriorOpacity(.5);
         highlightAttributes.setEnableLighting(true);
     }

@@ -19,7 +19,7 @@ import java.awt.Color;
  *
  * @author serge
  */
-public class S57View {
+public class S57ObjectView {
 
     PolyGeomView polyView;
     protected TopologyServices topologyServices;
@@ -28,7 +28,7 @@ public class S57View {
     ShapeAttributes normAttributes;
     ShapeAttributes highlightAttributes;
 
-    public S57View(TopologyServices topologyServices, RenderableLayer layer) {
+    public S57ObjectView(TopologyServices topologyServices, RenderableLayer layer) {
         this.topologyServices = topologyServices;
         this.layer = layer;
 
@@ -43,7 +43,7 @@ public class S57View {
         highlightAttributes.setEnableLighting(true);
     }
 
-    public S57View(TopologyServices topologyServices, RenderableLayer layer,
+    public S57ObjectView(TopologyServices topologyServices, RenderableLayer layer,
             ShapeAttributes normAttributes, ShapeAttributes highlightAttributes) {
         this.topologyServices = topologyServices;
         this.layer = layer;
@@ -54,17 +54,22 @@ public class S57View {
     @SuppressWarnings("unchecked")
     public void display(Geo object,
             ShapeAttributes normAttributes, ShapeAttributes highlightAttributes) {
+        displayP(object, normAttributes, highlightAttributes);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void display(Geo object) {
+        displayP(object, normAttributes, highlightAttributes);
+    }
+
+    private void displayP(Geo object, ShapeAttributes normAttributes, ShapeAttributes highlightAttributes) {
         String geometry = object.getGeom();
-        if (geometry.contains("MULTILINESTRING")) {
+        if (geometry.contains("MULTILINESTRING") && !geometry.contains("EMPTY")) {
             polyView = new PolylineView(topologyServices, layer);
             polyView.display(geometry, normAttributes, highlightAttributes, object.getLabels());
         }
-    }
-    @SuppressWarnings("unchecked")
-    public void display(Geo object) {
-        String geometry = object.getGeom();
-        if (geometry.contains("MULTILINESTRING")) {
-            polyView = new PolylineView(topologyServices, layer);
+        if (geometry.contains("MULTIPOLYGON") && !geometry.contains("EMPTY")) {
+            polyView = new PolygonView(topologyServices, layer);
             polyView.display(geometry, normAttributes, highlightAttributes, object.getLabels());
         }
     }

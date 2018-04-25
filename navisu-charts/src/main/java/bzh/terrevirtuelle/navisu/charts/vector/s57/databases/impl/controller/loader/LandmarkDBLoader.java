@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
-import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import java.sql.Connection;
 import java.sql.SQLException;

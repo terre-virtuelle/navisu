@@ -9,9 +9,11 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import java.util.Map;
 
 /**
  *
@@ -22,9 +24,10 @@ public class PolygonView
 
     protected TopologyServices topologyServices;
     protected RenderableLayer layer;
-    protected Polygon path;
+    protected Polygon polygon;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected String label;
+    String tmp = "";
 
     public PolygonView(TopologyServices topologyServices, RenderableLayer layer) {
         this.topologyServices = topologyServices;
@@ -32,11 +35,23 @@ public class PolygonView
     }
 
     @SuppressWarnings("unchecked")
- //   @Override
-    public void display(String geometries, ShapeAttributes attrs) {
-            path = topologyServices.wktMultiPolygonToWwjPolygon(geometries);
-            path.setAttributes(attrs);
-            path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-            layer.addRenderable(path);
+    //   @Override
+    public void display(String geometries, ShapeAttributes attrs, ShapeAttributes hattrs,
+            Map<String, String> labels) {
+        // System.out.println("geometries : " + geometries);
+        polygon = topologyServices.wktMultiPolygonToWwjPolygon(geometries);
+        polygon.setAttributes(attrs);
+        polygon.setHighlightAttributes(hattrs);
+        polygon.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+        if (labels != null) {
+            labels.keySet().forEach((key) -> {
+                tmp = labels.get(key);
+                if (tmp != null) {
+                    label += " " + tmp + "\n";
+                }
+            });
+            polygon.setValue(AVKey.DISPLAY_NAME, label);
+        }
+        layer.addRenderable(polygon);
     }
 }

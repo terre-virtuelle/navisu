@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Coastline;
-import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,8 +21,7 @@ import java.util.logging.Logger;
 public class CoastlineDBLoader
         extends ResultSetDBLoader {
 
-    public CoastlineDBLoader(TopologyServices topologyServices,
-            Connection connection) {
+    public CoastlineDBLoader(Connection connection) {
         super(connection, "COALNE");
     }
 
@@ -36,7 +34,7 @@ public class CoastlineDBLoader
         try {
             while (resultSet.next()) {
                 object = new Coastline();
-                geom = resultSet.getString(1);
+                geom = resultSet.getString("geom");
                 if (geom != null) {
                     object.setGeom(geom);
                     object.getLabels().put("COALNE","Coastline");

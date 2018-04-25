@@ -8,7 +8,6 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader.LOGGER;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,7 +44,7 @@ public abstract class ResultSetDBLoader {
         resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
         try {
             while (resultSet.next()) {
-                geometry.add(resultSet.getString(1));
+                geometry.add(resultSet.getString("geom"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ResultSetDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
@@ -62,13 +61,13 @@ public abstract class ResultSetDBLoader {
             try {
                 request = "SELECT ST_AsText(ST_ClipByBox2D(geom, ST_MakeEnvelope";
                 request += "(" + lonMin + ", " + latMin + ", "
-                        + lonMax + ", " + latMax + ", 4326)))";
+                        + lonMax + ", " + latMax + ", 4326))) AS geom";
                 String tmp = S57_REQUEST_MAP.get(acronym);
                 if (!tmp.trim().equals("")) {
                     request += ", " + tmp;
                 }
                 request += " FROM " + acronym.toLowerCase() + " ;";
-               
+
                 resultSet = connection
                         .createStatement()
                         .executeQuery(request);

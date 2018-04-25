@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.AnchorageArea;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -16,36 +16,43 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @date 28/02/2018
+ *
  * @author serge
  */
-public class DepthContourDBLoader
+public class AnchorageAreaDBLoader
         extends ResultSetDBLoader {
 
-    public DepthContourDBLoader(TopologyServices topologyServices,
+    public AnchorageAreaDBLoader(TopologyServices topologyServices,
             Connection connection) {
-        super(connection, "DEPCNT");
+        super(connection, "ACHARE");
     }
 
     @Override
     public List<? extends Geo> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
         objects = new ArrayList<>();
         String geom = "";
+       
         resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
-        DepthContour object;
+        AnchorageArea object;
         try {
             while (resultSet.next()) {
-                object = new DepthContour();
+                object = new AnchorageArea();
                 geom = resultSet.getString("geom");
                 if (geom != null) {
                     object.setGeom(geom);
-                    object.setValueOfDepthContour(Double.toString(resultSet.getDouble(2)));
-                    object.getLabels().put("", Double.toString(resultSet.getDouble(2)) + " m");
+                    object.setCategoryOfAnchorage(resultSet.getString("catach"));
+                    object.setObjectName(resultSet.getString("objnam"));
+                    object.setRestriction(resultSet.getString("restrn"));
+                    object.setId(resultSet.getInt("rcid"));
+                    object.getLabels().put("ACHARE","AnchorageArea");
+                    object.getLabels().put("catach",resultSet.getString("catach"));
+                    object.getLabels().put("objnam",resultSet.getString("objnam"));
+                    object.getLabels().put("restrn",resultSet.getString("restrn"));
                     objects.add(object);
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DepthContourDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(AnchorageAreaDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return objects;
     }

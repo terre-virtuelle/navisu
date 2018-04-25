@@ -39,6 +39,7 @@ public class PolylineView
     public void display(String geometry,
             ShapeAttributes attrs, ShapeAttributes hattrs,
             Map<String, String> labels) {
+        // System.out.println("geometry : " + geometry);
         path = topologyServices.wktMultiLineToWwjPath(geometry, 1.0);
         path.setAttributes(attrs);
         path.setHighlightAttributes(hattrs);
@@ -47,7 +48,9 @@ public class PolylineView
         if (labels != null) {
             labels.keySet().forEach((key) -> {
                 tmp = labels.get(key);
-                label += " " + tmp + "\n";
+                if (tmp != null) {
+                    label += " " + tmp + "\n";
+                }
             });
             path.setValue(AVKey.DISPLAY_NAME, label);
         }

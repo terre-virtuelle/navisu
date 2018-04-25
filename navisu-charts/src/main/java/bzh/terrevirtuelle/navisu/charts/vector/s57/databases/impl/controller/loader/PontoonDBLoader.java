@@ -35,12 +35,10 @@ public class PontoonDBLoader
         try {
             while (resultSet.next()) {
                 object = new Pontoon();
-                geom = resultSet.getString(1);
-                if (geom != null&& geom.contains("MULTILINESTRING")) {
-                    object.setGeom(geom);
-                    object.getLabels().put("PONTON","Pontoon");
-                    objects.add(object);
-                }
+                geom = resultSet.getString("geom");
+                object.setGeom(geom);
+                object.getLabels().put("PONTON", "Pontoon");
+                objects.add(object);
             }
         } catch (SQLException ex) {
             Logger.getLogger(PontoonDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
