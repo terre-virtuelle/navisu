@@ -48,10 +48,10 @@ import bzh.terrevirtuelle.navisu.instruments.transponder.impl.events.Transponder
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponent;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.database.relational.impl.DatabaseImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import com.sun.jna.Library;
-import com.sun.jna.Native;
 import de.micromata.opengis.kml.v_2_2_0.Container;
 import de.micromata.opengis.kml.v_2_2_0.Document;
 import de.micromata.opengis.kml.v_2_2_0.Feature;
@@ -239,29 +239,21 @@ public class S57ChartComponentImpl
             try {
                 Path tmp = Paths.get(inputFile.toString());
                 cmd = cmd0 + " -skipfailures -overwrite data/shp/shp_" + i + " " + tmp.toString();
-                String command = createCmdSh(cmd);
                 Proc.BUILDER.create()
-                        .setCmd(command)
-                        .setOut(System.out)
-                        .setErr(System.err)
-                        .exec();
+                        .setCmd(cmd)
+                        .execSh();
                 inputFile = tmp;
             } catch (IOException | InterruptedException e) {
                 LOGGER.log(Level.SEVERE, e.toString(), e);
             }
-
             try {
                 Path tmp = Paths.get(inputFile.toString());
                 cmd = cmd0 + " -nlt POINT25D -skipfailures -append data/shp/shp_" + i + "/soundg/SOUNDG.shp "
                         + tmp.toString() + " SOUNDG";
-                String command = createCmdSh(cmd);
                 Proc.BUILDER.create()
-                        .setCmd(command)
-                        .setOut(System.out)
-                        .setErr(System.err)
-                        .exec();
+                        .setCmd(cmd)
+                        .execSh();
                 inputFile = tmp;
-
             } catch (IOException | InterruptedException e) {
                 LOGGER.log(Level.SEVERE, e.toString(), e);
             }
@@ -301,9 +293,8 @@ public class S57ChartComponentImpl
              //   layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
             });
              */
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-
         }
     }
 
@@ -503,14 +494,21 @@ public class S57ChartComponentImpl
         for (Path tmp : paths) {
             new File("data/shp").mkdir();
             new File("data/shp/shp_" + j).mkdir();
-            try {
-                String command = cmd
-                        + " -skipfailures "
-                        + " -overwrite "
-                        + " -nlt PROMOTE_TO_MULTI"
-                        + " data/shp/shp_" + j + " "
-                        + tmp.toString();
 
+            String command = cmd
+                    + " -skipfailures "
+                    + " -overwrite "
+                    + " -nlt PROMOTE_TO_MULTI"
+                    + " data/shp/shp_" + j + " "
+                    + tmp.toString();
+            try {
+                Proc.BUILDER.create()
+                        .setCmd(command)
+                        .execSh();
+            } catch (IOException | InterruptedException ex) {
+                Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+            /*
                 String command1 = createCmdSh(command);
                 Proc.BUILDER.create()
                         .setCmd(command1)
@@ -520,6 +518,7 @@ public class S57ChartComponentImpl
             } catch (IOException | InterruptedException e) {
                 LOGGER.log(Level.SEVERE, e.toString(), e);
             }
+             */
             j++;
         }
         return dir;
@@ -550,7 +549,7 @@ public class S57ChartComponentImpl
             Buoyage buoy, double lat0, double lon0, double lat1, double lon1) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    /*
     private String createCmdSh(String cmd) {
         String cmdFile = "cmd/cmd.sh";
         try {
@@ -578,6 +577,7 @@ public class S57ChartComponentImpl
         }
         return cmd;
     }
+     */
 }
 
 interface LinkedOSLibrary extends Library {

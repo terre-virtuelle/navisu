@@ -1,7 +1,6 @@
 package bzh.terrevirtuelle.navisu.core.util;
 
 import com.sun.jna.Library;
-import com.sun.jna.Native;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -73,7 +72,7 @@ public class Proc {
         args.stream().forEach((arg) -> {
             sb.append(arg).append(SPACE);
         });
-      //  System.out.println("exec : " + sb);
+        //  System.out.println("exec : " + sb);
         process = Runtime.getRuntime().exec(sb.toString());
 
         redirectSreamAsync(process.getInputStream(), out);
@@ -100,7 +99,7 @@ public class Proc {
         process = Runtime.getRuntime().exec(sb.toString(), envp);
         redirectSreamAsync(process.getInputStream(), out);
         redirectSreamAsync(process.getErrorStream(), errors);
-        
+
         this.returnCode = process.waitFor();
     }
 
@@ -125,7 +124,12 @@ public class Proc {
     }
 
     private String createCmdSh(String cmd) {
-        String cmdFile = "cmd/cmd.sh";
+        String cmdFile = null;
+        if (OS.isWindows()) {
+            cmdFile = "cmd/cmd.bat";
+        } else if (OS.isLinux()) {
+            cmdFile = "cmd/cmd.sh";
+        }
         try {
             Files.write(Paths.get(cmdFile), cmd.getBytes());
         } catch (IOException ex) {
@@ -222,9 +226,4 @@ public class Proc {
     public int getReturnCode() {
         return returnCode;
     }
-}
-
-interface LinkedOSLibrary extends Library {
-
-    public int chmod(String path, int mode);
 }

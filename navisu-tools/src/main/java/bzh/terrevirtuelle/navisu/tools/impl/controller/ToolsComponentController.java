@@ -312,7 +312,6 @@ public class ToolsComponentController
                 bathymetryDBServices.connect(BATHY_SHOM_DB_NAME, "localhost", "jdbc:postgresql://",
                         "5432", "org.postgresql.Driver", "admin", "admin");
                 bathymetryDBServices.create(bathyData);
-               // bathymetryDBServices.createIndex();
             });
         });
 
@@ -352,22 +351,38 @@ public class ToolsComponentController
     }
 
     private void saveConfiguration() {
-
         try (OutputStream output = new FileOutputStream(CONFIG_FILE_NAME)) {
             if (s57Path != null) {
-                properties.setProperty("s57ChartsDir", s57Path);
+                if (s57Path.charAt(s57Path.length() - 1) == '\\'
+                        || s57Path.charAt(s57Path.length() - 1) == '/') {
+                    s57Path = s57Path.substring(0, psqlPath.length() - 1);
+                    properties.setProperty("s57ChartsDir", s57Path);
+                }
             }
             if (bathyData != null) {
                 properties.setProperty("bathyData", bathyData);
             }
             if (psqlPath != null) {
-                properties.setProperty("psqlPath", psqlPath);
+                if (psqlPath.charAt(psqlPath.length() - 1) == '\\'
+                        || psqlPath.charAt(psqlPath.length() - 1) == '/') {
+                    psqlPath = psqlPath.substring(0, psqlPath.length() - 1);
+                    properties.setProperty("psqlPath", psqlPath);
+                }
             }
             if (gdalPath != null) {
-                properties.setProperty("gdalPath", gdalPath);
+                if (gdalPath.charAt(gdalPath.length() - 1) == '\\'
+                        || gdalPath.charAt(gdalPath.length() - 1) == '/') {
+                    gdalPath = gdalPath.substring(0, gdalPath.length() - 1);
+                    properties.setProperty("gdalPath", gdalPath);
+                }
             }
             if (ulhyssesPath != null) {
-                properties.setProperty("ulhyssesPath", ulhyssesPath);
+                if (ulhyssesPath.charAt(ulhyssesPath.length() - 1) == '\\'
+                        || ulhyssesPath.charAt(ulhyssesPath.length() - 1) == '/') {
+                    ulhyssesPath = ulhyssesPath.substring(0, ulhyssesPath.length() - 1);
+                    properties.setProperty("ulhyssesPath", ulhyssesPath);
+                }
+
             }
             properties.store(output, null);
             output.close();

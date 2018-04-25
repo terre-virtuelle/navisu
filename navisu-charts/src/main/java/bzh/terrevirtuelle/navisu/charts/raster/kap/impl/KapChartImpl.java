@@ -24,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -83,7 +84,7 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
         String options
                 = "\"BSB_IGNORE_LINENUMBERS=true\"";
         environment.put("GDAL_DATA", options);
-
+        /*
         if (OS.isWindows()) {
             cmd = "gdal/win/gdal_translate";
         } else {
@@ -97,17 +98,25 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
                 }
             }
         }
+         */
+        cmd = startCmd("gdal_translate");
         try {
 
             Path tmpTif = Paths.get(inputFile.toString() + ".tif");
-           // System.out.print(tmpTif);
-            cmd+=" -b 1 "+file+" "+tmpTif.toString();
+            // System.out.print(tmpTif);
+            cmd += " -b 1 " + file + " " + tmpTif.toString();
+            /*
             String cmd0=createCmdSh(cmd);
+           
             Proc.BUILDER.create()
                     .setCmd(cmd0)
                     .setOut(System.out)
                     .setErr(System.err)
                     .exec();
+             */
+            Proc.BUILDER.create()
+                    .setCmd(cmd)
+                    .execSh();
             /*
             Proc.BUILDER.create()
                     .setCmd(cmd)
@@ -117,8 +126,8 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
                     .setOut(System.out)
                     .setErr(System.err)
                     .exec(environment);
-*/
-            
+             */
+
             inputFile = tmpTif;
             System.out.print(tmpTif);
         } catch (IOException | InterruptedException e) {
@@ -145,37 +154,17 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
 
     }
 
-    private String createCmdSh(String cmd) {
-        String cmdFile = "cmd/cmd.sh";
-        try {
-            Files.write(Paths.get(cmdFile), cmd.getBytes());
-        } catch (IOException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-        chmodCmd(cmdFile);
-        return cmdFile;
-    }
-
-    private String chmodCmd(String cmdFile) {
+    private String startCmd(String command) {
+        Properties properties = new Properties();
         String cmd = null;
         if (OS.isWindows()) {
-            LinkedOSLibrary linkedLibrary
-                    = (LinkedOSLibrary) Native.loadLibrary("c", LinkedOSLibrary.class);
-            linkedLibrary.chmod(cmdFile, 0777);
+            cmd = "gdal/win" + "/" + command;
         } else if (OS.isLinux()) {
-            File file = new File(cmdFile);
-            file.setReadable(true, false);
-            file.setWritable(true, false);
-            file.setExecutable(true, false);
+            cmd = properties.getProperty("gdalPath") + "/" + command;
         } else {
             System.out.println("OS not found");
         }
         return cmd;
-    }
-
-    interface LinkedOSLibrary extends Library {
-
-        public int chmod(String path, int mode);
     }
 
     @Override
