@@ -36,40 +36,48 @@ public class Configuration {
         initPrivateData();
 
         String navisuHome = System.getProperty("user.home") + "/.navisu";
+        String navisuDir = System.getProperty("user.dir");
         Path navisuHomePath = Paths.get(navisuHome);
         if (!Files.exists(navisuHomePath, LinkOption.NOFOLLOW_LINKS)) {
             try {
                 Files.createDirectory(navisuHomePath);
             } catch (IOException ex) {
-                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
         if (!Files.exists(Paths.get(navisuHome + "/databases"), LinkOption.NOFOLLOW_LINKS)) {
             try {
                 Files.createDirectory(Paths.get(navisuHome + "/v/"));
             } catch (IOException ex) {
-                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
         if (!Files.exists(Paths.get(navisuHome + "/config"), LinkOption.NOFOLLOW_LINKS)) {
             try {
                 Files.createDirectory(Paths.get(navisuHome + "/config/"));
             } catch (IOException ex) {
-                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
         if (!Files.exists(Paths.get(navisuHome + "/caches"), LinkOption.NOFOLLOW_LINKS)) {
             try {
                 Files.createDirectory(Paths.get(navisuHome + "/caches/"));
             } catch (IOException ex) {
-                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
         if (!Files.exists(Paths.get(navisuHome + "/logs"), LinkOption.NOFOLLOW_LINKS)) {
             try {
                 Files.createDirectory(Paths.get(navisuHome + "/logs/"));
             } catch (IOException ex) {
-                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+        if (!Files.exists(Paths.get(navisuDir + "/cmd/cmd"), LinkOption.NOFOLLOW_LINKS)) {
+            try {
+                Files.createDirectories(Paths.get(navisuDir + "/cmd/cmd"));
+            } catch (IOException ex) {
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
         String navisuCache = navisuHome + "/caches/caches.properties";
@@ -78,7 +86,7 @@ public class Configuration {
                 Files.createFile(Paths.get(navisuCache));
                 writeDefaultCacheProperties(navisuCache);
             } catch (IOException ex) {
-                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         } else {
             Properties properties = new Properties();
@@ -122,7 +130,7 @@ public class Configuration {
     }
 
     private static void writeDefaultConfigProperties(String configProperties) {
-        System.out.println("writeDefaultConfigProperties");
+        //System.out.println("writeDefaultConfigProperties");
         try {
             List<String> keys = new ArrayList<>(Arrays.asList(
                     "s57ChartsDir", "darkSkyApiKey", "allCountriesPath", "luceneAllCountriesIndexPath",

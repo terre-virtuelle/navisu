@@ -159,6 +159,7 @@ import bzh.terrevirtuelle.navisu.tools.ToolsComponentServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.topology.impl.TopologyImpl;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -193,15 +194,16 @@ public class AppMain extends Application {
      */
     private WorldWindow wwd;
     private final String NAVISU_HOME = System.getProperty("user.home") + "/.navisu";
-
+private final String USER_DIR = System.getProperty("user.dir");
     @Override
     @SuppressWarnings({"unchecked", "varargs"})
     public void start(Stage stage) throws Exception {
-        clearTmpDirs(System.getProperty("user.dir") + "/data/sql", ".sql", true);
-        clearTmpDirs(System.getProperty("user.dir"), ".log", false);
-        clearTmpDirs(System.getProperty("user.dir") + "/tmp", "*", false);
-        clearTmpDirs(System.getProperty("user.dir") + "/cmd", "*", false);
-
+        clearTmpDirs(USER_DIR + "/data/sql", ".sql", true);
+        clearTmpDirs(USER_DIR, ".log", false);
+        clearTmpDirs(USER_DIR + "/tmp", "*", false);
+        clearTmpDirs(USER_DIR + "/cmd", "*", false);
+        
+        
         wwd = GeoWorldWindViewImpl.getWW();
 
         Translator.setLang(I18nLangEnum.FRENCH);
@@ -587,7 +589,7 @@ public class AppMain extends Application {
             wwd.getView().setEyePosition(Position.fromDegrees(location.getLatitude(), location.getLongitude(), 15000));
         }
          */
-        /*
+ /*
          /*
        // Test load all S57 from one category of scale in DB
         String ENC_HOME = "/home/serge/Data/cartography/data/ENC/FR";
@@ -600,9 +602,7 @@ public class AppMain extends Application {
         //Create files at data/shp/... first, with ogr2ogr
         //Load in DB with ogr2ogr
         chartS57ComponentServices.loadDataBase(paths, S57_DB, EPSG);
-        */
-        
-        
+         */
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");
