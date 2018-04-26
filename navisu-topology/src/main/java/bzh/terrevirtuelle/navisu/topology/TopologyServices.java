@@ -108,7 +108,7 @@ public interface TopologyServices
      * @param geometry
      * @return
      */
-    Polygon wktMultiPolygonToWwjPolygon(String geometry);
+    List<Polygon> wktMultiPolygonToWwjPolygons(String geometry);
 
     /**
      *
@@ -145,6 +145,14 @@ public interface TopologyServices
      * @return
      */
     Path wktMultiLineToWwjPath(String geometry, double height);
+
+    /**
+     *
+     * @param geometry
+     * @param height
+     * @return
+     */
+    Path wktLineToWwjPath(String geometry, double height);
 
     /**
      *

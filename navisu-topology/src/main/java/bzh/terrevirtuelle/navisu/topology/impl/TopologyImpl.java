@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import org.capcaval.c3.component.ComponentState;
 
 /**
@@ -245,23 +246,53 @@ public class TopologyImpl
         }
         return new Path(positions);
     }
-
-    @Override
-    public Polygon wktMultiPolygonToWwjPolygon(String geometry) {
-        String tmp = geometry.replace("MULTIPOLYGON(((", "");
-        tmp = tmp.replace(")))", "");
+@Override
+    public Path wktLineToWwjPath(String geometry, double height) {
+        String tmp = geometry.replace("LINESTRING(", "");
+        tmp = tmp.replace("LINESTRING (", "");
+        tmp = tmp.replace(")", "");
         tmp = tmp.replace(")", "");
         tmp = tmp.replace("(", "");
-
-        String[] posTab0 = tmp.split(",");
+        //  System.out.println("tmp : " + tmp);
         List<Position> positions = new ArrayList<>();
-        for (String s : posTab0) {
-            String[] posTab1 = s.split("\\s+");
-            positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1])),
-                    Angle.fromDegrees(Double.valueOf(posTab1[0])), 10.0));
-        }
+        if (!tmp.contains("EMPTY")) {
+            String[] posTab0 = tmp.split(",");
+            for (String s : posTab0) {
+                String[] posTab1 = s.trim().split("\\s+");
+                if (posTab1.length != 0) {
+                    try {
+                        positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1].trim())),
+                                Angle.fromDegrees(Double.valueOf(posTab1[0].trim())), height));
+                    } catch (NumberFormatException e) {
+                        System.out.println("posTab1 : " + posTab1[0] + " " + posTab1[1]);
 
-        return new Polygon(positions);
+                    }
+                }
+            }
+        }
+        return new Path(positions);
+    }
+    @Override
+    public List<Polygon> wktMultiPolygonToWwjPolygons(String geometry) {
+        List<Polygon> polygons = new ArrayList<>();
+        String tmp = geometry.replace("MULTIPOLYGON((", "");
+        tmp = tmp.replace("))", "");
+        String[] polygonTab = tmp.split(Pattern.quote(")"));
+        for (String s : polygonTab) {
+            s = s.replace(")", "");
+            s = s.replace(",(", "");
+            s = s.replace("(", "");
+
+            String[] posTab0 = s.split(",");
+            List<Position> positions = new ArrayList<>();
+            for (String ss : posTab0) {
+                String[] posTab1 = ss.split("\\s+");
+                positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1])),
+                        Angle.fromDegrees(Double.valueOf(posTab1[0])), 10.0));
+            }
+            polygons.add(new Polygon(positions));
+        }
+        return polygons;
     }
 
     @Override
