@@ -20,7 +20,7 @@ import java.util.Map;
  *
  * @author serge
  */
-public class PolygonView
+public class MultiPolygonView
         implements PolyGeomView {
 
     protected TopologyServices topologyServices;
@@ -31,7 +31,7 @@ public class PolygonView
     protected String label = "";
     String tmp = "";
 
-    public PolygonView(String acronym, TopologyServices topologyServices, RenderableLayer layer) {
+    public MultiPolygonView(String acronym, TopologyServices topologyServices, RenderableLayer layer) {
         this.topologyServices = topologyServices;
         this.layer = layer;
         this.acronym = acronym;
@@ -41,26 +41,28 @@ public class PolygonView
     @Override
     public void display(String geometries, ShapeAttributes attrs, ShapeAttributes hattrs,
             Map<String, String> labels) {
-        polygon = topologyServices.wktPolygonToWwjPolygon(geometries);
-        polygon.setAttributes(attrs);
-        polygon.setHighlightAttributes(hattrs);
-        polygon.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-        if (labels != null) {
-           if (labels.get(acronym) != null) {
-                label = labels.get(acronym).toUpperCase() + "\n";
-            }
-            labels.keySet().forEach((key) -> {
-                tmp = labels.get(key);
-                if (tmp != null && !key.equals(acronym)) {
-                    if (!key.equals("")) {
-                        label += key + " : " + tmp + "\n";
-                    }else{
-                        label += tmp + "\n";
-                    }
+        List<Polygon> polygons = topologyServices.wktMultiPolygonToWwjPolygons(geometries);
+        for (Polygon p : polygons) {
+            p.setAttributes(attrs);
+            p.setHighlightAttributes(hattrs);
+            p.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+            if (labels != null) {
+                if (labels.get(acronym) != null) {
+                    label = labels.get(acronym).toUpperCase() + "\n";
                 }
-            });
-            polygon.setValue(AVKey.DISPLAY_NAME, label);
+                labels.keySet().forEach((key) -> {
+                    tmp = labels.get(key);
+                    if (tmp != null && !key.equals(acronym)) {
+                        if (!key.equals("")) {
+                            label += key + " : " + tmp + "\n";
+                        } else {
+                            label += tmp + "\n";
+                        }
+                    }
+                });
+                p.setValue(AVKey.DISPLAY_NAME, label);
+            }
         }
-        layer.addRenderable(polygon);
+        layer.addRenderables(polygons);
     }
 }

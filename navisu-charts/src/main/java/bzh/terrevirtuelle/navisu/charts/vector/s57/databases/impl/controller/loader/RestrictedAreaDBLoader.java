@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.RestrictedArea;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.RESARE;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.RESTRN;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,11 +43,15 @@ public class RestrictedAreaDBLoader
                     object.setObjectName(resultSet.getString("catrea"));
                     object.setObjectName(resultSet.getString("objnam"));
                     object.setRestriction(resultSet.getString("restrn"));
+                    object.setObjectName(resultSet.getString("inform"));
+                    object.setObjectNameInNationalLanguage(resultSet.getString("ninfom"));
                     object.setId(resultSet.getInt("rcid"));
-                    object.getLabels().put("RESARE","RestrictedArea");
+                    object.getLabels().put("RESARE","Restricted Area");
                     object.getLabels().put("catrea",RESARE.ATT.get(resultSet.getString("catrea")));
                     object.getLabels().put("objnam",resultSet.getString("objnam"));
-                    object.getLabels().put("restrn",resultSet.getString("restrn"));
+                    object.getLabels().put("restrn",RESTRN.ATT.get(resultSet.getString("restrn")));
+                    object.getLabels().put("inform",resultSet.getString("inform"));
+                    object.getLabels().put("ninfom",resultSet.getString("ninfom"));
                     objects.add(object);;
                 }
             }

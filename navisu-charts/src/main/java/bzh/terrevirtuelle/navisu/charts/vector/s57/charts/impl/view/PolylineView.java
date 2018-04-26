@@ -24,14 +24,16 @@ public class PolylineView
 
     protected TopologyServices topologyServices;
     protected RenderableLayer layer;
+    String acronym;
     protected Path path;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     String label = "";
     String tmp = "";
 
-    public PolylineView(TopologyServices topologyServices, RenderableLayer layer) {
+    public PolylineView(String acronym, TopologyServices topologyServices, RenderableLayer layer) {
         this.topologyServices = topologyServices;
         this.layer = layer;
+        this.acronym = acronym;
     }
 
     @SuppressWarnings("unchecked")
@@ -46,10 +48,17 @@ public class PolylineView
         path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
 
         if (labels != null) {
+            if (labels.get(acronym) != null) {
+                label = labels.get(acronym).toUpperCase() + "\n";
+            }
             labels.keySet().forEach((key) -> {
                 tmp = labels.get(key);
-                if (tmp != null) {
-                    label += " " + tmp + "\n";
+                if (tmp != null && !key.equals(acronym)) {
+                   if (!key.equals("")) {
+                        label += key + " : " + tmp + "\n";
+                    }else{
+                        label += tmp + "\n";
+                    }
                 }
             });
             path.setValue(AVKey.DISPLAY_NAME, label);

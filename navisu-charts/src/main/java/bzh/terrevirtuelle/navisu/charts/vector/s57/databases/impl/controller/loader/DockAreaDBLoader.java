@@ -6,7 +6,8 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.AnchorageArea;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DockArea;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -16,37 +17,41 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @date 28/02/2018
+ *
  * @author serge
  */
-public class DepthContourDBLoader
+public class DockAreaDBLoader
         extends ResultSetDBLoader {
 
-    public DepthContourDBLoader(TopologyServices topologyServices,
+    public DockAreaDBLoader(TopologyServices topologyServices,
             Connection connection) {
-        super(connection, "DEPCNT");
+        super(connection, "DOCARE");
     }
 
     @Override
     public List<? extends Geo> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
         objects = new ArrayList<>();
         String geom = "";
+
         resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
-        DepthContour object;
+        DockArea object;
         try {
             while (resultSet.next()) {
-                object = new DepthContour();
+                object = new DockArea();
                 geom = resultSet.getString("geom");
                 if (geom != null) {
                     object.setGeom(geom);
-                    object.setValueOfDepthContour(Double.toString(resultSet.getDouble(2)));
-                  // object.getLabels().put("DEPCNT","DepthContour");
-                    object.getLabels().put("", Double.toString(resultSet.getDouble(2)/100) + " m");
+                    object.setObjectName(resultSet.getString("objnam"));
+                    object.setId(resultSet.getInt("rcid"));
+                    object.getLabels().put("DOCARE", "Dock Area");
+                    object.getLabels().put("objnam", resultSet.getString("objnam"));
+                    object.getLabels().put("inform", resultSet.getString("inform"));
+                    object.getLabels().put("ninfom", resultSet.getString("ninfom"));
                     objects.add(object);
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DepthContourDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(DockAreaDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return objects;
     }

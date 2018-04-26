@@ -26,6 +26,8 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DaymarView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57ObjectView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.AnchorageAreaDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DockAreaDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DredgedAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.NavigationLineDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.RestrictedAreaDBLoader;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
@@ -222,7 +224,7 @@ public class S57DBComponentController
     /*
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
 
-            "DOCARE : DockArea",
+            
             "DRGARE : DredgedArea",
             "FAIRWY : Fairway",
             "LAKARE : Lake",
@@ -244,6 +246,8 @@ public class S57DBComponentController
             "COALNE : Coastaline",
             "DEPARE : DepthArea",
             "DEPCNT : DepthContour",
+            "DOCARE : DockArea",
+            "DRGARE : DredgedArea",
             "NAVLNE : NavigationLine",
             "LNDMRK : Landmark",
             "PONTON : Pontoon",
@@ -304,11 +308,13 @@ public class S57DBComponentController
             put("COALNE", "rcid, elevat");
             put("DEPARE", "rcid, drval1, drval2");
             put("DEPCNT", "rcid, valdco");
+            put("DOCARE", "rcid, objnam, inform, ninfom");
+            put("DRGARE", "rcid, objnam, inform, ninfom, drval1, drval2");
             put("LNDMRK", "rcid, objnam, catlmk, colour, colpat, rcid, status, convis, functn");
             put("NAVLNE", "rcid, orient");
             put("PONTON", "rcid");
             put("SLCONS", "rcid");
-            put("RESARE", "rcid, catrea, objnam, restrn");
+            put("RESARE", "rcid, catrea, objnam, restrn, inform, ninfom");
         }
     ;
 
@@ -671,7 +677,7 @@ public class S57DBComponentController
             if (object.trim().equals("ALL") || object.trim().equals("ACHARE")) {
                 objects = new AnchorageAreaDBLoader(topologyServices, connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57ObjectView(topologyServices, bathymetryLayer);
+                s57Viewer = new S57ObjectView("ACHARE", topologyServices, navigationLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
@@ -693,7 +699,23 @@ public class S57DBComponentController
             if (object.trim().equals("ALL") || object.trim().equals("DEPCNT")) {
                 objects = new DepthContourDBLoader(topologyServices, connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57ObjectView(topologyServices, bathymetryLayer);
+                s57Viewer = new S57ObjectView("DEPCNT", topologyServices, bathymetryLayer);
+                objects.forEach((g) -> {
+                    s57Viewer.display(g);
+                });
+            }
+            if (object.trim().equals("ALL") || object.trim().equals("DOCARE")) {
+                objects = new DockAreaDBLoader(topologyServices, connection)
+                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                s57Viewer = new S57ObjectView("DOCARE", topologyServices, bathymetryLayer);
+                objects.forEach((g) -> {
+                    s57Viewer.display(g);
+                });
+            }
+            if (object.trim().equals("ALL") || object.trim().equals("DRGARE")) {
+                objects = new DredgedAreaDBLoader(topologyServices, connection)
+                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                s57Viewer = new S57ObjectView("DRGARE", topologyServices, bathymetryLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
@@ -701,7 +723,7 @@ public class S57DBComponentController
             if (object.trim().equals("ALL") || object.trim().equals("COALNE")) {
                 objects = new CoastlineDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57ObjectView(topologyServices, depareLayer);
+                s57Viewer = new S57ObjectView("COALNE", topologyServices, depareLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
@@ -709,7 +731,7 @@ public class S57DBComponentController
             if (object.trim().equals("ALL") || object.trim().equals("PONTON")) {
                 objects = new PontoonDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57ObjectView(topologyServices, buildingLayer);
+                s57Viewer = new S57ObjectView("PONTON", topologyServices, buildingLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
@@ -717,7 +739,7 @@ public class S57DBComponentController
             if (object.trim().equals("ALL") || object.trim().equals("SLCONS")) {
                 objects = new ShorelineConstructionDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57ObjectView(topologyServices, buildingLayer);
+                s57Viewer = new S57ObjectView("SLCONS", topologyServices, buildingLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
@@ -725,7 +747,7 @@ public class S57DBComponentController
             if (object.trim().equals("ALL") || object.trim().equals("NAVLNE")) {
                 objects = new NavigationLineDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57ObjectView(topologyServices, navigationLayer);
+                s57Viewer = new S57ObjectView("NAVLNE", topologyServices, navigationLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
@@ -733,8 +755,9 @@ public class S57DBComponentController
             if (object.trim().equals("ALL") || object.trim().equals("RESARE")) {
                 objects = new RestrictedAreaDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57ObjectView(topologyServices, navigationLayer);
+                s57Viewer = new S57ObjectView("RESARE", topologyServices, navigationLayer);
                 objects.forEach((g) -> {
+                    normalAttributes.setOutlineMaterial(new Material(new Color(197,69,195)));
                     s57Viewer.display(g, normalAttributes, highlightAttributes);
                 });
             }

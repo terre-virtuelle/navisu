@@ -27,8 +27,10 @@ public class S57ObjectView {
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     ShapeAttributes normAttributes;
     ShapeAttributes highlightAttributes;
+    String acronym;
 
-    public S57ObjectView(TopologyServices topologyServices, RenderableLayer layer) {
+    public S57ObjectView(String acronym, TopologyServices topologyServices, RenderableLayer layer) {
+        this.acronym = acronym;
         this.topologyServices = topologyServices;
         this.layer = layer;
 
@@ -43,8 +45,9 @@ public class S57ObjectView {
         highlightAttributes.setEnableLighting(true);
     }
 
-    public S57ObjectView(TopologyServices topologyServices, RenderableLayer layer,
+    public S57ObjectView(String acronym, TopologyServices topologyServices, RenderableLayer layer,
             ShapeAttributes normAttributes, ShapeAttributes highlightAttributes) {
+        this.acronym = acronym;
         this.topologyServices = topologyServices;
         this.layer = layer;
         this.normAttributes = normAttributes;
@@ -64,12 +67,21 @@ public class S57ObjectView {
 
     private void displayP(Geo object, ShapeAttributes normAttributes, ShapeAttributes highlightAttributes) {
         String geometry = object.getGeom();
+       // System.out.println("geometry : " + geometry);
+        if ((geometry.contains("LINESTRING") && !geometry.contains("MULTILINESTRING")) && !geometry.contains("EMPTY")) {
+            polyView = new LineView(acronym, topologyServices, layer);
+            polyView.display(geometry, normAttributes, highlightAttributes, object.getLabels());
+        }
         if (geometry.contains("MULTILINESTRING") && !geometry.contains("EMPTY")) {
-            polyView = new PolylineView(topologyServices, layer);
+            polyView = new PolylineView(acronym, topologyServices, layer);
+            polyView.display(geometry, normAttributes, highlightAttributes, object.getLabels());
+        }
+        if (geometry.contains("POLYGON") && !geometry.contains("MULTIPOLYGON") && !geometry.contains("EMPTY")) {
+            polyView = new PolygonView(acronym, topologyServices, layer);
             polyView.display(geometry, normAttributes, highlightAttributes, object.getLabels());
         }
         if (geometry.contains("MULTIPOLYGON") && !geometry.contains("EMPTY")) {
-            polyView = new PolygonView(topologyServices, layer);
+            polyView = new MultiPolygonView(acronym, topologyServices, layer);
             polyView.display(geometry, normAttributes, highlightAttributes, object.getLabels());
         }
     }

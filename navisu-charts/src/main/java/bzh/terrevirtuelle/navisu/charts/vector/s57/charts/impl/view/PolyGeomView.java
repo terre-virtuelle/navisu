@@ -14,7 +14,6 @@ import java.util.Map;
  */
 public interface PolyGeomView {
 
-    default void display(String geometries, 
-            ShapeAttributes attrs, ShapeAttributes hattrs,
+    default void display(String geometries, ShapeAttributes attrs, ShapeAttributes hattrs,
             Map<String,String> labels){}
 }

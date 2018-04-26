@@ -11,27 +11,26 @@ import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import java.util.List;
 import java.util.Map;
 
 /**
  *
  * @author serge
  */
-public class PolygonView
+public class LineView
         implements PolyGeomView {
 
     protected TopologyServices topologyServices;
     protected RenderableLayer layer;
-    protected String acronym;
-    protected Polygon polygon;
+    String acronym;
+    protected Path path;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
-    protected String label = "";
+    String label = "";
     String tmp = "";
 
-    public PolygonView(String acronym, TopologyServices topologyServices, RenderableLayer layer) {
+    public LineView(String acronym, TopologyServices topologyServices, RenderableLayer layer) {
         this.topologyServices = topologyServices;
         this.layer = layer;
         this.acronym = acronym;
@@ -39,14 +38,17 @@ public class PolygonView
 
     @SuppressWarnings("unchecked")
     @Override
-    public void display(String geometries, ShapeAttributes attrs, ShapeAttributes hattrs,
+    public void display(String geometry,
+            ShapeAttributes attrs, ShapeAttributes hattrs,
             Map<String, String> labels) {
-        polygon = topologyServices.wktPolygonToWwjPolygon(geometries);
-        polygon.setAttributes(attrs);
-        polygon.setHighlightAttributes(hattrs);
-        polygon.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+        System.out.println("geometry : " + geometry);
+        path = topologyServices.wktLineToWwjPath(geometry, 1.0);
+        path.setAttributes(attrs);
+        path.setHighlightAttributes(hattrs);
+        path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+
         if (labels != null) {
-           if (labels.get(acronym) != null) {
+            if (labels.get(acronym) != null) {
                 label = labels.get(acronym).toUpperCase() + "\n";
             }
             labels.keySet().forEach((key) -> {
@@ -59,8 +61,9 @@ public class PolygonView
                     }
                 }
             });
-            polygon.setValue(AVKey.DISPLAY_NAME, label);
+            path.setValue(AVKey.DISPLAY_NAME, label);
         }
-        layer.addRenderable(polygon);
+        //Le formatage n'est pas respecté dans le DISPLAY_NAME
+        layer.addRenderable(path);
     }
 }
