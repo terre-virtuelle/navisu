@@ -73,7 +73,7 @@ public class Configuration {
                 Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-        if (!Files.exists(Paths.get(navisuDir + "/cmd/cmd"), LinkOption.NOFOLLOW_LINKS)) {
+        if (!Files.exists(Paths.get(navisuDir + "/cmd"), LinkOption.NOFOLLOW_LINKS)) {
             try {
                 Files.createDirectories(Paths.get(navisuDir + "/cmd/cmd"));
             } catch (IOException ex) {

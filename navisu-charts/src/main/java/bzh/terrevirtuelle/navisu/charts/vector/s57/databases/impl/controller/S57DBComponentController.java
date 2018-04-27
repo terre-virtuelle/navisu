@@ -224,14 +224,12 @@ public class S57DBComponentController
     /*
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
 
-            
-            "DRGARE : DredgedArea",
+
             "FAIRWY : Fairway",
             "LAKARE : Lake",
             "LIGHTS : Light",
             "MIPARE : MilitaryPracticeArea",
             "OBSTRN : Obstruction",
-
             "SEAARE : SeaAreaNamedWaterArea",
             "SOUNDG : Sounding",
             "TSSBND : TrafficSeparationSchemeBoundary",
@@ -241,18 +239,18 @@ public class S57DBComponentController
      */
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
             "ALL : All S57 objects",
-            "ACHARE : AnchorageArea",
+            "ACHARE : Anchorage Area",
             "BUOYAGE : All buoyage",
             "COALNE : Coastaline",
-            "DEPARE : DepthArea",
-            "DEPCNT : DepthContour",
-            "DOCARE : DockArea",
-            "DRGARE : DredgedArea",
-            "NAVLNE : NavigationLine",
+            "DEPARE : Depth Area",
+            "DEPCNT : Depth Contour",
+            "DOCARE : Dock Area",
+            "DRGARE : Dredged Area",
+            "NAVLNE : Navigation Line",
             "LNDMRK : Landmark",
             "PONTON : Pontoon",
-            "RESARE : RestrictedArea",
-            "SLCONS : ShorelineConstruction"
+            "RESARE : Restricted Area",
+            "SLCONS : Shoreline Construction"
     );
     public static final Map<String, String> S57_REQUEST_MAP = Collections.unmodifiableMap(new HashMap<String, String>() {
         {
