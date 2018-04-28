@@ -79,9 +79,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -142,7 +142,7 @@ public class S57DBComponentController
     @FXML
     public ChoiceBox<String> databasesCB;
     @FXML
-    public ListView<String> objectsLV;
+    public ComboBox<String> objectsCB;
     @FXML
     public Button latLonButton;
     @FXML
@@ -358,11 +358,11 @@ public class S57DBComponentController
                         (ObservableValue<? extends String> observable, String oldValue, String newValue)
                         -> databaseTF.setText(databasesCB.getValue())
                 );
-        objectsLV.setItems(objectsCbData);
-        objectsLV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        objectsLV.getSelectionModel().select("ALL : All S57 objects");
+        objectsCB.setItems(objectsCbData);
+       // objectsCB.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        objectsCB.getSelectionModel().select("ALL : All S57 objects");
         objectsTF.setText("ALL");
-        objectsLV.getSelectionModel()
+        objectsCB.getSelectionModel()
                 .selectedItemProperty()
                 .addListener(
                         (ObservableValue<? extends String> observable, String oldValue, String newValue)
