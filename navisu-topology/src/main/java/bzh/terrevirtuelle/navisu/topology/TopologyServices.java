@@ -95,6 +95,8 @@ public interface TopologyServices
      */
     Polygon wktPolygonToWwjPolygon(String geometry);
 
+    LatLon wktMultiPointToWwjLatLon(String geometry);
+
     /**
      *
      * @param geometry

@@ -6,41 +6,35 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.BUOYAGE_ShapefileLoader;
-import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader.LOGGER;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.Alert;
-import org.postgis.PGgeometry;
 
 /**
  *
  * @author serge
  */
-public class BuoyageDBLoader {
+public class BuoyageDBLoader
+        extends ResultSetDBLoader {
 
     protected final String BUOYAGE_PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
-    protected Connection connection;
-    protected String acronym;
     protected Buoyage buoyage;
-    protected String request;
     protected Class claz;
     protected Map<Pair<Double, Double>, String> marsysMap;
-    protected double lat;
-    protected double lon;
-    protected ResultSet resultSet;
 
-    public BuoyageDBLoader(Connection connection, String acronym,
-            Map<Pair<Double, Double>, String> marsysMap) {
+    ;
+
+    public BuoyageDBLoader(Connection connection, String acronym, Map<Pair<Double, Double>, String> marsysMap) {
+        super(connection, acronym);
         this.connection = connection;
         this.acronym = acronym;
         this.marsysMap = marsysMap;
@@ -49,93 +43,95 @@ public class BuoyageDBLoader {
         try {
             claz = Class.forName(BUOYAGE_PATH + "." + className);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuoyageDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public List<Buoyage> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
-        List<Buoyage> buoyages = new ArrayList<>();
-        PGgeometry geom;
-
-        if (connection != null) {
-            try {
-                request = S57_REQUEST_MAP.get(acronym);
-                request += "(" + lonMin + ", " + latMin + ", "
-                        + lonMax + ", " + latMax + ", "
-                        + "4326);";
-
-                resultSet = connection
-                        .createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)
-                        .executeQuery(request);
-
-                while (resultSet.next()) {
-                    try {
-                        buoyage = (Buoyage) claz.newInstance();
-                    } catch (InstantiationException | IllegalAccessException ex) {
-                        Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-                    }
-                    String tmp = resultSet.getString("objnam");
-                    String name = "";
-                    if (tmp != null) {
-                        name = tmp;
-                    }
-                    buoyage.setObjectName(name);
-
-                    geom = (PGgeometry) resultSet.getObject("geom");
-                    lat = geom.getGeometry().getFirstPoint().getY();
-                    lon = geom.getGeometry().getFirstPoint().getX();
-                    buoyage.setLatitude(lat);
-                    buoyage.setLongitude(lon);
-
-                    tmp = resultSet.getString(3);
-                    String shp = "0";
-                    if (tmp != null) {
-                        shp = tmp;
-                    }
-                    buoyage.setShape(shp);
-
-                    tmp = resultSet.getString("colour");
-                    String col = "0";
-                    if (tmp != null) {
-                        col = tmp;
-                    }
-                    buoyage.setColour(col);
-
-                    tmp = resultSet.getString("colpat");
-                    String colPat = "0";
-                    if (tmp != null) {
-                        colPat = tmp;
-                    }
-                    buoyage.setColourPattern(colPat);
-
-                    buoyage.setId(resultSet.getLong("rcid"));
-                    
-                    String cat = resultSet.getString(7);
-                    if (cat == null) {
-                        cat = "0";
-                    }
-                    buoyage.setCategoryOfMark(cat);
-
-                    String ma = marsysMap.get(new Pair(lat, lon));
-                    if (ma == null) {
-                        ma = "1";
-                    }
-                    buoyage.setMarsys(ma);
-
-                    buoyages.add(buoyage);
+    @Override
+    public List<Buoyage> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
+        List<Buoyage> objects = new ArrayList<>();
+        String geom;
+        resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
+        try {
+            while (resultSet.next()) {
+                try {
+                    buoyage = (Buoyage) claz.newInstance();
+                } catch (InstantiationException | IllegalAccessException ex) {
+                    Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                 }
 
-            } catch (SQLException ex) {
-                LOGGER.log(Level.SEVERE, ex.toString(), ex);
-            }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Database connection fail");
-            alert.show();
-        }
-        return buoyages;
-    }
+                buoyage.setId(Long.parseLong(resultSet.getString("rcid")));
 
+                String tmp = resultSet.getString("objnam");
+                String name = "";
+                if (tmp != null) {
+                    name = tmp;
+                }
+                buoyage.setObjectName(name);
+
+                geom = resultSet.getString("geom");
+                buoyage.setGeom(geom);
+                tmp = resultSet.getString(4);
+                String shp = "0";
+                if (tmp != null) {
+                    shp = tmp;
+                }
+                if (acronym.equals("LNDMRK")) {
+                    ((Landmark) buoyage).setFunction(shp);
+                } else {
+                    buoyage.setShape(shp);
+                }
+                tmp = resultSet.getString("colour");
+                String col = "0";
+                if (tmp != null) {
+                    col = tmp;
+                }
+                buoyage.setColour(col);
+
+                tmp = resultSet.getString("colpat");
+                String colPat = "0";
+                if (tmp != null) {
+                    colPat = tmp;
+                }
+                buoyage.setColourPattern(colPat);
+
+                String cat = resultSet.getString(7);//7
+                if (cat == null) {
+                    cat = "0";
+                }
+                if (acronym.equals("LNDMRK")) {
+                    ((Landmark) buoyage).setCategoryOfLandMark(cat);
+                    String convis = resultSet.getString("convis");
+                    if (convis != null) {
+                        ((Landmark) buoyage).setConspicuousVisually(convis);
+                    } else {
+                        ((Landmark) buoyage).setConspicuousVisually("0");
+                    }
+                } else {
+                    buoyage.setCategoryOfMark(cat);
+                }
+
+                if (acronym.equals("DAYMAR")) {
+                    String natcon = resultSet.getString("natcon");
+                    if (natcon == null) {
+                        natcon = "0";
+                    }
+                    buoyage.setNatureOfConstruction(natcon);
+                }
+                String ma = marsysMap.get(new Pair(lat, lon));
+                if (ma == null) {
+                    ma = "1";
+                }
+                buoyage.setMarsys(ma);
+                //  System.out.println(buoyage);
+                objects.add(buoyage);
+            }
+
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+        }
+       // System.out.println("objects : " + objects);
+        return objects;
+    }
 }

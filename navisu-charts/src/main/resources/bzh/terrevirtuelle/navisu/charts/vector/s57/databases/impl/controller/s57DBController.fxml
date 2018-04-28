@@ -6,6 +6,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="570.0" styleClass="background-pane">
             <children>
@@ -76,8 +77,7 @@
                               <TextField fx:id="hostnameTF" editable="false" text="localhost" GridPane.columnIndex="3" GridPane.rowIndex="13" />
                               <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" styleClass="text-field" text="Port" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="14" />
                               <TextField fx:id="encPortBDTF" editable="false" text="5432" GridPane.columnIndex="3" GridPane.rowIndex="14" />
-                              <ChoiceBox fx:id="objectsCB" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                              <Button fx:id="latLonButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="223.0" text="Enter coordinates" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
+                              <Button fx:id="latLonButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="257.0" text="Enter coordinates" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
                               <Button fx:id="interactiveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="176.0" text="Marquee tool" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
                               <GridPane GridPane.columnIndex="4" GridPane.rowIndex="9">
                                 <columnConstraints>
@@ -90,14 +90,16 @@
                               </GridPane>
                               <Button fx:id="selectedButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="valid" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
                               <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="DATA BASE / OBJECTS CHOICE" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                              <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="SERVER" GridPane.columnIndex="3" GridPane.rowIndex="12" />
-                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="15.0" prefWidth="120.0" text="keyboard" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
+                              <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="Actual server configuration" GridPane.columnIndex="3" GridPane.rowIndex="12" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="15.0" prefWidth="120.0" text="Keyboard" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
                               <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Graphic selection" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
                               <Label text="Distance tolerance" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
                               <TextField fx:id="simplifyTF" alignment="CENTER_RIGHT" promptText="0.00001" text="0.0001" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                               <Label text="Depth magnification" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
                               <TextField fx:id="depthMagnificationTF" alignment="CENTER_RIGHT" text="10.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                               <CheckBox fx:id="createElevationCB" mnemonicParsing="false" selected="true" text="Create elevation" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                              <CheckBox fx:id="simplifyCB" mnemonicParsing="false" selected="true" text="Create simplify Depare" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                              <ListView fx:id="objectsLV" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                                         </children>
                                     </GridPane>
                                 </children>

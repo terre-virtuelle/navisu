@@ -6,9 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.AnchorageArea;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DockArea;
-import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,8 +21,7 @@ import java.util.logging.Logger;
 public class DockAreaDBLoader
         extends ResultSetDBLoader {
 
-    public DockAreaDBLoader(TopologyServices topologyServices,
-            Connection connection) {
+    public DockAreaDBLoader(Connection connection) {
         super(connection, "DOCARE");
     }
 

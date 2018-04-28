@@ -6,9 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DockArea;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DredgedArea;
-import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,8 +21,7 @@ import java.util.logging.Logger;
 public class DredgedAreaDBLoader
         extends ResultSetDBLoader {
 
-    public DredgedAreaDBLoader(TopologyServices topologyServices,
-            Connection connection) {
+    public DredgedAreaDBLoader(Connection connection) {
         super(connection, "DRGARE");
     }
 

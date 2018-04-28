@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
-import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,8 +21,7 @@ import java.util.logging.Logger;
 public class DepthContourDBLoader
         extends ResultSetDBLoader {
 
-    public DepthContourDBLoader(TopologyServices topologyServices,
-            Connection connection) {
+    public DepthContourDBLoader(Connection connection) {
         super(connection, "DEPCNT");
     }
 
@@ -40,7 +38,6 @@ public class DepthContourDBLoader
                 if (geom != null) {
                     object.setGeom(geom);
                     object.setValueOfDepthContour(Double.toString(resultSet.getDouble(2)));
-                  // object.getLabels().put("DEPCNT","DepthContour");
                     object.getLabels().put("", Double.toString(resultSet.getDouble(2)/100) + " m");
                     objects.add(object);
                 }

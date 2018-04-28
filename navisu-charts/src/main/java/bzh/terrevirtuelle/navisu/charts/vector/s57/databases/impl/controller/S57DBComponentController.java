@@ -14,7 +14,6 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.naviga
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.CoastlineDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DaymarDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepareDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepthContourDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader;
@@ -22,7 +21,6 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.ShorelineConstructionDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.BuoyageView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DaymarView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57ObjectView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.AnchorageAreaDBLoader;
@@ -83,6 +81,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -142,7 +142,7 @@ public class S57DBComponentController
     @FXML
     public ChoiceBox<String> databasesCB;
     @FXML
-    public ChoiceBox<String> objectsCB;
+    public ListView<String> objectsLV;
     @FXML
     public Button latLonButton;
     @FXML
@@ -172,6 +172,8 @@ public class S57DBComponentController
     public TextField encPortDBTF;
     @FXML
     public CheckBox createElevationCB;
+    @FXML
+    public CheckBox simplifyCB;
 
     protected Map<String, String> acronyms;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
@@ -260,55 +262,27 @@ public class S57DBComponentController
             put("M_NSYS", "SELECT geom, marsys "
                     + " FROM m_nsys "
                     + " WHERE geom && ST_MakeEnvelope");
-            put("BCNCAR", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, catcam "
-                    + " FROM bcncar "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BCNLAT", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, catlam "
-                    + " FROM bcnlat "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BCNISD", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, status"
-                    + " FROM bcnisd  "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BCNSAW", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, status"
-                    + " FROM bcnsaw "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BCNSPP", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, catspm"
-                    + " FROM bcnspp "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BCNISD", "SELECT objnam, geom, bcnshp, colour, colpat, rcid, status"
-                    + " FROM bcnisd "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BOYCAR", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catcam"
-                    + " FROM boycar "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BOYINB", "SELECT objnam, geom, boyshp, colour, colpat, rcid, status"
-                    + " FROM boyinb "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BOYISD", "SELECT objnam, geom, boyshp, colour, colpat, rcid, status"
-                    + " FROM boyisd "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BOYLAT", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catlam"
-                    + " FROM boylat"
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BOYSAW", "SELECT objnam, geom, boyshp, colour, colpat, rcid, status"
-                    + " FROM boysaw "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("BOYSPP", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catspm"
-                    + " FROM boyspp"
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("DAYMAR", "SELECT objnam, geom, topshp, colour, colpat, rcid, catspm, natcon"
-                    + " FROM daymar"
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("MORFAC", "SELECT objnam, geom, boyshp, colour, colpat, rcid, catmor"
-                    + " FROM morfac"
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("ACHARE", "rcid, catach, objnam, restrn");
+            put("BCNCAR", "rcid, objnam, bcnshp, colour, colpat, catcam");
+            put("BCNLAT", "rcid, objnam, bcnshp, colour, colpat, catlam");
+            put("BCNISD", "rcid, objnam, bcnshp, colour, colpat, status");
+            put("BCNSAW", "rcid, objnam, bcnshp, colour, colpat, status");
+            put("BCNSPP", "rcid, objnam, bcnshp, colour, colpat, catspm");
+            put("BCNISD", "rcid, objnam, bcnshp, colour, colpat, status");
+            put("BOYCAR", "rcid, objnam, boyshp, colour, colpat, catcam");
+            put("BOYINB", "rcid, objnam, boyshp, colour, colpat, status");
+            put("BOYISD", "rcid, objnam, boyshp, colour, colpat, status");
+            put("BOYLAT", "rcid, objnam, boyshp, colour, colpat, catlam");
+            put("BOYSAW", "rcid, objnam, boyshp, colour, colpat, status");
+            put("BOYSPP", "rcid, objnam, boyshp, colour, colpat, catspm");
+            put("DAYMAR", "rcid, objnam, topshp, colour, colpat, catspm, natcon");
+            put("MORFAC", "rcid, objnam, boyshp, colour, colpat, catmor");
+            put("LNDMRK", "rcid, objnam, functn, colour, colpat, catlmk, status, convis ");
+            put("ACHARE", "rcid, objnam, catach, restrn");
             put("COALNE", "rcid, elevat");
             put("DEPARE", "rcid, drval1, drval2");
             put("DEPCNT", "rcid, valdco");
             put("DOCARE", "rcid, objnam, inform, ninfom");
             put("DRGARE", "rcid, objnam, inform, ninfom, drval1, drval2");
-            put("LNDMRK", "rcid, objnam, catlmk, colour, colpat, rcid, status, convis, functn");
             put("NAVLNE", "rcid, orient");
             put("PONTON", "rcid");
             put("SLCONS", "rcid");
@@ -384,11 +358,11 @@ public class S57DBComponentController
                         (ObservableValue<? extends String> observable, String oldValue, String newValue)
                         -> databaseTF.setText(databasesCB.getValue())
                 );
-        objectsCB.setItems(objectsCbData);
-        // initCheckBox( "properties/objects_1.csv", objectsCB);
-        objectsCB.getSelectionModel().select("ALL : All S57 objects");
+        objectsLV.setItems(objectsCbData);
+        objectsLV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        objectsLV.getSelectionModel().select("ALL : All S57 objects");
         objectsTF.setText("ALL");
-        objectsCB.getSelectionModel()
+        objectsLV.getSelectionModel()
                 .selectedItemProperty()
                 .addListener(
                         (ObservableValue<? extends String> observable, String oldValue, String newValue)
@@ -499,7 +473,8 @@ public class S57DBComponentController
                 lightsSectorsLayer.removeAllRenderables();
             }
             connection = databaseServices.connect(databaseTF.getText(),
-                    "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
+                    "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver",
+                    USER, PASSWD);
             if (lat0 != 0 && lon0 != 0 && lat1 != 0 && lon1 != 0) {
                 retrieveIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
             } else {
@@ -523,7 +498,7 @@ public class S57DBComponentController
 
         Label lat0Label = new Label("Northwest point latitude : ");
         Label lon0Label = new Label("Northwest point longitude : ");
-        Label lat1Label = new Label("Southeast point latatitude : ");
+        Label lat1Label = new Label("Southeast point latitude : ");
         Label lon1Label = new Label("Southeast point longitude : ");
 
         TextField lat0TF = new TextField();
@@ -628,49 +603,53 @@ public class S57DBComponentController
 
         guiAgentServices.getJobsManager().newJob("Load S57 objects", (progressHandle) -> {
             if (object.trim().equals("ALL") || object.trim().equals("BUOYAGE")) {
-
-                new BuoyageView(topMarkMap, buoyageLayer, "BCNCAR")
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BCNCAR")
                         .display(new BuoyageDBLoader(connection, "BCNCAR", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topMarkMap, buoyageLayer, "BCNLAT")
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BCNLAT")
                         .display(new BuoyageDBLoader(connection, "BCNLAT", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topMarkMap, buoyageLayer, "BCNISD")
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BCNISD")
                         .display(new BuoyageDBLoader(connection, "BCNISD", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topMarkMap, buoyageLayer, "BCNSAW")
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BCNSAW")
                         .display(new BuoyageDBLoader(connection, "BCNSAW", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topMarkMap, buoyageLayer, "BCNSPP")
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BCNSPP")
                         .display(new BuoyageDBLoader(connection, "BCNSPP", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topMarkMap, buoyageLayer, "BCNISD")
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BCNISD")
                         .display(new BuoyageDBLoader(connection, "BCNISD", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topMarkMap, buoyageLayer, "BOYCAR")
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BOYCAR")
                         .display(new BuoyageDBLoader(connection, "BOYCAR", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topMarkMap, buoyageLayer, "BOYLAT")
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BOYLAT")
                         .display(new BuoyageDBLoader(connection, "BOYLAT", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topMarkMap, buoyageLayer, "BOYINB")
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BOYINB")
                         .display(new BuoyageDBLoader(connection, "BOYINB", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topMarkMap, buoyageLayer, "BOYISD")
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BOYISD")
                         .display(new BuoyageDBLoader(connection, "BOYISD", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topMarkMap, buoyageLayer, "BOYSAW")
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BOYSAW")
                         .display(new BuoyageDBLoader(connection, "BOYSAW", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topMarkMap, buoyageLayer, "BOYSPP")
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BOYSPP")
                         .display(new BuoyageDBLoader(connection, "BOYSPP", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-                new DaymarView(topMarkMap, harbourLayer, "DAYMAR")
-                        .display(new DaymarDBLoader(connection, "DAYMAR", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topMarkMap, buoyageLayer, "MORFAC")
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                new BuoyageView(topologyServices, topMarkMap, harbourLayer, "DAYMAR")
+                        .display(new BuoyageDBLoader(connection, "DAYMAR", marsysMap)
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "MORFAC")
                         .display(new BuoyageDBLoader(connection, "MORFAC", marsysMap)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+            }
+            if (object.trim().equals("ALL") || object.trim().equals("LNDMRK")) {
+                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "LNDMRK")
+                        .display(new BuoyageDBLoader(connection, "LNDMRK", marsysMap)
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
             }
             if (object.trim().equals("ALL") || object.trim().equals("ACHARE")) {
                 objects = new AnchorageAreaDBLoader(topologyServices, connection)
@@ -679,9 +658,6 @@ public class S57DBComponentController
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
-            }
-            if (object.trim().equals("ALL") || object.trim().equals("LNDMRK")) {
-
             }
             if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
                 new DepareView(latMin, lonMin, latMax, lonMax,
@@ -695,7 +671,7 @@ public class S57DBComponentController
                                 PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
             }
             if (object.trim().equals("ALL") || object.trim().equals("DEPCNT")) {
-                objects = new DepthContourDBLoader(topologyServices, connection)
+                objects = new DepthContourDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("DEPCNT", topologyServices, bathymetryLayer);
                 objects.forEach((g) -> {
@@ -703,7 +679,7 @@ public class S57DBComponentController
                 });
             }
             if (object.trim().equals("ALL") || object.trim().equals("DOCARE")) {
-                objects = new DockAreaDBLoader(topologyServices, connection)
+                objects = new DockAreaDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("DOCARE", topologyServices, bathymetryLayer);
                 objects.forEach((g) -> {
@@ -711,7 +687,7 @@ public class S57DBComponentController
                 });
             }
             if (object.trim().equals("ALL") || object.trim().equals("DRGARE")) {
-                objects = new DredgedAreaDBLoader(topologyServices, connection)
+                objects = new DredgedAreaDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("DRGARE", topologyServices, bathymetryLayer);
                 objects.forEach((g) -> {
@@ -755,7 +731,7 @@ public class S57DBComponentController
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("RESARE", topologyServices, navigationLayer);
                 objects.forEach((g) -> {
-                    normalAttributes.setOutlineMaterial(new Material(new Color(197,69,195)));
+                    normalAttributes.setOutlineMaterial(new Material(new Color(197, 69, 195)));
                     s57Viewer.display(g, normalAttributes, highlightAttributes);
                 });
             }

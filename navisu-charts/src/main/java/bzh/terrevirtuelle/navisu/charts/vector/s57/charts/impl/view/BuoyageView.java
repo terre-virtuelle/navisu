@@ -7,15 +7,19 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +29,7 @@ import java.util.Map;
  */
 public class BuoyageView {
 
+    protected TopologyServices topologyServices;
     protected RenderableLayer layer;
     protected List<Buoyage> buoyages;
     protected PointPlacemark placemark;
@@ -36,10 +41,13 @@ public class BuoyageView {
     protected double lon;
     protected String topMark;
     protected String label;
+    protected boolean dev = false;
 
-    public BuoyageView(Map<Pair<Double, Double>, String> topMarkMap,
+    public BuoyageView(TopologyServices topologyServices,
+            Map<Pair<Double, Double>, String> topMarkMap,
             RenderableLayer layer,
             String acronym) {
+        this.topologyServices = topologyServices;
         this.topMarkMap = topMarkMap;
         this.acronym = acronym;
         this.layer = layer;
@@ -47,66 +55,76 @@ public class BuoyageView {
 
     @SuppressWarnings("unchecked")
     public void display(List<Buoyage> buoyages) {
-        buoyages.stream().map((buoyage) -> {
-            lat = buoyage.getLatitude();
-            lon = buoyage.getLongitude();
-            placemark = new PointPlacemark(Position.fromDegrees(lat, lon, 0));
-            return buoyage;
-        }).map((buoyage) -> {
-            placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-            return buoyage;
-        }).map((buoyage) -> {
-            label = buoyage.getClass().getSimpleName() + "\n"
-                    + buoyage.getObjectName() + "\n"
-                    + "Lat : " + new Float(lat).toString() + "\n"
-                    + "Lon : " + new Float(lon).toString();
-            buoyage.setLabel(label);
-            placemark.setValue(AVKey.DISPLAY_NAME, label);
-            topMark = topMarkMap.get(new Pair(lat, lon));
-            if (topMark == null) {
-                topMark = "0";
+
+        List<PointPlacemark> pointPlacemarks = new ArrayList<>();
+        for (Buoyage buoyage : buoyages) {
+            String geom = buoyage.getGeom();
+            LatLon latLon;
+            if (geom.contains("MULTIPOINT") && !geom.contains("EMPTY")) {
+                latLon = topologyServices.wktMultiPointToWwjLatLon(geom);
+                buoyage.setLatitude(latLon.getLatitude().getDegrees());
+                buoyage.setLongitude(latLon.getLongitude().getDegrees());
+                lat = buoyage.getLatitude();
+                lon = buoyage.getLongitude();
+                placemark = new PointPlacemark(Position.fromDegrees(lat, lon, 0));
+                placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
+                label = buoyage.getClass().getSimpleName() + "\n"
+                        + buoyage.getObjectName() + "\n"
+                        + "Lat : " + new Float(lat).toString() + "\n"
+                        + "Lon : " + new Float(lon).toString();
+                buoyage.setLabel(label);
+                placemark.setValue(AVKey.DISPLAY_NAME, label);
+                topMark = topMarkMap.get(new Pair(lat, lon));
+                if (topMark == null) {
+                    topMark = "0";
+                }
+                String imageAddress = "";
+                if (acronym.equals("LNDMRK")) {
+                    imageAddress = "img/landmarks_" + buoyage.getMarsys() + "/" 
+                            + acronym + "_"
+                            + buoyage.getCategoryOfMark() + "_"
+                            + buoyage.getConspicuousVisually() + "_"
+                            + ((Landmark) buoyage).getFunction() + "_"
+                            + buoyage.getColour() + "_"
+                            + buoyage.getColourPattern() + "_"
+                            + buoyage.getMarsys()
+                            + ".png";
+                } else {
+                    if (acronym.equals("DAYMAR")) {
+                        imageAddress = "img/daymarks_"
+                                + buoyage.getMarsys() + "/"
+                                + acronym + "_"
+                                + buoyage.getShape() + "_"
+                                + buoyage.getCategoryOfMark() + "_"
+                                + buoyage.getColour() + "_"
+                                + buoyage.getColourPattern() + "_"
+                                + buoyage.getNatureOfConstruction() + "_"
+                                + buoyage.getMarsys()
+                                + ".png";
+                    } else {
+                        imageAddress = "img/buoyage_"
+                                + buoyage.getMarsys() + "/"
+                                + acronym + "_"
+                                + buoyage.getShape() + "_"
+                                + buoyage.getCategoryOfMark() + "_"
+                                + buoyage.getColour() + "_"
+                                + buoyage.getColourPattern() + "_"
+                                + topMark + "_"
+                                + buoyage.getMarsys() + ".png";
+                    }
+                }
+                buoyage.setImageAddress(imageAddress);
+                attrs = new PointPlacemarkAttributes();
+                attrs.setImageAddress(imageAddress);
+                attrs.setImageOffset(Offset.BOTTOM_CENTER);
+                attrs.setScale(0.65);//0.9
+                placemark.setAttributes(attrs);
+                if (dev) {
+                    placemark.setValue(AVKey.DISPLAY_NAME, imageAddress);
+                }
+                pointPlacemarks.add(placemark);
             }
-           /* 
-            label =  buoyage.getMarsys() + "/" 
-                    + acronym + "_"
-                    + buoyage.getShape() + "_"
-                    + buoyage.getCategoryOfMark() + "_"
-                    + buoyage.getColour() + "_"
-                    + buoyage.getColourPattern() + "_"
-                    + topMark + "_"
-                    + buoyage.getMarsys()
-                    + ".png";
-            placemark.setValue(AVKey.DISPLAY_NAME, label);
-            */
-            String imageAddress = "img/buoyage_" 
-                    + buoyage.getMarsys() + "/" 
-                    + acronym + "_"
-                    + buoyage.getShape() + "_"
-                    + buoyage.getCategoryOfMark() + "_"
-                    + buoyage.getColour() + "_"
-                    + buoyage.getColourPattern() + "_"
-                    + topMark + "_"
-                    + buoyage.getMarsys()
-                    + ".png";
-            buoyage.setImageAddress(imageAddress);
-            return imageAddress;
-        }).map((imageAddress) -> {
-            attrs = new PointPlacemarkAttributes();
-            return imageAddress;
-        }).map((imageAddress) -> {
-            attrs.setImageAddress(imageAddress);
-            return imageAddress;
-        }).map((imageAddress) -> {
-            attrs.setImageOffset(Offset.BOTTOM_CENTER);
-            return imageAddress;
-        }).map((imageAddress) -> {
-            attrs.setScale(0.65);//0.9
-            return imageAddress;
-        }).map((imageAddress) -> {
-            placemark.setAttributes(attrs);
-            return imageAddress;
-        }).forEachOrdered((_item) -> {
-            layer.addRenderable(placemark);
-        });
+            layer.addRenderables(pointPlacemarks);
+        }
     }
 }

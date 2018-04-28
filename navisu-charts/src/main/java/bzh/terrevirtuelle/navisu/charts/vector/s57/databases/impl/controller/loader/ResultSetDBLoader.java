@@ -67,7 +67,6 @@ public abstract class ResultSetDBLoader {
                     request += ", " + tmp;
                 }
                 request += " FROM " + acronym.toLowerCase() + " ;";
-
                 resultSet = connection
                         .createStatement()
                         .executeQuery(request);

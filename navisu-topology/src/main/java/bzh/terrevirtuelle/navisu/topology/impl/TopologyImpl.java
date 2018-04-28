@@ -246,7 +246,29 @@ public class TopologyImpl
         }
         return new Path(positions);
     }
-@Override
+
+    @Override
+    public LatLon wktMultiPointToWwjLatLon(String geometry) {
+        String tmp = geometry.replace("MULTIPOINT(", "");
+        tmp = tmp.replace(")", "");
+        LatLon latLon = null;
+        if (!tmp.contains("EMPTY")) {
+           // System.out.println("tmp : " + tmp);
+            String[] posTab0 = tmp.split("\\s+");
+            if (posTab0.length != 0) {
+                try {
+                    latLon = new LatLon(Angle.fromDegrees(Double.valueOf(posTab0[1].trim())),
+                            Angle.fromDegrees(Double.valueOf(posTab0[0].trim())));
+                } catch (NumberFormatException e) {
+                    System.out.println("posTab1 : " + posTab0[0] + " " + posTab0[1]);
+                }
+            }
+        }
+       // System.out.println("latLon : " + latLon);
+        return latLon;
+    }
+
+    @Override
     public Path wktLineToWwjPath(String geometry, double height) {
         String tmp = geometry.replace("LINESTRING(", "");
         tmp = tmp.replace("LINESTRING (", "");
@@ -272,6 +294,7 @@ public class TopologyImpl
         }
         return new Path(positions);
     }
+
     @Override
     public List<Polygon> wktMultiPolygonToWwjPolygons(String geometry) {
         List<Polygon> polygons = new ArrayList<>();

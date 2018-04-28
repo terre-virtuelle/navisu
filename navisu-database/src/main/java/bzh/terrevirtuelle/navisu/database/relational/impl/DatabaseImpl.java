@@ -85,7 +85,6 @@ public class DatabaseImpl
         try {
             Class.forName(driverName);
             String url = protocol + hostName + ":" + port + "/" + dbName;
-            System.out.println("url : " + url);
             connection = DriverManager.getConnection(url, userName, passwd);
             statement = connection.createStatement();
         } catch (ClassNotFoundException | SQLException ex) {
