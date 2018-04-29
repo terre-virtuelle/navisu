@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,7 +19,7 @@
     <children>
         <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="570.0" styleClass="background-pane">
             <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="514.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="570.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="514.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="570.0" />
                 <GridPane prefHeight="506.0" prefWidth="560.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="22.0" />
@@ -34,76 +33,75 @@
                         <RowConstraints />
                     </rowConstraints>
                     <children>
-                            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                <children>
-                                    <GridPane alignment="CENTER" layoutY="-82.0" prefHeight="330.0" prefWidth="531.0" styleClass="grid-pane-contour">
-                                        <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="120.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="1.0" prefWidth="258.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="120.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                                        </columnConstraints>
-                                        <rowConstraints>
-                                            <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                                        </rowConstraints>
-                                        <opaqueInsets>
-                                            <Insets />
-                                        </opaqueInsets>
-                                        <children>
-                                            <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Database" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                                            <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Selected objects" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                                            <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="SELECTION MODE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
-                                            <TextField fx:id="databaseTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                            <TextField fx:id="objectsTF" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                              <ChoiceBox fx:id="databasesCB" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="15.0" prefWidth="120.0" text="Hostname" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="13" />
-                              <TextField fx:id="hostnameTF" editable="false" text="localhost" GridPane.columnIndex="3" GridPane.rowIndex="13" />
-                              <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" styleClass="text-field" text="Port" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="14" />
-                              <TextField fx:id="encPortBDTF" editable="false" text="5432" GridPane.columnIndex="3" GridPane.rowIndex="14" />
-                              <Button fx:id="latLonButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="223.0" text="Enter coordinates" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
-                              <Button fx:id="interactiveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="176.0" text="Marquee tool" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
-                              <GridPane GridPane.columnIndex="4" GridPane.rowIndex="9">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                              </GridPane>
-                              <Button fx:id="selectedButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="valid" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
-                              <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="DATA BASE / OBJECTS CHOICE" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                              <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="SERVER" GridPane.columnIndex="3" GridPane.rowIndex="12" />
-                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="15.0" prefWidth="120.0" text="keyboard" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
-                              <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Graphic selection" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
-                              <Label text="Distance tolerance" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                              <TextField fx:id="simplifyTF" alignment="CENTER_RIGHT" promptText="0.00001" text="0.0001" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                              <Label text="Depth magnification" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-                              <TextField fx:id="depthMagnificationTF" alignment="CENTER_RIGHT" text="10.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                              <CheckBox fx:id="createElevationCB" mnemonicParsing="false" selected="true" text="Create elevation" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-                              <CheckBox mnemonicParsing="false" selected="true" text="Simplify Deph Area" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                              <ComboBox fx:id="objectsCB" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                                        </children>
-                                    </GridPane>
-                                </children>
-                            </AnchorPane>
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <children>
+                                <GridPane fx:id="paneGB" alignment="CENTER" layoutY="-82.0" prefHeight="330.0" prefWidth="531.0" styleClass="grid-pane-contour">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="120.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="1.0" prefWidth="258.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="120.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                    <children>
+                                        <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Database" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                        <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Selected objects" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                                        <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="SELECTION MODE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                                        <TextField fx:id="databaseTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                        <TextField fx:id="objectsTF" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                        <ChoiceBox fx:id="databasesCB" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="15.0" prefWidth="120.0" text="Hostname" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="13" />
+                                        <TextField fx:id="hostnameTF" editable="false" text="localhost" GridPane.columnIndex="3" GridPane.rowIndex="13" />
+                                        <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" styleClass="text-field" text="Port" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="14" />
+                                        <TextField fx:id="encPortBDTF" editable="false" text="5432" GridPane.columnIndex="3" GridPane.rowIndex="14" />
+                                        <Button fx:id="latLonButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="223.0" text="Enter coordinates" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
+                                        <Button fx:id="interactiveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="176.0" text="Marquee tool" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
+                                        <GridPane GridPane.columnIndex="4" GridPane.rowIndex="9">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                        </GridPane>
+                                        <Button fx:id="selectedButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="valid" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
+                                        <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="DATA BASE / OBJECTS CHOICE" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                        <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="SERVER" GridPane.columnIndex="3" GridPane.rowIndex="12" />
+                                        <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="15.0" prefWidth="120.0" text="keyboard" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
+                                        <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Graphic selection" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
+                                        <Label text="Distance tolerance" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                                        <TextField fx:id="simplifyTF" alignment="CENTER_RIGHT" promptText="0.00001" text="0.0001" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                        <Label text="Depth magnification" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                                        <TextField fx:id="depthMagnificationTF" alignment="CENTER_RIGHT" text="10.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                        <CheckBox fx:id="createElevationCB" mnemonicParsing="false" selected="true" text="Create elevation" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                                        <CheckBox mnemonicParsing="false" selected="true" text="Simplify Deph Area" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                    </children>
+                                </GridPane>
+                            </children>
+                        </AnchorPane>
                         <GridPane maxHeight="79.0" maxWidth="-Infinity" prefHeight="79.0" prefWidth="412.0" styleClass="grid-pane-contour" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="328.0" minWidth="10.0" prefWidth="100.0" />
@@ -111,65 +109,69 @@
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                             </columnConstraints>
                             <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                 <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="3.0" minHeight="3.0" prefHeight="3.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="3.0" minHeight="3.0" prefHeight="3.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
                                 <Button fx:id="requestButton" maxWidth="122.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Request DB" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                        <GridPane prefHeight="25.0" styleClass="tab-container" GridPane.rowIndex="2">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Label fx:id="latMinLabel" alignment="CENTER" prefHeight="25.0" prefWidth="50.0" styleClass="infoslabel" GridPane.halignment="LEFT" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets left="20.0" />
-                                 </GridPane.margin></Label>
-                              <Label fx:id="lonMinLabel" alignment="CENTER" prefHeight="25.0" prefWidth="50.0" styleClass="infoslabel" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets right="20.0" />
-                                 </GridPane.margin></Label>
-                              <Label fx:id="latMaxLabel" alignment="CENTER" prefHeight="25.0" prefWidth="50.0" styleClass="infoslabel" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets left="20.0" />
-                                 </GridPane.margin></Label>
-                              <Label fx:id="lonMaxLabel" alignment="CENTER" prefHeight="25.0" prefWidth="50.0" styleClass="infoslabel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets right="20.0" />
-                                 </GridPane.margin></Label>
-                           </children>
-                        </GridPane>
-                        <Label text="Selected corners coordinates" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="100.0" text="min coord." GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="21.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="40.0" prefHeight="20.0" prefWidth="100.0" text="max coord." GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets right="22.0" />
-                           </GridPane.margin>
-                        </Label>
+                                <GridPane prefHeight="25.0" styleClass="tab-container" GridPane.rowIndex="2">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label fx:id="latMinLabel" alignment="CENTER" prefHeight="25.0" prefWidth="50.0" styleClass="infoslabel" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets left="20.0" />
+                                            </GridPane.margin>
+                                        </Label>
+                                        <Label fx:id="lonMinLabel" alignment="CENTER" prefHeight="25.0" prefWidth="50.0" styleClass="infoslabel" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets right="20.0" />
+                                            </GridPane.margin>
+                                        </Label>
+                                        <Label fx:id="latMaxLabel" alignment="CENTER" prefHeight="25.0" prefWidth="50.0" styleClass="infoslabel" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets left="20.0" />
+                                            </GridPane.margin>
+                                        </Label>
+                                        <Label fx:id="lonMaxLabel" alignment="CENTER" prefHeight="25.0" prefWidth="50.0" styleClass="infoslabel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets right="20.0" />
+                                            </GridPane.margin>
+                                        </Label>
+                                    </children>
+                                </GridPane>
+                                <Label text="Selected corners coordinates" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="100.0" text="min coord." GridPane.rowIndex="1">
+                                    <GridPane.margin>
+                                        <Insets left="21.0" />
+                                    </GridPane.margin>
+                                </Label>
+                                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="40.0" prefHeight="20.0" prefWidth="100.0" text="max coord." GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                    <GridPane.margin>
+                                        <Insets right="22.0" />
+                                    </GridPane.margin>
+                                </Label>
                             </children>
                         </GridPane>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="Select S57 objects from databases" wrappingWidth="350.50146484375" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                          <Button fx:id="helpButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Help" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
-                     <GridPane.margin>
-                        <Insets right="70.0" />
-                     </GridPane.margin>
-                  </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="Select S57 objects from databases" wrappingWidth="350.50146484375" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Button fx:id="helpButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Help" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+                            <GridPane.margin>
+                                <Insets right="70.0" />
+                            </GridPane.margin>
+                        </Button>
                     </children>
                 </GridPane>
             </children>
         </Pane>
-      <Button fx:id="quit" layoutX="520.0" layoutY="13.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" styleClass="quitbutton" />
-      <Pane layoutX="8.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="logo" />
+        <Button fx:id="quit" layoutX="520.0" layoutY="13.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" styleClass="quitbutton" />
+        <Pane layoutX="8.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="logo" />
     </children>
 </fx:root>
