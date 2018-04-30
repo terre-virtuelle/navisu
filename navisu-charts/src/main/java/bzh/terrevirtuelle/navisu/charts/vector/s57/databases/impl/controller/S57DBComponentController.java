@@ -289,6 +289,7 @@ public class S57DBComponentController
             put("PONTON", "rcid");
             put("RESARE", "rcid, catrea, objnam, restrn, inform, ninfom");
             put("SLCONS", "rcid");
+            put("WRECKS", "rcid, objnam, catwrk");
         }
     ;
 
@@ -607,7 +608,6 @@ public class S57DBComponentController
                 MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(connection);
                 marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
-                
                 new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BCNCAR", marsysMap)
                         .display(new BuoyageDBLoader(connection, "BCNCAR")
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
@@ -644,7 +644,7 @@ public class S57DBComponentController
                 new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BOYSPP", marsysMap)
                         .display(new BuoyageDBLoader(connection, "BOYSPP")
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                 
+
                 new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "DAYMAR", marsysMap)
                         .display(new BuoyageDBLoader(connection, "DAYMAR")
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));

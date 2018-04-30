@@ -126,16 +126,14 @@ public class DepareView
                 + "--inputFile=/home/serge/Data/navisu/arnaud/testBathy_RADE_100_xyz.csv "
                 + "--compilationScale=1000 --fileType=0 --isoValues='0;2;4;6;8;10;12;14;16;18;20' "
                 + "--codeAgency=4G --baseName=0001";
-
         try {
             Proc.BUILDER.create()
                     .setCmd(command)
-                    .execSh();
-            
+                    .execSh();    
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-         */
+        } 
+*/
     }
 
     protected void createSurfacePolygons(ShapefileRecord record, RenderableLayer layer,
