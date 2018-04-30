@@ -36,12 +36,12 @@ public class ServerOptionsComponentImpl
 
     @Override
     public void componentInitiated() {
-        LOGGER.info("Options Component Initiated");
+       // LOGGER.info("Options Component Initiated");
     }
 
     @Override
     public void componentStarted() {
-        LOGGER.info("Options Component Started");
+       // LOGGER.info("Options Component Started");
     }
 
     @Override

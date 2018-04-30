@@ -41,7 +41,7 @@ public class LineView
     public void display(String geometry,
             ShapeAttributes attrs, ShapeAttributes hattrs,
             Map<String, String> labels) {
-        System.out.println("geometry : " + geometry);
+       // System.out.println("geometry : " + geometry);
         path = topologyServices.wktLineToWwjPath(geometry, 1.0);
         path.setAttributes(attrs);
         path.setHighlightAttributes(hattrs);

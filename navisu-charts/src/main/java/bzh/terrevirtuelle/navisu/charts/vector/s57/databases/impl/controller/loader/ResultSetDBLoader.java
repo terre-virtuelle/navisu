@@ -49,6 +49,7 @@ public abstract class ResultSetDBLoader {
         } catch (SQLException ex) {
             Logger.getLogger(ResultSetDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+        
         return geometry;
     }
 
@@ -79,6 +80,7 @@ public abstract class ResultSetDBLoader {
             alert.setHeaderText("Database connection fail");
             alert.show();
         }
+        //System.out.println(request);
         return resultSet;
     }
 }

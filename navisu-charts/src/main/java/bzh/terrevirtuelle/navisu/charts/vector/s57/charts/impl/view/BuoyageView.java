@@ -42,13 +42,16 @@ public class BuoyageView {
     protected String topMark;
     protected String label;
     protected boolean dev = false;
+    protected Map<Pair<Double, Double>, String> marsysMap;
 
     public BuoyageView(TopologyServices topologyServices,
             Map<Pair<Double, Double>, String> topMarkMap,
             RenderableLayer layer,
-            String acronym) {
+            String acronym,
+            Map<Pair<Double, Double>, String> marsysMap) {
         this.topologyServices = topologyServices;
         this.topMarkMap = topMarkMap;
+        this.marsysMap = marsysMap;
         this.acronym = acronym;
         this.layer = layer;
     }
@@ -60,12 +63,17 @@ public class BuoyageView {
         for (Buoyage buoyage : buoyages) {
             String geom = buoyage.getGeom();
             LatLon latLon;
-            if (geom.contains("MULTIPOINT") && !geom.contains("EMPTY")) {
+            if ((geom.contains("MULTIPOINT") || geom.contains("POINT")) && !geom.contains("EMPTY")) {
                 latLon = topologyServices.wktMultiPointToWwjLatLon(geom);
                 buoyage.setLatitude(latLon.getLatitude().getDegrees());
                 buoyage.setLongitude(latLon.getLongitude().getDegrees());
                 lat = buoyage.getLatitude();
                 lon = buoyage.getLongitude();
+                String ma = marsysMap.get(new Pair(lat, lon));
+                if (ma == null) {
+                    ma = "1";
+                }
+                buoyage.setMarsys(ma);
                 placemark = new PointPlacemark(Position.fromDegrees(lat, lon, 0));
                 placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
                 label = buoyage.getClass().getSimpleName() + "\n"
@@ -80,7 +88,7 @@ public class BuoyageView {
                 }
                 String imageAddress = "";
                 if (acronym.equals("LNDMRK")) {
-                    imageAddress = "img/landmarks_" + buoyage.getMarsys() + "/" 
+                    imageAddress = "img/landmarks_" + buoyage.getMarsys() + "/"
                             + acronym + "_"
                             + buoyage.getCategoryOfMark() + "_"
                             + buoyage.getConspicuousVisually() + "_"
@@ -91,6 +99,7 @@ public class BuoyageView {
                             + ".png";
                 } else {
                     if (acronym.equals("DAYMAR")) {
+                       // System.out.println("buoyage");
                         imageAddress = "img/daymarks_"
                                 + buoyage.getMarsys() + "/"
                                 + acronym + "_"

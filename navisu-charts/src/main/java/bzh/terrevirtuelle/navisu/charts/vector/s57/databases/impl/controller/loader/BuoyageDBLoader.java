@@ -29,16 +29,15 @@ public class BuoyageDBLoader
     protected final String BUOYAGE_PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
     protected Buoyage buoyage;
     protected Class claz;
-    protected Map<Pair<Double, Double>, String> marsysMap;
+    
 
     ;
 
-    public BuoyageDBLoader(Connection connection, String acronym, Map<Pair<Double, Double>, String> marsysMap) {
+    public BuoyageDBLoader(Connection connection, String acronym) {
         super(connection, acronym);
         this.connection = connection;
         this.acronym = acronym;
-        this.marsysMap = marsysMap;
-
+       
         String className = BUOYAGE.ATT.get(acronym);
         try {
             claz = Class.forName(BUOYAGE_PATH + "." + className);
@@ -50,7 +49,7 @@ public class BuoyageDBLoader
     @SuppressWarnings("unchecked")
     @Override
     public List<Buoyage> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
-        List<Buoyage> objects = new ArrayList<>();
+        List<Buoyage> buoyages = new ArrayList<>();
         String geom;
         resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
         try {
@@ -60,7 +59,6 @@ public class BuoyageDBLoader
                 } catch (InstantiationException | IllegalAccessException ex) {
                     Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                 }
-
                 buoyage.setId(Long.parseLong(resultSet.getString("rcid")));
 
                 String tmp = resultSet.getString("objnam");
@@ -72,6 +70,7 @@ public class BuoyageDBLoader
 
                 geom = resultSet.getString("geom");
                 buoyage.setGeom(geom);
+
                 tmp = resultSet.getString(4);
                 String shp = "0";
                 if (tmp != null) {
@@ -96,7 +95,7 @@ public class BuoyageDBLoader
                 }
                 buoyage.setColourPattern(colPat);
 
-                String cat = resultSet.getString(7);//7
+                String cat = resultSet.getString(7);
                 if (cat == null) {
                     cat = "0";
                 }
@@ -119,19 +118,15 @@ public class BuoyageDBLoader
                     }
                     buoyage.setNatureOfConstruction(natcon);
                 }
-                String ma = marsysMap.get(new Pair(lat, lon));
-                if (ma == null) {
-                    ma = "1";
-                }
-                buoyage.setMarsys(ma);
-                //  System.out.println(buoyage);
-                objects.add(buoyage);
+                
+              //  System.out.println(buoyage+" "+buoyage.getGeom());
+                buoyages.add(buoyage);
             }
 
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-       // System.out.println("objects : " + objects);
-        return objects;
+        // System.out.println("objects : " + objects);
+        return buoyages;
     }
 }

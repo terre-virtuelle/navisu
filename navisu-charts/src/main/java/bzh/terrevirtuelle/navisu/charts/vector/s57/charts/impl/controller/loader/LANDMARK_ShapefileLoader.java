@@ -75,6 +75,7 @@ public class LANDMARK_ShapefileLoader
             PointPlacemarkAttributes attrs) {
         object = new Landmark();
         objects.add(object);
+
         entries = record.getAttributes().getEntries();
         object.setLatitude(latDegrees);
         object.setLongitude(lonDegrees);
@@ -178,7 +179,7 @@ public class LANDMARK_ShapefileLoader
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.6);//0.8
         placemark.setAttributes(attrs);
-
+       // System.out.println("object : " + object);
         return placemark;
     }
 

@@ -165,7 +165,7 @@ public class S57GlobalCatalogImpl
 
     @SuppressWarnings("unchecked")
     public void handleOpenFile(ProgressHandle pHandle, String fileName) {
-        LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
+      //  LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
         s57GlobalCatalogController = S57GlobalCatalogController.getInstance(guiAgentServices, layersManagerServices);
         s57GlobalCatalogController.setS57GlobalCatalogImpl(this);
         layers = s57GlobalCatalogController.init(fileName);

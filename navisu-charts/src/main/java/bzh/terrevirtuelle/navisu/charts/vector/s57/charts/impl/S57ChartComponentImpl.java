@@ -342,7 +342,7 @@ public class S57ChartComponentImpl
 
             });
         } catch (IOException ex) {
-            Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.INFO, "Clean tmp directories", ex);
+           // Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.INFO, "Clean tmp directories", ex);
         }
 
     }
