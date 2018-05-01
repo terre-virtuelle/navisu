@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -36,7 +35,7 @@
                     <children>
                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <children>
-                                <GridPane fx:id="paneGB" alignment="CENTER" layoutY="-82.0" prefHeight="330.0" prefWidth="531.0" styleClass="grid-pane-contour">
+                                <GridPane fx:id="paneGP" alignment="CENTER" layoutY="-82.0" prefHeight="330.0" prefWidth="531.0" styleClass="grid-pane-contour">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="120.0" />
@@ -99,7 +98,6 @@
                                         <TextField fx:id="depthMagnificationTF" alignment="CENTER_RIGHT" text="10.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                                         <CheckBox fx:id="createElevationCB" mnemonicParsing="false" selected="true" text="Create elevation" GridPane.columnIndex="4" GridPane.rowIndex="6" />
                                         <CheckBox mnemonicParsing="false" selected="true" text="Simplify Deph Area" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                              <ComboBox fx:id="objectsCB" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                                     </children>
                                 </GridPane>
                             </children>

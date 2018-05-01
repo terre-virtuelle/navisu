@@ -250,10 +250,10 @@ public class TopologyImpl
     @Override
     public LatLon wktMultiPointToWwjLatLon(String geometry) {
         String tmp = geometry.replace("MULTIPOINT(", "");
+        tmp = tmp.replace("POINT(", "");
         tmp = tmp.replace(")", "");
         LatLon latLon = null;
         if (!tmp.contains("EMPTY")) {
-           // System.out.println("tmp : " + tmp);
             String[] posTab0 = tmp.split("\\s+");
             if (posTab0.length != 0) {
                 try {
@@ -264,7 +264,6 @@ public class TopologyImpl
                 }
             }
         }
-       // System.out.println("latLon : " + latLon);
         return latLon;
     }
 
