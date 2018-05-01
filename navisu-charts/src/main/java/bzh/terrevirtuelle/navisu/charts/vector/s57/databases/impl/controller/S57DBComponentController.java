@@ -66,6 +66,7 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -175,6 +176,8 @@ public class S57DBComponentController
     public CheckBox simplifyCB;
     @FXML
     public GridPane paneGP;
+    private final Label checkedItemsLabel = new Label();
+    protected CheckComboBox<String> checkComboBox;
 
     protected Map<String, String> acronyms;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
@@ -224,7 +227,7 @@ public class S57DBComponentController
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
     protected Map<Pair<Double, Double>, String> marsysMap = new HashMap<>();
     protected ObservableList<String> dbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
-
+    protected List<String> selectedObjects = new ArrayList<>();
     /*
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
 
@@ -242,19 +245,19 @@ public class S57DBComponentController
             "WRECKS : Wreck");
      */
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
-            "ALL : All S57 objects",
-            "ACHARE : Anchorage Area",
-            "BUOYAGE : All buoyage",
-            "COALNE : Coastaline",
-            "DEPARE : Depth Area",
-            "DEPCNT : Depth Contour",
-            "DOCARE : Dock Area",
-            "DRGARE : Dredged Area",
-            "NAVLNE : Navigation Line",
-            "LNDMRK : Landmark",
-            "PONTON : Pontoon",
-            "RESARE : Restricted Area",
-            "SLCONS : Shoreline Construction"
+            "ALL",
+            "ACHARE",
+            "BUOYAGE",
+            "COALNE",
+            "DEPARE",
+            "DEPCNT",
+            "DOCARE",
+            "DRGARE",
+            "NAVLNE",
+            "LNDMRK",
+            "PONTON",
+            "RESARE",
+            "SLCONS"
     );
     public static final Map<String, String> S57_REQUEST_MAP = Collections.unmodifiableMap(new HashMap<String, String>() {
         {
@@ -363,18 +366,20 @@ public class S57DBComponentController
                         (ObservableValue<? extends String> observable, String oldValue, String newValue)
                         -> databaseTF.setText(databasesCB.getValue())
                 );
-        objectsTF.setText("ALL");
-        objectsCB.getSelectionModel().select("ALL : All S57 objects");
-        objectsCB.setItems(objectsCbData);
-        objectsCB.getSelectionModel()
-                .selectedItemProperty()
-                .addListener(
-                        (ObservableValue<? extends String> observable, String oldValue, String newValue)
-                        -> {
-                    String[] v = newValue.split(":");
-                    objectsTF.setText(v[0]);
-                }
-                );
+
+        // objectsTF.setText("ALL");
+        checkComboBox = new CheckComboBox<>(objectsCbData);
+        paneGP.add(checkComboBox, 4, 3);
+        checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener.Change<? extends String> change) -> {
+            selectedObjects.clear();
+            selectedObjects.addAll(change.getList());
+            objectsTF.clear();
+            for (int i = 0; i < selectedObjects.size() - 1; i++) {
+                objectsTF.appendText(selectedObjects.get(i));
+                objectsTF.appendText("; ");
+            }
+            objectsTF.appendText(selectedObjects.get(selectedObjects.size() - 1));
+        });
 
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
@@ -596,9 +601,9 @@ public class S57DBComponentController
         pgon.setAttributes(normalAttributes);
         depareLayer.addRenderable(pgon);
         wwd.redrawNow();
-
+        System.out.println("selectedObjects : " + selectedObjects);
         guiAgentServices.getJobsManager().newJob("Load S57 objects", (progressHandle) -> {
-            if (object.trim().equals("ALL") || object.trim().equals("BUOYAGE")) {
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
 
                 //Define TopMak for all buoyages, default is 0 : no topmark
                 TopmarDBLoader topmarDbLoader = new TopmarDBLoader(connection);
@@ -652,12 +657,12 @@ public class S57DBComponentController
                         .display(new BuoyageDBLoader(connection, "MORFAC")
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
             }
-            if (object.trim().equals("ALL") || object.trim().equals("LNDMRK")) {
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("LNDMRK")) {
                 new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "LNDMRK", marsysMap)
                         .display(new BuoyageDBLoader(connection, "LNDMRK")
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
             }
-            if (object.trim().equals("ALL") || object.trim().equals("ACHARE")) {
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("ACHARE")) {
                 objects = new AnchorageAreaDBLoader(topologyServices, connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("ACHARE", topologyServices, navigationLayer);
@@ -665,7 +670,7 @@ public class S57DBComponentController
                     s57Viewer.display(g);
                 });
             }
-            if (object.trim().equals("ALL") || object.trim().equals("DEPARE")) {
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("DEPARE")) {
                 new DepareView(latMin, lonMin, latMax, lonMax,
                         depareLayer, simpleDepareLayer, depare3DLayer,
                         Double.valueOf(simplifyTF.getText()),
@@ -676,7 +681,7 @@ public class S57DBComponentController
                                 USER,
                                 PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
             }
-            if (object.trim().equals("ALL") || object.trim().equals("DEPCNT")) {
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("DEPCNT")) {
                 objects = new DepthContourDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("DEPCNT", topologyServices, bathymetryLayer);
@@ -684,7 +689,7 @@ public class S57DBComponentController
                     s57Viewer.display(g);
                 });
             }
-            if (object.trim().equals("ALL") || object.trim().equals("DOCARE")) {
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("DOCARE")) {
                 objects = new DockAreaDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("DOCARE", topologyServices, bathymetryLayer);
@@ -692,7 +697,7 @@ public class S57DBComponentController
                     s57Viewer.display(g);
                 });
             }
-            if (object.trim().equals("ALL") || object.trim().equals("DRGARE")) {
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("DRGARE")) {
                 objects = new DredgedAreaDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("DRGARE", topologyServices, bathymetryLayer);
@@ -700,7 +705,7 @@ public class S57DBComponentController
                     s57Viewer.display(g);
                 });
             }
-            if (object.trim().equals("ALL") || object.trim().equals("COALNE")) {
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("COALNE")) {
                 objects = new CoastlineDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("COALNE", topologyServices, depareLayer);
@@ -708,7 +713,7 @@ public class S57DBComponentController
                     s57Viewer.display(g);
                 });
             }
-            if (object.trim().equals("ALL") || object.trim().equals("PONTON")) {
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("PONTON")) {
                 objects = new PontoonDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("PONTON", topologyServices, buildingLayer);
@@ -716,7 +721,7 @@ public class S57DBComponentController
                     s57Viewer.display(g);
                 });
             }
-            if (object.trim().equals("ALL") || object.trim().equals("SLCONS")) {
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("SLCONS")) {
                 objects = new ShorelineConstructionDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("SLCONS", topologyServices, buildingLayer);
@@ -724,7 +729,7 @@ public class S57DBComponentController
                     s57Viewer.display(g);
                 });
             }
-            if (object.trim().equals("ALL") || object.trim().equals("NAVLNE")) {
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("NAVLNE")) {
                 objects = new NavigationLineDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("NAVLNE", topologyServices, navigationLayer);
@@ -732,7 +737,7 @@ public class S57DBComponentController
                     s57Viewer.display(g);
                 });
             }
-            if (object.trim().equals("ALL") || object.trim().equals("RESARE")) {
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("RESARE")) {
                 objects = new RestrictedAreaDBLoader(connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("RESARE", topologyServices, navigationLayer);
