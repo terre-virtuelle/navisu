@@ -13,9 +13,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="570.0" styleClass="background-pane">
             <children>
@@ -38,7 +39,7 @@
                                     <content>
                                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
                                             <children>
-                                                <GridPane layoutX="1.0" prefHeight="386.0" prefWidth="531.0" styleClass="tab-conteneur">
+                                                <GridPane layoutX="1.0" prefHeight="448.0" prefWidth="531.0" styleClass="tab-conteneur">
                                                     <columnConstraints>
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="150.0" />
@@ -66,7 +67,7 @@
                                                     <children>
                                                         <Label prefHeight="15.0" prefWidth="153.0" text="S57ChartsDir" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                         <Label text="Catalog" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                        <Label text="Database created" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                        <Label text="Database name" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                         <TextField fx:id="s57TF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                         <TextField fx:id="catalogTF" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                                         <TextField fx:id="s57DatabaseTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
@@ -75,21 +76,23 @@
                                                         <Label prefHeight="15.0" prefWidth="59.0" text="gdal Path" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                                         <TextField fx:id="psqlTF" prefWidth="80.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                                         <TextField fx:id="gdalTF" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                                                        <Button fx:id="psqlButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                                                        <Button fx:id="gdalButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                                                        <Button fx:id="psqlButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Modify" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                                        <Button fx:id="gdalButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Modify" GridPane.columnIndex="3" GridPane.rowIndex="7" />
                                                         <Label prefHeight="15.0" prefWidth="120.0" text="ulhysses Path" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                                                         <TextField fx:id="ulhyssesTF" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                                                        <Button fx:id="ulhyssesButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                                                        <Button fx:id="ulhyssesButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Modify" GridPane.columnIndex="3" GridPane.rowIndex="8" />
                                           <ChoiceBox fx:id="catalogCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                           <Label prefHeight="15.0" prefWidth="156.0" text="Country" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <TextField fx:id="countryTF" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                           <ChoiceBox fx:id="countryCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                          <Label prefHeight="15.0" prefWidth="148.0" text="Configuration" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <Label prefHeight="19.0" prefWidth="199.0" text="Actual configuration" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                   <Button fx:id="createButton" maxWidth="109.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Create" GridPane.columnIndex="3" GridPane.rowIndex="11" />
                                           <Label prefHeight="15.0" prefWidth="155.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                                           <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="9" />
                                           <TextField text="admin" GridPane.columnIndex="2" GridPane.rowIndex="10" />
                                           <Label prefHeight="15.0" prefWidth="150.0" text="Password" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                          <Line endX="400.0" startX="-100.0" styleClass="viewcadres" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+                                          <Line endX="400.0" layoutX="122.0" layoutY="192.0" startX="-100.0" styleClass="viewcadres" GridPane.columnIndex="1" GridPane.rowIndex="11" GridPane.valignment="TOP" />
                                                     </children>
                                                 </GridPane>
                                             </children>

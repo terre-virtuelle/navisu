@@ -369,6 +369,7 @@ public class ToolsComponentController
                     properties.setProperty("psqlPath", psqlPath);
                 }
             }
+/*
             if (gdalPath != null) {
                 if (gdalPath.charAt(gdalPath.length() - 1) == '\\'
                         || gdalPath.charAt(gdalPath.length() - 1) == '/') {
@@ -384,6 +385,7 @@ public class ToolsComponentController
                 }
 
             }
+*/
             properties.store(output, null);
             output.close();
 
