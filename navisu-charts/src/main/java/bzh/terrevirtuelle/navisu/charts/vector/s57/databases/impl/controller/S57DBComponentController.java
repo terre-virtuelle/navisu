@@ -367,7 +367,6 @@ public class S57DBComponentController
                         -> databaseTF.setText(databasesCB.getValue())
                 );
 
-        // objectsTF.setText("ALL");
         checkComboBox = new CheckComboBox<>(objectsCbData);
         paneGP.add(checkComboBox, 4, 3);
         checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener.Change<? extends String> change) -> {
@@ -384,6 +383,7 @@ public class S57DBComponentController
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
         });
+        
         helpButton.setOnMouseClicked((MouseEvent event) -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Options");
@@ -401,11 +401,13 @@ public class S57DBComponentController
             alert.getDialogPane().setContent(s);
             alert.show();
         });
+        
         latLonButton.setOnMouseClicked((MouseEvent event) -> {
             Platform.runLater(() -> {
                 initSelectedZone();
             });
         });
+        
         interactiveButton.setOnMouseClicked((MouseEvent event) -> {
             measureTool = new MeasureTool(wwd);
             MeasureToolController measureToolController = new MeasureToolController();
@@ -413,6 +415,7 @@ public class S57DBComponentController
             measureTool.setMeasureShapeType(MeasureTool.SHAPE_SQUARE);
             measureTool.setArmed(true);
         });
+        
         selectedButton.setOnMouseClicked((MouseEvent event) -> {
             if (measureTool != null) {
                 List<? extends Position> positions = measureTool.getPositions();
@@ -495,7 +498,6 @@ public class S57DBComponentController
                 alert.show();
             }
         });
-
     }
 
     private void initSelectedZone() {
@@ -601,7 +603,7 @@ public class S57DBComponentController
         pgon.setAttributes(normalAttributes);
         depareLayer.addRenderable(pgon);
         wwd.redrawNow();
-        System.out.println("selectedObjects : " + selectedObjects);
+        
         guiAgentServices.getJobsManager().newJob("Load S57 objects", (progressHandle) -> {
             if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
 
