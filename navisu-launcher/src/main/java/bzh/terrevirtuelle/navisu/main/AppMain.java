@@ -202,7 +202,7 @@ private final String USER_DIR = System.getProperty("user.dir");
         clearTmpDirs(USER_DIR, ".log", false);
         clearTmpDirs(USER_DIR + "/tmp", "*", false);
         clearTmpDirs(USER_DIR + "/cmd", "*", false);
-        
+        clearTmpDirs(USER_DIR + "/privateData/ulhysses", "*", false);
         
         wwd = GeoWorldWindViewImpl.getWW();
 

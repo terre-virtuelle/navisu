@@ -75,7 +75,14 @@ public class Configuration {
         }
         if (!Files.exists(Paths.get(navisuDir + "/cmd"), LinkOption.NOFOLLOW_LINKS)) {
             try {
-                Files.createDirectories(Paths.get(navisuDir + "/cmd/cmd"));
+                Files.createDirectory(Paths.get(navisuDir + "/cmd"));
+            } catch (IOException ex) {
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+        if (!Files.exists(Paths.get(navisuDir + "/privateData/ulhysses"), LinkOption.NOFOLLOW_LINKS)) {
+            try {
+                Files.createDirectory(Paths.get(navisuDir + "/privateData/ulhysses"));
             } catch (IOException ex) {
                 Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
