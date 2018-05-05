@@ -5,7 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
-import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
+
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.ResultSetDBLoader.S57_REQUEST_MAP;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -66,6 +67,7 @@ public class TopmarDBLoader {
                     geom = (PGgeometry) r.getObject(1);
                     topMarksMap.put(new Pair(geom.getGeometry().getFirstPoint().getY(),
                             geom.getGeometry().getFirstPoint().getX()), tm);
+                   // System.out.println("geom : " + geom+" ym : "+tm);
                 }
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);

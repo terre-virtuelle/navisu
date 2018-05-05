@@ -3,10 +3,10 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import gov.nasa.worldwind.render.SurfacePolylines;
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.List;
 import java.util.Set;
 import org.capcaval.c3.component.ComponentService;
@@ -55,6 +55,5 @@ public interface S57ChartComponentServices
 
     String s57FromCatalogToShapeFile(String rootFileNames, String kmlCatalog, String country, String epsg);
 
-    List<Buoyage> getBuoyage(String database, String user, String passwd,
-            Buoyage buoyage, double lat0, double lon0, double lat1, double lon1);
+    void s57BuoyageView();
 }

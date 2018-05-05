@@ -5,8 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
-import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.S57DBComponentController.S57_REQUEST_MAP;
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader.LOGGER;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.ResultSetDBLoader.S57_REQUEST_MAP;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.util.Logging;

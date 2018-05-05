@@ -59,7 +59,6 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -176,7 +175,7 @@ public class S57DBComponentController
     public CheckBox simplifyCB;
     @FXML
     public GridPane paneGP;
-    private final Label checkedItemsLabel = new Label();
+    //private final Label checkedItemsLabel = new Label();
     protected CheckComboBox<String> checkComboBox;
 
     protected Map<String, String> acronyms;
@@ -259,45 +258,7 @@ public class S57DBComponentController
             "RESARE",
             "SLCONS"
     );
-    public static final Map<String, String> S57_REQUEST_MAP = Collections.unmodifiableMap(new HashMap<String, String>() {
-        {
-            put("TOPMAR", "SELECT geom, topshp "
-                    + " FROM topmar "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("M_NSYS", "SELECT geom, marsys "
-                    + " FROM m_nsys "
-                    + " WHERE geom && ST_MakeEnvelope");
-            put("ACHARE", "rcid, objnam, catach, restrn");
-            put("BCNCAR", "rcid, objnam, bcnshp, colour, colpat, catcam");
-            put("BCNLAT", "rcid, objnam, bcnshp, colour, colpat, catlam");
-            put("BCNISD", "rcid, objnam, bcnshp, colour, colpat, status");
-            put("BCNSAW", "rcid, objnam, bcnshp, colour, colpat, status");
-            put("BCNSPP", "rcid, objnam, bcnshp, colour, colpat, catspm");
-            put("BCNISD", "rcid, objnam, bcnshp, colour, colpat, status");
-            put("BOYCAR", "rcid, objnam, boyshp, colour, colpat, catcam");
-            put("BOYINB", "rcid, objnam, boyshp, colour, colpat, status");
-            put("BOYISD", "rcid, objnam, boyshp, colour, colpat, status");
-            put("BOYLAT", "rcid, objnam, boyshp, colour, colpat, catlam");
-            put("BOYSAW", "rcid, objnam, boyshp, colour, colpat, status");
-            put("BOYSPP", "rcid, objnam, boyshp, colour, colpat, catspm");
-            put("DAYMAR", "rcid, objnam, topshp, colour, colpat, catspm, natcon");
-            put("COALNE", "rcid, elevat");
-            put("DEPARE", "rcid, drval1, drval2");
-            put("DEPCNT", "rcid, valdco");
-            put("DOCARE", "rcid, objnam, inform, ninfom");
-            put("DRGARE", "rcid, objnam, inform, ninfom, drval1, drval2");
-            put("LNDMRK", "rcid, objnam, functn, colour, colpat, catlmk, status, convis ");
-            put("MORFAC", "rcid, objnam, boyshp, colour, colpat, catmor");
-            put("NAVLNE", "rcid, orient");
-            put("PONTON", "rcid");
-            put("RESARE", "rcid, catrea, objnam, restrn, inform, ninfom");
-            put("SLCONS", "rcid");
-            put("WRECKS", "rcid, objnam, catwrk");
-        }
-    ;
 
-    });
-    
     public S57DBComponentController(S57DBComponentImpl component, String componentKeyName,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
@@ -383,7 +344,7 @@ public class S57DBComponentController
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
         });
-        
+
         helpButton.setOnMouseClicked((MouseEvent event) -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Options");
@@ -401,13 +362,13 @@ public class S57DBComponentController
             alert.getDialogPane().setContent(s);
             alert.show();
         });
-        
+
         latLonButton.setOnMouseClicked((MouseEvent event) -> {
             Platform.runLater(() -> {
                 initSelectedZone();
             });
         });
-        
+
         interactiveButton.setOnMouseClicked((MouseEvent event) -> {
             measureTool = new MeasureTool(wwd);
             MeasureToolController measureToolController = new MeasureToolController();
@@ -415,7 +376,7 @@ public class S57DBComponentController
             measureTool.setMeasureShapeType(MeasureTool.SHAPE_SQUARE);
             measureTool.setArmed(true);
         });
-        
+
         selectedButton.setOnMouseClicked((MouseEvent event) -> {
             if (measureTool != null) {
                 List<? extends Position> positions = measureTool.getPositions();
@@ -603,7 +564,7 @@ public class S57DBComponentController
         pgon.setAttributes(normalAttributes);
         depareLayer.addRenderable(pgon);
         wwd.redrawNow();
-        
+
         guiAgentServices.getJobsManager().newJob("Load S57 objects", (progressHandle) -> {
             if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
 
@@ -615,53 +576,52 @@ public class S57DBComponentController
                 MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(connection);
                 marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BCNCAR", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "BCNCAR")
+                new BuoyageView(buoyageLayer, "BCNCAR")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNCAR", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BCNLAT", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "BCNLAT")
+                new BuoyageView( buoyageLayer, "BCNLAT")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNLAT", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BCNISD", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "BCNISD")
+                new BuoyageView( buoyageLayer, "BCNISD")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNISD", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BCNSAW", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "BCNSAW")
+                new BuoyageView( buoyageLayer, "BCNSAW")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNSAW", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BCNSPP", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "BCNSPP")
+                new BuoyageView(buoyageLayer, "BCNSPP")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNSPP", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BCNISD", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "BCNISD")
+                new BuoyageView(buoyageLayer, "BCNISD")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNISD", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BOYCAR", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "BOYCAR")
+                new BuoyageView(buoyageLayer, "BOYCAR")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYCAR", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BOYLAT", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "BOYLAT")
+                new BuoyageView( buoyageLayer, "BOYLAT")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYLAT", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BOYINB", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "BOYINB")
+                new BuoyageView( buoyageLayer, "BOYINB")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYINB", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BOYISD", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "BOYISD")
+                new BuoyageView(buoyageLayer, "BOYISD")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYISD", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BOYSAW", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "BOYSAW")
+                new BuoyageView(buoyageLayer, "BOYSAW")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYSAW", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "BOYSPP", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "BOYSPP")
+                new BuoyageView( buoyageLayer, "BOYSPP")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYSPP", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "DAYMAR", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "DAYMAR")
+                new BuoyageView(buoyageLayer, "DAYMAR")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "DAYMAR", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "MORFAC", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "MORFAC")
+                new BuoyageView(buoyageLayer, "MORFAC")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "MORFAC", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("LNDMRK")) {
-                new BuoyageView(topologyServices, topMarkMap, buoyageLayer, "LNDMRK", marsysMap)
-                        .display(new BuoyageDBLoader(connection, "LNDMRK")
+                new BuoyageView(buoyageLayer, "LNDMRK")
+                        .display(new BuoyageDBLoader(topologyServices, connection, "LNDMRK", topMarkMap, marsysMap)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("ACHARE")) {
@@ -755,11 +715,5 @@ public class S57DBComponentController
 
     public Connection getConnection() {
         return connection;
-    }
-
-    public List<? extends Geo> getS57Objects(Geo t, double latMin, double lonMin, double latMax, double lonMax) {
-        //Faire une Map avec les classes et les loader
-
-        return null;
     }
 }

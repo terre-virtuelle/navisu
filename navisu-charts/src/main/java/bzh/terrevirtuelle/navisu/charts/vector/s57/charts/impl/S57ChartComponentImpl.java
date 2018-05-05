@@ -50,8 +50,6 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServi
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponent;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.database.relational.impl.DatabaseImpl;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
-import com.sun.jna.Library;
 import de.micromata.opengis.kml.v_2_2_0.Container;
 import de.micromata.opengis.kml.v_2_2_0.Document;
 import de.micromata.opengis.kml.v_2_2_0.Feature;
@@ -508,17 +506,6 @@ public class S57ChartComponentImpl
             } catch (IOException | InterruptedException ex) {
                 Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
-            /*
-                String command1 = createCmdSh(command);
-                Proc.BUILDER.create()
-                        .setCmd(command1)
-                        .setOut(System.out)
-                        .setErr(System.err)
-                        .exec();
-            } catch (IOException | InterruptedException e) {
-                LOGGER.log(Level.SEVERE, e.toString(), e);
-            }
-             */
             j++;
         }
         return dir;
@@ -545,42 +532,10 @@ public class S57ChartComponentImpl
     }
 
     @Override
-    public List<Buoyage> getBuoyage(String database, String user, String passwd,
-            Buoyage buoy, double lat0, double lon0, double lat1, double lon1) {
+    public void s57BuoyageView() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    /*
-    private String createCmdSh(String cmd) {
-        String cmdFile = "cmd/cmd.sh";
-        try {
-            Files.write(Paths.get(cmdFile), cmd.getBytes());
-        } catch (IOException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-        chmodCmd(cmdFile);
-        return cmdFile;
-    }
 
-    private String chmodCmd(String cmdFile) {
-        String cmd = null;
-        if (OS.isWindows()) {
-            LinkedOSLibrary linkedLibrary
-                    = (LinkedOSLibrary) Native.loadLibrary("c", LinkedOSLibrary.class);
-            linkedLibrary.chmod(cmdFile, 0777);
-        } else if (OS.isLinux()) {
-            File file = new File(cmdFile);
-            file.setReadable(true, false);
-            file.setWritable(true, false);
-            file.setExecutable(true, false);
-        } else {
-            System.out.println("OS not found");
-        }
-        return cmd;
-    }
-     */
-}
-
-interface LinkedOSLibrary extends Library {
-
-    public int chmod(String path, int mode);
+    
+    
 }

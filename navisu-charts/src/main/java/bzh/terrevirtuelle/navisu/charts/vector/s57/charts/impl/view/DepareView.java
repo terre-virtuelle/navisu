@@ -37,7 +37,7 @@ public class DepareView
     double maxHeight = 0.0;
     boolean createElevation;
 
-    public DepareView( double latMin, double lonMin, double latMax, double lonMax,
+    public DepareView(double latMin, double lonMin, double latMax, double lonMax,
             RenderableLayer layer, RenderableLayer simpleDeparelayer, RenderableLayer depare3DLayer,
             double simplify, double magnify, boolean showElevation) {
         this.latMin = latMin;
@@ -82,9 +82,9 @@ public class DepareView
         for (int i = 0; i < polygons.size(); i++) {
             array[i] = polygons.get(i);
         }
-        
+
         creatKML(array);
-        
+
         //Simplify data and create depare.shp
         String path = Proc.getProperty("gdalPath");
         String command = path + "/ogr2ogr -f 'ESRI Shapefile' cmd/output.shp cmd/output.kml \n"
@@ -113,26 +113,25 @@ public class DepareView
         }
 
         wwd.redrawNow();
-
-        /*
+/*
         //Test lancement Ulhysses
-        String ulhyssesPath = "/opt/ULHYSSES/app/";
+        String ulhyssesPath = "/opt/ULHYSSES/app";
         command
                 = "cd " + ulhyssesPath + " \n"
-                + "java "
-                + "-Dlog4j.configuration=file:" + ulhyssesPath + "conf-tools/toolsLog4j.properties "
-                + "-Xmx14g -Xms1024m -jar " + ulhyssesPath + "ULHYSSES.jar "
-                + "--outputDirectory=" + System.getProperty("user.dir")+"/cmd "
-                + "--inputFile=/home/serge/Data/navisu/arnaud/testBathy_RADE_100_xyz.csv "
+                + System.getProperty("java.home") + "/bin/java "
+                + "-Dlog4j.configuration=file:" + ulhyssesPath + "/conf-tools/toolsLog4j.properties "
+                + "-Xmx14g -Xms1024m -jar " + ulhyssesPath + "/" + "ULHYSSES.jar "
+                + "--outputDirectory=" + System.getProperty("user.dir") + "/privateData/ulhysses "
+                + "--inputFile=" + System.getProperty("user.dir") + "/data/ulhysses/testBathy_RADE_100_xyz.csv "
                 + "--compilationScale=1000 --fileType=0 --isoValues='0;2;4;6;8;10;12;14;16;18;20' "
                 + "--codeAgency=4G --baseName=0001";
         try {
             Proc.BUILDER.create()
                     .setCmd(command)
-                    .execSh();    
+                    .execSh();
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        } 
+        }
 */
     }
 
@@ -154,7 +153,7 @@ public class DepareView
                             maxHeight = val2;
                         }
                     }
-                     color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val1);
+                    color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val1);
                 });
             }
 
