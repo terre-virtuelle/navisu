@@ -58,7 +58,7 @@ public class BeaconSpecialPurpose
 
     @Override
     public String toString() {
-        return "BeaconSpecialPurpose{" + "beaconShape=" + beaconShape + ", categoryOfSpecialPurposeMark=" + categoryOfSpecialPurposeMark + ", marksNavigationalSystemof=" + marksNavigationalSystemof + '}';
+     return "BeaconSpecialPurpose{" + super.toString() + '}';
     }
 
     @Override

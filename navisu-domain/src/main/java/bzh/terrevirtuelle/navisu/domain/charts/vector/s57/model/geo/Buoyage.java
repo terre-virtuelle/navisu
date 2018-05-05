@@ -55,6 +55,7 @@ public abstract class Buoyage
     @XmlTransient
     protected String label;
     protected String imageAddress;
+    protected String topMark;
 
     public Buoyage() {
     }
@@ -69,6 +70,24 @@ public abstract class Buoyage
 
     public Buoyage(long id, String geometry) {
         super(id, geometry);
+    }
+
+    /**
+     * Get the value of topMark
+     *
+     * @return the value of topMark
+     */
+    public String getTopMark() {
+        return topMark;
+    }
+
+    /**
+     * Set the value of topMark
+     *
+     * @param topMark new value of topMark
+     */
+    public void setTopMark(String topMark) {
+        this.topMark = topMark;
     }
 
     /**
@@ -375,35 +394,46 @@ public abstract class Buoyage
 
     @Override
     public String toString() {
-        return "Buoyage{"
-                + "shape=" + shape
-                + ", categoryOfMark=" + categoryOfMark
-                + ", colour=" + colour
-                + ", colourPattern=" + colourPattern
-                + ", navigationalSystemOfMarks=" + navigationalSystemOfMarks
-                + ", condition=" + condition
-                + ", conspicuousRadar=" + conspicuousRadar
-                + ", conspicuousVisually=" + conspicuousVisually
-                + ", dateEnd=" + dateEnd
-                + ", dateStart=" + dateStart
-                + ", elevation=" + elevation
-                + ", height=" + height
-                + ", natureOfConstruction=" + natureOfConstruction
-                + ", objectName=" + objectName
-                + ", periodicDateStart=" + periodicDateStart
-                + ", periodicDateEnd=" + periodicDateEnd
-                + ", pictorialRepresentation=" + pictorialRepresentation
-                + ", recordIngdate=" + recordIngdate
-                + ", scaleMaximum=" + scaleMaximum
-                + ", verticalAccuracy=" + verticalAccuracy
-                + ", recordingIndication=" + recordingIndication
-                + ", verticaldatum=" + verticaldatum
-                + ", verticalLength=" + verticalLength
-                + ", objectNameInNationalLanguage=" + objectNameInNationalLanguage
-                + ", status=" + status
-                + ", marsys=" + marsys
-                //  + super.toString() 
-                + '}';
+        /*
+        String str = "{"
+              //  + objectName != "" || objectName != null ? "objectName=" + objectName : ""
+                + "Lat : " + Double.toString(getLatitude())
+                + ", Lon : " + Double.toString(longitude)
+                + " , shape=" + shape
+                        +  ", categoryOfMark=" + categoryOfMark : ""
+                                + colour != null ? ", colour=" + colour : ""
+                                        + colourPattern != null ? ", colourPattern=" + colourPattern : ""
+                                                + navigationalSystemOfMarks != null ? ", navigationalSystemOfMarks=" + navigationalSystemOfMarks : ""
+                                                        + condition != null ? ", condition=" + condition : ""
+                                                                + conspicuousRadar != null ? ", conspicuousRadar=" + conspicuousRadar : ""
+                                                                        + conspicuousVisually != null ? ", conspicuousVisually=" + conspicuousVisually : ""
+                                                                                + dateEnd != null ? ", dateEnd=" + dateEnd : ""
+                                                                                        + dateStart != null ? ", dateStart=" + dateStart : ""
+                                                                                                + elevation != null ? ", elevation=" + elevation : ""
+                                                                                                        + height != null ? ", height=" + height : ""
+                                                                                                                + natureOfConstruction != null ? ", natureOfConstruction=" + natureOfConstruction : ""
+                                                                                                                        + periodicDateStart != null ? ", periodicDateStart=" + periodicDateStart : ""
+                                                                                                                                + periodicDateEnd != null ? ", periodicDateEnd=" + periodicDateEnd : ""
+                                                                                                                                        + pictorialRepresentation != null ? ", pictorialRepresentation=" + pictorialRepresentation : ""
+                                                                                                                                                + recordIngdate != null ? ", recordIngdate=" + recordIngdate : ""
+                                                                                                                                                        + scaleMaximum != null ? ", scaleMaximum=" + scaleMaximum : ""
+                                                                                                                                                                + verticalAccuracy != null ? ", verticalAccuracy=" + verticalAccuracy : ""
+                                                                                                                                                                        + recordingIndication != null ? ", recordingIndication=" + recordingIndication : ""
+                                                                                                                                                                                + verticaldatum != null ? ", verticaldatum=" + verticaldatum : ""
+                                                                                                                                                                                        + verticalLength != null ? ", verticalLength=" + verticalLength : ""
+                                                                                                                                                                                                + objectNameInNationalLanguage != null ? ", objectNameInNationalLanguage=" + objectNameInNationalLanguage : ""
+                                                                                                                                                                                                        + status != null ? ", status=" + status : ""
+                                                                                                                                                                                                                + marsys != null ? ", marsys=" + marsys : ""
+                                                                                                                                                                                                                        //  + super.toString() 
+      
+      + '}';
+         */
+        String str = "";
+        if (objectName != null && !objectName.equals("")) {
+            str = "Name = " + objectName + ", ";
+        }
+        str += "Lat : " + Double.toString(getLatitude()) + ", Lon : " + Double.toString(longitude);
+        return str;
     }
 
     public String getLabel() {
@@ -424,7 +454,6 @@ public abstract class Buoyage
 
     public abstract String spatialRequest(double lat0, double lon0, double lat1, double lon1, String epsg);
 
-   
     public String spatialRequest(double lat0, double lon0, double lat1, double lon1) {
         return spatialRequest(lat0, lon0, lat1, lon1, "4326");
     }

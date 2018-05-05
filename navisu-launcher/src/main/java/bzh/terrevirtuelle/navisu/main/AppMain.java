@@ -133,6 +133,7 @@ import bzh.terrevirtuelle.navisu.bathymetry.view.impl.DisplayBathymetryImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.S57DBComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
@@ -159,7 +160,6 @@ import bzh.terrevirtuelle.navisu.tools.ToolsComponentServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.topology.impl.TopologyImpl;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -167,6 +167,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.sql.Connection;
+import java.util.List;
 import java.util.logging.FileHandler;
 
 /**
@@ -194,7 +196,8 @@ public class AppMain extends Application {
      */
     private WorldWindow wwd;
     private final String NAVISU_HOME = System.getProperty("user.home") + "/.navisu";
-private final String USER_DIR = System.getProperty("user.dir");
+    private final String USER_DIR = System.getProperty("user.dir");
+
     @Override
     @SuppressWarnings({"unchecked", "varargs"})
     public void start(Stage stage) throws Exception {
@@ -203,7 +206,7 @@ private final String USER_DIR = System.getProperty("user.dir");
         clearTmpDirs(USER_DIR + "/tmp", "*", false);
         clearTmpDirs(USER_DIR + "/cmd", "*", false);
         clearTmpDirs(USER_DIR + "/privateData/ulhysses", "*", false);
-        
+
         wwd = GeoWorldWindViewImpl.getWW();
 
         Translator.setLang(I18nLangEnum.FRENCH);
@@ -372,7 +375,7 @@ private final String USER_DIR = System.getProperty("user.dir");
         SoundServices soundServices = componentManager.getComponentService(SoundServices.class);
         SpeakerServices speakerServices = componentManager.getComponentService(SpeakerServices.class);
         S57ChartComponentServices chartS57ComponentServices = componentManager.getComponentService(S57ChartComponentServices.class);
-        S57DBComponentServices Ss57DBComponentServices = componentManager.getComponentService(S57DBComponentServices.class);
+        S57DBComponentServices s57DBComponentServices = componentManager.getComponentService(S57DBComponentServices.class);
         S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
         StlComponentServices s57StlComponentServices = componentManager.getComponentService(StlComponentServices.class);
@@ -435,7 +438,7 @@ private final String USER_DIR = System.getProperty("user.dir");
         instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routePhotoEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(serverOptionsComponentServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(Ss57DBComponentServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(s57DBComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(s57StlComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
@@ -568,7 +571,7 @@ private final String USER_DIR = System.getProperty("user.dir");
          System.out.println(exif1);
          */
         // Test Navigation  Communication with external client 
-        navigationServerServices.init(9090);
+        // navigationServerServices.init(9090);
 
         // Start Leap Motion 
         // leapMotionComponentServices.on();
@@ -603,6 +606,15 @@ private final String USER_DIR = System.getProperty("user.dir");
         //Load in DB with ogr2ogr
         chartS57ComponentServices.loadDataBase(paths, S57_DB, EPSG);
          */
+ 
+        //Test recherche balisage dans la DB
+        s57DBComponentServices.on("ReqDbS57");
+        Connection connection = databaseServices.connect("s57NP5DB",
+                    "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver",
+                    "admin", "admin");
+        List<Buoyage> buoyages = s57DBComponentServices.retrieveBuoyagesIn(connection, 48.338745, -4.575862, 10000);
+       // System.out.println("buoyages : " + buoyages);
+        
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");

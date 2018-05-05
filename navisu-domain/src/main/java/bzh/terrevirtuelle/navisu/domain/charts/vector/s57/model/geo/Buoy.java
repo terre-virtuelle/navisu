@@ -12,7 +12,8 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BOYSHP;
  * @author Serge Morvan
  * @date 2 oct. 2014 NaVisu project
  */
-public abstract class Buoy extends Buoyage {
+public abstract class Buoy 
+        extends Buoyage {
 
     public String getBuoyShape() {
         return shape;
