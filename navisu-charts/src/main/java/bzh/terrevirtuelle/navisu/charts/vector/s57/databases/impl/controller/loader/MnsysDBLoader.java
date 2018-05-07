@@ -44,9 +44,11 @@ public class MnsysDBLoader {
                 r = connection.createStatement().executeQuery(request);
                 while (r.next()) {
                     String marsys = r.getString(2);
+                   // System.out.println("marsys : " +marsys);
                     if (marsys == null || marsys.equals("9") || marsys.equals("10")) {
                         marsys = "0";
                     }
+                   
                     geom = (PGgeometry) r.getObject(1);
                     marsysMap.put(new Pair(geom.getGeometry().getFirstPoint().getY(),
                             geom.getGeometry().getFirstPoint().getX()), marsys);

@@ -73,8 +73,8 @@ public class BuoyageDBLoader
                         }
                         buoyage.setGeom(geom);
                         LatLon latLon = topologyServices.wktMultiPointToWwjLatLon(geom);
-                        double lat=latLon.getLatitude().getDegrees();
-                        double lon=latLon.getLongitude().getDegrees();
+                        double lat = latLon.getLatitude().getDegrees();
+                        double lon = latLon.getLongitude().getDegrees();
                         buoyage.setLatitude(lat);
                         buoyage.setLongitude(lon);
 
@@ -91,7 +91,7 @@ public class BuoyageDBLoader
                             topMark = "0";
                         }
                         buoyage.setTopMark(topMark);
-                        
+
                         String tmp = resultSet.getString("objnam");
                         String name = "";
                         if (tmp != null) {

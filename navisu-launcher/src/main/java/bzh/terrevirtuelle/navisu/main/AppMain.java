@@ -133,7 +133,6 @@ import bzh.terrevirtuelle.navisu.bathymetry.view.impl.DisplayBathymetryImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.S57DBComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
@@ -167,8 +166,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.sql.Connection;
-import java.util.List;
 import java.util.logging.FileHandler;
 
 /**
@@ -607,14 +604,16 @@ public class AppMain extends Application {
         chartS57ComponentServices.loadDataBase(paths, S57_DB, EPSG);
          */
  
+ /*
         //Test recherche balisage dans la DB
-        s57DBComponentServices.on("ReqDbS57");
+        s57DBComponentServices.on("ReqDbS57");//Activation s57DB services
         Connection connection = databaseServices.connect("s57NP5DB",
                     "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver",
                     "admin", "admin");
-        List<Buoyage> buoyages = s57DBComponentServices.retrieveBuoyagesIn(connection, 48.338745, -4.575862, 10000);
-       // System.out.println("buoyages : " + buoyages);
-        
+        List<Buoyage> buoyages = s57DBComponentServices.retrieveBuoyagesIn(connection, 48.338745, -4.575862, 100);
+        System.out.println("buoyages : " + buoyages);
+ */
+ 
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");

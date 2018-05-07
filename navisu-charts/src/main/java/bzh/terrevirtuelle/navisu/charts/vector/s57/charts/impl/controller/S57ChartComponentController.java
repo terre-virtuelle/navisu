@@ -127,7 +127,7 @@ public class S57ChartComponentController
     protected final boolean DEV = false;
     //protected final boolean DEV = true;
     protected final Set<S57Controller> s57Controllers = new HashSet<>();
-    protected boolean first = true;
+    protected boolean first = false;
 
     public static S57ChartComponentController getInstance() {
         if (INSTANCE == null) {
