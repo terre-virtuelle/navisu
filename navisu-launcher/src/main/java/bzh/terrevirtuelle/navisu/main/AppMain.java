@@ -606,7 +606,7 @@ public class AppMain extends Application {
         //Load in DB with ogr2ogr
         chartS57ComponentServices.loadDataBase(paths, S57_DB, EPSG);
          */
- 
+ /*
         //Test recherche balisage dans la DB
         s57DBComponentServices.on("ReqDbS57_OFF");//Activation s57DB services, pas d'affichage de l'IHM
         Connection connection = databaseServices.connect("s57NP5DB",
@@ -614,7 +614,7 @@ public class AppMain extends Application {
         List<Buoyage> buoyages = s57DBComponentServices.retrieveBuoyagesIn(connection, 48.338745, -4.575862, 10000);
         RenderableLayer layer = layersManagerServices.getLayer("S57 charts", "BUOYAGE");
         s57ChartComponentServices.s57BuoyageView(layer, buoyages);
-
+*/
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");
