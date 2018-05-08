@@ -48,6 +48,7 @@ import bzh.terrevirtuelle.navisu.instruments.transponder.impl.events.Transponder
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponent;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.database.relational.impl.DatabaseImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
@@ -533,15 +534,15 @@ public class S57ChartComponentImpl
     }
 
     @Override
-    public void s57BuoyageView(List<Buoyage> buoyages) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void s57BuoyageView(RenderableLayer layer, List<Buoyage> buoyages) {
+        BuoyageView buoyageView = new BuoyageView(layer);
+        buoyageView.display(buoyages);
     }
 
     @Override
-    public void s57BuoyageView(Buoyage buoyage) {
+    public void s57BuoyageView(RenderableLayer layer, Buoyage buoyage) {
         List<Buoyage> buoyages = new ArrayList<>();
         buoyages.add(buoyage);
-        s57BuoyageView(buoyages);
+        s57BuoyageView(layer, buoyages);
     }
-
 }

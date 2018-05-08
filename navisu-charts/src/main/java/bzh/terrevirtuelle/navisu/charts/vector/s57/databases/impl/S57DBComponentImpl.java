@@ -83,8 +83,9 @@ public class S57DBComponentImpl
     ComponentManager cm;
     ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
 
-    private final String COMPONENT_KEY_NAME_0 = "ReqDbS57";
-    private String componentKeyName;
+    protected final String COMPONENT_KEY_NAME_0 = "ReqDbS57";
+    protected final String COMPONENT_KEY_NAME_1 = "ReqDbS57_OFF";
+    protected String componentKeyName;
     protected S57DBComponentController controller;
     protected Layer layer;
     protected static final Logger LOGGER = Logger.getLogger(S57DBComponentImpl.class.getName());
@@ -93,7 +94,7 @@ public class S57DBComponentImpl
     protected String shpDir;
     protected String dir;
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
-    protected String marsys ;
+    protected String marsys;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -120,6 +121,21 @@ public class S57DBComponentImpl
                         displayServices,
                         delaunayServices);
                 controller.setVisible(true);
+            } else if (cmd[0].equals(COMPONENT_KEY_NAME_0)) {
+                {
+                    controller = new S57DBComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
+                            guiAgentServices,
+                            layersManagerServices,
+                            layerTreeServices,
+                            s57ChartComponentServices,
+                            databaseServices,
+                            instrumentDriverManagerServices,
+                            topologyServices,
+                            jtsServices,
+                            shapefileObjectServices,
+                            displayServices,
+                            delaunayServices);
+                }
             }
         }
     }
@@ -177,13 +193,13 @@ public class S57DBComponentImpl
         //Define IALA system for all buoyages, default is 1
         MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(connection);
         marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-        
+
         List<Buoyage> buoyages = new ArrayList<>();
         Set<String> buoyageKeys = BUOYAGE.ATT.keySet();
-        for (String b : buoyageKeys) {
+        buoyageKeys.forEach((b) -> {
             buoyages.addAll(new BuoyageDBLoader(topologyServices, connection, b, topMarkMap, marsys)
                     .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-        }
+        });
         return buoyages;
     }
 
@@ -200,5 +216,5 @@ public class S57DBComponentImpl
         double lonMin = position.getLongitude().getDegrees();
         return retrieveBuoyagesIn(connection, latMin, lonMin, latMax, lonMax);
     }
-   
+
 }

@@ -35,7 +35,7 @@ public class BuoyageView {
     protected double lat;
     protected double lon;
     protected String label;
-    protected boolean dev = true;
+    protected boolean dev = false;
 
     public BuoyageView(RenderableLayer layer) {
         this.layer = layer;
