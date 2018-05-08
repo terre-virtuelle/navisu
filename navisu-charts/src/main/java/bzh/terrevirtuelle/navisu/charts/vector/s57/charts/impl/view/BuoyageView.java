@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE_INV;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -36,8 +37,7 @@ public class BuoyageView {
     protected String label;
     protected boolean dev = true;
 
-    public BuoyageView(RenderableLayer layer, String acronym) {
-        this.acronym = acronym;
+    public BuoyageView(RenderableLayer layer) {
         this.layer = layer;
     }
 
@@ -46,6 +46,8 @@ public class BuoyageView {
 
         List<PointPlacemark> pointPlacemarks = new ArrayList<>();
         for (Buoyage buoyage : buoyages) {
+
+            acronym = BUOYAGE_INV.ATT.get(buoyage.getClass().getSimpleName());
             lat = buoyage.getLatitude();
             lon = buoyage.getLongitude();
 

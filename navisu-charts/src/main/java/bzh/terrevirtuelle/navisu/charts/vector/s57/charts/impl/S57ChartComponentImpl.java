@@ -50,6 +50,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServi
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponent;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.database.relational.impl.DatabaseImpl;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import de.micromata.opengis.kml.v_2_2_0.Container;
 import de.micromata.opengis.kml.v_2_2_0.Document;
 import de.micromata.opengis.kml.v_2_2_0.Feature;
@@ -340,7 +341,7 @@ public class S57ChartComponentImpl
 
             });
         } catch (IOException ex) {
-           // Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.INFO, "Clean tmp directories", ex);
+            // Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.INFO, "Clean tmp directories", ex);
         }
 
     }
@@ -532,10 +533,15 @@ public class S57ChartComponentImpl
     }
 
     @Override
-    public void s57BuoyageView() {
+    public void s57BuoyageView(List<Buoyage> buoyages) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
+    @Override
+    public void s57BuoyageView(Buoyage buoyage) {
+        List<Buoyage> buoyages = new ArrayList<>();
+        buoyages.add(buoyage);
+        s57BuoyageView(buoyages);
+    }
+
 }

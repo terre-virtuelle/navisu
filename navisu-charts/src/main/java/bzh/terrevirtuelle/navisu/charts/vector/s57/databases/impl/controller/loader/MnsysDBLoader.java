@@ -22,46 +22,68 @@ import org.postgis.PGgeometry;
  * @author serge
  */
 public class MnsysDBLoader {
+
     protected static final Logger LOGGER = Logger.getLogger(MnsysDBLoader.class.getName());
-    protected Map<Pair<Double, Double>, String> marsysMap;
     protected Connection connection;
 
     public MnsysDBLoader(Connection connection) {
         this.connection = connection;
-        marsysMap=new HashMap<>();
     }
+
     @SuppressWarnings("unchecked")
-    public Map<Pair<Double, Double>, String> retrieveIn(double latMin, double lonMin,
-            double latMax, double lonMax) {
-        PGgeometry geom;
+    public String retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
         ResultSet r;
+        String request;
+        String marsys = "";
+        boolean first = true;
         if (connection != null) {
             try {
-                String request = S57_REQUEST_MAP.get("M_NSYS");
-                request += "(" + lonMin + ", " + latMin + ", "
-                        + lonMax + ", " + latMax + ", "
-                        + "4326);";
-                r = connection.createStatement().executeQuery(request);
-                while (r.next()) {
-                    String marsys = r.getString(2);
-                   // System.out.println("marsys : " +marsys);
-                    if (marsys == null || marsys.equals("9") || marsys.equals("10")) {
-                        marsys = "0";
+                while (true) {
+                    request = S57_REQUEST_MAP.get("M_NSYS");
+                    request += "(" + lonMin + ", " + latMin + ", "
+                            + lonMax + ", " + latMax + ", "
+                            + "4326);";
+                    r = connection.createStatement().executeQuery(request);
+                    while (r.next()) {
+                        marsys = r.getString(2);
+                        if (marsys.equals("1") || marsys.equals("2") || marsys.equals("9") || marsys.equals("10")) {
+                            break;
+                        }
                     }
                    
-                    geom = (PGgeometry) r.getObject(1);
-                    marsysMap.put(new Pair(geom.getGeometry().getFirstPoint().getY(),
-                            geom.getGeometry().getFirstPoint().getX()), marsys);
+                    if (latMin <= 0) {
+                        latMin -= 0.01;
+                    } else {
+                        latMin += 0.01;
+                    }
+                    if (lonMin <= 0) {
+                        lonMin -= 0.01;
+                    } else {
+                        lonMin += 0.01;
+                    }
+                    if (latMax <= 0) {
+                        latMax -= 0.01;
+                    } else {
+                        latMax += 0.01;
+                    }
+                    if (lonMax <= 0) {
+                        lonMax -= 0.01;
+                    } else {
+                        lonMax += 0.01;
+                    }
+                    if (marsys.equals("1") || marsys.equals("2") || marsys.equals("9") || marsys.equals("10")) {
+                        break;
+                    }
                 }
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Database connection fail");
-                alert.show();
+            alert.setTitle("Error");
+            alert.setHeaderText("Database connection fail");
+            alert.show();
         }
-        return marsysMap;
+        return marsys;
     }
 }

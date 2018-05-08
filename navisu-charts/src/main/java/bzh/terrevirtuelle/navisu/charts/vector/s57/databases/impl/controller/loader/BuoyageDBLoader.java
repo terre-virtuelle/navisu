@@ -33,18 +33,18 @@ public class BuoyageDBLoader
     protected Class claz;
     protected TopologyServices topologyServices;
     protected Map<Pair<Double, Double>, String> topMarkMap;
-    protected Map<Pair<Double, Double>, String> marsysMap;
+    protected String marsys;
 
     public BuoyageDBLoader(TopologyServices topologyServices,
             Connection connection, String acronym,
             Map<Pair<Double, Double>, String> topMarkMap,
-            Map<Pair<Double, Double>, String> marsysMap) {
+            String marsys) {
         super(connection, acronym);
         this.topologyServices = topologyServices;
         this.connection = connection;
         this.acronym = acronym;
         this.topMarkMap = topMarkMap;
-        this.marsysMap = marsysMap;
+        this.marsys = marsys;
 
         String className = BUOYAGE.ATT.get(acronym);
         try {
@@ -80,11 +80,8 @@ public class BuoyageDBLoader
 
                         buoyage.setId(Long.parseLong(resultSet.getString("rcid")));
 
-                        String ma = marsysMap.get(new Pair(lat, lon));
-                        if (ma == null) {
-                            ma = "1";
-                        }
-                        buoyage.setMarsys(ma);
+                        
+                        buoyage.setMarsys(marsys);
 
                         String topMark = topMarkMap.get(new Pair(lat, lon));
                         if (topMark == null) {

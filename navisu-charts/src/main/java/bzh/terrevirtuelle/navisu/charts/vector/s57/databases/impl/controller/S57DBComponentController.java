@@ -224,7 +224,7 @@ public class S57DBComponentController
     protected List<? extends Geo> objects;
     protected Connection connection;
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
-    protected Map<Pair<Double, Double>, String> marsysMap = new HashMap<>();
+    protected String marsys;
     protected ObservableList<String> dbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
     protected List<String> selectedObjects = new ArrayList<>();
     /*
@@ -574,54 +574,54 @@ public class S57DBComponentController
 
                 //Define IALA system for all buoyages, default is 1
                 MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(connection);
-                marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+                marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
-                new BuoyageView(buoyageLayer, "BCNCAR")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNCAR", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNCAR", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView( buoyageLayer, "BCNLAT")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNLAT", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNLAT", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView( buoyageLayer, "BCNISD")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNISD", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNISD", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView( buoyageLayer, "BCNSAW")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNSAW", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNSAW", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(buoyageLayer, "BCNSPP")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNSPP", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNSPP", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(buoyageLayer, "BCNISD")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNISD", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNISD", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(buoyageLayer, "BOYCAR")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYCAR", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYCAR", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView( buoyageLayer, "BOYLAT")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYLAT", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYLAT", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView( buoyageLayer, "BOYINB")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYINB", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYINB", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(buoyageLayer, "BOYISD")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYISD", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYISD", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(buoyageLayer, "BOYSAW")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYSAW", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYSAW", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView( buoyageLayer, "BOYSPP")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYSPP", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYSPP", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(buoyageLayer, "DAYMAR")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "DAYMAR", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "DAYMAR", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                new BuoyageView(buoyageLayer, "MORFAC")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "MORFAC", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "MORFAC", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("LNDMRK")) {
-                new BuoyageView(buoyageLayer, "LNDMRK")
-                        .display(new BuoyageDBLoader(topologyServices, connection, "LNDMRK", topMarkMap, marsysMap)
+                new BuoyageView(buoyageLayer)
+                        .display(new BuoyageDBLoader(topologyServices, connection, "LNDMRK", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("ACHARE")) {

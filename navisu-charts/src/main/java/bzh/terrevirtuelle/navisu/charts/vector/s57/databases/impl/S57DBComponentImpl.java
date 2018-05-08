@@ -93,7 +93,7 @@ public class S57DBComponentImpl
     protected String shpDir;
     protected String dir;
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
-    protected Map<Pair<Double, Double>, String> marsysMap = new HashMap<>();
+    protected String marsys ;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -176,12 +176,12 @@ public class S57DBComponentImpl
 
         //Define IALA system for all buoyages, default is 1
         MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(connection);
-        marsysMap = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+        marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
         
         List<Buoyage> buoyages = new ArrayList<>();
         Set<String> buoyageKeys = BUOYAGE.ATT.keySet();
         for (String b : buoyageKeys) {
-            buoyages.addAll(new BuoyageDBLoader(topologyServices, connection, b, topMarkMap, marsysMap)
+            buoyages.addAll(new BuoyageDBLoader(topologyServices, connection, b, topMarkMap, marsys)
                     .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
         }
         return buoyages;
