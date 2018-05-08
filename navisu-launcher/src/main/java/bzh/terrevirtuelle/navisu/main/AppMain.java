@@ -133,6 +133,7 @@ import bzh.terrevirtuelle.navisu.bathymetry.view.impl.DisplayBathymetryImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.S57DBComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
@@ -159,6 +160,7 @@ import bzh.terrevirtuelle.navisu.tools.ToolsComponentServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.topology.impl.TopologyImpl;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -166,6 +168,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.sql.Connection;
+import java.util.List;
 import java.util.logging.FileHandler;
 
 /**
@@ -371,7 +375,7 @@ public class AppMain extends Application {
         SonarServices sonarServices = componentManager.getComponentService(SonarServices.class);
         SoundServices soundServices = componentManager.getComponentService(SoundServices.class);
         SpeakerServices speakerServices = componentManager.getComponentService(SpeakerServices.class);
-        S57ChartComponentServices chartS57ComponentServices = componentManager.getComponentService(S57ChartComponentServices.class);
+        S57ChartComponentServices s57ChartComponentServices = componentManager.getComponentService(S57ChartComponentServices.class);
         S57DBComponentServices s57DBComponentServices = componentManager.getComponentService(S57DBComponentServices.class);
         S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
@@ -397,7 +401,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(bathymetryLocalCatalogServices.getDriver());
         driverServices.registerNewDriver(bathymetryServices.getDriver());
         driverServices.registerNewDriver((Driver) chartsServices.getDriver());
-        driverServices.registerNewDriver(chartS57ComponentServices.getDriver());
+        driverServices.registerNewDriver(s57ChartComponentServices.getDriver());
         driverServices.registerNewDriver(currentsServices.getDriver());
         driverServices.registerNewDriver((Driver) geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
@@ -569,7 +573,6 @@ public class AppMain extends Application {
          */
         // Test Navigation  Communication with external client 
         // navigationServerServices.init(9090);
-
         // Start Leap Motion 
         // leapMotionComponentServices.on();
         // Test Gazeteer services
@@ -604,16 +607,14 @@ public class AppMain extends Application {
         chartS57ComponentServices.loadDataBase(paths, S57_DB, EPSG);
          */
  
- /*
         //Test recherche balisage dans la DB
-        s57DBComponentServices.on("ReqDbS57");//Activation s57DB services
+        s57DBComponentServices.on("ReqDbS57_OFF");//Activation s57DB services, pas d'affichage de l'IHM
         Connection connection = databaseServices.connect("s57NP5DB",
-                    "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver",
-                    "admin", "admin");
-        List<Buoyage> buoyages = s57DBComponentServices.retrieveBuoyagesIn(connection, 48.338745, -4.575862, 100);
-        System.out.println("buoyages : " + buoyages);
- */
- 
+                "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", "admin", "admin");
+        List<Buoyage> buoyages = s57DBComponentServices.retrieveBuoyagesIn(connection, 48.338745, -4.575862, 10000);
+        RenderableLayer layer = layersManagerServices.getLayer("S57 charts", "BUOYAGE");
+        s57ChartComponentServices.s57BuoyageView(layer, buoyages);
+
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");
