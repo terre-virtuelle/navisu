@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -92,12 +91,6 @@
                                         <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="SERVER" GridPane.columnIndex="3" GridPane.rowIndex="12" />
                                         <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="15.0" prefWidth="120.0" text="keyboard" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
                                         <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Graphic selection" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
-                                        <Label text="Distance tolerance" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                                        <TextField fx:id="simplifyTF" alignment="CENTER_RIGHT" promptText="0.00001" text="0.0001" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                        <Label text="Depth magnification" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-                                        <TextField fx:id="depthMagnificationTF" alignment="CENTER_RIGHT" text="10.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                        <CheckBox fx:id="createElevationCB" mnemonicParsing="false" selected="true" text="Create elevation" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-                                        <CheckBox mnemonicParsing="false" selected="true" text="Simplify Deph Area" GridPane.columnIndex="3" GridPane.rowIndex="6" />
                                     </children>
                                 </GridPane>
                             </children>

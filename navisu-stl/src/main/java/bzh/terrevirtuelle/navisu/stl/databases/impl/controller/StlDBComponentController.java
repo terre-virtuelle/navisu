@@ -11,7 +11,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.CoastlineDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepareDBLoader;
@@ -100,7 +99,7 @@ import org.controlsfx.control.CheckComboBox;
 public class StlDBComponentController
         extends Widget2DController
         implements Initializable {
-
+    
     protected StlDBComponentImpl component;
     private String componentKeyName;
     protected static final Logger LOGGER = Logger.getLogger(StlDBComponentController.class.getName());
@@ -115,7 +114,7 @@ public class StlDBComponentController
     protected ShapefileObjectServices shapefileObjectServices;
     protected DisplayServices displayServices;
     private final String FXML = "stlDBController.fxml";
-
+    
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
@@ -123,7 +122,7 @@ public class StlDBComponentController
     private final String PASSWD = "admin";
     protected Properties properties;
     private static final String NAME = "StlDB";
-
+    
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     protected String viewgroupstyle = "configuration.css";
 
@@ -167,7 +166,11 @@ public class StlDBComponentController
     @FXML
     public ComboBox<String> objectsCB;
     @FXML
+    public TextField outFileTF;
+    @FXML
     public TextField hostnameTF;
+    @FXML
+    public TextField tilesCountTF;
     @FXML
     public TextField encPortDBTF;
     @FXML
@@ -175,20 +178,22 @@ public class StlDBComponentController
     @FXML
     public CheckBox simplifyCB;
     @FXML
+    public ChoiceBox<String> tilesCountCB;
+    @FXML
     public GridPane paneGP;
     //private final Label checkedItemsLabel = new Label();
     protected CheckComboBox<String> checkComboBox;
-
+    
     protected Map<String, String> acronyms;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected MeasureTool measureTool;
     protected final Set<S57Controller> s57Controllers = new HashSet<>();
     protected boolean first = true;
-
+    
     protected static final String GROUP_0 = "S57 charts";
     protected static final String GROUP_1 = "S57Stl";
     protected static final String GROUP_2 = "3D";
-
+    
     protected static final String BATHYMETRY_LAYER = "BATHYMETRY";
     protected static final String BUOYAGE_LAYER = "BUOYAGE";
     protected static final String HARBOUR_LAYER = "HARBOUR";
@@ -227,6 +232,8 @@ public class StlDBComponentController
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
     protected String marsys;
     protected ObservableList<String> dbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
+    protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6");
+    
     protected List<String> selectedObjects = new ArrayList<>();
     /*
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
@@ -259,7 +266,7 @@ public class StlDBComponentController
             "RESARE",
             "SLCONS"
     );
-
+    
     public StlDBComponentController(StlDBComponentImpl component, String componentKeyName,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
@@ -283,7 +290,7 @@ public class StlDBComponentController
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-
+        
         String uri = CSS_STYLE_PATH + viewgroupstyle;
         view.getStylesheets().add(uri);
         this.component = component;
@@ -299,7 +306,7 @@ public class StlDBComponentController
         this.delaunayServices = delaunayServices;
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
-
+        
         bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
         depareLayer = layersManagerServices.getLayer(GROUP_0, DEPARE_LAYER);
         depare3DLayer = layersManagerServices.getLayer(GROUP_0, DEPARE_3D_LAYER);
@@ -315,10 +322,10 @@ public class StlDBComponentController
         lightsLayer = layersManagerServices.getLayer(GROUP_0, LIGHTS_LAYER);
         lightsSectorsLayer = layersManagerServices.getLayer(GROUP_0, LIGHTS_SECTORS_LAYER);
     }
-
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        
         databasesCB.setItems(dbCbData);
         databasesCB.getSelectionModel().select("s57NP5DB");
         databaseTF.setText("s57NP5DB");
@@ -328,9 +335,18 @@ public class StlDBComponentController
                         (ObservableValue<? extends String> observable, String oldValue, String newValue)
                         -> databaseTF.setText(databasesCB.getValue())
                 );
-
+        tilesCountCB.setItems(tilesCbData);
+        tilesCountCB.getSelectionModel().select("1x1");
+        tilesCountTF.setText("1");
+        tilesCountCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener(
+                        (ObservableValue<? extends String> observable, String oldValue, String newValue)
+                        -> tilesCountTF.setText(tilesCountCB.getValue().split("x")[0])
+                );
         checkComboBox = new CheckComboBox<>(objectsCbData);
-        paneGP.add(checkComboBox, 4, 3);
+        paneGP.add(checkComboBox, 4, 2);
+        objectsTF.setText("ALL");
         checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener.Change<? extends String> change) -> {
             selectedObjects.clear();
             selectedObjects.addAll(change.getList());
@@ -341,11 +357,11 @@ public class StlDBComponentController
             }
             objectsTF.appendText(selectedObjects.get(selectedObjects.size() - 1));
         });
-
+        outFileTF.setText("out");
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
         });
-
+        
         helpButton.setOnMouseClicked((MouseEvent event) -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Options");
@@ -363,13 +379,13 @@ public class StlDBComponentController
             alert.getDialogPane().setContent(s);
             alert.show();
         });
-
+        
         latLonButton.setOnMouseClicked((MouseEvent event) -> {
             Platform.runLater(() -> {
                 initSelectedZone();
             });
         });
-
+        
         interactiveButton.setOnMouseClicked((MouseEvent event) -> {
             measureTool = new MeasureTool(wwd);
             MeasureToolController measureToolController = new MeasureToolController();
@@ -377,7 +393,7 @@ public class StlDBComponentController
             measureTool.setMeasureShapeType(MeasureTool.SHAPE_SQUARE);
             measureTool.setArmed(true);
         });
-
+        
         selectedButton.setOnMouseClicked((MouseEvent event) -> {
             if (measureTool != null) {
                 List<? extends Position> positions = measureTool.getPositions();
@@ -386,7 +402,7 @@ public class StlDBComponentController
                     lon0 = positions.get(0).getLongitude().getDegrees();
                     lat1 = positions.get(2).getLatitude().getDegrees();
                     lon1 = positions.get(2).getLongitude().getDegrees();
-
+                    
                     latMinLabel.setText(String.format("%.2f", lat0));
                     lonMinLabel.setText(String.format("%.2f", lon0));
                     latMaxLabel.setText(String.format("%.2f", lat1));
@@ -400,9 +416,9 @@ public class StlDBComponentController
                 measureTool.setArmed(false);
                 measureTool.dispose();
             }
-
+            
         });
-
+        
         requestButton.setOnMouseClicked((MouseEvent event) -> {
             if (bathymetryLayer.getNumRenderables() != 0) {
                 bathymetryLayer.removeAllRenderables();
@@ -461,19 +477,19 @@ public class StlDBComponentController
             }
         });
     }
-
+    
     private void initSelectedZone() {
-
+        
         Dialog dialog = new Dialog<>();
         dialog.setTitle("Create Area");
         dialog.setHeaderText("Please enter selected area coordinates.");
         dialog.setResizable(false);
-
+        
         Label lat0Label = new Label("Northwest point latitude : ");
         Label lon0Label = new Label("Northwest point longitude : ");
         Label lat1Label = new Label("Southeast point latitude : ");
         Label lon1Label = new Label("Southeast point longitude : ");
-
+        
         TextField lat0TF = new TextField();
         TextField lat1TF = new TextField();
         TextField lon0TF = new TextField();
@@ -484,7 +500,7 @@ public class StlDBComponentController
         lat1TF.setText("48.42");
         lon0TF.setText("-4.61");
         lon1TF.setText("-4.30");
-
+        
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -494,12 +510,12 @@ public class StlDBComponentController
         grid.add(lat0TF, 1, 0);
         grid.add(lon0Label, 0, 1);
         grid.add(lon0TF, 1, 1);
-
+        
         grid.add(lat1Label, 0, 2);
         grid.add(lat1TF, 1, 2);
         grid.add(lon1Label, 0, 3);
         grid.add(lon1TF, 1, 3);
-
+        
         dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
@@ -538,10 +554,10 @@ public class StlDBComponentController
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
         dialog.showAndWait();
     }
-
+    
     public void retrieveIn(String object, double latMin, double lonMin,
             double latMax, double lonMax) {
-
+        
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setOutlineMaterial(Material.RED);
         normalAttributes.setOutlineOpacity(0.5);
@@ -560,12 +576,12 @@ public class StlDBComponentController
         pathPositions.add(Position.fromDegrees(lat1, lon1, 100));
         pathPositions.add(Position.fromDegrees(lat1, lon0, 100));
         pathPositions.add(Position.fromDegrees(lat0, lon0, 100));
-
+        
         Polygon pgon = new Polygon(pathPositions);
         pgon.setAttributes(normalAttributes);
         depareLayer.addRenderable(pgon);
         wwd.redrawNow();
-
+        
         guiAgentServices.getJobsManager().newJob("Load S57 objects", (progressHandle) -> {
             if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
 
@@ -576,7 +592,7 @@ public class StlDBComponentController
                 //Define IALA system for all buoyages, default is 1
                 MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(connection);
                 marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-
+                
                 new BuoyageView(buoyageLayer)
                         .display(new BuoyageDBLoader(topologyServices, connection, "BCNCAR", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
@@ -713,7 +729,7 @@ public class StlDBComponentController
             wwd.redrawNow();
         });
     }
-
+    
     public Connection getConnection() {
         return connection;
     }

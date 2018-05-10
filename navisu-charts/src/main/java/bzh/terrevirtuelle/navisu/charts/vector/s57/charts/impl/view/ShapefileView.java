@@ -59,7 +59,7 @@ public class ShapefileView {
         highlightAttributes.setDrawInterior(true);
         highlightAttributes.setInteriorMaterial(new Material(new Color(47,77,88)));
         highlightAttributes.setInteriorOpacity(.5);
-        highlightAttributes.setEnableLighting(true);
+      //  highlightAttributes.setEnableLighting(true);
     }
 
     protected Shapefile createShapeFileFromSource(Object source) {

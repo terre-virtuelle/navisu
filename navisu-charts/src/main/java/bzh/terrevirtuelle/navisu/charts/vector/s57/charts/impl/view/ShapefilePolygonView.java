@@ -88,10 +88,10 @@ public abstract class ShapefilePolygonView
         normAttributes.setInteriorMaterial(new Material(col));
         normAttributes.setDrawOutline(true);
         normAttributes.setOutlineMaterial(new Material(Color.BLACK));
-        normAttributes.setEnableLighting(true);
+     //   normAttributes.setEnableLighting(true);
         shape.setAttributes(normAttributes);
 
-        shape.setHighlightAttributes(highlightAttributes);
+      //  shape.setHighlightAttributes(highlightAttributes);
     }
 
     protected void setExtrudedPolygonAttributes(ExtrudedPolygon ep, Color color) {
@@ -99,7 +99,7 @@ public abstract class ShapefilePolygonView
         capAttrs.setDrawInterior(true);
         capAttrs.setOutlineMaterial(Material.BLUE);
         capAttrs.setInteriorMaterial(new Material(color));
-        capAttrs.setEnableLighting(true);
+      //  capAttrs.setEnableLighting(true);
         ep.setCapAttributes(capAttrs);
 
         sideAttrs.setOutlineWidth(3);
@@ -107,7 +107,7 @@ public abstract class ShapefilePolygonView
         sideAttrs.setDrawInterior(true);
         sideAttrs.setOutlineMaterial(Material.BLUE);
         sideAttrs.setInteriorMaterial(new Material(color));
-        sideAttrs.setEnableLighting(true);
+      //  sideAttrs.setEnableLighting(true);
         ep.setSideAttributes(sideAttrs);
     }
 }

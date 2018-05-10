@@ -131,8 +131,6 @@ public class S57DBComponentController
     public Group view;
     @FXML
     public Pane viewPane;
-    /*@FXML
-    public TabPane toolsTabPane;*/
     @FXML
     public Button quit;
     @FXML
@@ -152,10 +150,6 @@ public class S57DBComponentController
     @FXML
     public TextField objectsTF;
     @FXML
-    public TextField depthMagnificationTF;
-    @FXML
-    public TextField simplifyTF;
-    @FXML
     public Label latMinLabel;
     @FXML
     public Label lonMinLabel;
@@ -169,8 +163,6 @@ public class S57DBComponentController
     public TextField hostnameTF;
     @FXML
     public TextField encPortDBTF;
-    @FXML
-    public CheckBox createElevationCB;
     @FXML
     public CheckBox simplifyCB;
     @FXML
@@ -249,7 +241,6 @@ public class S57DBComponentController
             "BUOYAGE",
             "COALNE",
             "DEPARE",
-            "DEPCNT",
             "DOCARE",
             "DRGARE",
             "NAVLNE",
@@ -635,21 +626,13 @@ public class S57DBComponentController
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DEPARE")) {
                 new DepareView(latMin, lonMin, latMax, lonMax,
                         depareLayer, simpleDepareLayer, depare3DLayer,
-                        Double.valueOf(simplifyTF.getText()),
-                        Double.valueOf(depthMagnificationTF.getText()),
-                        createElevationCB.isSelected())
+                        0.00001,
+                         1.0,
+                        false)
                         .display(new DepareDBLoader(databaseServices,
                                 databaseTF.getText(),
                                 USER,
                                 PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
-            }
-            if (selectedObjects.contains("ALL") || selectedObjects.contains("DEPCNT")) {
-                objects = new DepthContourDBLoader(connection)
-                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57ObjectView("DEPCNT", topologyServices, bathymetryLayer);
-                objects.forEach((g) -> {
-                    s57Viewer.display(g);
-                });
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DOCARE")) {
                 objects = new DockAreaDBLoader(connection)
