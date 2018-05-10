@@ -133,7 +133,6 @@ import bzh.terrevirtuelle.navisu.bathymetry.view.impl.DisplayBathymetryImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.S57DBComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
@@ -149,18 +148,16 @@ import bzh.terrevirtuelle.navisu.leapmotion.impl.LeapMotionComponentImpl;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
 import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
-import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
+import bzh.terrevirtuelle.navisu.stl.charts.impl.StlChartComponentImpl;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.DisplayImpl;
 import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
 import gov.nasa.worldwind.WorldWindow;
-import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.tools.ToolsComponentServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.topology.impl.TopologyImpl;
-import gov.nasa.worldwind.layers.RenderableLayer;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -168,9 +165,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.sql.Connection;
-import java.util.List;
 import java.util.logging.FileHandler;
+import bzh.terrevirtuelle.navisu.stl.charts.StlChartComponentServices;
+import bzh.terrevirtuelle.navisu.stl.databases.StlDBComponentServices;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -283,10 +281,11 @@ public class AppMain extends Application {
                         SonarImpl.class,
                         SoundImpl.class,
                         SpeakerImpl.class,
+                        StlDBComponentImpl.class,
                         S57ChartComponentImpl.class,
                         S57DBComponentImpl.class,
                         S57GlobalCatalogImpl.class,
-                        StlComponentImpl.class,
+                        StlChartComponentImpl.class,
                         TestDBImpl.class,
                         ToolsComponentImpl.class,
                         TopologyImpl.class,
@@ -362,8 +361,6 @@ public class AppMain extends Application {
         NavigationCmdComponentServices navigationCmdComponentServices = componentManager.getComponentService(NavigationCmdComponentServices.class);
         navigationCmdComponentServices.init();
 
-        ServerOptionsComponentServices serverOptionsComponentServices = componentManager.getComponentService(ServerOptionsComponentServices.class);
-
         ProjectionsComponentServices projectionsComponentServices = componentManager.getComponentService(ProjectionsComponentServices.class);
         RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
         RouteDataEditorServices routeDataEditorServices = componentManager.getComponentService(RouteDataEditorServices.class);
@@ -371,16 +368,18 @@ public class AppMain extends Application {
         RoutePhotoViewerServices routePhotoViewerServices = componentManager.getComponentService(RoutePhotoViewerServices.class);
 
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
+        ServerOptionsComponentServices serverOptionsComponentServices = componentManager.getComponentService(ServerOptionsComponentServices.class);
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
         SonarServices sonarServices = componentManager.getComponentService(SonarServices.class);
         SoundServices soundServices = componentManager.getComponentService(SoundServices.class);
         SpeakerServices speakerServices = componentManager.getComponentService(SpeakerServices.class);
+        StlChartComponentServices stlChartComponentServices = componentManager.getComponentService(StlChartComponentServices.class);
+        StlDBComponentServices stlDBComponentServices = componentManager.getComponentService(StlDBComponentServices.class);
         S57ChartComponentServices s57ChartComponentServices = componentManager.getComponentService(S57ChartComponentServices.class);
         S57DBComponentServices s57DBComponentServices = componentManager.getComponentService(S57DBComponentServices.class);
         S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
-        StlComponentServices s57StlComponentServices = componentManager.getComponentService(StlComponentServices.class);
-
+       
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
         TopologyServices topologyServices = componentManager.getComponentService(TopologyServices.class);
         ToolsComponentServices toolsComponentServices = componentManager.getComponentService(ToolsComponentServices.class);
@@ -440,7 +439,8 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(routePhotoEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(serverOptionsComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(s57DBComponentServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(s57StlComponentServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(stlChartComponentServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(stlDBComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(toolsComponentServices.getDriver());
@@ -606,7 +606,7 @@ public class AppMain extends Application {
         //Load in DB with ogr2ogr
         chartS57ComponentServices.loadDataBase(paths, S57_DB, EPSG);
          */
- /*
+ /* 
         //Test recherche balisage dans la DB
         s57DBComponentServices.on("ReqDbS57_OFF");//Activation s57DB services, pas d'affichage de l'IHM
         Connection connection = databaseServices.connect("s57NP5DB",
@@ -614,7 +614,7 @@ public class AppMain extends Application {
         List<Buoyage> buoyages = s57DBComponentServices.retrieveBuoyagesIn(connection, 48.338745, -4.575862, 10000);
         RenderableLayer layer = layersManagerServices.getLayer("S57 charts", "BUOYAGE");
         s57ChartComponentServices.s57BuoyageView(layer, buoyages);
-*/
+         */
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");

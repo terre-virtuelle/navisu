@@ -201,7 +201,7 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "dem.png", 0, "vide.png", 0, "vide.png", (e) -> open())
                 .createNode(1, "bathy.png", 1, "vide.png", 0, "vide.png", (e) -> open())
                 .createNode(2, "charts.png", 1, "files.png", 0, "vide.png", (e) -> open())
-                .createNode(2, "charts.png", 2, "db.png", 0, "scales.png", (e) -> open("ReqDbS57"))
+                .createNode(2, "charts.png", 2, "db.png", 0, "scales.png", (e) -> open("StlDbS57"))
               //  .createNode(1, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> open())
               //  .createNode(1, "vide.png", 1, "vide.png", 1, "vide.png", (e) -> open())
                 .build();
@@ -235,7 +235,8 @@ public class DockManagerImpl<TrackTool>
     private void createChartsRadialWidget() {
         chartsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("chartsradialmenu150.png")
-                .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("S57", ".000"))
+                .createNode(0, "nav.png", 0, "vector.png", 0, "s57charts.png", (e) -> open("S57", ".000"))
+                .createNode(0, "nav.png", 0, "vector.png", 1, "s57db.png", (e) -> open("ReqDbS57"))
                 .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP", ".kap"))
                 .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("GeoTiff", ".tif", ".TIF", ".tiff"))
                 // .createNode(0, "nav.png", 2, "vector3D.png", 2, "stl.png", (e) -> open("S57Stl", ".000",".001",".002"))
