@@ -243,7 +243,7 @@ public class BathymetryDBController {
         PGgeometry geom;
         double depth;
         ResultSet r;
-        
+
         if (connection != null) {
             try {
                 r = connection.createStatement().executeQuery(
@@ -271,6 +271,14 @@ public class BathymetryDBController {
         } else {
             alert();
         }
+        return tmp1;
+    }
+
+    public List<Point3D> retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax) {
+        Connection tmp0 = this.connection;
+        this.connection = connection;
+        List<Point3D> tmp1 = retrieveIn(latMin, lonMin, latMax, lonMax);
+        this.connection = tmp0;
         return tmp1;
     }
 

@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.bathymetry.db;
 
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriver;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
@@ -46,6 +47,8 @@ public interface BathymetryDBServices
     List<Point3D> retrieveAround(double lat, double lon, double limit);
 
     List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax);
+
+    List<Point3D>  retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax);
 
     void writePointList(List<Point3D> points, Path pathname, boolean latLon);
 

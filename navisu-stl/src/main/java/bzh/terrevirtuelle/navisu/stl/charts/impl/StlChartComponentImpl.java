@@ -22,7 +22,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.stl.charts.impl.controller.charts.StlChartController;
-import bzh.terrevirtuelle.navisu.stl.charts.impl.controller.StlComponentController;
+import bzh.terrevirtuelle.navisu.stl.charts.impl.controller.StlChartComponentController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.ogc.kml.impl.KMLSurfacePolygonImpl;
@@ -83,7 +83,7 @@ public class StlChartComponentImpl
     protected List<GeoLayer<Layer>> geoLayerList;
     protected List<String> groupNames = new ArrayList<>();
 
-    protected StlComponentController s57StlComponentController;
+    protected StlChartComponentController s57StlComponentController;
     protected StlChartController s57StlChartComponentController;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
@@ -110,7 +110,7 @@ public class StlChartComponentImpl
     public void componentInitiated() {
 
         s57StlChartComponentController = new StlChartController(geodesyServices);
-        s57StlComponentController = new StlComponentController(this,
+        s57StlComponentController = new StlChartComponentController(this,
                 guiAgentServices, // pour afficher le widget
                 layerTreeServices, // pour indiquer dans l'arbre à gauche ou est la couche
                 layersManagerServices, // pour afficher la couche

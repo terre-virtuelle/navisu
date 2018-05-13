@@ -16,6 +16,7 @@ import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.impl.controller.BathymetryDBController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
@@ -139,13 +140,20 @@ public class BathymetryDBImpl
     public List<Point3D> retrieveAround(double lat, double lon) {
         return bathymetryDBController.retrieveAround(lat, lon, LIMIT);
     }
+
     @Override
-public List<Point3D> retrieveAround(double lat, double lon, double limit) {
+    public List<Point3D> retrieveAround(double lat, double lon, double limit) {
         return bathymetryDBController.retrieveAround(lat, lon, limit);
     }
+
     @Override
     public List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
         return bathymetryDBController.retrieveIn(latMin, lonMin, latMax, lonMax);
+    }
+
+    @Override
+    public List<Point3D>  retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax) {
+        return bathymetryDBController.retrieveIn(connection, latMin, lonMin, latMax, lonMax);
     }
 
     @Override

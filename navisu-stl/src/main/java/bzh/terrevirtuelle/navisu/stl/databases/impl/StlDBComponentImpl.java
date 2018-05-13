@@ -8,6 +8,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
@@ -66,6 +67,8 @@ public class StlDBComponentImpl
     @UsedService
     DatabaseServices databaseServices;
     @UsedService
+    BathymetryDBServices bathymetryDBServices;
+    @UsedService
     InstrumentDriverManagerServices instrumentDriverManagerServices;
     @UsedService
     TopologyServices topologyServices;
@@ -107,20 +110,17 @@ public class StlDBComponentImpl
         if (cmd != null) {
             componentKeyName = cmd[0];
             if (cmd[0].equals(COMPONENT_KEY_NAME_0)) {
-                controller = new StlDBComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
+                controller = new StlDBComponentController(this, KeyCode.T, KeyCombination.CONTROL_DOWN,
                         guiAgentServices,
                         layersManagerServices,
-                        layerTreeServices,
                         s57ChartComponentServices,
                         databaseServices,
+                        bathymetryDBServices,
                         instrumentDriverManagerServices,
                         topologyServices,
-                        jtsServices,
-                        shapefileObjectServices,
-                        displayServices,
-                        delaunayServices);
+                        shapefileObjectServices);
                 controller.setVisible(true);
-            } 
+            }
         }
     }
 

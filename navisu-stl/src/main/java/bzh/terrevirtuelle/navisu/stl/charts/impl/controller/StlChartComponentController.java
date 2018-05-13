@@ -74,7 +74,7 @@ import javafx.scene.layout.Pane;
 /*
 Leader of controllers, via gui switch between different controllers
  */
-public class StlComponentController
+public class StlChartComponentController
         extends Widget2DController
         implements Initializable {
 
@@ -124,7 +124,7 @@ public class StlComponentController
     protected List<Polygon> tiles;
     protected double lonRange;
     protected double latRange;
-    List<Polygon> wwjTiles;
+    protected List<Polygon> wwjTiles;
     protected List<Position> squareEnvelopeList;
     protected List<? extends Position> envelopeList;
     protected Geometry geometryEnvelope;
@@ -134,7 +134,6 @@ public class StlComponentController
     protected KMLSurfacePolygonImpl kmlPolygon;
     protected Polygon polygonEnvelope;
     protected Polygon squarePolygonEnvelope;
-
     protected RenderableLayer layer;
     protected RenderableLayer layerBathy;
     protected WorldWindow wwd;
@@ -202,7 +201,7 @@ public class StlComponentController
     protected KeyCode keyCode;
     protected SectorSelector selector;
 
-    public StlComponentController(StlChartComponentImpl component,
+    public StlChartComponentController(StlChartComponentImpl component,
             GuiAgentServices guiAgentServices,
             LayerTreeServices layerTreeServices,
             LayersManagerServices layersManagerServices,
@@ -247,7 +246,7 @@ public class StlComponentController
             try {
                 fxmlLoader.load();
             } catch (IOException ex) {
-                Logger.getLogger(StlComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                Logger.getLogger(StlChartComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
             configGroup.getStylesheets().add(CSS_STYLE_PATH + VIEW_GROUP_STYLE);
             Platform.runLater(() -> {
@@ -521,7 +520,7 @@ public class StlComponentController
         try {
             geom = wkt.read(result);
         } catch (ParseException ex) {
-            Logger.getLogger(StlComponentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StlChartComponentController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (geom != null) {
@@ -707,7 +706,7 @@ public class StlComponentController
                 geometryEnvelope = geometryFactory.createPolygon(ring, null);
 
             } catch (com.vividsolutions.jts.io.ParseException ex) {
-                Logger.getLogger(StlComponentController.class
+                Logger.getLogger(StlChartComponentController.class
                         .getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }

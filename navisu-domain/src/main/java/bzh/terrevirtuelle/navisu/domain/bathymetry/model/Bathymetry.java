@@ -19,12 +19,32 @@ public class Bathymetry {
 
     private List<Point3D> grid;
 
+    private double maxElevation;
+
     public Bathymetry() {
         grid = new ArrayList<>();
     }
 
     public Bathymetry(List<Point3D> grid) {
         this.grid = grid;
+    }
+
+    /**
+     * Get the value of maxElevation
+     *
+     * @return the value of maxElevation
+     */
+    public double getMaxElevation() {
+        return maxElevation;
+    }
+
+    /**
+     * Set the value of maxElevation
+     *
+     * @param maxElevation new value of maxElevation
+     */
+    public void setMaxElevation(double maxElevation) {
+        this.maxElevation = maxElevation;
     }
 
     /**
@@ -57,5 +77,5 @@ public class Bathymetry {
     public String toString() {
         return "Bathymetry{" + "grid=" + grid + '}';
     }
-    
+
 }
