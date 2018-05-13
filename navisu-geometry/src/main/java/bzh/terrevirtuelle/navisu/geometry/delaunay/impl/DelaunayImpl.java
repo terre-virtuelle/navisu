@@ -38,7 +38,7 @@ public class DelaunayImpl
      * @return
      */
     @Override
-    public ArrayList<Triangle_dt> createDelaunay(List<Point3D> points, double elevation) {
+    public List<Triangle_dt> createDelaunay(List<Point3D> points, double elevation) {
 
         Delaunay_Triangulation dt = new Delaunay_Triangulation();
         points.stream().forEach((pt) -> {
@@ -65,9 +65,7 @@ public class DelaunayImpl
                         new Point_dt(pt3.getLatitude(), pt3.getLongitude(), pt3.getElevation()),
                         new Point_dt(pt2.getLatitude(), pt2.getLongitude(), pt2.getElevation())));
             }
-
         }
-
         return triangles;
     }
 
@@ -109,6 +107,16 @@ public class DelaunayImpl
     }
 
     @Override
+    public Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax, double y, double x, double elevation) {
+        double latRange = geodesyServices.getDistanceM(Position.fromDegrees(latMin, lonMin), Position.fromDegrees(latMax, lonMin));
+        double lonRange = geodesyServices.getDistanceM(Position.fromDegrees(latMin, lonMin), Position.fromDegrees(latMin, lonMax));
+
+        int nbLat = (int) (latRange / y);
+        int nbLon = (int) (lonRange / x);
+        return toGrid(latMin, lonMin, y, x, nbLat, nbLon, elevation);
+    }
+
+    @Override
     public Point3D[][] toGrid(double orgLat, double orgLon,
             double dy, double dx,
             int nbLat, int nbLon,
@@ -130,8 +138,8 @@ public class DelaunayImpl
     public List<Triangle_dt> filterLargeEdges(List<Triangle_dt> triangles, double threshold) {
         List<Triangle_dt> tmp1 = new ArrayList<>();
         triangles.stream().filter((t) -> (t.getBoundingBox().getWidth() < threshold)).forEach((t) -> {
+          //  System.out.println("t.getBoundingBox().getWidth() : " +t.getBoundingBox().getWidth());
             tmp1.add(t);
-
         });
         return tmp1;
     }
@@ -147,4 +155,5 @@ public class DelaunayImpl
     @Override
     public void componentStopped() {
     }
+
 }

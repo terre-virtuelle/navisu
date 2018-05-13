@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,13 +20,16 @@ import org.capcaval.c3.component.ComponentService;
 public interface DelaunayServices
         extends ComponentService {
 
-    ArrayList<Triangle_dt> createDelaunay(List<Point3D> points, double elevation);
+    List<Triangle_dt> createDelaunay(List<Point3D> points, double elevation);
 
     List<Triangle_dt> createDelaunay(Point3D[][] points, int nbLat, int nbLon, double elevation);
 
     Delaunay_Triangulation getTriangulation(List<Point3D> points);
 
     List<Point3D> toGrid(double latMin, double lonMin, double latMax, double lonMax,
+            double y, double x, double elevation);
+
+    Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax,
             double y, double x, double elevation);
 
     Point3D[][] toGrid(double orgLat, double orgLon, double dy, double dx,

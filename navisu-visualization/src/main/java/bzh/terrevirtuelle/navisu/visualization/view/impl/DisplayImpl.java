@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.visualization.view.impl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.lut.Clut;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Point_dt;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.visualization.view.Display;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
@@ -68,6 +69,41 @@ public class DisplayImpl
             layer.addRenderables(pathLatLonS.get(i));
         }
          */
+    }
+// = new ArrayList<>();
+
+    @Override
+    public void displayGrid(Point3D[][] latLons, Material material, RenderableLayer layer, double verticalExaggeration) {
+        ArrayList<Position> pathIsoLatPositions;
+        List<Path> latPaths = new ArrayList<>();
+        Path path = null;
+        for (Point3D[] p : latLons) {
+            pathIsoLatPositions = new ArrayList<>();
+            for (Point3D pp : p) {
+                pathIsoLatPositions.add(Position.fromDegrees(pp.getLatitude(), 
+                        pp.getLongitude(), 
+                        pp.getElevation()*verticalExaggeration));
+                path = createPath(pathIsoLatPositions, material);
+            }
+            latPaths.add(path);
+        }
+        layer.addRenderables(latPaths);
+        
+        List<Path> lonPaths = new ArrayList<>();
+        ArrayList<Position> pathIsoLonPositions;
+        int i = 0;
+        for (Point3D k : latLons[0]) {
+            pathIsoLonPositions = new ArrayList<>();
+            for (Point3D[] row : latLons) {
+                pathIsoLonPositions.add(Position.fromDegrees(row[i].getLatitude(), 
+                        row[i].getLongitude(),
+                        row[i].getElevation()*verticalExaggeration));
+                path = createPath(pathIsoLonPositions, material);
+            }
+            i++;
+            lonPaths.add(path);
+        }
+        layer.addRenderables(lonPaths);
     }
 
     @Override

@@ -104,6 +104,7 @@ public class S57DBComponentImpl
 
     @Override
     public void on(String... files) {
+        System.out.println("on");
         String[] cmd = files;
         if (cmd != null) {
             componentKeyName = cmd[0];
@@ -121,22 +122,7 @@ public class S57DBComponentImpl
                         displayServices,
                         delaunayServices);
                 controller.setVisible(true);
-            } else if (cmd[0].equals(COMPONENT_KEY_NAME_0)) {
-                {
-                    controller = new S57DBComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
-                            guiAgentServices,
-                            layersManagerServices,
-                            layerTreeServices,
-                            s57ChartComponentServices,
-                            databaseServices,
-                            instrumentDriverManagerServices,
-                            topologyServices,
-                            jtsServices,
-                            shapefileObjectServices,
-                            displayServices,
-                            delaunayServices);
-                }
-            }
+            }  
         }
     }
 

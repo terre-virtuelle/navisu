@@ -33,11 +33,15 @@ import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
+import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.BathyLoader;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
+import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.WorldWindow;
 import java.io.IOException;
 import java.util.HashMap;
@@ -108,6 +112,8 @@ public class StlDBComponentController
     protected GuiAgentServices guiAgentServices;
     protected LayersManagerServices layersManagerServices;
     protected DatabaseServices databaseServices;
+    protected DelaunayServices delaunayServices;
+    protected DisplayServices displayServices;
     protected BathymetryDBServices bathymetryDBServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected TopologyServices topologyServices;
@@ -254,6 +260,8 @@ public class StlDBComponentController
             LayersManagerServices layersManagerServices,
             S57ChartComponentServices s57ChartComponentServices,
             DatabaseServices databaseServices,
+            DelaunayServices delaunayServices,
+            DisplayServices displayServices,
             BathymetryDBServices bathymetryDBServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
             TopologyServices topologyServices,
@@ -274,6 +282,8 @@ public class StlDBComponentController
         this.guiAgentServices = guiAgentServices;
         this.layersManagerServices = layersManagerServices;
         this.databaseServices = databaseServices;
+        this.delaunayServices = delaunayServices;
+        this.displayServices = displayServices;
         this.bathymetryDBServices = bathymetryDBServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.topologyServices = topologyServices;
@@ -557,12 +567,16 @@ public class StlDBComponentController
                                 PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
             }
             if (selectedObjects.contains("ALL") || demRB.isSelected()) {
-                bathyConnection = databaseServices.connect(s57DatabaseTF.getText(),
+                bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(),
                         "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver",
                         USER, PASSWD);
                 Bathymetry bathymetry = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
-                System.out.println(bathymetry.getMaxElevation());
-                System.out.println(bathymetry.getGrid().size());
+                List<Triangle_dt> triangles = delaunayServices.createDelaunay(bathymetry.getGrid(), bathymetry.getMaxElevation());
+                triangles = delaunayServices.filterLargeEdges(triangles, 0.001);
+               // displayServices.displayDelaunay(triangles, bathymetry.getMaxElevation(), 50, Material.GREEN, s57Layer);
+                Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, bathymetry.getMaxElevation());
+                Point3D[][] pts1 = bathymetryDBServices.mergeData(pts, triangles);
+                displayServices.displayGrid(pts1, Material.MAGENTA, s57Layer,10);
             }
             s57Layer.removeRenderable(selectionPolygon);
             wwd.redrawNow();

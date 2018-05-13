@@ -115,6 +115,8 @@ public class StlDBComponentImpl
                         layersManagerServices,
                         s57ChartComponentServices,
                         databaseServices,
+                        delaunayServices,
+                        displayServices,
                         bathymetryDBServices,
                         instrumentDriverManagerServices,
                         topologyServices,

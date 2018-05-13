@@ -48,8 +48,7 @@ public interface S57ChartComponentServices
     List<Path> getFilePaths(String rootFileNames, String kmlCatalog, String country);
 
     /*
-     Translate S7 charts in shapefiles and load these in a spatial DB
-     script shell for Linux
+     Translate S7 charts in shapefiles, script shell for Linux and Windows
      */
     String s57ToShapeFile(List<Path> paths);
 

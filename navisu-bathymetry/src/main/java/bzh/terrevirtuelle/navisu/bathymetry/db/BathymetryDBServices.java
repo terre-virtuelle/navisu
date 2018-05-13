@@ -52,7 +52,7 @@ public interface BathymetryDBServices
 
     void writePointList(List<Point3D> points, Path pathname, boolean latLon);
 
-    Point3D[][] mergeData(Point3D[][] orgData, int nbLat, int nbLon, List<Triangle_dt> triangles);
+    Point3D[][] mergeData(Point3D[][] orgData,List<Triangle_dt> triangles);
 
     DatabaseDriver getDriver();
 }

@@ -157,9 +157,8 @@ public class BathymetryDBImpl
     }
 
     @Override
-    public Point3D[][] mergeData(Point3D[][] orgData, int nbLat, int nbLon,
-            List<Triangle_dt> triangles) {
-        return bathymetryDBController.mergeData(orgData, nbLat, nbLon, triangles);
+    public Point3D[][] mergeData(Point3D[][] orgData, List<Triangle_dt> triangles) {
+        return bathymetryDBController.mergeData(orgData,triangles);
     }
 
     @Override

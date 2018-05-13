@@ -275,6 +275,7 @@ public class BathymetryDBController {
     }
 
     public List<Point3D> retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax) {
+
         Connection tmp0 = this.connection;
         this.connection = connection;
         List<Point3D> tmp1 = retrieveIn(latMin, lonMin, latMax, lonMax);
@@ -322,9 +323,14 @@ public class BathymetryDBController {
      * @return the initial grid whith elevation value
      *
      */
-    public Point3D[][] mergeData(Point3D[][] orgData,
-            int nbLat, int nbLon,
-            List<Triangle_dt> triangles) {
+    public Point3D[][] mergeData(Point3D[][] orgData, List<Triangle_dt> triangles) {
+        /*
+        matrice.length     //  2
+        matrice[0].length  //  4
+        matrice[1].length  //  7
+         */
+        int nbLat = orgData[0].length;
+        int nbLon = orgData[1].length;
         Point3D[][] tmp = new Point3D[nbLat][nbLon];
         for (int k = 0; k < nbLat; k++) {
             System.arraycopy(orgData[k], 0, tmp[k], 0, nbLon);
@@ -354,7 +360,6 @@ public class BathymetryDBController {
                     }
                 }
             }
-
         }
         return tmp;
     }
