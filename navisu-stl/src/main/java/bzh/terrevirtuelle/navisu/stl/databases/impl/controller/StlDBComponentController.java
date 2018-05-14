@@ -68,6 +68,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -162,7 +163,7 @@ public class StlDBComponentController
     protected double DEFAULT_SIDE = 200.0;
     protected double tileSideX = DEFAULT_SIDE;
     protected double tileSideY = DEFAULT_SIDE;
-
+    protected double simplifyFactor = 0.0001;
     /* Common controls */
     @FXML
     public Group view;
@@ -210,6 +211,12 @@ public class StlDBComponentController
     public TextField hostnameTF;
     @FXML
     public TextField tilesCountTF;
+    @FXML
+    public TextField rangeLatTF;
+    @FXML
+    public TextField rangeLonTF;
+    @FXML
+    public TextField scaleTF;
     @FXML
     public TextField tileSideXTF;
     @FXML
@@ -321,19 +328,23 @@ public class StlDBComponentController
         tilesCountTF.setText("1");
         tilesCountCB.getSelectionModel()
                 .selectedItemProperty()
-                .addListener(
-                        (ObservableValue<? extends String> observable, String oldValue, String newValue)
-                        -> tilesCountTF.setText(tilesCountCB.getValue().split("x")[0])
-                );
+                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    int nb = Integer.parseInt(tilesCountCB.getValue().split("x")[0]);
+                    nb *= nb;
+                    tilesCountTF.setText(Integer.toString(nb));
+                });
         tileSideXTF.setOnAction((ActionEvent event) -> {
 
             try {
                 tileSideX = Double.parseDouble(tileSideXTF.getText());
                 tileSideXTF.setText(Double.toString(tileSideX));
-
+                tileSideY = tileSideX;
+                tileSideYTF.setText(Double.toString(tileSideX));
             } catch (NumberFormatException e) {
                 tileSideX = DEFAULT_SIDE;
                 tileSideXTF.setText(Double.toString(tileSideX));
+                tileSideY = DEFAULT_SIDE;
+                tileSideYTF.setText(Double.toString(tileSideY));
             }
 
         });
@@ -342,13 +353,26 @@ public class StlDBComponentController
             try {
                 tileSideY = Double.parseDouble(tileSideYTF.getText());
                 tileSideYTF.setText(Double.toString(tileSideY));
-
+                tileSideX = tileSideY;
+                tileSideXTF.setText(Double.toString(tileSideY));
             } catch (NumberFormatException e) {
                 tileSideY = DEFAULT_SIDE;
                 tileSideYTF.setText(Double.toString(tileSideY));
+                tileSideX = DEFAULT_SIDE;
+                tileSideXTF.setText(Double.toString(tileSideX));
             }
 
         });
+        simplifyTF.setOnAction((ActionEvent event) -> {
+            try {
+                double tmp = Double.valueOf(simplifyTF.getText());
+                simplifyFactor = tmp / 100000;
+            } catch (NumberFormatException e) {
+                simplifyFactor = 0.0001;
+                simplifyTF.setText(Double.toString(simplifyFactor*100000));
+            }
+        });
+
         checkComboBox = new CheckComboBox<>(objectsCbData);
         paneGP.add(checkComboBox, 4, 2);
         objectsTF.setText("ALL");
@@ -558,7 +582,7 @@ public class StlDBComponentController
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DEPARE")) {
                 new DepareView(latMin, lonMin, latMax, lonMax,
                         s57Layer, s57Layer, s57Layer,
-                        Double.valueOf(simplifyTF.getText()),
+                        simplifyFactor,
                         Double.valueOf(depthMagnificationTF.getText()),
                         createElevationCB.isSelected())
                         .display(new DepareDBLoader(databaseServices,
@@ -573,10 +597,10 @@ public class StlDBComponentController
                 Bathymetry bathymetry = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
                 List<Triangle_dt> triangles = delaunayServices.createDelaunay(bathymetry.getGrid(), bathymetry.getMaxElevation());
                 triangles = delaunayServices.filterLargeEdges(triangles, 0.001);
-               // displayServices.displayDelaunay(triangles, bathymetry.getMaxElevation(), 50, Material.GREEN, s57Layer);
+                // displayServices.displayDelaunay(triangles, bathymetry.getMaxElevation(), 50, Material.GREEN, s57Layer);
                 Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, bathymetry.getMaxElevation());
                 Point3D[][] pts1 = bathymetryDBServices.mergeData(pts, triangles);
-                displayServices.displayGrid(pts1, Material.MAGENTA, s57Layer,10);
+                displayServices.displayGrid(pts1, Material.MAGENTA, s57Layer, 10);
             }
             s57Layer.removeRenderable(selectionPolygon);
             wwd.redrawNow();
