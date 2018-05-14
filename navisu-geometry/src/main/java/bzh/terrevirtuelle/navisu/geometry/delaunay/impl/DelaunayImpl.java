@@ -113,15 +113,16 @@ public class DelaunayImpl
 
         int nbLat = (int) (latRange / y);
         int nbLon = (int) (lonRange / x);
-        return toGrid(latMin, lonMin, y, x, nbLat, nbLon, elevation);
+        return toGrid(latMin, lonMin, latMax, lonMax, y, x, nbLat, nbLon, elevation);
     }
 
     @Override
     public Point3D[][] toGrid(double orgLat, double orgLon,
+            double latMax, double lonMax,
             double dy, double dx,
             int nbLat, int nbLon,
             double elevation) {
-
+//Pb d'arrondis
         Point3D[][] tab = new Point3D[nbLat][nbLon];
         for (int v = 0; v < nbLat; v++) {
             Position p = geodesyServices.getPosition(Position.fromDegrees(orgLat, orgLon), 0.0, v * dy);
@@ -129,8 +130,11 @@ public class DelaunayImpl
                 Position pp = geodesyServices.getPosition(p, 90.0, u * dx);
                 tab[v][u] = new Point3D(pp.getLatitude().getDegrees(), pp.getLongitude().getDegrees(), elevation);
             }
+           // Position pp = geodesyServices.getPosition(p, 90.0, lonMax);
+          // tab[v][nbLon - 1] = new Point3D(pp.getLatitude().getDegrees(), pp.getLongitude().getDegrees(), elevation);
         }
-
+       // Position p = geodesyServices.getPosition(Position.fromDegrees(orgLat, orgLon), 0.0, latMax);
+       // tab[v][nbLon - 1] = new Point3D(pp.getLatitude().getDegrees(), pp.getLongitude().getDegrees(), elevation);
         return tab;
     }
 
@@ -138,7 +142,7 @@ public class DelaunayImpl
     public List<Triangle_dt> filterLargeEdges(List<Triangle_dt> triangles, double threshold) {
         List<Triangle_dt> tmp1 = new ArrayList<>();
         triangles.stream().filter((t) -> (t.getBoundingBox().getWidth() < threshold)).forEach((t) -> {
-          //  System.out.println("t.getBoundingBox().getWidth() : " +t.getBoundingBox().getWidth());
+            //  System.out.println("t.getBoundingBox().getWidth() : " +t.getBoundingBox().getWidth());
             tmp1.add(t);
         });
         return tmp1;

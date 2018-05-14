@@ -152,13 +152,18 @@ public class BathymetryDBImpl
     }
 
     @Override
-    public List<Point3D>  retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax) {
+    public List<Point3D> retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax) {
         return bathymetryDBController.retrieveIn(connection, latMin, lonMin, latMax, lonMax);
     }
 
     @Override
     public Point3D[][] mergeData(Point3D[][] orgData, List<Triangle_dt> triangles) {
-        return bathymetryDBController.mergeData(orgData,triangles);
+        return bathymetryDBController.mergeData(orgData, triangles);
+    }
+
+    @Override
+    public Point3D[][] mergeData(Point3D[][] orgData, List<Triangle_dt> triangles, double depth) {
+        return bathymetryDBController.mergeData(orgData, triangles, depth);
     }
 
     @Override

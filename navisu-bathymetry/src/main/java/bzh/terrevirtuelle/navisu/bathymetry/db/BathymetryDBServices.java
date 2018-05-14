@@ -48,11 +48,13 @@ public interface BathymetryDBServices
 
     List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax);
 
-    List<Point3D>  retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax);
+    List<Point3D> retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax);
 
     void writePointList(List<Point3D> points, Path pathname, boolean latLon);
 
-    Point3D[][] mergeData(Point3D[][] orgData,List<Triangle_dt> triangles);
+    Point3D[][] mergeData(Point3D[][] orgData, List<Triangle_dt> triangles);
+
+    Point3D[][] mergeData(Point3D[][] orgData, List<Triangle_dt> triangles, double depth);
 
     DatabaseDriver getDriver();
 }

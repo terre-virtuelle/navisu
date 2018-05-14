@@ -87,7 +87,8 @@ public class BathymetryDBController {
     protected Charset charset = Charset.forName("UTF-8");
 
     private BathymetryDBController(BathymetryDBImpl component,
-            DatabaseServices databaseServices, GuiAgentServices guiAgentServices,
+            DatabaseServices databaseServices,
+            GuiAgentServices guiAgentServices,
             BathymetryEventProducerServices bathymetryEventProducerServices,
             double limit, RenderableLayer layer) {
         this.component = component;
@@ -357,6 +358,50 @@ public class BathymetryDBController {
                             pMin = tt.C;
                         }
                         tmp[k][l].setElevation(pMin.z);
+                    }
+                }
+            }
+        }
+        return tmp;
+    }
+
+    /**
+     * @param orgData a simple grid of point3D, with z =0.0
+     * @param nbLat nb of lines
+     * @param nbLon nb of columns
+     * @param triangles Delaunay tiangulation with elevation value
+     * @return the initial grid whith elevation value
+     *
+     */
+    public Point3D[][] mergeData(Point3D[][] orgData, List<Triangle_dt> triangles, double depth) {
+        int nbLat = orgData[0].length;
+        int nbLon = orgData[1].length;
+        Point3D[][] tmp = new Point3D[nbLat][nbLon];
+        for (int k = 0; k < nbLat; k++) {
+            System.arraycopy(orgData[k], 0, tmp[k], 0, nbLon);
+        }
+        for (int k = 0; k < nbLat - 1; k++) {
+            for (int l = 0; l < nbLon - 1; l++) {
+                //Select one point
+                Point3D p = tmp[k][l];
+                Point_dt pp = new Point_dt(p.getLatitude(), p.getLongitude(), p.getElevation());
+                for (Triangle_dt tt : triangles) {
+                    // Research  the nearest point of this triangle
+                    if (tt.contains(pp)) {
+                        distA = tt.A.distance(pp);
+                        distB = tt.B.distance(pp);
+                        distC = tt.C.distance(pp);
+                        distMin = distA;
+                        pMin = tt.A;
+                        if (distMin > distB) {
+                            distMin = distB;
+                            pMin = tt.B;
+                        }
+                        if (distMin > distC) {
+                            distMin = distC;
+                            pMin = tt.C;
+                        }
+                        tmp[k][l].setElevation(depth);
                     }
                 }
             }
