@@ -55,36 +55,33 @@ public class StlDBComponentImpl
         implements StlDBComponent, StlDBComponentServices, InstrumentDriver, ComponentState {
 
     @UsedService
+    BathymetryDBServices bathymetryDBServices;
+    @UsedService
+    DatabaseServices databaseServices;
+    @UsedService
+    DelaunayServices delaunayServices;
+    @UsedService
+    DisplayServices displayServices;
+    @UsedService
+    GeodesyServices geodesyServices;
+    @UsedService
     GeoViewServices geoViewServices;
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
-    LayerTreeServices layerTreeServices;
-    @UsedService
-    LayersManagerServices layersManagerServices;
-    @UsedService
-    S57ChartComponentServices s57ChartComponentServices;
-    @UsedService
-    DatabaseServices databaseServices;
-    @UsedService
-    BathymetryDBServices bathymetryDBServices;
-    @UsedService
     InstrumentDriverManagerServices instrumentDriverManagerServices;
-    @UsedService
-    TopologyServices topologyServices;
-    @UsedService
-    GeodesyServices geodesyServices;
     @UsedService
     JTSServices jtsServices;
     @UsedService
-    DelaunayServices delaunayServices;
+    LayersManagerServices layersManagerServices;
+    @UsedService
+    LayerTreeServices layerTreeServices;
     @UsedService
     ShapefileObjectServices shapefileObjectServices;
     @UsedService
-    DisplayServices displayServices;
-
-    ComponentManager cm;
-    ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
+    S57ChartComponentServices s57ChartComponentServices;
+    @UsedService
+    TopologyServices topologyServices;
 
     protected final String COMPONENT_KEY_NAME_0 = "StlDbS57";
     protected String componentKeyName;
@@ -120,7 +117,8 @@ public class StlDBComponentImpl
                         bathymetryDBServices,
                         instrumentDriverManagerServices,
                         topologyServices,
-                        shapefileObjectServices);
+                        shapefileObjectServices,
+                        geodesyServices);
                 controller.setVisible(true);
             }
         }

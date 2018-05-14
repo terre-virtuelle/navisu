@@ -36,6 +36,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
+import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.BathyLoader;
@@ -110,15 +111,16 @@ public class StlDBComponentController
 
     protected StlDBComponentImpl component;
 
-    protected GuiAgentServices guiAgentServices;
-    protected LayersManagerServices layersManagerServices;
+    protected BathymetryDBServices bathymetryDBServices;
     protected DatabaseServices databaseServices;
     protected DelaunayServices delaunayServices;
     protected DisplayServices displayServices;
-    protected BathymetryDBServices bathymetryDBServices;
+    protected GeodesyServices geodesyServices;
+    protected GuiAgentServices guiAgentServices;
+    protected LayersManagerServices layersManagerServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
-    protected TopologyServices topologyServices;
     protected ShapefileObjectServices shapefileObjectServices;
+    protected TopologyServices topologyServices;
 
     protected static final Logger LOGGER = Logger.getLogger(StlDBComponentController.class.getName());
 
@@ -144,14 +146,23 @@ public class StlDBComponentController
     protected ShapeAttributes normalAttributes;
     protected ShapeAttributes highlightAttributes;
     protected Polygon selectionPolygon;
-    protected double lat0;
+
+    protected double DEFAULT_SIDE = 200.0;
+    protected double tileSideX = DEFAULT_SIDE;
+    protected double tileSideY = DEFAULT_SIDE;
+    protected double lat0 = 520;
     protected double lon0;
     protected double lat1;
     protected double lon1;
-    protected double earthSpaceX;
-    protected double earthSpaceY;
+    protected double latRange;
+    protected double lonRange;
+    protected double latRangemetric;
     protected double lonRangeMetric;
-    protected double latRangeMetric;
+    protected double latScale;
+    protected double lonScale;
+    protected double globalScale;
+    protected int tileCount = 1;
+    protected double simplifyFactor;
     protected S57ObjectView s57Viewer;
     protected List<? extends Geo> objects;
     protected List<Buoyage> buoyages = new ArrayList<>();
@@ -160,10 +171,7 @@ public class StlDBComponentController
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
     protected String marsys;
     protected List<String> selectedObjects = new ArrayList<>();
-    protected double DEFAULT_SIDE = 200.0;
-    protected double tileSideX = DEFAULT_SIDE;
-    protected double tileSideY = DEFAULT_SIDE;
-    protected double simplifyFactor = 0.0001;
+
     /* Common controls */
     @FXML
     public Group view;
@@ -272,7 +280,8 @@ public class StlDBComponentController
             BathymetryDBServices bathymetryDBServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
             TopologyServices topologyServices,
-            ShapefileObjectServices shapefileObjectServices) {
+            ShapefileObjectServices shapefileObjectServices,
+            GeodesyServices geodesyServices) {
         super(keyCode, keyCombination);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
         fxmlLoader.setRoot(this);
@@ -295,6 +304,8 @@ public class StlDBComponentController
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.topologyServices = topologyServices;
         this.shapefileObjectServices = shapefileObjectServices;
+        this.geodesyServices = geodesyServices;
+
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
 
@@ -328,11 +339,17 @@ public class StlDBComponentController
         tilesCountTF.setText("1");
         tilesCountCB.getSelectionModel()
                 .selectedItemProperty()
-                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-                    int nb = Integer.parseInt(tilesCountCB.getValue().split("x")[0]);
-                    nb *= nb;
-                    tilesCountTF.setText(Integer.toString(nb));
+                .addListener(
+                        (ObservableValue<? extends String> observable, String oldValue, String newValue)
+                        -> {
+                    tileCount = Integer.parseInt(tilesCountCB.getValue().split("x")[0]);
+                    tileCount *= tileCount;
+                    tilesCountTF.setText(Integer.toString(tileCount));
+                    if (lat0 != 520) {
+                        initScale();
+                    }
                 });
+
         tileSideXTF.setOnAction((ActionEvent event) -> {
 
             try {
@@ -345,6 +362,9 @@ public class StlDBComponentController
                 tileSideXTF.setText(Double.toString(tileSideX));
                 tileSideY = DEFAULT_SIDE;
                 tileSideYTF.setText(Double.toString(tileSideY));
+            }
+            if (lat0 != 520) {
+                initScale();
             }
 
         });
@@ -361,7 +381,9 @@ public class StlDBComponentController
                 tileSideX = DEFAULT_SIDE;
                 tileSideXTF.setText(Double.toString(tileSideX));
             }
-
+            if (lat0 != 520) {
+                initScale();
+            }
         });
         simplifyTF.setOnAction((ActionEvent event) -> {
             try {
@@ -369,7 +391,7 @@ public class StlDBComponentController
                 simplifyFactor = tmp / 100000;
             } catch (NumberFormatException e) {
                 simplifyFactor = 0.0001;
-                simplifyTF.setText(Double.toString(simplifyFactor*100000));
+                simplifyTF.setText(Double.toString(simplifyFactor * 100000));
             }
         });
 
@@ -441,6 +463,7 @@ public class StlDBComponentController
                     lonMinLabel.setText(String.format("%.2f", lon0));
                     latMaxLabel.setText(String.format("%.2f", lat1));
                     lonMaxLabel.setText(String.format("%.2f", lon1));
+                    initScale();
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
@@ -465,6 +488,7 @@ public class StlDBComponentController
                     "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver",
                     USER, PASSWD);
             if (lat0 != 0 && lon0 != 0 && lat1 != 0 && lon1 != 0) {
+
                 retrieveIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -601,6 +625,9 @@ public class StlDBComponentController
                 Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, bathymetry.getMaxElevation());
                 Point3D[][] pts1 = bathymetryDBServices.mergeData(pts, triangles);
                 displayServices.displayGrid(pts1, Material.MAGENTA, s57Layer, 10);
+                Point3D[][] pts2 = bathymetryDBServices.mergeData(pts, triangles, 0.0);
+                displayServices.displayGrid(pts2, Material.GREEN, s57Layer, 10);
+              //  paintBox(s57Layer, Material.MAGENTA, latMin, lonMin, latMax, lonMax, bathymetry.getMaxElevation()*10);
             }
             s57Layer.removeRenderable(selectionPolygon);
             wwd.redrawNow();
@@ -635,7 +662,6 @@ public class StlDBComponentController
         highlightAttributes = new BasicShapeAttributes(normalAttributes);
         highlightAttributes.setOutlineOpacity(1);
         highlightAttributes.setOutlineMaterial(new Material(Color.WHITE));
-        // highlightAttributes.setEnableLighting(true);
     }
 
     private void initSelectedZone() {
@@ -710,9 +736,91 @@ public class StlDBComponentController
             lonMinLabel.setText(Double.toString(lon0));
             latMaxLabel.setText(Double.toString(lat1));
             lonMaxLabel.setText(Double.toString(lon1));
+            initScale();
         });
+
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
         dialog.showAndWait();
+    }
+
+    private void initScale() {
+        latRangemetric = geodesyServices.getDistanceM(lat0, lon0, lat1, lon0);
+        lonRangeMetric = geodesyServices.getDistanceM(lat0, lon0, lat0, lon1);
+        double scaleLat = latRangemetric / (tileSideY / 1000.0);
+        double scaleLon = lonRangeMetric / (tileSideX / 1000.0);
+
+        globalScale = (scaleLat + scaleLon) / 2;//Arrondi pour l'affichage
+        globalScale /= tileCount;
+        double sc = 1;
+        if (globalScale <= 1000) {
+            sc = 100;
+        } else if (globalScale > 1000 && globalScale <= 10000) {
+            sc = 1000;
+        } else if (globalScale > 10000 && globalScale <= 100000) {
+            sc = 1000;
+        } else if (globalScale > 100000 && globalScale <= 1000000) {
+            sc = 10000;
+        } else if (globalScale > 1000000 && globalScale <= 10000000) {
+            sc = 100000;
+        }
+        globalScale /= sc;
+        scaleTF.setText("1/" + Integer.toString((int) (Math.round(globalScale) * sc)));
+
+    }
+
+    private List<Polygon> paintBox(RenderableLayer layer, Material material,double lat0, double lon0, double lat1, double lon1, double height) {
+        List<Polygon> box = new ArrayList<>();
+        ArrayList<Position> pathPositions = new ArrayList<>();
+        pathPositions.add(Position.fromDegrees(lat0, lon0, 0));
+        pathPositions.add(Position.fromDegrees(lat0, lon1, 0));
+        pathPositions.add(Position.fromDegrees(lat0, lon1, height));
+        pathPositions.add(Position.fromDegrees(lat0, lon0, height));
+        pathPositions.add(Position.fromDegrees(lat0, lon0, 0));
+        Polygon sidePolygon = new Polygon(pathPositions);
+        normalAttributes.setInteriorMaterial(material);
+        normalAttributes.setDrawInterior(true);
+        sidePolygon.setAttributes(normalAttributes);
+        box.add(sidePolygon);
+        
+        pathPositions.clear();
+        pathPositions.add(Position.fromDegrees(lat0, lon0, 0));
+        pathPositions.add(Position.fromDegrees(lat0, lon0,height));
+        pathPositions.add(Position.fromDegrees(lat1, lon0, height));
+        pathPositions.add(Position.fromDegrees(lat1, lon0, 0));
+        pathPositions.add(Position.fromDegrees(lat0, lon0, 0));
+        sidePolygon = new Polygon(pathPositions);
+        normalAttributes.setInteriorMaterial(material);
+        normalAttributes.setDrawInterior(true);
+        sidePolygon.setAttributes(normalAttributes);
+        box.add(sidePolygon);
+        
+        pathPositions.clear();
+        pathPositions.add(Position.fromDegrees(lat1, lon0, 0));
+        pathPositions.add(Position.fromDegrees(lat1, lon0,height));
+        pathPositions.add(Position.fromDegrees(lat1, lon1, height));
+        pathPositions.add(Position.fromDegrees(lat1, lon1, 0));
+        pathPositions.add(Position.fromDegrees(lat1, lon0, 0));
+        sidePolygon = new Polygon(pathPositions);
+        normalAttributes.setInteriorMaterial(material);
+        normalAttributes.setDrawInterior(true);
+        sidePolygon.setAttributes(normalAttributes);
+        box.add(sidePolygon);
+        
+        pathPositions.clear();
+        pathPositions.add(Position.fromDegrees(lat1, lon1, 0));
+        pathPositions.add(Position.fromDegrees(lat1, lon1,height));
+        pathPositions.add(Position.fromDegrees(lat0, lon1, height));
+        pathPositions.add(Position.fromDegrees(lat0, lon1, 0));
+        pathPositions.add(Position.fromDegrees(lat1, lon1, 0));
+        sidePolygon = new Polygon(pathPositions);
+        normalAttributes.setInteriorMaterial(material);
+        normalAttributes.setDrawInterior(true);
+        sidePolygon.setAttributes(normalAttributes);
+        box.add(sidePolygon);
+        
+        layer.addRenderables(box);
+        wwd.redrawNow();
+        return box;
     }
 
     public Connection getConnection() {
