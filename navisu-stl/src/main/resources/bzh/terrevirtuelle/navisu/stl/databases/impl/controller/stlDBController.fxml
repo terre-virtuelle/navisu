@@ -28,7 +28,7 @@
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="538.0" minWidth="8.0" prefWidth="13.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="95.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="95.0" minHeight="30.0" prefHeight="20.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="500.0" minHeight="10.0" prefHeight="360.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints />
@@ -36,7 +36,7 @@
                     <children>
                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <children>
-                                <GridPane fx:id="paneGP" alignment="CENTER" layoutY="-82.0" prefHeight="330.0" prefWidth="531.0" styleClass="grid-pane-contour">
+                                <GridPane fx:id="paneGP" alignment="CENTER" layoutY="-82.0" prefHeight="360.0" prefWidth="531.0" styleClass="grid-pane-contour">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="120.0" />
@@ -59,6 +59,7 @@
                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -70,13 +71,13 @@
                                     <children>
                                         <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="S57 objects database" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                                         <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Selected objects" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                                        <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="SELECTION MODE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="13" GridPane.valignment="CENTER" />
+                                        <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="SELECTION MODE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="14" GridPane.valignment="CENTER" />
                                         <TextField fx:id="s57DatabaseTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                         <TextField fx:id="objectsTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                         <ChoiceBox fx:id="s57DatabasesCB" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                        <Button fx:id="latLonButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="255.0" text="Enter coordinates" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="14" GridPane.valignment="CENTER" />
-                                        <Button fx:id="interactiveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="176.0" text="Marquee tool" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="15" GridPane.valignment="CENTER" />
-                                        <GridPane GridPane.columnIndex="4" GridPane.rowIndex="14">
+                                        <Button fx:id="latLonButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="255.0" text="Enter coordinates" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="15" GridPane.valignment="CENTER" />
+                                        <Button fx:id="interactiveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="176.0" text="Marquee tool" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="16" GridPane.valignment="CENTER" />
+                                        <GridPane GridPane.columnIndex="4" GridPane.rowIndex="15">
                                             <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -85,9 +86,9 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                         </GridPane>
-                                        <Button fx:id="selectedButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Valid" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="15" GridPane.valignment="CENTER" />
-                                        <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="15.0" prefWidth="120.0" text="Keyboard" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="14" />
-                                        <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Graphic selection" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="15" />
+                                        <Button fx:id="selectedButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Valid" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="16" GridPane.valignment="CENTER" />
+                                        <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="15.0" prefWidth="120.0" text="Keyboard" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="15" />
+                                        <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Graphic selection" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="16" />
                                         <Label text="Distance tolerance (m)" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                                         <TextField fx:id="simplifyTF" alignment="CENTER_RIGHT" text="10" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                         <Label text="Elevation magnification" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
@@ -151,7 +152,7 @@
                                               <CheckBox fx:id="createElevationCB" mnemonicParsing="false" prefHeight="18.0" prefWidth="126.0" text="Create elevation" />
                                  </children>
                               </GridPane>
-                              <RadioButton fx:id="depareUlhyssesRB" mnemonicParsing="false" text="DEPARE ULHYSSES" GridPane.columnIndex="4" GridPane.rowIndex="12" />
+                              <RadioButton fx:id="depareUlhyssesRB" mnemonicParsing="false" text="DEPARE ULHYSSES" GridPane.columnIndex="4" GridPane.rowIndex="13" />
                               <ChoiceBox fx:id="bathyDatabasesCB" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="11" />
                               <Label text="Bathymetry database" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="11" />
                               <TextField fx:id="bathyDatabaseTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="11" />
@@ -170,12 +171,14 @@
                                  </children>
                               </GridPane>
                               <Label text="Scale" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
-                              <TextField fx:id="scaleTF" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                              <TextField fx:id="scaleTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                              <Label text="ULYSSES parameters" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="13" />
+                              <TextField fx:id="ulhyssesTF" GridPane.columnIndex="3" GridPane.rowIndex="13" />
                                     </children>
                                 </GridPane>
                             </children>
                         </AnchorPane>
-                        <GridPane maxHeight="79.0" maxWidth="-Infinity" prefHeight="79.0" prefWidth="412.0" styleClass="grid-pane-contour" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2">
+                        <GridPane maxHeight="79.0" maxWidth="-Infinity" prefHeight="70.0" prefWidth="412.0" styleClass="grid-pane-contour" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="328.0" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="95.0" />
