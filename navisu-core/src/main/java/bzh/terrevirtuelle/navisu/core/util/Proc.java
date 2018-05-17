@@ -43,6 +43,7 @@ public class Proc {
     protected int returnCode;
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     protected static Properties properties;
+    protected String sep = File.separator;
 
     public Proc() {
         this.args = new LinkedList<>();
@@ -71,7 +72,7 @@ public class Proc {
         args.stream().forEach((arg) -> {
             sb.append(arg).append(SPACE);
         });
-       //System.out.println("exec : " + sb);
+        //System.out.println("exec : " + sb);
         process = Runtime.getRuntime().exec(sb.toString());
 
         redirectSreamAsync(process.getInputStream(), out);
@@ -125,10 +126,11 @@ public class Proc {
     private String createCmdSh(String cmd) {
         String cmdFile = null;
         if (OS.isWindows()) {
-            cmdFile = "cmd/cmd.bat";
+            cmdFile = "cmd\\cmd.bat";
         } else if (OS.isLinux()) {
             cmdFile = "cmd/cmd.sh";
         }
+        System.out.println("cmd : " + cmd);
         try {
             Files.write(Paths.get(cmdFile), cmd.getBytes());
         } catch (IOException ex) {

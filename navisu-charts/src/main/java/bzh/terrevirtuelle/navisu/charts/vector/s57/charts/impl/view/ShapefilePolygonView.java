@@ -26,7 +26,6 @@ import java.awt.Color;
 public abstract class ShapefilePolygonView
         extends ShapefileView {
 
-    
     protected SurfacePolygons shape;
     protected double height;
     protected ShapeAttributes capAttrs = new BasicShapeAttributes();
@@ -37,9 +36,12 @@ public abstract class ShapefilePolygonView
     }
 
     protected void createPolygon(RenderableLayer layer, ShapefileRecord record,
-            boolean isHeight, double magnify, double maxHeight, boolean simp) {
+            boolean isHeight, double magnify, double maxHeight) {
         this.record = record;
+        System.out.println("createPolygon " + layer +" "+record +" "+isHeight+" "+magnify+" "+maxHeight);
+        isHeight = true;//Hack
         if (isHeight == true) {
+            // System.out.println("record : "+record);
             if (record.getAttributes() != null) {
                 entries = record.getAttributes().getEntries();
                 entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
@@ -48,9 +50,8 @@ public abstract class ShapefilePolygonView
                     }
                 });
             }
-
-            if (height != 0) // create extruded polygons
-            {
+            // System.out.println("height : " + height);
+            if (height != 0) {  // create extruded polygons
                 ExtrudedPolygon ep = new ExtrudedPolygon(height);
                 setExtrudedPolygonAttributes(ep, color);
 
@@ -88,10 +89,10 @@ public abstract class ShapefilePolygonView
         normAttributes.setInteriorMaterial(new Material(col));
         normAttributes.setDrawOutline(true);
         normAttributes.setOutlineMaterial(new Material(Color.BLACK));
-     //   normAttributes.setEnableLighting(true);
+        //   normAttributes.setEnableLighting(true);
         shape.setAttributes(normAttributes);
 
-      //  shape.setHighlightAttributes(highlightAttributes);
+        //  shape.setHighlightAttributes(highlightAttributes);
     }
 
     protected void setExtrudedPolygonAttributes(ExtrudedPolygon ep, Color color) {
@@ -99,7 +100,7 @@ public abstract class ShapefilePolygonView
         capAttrs.setDrawInterior(true);
         capAttrs.setOutlineMaterial(Material.BLUE);
         capAttrs.setInteriorMaterial(new Material(color));
-      //  capAttrs.setEnableLighting(true);
+        //  capAttrs.setEnableLighting(true);
         ep.setCapAttributes(capAttrs);
 
         sideAttrs.setOutlineWidth(3);
@@ -107,7 +108,7 @@ public abstract class ShapefilePolygonView
         sideAttrs.setDrawInterior(true);
         sideAttrs.setOutlineMaterial(Material.BLUE);
         sideAttrs.setInteriorMaterial(new Material(color));
-      //  sideAttrs.setEnableLighting(true);
+        //  sideAttrs.setEnableLighting(true);
         ep.setSideAttributes(sideAttrs);
     }
 }

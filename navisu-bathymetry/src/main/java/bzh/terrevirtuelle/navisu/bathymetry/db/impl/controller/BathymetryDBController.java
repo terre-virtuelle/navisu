@@ -414,6 +414,7 @@ public class BathymetryDBController {
     }
 
     public void writePointList(List<Point3D> points, Path pathname, boolean latLon) {
+       
         List<String> lines = new ArrayList<>();
         if (points != null) {
             if (latLon == true) {

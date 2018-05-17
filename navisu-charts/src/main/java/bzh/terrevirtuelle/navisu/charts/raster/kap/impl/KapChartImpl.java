@@ -103,31 +103,11 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
         try {
 
             Path tmpTif = Paths.get(inputFile.toString() + ".tif");
-            // System.out.print(tmpTif);
             cmd += " -b 1 " + file + " " + tmpTif.toString();
-            /*
-            String cmd0=createCmdSh(cmd);
-           
-            Proc.BUILDER.create()
-                    .setCmd(cmd0)
-                    .setOut(System.out)
-                    .setErr(System.err)
-                    .exec();
-             */
+            
             Proc.BUILDER.create()
                     .setCmd(cmd)
                     .execSh();
-            /*
-            Proc.BUILDER.create()
-                    .setCmd(cmd)
-                    .addArg("-b 1")
-                    .addArg(file)
-                    .addArg(tmpTif.toString())
-                    .setOut(System.out)
-                    .setErr(System.err)
-                    .exec(environment);
-             */
-
             inputFile = tmpTif;
             System.out.print(tmpTif);
         } catch (IOException | InterruptedException e) {

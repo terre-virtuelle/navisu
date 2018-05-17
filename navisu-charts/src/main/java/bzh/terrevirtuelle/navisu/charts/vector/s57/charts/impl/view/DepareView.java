@@ -12,6 +12,7 @@ import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Polygon;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,29 +32,27 @@ public class DepareView
     protected RenderableLayer simpleDeparelayer;
     protected RenderableLayer depare3DLayer;
     protected List<Polygon> polygons = new ArrayList<>();
-
-    double simplify;
+    double simplify = 0.001;
+    boolean isSimplify = false;
     double magnify;
     double maxHeight = 0.0;
-    boolean createElevation;
+    boolean isShowElevation;
 
-    public DepareView(double latMin, double lonMin, double latMax, double lonMax,
-            RenderableLayer layer, RenderableLayer simpleDeparelayer, RenderableLayer depare3DLayer,
-            double simplify, double magnify, boolean showElevation) {
-        this.latMin = latMin;
-        this.lonMin = lonMin;
-        this.latMax = latMax;
-        this.lonMax = lonMax;
+    public DepareView(RenderableLayer layer, RenderableLayer simpleDeparelayer, RenderableLayer depare3DLayer,
+            double simplify, double magnify,
+            boolean isSimplify, boolean isShowElevation) {
         this.layer = layer;
         this.simpleDeparelayer = simpleDeparelayer;
         this.depare3DLayer = depare3DLayer;
         this.simplify = simplify;
+        this.isSimplify = isSimplify;
         this.magnify = magnify;
-        this.createElevation = showElevation;
+        this.isShowElevation = isShowElevation;
+        new File("cmd").mkdir();
     }
 
     public void display(Shapefile shp) {
-
+      //  System.out.println("shp : " + shp);OK
         while (shp.hasNext()) {
             try {
                 //Create classical chart
@@ -62,7 +61,7 @@ public class DepareView
                 if (!Shapefile.isPolygonType(record.getShapeType())) {
                     continue;
                 }
-
+                
                 Polygon p;
                 for (int i = 0; i < shape.getBuffer().size(); i++) {
                     p = new Polygon(shape.getBuffer().subBuffer(i).getPositions());
@@ -77,65 +76,64 @@ public class DepareView
             }
         }
 
-        //Create kml output.kml file
-        Polygon[] array = new Polygon[polygons.size()];
-        for (int i = 0; i < polygons.size(); i++) {
-            array[i] = polygons.get(i);
-        }
+        if (isSimplify == true) {
+            //Create kml output.kml file
+            Polygon[] array = new Polygon[polygons.size()];
+            for (int i = 0; i < polygons.size(); i++) {
+                array[i] = polygons.get(i);
+            }
 
-        creatKML(array);
+            creatKML(array);
 
-        //Simplify data and create depare.shp
-        String path = Proc.getProperty("gdalPath");
-        String command = path + "/ogr2ogr -f 'ESRI Shapefile' cmd/output.shp cmd/output.kml \n"
-                + path + "/ogr2ogr cmd/outfileSimplify.shp cmd/depare.shp -simplify " + simplify;
-        try {
-            Proc.BUILDER.create()
-                    .setCmd(command)
-                    .execSh();
-        } catch (IOException | InterruptedException ex) {
-            Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-
-        //Create objectShapefile with data simplified
-        //Create extruded polygons with data simplified
-        Shapefile simplifiedShape = new Shapefile("cmd/outfileSimplify.shp");
-        while (simplifiedShape.hasNext()) {
+            //Simplify data and create depare.shp
+            String path = Proc.getProperty("gdalPath");
+            String command = path + "/ogr2ogr -f 'ESRI Shapefile' cmd/output.shp cmd/output.kml \n"
+                    + path + "/ogr2ogr cmd/outfileSimplify.shp cmd/depare.shp -simplify " + simplify;
             try {
-                record = simplifiedShape.nextRecord();
-                createSurfacePolygons(record, simpleDeparelayer, false, true);
-                if (createElevation) {
-                    createSurfacePolygons(record, depare3DLayer, true, false);
-                }
-            } catch (Exception ex) {
+                Proc.BUILDER.create()
+                        .setCmd(command)
+                        .execSh();
+            } catch (IOException | InterruptedException ex) {
                 Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+
+            //Create objectShapefile with data simplified
+            //Create extruded polygons with data simplified
+            Shapefile simplifiedShape = new Shapefile("cmd/outfileSimplify.shp");
+            while (simplifiedShape.hasNext()) {
+                try {
+                    record = simplifiedShape.nextRecord();
+                    createSurfacePolygons(record, simpleDeparelayer, false, true);
+                    if (isShowElevation) {
+                        createSurfacePolygons(record, depare3DLayer, true, false);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                }
+            }
+        } else {
+            while (shp.hasNext()) {
+                try {
+                    record = shp.nextRecord();
+                    createSurfacePolygons(record, simpleDeparelayer, false, true);
+                    if (isShowElevation) {
+                        System.out.println("isShowElevation" + record + " " + depare3DLayer);
+                        createSurfacePolygons(record, depare3DLayer, true, false);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                }
             }
         }
 
+        
+        
         wwd.redrawNow();
-/*
-        //Test lancement Ulhysses
-        String ulhyssesPath = "/opt/ULHYSSES/app";
-        command
-                = "cd " + ulhyssesPath + " \n"
-                + System.getProperty("java.home") + "/bin/java "
-                + "-Dlog4j.configuration=file:" + ulhyssesPath + "/conf-tools/toolsLog4j.properties "
-                + "-Xmx14g -Xms1024m -jar " + ulhyssesPath + "/" + "ULHYSSES.jar "
-                + "--outputDirectory=" + System.getProperty("user.dir") + "/privateData/ulhysses "
-                + "--inputFile=" + System.getProperty("user.dir") + "/data/ulhysses/testBathy_RADE_100_xyz.csv "
-                + "--compilationScale=1000 --fileType=0 --isoValues='0;2;4;6;8;10;12;14;16;18;20' "
-                + "--codeAgency=4G --baseName=0001";
-        try {
-            Proc.BUILDER.create()
-                    .setCmd(command)
-                    .execSh();
-        } catch (IOException | InterruptedException ex) {
-            Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-*/
+
     }
 
-    protected void createSurfacePolygons(ShapefileRecord record, RenderableLayer layer,
+    protected void createSurfacePolygons(ShapefileRecord record, 
+            RenderableLayer layer,
             boolean isHeight, boolean simp) {
 
         if (record != null) {
@@ -156,8 +154,9 @@ public class DepareView
                     color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val1);
                 });
             }
-
-            createPolygon(layer, record, isHeight, magnify, maxHeight, simp);
+            System.out.println("shape 0 : "+shape);
+            createPolygon(layer, record, isHeight, magnify, maxHeight);
+           System.out.println("shape 1 : "+shape);
             shape.setValue("drval1", val1);
             shape.setValue("drval2", val2);
             shape.setValue(AVKey.DISPLAY_NAME,

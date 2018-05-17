@@ -49,10 +49,7 @@ public class ShapefileView {
     protected ShapeAttributes highlightAttributes = new BasicShapeAttributes();
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected int altitudeMode = WorldWind.RELATIVE_TO_GROUND;
-    protected double latMin;
-    protected double lonMin;
-    protected double latMax;
-    protected double lonMax;
+    
 
     public ShapefileView() {
         highlightAttributes.setOutlineOpacity(1);

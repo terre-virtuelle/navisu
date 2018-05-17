@@ -166,25 +166,7 @@ public class S57LocalCatalogImpl
         });
     }
 
-    private void clip() {
-        /*
-         if (layers != null) {
-         layers.stream().filter((l) -> (l.getName().contains("M_COVR"))).forEach((l) -> {
-         l.setEnabled(false);
-         });
-         }
-         */
-    }
-
-    private void unClip() {
-        /*
-         if (layers != null) {
-         layers.stream().filter((l) -> (l.getName().contains("M_COVR"))).forEach((l) -> {
-         l.setEnabled(true);
-         });
-         }
-         */
-    }
+   
 
     @Override
     public String getName() {

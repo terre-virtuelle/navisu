@@ -27,6 +27,8 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DredgedAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.NavigationLineDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.RestrictedAreaDBLoader;
+import bzh.terrevirtuelle.navisu.core.util.OS;
+import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
@@ -52,6 +54,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -61,7 +64,10 @@ import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.util.measure.MeasureTool;
 import gov.nasa.worldwind.util.measure.MeasureToolController;
 import java.awt.Color;
+import java.io.File;
+import java.io.FileInputStream;
 import java.net.URL;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -69,7 +75,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -130,7 +135,7 @@ public class StlDBComponentController
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     private final String USER = "admin";
     private final String PASSWD = "admin";
-    protected Properties properties;
+    protected Properties properties = new Properties();
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     protected String viewgroupstyle = "configuration.css";
     protected Map<String, String> acronyms;
@@ -162,16 +167,19 @@ public class StlDBComponentController
     protected double lonScale;
     protected double globalScale;
     protected int tileCount = 1;
+    protected double DEFAULT_EXAGGERATION = 10;
+    protected double verticalExaggeration = DEFAULT_EXAGGERATION;
     protected double simplifyFactor;
     protected S57ObjectView s57Viewer;
     protected List<? extends Geo> objects;
     protected List<Buoyage> buoyages = new ArrayList<>();
     protected Connection s57Connection;
     protected Connection bathyConnection;
+    protected Bathymetry bathymetry;
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
     protected String marsys;
     protected List<String> selectedObjects = new ArrayList<>();
-
+    protected String sep = File.separator;
     /* Common controls */
     @FXML
     public Group view;
@@ -394,10 +402,16 @@ public class StlDBComponentController
                 simplifyTF.setText(Double.toString(simplifyFactor * 100000));
             }
         });
-
+        depthMagnificationTF.setOnAction((ActionEvent event) -> {
+            try {
+                verticalExaggeration = Double.valueOf(depthMagnificationTF.getText());
+            } catch (NumberFormatException e) {
+                verticalExaggeration = DEFAULT_EXAGGERATION;
+                depthMagnificationTF.setText(Double.toString(verticalExaggeration));
+            }
+        });
         checkComboBox = new CheckComboBox<>(objectsCbData);
         paneGP.add(checkComboBox, 4, 2);
-        objectsTF.setText("ALL");
         checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener.Change<? extends String> change) -> {
             selectedObjects.clear();
             selectedObjects.addAll(change.getList());
@@ -408,6 +422,7 @@ public class StlDBComponentController
             }
             objectsTF.appendText(selectedObjects.get(selectedObjects.size() - 1));
         });
+
         outFileTF.setText("out");
 
         demRB.setToggleGroup(bathyGroup);
@@ -485,7 +500,7 @@ public class StlDBComponentController
             }
 
             s57Connection = databaseServices.connect(s57DatabaseTF.getText(),
-                    "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver",
+                    "localhost", "jdbc:postgresql:" + sep + sep + "", "5432", "org.postgresql.Driver",
                     USER, PASSWD);
             if (lat0 != 0 && lon0 != 0 && lat1 != 0 && lon1 != 0) {
 
@@ -604,10 +619,10 @@ public class StlDBComponentController
                 });
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DEPARE")) {
-                new DepareView(latMin, lonMin, latMax, lonMax,
-                        s57Layer, s57Layer, s57Layer,
+                new DepareView(s57Layer, s57Layer, s57Layer,
                         simplifyFactor,
                         Double.valueOf(depthMagnificationTF.getText()),
+                        true,
                         createElevationCB.isSelected())
                         .display(new DepareDBLoader(databaseServices,
                                 s57DatabaseTF.getText(),
@@ -615,23 +630,96 @@ public class StlDBComponentController
                                 PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
             }
             if (selectedObjects.contains("ALL") || demRB.isSelected()) {
-                bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(),
-                        "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver",
-                        USER, PASSWD);
-                Bathymetry bathymetry = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
-                List<Triangle_dt> triangles = delaunayServices.createDelaunay(bathymetry.getGrid(), bathymetry.getMaxElevation());
+                List<Triangle_dt> triangles = createBathy(latMin, lonMin, latMax, lonMax);
                 triangles = delaunayServices.filterLargeEdges(triangles, 0.001);
-                // displayServices.displayDelaunay(triangles, bathymetry.getMaxElevation(), 50, Material.GREEN, s57Layer);
                 Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, bathymetry.getMaxElevation());
                 Point3D[][] pts1 = bathymetryDBServices.mergeData(pts, triangles);
-                displayServices.displayGrid(pts1, Material.MAGENTA, s57Layer, 10);
+                displayServices.displayGrid(pts1, Material.MAGENTA, s57Layer, verticalExaggeration);
+
+            }
+            if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
+                List<Triangle_dt> triangles = createBathy(latMin, lonMin, latMax, lonMax);
+                Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, bathymetry.getMaxElevation());
                 Point3D[][] pts2 = bathymetryDBServices.mergeData(pts, triangles, 0.0);
-                displayServices.displayGrid(pts2, Material.GREEN, s57Layer, 10);
-              //  paintBox(s57Layer, Material.MAGENTA, latMin, lonMin, latMax, lonMax, bathymetry.getMaxElevation()*10);
+                displayServices.displayGrid(pts2, Material.GREEN, s57Layer, verticalExaggeration);
+                new DepareView(s57Layer, s57Layer, s57Layer,
+                        simplifyFactor, verticalExaggeration, 
+                        true, true)
+                        .display(new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                                .retrieveIn(latMin, lonMin, latMax, lonMax));
+                //paintBox(s57Layer, Material.MAGENTA, latMin, lonMin, latMax, lonMax, bathymetry.getMaxElevation()*verticalExaggeration);
+            }
+            if (selectedObjects.contains("ALL") || depareUlhyssesRB.isSelected()) {
+                List<Triangle_dt> triangles = createBathy(latMin, lonMin, latMax, lonMax);
+                Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, bathymetry.getMaxElevation());
+                Point3D[][] pts2 = bathymetryDBServices.mergeData(pts, triangles, 0.0);
+                displayServices.displayGrid(pts2, Material.GREEN, s57Layer, verticalExaggeration);
+                //Avec bathymetry faire un fichier csv
+                List<Point3D> points = bathymetry.getGrid();
+                bathymetryDBServices.writePointList(points, Paths.get(System.getProperty("user.dir") + "/privateData/ulhysses", "bathy.csv"), false);
+                //Test lancement Ulhysses
+                String ulhyssesPath = "" + sep + "opt" + sep + "ULHYSSES" + sep + "app";
+                String command
+                        = "cd " + ulhyssesPath + " \n"
+                        + System.getProperty("java.home") + sep + "bin" + sep + "java "
+                        + "-Dlog4j.configuration=file:" + ulhyssesPath + "" + sep + "conf-tools" + sep + "toolsLog4j.properties "
+                        + "-Xmx14g -Xms1024m -jar " + ulhyssesPath + "" + sep + "" + "ULHYSSES.jar "
+                        + "--outputDirectory=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses "
+                        + "--inputFile=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses" + sep + "bathy.csv "
+                        + "--compilationScale=1000 --fileType=0 --isoValues='0;2;4;6;8;10;12;14;16;18;20' "
+                        + "--codeAgency=4G --baseName=0001";
+                try {
+                    Proc.BUILDER.create()
+                            .setCmd(command)
+                            .execSh();
+                } catch (IOException | InterruptedException ex) {
+                    LOGGER.log(Level.SEVERE, ex.toString(), ex);
+                }
+
+                try {
+                    properties.load(new FileInputStream(CONFIG_FILE_NAME));
+                } catch (IOException ex) {
+                    LOGGER.log(Level.SEVERE, ex.toString(), ex);
+                }
+
+                new File("data" + sep + "shp").mkdir();
+                new File("data" + sep + "shp" + sep + "shp_0").mkdir();
+                String cmd0 = startCmd("ogr2ogr");
+                String cmd;
+                String sep = File.separator;
+                try {
+                    Path tmp = Paths.get(new File(System.getProperty("user.dir") + sep + "privateData" + sep + "ulhysses" + sep + "bathy" + sep + "ENC" + sep + "4G600010.000").toString());
+                    cmd = cmd0 + " -skipfailures -overwrite " + "data" + sep + "shp" + sep + "shp_0" + " " + tmp.toString();
+                    Proc.BUILDER.create()
+                            .setCmd(cmd)
+                            .execSh();
+                } catch (IOException | InterruptedException e) {
+                    LOGGER.log(Level.SEVERE, e.toString(), e);
+                }
+
+                Shapefile shp = new Shapefile(new File("data" + sep + "shp" + sep + "shp_0" + sep + "DEPARE.shp"));
+
+                new DepareView(s57Layer, s57Layer, s57Layer,
+                        simplifyFactor, bathymetry.getMaxElevation(),
+                        false, true)
+                        .display(shp);
+
+                //paintBox(s57Layer, Material.MAGENTA, latMin, lonMin, latMax, lonMax, bathymetry.getMaxElevation()*verticalExaggeration);
             }
             s57Layer.removeRenderable(selectionPolygon);
+            instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             wwd.redrawNow();
         });
+    }
+//
+
+    private List<Triangle_dt> createBathy(double latMin, double lonMin, double latMax, double lonMax) {
+        bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(),
+                "localhost", "jdbc:postgresql:" + sep + sep + "", "5432", "org.postgresql.Driver", USER, PASSWD);
+        bathymetry = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
+        List<Triangle_dt> triangles = delaunayServices.createDelaunay(bathymetry.getGrid(), bathymetry.getMaxElevation());
+        triangles = delaunayServices.filterLargeEdges(triangles, 0.001);
+        return triangles;
     }
 
     private void paintSelectedArea(RenderableLayer layer,
@@ -768,7 +856,7 @@ public class StlDBComponentController
 
     }
 
-    private List<Polygon> paintBox(RenderableLayer layer, Material material,double lat0, double lon0, double lat1, double lon1, double height) {
+    private List<Polygon> paintBox(RenderableLayer layer, Material material, double lat0, double lon0, double lat1, double lon1, double height) {
         List<Polygon> box = new ArrayList<>();
         ArrayList<Position> pathPositions = new ArrayList<>();
         pathPositions.add(Position.fromDegrees(lat0, lon0, 0));
@@ -781,10 +869,10 @@ public class StlDBComponentController
         normalAttributes.setDrawInterior(true);
         sidePolygon.setAttributes(normalAttributes);
         box.add(sidePolygon);
-        
+
         pathPositions.clear();
         pathPositions.add(Position.fromDegrees(lat0, lon0, 0));
-        pathPositions.add(Position.fromDegrees(lat0, lon0,height));
+        pathPositions.add(Position.fromDegrees(lat0, lon0, height));
         pathPositions.add(Position.fromDegrees(lat1, lon0, height));
         pathPositions.add(Position.fromDegrees(lat1, lon0, 0));
         pathPositions.add(Position.fromDegrees(lat0, lon0, 0));
@@ -793,10 +881,10 @@ public class StlDBComponentController
         normalAttributes.setDrawInterior(true);
         sidePolygon.setAttributes(normalAttributes);
         box.add(sidePolygon);
-        
+
         pathPositions.clear();
         pathPositions.add(Position.fromDegrees(lat1, lon0, 0));
-        pathPositions.add(Position.fromDegrees(lat1, lon0,height));
+        pathPositions.add(Position.fromDegrees(lat1, lon0, height));
         pathPositions.add(Position.fromDegrees(lat1, lon1, height));
         pathPositions.add(Position.fromDegrees(lat1, lon1, 0));
         pathPositions.add(Position.fromDegrees(lat1, lon0, 0));
@@ -805,10 +893,10 @@ public class StlDBComponentController
         normalAttributes.setDrawInterior(true);
         sidePolygon.setAttributes(normalAttributes);
         box.add(sidePolygon);
-        
+
         pathPositions.clear();
         pathPositions.add(Position.fromDegrees(lat1, lon1, 0));
-        pathPositions.add(Position.fromDegrees(lat1, lon1,height));
+        pathPositions.add(Position.fromDegrees(lat1, lon1, height));
         pathPositions.add(Position.fromDegrees(lat0, lon1, height));
         pathPositions.add(Position.fromDegrees(lat0, lon1, 0));
         pathPositions.add(Position.fromDegrees(lat1, lon1, 0));
@@ -817,7 +905,7 @@ public class StlDBComponentController
         normalAttributes.setDrawInterior(true);
         sidePolygon.setAttributes(normalAttributes);
         box.add(sidePolygon);
-        
+
         layer.addRenderables(box);
         wwd.redrawNow();
         return box;
@@ -825,5 +913,17 @@ public class StlDBComponentController
 
     public Connection getConnection() {
         return s57Connection;
+    }
+
+    private String startCmd(String command) {
+        String cmd = null;
+        if (OS.isWindows()) {
+            cmd = "gdal\\win\\" + command;
+        } else if (OS.isLinux()) {
+            cmd = properties.getProperty("gdalPath") + "/" + command;
+        } else {
+            System.out.println("OS not found");
+        }
+        return cmd;
     }
 }

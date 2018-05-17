@@ -624,11 +624,10 @@ public class S57DBComponentController
                 });
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DEPARE")) {
-                new DepareView(latMin, lonMin, latMax, lonMax,
-                        depareLayer, simpleDepareLayer, depare3DLayer,
+                new DepareView(depareLayer, simpleDepareLayer, depare3DLayer,
                         0.00001,
                          1.0,
-                        false)
+                        true, false)
                         .display(new DepareDBLoader(databaseServices,
                                 databaseTF.getText(),
                                 USER,
