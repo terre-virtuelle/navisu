@@ -240,7 +240,7 @@ public class StlDBComponentController
     @FXML
     public TextField encPortDBTF;
     @FXML
-    public CheckBox createElevationCB;
+    public TextField ulhyssesTF;
     @FXML
     public RadioButton demRB;
     @FXML
@@ -623,7 +623,7 @@ public class StlDBComponentController
                         simplifyFactor,
                         Double.valueOf(depthMagnificationTF.getText()),
                         true,
-                        createElevationCB.isSelected())
+                        true)
                         .display(new DepareDBLoader(databaseServices,
                                 s57DatabaseTF.getText(),
                                 USER,
@@ -643,7 +643,7 @@ public class StlDBComponentController
                 Point3D[][] pts2 = bathymetryDBServices.mergeData(pts, triangles, 0.0);
                 displayServices.displayGrid(pts2, Material.GREEN, s57Layer, verticalExaggeration);
                 new DepareView(s57Layer, s57Layer, s57Layer,
-                        simplifyFactor, verticalExaggeration, 
+                        simplifyFactor, verticalExaggeration,
                         true, true)
                         .display(new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
                                 .retrieveIn(latMin, lonMin, latMax, lonMax));
