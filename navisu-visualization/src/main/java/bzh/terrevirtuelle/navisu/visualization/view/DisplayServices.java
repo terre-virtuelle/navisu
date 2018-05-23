@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.visualization.view;
 
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -28,6 +29,10 @@ public interface DisplayServices
     void displayGrid(List<List<Point3D>> latLons, Material material, RenderableLayer layer);
 
     void displayGrid(Point3D[][] latLons, Material material, RenderableLayer layer, double verticalExaggeration);
+
+    void displayGrid(GridBox3D gridBox3D, Material material, RenderableLayer layer, double verticalExaggeration, boolean isBaseDisplayed);
+
+    void displayGridAsPolygon(Point3D[][] latLons, Material material, RenderableLayer layer, double verticalExaggeration);
 
     void displayPlane(double minLat, double minLon, double maxLat, double maxLon, double height,
             Material material, RenderableLayer l);

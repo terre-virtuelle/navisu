@@ -113,6 +113,7 @@ public class S57ChartComponentImpl
     protected String userDirPath = null;
     protected String shpDir;
     protected String dir;
+    protected String sep = File.separator;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -210,9 +211,9 @@ public class S57ChartComponentImpl
              */
             s57ChartComponentController.subscribe(); // A chaque nouvelle carte car S57Controllers est modifie
 
-            new File("data/shp").mkdir();
-            new File("data/shp/shp_" + i).mkdir();
-            new File("data/shp/shp_" + i + "/soundg").mkdir();
+            new File("data" + sep + "shp").mkdir();
+            new File("data" + sep + "shp" + sep + "shp_" + i).mkdir();
+            new File("data" + sep + "shp" + sep + "shp_" + i + "" + sep + "soundg").mkdir();
 
             LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
 
@@ -228,7 +229,7 @@ public class S57ChartComponentImpl
                     + "SPLIT_MULTIPOINT=ON, "
                     + "ADD_SOUNDG_DEPTH=ON\" \n";
             environment.put("OGR_S57_OPTIONS", options);
-            options = System.getProperty("user.dir") + "/gdal/data";
+            options = System.getProperty("user.dir") + sep + "gdal" + sep + "data";
             environment.put("GDAL_DATA", options);
 
             properties = new Properties();

@@ -39,6 +39,7 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.BathyLoader;
@@ -179,6 +180,7 @@ public class StlDBComponentController
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
     protected String marsys;
     protected List<String> selectedObjects = new ArrayList<>();
+    protected String isoValuesUlhysses = "";
     protected String sep = File.separator;
     /* Common controls */
     @FXML
@@ -319,6 +321,12 @@ public class StlDBComponentController
 
         s57Layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
         bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
+
+        try {
+            properties.load(new FileInputStream(CONFIG_FILE_NAME));
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+        }
     }
 
     @Override
@@ -428,6 +436,12 @@ public class StlDBComponentController
         demRB.setToggleGroup(bathyGroup);
         depareRB.setToggleGroup(bathyGroup);
         depareUlhyssesRB.setToggleGroup(bathyGroup);
+
+        isoValuesUlhysses = ulhyssesTF.getText();
+        ulhyssesTF.setOnAction((ActionEvent event) -> {
+            isoValuesUlhysses = ulhyssesTF.getText();
+            //check
+        });
 
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
@@ -619,45 +633,51 @@ public class StlDBComponentController
                 });
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DEPARE")) {
+                Shapefile shapeFile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                        .retrieveIn(latMin, lonMin, latMax, lonMax);
                 new DepareView(s57Layer, s57Layer, s57Layer,
                         simplifyFactor,
-                        Double.valueOf(depthMagnificationTF.getText()),
-                        true,
-                        true)
-                        .display(new DepareDBLoader(databaseServices,
-                                s57DatabaseTF.getText(),
-                                USER,
-                                PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
+                        10.0, verticalExaggeration,
+                        true, //isSimplify
+                        true) //isCreateElevation
+                        .display(shapeFile);
             }
             if (selectedObjects.contains("ALL") || demRB.isSelected()) {
-                List<Triangle_dt> triangles = createBathy(latMin, lonMin, latMax, lonMax);
-                triangles = delaunayServices.filterLargeEdges(triangles, 0.001);
-                Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, bathymetry.getMaxElevation());
-                Point3D[][] pts1 = bathymetryDBServices.mergeData(pts, triangles);
-                displayServices.displayGrid(pts1, Material.MAGENTA, s57Layer, verticalExaggeration);
+                bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
 
+                Point3D[][] ptsTab = createGrid(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
+                GridBox3D box = new GridBox3D(ptsTab);
+                
+                boolean isBaseDisplayed = false;
+                displayServices.displayGrid(box, Material.MAGENTA, s57Layer, verticalExaggeration, isBaseDisplayed);
+                //Pb fps si trop de polygones
+                // displayServices.displayGridAsPolygon(ptsTab, Material.MAGENTA, s57Layer, verticalExaggeration);
             }
+
             if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
-                List<Triangle_dt> triangles = createBathy(latMin, lonMin, latMax, lonMax);
-                Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, bathymetry.getMaxElevation());
-                Point3D[][] pts2 = bathymetryDBServices.mergeData(pts, triangles, 0.0);
-                displayServices.displayGrid(pts2, Material.GREEN, s57Layer, verticalExaggeration);
+                bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
+                Point3D[][] ptsTab = createGrid(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
+                displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
+
+                Shapefile shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                        .retrieveIn(latMin, lonMin, latMax, lonMax);
+
                 new DepareView(s57Layer, s57Layer, s57Layer,
-                        simplifyFactor, verticalExaggeration,
+                        simplifyFactor,
+                        Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
                         true, true)
-                        .display(new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                                .retrieveIn(latMin, lonMin, latMax, lonMax));
+                        .display(shapefile);
                 //paintBox(s57Layer, Material.MAGENTA, latMin, lonMin, latMax, lonMax, bathymetry.getMaxElevation()*verticalExaggeration);
             }
+
             if (selectedObjects.contains("ALL") || depareUlhyssesRB.isSelected()) {
-                List<Triangle_dt> triangles = createBathy(latMin, lonMin, latMax, lonMax);
-                Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, bathymetry.getMaxElevation());
-                Point3D[][] pts2 = bathymetryDBServices.mergeData(pts, triangles, 0.0);
-                displayServices.displayGrid(pts2, Material.GREEN, s57Layer, verticalExaggeration);
-                //Avec bathymetry faire un fichier csv
+                bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
+                Point3D[][] pts = createGrid(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
+                displayServices.displayGrid(pts, Material.GREEN, s57Layer, verticalExaggeration);
+
                 List<Point3D> points = bathymetry.getGrid();
                 bathymetryDBServices.writePointList(points, Paths.get(System.getProperty("user.dir") + "/privateData/ulhysses", "bathy.csv"), false);
-                //Test lancement Ulhysses
+
                 String ulhyssesPath = "" + sep + "opt" + sep + "ULHYSSES" + sep + "app";
                 String command
                         = "cd " + ulhyssesPath + " \n"
@@ -666,19 +686,13 @@ public class StlDBComponentController
                         + "-Xmx14g -Xms1024m -jar " + ulhyssesPath + "" + sep + "" + "ULHYSSES.jar "
                         + "--outputDirectory=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses "
                         + "--inputFile=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses" + sep + "bathy.csv "
-                        + "--compilationScale=1000 --fileType=0 --isoValues='0;2;4;6;8;10;12;14;16;18;20' "
+                        + "--compilationScale=1000 --fileType=0 --isoValues='" + isoValuesUlhysses + "' "
                         + "--codeAgency=4G --baseName=0001";
                 try {
                     Proc.BUILDER.create()
                             .setCmd(command)
                             .execSh();
                 } catch (IOException | InterruptedException ex) {
-                    LOGGER.log(Level.SEVERE, ex.toString(), ex);
-                }
-
-                try {
-                    properties.load(new FileInputStream(CONFIG_FILE_NAME));
-                } catch (IOException ex) {
                     LOGGER.log(Level.SEVERE, ex.toString(), ex);
                 }
 
@@ -700,26 +714,38 @@ public class StlDBComponentController
                 Shapefile shp = new Shapefile(new File("data" + sep + "shp" + sep + "shp_0" + sep + "DEPARE.shp"));
 
                 new DepareView(s57Layer, s57Layer, s57Layer,
-                        simplifyFactor, bathymetry.getMaxElevation(),
-                        false, true)
-                        .display(shp);
-
-                //paintBox(s57Layer, Material.MAGENTA, latMin, lonMin, latMax, lonMax, bathymetry.getMaxElevation()*verticalExaggeration);
+                        simplifyFactor,
+                        Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
+                        true, true)
+                        .display(shp);  
             }
+
             s57Layer.removeRenderable(selectionPolygon);
             instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             wwd.redrawNow();
         });
     }
-//
 
-    private List<Triangle_dt> createBathy(double latMin, double lonMin, double latMax, double lonMax) {
+    private Bathymetry createBathymetry(double latMin, double lonMin, double latMax, double lonMax) {
+        Bathymetry bathy;
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(),
-                "localhost", "jdbc:postgresql:" + sep + sep + "", "5432", "org.postgresql.Driver", USER, PASSWD);
-        bathymetry = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
-        List<Triangle_dt> triangles = delaunayServices.createDelaunay(bathymetry.getGrid(), bathymetry.getMaxElevation());
+                "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
+        bathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
+        return bathy;
+    }
+
+    private Point3D[][] createGrid(Bathymetry bathymetry, double latMin, double lonMin, double latMax, double lonMax, double elevation) {
+        List<Triangle_dt> triangles = delaunayServices.createDelaunay(bathymetry.getGrid(), Math.round(bathymetry.getMaxElevation()));
         triangles = delaunayServices.filterLargeEdges(triangles, 0.001);
-        return triangles;
+        Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, Math.round(bathymetry.getMaxElevation()));
+        Point3D[][] pts1;
+        if (Double.isNaN(elevation)) {//If NaN, elevations are take on the bathymetry triangles
+            pts1 = bathymetryDBServices.mergeData(pts, triangles);
+        } else {
+            // pts1 = bathymetryDBServices.mergeData(pts, triangles, elevation);
+            pts1 = bathymetryDBServices.mergeData(pts, triangles);
+        }
+        return pts1;
     }
 
     private void paintSelectedArea(RenderableLayer layer,
@@ -856,61 +882,7 @@ public class StlDBComponentController
 
     }
 
-    private List<Polygon> paintBox(RenderableLayer layer, Material material, double lat0, double lon0, double lat1, double lon1, double height) {
-        List<Polygon> box = new ArrayList<>();
-        ArrayList<Position> pathPositions = new ArrayList<>();
-        pathPositions.add(Position.fromDegrees(lat0, lon0, 0));
-        pathPositions.add(Position.fromDegrees(lat0, lon1, 0));
-        pathPositions.add(Position.fromDegrees(lat0, lon1, height));
-        pathPositions.add(Position.fromDegrees(lat0, lon0, height));
-        pathPositions.add(Position.fromDegrees(lat0, lon0, 0));
-        Polygon sidePolygon = new Polygon(pathPositions);
-        normalAttributes.setInteriorMaterial(material);
-        normalAttributes.setDrawInterior(true);
-        sidePolygon.setAttributes(normalAttributes);
-        box.add(sidePolygon);
-
-        pathPositions.clear();
-        pathPositions.add(Position.fromDegrees(lat0, lon0, 0));
-        pathPositions.add(Position.fromDegrees(lat0, lon0, height));
-        pathPositions.add(Position.fromDegrees(lat1, lon0, height));
-        pathPositions.add(Position.fromDegrees(lat1, lon0, 0));
-        pathPositions.add(Position.fromDegrees(lat0, lon0, 0));
-        sidePolygon = new Polygon(pathPositions);
-        normalAttributes.setInteriorMaterial(material);
-        normalAttributes.setDrawInterior(true);
-        sidePolygon.setAttributes(normalAttributes);
-        box.add(sidePolygon);
-
-        pathPositions.clear();
-        pathPositions.add(Position.fromDegrees(lat1, lon0, 0));
-        pathPositions.add(Position.fromDegrees(lat1, lon0, height));
-        pathPositions.add(Position.fromDegrees(lat1, lon1, height));
-        pathPositions.add(Position.fromDegrees(lat1, lon1, 0));
-        pathPositions.add(Position.fromDegrees(lat1, lon0, 0));
-        sidePolygon = new Polygon(pathPositions);
-        normalAttributes.setInteriorMaterial(material);
-        normalAttributes.setDrawInterior(true);
-        sidePolygon.setAttributes(normalAttributes);
-        box.add(sidePolygon);
-
-        pathPositions.clear();
-        pathPositions.add(Position.fromDegrees(lat1, lon1, 0));
-        pathPositions.add(Position.fromDegrees(lat1, lon1, height));
-        pathPositions.add(Position.fromDegrees(lat0, lon1, height));
-        pathPositions.add(Position.fromDegrees(lat0, lon1, 0));
-        pathPositions.add(Position.fromDegrees(lat1, lon1, 0));
-        sidePolygon = new Polygon(pathPositions);
-        normalAttributes.setInteriorMaterial(material);
-        normalAttributes.setDrawInterior(true);
-        sidePolygon.setAttributes(normalAttributes);
-        box.add(sidePolygon);
-
-        layer.addRenderables(box);
-        wwd.redrawNow();
-        return box;
-    }
-
+    
     public Connection getConnection() {
         return s57Connection;
     }

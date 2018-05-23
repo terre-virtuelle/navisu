@@ -35,33 +35,38 @@ public class DepareView
     double simplify = 0.001;
     boolean isSimplify = false;
     double magnify;
-    double maxHeight = 0.0;
-    boolean isShowElevation;
+    double maxHeight;
+    boolean isCreateElevation;
+    protected String sep = File.separator;
 
     public DepareView(RenderableLayer layer, RenderableLayer simpleDeparelayer, RenderableLayer depare3DLayer,
-            double simplify, double magnify,
-            boolean isSimplify, boolean isShowElevation) {
+            double simplify,
+            double maxHeight,  double magnify,
+            boolean isSimplify, boolean isCreateElevation) {
         this.layer = layer;
         this.simpleDeparelayer = simpleDeparelayer;
         this.depare3DLayer = depare3DLayer;
+        this.maxHeight=maxHeight;
         this.simplify = simplify;
         this.isSimplify = isSimplify;
         this.magnify = magnify;
-        this.isShowElevation = isShowElevation;
+        this.isCreateElevation = isCreateElevation;
         new File("cmd").mkdir();
     }
 
     public void display(Shapefile shp) {
-      //  System.out.println("shp : " + shp);OK
+        //  System.out.println("shp : " + shp);OK
         while (shp.hasNext()) {
             try {
                 //Create classical chart
                 record = shp.nextRecord();
                 createSurfacePolygons(record, layer, false, false);
+                /*
                 if (!Shapefile.isPolygonType(record.getShapeType())) {
                     continue;
                 }
-                
+                */
+                /*
                 Polygon p;
                 for (int i = 0; i < shape.getBuffer().size(); i++) {
                     p = new Polygon(shape.getBuffer().subBuffer(i).getPositions());
@@ -70,12 +75,14 @@ public class DepareView
                     p.setValue(AVKey.ABOVE_MEAN_SEA_LEVEL, ((Double) shape.getValue("drval2")).toString());
                     p.setAltitudeMode(altitudeMode);
                     polygons.add(p);
+                    
                 }
+                */
             } catch (Exception ex) {
                 Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-
+/*
         if (isSimplify == true) {
             //Create kml output.kml file
             Polygon[] array = new Polygon[polygons.size()];
@@ -87,8 +94,8 @@ public class DepareView
 
             //Simplify data and create depare.shp
             String path = Proc.getProperty("gdalPath");
-            String command = path + "/ogr2ogr -f 'ESRI Shapefile' cmd/output.shp cmd/output.kml \n"
-                    + path + "/ogr2ogr cmd/outfileSimplify.shp cmd/depare.shp -simplify " + simplify;
+            String command = path + sep +"ogr2ogr -f 'ESRI Shapefile' cmd"+sep+"output.shp cmd"+sep+"output.kml \n"
+                    + path + sep +"ogr2ogr cmd"+sep+"outfileSimplify.shp cmd"+sep+"depare.shp -simplify " + simplify;
             try {
                 Proc.BUILDER.create()
                         .setCmd(command)
@@ -99,12 +106,12 @@ public class DepareView
 
             //Create objectShapefile with data simplified
             //Create extruded polygons with data simplified
-            Shapefile simplifiedShape = new Shapefile("cmd/outfileSimplify.shp");
+            Shapefile simplifiedShape = new Shapefile("cmd"+sep+"outfileSimplify.shp");
             while (simplifiedShape.hasNext()) {
                 try {
                     record = simplifiedShape.nextRecord();
                     createSurfacePolygons(record, simpleDeparelayer, false, true);
-                    if (isShowElevation) {
+                    if (isCreateElevation) {
                         createSurfacePolygons(record, depare3DLayer, true, false);
                     }
                 } catch (Exception ex) {
@@ -116,7 +123,7 @@ public class DepareView
                 try {
                     record = shp.nextRecord();
                     createSurfacePolygons(record, simpleDeparelayer, false, true);
-                    if (isShowElevation) {
+                    if (isCreateElevation) {
                         System.out.println("isShowElevation" + record + " " + depare3DLayer);
                         createSurfacePolygons(record, depare3DLayer, true, false);
                     }
@@ -125,14 +132,12 @@ public class DepareView
                 }
             }
         }
-
-        
-        
+*/
         wwd.redrawNow();
 
     }
 
-    protected void createSurfacePolygons(ShapefileRecord record, 
+    protected void createSurfacePolygons(ShapefileRecord record,
             RenderableLayer layer,
             boolean isHeight, boolean simp) {
 
@@ -145,24 +150,20 @@ public class DepareView
                     if (e.getKey().equalsIgnoreCase("drval1")) {
                         val1 = (Double) e.getValue();
                     }
-                    if (e.getKey().equalsIgnoreCase("drval2")) {
-                        val2 = (Double) e.getValue();
-                        if (val2 > maxHeight) {
-                            maxHeight = val2;
-                        }
-                    }
+                   
                     color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val1);
                 });
             }
-            System.out.println("shape 0 : "+shape);
             createPolygon(layer, record, isHeight, magnify, maxHeight);
-           System.out.println("shape 1 : "+shape);
-            shape.setValue("drval1", val1);
+         //   System.out.println("shape 1 : " + shape);
+         /*
+         shape.setValue("drval1", val1);
             shape.setValue("drval2", val2);
             shape.setValue(AVKey.DISPLAY_NAME,
                     "[" + Double.toString(val1) + ", " + Double.toString(val2) + "]");
             setPolygonAttributes(color);
-            layer.addRenderable(shape);
+           layer.addRenderable(shape);
+           */
         }
     }
 

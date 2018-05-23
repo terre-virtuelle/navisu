@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.geometry.objects3D.obj;
 
+import bzh.terrevirtuelle.navisu.geometry.objects3D.Point3D;
 import java.awt.geom.Point2D;
 import java.util.*;
 
