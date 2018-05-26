@@ -169,6 +169,8 @@ import java.util.logging.FileHandler;
 import bzh.terrevirtuelle.navisu.stl.charts.StlChartComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.StlDBComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
+import gov.nasa.worldwind.globes.ElevationModel;
+import gov.nasa.worldwind.terrain.BathymetryFilterElevationModel;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -460,7 +462,21 @@ public class AppMain extends Application {
                 DATA_S57_CATALOG_6);
 
         wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 120000));
-
+/*
+        // Get the current elevation model.
+            ElevationModel currentElevationModel = wwd.getModel().getGlobe().getElevationModel();
+            // Wrap it with the no-bathymetry elevation model.
+            BathymetryFilterElevationModel noDepthModel = new BathymetryFilterElevationModel(currentElevationModel);
+            // Have the globe use the no-bathymetry elevation model.
+            wwd.getModel().getGlobe().setElevationModel(noDepthModel);
+*/
+        
+        
+        
+        
+        
+        
+        
         // Initialisation du serveur
         dataServerServices.init("localhost", 8585);
 

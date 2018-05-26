@@ -134,7 +134,7 @@ public class DatabaseImpl
     public Connection connect(String hostName, String protocol, String port, String driverName, String userName, String passwd) {
         try {
             Class.forName(driverName);
-            String url = protocol + hostName + ":" + port + "/";
+            String url = protocol + hostName + ":" + port + sep;
             System.out.println("url " + url);
             connection = DriverManager.getConnection(url, userName, passwd);
             System.out.println("connection " + connection);
@@ -366,98 +366,6 @@ public class DatabaseImpl
         return userDirPath + sep + "data" + sep + "sql";
     }
 
-    /*
-    @Override
-    public String shapeFileToSql(String path, String shpDir, String epsg) {
-        // programme de test des differents type par colonne 
-        userDirPath = System.getProperty("user.dir");
-        try {
-            Files.createDirectory(Paths.get(userDirPath + "/data/sql/"));
-        } catch (IOException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-        Map<String, String> environment = new HashMap<>(System.getenv());
-        String options = System.getProperty("user.dir") + "/gdal/data";
-        environment.put("GDAL_DATA", options);
-        String cmd = path + "/shp2pgsql";
-
-        //Search all different tables
-        tableSet = new HashSet<>();
-        List<Path> refPathList = new ArrayList<>();
-        try (Stream<Path> filePathStream = Files.walk(Paths.get("data/shp"))) {
-            filePathStream.forEach(filePath -> {
-                if (Files.isRegularFile(filePath)) {
-                    String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
-                    if (nameTab[1].equals("shp")) {
-                        refPathList.add(filePath);
-                    }
-                }
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-        Stream<Path> filePathStream = refPathList.stream();
-        filePathStream.forEach(filePath -> {
-            if (Files.isRegularFile(filePath)) {
-                String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
-                if (nameTab[1].equals("shp")) {
-                    try {
-                        Proc.BUILDER.create()
-                                .setCmd(cmd)
-                                .addArg("-p -I -s " + epsg)
-                                .addArg(userDirPath + "/" + filePath)
-                                .addArg(nameTab[0])
-                                .setOut(new FileOutputStream(userDirPath + "/data/sql/" + nameTab[0] + ".sql", true))
-                                .setErr(System.err)
-                                .exec(environment);
-                    } catch (IOException | InterruptedException ex) {
-                        Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-                    }
-                }
-            }
-        });
-        Map<String, Set<String>> tableTypeMap = new HashMap<>();
-        try {
-            filePathStream = Files.walk(Paths.get("data/sql"));
-            filePathStream.forEach(filePath -> {
-                if (Files.isRegularFile(filePath)) {
-                    String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
-                    if (nameTab[1].equals("sql")) {
-                        try {
-                            try (Stream<String> lines = Files.lines(filePath)) {
-                                String content = new String(Files.readAllBytes(filePath));
-                                String[] content1 = content.split("\n");
-                                for (int i = 0; i < content1.length; i++) {
-                                    if (content1[i].contains("AddGeometryColumn")) {
-                                        String str = content1[i];
-                                        str = str.replace("SELECT AddGeometryColumn(", "");
-                                        str = str.replace(");", "");
-                                        str = str.replace("'", "");
-                                        String[] tab = str.split(",");
-                                        if (!tableTypeMap.containsKey(tab[1])) {
-                                            tableTypeMap.put(tab[1], new HashSet<>());
-                                        }
-                                        tableTypeMap.get(tab[1]).add(tab[4]);
-                                    };
-                                }
-                            }
-                        } catch (IOException ex) {
-                            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-                        }
-                    }
-                }
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-        List<String> keys = new ArrayList(tableTypeMap.keySet());
-        Collections.sort(keys);
-        keys.forEach((s) -> {
-            System.out.println(s.toUpperCase() + " : " + tableTypeMap.get(s));
-        });
-        return userDirPath + "/data/sql";
-    }
-     */
     @Override
     public void sqlToSpatialDB(String databaseName, String user, String passwd, String dir, String cmd) {
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader;
+package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.bathy;
 
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;

@@ -106,6 +106,7 @@ public class DelaunayImpl
         return l;
     }
 
+    /*
     @Override
     public Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax, double y, double x, double elevation) {
         double latRange = geodesyServices.getDistanceM(Position.fromDegrees(latMin, lonMin), Position.fromDegrees(latMax, lonMin));
@@ -113,7 +114,9 @@ public class DelaunayImpl
 
         int nbLat = (int) (latRange / y);
         int nbLon = (int) (lonRange / x);
+        
         return toGrid(latMin, lonMin, latMax, lonMax, y, x, nbLat, nbLon, elevation);
+
     }
 
     @Override
@@ -123,18 +126,91 @@ public class DelaunayImpl
             int nbLat, int nbLon,
             double elevation) {
 //Pb d'arrondis
+
         Point3D[][] tab = new Point3D[nbLat][nbLon];
         for (int v = 0; v < nbLat; v++) {
             Position p = geodesyServices.getPosition(Position.fromDegrees(orgLat, orgLon), 0.0, v * dy);
+
             for (int u = 0; u < nbLon; u++) {
                 Position pp = geodesyServices.getPosition(p, 90.0, u * dx);
                 tab[v][u] = new Point3D(pp.getLatitude().getDegrees(), pp.getLongitude().getDegrees(), elevation);
+                
+                //tab[v][u] = new Point3D(orgLat+(v*dy), orgLon+(u*dx), elevation);
             }
-           // Position pp = geodesyServices.getPosition(p, 90.0, lonMax);
-          // tab[v][nbLon - 1] = new Point3D(pp.getLatitude().getDegrees(), pp.getLongitude().getDegrees(), elevation);
+            // Position pp = geodesyServices.getPosition(p, 90.0, lonMax);
+            // tab[v][nbLon - 1] = new Point3D(pp.getLatitude().getDegrees(), pp.getLongitude().getDegrees(), elevation);
         }
-       // Position p = geodesyServices.getPosition(Position.fromDegrees(orgLat, orgLon), 0.0, latMax);
-       // tab[v][nbLon - 1] = new Point3D(pp.getLatitude().getDegrees(), pp.getLongitude().getDegrees(), elevation);
+
+        // Position p = geodesyServices.getPosition(Position.fromDegrees(orgLat, orgLon), 0.0, latMax);
+        // tab[v][nbLon - 1] = new Point3D(pp.getLatitude().getDegrees(), pp.getLongitude().getDegrees(), elevation);
+        return tab;
+    }
+     */
+    @Override
+    public Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax,
+            double y, double x, double elevation) {
+        Position p = geodesyServices.getPosition(Position.fromDegrees(latMin, lonMin), 0.0, y);
+        double latInc = latMin - p.getLatitude().getDegrees();
+        latInc = Math.abs(latInc);
+        double lat = latMin;
+        p = geodesyServices.getPosition(Position.fromDegrees(latMin, lonMin), 90.0, x);
+        double lonInc = lonMin - p.getLongitude().getDegrees();
+        lonInc = Math.abs(lonInc);
+        double lon = lonMin;
+        List<List<Point3D>> ptsList = new ArrayList<>();
+        while (lat < latMax) {
+            List<Point3D> l = new ArrayList<>();
+            ptsList.add(l);
+            while (lon < lonMax) {
+                l.add(new Point3D(lat, lon, elevation));
+                lon += lonInc;
+            }
+            l.add(new Point3D(lat, lonMax, elevation));//last column
+            lon = lonMin;
+            lat += latInc;
+        }
+        List<Point3D> l = new ArrayList<>();
+        ptsList.add(l);
+        lat = latMax;
+        for (int i = 0; i < ptsList.get(0).size(); i++) {
+            l.add(new Point3D(lat, ptsList.get(0).get(i).getLongitude(), elevation));//last line
+        }
+
+        int latCount = ptsList.size();
+        int lonCount = ptsList.get(0).size();
+        Point3D[][] ptsTab = new Point3D[latCount][lonCount];
+        for (int i = 0; i < latCount; i++) {
+            for (int j = 0; j < lonCount; j++) {
+                ptsTab[i][j] = ptsList.get(i).get(j);
+            }
+        }
+        return ptsTab;
+    }
+
+    @Override
+    public Point3D[][] toGrid(double orgLat, double orgLon,
+            double latMax, double lonMax,
+            double dy, double dx,
+            int nbLat, int nbLon,
+            double elevation) {
+//Pb d'arrondis
+
+        Point3D[][] tab = new Point3D[nbLat][nbLon];
+        for (int v = 0; v < nbLat; v++) {
+            Position p = geodesyServices.getPosition(Position.fromDegrees(orgLat, orgLon), 0.0, v * dy);
+
+            for (int u = 0; u < nbLon; u++) {
+                Position pp = geodesyServices.getPosition(p, 90.0, u * dx);
+                tab[v][u] = new Point3D(pp.getLatitude().getDegrees(), pp.getLongitude().getDegrees(), elevation);
+
+                //tab[v][u] = new Point3D(orgLat+(v*dy), orgLon+(u*dx), elevation);
+            }
+            // Position pp = geodesyServices.getPosition(p, 90.0, lonMax);
+            // tab[v][nbLon - 1] = new Point3D(pp.getLatitude().getDegrees(), pp.getLongitude().getDegrees(), elevation);
+        }
+
+        // Position p = geodesyServices.getPosition(Position.fromDegrees(orgLat, orgLon), 0.0, latMax);
+        // tab[v][nbLon - 1] = new Point3D(pp.getLatitude().getDegrees(), pp.getLongitude().getDegrees(), elevation);
         return tab;
     }
 

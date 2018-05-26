@@ -5,7 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.geometry.geodesy;
 
+import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.geom.Position;
+import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -22,6 +24,8 @@ public interface GeodesyServices
     Position getPosition(Position posA, double bearing, double distance);
 
     Position getPosition(double latA, double lonA, double bearing, double distance);
+
+    List<Pair<Position, Position>> split(int count, Position a, Position b);
 
     double getAzimuth(Position posA, Position posB);
 

@@ -16,6 +16,7 @@ import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.controller.DisplayController;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
@@ -61,19 +62,9 @@ public class DisplayImpl
 
     @Override
     public void displayGrid(List<List<Point3D>> latLons, Material material, RenderableLayer layer) {
-        List<List<Position>> posLatLons = new ArrayList<>();
-        /*
-        List< List<Path>> pathLatLonS = new ArrayList<>();
-        for (int i = 0; i < lats.size(); i++) {
-            pathLatLonS.add(new ArrayList<>());
-            pathLatLonS.get(i).add(new Path(posLatLons.get(i)));
-        }
-        for (int i = 0; i < lats.size(); i++) {
-            layer.addRenderables(pathLatLonS.get(i));
-        }
-         */
+        
     }
-// = new ArrayList<>();
+
 
     @Override
     public void displayGrid(Point3D[][] latLons, Material material, RenderableLayer layer, double verticalExaggeration) {
@@ -90,8 +81,7 @@ public class DisplayImpl
             }
             latPaths.add(path0);
         }
-        Path latPath = latPaths.get(0);
-        latPath.setAttributes(createAttributes(Color.green));
+      
 
         layer.addRenderables(latPaths);
 
@@ -258,6 +248,7 @@ public class DisplayImpl
         attrs0.setOutlineOpacity(1.0);
         attrs0.setOutlineWidth(1d);
         attrs0.setOutlineMaterial(material);
+        p.setAltitudeMode(WorldWind.ABSOLUTE);
         p.setAttributes(attrs0);
         return p;
     }

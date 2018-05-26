@@ -7,8 +7,10 @@ package bzh.terrevirtuelle.navisu.geometry.geodesy.impl;
 
 import bzh.terrevirtuelle.navisu.geometry.geodesy.Geodesy;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
+import java.util.List;
 import org.capcaval.c3.component.ComponentState;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
@@ -98,6 +100,14 @@ public class GeodesyImpl
 
     @Override
     public void componentStopped() {
+    }
+
+    @Override
+    public List<Pair<Position, Position>> split(int count, Position a, Position b) {
+        
+        
+        
+        return null;
     }
 
 }
