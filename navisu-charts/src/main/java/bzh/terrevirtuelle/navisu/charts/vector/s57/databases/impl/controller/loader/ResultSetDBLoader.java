@@ -62,6 +62,7 @@ public abstract class ResultSetDBLoader {
                     put("DEPCNT", "rcid, valdco");
                     put("DOCARE", "rcid, objnam, inform, ninfom");
                     put("DRGARE", "rcid, objnam, inform, ninfom, drval1, drval2");
+                    put("LIGHTS", "rcid, objnam, catlit, colour, height, litchr, orient, sectr1, sectr2, siggrp, sigper, sigseq ");
                     put("LNDMRK", "rcid, objnam, functn, colour, colpat, catlmk, status, convis ");
                     put("MORFAC", "rcid, objnam, boyshp, colour, colpat, catmor");
                     put("NAVLNE", "rcid, orient");
@@ -79,21 +80,6 @@ public abstract class ResultSetDBLoader {
         this.acronym = acronym;
     }
 
-    @SuppressWarnings("unchecked")
-    public List<String> retrieveGeometriesIn(double latMin, double lonMin,
-            double latMax, double lonMax) {
-        geometry = new ArrayList<>();
-        resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
-        try {
-            while (resultSet.next()) {
-                geometry.add(resultSet.getString("geom"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ResultSetDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-
-        return geometry;
-    }
 
     abstract List<? extends Geo> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax);
 

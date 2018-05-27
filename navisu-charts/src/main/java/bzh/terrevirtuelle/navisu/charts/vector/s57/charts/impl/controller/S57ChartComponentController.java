@@ -43,7 +43,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Object;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR_NAME;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Lights;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import bzh.terrevirtuelle.navisu.util.Pair;
@@ -111,8 +111,8 @@ public class S57ChartComponentController
     protected final List<RenderableLayer> airspaceLayers = new ArrayList<>();
     protected RenderableLayer airspaceTmpLayer;
     protected LIGHTS_ShapefileLoader loader;
-    protected final List<Light> lightList;
-    protected final List<Light> lightDisplayedList;
+    protected final List<Lights> lightList;
+    protected final List<Lights> lightDisplayedList;
     protected final List<SurfacePolylines> coastalSurfacePolylinesList;
     protected Scene scene;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
@@ -124,7 +124,7 @@ public class S57ChartComponentController
     protected RenderableLayer transponderZoneLayer;
     protected final String NAME = "Transponder";
     protected final String GROUP = "Navigation";
-    protected final boolean DEV = false;
+    protected final boolean DEV = true;
     //protected final boolean DEV = true;
     protected final Set<S57Controller> s57Controllers = new HashSet<>();
     protected boolean first = false;
@@ -446,7 +446,7 @@ public class S57ChartComponentController
                         lightDisplayedList.clear();
                         if (isDisplay == false) {
                             isDisplay = true;
-                            Light data = lightView.getLight();
+                            Lights data = lightView.getLight();
                             showLightSectors(data);
                         } else {
                             isDisplay = false;
@@ -457,7 +457,7 @@ public class S57ChartComponentController
         });
     }
 
-    private void showLightSectors(Light data) {
+    private void showLightSectors(Lights data) {
         if (!lightDisplayedList.contains(data)) {
             S57LightView lightView;
             if (data != null

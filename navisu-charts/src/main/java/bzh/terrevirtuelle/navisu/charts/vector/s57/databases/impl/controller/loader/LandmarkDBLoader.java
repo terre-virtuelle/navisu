@@ -7,7 +7,9 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
+import gov.nasa.worldwind.geom.LatLon;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,43 +26,91 @@ import org.postgis.PGgeometry;
 public class LandmarkDBLoader
         extends ResultSetDBLoader {
 
-    protected Map<Pair<Double, Double>, String> marsysMap;
+    TopologyServices topologyServices;
+    List<Landmark> landmarks;
+    String marsys;
 
-    public LandmarkDBLoader(Connection connection,Map<Pair<Double, Double>, String> marsysMap) {
+    public LandmarkDBLoader(TopologyServices topologyServices, Connection connection, String marsys) {
         super(connection, "LNDMRK");
+        this.topologyServices = topologyServices;
+        this.marsys = marsys;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<? extends Geo> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
-        PGgeometry geom;
-       
-        objects = new ArrayList<>();
+    public List<Landmark> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
+        String geom;
+        landmarks = new ArrayList<>();
         resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
         Landmark object;
         try {
             while (resultSet.next()) {
-                object = new Landmark();
-                geom = (PGgeometry) resultSet.getObject("geom");
-                lat = geom.getGeometry().getFirstPoint().getY();
-                lon = geom.getGeometry().getFirstPoint().getX();
-                object.setLatitude(lat);
-                object.setLongitude(lon);
-                
-                String tmp = resultSet.getString("objnam");
-                String name = "";
-                if (tmp != null) {
-                    name = tmp;
-                }
-                object.setObjectName(name);
+                geom = resultSet.getString("geom");
+                if ((geom.contains("MULTIPOINT") || geom.contains("POINT")) && !geom.contains("EMPTY")) {
+                    object = new Landmark();
+                    object.setGeom(geom);
+                    object.setId(Long.parseLong(resultSet.getString("rcid")));
 
-                object.getLabels().put("LNDMRK", "Landmark");
-                objects.add(object);
+                    LatLon latLon = topologyServices.wktMultiPointToWwjLatLon(geom);
+                    object.setLatitude(latLon.getLatitude().getDegrees());
+                    object.setLongitude(latLon.getLongitude().getDegrees());
+
+                    object.setMarsys(marsys);
+
+                    String tmp = resultSet.getString("objnam");
+                    String name = "";
+                    if (tmp != null) {
+                        name = tmp;
+                    }
+                    object.setObjectName(name);
+
+                    tmp = resultSet.getString("functn");
+                    String functn = "0";
+                    if (tmp != null) {
+                        functn = tmp;
+                    }
+                    object.setFunction(functn);
+
+                    tmp = resultSet.getString("colour");
+                    String col = "0";
+                    if (tmp != null) {
+                        col = tmp;
+                    }
+                    object.setColour(col);
+
+                    tmp = resultSet.getString("colpat");
+                    String colPat = "0";
+                    if (tmp != null) {
+                        colPat = tmp;
+                    }
+                    object.setColourPattern(colPat);
+
+                    String catlmk = resultSet.getString("catlmk");
+                    if (catlmk == null) {
+                        catlmk = "0";
+                    }
+                    object.setCategoryOfLandMark(catlmk);
+
+                    String status = resultSet.getString("status");
+                    if (status == null) {
+                        status = "0";
+                    }
+                    object.setStatus(status);
+
+                    String convis = resultSet.getString("convis");
+                    if (convis == null) {
+                        convis = "0";
+                    }
+                    object.setConspicuousVisually(convis);
+
+                    object.getLabels().put("LNDMRK", "Landmark");
+                    landmarks.add(object);
+                }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(PontoonDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(LandmarkDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        return objects;
+        return landmarks;
     }
 
 }
