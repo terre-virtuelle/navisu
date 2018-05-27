@@ -3,7 +3,7 @@ package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import java.io.Serializable;
 
-public class Light extends Location
+public class Lights extends Location
         implements NavigationData, Serializable {
 
     private String categoryOfLight;
@@ -33,11 +33,11 @@ public class Light extends Location
     private String verticaldatum;
     private String objectNameInNationalLanguage;
 
-    public Light(Long id) {
+    public Lights(Long id) {
         this.id = id;
     }
 
-    public Light() {
+    public Lights() {
     }
 
     public String getCategoryOfLight() {

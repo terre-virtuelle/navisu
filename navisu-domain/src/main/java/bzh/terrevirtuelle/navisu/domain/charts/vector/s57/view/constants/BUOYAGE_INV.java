@@ -21,7 +21,6 @@ public class BUOYAGE_INV {
                     put("BuoyIsolatedDanger", "BOYISD");
                     put("BuoySafeWater", "BOYSAW");
                     put("BuoyInstallation", "BOYINB");
-                    put("Landmark", "LNDMRK");
                     put("MooringWarpingFacility", "MORFAC");
                     put("Daymark", "DAYMAR");
                 }

@@ -21,10 +21,13 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LandmarkView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57ObjectView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.AnchorageAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DockAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DredgedAreaDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.LandmarkDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.LightDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.NavigationLineDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.RestrictedAreaDBLoader;
 import bzh.terrevirtuelle.navisu.core.util.OS;
@@ -34,6 +37,8 @@ import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
@@ -175,7 +180,8 @@ public class StlDBComponentController
     protected double verticalExaggeration = DEFAULT_EXAGGERATION;
     protected double simplifyFactor;
     protected S57ObjectView s57Viewer;
-    protected List<? extends Geo> objects;
+    protected List<? extends Geo> objects = new ArrayList<>();
+    protected List<DepthContour> depthContours = new ArrayList<>();
     protected List<Buoyage> buoyages = new ArrayList<>();
     protected Connection s57Connection;
     protected Connection bathyConnection;
@@ -275,11 +281,13 @@ public class StlDBComponentController
             "DEPCNT",
             "DOCARE",
             "DRGARE",
-            "NAVLNE",
             "LNDMRK",
+            "LIGHTS",
+            "NAVLNE",
             "PONTON",
             "RESARE",
-            "SLCONS"
+            "SLCONS",
+            "LIGHT"
     );
 
     public StlDBComponentController(StlDBComponentImpl component,
@@ -538,27 +546,23 @@ public class StlDBComponentController
             double latMax, double lonMax) {
 
         guiAgentServices.getJobsManager().newJob("Load S57 objects", (progressHandle) -> {
+            //Define TopMak for all buoyages, default is 0 : no topmark
+            TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
+            topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+
+            //Define IALA system for all buoyages, default is 1
+            MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
+            marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+
             if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
 
-                //Define TopMak for all buoyages, default is 0 : no topmark
-                TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
-                topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-
-                //Define IALA system for all buoyages, default is 1
-                MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
-                marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-
                 Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
+
                 for (String b : buoyageKeySet) {
                     buoyages.addAll(new BuoyageDBLoader(topologyServices, s57Connection, b, topMarkMap, marsys)
                             .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 }
                 new BuoyageView(s57Layer).display(buoyages);
-            }
-            if (selectedObjects.contains("ALL") || selectedObjects.contains("LNDMRK")) {
-                new BuoyageView(s57Layer)
-                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "LNDMRK", topMarkMap, marsys)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("ACHARE")) {
                 objects = new AnchorageAreaDBLoader(topologyServices, s57Connection)
@@ -568,13 +572,21 @@ public class StlDBComponentController
                     s57Viewer.display(g);
                 });
             }
-
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("COALNE")) {
+                objects = new CoastlineDBLoader(s57Connection)
+                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                s57Viewer = new S57ObjectView("COALNE", topologyServices, s57Layer);
+                objects.forEach((g) -> {
+                    s57Viewer.display(g);
+                });
+            }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DEPCNT")) {
                 objects = new DepthContourDBLoader(s57Connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("DEPCNT", topologyServices, bathymetryLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
+
                 });
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DOCARE")) {
@@ -583,6 +595,7 @@ public class StlDBComponentController
                 s57Viewer = new S57ObjectView("DOCARE", topologyServices, bathymetryLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
+                    System.out.println("g : " + g.getClass().getSimpleName());
                 });
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DRGARE")) {
@@ -593,10 +606,28 @@ public class StlDBComponentController
                     s57Viewer.display(g);
                 });
             }
-            if (selectedObjects.contains("ALL") || selectedObjects.contains("COALNE")) {
-                objects = new CoastlineDBLoader(s57Connection)
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("LNDMRK")) {
+
+                List<Landmark> landmarks = new LandmarkDBLoader(topologyServices, s57Connection, marsys)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57ObjectView("COALNE", topologyServices, s57Layer);
+                new LandmarkView(s57Layer).display(landmarks);
+
+            }
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("LIGHTS")) {
+
+                objects = new LightDBLoader(topologyServices, s57Connection, marsys)
+                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                /*
+                      s57Viewer = new S57ObjectView("LIGHT", topologyServices, s57Layer);
+                objects.forEach((g) -> {
+                    s57Viewer.display(g);
+                });
+                 */
+            }
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("NAVLNE")) {
+                objects = new NavigationLineDBLoader(s57Connection)
+                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                s57Viewer = new S57ObjectView("NAVLNE", topologyServices, s57Layer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
@@ -617,14 +648,7 @@ public class StlDBComponentController
                     s57Viewer.display(g);
                 });
             }
-            if (selectedObjects.contains("ALL") || selectedObjects.contains("NAVLNE")) {
-                objects = new NavigationLineDBLoader(s57Connection)
-                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                s57Viewer = new S57ObjectView("NAVLNE", topologyServices, s57Layer);
-                objects.forEach((g) -> {
-                    s57Viewer.display(g);
-                });
-            }
+
             if (selectedObjects.contains("ALL") || selectedObjects.contains("RESARE")) {
                 objects = new RestrictedAreaDBLoader(s57Connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
@@ -636,16 +660,16 @@ public class StlDBComponentController
             }
 
             if (selectedObjects.contains("ALL") || demRB.isSelected()) {
-               bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
-              //  Point3D[][] ptsTab = delaunayServices.toGridTab(lat0, lon0, lat1, lon1, 100, 100, bathymetry.getMaxElevation());
+                bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
+                //  Point3D[][] ptsTab = delaunayServices.toGridTab(lat0, lon0, lat1, lon1, 100, 100, bathymetry.getMaxElevation());
                 Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
                 // Point3D[][] ptsTab = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, 200);
 
                 displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
 
-                 GridBox3D box = new GridBox3D(ptsTab);
-                 boolean isBaseDisplayed = false;
-                  displayServices.displayGrid(box, Material.MAGENTA, s57Layer, verticalExaggeration, isBaseDisplayed);
+                GridBox3D box = new GridBox3D(ptsTab);
+                boolean isBaseDisplayed = false;
+                displayServices.displayGrid(box, Material.MAGENTA, s57Layer, verticalExaggeration, isBaseDisplayed);
             }
 
             if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
