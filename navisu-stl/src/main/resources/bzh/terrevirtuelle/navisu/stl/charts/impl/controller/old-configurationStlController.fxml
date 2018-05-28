@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="configGroup" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="configGroup" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="610.0" styleClass="background-pane">
             <children>
@@ -148,7 +148,7 @@
         </Pane>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="500.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="610.0" />
       <Pane layoutX="14.0" layoutY="10.0" prefHeight="50.0" prefWidth="50.0" styleClass="logo" />
-      <Button fx:id="quit" layoutX="549.0" layoutY="17.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" styleClass="quitbutton" />
+      <Pane fx:id="quit" layoutX="557.0" layoutY="15.0" prefHeight="35.0" prefWidth="35.0" styleClass="quitbutton" />
         <Text layoutX="76.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="groupviewtittle" text="Options X3D/STL " textAlignment="CENTER" wrappingWidth="159.771484375" />
       <TextField fx:id="titleTF" layoutX="320.0" layoutY="22.0" prefHeight="25.0" prefWidth="204.0" />
       <Label alignment="TOP_RIGHT" layoutX="253.0" layoutY="29.0" prefHeight="15.0" prefWidth="55.0" text="Titre" textAlignment="RIGHT" />
