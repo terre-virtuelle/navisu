@@ -184,7 +184,6 @@
 	-fx-border-width : 1px;
 }
 
-}
 /*--------- background instruments - view ----------------*/
 .foot-pane {
     -fx-border-radius: 0 0 20 20;
@@ -308,6 +307,18 @@
     -fx-border-color: -fx-line-base;
     -fx-border-width: 1;
     -fx-border-radius: 10;
+}
+.grid-pane-fixvalue {
+    -fx-background-color: derive(-fx-base, 95%);
+    -fx-background-radius: 10;
+    -fx-border-color: #fff;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-text-fill: -fx-base;
+}
+/*------------------ Labels Navisu ----------------*/
+.label-fixvalue {
+    -fx-text-fill: -fx-base;
 }
 
 /*------------------ TabPane ------------------*/
