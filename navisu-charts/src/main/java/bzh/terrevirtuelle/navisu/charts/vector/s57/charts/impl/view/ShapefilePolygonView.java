@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view;
 
+import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
@@ -41,7 +42,7 @@ public abstract class ShapefilePolygonView
             boolean isHeight, double magnify, double maxHeight) {
         this.record = record;
 
-        isHeight = true;//Hack
+        // isHeight = true;//Hack
         if (isHeight == true) {
             if (record.getAttributes() != null) {
                 entries = record.getAttributes().getEntries();
@@ -52,8 +53,27 @@ public abstract class ShapefilePolygonView
                     }
                 });
             }
+        } else {
+            if (record.getAttributes() != null) {
+                entries = record.getAttributes().getEntries();
+                entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
+                    if (e.getKey().equalsIgnoreCase("drval1")) {
+                        val1 = (Double) e.getValue();
+                    }
+                   
+                    color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val1);
+                });
+            }
+            surface(layer, record);
+            shape.setValue("drval1", val1);
+            shape.setValue("drval2", val2);
+            shape.setValue(AVKey.DISPLAY_NAME,
+                    "[" + Double.toString(val1) + ", " + Double.toString(val2) + "]");
+            setPolygonAttributes(color);
+            
         }
-    }        
+    }
+
     private void extrudePolygon(RenderableLayer layer, ShapefileRecord record, double height) {
         if (height != 0) {  // create extruded polygons
             ExtrudedPolygon ep = new ExtrudedPolygon(height);
@@ -67,8 +87,7 @@ public abstract class ShapefilePolygonView
                     } else {
                         ep = new ExtrudedPolygon();
                         ep.setOuterBoundary(record.getCompoundPointBuffer().getLocations());
-                     //   System.out.println(ep.getOuterBoundary());
-                     ep.setValue(AVKey.DISPLAY_NAME,"[" + Double.toString(height) +"]");
+                        ep.setValue(AVKey.DISPLAY_NAME, "[" + Double.toString(height) + "]");
                         layer.addRenderable(ep);
                     }
                 } else {
@@ -82,6 +101,15 @@ public abstract class ShapefilePolygonView
             shape.setWindingRule(AVKey.CLOCKWISE);
             shape.setPolygonRingGroups(new int[]{0});
         }
+    }
+
+    private void surface(RenderableLayer layer, ShapefileRecord record) {
+        shape = new SurfacePolygons(
+                Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
+                record.getCompoundPointBuffer());
+        shape.setWindingRule(AVKey.CLOCKWISE);
+        shape.setPolygonRingGroups(new int[]{0});
+        layer.addRenderable(shape);
     }
 
     protected void setPolygonAttributes(Color col) {

@@ -50,13 +50,14 @@ public class LightView {
     @SuppressWarnings("unchecked")
     public void display(List<Light> objects) {
 
-        for (Light object : objects) {
+        objects.forEach((object) -> {
             showLightSectors(object);
-        }
+        });
     }
 
     private void showLightSectors(Light data) {
         S57LightView lightView;
+        System.out.println(data.getSectorLimitOne()+" "+data.getSectorLimitTwo()+" "+data.getValueOfNominalRange());
         if (data != null
                 && data.getSectorLimitOne() != null
                 && data.getSectorLimitTwo() != null

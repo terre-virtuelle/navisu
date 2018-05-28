@@ -10,13 +10,11 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 
 /**
@@ -62,7 +60,7 @@ public abstract class ResultSetDBLoader {
                     put("DEPCNT", "rcid, valdco");
                     put("DOCARE", "rcid, objnam, inform, ninfom");
                     put("DRGARE", "rcid, objnam, inform, ninfom, drval1, drval2");
-                    put("LIGHTS", "rcid, objnam, catlit, colour, height, litchr, orient, sectr1, sectr2, siggrp, sigper, sigseq ");
+                    put("LIGHTS", "rcid, objnam, catlit, colour, height, litchr, orient, sectr1, sectr2, siggrp, sigper, sigseq, valnmr ");
                     put("LNDMRK", "rcid, objnam, functn, colour, colpat, catlmk, status, convis ");
                     put("MORFAC", "rcid, objnam, boyshp, colour, colpat, catmor");
                     put("NAVLNE", "rcid, orient");

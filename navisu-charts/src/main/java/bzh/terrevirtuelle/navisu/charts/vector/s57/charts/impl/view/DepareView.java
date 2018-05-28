@@ -5,15 +5,12 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view;
 
-import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT;
-import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Polygon;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;

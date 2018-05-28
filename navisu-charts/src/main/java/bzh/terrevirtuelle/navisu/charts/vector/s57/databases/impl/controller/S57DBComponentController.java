@@ -22,15 +22,18 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LandmarkView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57ObjectView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.AnchorageAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DockAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DredgedAreaDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.LandmarkDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.NavigationLineDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.RestrictedAreaDBLoader;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
@@ -555,17 +558,15 @@ public class S57DBComponentController
         pgon.setAttributes(normalAttributes);
         depareLayer.addRenderable(pgon);
         wwd.redrawNow();
+//Define TopMak for all buoyages, default is 0 : no topmark
+        TopmarDBLoader topmarDbLoader = new TopmarDBLoader(connection);
+        topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
+        //Define IALA system for all buoyages, default is 1
+        MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(connection);
+        marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
         guiAgentServices.getJobsManager().newJob("Load S57 objects", (progressHandle) -> {
             if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
-
-                //Define TopMak for all buoyages, default is 0 : no topmark
-                TopmarDBLoader topmarDbLoader = new TopmarDBLoader(connection);
-                topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-
-                //Define IALA system for all buoyages, default is 1
-                MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(connection);
-                marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
                 new BuoyageView(buoyageLayer)
                         .display(new BuoyageDBLoader(topologyServices, connection, "BCNCAR", topMarkMap, marsys)
@@ -611,9 +612,9 @@ public class S57DBComponentController
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("LNDMRK")) {
-                new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "LNDMRK", topMarkMap, marsys)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                List<Landmark> landmarks = new LandmarkDBLoader(topologyServices, connection, marsys)
+                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                new LandmarkView(buoyageLayer).display(landmarks);
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("ACHARE")) {
                 objects = new AnchorageAreaDBLoader(topologyServices, connection)
@@ -627,8 +628,8 @@ public class S57DBComponentController
                 new DepareView(depareLayer, simpleDepareLayer, depare3DLayer,
                         10.0,
                         0.00001,
-                         1.0,
-                        true, false)
+                        1.0,
+                        false, false)
                         .display(new DepareDBLoader(databaseServices,
                                 databaseTF.getText(),
                                 USER,
