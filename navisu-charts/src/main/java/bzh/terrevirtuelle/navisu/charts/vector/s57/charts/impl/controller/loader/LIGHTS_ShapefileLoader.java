@@ -10,7 +10,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57LightView
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR_NAME;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Lights;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
@@ -36,9 +36,9 @@ import java.util.Set;
 public class LIGHTS_ShapefileLoader
         extends LayerShapefileLoader {
 
-    private final List<Lights> lightList;
+    private final List<Light> lightList;
     private Set<Map.Entry<String, Object>> entries;
-    private Lights data;
+    private Light data;
     private final RenderableLayer airspaceLayer;
     protected WorldWindow wwd;
     protected Globe globe;
@@ -70,7 +70,7 @@ public class LIGHTS_ShapefileLoader
 
         entries = record.getAttributes().getEntries();
         elevation = globe.getElevation(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees));
-        data = new Lights();
+        data = new Light();
         //System.out.println("entries " + entries);
         lightList.add(data);
         data.setLatitude(latDegrees);
@@ -204,7 +204,7 @@ public class LIGHTS_ShapefileLoader
         return lightView;
     }
 
-    public List<Lights> getLights() {
+    public List<Light> getLights() {
         return lightList;
     }
 

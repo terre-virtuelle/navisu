@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Lights;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import gov.nasa.worldwind.render.airspaces.PartialCappedCylinder;
 
 /**
@@ -17,7 +17,7 @@ public class S57LightView
         extends PartialCappedCylinder
         implements S57Lights {
 
-    private Lights light;
+    private Light light;
 
     private boolean tmp = false;
 
@@ -39,14 +39,14 @@ public class S57LightView
         this.tmp = tmp;
     }
 
-    public S57LightView(Lights light) {
+    public S57LightView(Light light) {
         this.light = light;
     }
 
     public S57LightView() {
     }
 
-    public Lights getLight() {
+    public Light getLight() {
         return light;
     }
 

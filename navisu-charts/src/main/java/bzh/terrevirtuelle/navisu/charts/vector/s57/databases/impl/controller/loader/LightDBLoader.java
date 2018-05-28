@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Lights;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import gov.nasa.worldwind.geom.LatLon;
 import java.sql.Connection;
@@ -32,17 +32,17 @@ public class LightDBLoader
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<? extends Geo> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
+    public List<Light> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
         String geom;
 
-        objects = new ArrayList<>();
+        List<Light> lights = new ArrayList<>();
         resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
-        Lights object;
+        Light object;
         try {
             while (resultSet.next()) {
                 geom = resultSet.getString("geom");
                 if ((geom.contains("MULTIPOINT") || geom.contains("POINT")) && !geom.contains("EMPTY")) {
-                    object = new Lights();
+                    object = new Light();
 
 //"rcid, objnam, catlit, colour, height, litchr, orient, sectr1, sectr2, siggrp, sigper, sigseq ");                
                     LatLon latLon = topologyServices.wktMultiPointToWwjLatLon(geom);
@@ -62,13 +62,13 @@ public class LightDBLoader
          
                     
                     object.getLabels().put("LIGHTS", "Lights");
-                    objects.add(object);
+                    lights.add(object);
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(PontoonDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        return objects;
+        return lights;
     }
 
 }

@@ -27,14 +27,14 @@ import java.util.logging.Logger;
  */
 public class BuoyageDBLoader
         extends ResultSetDBLoader {
-    
+
     protected final String BUOYAGE_PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
     protected Buoyage buoyage;
     protected Class claz;
     protected TopologyServices topologyServices;
     protected Map<Pair<Double, Double>, String> topMarkMap;
     protected String marsys;
-    
+
     public BuoyageDBLoader(TopologyServices topologyServices,
             Connection connection, String acronym,
             Map<Pair<Double, Double>, String> topMarkMap,
@@ -52,7 +52,7 @@ public class BuoyageDBLoader
             Logger.getLogger(BuoyageDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public List<Buoyage> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
@@ -75,51 +75,51 @@ public class BuoyageDBLoader
                         double lon = latLon.getLongitude().getDegrees();
                         buoyage.setLatitude(lat);
                         buoyage.setLongitude(lon);
-                        
+
                         buoyage.setId(Long.parseLong(resultSet.getString("rcid")));
-                        
+
                         buoyage.setMarsys(marsys);
-                        
+
                         String topMark = topMarkMap.get(new Pair(lat, lon));
                         if (topMark == null) {
                             topMark = "0";
                         }
                         buoyage.setTopMark(topMark);
-                        
+
                         String tmp = resultSet.getString("objnam");
                         String name = "";
                         if (tmp != null) {
                             name = tmp;
                         }
                         buoyage.setObjectName(name);
-                        
+
                         tmp = resultSet.getString(4);
                         String shp = "0";
                         if (tmp != null) {
                             shp = tmp;
                         }
                         buoyage.setShape(shp);
-                        
+
                         tmp = resultSet.getString("colour");
                         String col = "0";
                         if (tmp != null) {
                             col = tmp;
                         }
                         buoyage.setColour(col);
-                        
+
                         tmp = resultSet.getString("colpat");
                         String colPat = "0";
                         if (tmp != null) {
                             colPat = tmp;
                         }
                         buoyage.setColourPattern(colPat);
-                        
+
                         String cat = resultSet.getString(7);
                         if (cat == null) {
                             cat = "0";
                         }
                         buoyage.setCategoryOfMark(cat);
-                        
+
                         if (acronym.equals("DAYMAR")) {
                             String natcon = resultSet.getString("natcon");
                             if (natcon == null) {
@@ -130,7 +130,7 @@ public class BuoyageDBLoader
                         buoyages.add(buoyage);
                     }
                 }
-                
+
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }

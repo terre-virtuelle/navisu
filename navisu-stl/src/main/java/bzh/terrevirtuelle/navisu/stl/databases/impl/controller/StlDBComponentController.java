@@ -22,6 +22,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LandmarkView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57ObjectView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.AnchorageAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DockAreaDBLoader;
@@ -39,6 +40,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
@@ -154,13 +156,14 @@ public class StlDBComponentController
     protected static final String GROUP_0 = "S57 charts";
     protected static final String BATHYMETRY_LAYER = "S57StlBathy";
     protected static final String S57_LAYER = "S57Stl";
+    protected static final String LIGHTS_LAYER = "LIGHTS";
     protected RenderableLayer bathymetryLayer;
     protected RenderableLayer s57Layer;
+    protected RenderableLayer lightsLayer;
     protected ShapeAttributes normalAttributes;
     protected ShapeAttributes highlightAttributes;
-    //   protected Polygon selectionPolygon;
 
-    protected double DEFAULT_SIDE = 200.0;
+    protected double DEFAULT_SIDE = 180.0;
     protected double tileSideX = DEFAULT_SIDE;
     protected double tileSideY = DEFAULT_SIDE;
     protected double lat0 = 520;
@@ -332,7 +335,7 @@ public class StlDBComponentController
 
         s57Layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
         bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
-
+        lightsLayer = layersManagerServices.getLayer(GROUP_0, LIGHTS_LAYER);
         try {
             properties.load(new FileInputStream(CONFIG_FILE_NAME));
         } catch (IOException ex) {
@@ -615,14 +618,12 @@ public class StlDBComponentController
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("LIGHTS")) {
 
-                objects = new LightDBLoader(topologyServices, s57Connection, marsys)
+                List<Light> lights = new LightDBLoader(topologyServices, s57Connection, marsys)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                /*
-                      s57Viewer = new S57ObjectView("LIGHT", topologyServices, s57Layer);
-                objects.forEach((g) -> {
-                    s57Viewer.display(g);
-                });
-                 */
+
+                new LightView(lightsLayer)
+                        .display(lights);
+
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("NAVLNE")) {
                 objects = new NavigationLineDBLoader(s57Connection)
@@ -661,10 +662,7 @@ public class StlDBComponentController
 
             if (selectedObjects.contains("ALL") || demRB.isSelected()) {
                 bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
-                //  Point3D[][] ptsTab = delaunayServices.toGridTab(lat0, lon0, lat1, lon1, 100, 100, bathymetry.getMaxElevation());
                 Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
-                // Point3D[][] ptsTab = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, 200);
-
                 displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
 
                 GridBox3D box = new GridBox3D(ptsTab);
@@ -685,7 +683,6 @@ public class StlDBComponentController
                         Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
                         true, true)
                         .display(shapefile);
-                //paintBox(s57Layer, Material.MAGENTA, latMin, lonMin, latMax, lonMax, bathymetry.getMaxElevation()*verticalExaggeration);
             }
 
             if (selectedObjects.contains("ALL") || depareUlhyssesRB.isSelected()) {
