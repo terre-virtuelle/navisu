@@ -23,17 +23,20 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LandmarkView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57ObjectView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.AnchorageAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DockAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DredgedAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.LandmarkDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.LightDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.NavigationLineDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.RestrictedAreaDBLoader;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
@@ -217,7 +220,7 @@ public class S57DBComponentController
     protected double lon1;
     protected S57ObjectView s57Viewer;
     protected List<? extends Geo> objects;
-    protected Connection connection;
+    protected Connection s57Connection;
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
     protected String marsys;
     protected ObservableList<String> dbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
@@ -439,7 +442,7 @@ public class S57DBComponentController
             if (lightsSectorsLayer.getNumRenderables() != 0) {
                 lightsSectorsLayer.removeAllRenderables();
             }
-            connection = databaseServices.connect(databaseTF.getText(),
+            s57Connection = databaseServices.connect(databaseTF.getText(),
                     "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver",
                     USER, PASSWD);
             if (lat0 != 0 && lon0 != 0 && lat1 != 0 && lon1 != 0) {
@@ -559,65 +562,65 @@ public class S57DBComponentController
         depareLayer.addRenderable(pgon);
         wwd.redrawNow();
 //Define TopMak for all buoyages, default is 0 : no topmark
-        TopmarDBLoader topmarDbLoader = new TopmarDBLoader(connection);
+        TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
         topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
         //Define IALA system for all buoyages, default is 1
-        MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(connection);
+        MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
         marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
         guiAgentServices.getJobsManager().newJob("Load S57 objects", (progressHandle) -> {
             if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
 
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNCAR", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "BCNCAR", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNLAT", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "BCNLAT", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNISD", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "BCNISD", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNSAW", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "BCNSAW", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNSPP", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "BCNSPP", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BCNISD", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "BCNISD", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYCAR", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "BOYCAR", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYLAT", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "BOYLAT", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYINB", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "BOYINB", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYISD", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "BOYISD", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYSAW", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "BOYSAW", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "BOYSPP", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "BOYSPP", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "DAYMAR", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "DAYMAR", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                 new BuoyageView(buoyageLayer)
-                        .display(new BuoyageDBLoader(topologyServices, connection, "MORFAC", topMarkMap, marsys)
+                        .display(new BuoyageDBLoader(topologyServices, s57Connection, "MORFAC", topMarkMap, marsys)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("LNDMRK")) {
-                List<Landmark> landmarks = new LandmarkDBLoader(topologyServices, connection, marsys)
+                List<Landmark> landmarks = new LandmarkDBLoader(topologyServices, s57Connection, marsys)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 new LandmarkView(buoyageLayer).display(landmarks);
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("ACHARE")) {
-                objects = new AnchorageAreaDBLoader(topologyServices, connection)
+                objects = new AnchorageAreaDBLoader(topologyServices, s57Connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("ACHARE", topologyServices, navigationLayer);
                 objects.forEach((g) -> {
@@ -636,7 +639,7 @@ public class S57DBComponentController
                                 PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DOCARE")) {
-                objects = new DockAreaDBLoader(connection)
+                objects = new DockAreaDBLoader(s57Connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("DOCARE", topologyServices, bathymetryLayer);
                 objects.forEach((g) -> {
@@ -644,7 +647,7 @@ public class S57DBComponentController
                 });
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DRGARE")) {
-                objects = new DredgedAreaDBLoader(connection)
+                objects = new DredgedAreaDBLoader(s57Connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("DRGARE", topologyServices, bathymetryLayer);
                 objects.forEach((g) -> {
@@ -652,7 +655,7 @@ public class S57DBComponentController
                 });
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("COALNE")) {
-                objects = new CoastlineDBLoader(connection)
+                objects = new CoastlineDBLoader(s57Connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("COALNE", topologyServices, depareLayer);
                 objects.forEach((g) -> {
@@ -660,7 +663,7 @@ public class S57DBComponentController
                 });
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("PONTON")) {
-                objects = new PontoonDBLoader(connection)
+                objects = new PontoonDBLoader(s57Connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("PONTON", topologyServices, buildingLayer);
                 objects.forEach((g) -> {
@@ -668,15 +671,24 @@ public class S57DBComponentController
                 });
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("SLCONS")) {
-                objects = new ShorelineConstructionDBLoader(connection)
+                objects = new ShorelineConstructionDBLoader(s57Connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("SLCONS", topologyServices, buildingLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
                 });
             }
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("LIGHTS")) {
+
+                List<Light> lights = new LightDBLoader(topologyServices, s57Connection, marsys)
+                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+
+                new LightView(lightsLayer)
+                        .display(lights);
+
+            }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("NAVLNE")) {
-                objects = new NavigationLineDBLoader(connection)
+                objects = new NavigationLineDBLoader(s57Connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("NAVLNE", topologyServices, navigationLayer);
                 objects.forEach((g) -> {
@@ -684,7 +696,7 @@ public class S57DBComponentController
                 });
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("RESARE")) {
-                objects = new RestrictedAreaDBLoader(connection)
+                objects = new RestrictedAreaDBLoader(s57Connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 s57Viewer = new S57ObjectView("RESARE", topologyServices, navigationLayer);
                 objects.forEach((g) -> {
@@ -698,6 +710,6 @@ public class S57DBComponentController
     }
 
     public Connection getConnection() {
-        return connection;
+        return s57Connection;
     }
 }

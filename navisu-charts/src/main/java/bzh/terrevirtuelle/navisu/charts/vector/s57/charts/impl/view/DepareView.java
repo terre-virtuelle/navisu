@@ -52,84 +52,16 @@ public class DepareView
     }
 
     public void display(Shapefile shp) {
-        //  System.out.println("shp : " + shp);OK
         while (shp.hasNext()) {
             try {
                 //Create classical chart
                 record = shp.nextRecord();
                 createSurfacePolygons(record, layer, false, false);
-                /*
-                if (!Shapefile.isPolygonType(record.getShapeType())) {
-                    continue;
-                }
-                */
-                /*
-                Polygon p;
-                for (int i = 0; i < shape.getBuffer().size(); i++) {
-                    p = new Polygon(shape.getBuffer().subBuffer(i).getPositions());
-                    p.setValue(AVKey.SHORT_DESCRIPTION, ((Double) shape.getValue("drval1")).toString());
-                    p.setValue(AVKey.BALLOON_TEXT, ((Double) shape.getValue("drval2")).toString());
-                    p.setValue(AVKey.ABOVE_MEAN_SEA_LEVEL, ((Double) shape.getValue("drval2")).toString());
-                    p.setAltitudeMode(altitudeMode);
-                    polygons.add(p);
-                    
-                }
-                */
             } catch (Exception ex) {
                 Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-/*
-        if (isSimplify == true) {
-            //Create kml output.kml file
-            Polygon[] array = new Polygon[polygons.size()];
-            for (int i = 0; i < polygons.size(); i++) {
-                array[i] = polygons.get(i);
-            }
 
-            creatKML(array);
-
-            //Simplify data and create depare.shp
-            String path = Proc.getProperty("gdalPath");
-            String command = path + sep +"ogr2ogr -f 'ESRI Shapefile' cmd"+sep+"output.shp cmd"+sep+"output.kml \n"
-                    + path + sep +"ogr2ogr cmd"+sep+"outfileSimplify.shp cmd"+sep+"depare.shp -simplify " + simplify;
-            try {
-                Proc.BUILDER.create()
-                        .setCmd(command)
-                        .execSh();
-            } catch (IOException | InterruptedException ex) {
-                Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
-
-            //Create objectShapefile with data simplified
-            //Create extruded polygons with data simplified
-            Shapefile simplifiedShape = new Shapefile("cmd"+sep+"outfileSimplify.shp");
-            while (simplifiedShape.hasNext()) {
-                try {
-                    record = simplifiedShape.nextRecord();
-                    createSurfacePolygons(record, simpleDeparelayer, false, true);
-                    if (isCreateElevation) {
-                        createSurfacePolygons(record, depare3DLayer, true, false);
-                    }
-                } catch (Exception ex) {
-                    Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-                }
-            }
-        } else {
-            while (shp.hasNext()) {
-                try {
-                    record = shp.nextRecord();
-                    createSurfacePolygons(record, simpleDeparelayer, false, true);
-                    if (isCreateElevation) {
-                        System.out.println("isShowElevation" + record + " " + depare3DLayer);
-                        createSurfacePolygons(record, depare3DLayer, true, false);
-                    }
-                } catch (Exception ex) {
-                    Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-                }
-            }
-        }
-*/
         wwd.redrawNow();
 
     }
@@ -143,25 +75,13 @@ public class DepareView
                 //Calculate depth max
                 entries = record.getAttributes().getEntries();
                 entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
-
                     if (e.getKey().equalsIgnoreCase("drval1")) {
                         val1 = (Double) e.getValue();
                     }
-                   
                     color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val1);
                 });
             }
             createPolygon(layer, record, isHeight, magnify, maxHeight);
-         //   System.out.println("shape 1 : " + shape);
-         /*
-         shape.setValue("drval1", val1);
-            shape.setValue("drval2", val2);
-            shape.setValue(AVKey.DISPLAY_NAME,
-                    "[" + Double.toString(val1) + ", " + Double.toString(val2) + "]");
-            setPolygonAttributes(color);
-           layer.addRenderable(shape);
-           */
         }
     }
-
 }

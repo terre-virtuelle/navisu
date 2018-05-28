@@ -57,7 +57,6 @@ public class LightView {
 
     private void showLightSectors(Light data) {
         S57LightView lightView;
-        System.out.println(data.getSectorLimitOne()+" "+data.getSectorLimitTwo()+" "+data.getValueOfNominalRange());
         if (data != null
                 && data.getSectorLimitOne() != null
                 && data.getSectorLimitTwo() != null
@@ -83,11 +82,11 @@ public class LightView {
                     + "Lat : " + Double.toString(lat) + "\n"
                     + "Lon : " + Double.toString(lon) + "\n"
                     + "Color : " + COLOR_NAME.getColor(data.getColour()) + "\n"
-                    + (data.getSignalPeriod() != null ? "Period : " + data.getSignalPeriod() + " s" + "\n" : "")
-                    + (data.getHeight() != null ? "Height : " + data.getHeight() + " m" + "\n" : "")
-                    + (data.getValueOfNominalRange() != null ? "Nominal range : " + data.getValueOfNominalRange() + " Nm" + "\n" : "")
-                    + "Sect1 : " + data.getSectorLimitOne() + "\n"
-                    + "Sect2 : " + data.getSectorLimitTwo() + "\n";
+                    + (data.getSignalPeriod() != null ? "Period : " + (int) Double.parseDouble(data.getSignalPeriod()) + " s" + "\n" : "")
+                    + (data.getHeight() != null ? "Height : " + (int) Double.parseDouble(data.getHeight()) + " m" + "\n" : "")
+                    + (data.getValueOfNominalRange() != null ? "Nominal range : " + (int) Double.parseDouble(data.getValueOfNominalRange()) + " Nm" + "\n" : "")
+                    + "Sect1 : " + (int) Double.parseDouble(data.getSectorLimitOne()) + "\n"
+                    + "Sect2 : " + (int) Double.parseDouble(data.getSectorLimitTwo()) + "\n";
             lightView.setValue(AVKey.DISPLAY_NAME, label);
             lightView.getAttributes().setDrawOutline(true);
 
