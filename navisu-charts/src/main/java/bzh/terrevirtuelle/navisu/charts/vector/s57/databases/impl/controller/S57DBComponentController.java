@@ -249,6 +249,7 @@ public class S57DBComponentController
             "DEPARE",
             "DOCARE",
             "DRGARE",
+            "LIGHTS",
             "NAVLNE",
             "LNDMRK",
             "PONTON",
@@ -561,14 +562,16 @@ public class S57DBComponentController
         pgon.setAttributes(normalAttributes);
         depareLayer.addRenderable(pgon);
         wwd.redrawNow();
-//Define TopMak for all buoyages, default is 0 : no topmark
-        TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
-        topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
-        //Define IALA system for all buoyages, default is 1
-        MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
-        marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
         guiAgentServices.getJobsManager().newJob("Load S57 objects", (progressHandle) -> {
+
+            //Define TopMak for all buoyages, default is 0 : no topmark
+            TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
+            topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+
+            //Define IALA system for all buoyages, default is 1
+            MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
+            marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
             if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
 
                 new BuoyageView(buoyageLayer)

@@ -598,7 +598,6 @@ public class StlDBComponentController
                 s57Viewer = new S57ObjectView("DOCARE", topologyServices, bathymetryLayer);
                 objects.forEach((g) -> {
                     s57Viewer.display(g);
-                    System.out.println("g : " + g.getClass().getSimpleName());
                 });
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DRGARE")) {
