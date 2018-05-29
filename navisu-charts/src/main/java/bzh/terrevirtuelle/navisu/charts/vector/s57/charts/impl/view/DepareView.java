@@ -56,7 +56,7 @@ public class DepareView
             try {
                 //Create classical chart
                 record = shp.nextRecord();
-                createSurfacePolygons(record, layer, false, false);
+                createSurfacePolygons(record, layer, isCreateElevation, false);
             } catch (Exception ex) {
                 Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }

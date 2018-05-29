@@ -41,8 +41,7 @@ public abstract class ShapefilePolygonView
     protected void createPolygon(RenderableLayer layer, ShapefileRecord record,
             boolean isHeight, double magnify, double maxHeight) {
         this.record = record;
-
-        // isHeight = true;//Hack
+        System.out.println("isHeight : " + isHeight);
         if (isHeight == true) {
             if (record.getAttributes() != null) {
                 entries = record.getAttributes().getEntries();

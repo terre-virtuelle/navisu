@@ -280,7 +280,6 @@ public class StlDBComponentController
             "ACHARE",
             "BUOYAGE",
             "COALNE",
-            "DEPARE",
             "DEPCNT",
             "DOCARE",
             "DRGARE",
