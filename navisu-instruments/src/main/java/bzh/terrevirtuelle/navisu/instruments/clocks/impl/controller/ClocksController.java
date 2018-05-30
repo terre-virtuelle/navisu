@@ -88,7 +88,7 @@ public class ClocksController
 
     private ClocksController(ClocksImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
-        this.viewgroupstyle = "clocks.css";
+        this.viewgroupstyle = "common.css";
         this.viewgroupstyle2 = "clocks2.css";
         this.instrument = instrument;
         load(FXML);
