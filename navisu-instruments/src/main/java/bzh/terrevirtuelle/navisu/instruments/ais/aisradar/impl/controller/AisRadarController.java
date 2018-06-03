@@ -190,7 +190,7 @@ public class AisRadarController
     protected NumberFormat formatter = new DecimalFormat("#0");
     protected SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-    protected String viewgroupstyle = "aisradar.css";
+    protected String viewgroupstyle = "common.css";
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     public AisRadarController(AisRadarImpl aisRadar) {
         this(aisRadar, null, null);

@@ -17,7 +17,7 @@
                 <Group layoutX="33.0" layoutY="50.0">
                     <children>
                         <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="260.0" strokeType="INSIDE" styleClass="instrumentcadres" width="260.0" />
-                  <Pane layoutX="93.0" prefHeight="220.0" prefWidth="70.0" scaleX="0.6" scaleY="0.6" styleClass="compass-navire" />
+                  <Pane layoutX="93.0" layoutY="41.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="151.0" prefWidth="70.0" styleClass="compass-navire" />
                         <Pane fx:id="couronne" layoutX="16.0" layoutY="10.0" prefHeight="225.0" prefWidth="225.0" styleClass="compass-couronne" />
                         <Text fx:id="headingValue" layoutX="99.0" layoutY="164.0" styleClass="instrumentvalue" text="0" textAlignment="CENTER" wrappingWidth="50.0" x="4.0" />
                         <Text fx:id="title" layoutX="121.0" layoutY="-15.0" styleClass="instrumenttitle" text="COMPASS" textAlignment="CENTER" wrappingWidth="150.0">

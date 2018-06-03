@@ -410,19 +410,14 @@
     -fx-content-display: CENTER;
 }
 .compass-navire{
-    /*-fx-background-image: url(cssImages/navirecompass.png) ;*/
+    -fx-background-image: url(cssImages/navirecompass.png) ;
     -fx-background-size: cover;
     -fx-background-repeat:no-repeat;  
-    -fx-background-color: -fx-line-base;
+    -fx-background-color: #bb000000;
     -fx-background-radius: 10;
     -fx-text-fill: -fx-color-typo;
     -fx-content-display: CENTER;
-    -fx-background-size: contain;
-    -fx-shape:"M181.4,221.9c0-0.2,0-0.4-0.1-0.5c0,0,0,0,0,0L181.4,221.9z M202.2,62.5h-0.3c-31,37.9-25.1,112.1-20.5,158.9c0,0,23.3-0.2,41,0.5C226.9,175.1,233.3,100.5,202.2,62.5z
-		 M220.3,218.1c-15.9-0.7-15.9-0.7-37-0.5c0,0.2,0,0.3,0,0.5l0-0.5c0,0,0,0,0,0c-4.1-42.3-9.2-117.3,18.8-151.4
-		C230.3,100.5,224.5,175.9,220.3,218.1z"
 }
-
 /******************************************************************************
  *                                                                             *
  * GPS                                                                         *
@@ -575,66 +570,4 @@ gps-circle, .gps-line{
 .menu-item >.label {
     -fx-padding: 0em 0.5em 0em 0em;
     -fx-text-fill: -fx-color-typo;
-}
-/*******************************************************************************
- *                                                                             *
- * Measure tools                                                               *
- *                                                                             *
- ******************************************************************************/
-
-.measuretool-panel{
-    -fx-border-radius: 20 20 20 20;
-    -fx-background-radius: 20 20 20 20;
-    -fx-background-color: -fx-base;
-    -fx-stroke: -fx-line-base;
-}
-.measuretool-circle, .measuretool-line{
-    -fx-stroke: -fx-line-base;
-    -fx-fill: -fx-base-trans10;  
-}
-.measuretool-line, .measuretool-ticks {
-    -fx-stroke: -fx-line-base;
-    -fx-stroke-width: 2;
-}
-.measuretool-ticks10{
-    -fx-stroke: -fx-line-base;
-    -fx-stroke-width: 3;
-}
-.measuretool-degrees{
-    -fx-font: 20pt "Roboto";
-    -fx-fill:-fx-line-base;
-}
-.measuretool-screen {
-    /*
-    -fx-stroke: -fx-line-base;
-    -fx-stroke-width: 4px;
-    */
-    -fx-arc-height:30;
-    -fx-arc-width:30;
-    -fx-fill: -fx-base;    
-}
-.measuretool-info-pane {
-    -fx-stroke: -fx-line-base;
-    -fx-arc-height:20;
-    -fx-arc-width:20;
-    -fx-fill: -fx-base-trans20;
-}
-.measuretool-buttonlabel{
-    -fx-font: 14px "Roboto";
-    -fx-fill : -fx-color-typo;
-}
-.measuretool-buttonlabel-nlines{
-    -fx-font: 12px "Roboto Cn";
-    -fx-fill : -fx-color-typo;
-}
-.measuretool-togglebutton{
-    -fx-background-color: linear-gradient(to bottom, ladder(-fx-toggle-color,derive(-fx-toggle-color,8%) 75%,derive(-fx-toggle-color,10%) 80%),derive(-fx-toggle-color,-8%));
-    -fx-body-color-bottomup: linear-gradient(to top, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
-    -fx-body-color-to-right: linear-gradient(to right, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
-    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
-    -fx-background-radius: 3px, 3px, 2px, 1px;
-    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
-    -fx-font: 12px "Roboto Cn";
-    -fx-fill : -fx-color-typo;
-    -fx-alignment: CENTER;
 }

@@ -33,7 +33,6 @@ public class InstrumentController
     @FXML
     public Group view;
     @FXML
-    //public ImageView quit;
     public Button quit;
     @FXML
     public Slider opacitySlider;
@@ -57,11 +56,10 @@ public class InstrumentController
             throw new RuntimeException(exception);
         }
         viewpane.setOpacity(0.6);
-        //view.setOpacity(0.8);
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
                 viewpane.setOpacity(opacitySlider.getValue());
-                //view.setOpacity(opacitySlider.getValue());
+
             });
         });
     }
