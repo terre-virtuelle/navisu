@@ -1,4 +1,5 @@
 /* CSS Document */
+@import "colors.css";
 @font-face {
     -fx-font-family: 'Roboto Cn';
     src: url('fonts/Roboto-Condensed.ttf');
@@ -6,26 +7,12 @@
 /*******************************************************************************
  *                                                                             *
  *                     partie commune aux instruments                          *
- *                  couleurs - surlignage - typo titres                        *
+ *                         surlignage - typo titres                            *
  *                                                                             *
  ******************************************************************************/
 *{
     -fx-font-family: "Roboto Cn" ;
-    /*---------- couleurs ----------------------*/    
-    -fx-base : #143b28;
-    -fx-base-trans : #143b2800;
-    -fx-base-trans10 : #143b2810;
-    -fx-base-trans20 : #143b2820;
-    -fx-base-trans95: #143b2895;
-    -fx-color : #143b28;
-    -fx-no-border: #143b28;
-    -fx-line-base : #04fff2;
-    -fx-focus-color: derive(-fx-color,80%); /* tonalité claire de la couleur de base*/
-    -fx-faint-focus-color: derive(-fx-color,80%);
-    -fx-color-typo: #c2f8c4;
-    -fx-color-title: #fff900;
-    -fx-color-backround-value: -fx-base-trans; /* background transparent boutons*/
-    -fx-cell-hover-color:#cce3f4;
+    
     /*------- dégradés des boutons----------*/
     -fx-color-button: derive(-fx-color,30%);
     -fx-button-background-color: linear-gradient(to bottom,
@@ -354,7 +341,7 @@
  ******************************************************************************/
 /*******************************************************************************
  *                                                                             *
- * Clock specific css                                                                   *
+ * Clock specific css                                                          *
  *                                                                             *
  ******************************************************************************/
 .clockvalue{
@@ -395,4 +382,192 @@
     -fx-background-color: #bb000088;
     -fx-background-radius: 15;
     -fx-background-insets: 5;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * compass specific css                                                        *
+ *                                                                             *
+ ******************************************************************************/
+.compass-ticks{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width : 5px;
+    -fx-fill: #143b28;
+}
+.compass-ticks-quarter{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width : 10px;
+    -fx-fill: #143b28;
+}
+
+.compass-couronne{
+    -fx-background-image: url(cssImages/couronne.png) ;
+    -fx-background-size: cover;
+    -fx-background-repeat:no-repeat;  
+    -fx-background-color: #bb000000;
+    -fx-background-radius: 10;
+    -fx-text-fill: -fx-color-typo;
+    -fx-content-display: CENTER;
+}
+.compass-navire{
+    -fx-background-image: url(cssImages/navirecompass.png) ;
+    -fx-background-size: cover;
+    -fx-background-repeat:no-repeat;  
+    -fx-background-color: #bb000000;
+    -fx-background-radius: 10;
+    -fx-text-fill: -fx-color-typo;
+    -fx-content-display: CENTER;
+}
+/******************************************************************************
+ *                                                                             *
+ * GPS                                                                         *
+ *                                                                             *
+ ******************************************************************************/
+gps-circle, .gps-line{
+    -fx-stroke: -fx-line-base;
+    -fx-fill: -fx-base-trans10;  
+}
+.gps-line, .gps-ticks {
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 1;
+}
+.gps-ticks10{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 3;
+}
+.gps-degrees{
+  -fx-font: 20pt "Roboto Cn";
+  -fx-font-weight: bold;
+  -fx-fill:-fx-line-base; 
+}
+.gps-sat{
+    -fx-fill : #fff90055;
+}
+/*******************************************************************************
+ *                                                                             *
+ * Infos et valeurs AIS                                                        *
+ *                                                                             *
+ ******************************************************************************/
+.aisvalue{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-color-title;
+}
+.aislabel, .radaraislabel{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-color-title;
+}
+.aisname{
+    -fx-font: 18px "Roboto Cn";
+    -fx-fill : -fx-color-title;
+    -fx-underline : true;
+}
+.info-text, radaraislabel{
+    -fx-font: 16px "Roboto Cn";
+    -fx-fill : -fx-color-title;
+}
+/*******************************************************************************
+ *                                                                             *
+ * radar circles and lines                                                     *
+ *                                                                             *
+ ******************************************************************************/
+.ais-panel{
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
+    -fx-background-color: -fx-base;
+    -fx-stroke: -fx-line-base;
+}
+
+.radar-circle, .radar-line{
+    -fx-stroke: -fx-line-base;
+    -fx-fill: -fx-base-trans10;  
+}
+.radar-line, .radar-ticks {
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 2;
+}
+.radar-ticks10{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 3;
+}
+.radar-degrees{
+    -fx-font: 20pt "Roboto Cn";
+    -fx-fill:-fx-line-base;
+}
+.radar-screen {
+    /*
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 4px;
+    */
+    -fx-arc-height:30;
+    -fx-arc-width:30;
+    -fx-fill: #143b28;    
+}
+.radar-info-pane {
+    -fx-stroke: -fx-line-base;
+    -fx-arc-height:20;
+    -fx-arc-width:20;
+    -fx-fill: -fx-base-trans20;
+}
+.radar-buttonlabel, .radaraisvalue{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
+}
+.radar-buttonlabel-nlines{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
+}
+.radar-togglebutton{
+    -fx-background-color: linear-gradient(to bottom,
+        ladder(
+        -fx-toggle-color,
+        derive(-fx-toggle-color,8%) 75%,
+        derive(-fx-toggle-color,10%) 80%
+        ),
+        derive(-fx-toggle-color,-8%));
+    -fx-body-color-bottomup: linear-gradient(to top, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
+    -fx-body-color-to-right: linear-gradient(to right, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
+    -fx-alignment: CENTER;
+}
+/*******************************************************************************
+ *                                                                             *
+ * MenuBar                                                                     *
+ *                                                                             *
+ ******************************************************************************/
+
+.menu-bar {
+    -fx-padding: 0.0em 0.666667em 0.0em 0.666667em; /* 0 8 0 8 */
+    -fx-spacing: 0.166667em; /* 2 */
+    -fx-background-color:
+        linear-gradient(to bottom, derive(-fx-base,75%) 0%, -fx-base 90%),
+        linear-gradient(to bottom, derive(-fx-base,46.9%) 2%, derive(-fx-base,-2.1%) 95%);
+    -fx-background-insets: 0 0 0 0, 1 0 1 0;
+    -fx-background-radius: 5 ;
+}
+
+
+/*******************************************************************************
+ *                                                                             *
+ * MenuItem                                                                    *
+ *                                                                             *
+ ******************************************************************************/
+
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-padding: 0.333333em 0.41777em 0.333333em 0.41777em;  /* 4 5 4 5 */
+    -fx-background-radius: 5 ;
+}
+.menu-item > .left-container {
+    -fx-padding: 0.458em 0.791em 0.458em 0.458em;
+}
+.menu-item > .graphic-container {
+    -fx-padding: 0em 0.333em 0em 0em;
+}
+.menu-item >.label {
+    -fx-padding: 0em 0.5em 0em 0em;
+    -fx-text-fill: -fx-color-typo;
 }

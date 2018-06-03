@@ -60,7 +60,7 @@ public class CompassController
 
     protected CompassImpl instrument;
     protected ComponentManager cm = ComponentManager.componentManager;
-    protected String viewgroupstyle = "compass.css";
+    protected String viewgroupstyle = "common.css";
 
     double org = 0;
 

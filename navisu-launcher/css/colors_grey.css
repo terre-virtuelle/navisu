@@ -1,0 +1,26 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 3 juin 2018, 09:57:36
+    Author     : Dom
+*/
+*{
+    /*---------- couleurs base grise ----------------------*/    
+    -fx-base : #202020;
+    -fx-base-trans : #30303000;
+    -fx-base-trans10 : #30303010;
+    -fx-base-trans20 : #30303020;
+    -fx-base-trans95: #30303095;
+    -fx-color : #303030;
+    -fx-no-border: #303030;
+    -fx-line-base : #e0e0e0;
+    -fx-focus-color: derive(-fx-color,80%); /* tonalité claire de la couleur de base*/
+    -fx-faint-focus-color: derive(-fx-color,80%);
+    -fx-color-typo: -fx-line-base;
+    -fx-color-title: white;
+    -fx-color-backround-value: -fx-base-trans; /* background transparent boutons*/
+    -fx-cell-hover-color:#cce3f4;
+}
