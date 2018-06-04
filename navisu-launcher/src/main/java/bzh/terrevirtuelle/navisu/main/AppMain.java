@@ -133,6 +133,8 @@ import bzh.terrevirtuelle.navisu.bathymetry.view.impl.DisplayBathymetryImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.S57DBComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
+import bzh.terrevirtuelle.navisu.dem.DemComponentServices;
+import bzh.terrevirtuelle.navisu.dem.impl.DemComponentImpl;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
@@ -169,8 +171,6 @@ import java.util.logging.FileHandler;
 import bzh.terrevirtuelle.navisu.stl.charts.StlChartComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.StlDBComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
-import gov.nasa.worldwind.globes.ElevationModel;
-import gov.nasa.worldwind.terrain.BathymetryFilterElevationModel;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -244,6 +244,7 @@ public class AppMain extends Application {
                         DatabaseImpl.class,
                         DatabaseDriverManagerImpl.class,
                         DelaunayImpl.class,
+                        DemComponentImpl.class,
                         DirectoryDriverManagerImpl.class,
                         DpAgentImpl.class,
                         DriverManagerImpl.class,
@@ -321,8 +322,9 @@ public class AppMain extends Application {
 
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
-        DisplayServices displayServices = componentManager.getComponentService(DisplayServices.class);
         DelaunayServices delaunayServices = componentManager.getComponentService(DelaunayServices.class);
+        DemComponentServices demComponentServices = componentManager.getComponentService(DemComponentServices.class);
+        DisplayServices displayServices = componentManager.getComponentService(DisplayServices.class);
         DisplayBathymetryServices displayBathymetryServices = componentManager.getComponentService(DisplayBathymetryServices.class);
 
         ExifComponentServices exifComponentServices = componentManager.getComponentService(ExifComponentServices.class);
@@ -381,7 +383,7 @@ public class AppMain extends Application {
         S57DBComponentServices s57DBComponentServices = componentManager.getComponentService(S57DBComponentServices.class);
         S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
-       
+
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
         TopologyServices topologyServices = componentManager.getComponentService(TopologyServices.class);
         ToolsComponentServices toolsComponentServices = componentManager.getComponentService(ToolsComponentServices.class);
@@ -426,6 +428,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(configurationComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(clocksServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(demComponentServices.getDriver());
         // instrumentDriverManagerServices.registerNewDriver(displayServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(displayBathymetryServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
@@ -462,21 +465,15 @@ public class AppMain extends Application {
                 DATA_S57_CATALOG_6);
 
         wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 120000));
-/*
+        /*
         // Get the current elevation model.
             ElevationModel currentElevationModel = wwd.getModel().getGlobe().getElevationModel();
             // Wrap it with the no-bathymetry elevation model.
             BathymetryFilterElevationModel noDepthModel = new BathymetryFilterElevationModel(currentElevationModel);
             // Have the globe use the no-bathymetry elevation model.
             wwd.getModel().getGlobe().setElevationModel(noDepthModel);
-*/
-        
-        
-        
-        
-        
-        
-        
+         */
+
         // Initialisation du serveur
         dataServerServices.init("localhost", 8585);
 

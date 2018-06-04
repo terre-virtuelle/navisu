@@ -106,7 +106,7 @@ public class S57GlobalCatalogController
             kmlLayer.addRenderable(kmlController);
             layers.add(kmlLayer);
         } catch (IOException | XMLStreamException ex) {
-            Logger.getLogger(S57GlobalCatalogController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(S57GlobalCatalogController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return layers;
     }

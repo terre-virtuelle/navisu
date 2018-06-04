@@ -18,13 +18,11 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.logging.Logger;
-import org.capcaval.c3.component.ComponentEventSubscribe;
-import org.capcaval.c3.componentmanager.ComponentManager;
-import bzh.terrevirtuelle.navisu.instruments.transponder.impl.events.TransponderActivateEvent;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDBLoader;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import bzh.terrevirtuelle.navisu.dem.DemComponentServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
@@ -60,6 +58,8 @@ public class StlDBComponentImpl
     DatabaseServices databaseServices;
     @UsedService
     DelaunayServices delaunayServices;
+    @UsedService
+    DemComponentServices demComponentServices;
     @UsedService
     DisplayServices displayServices;
     @UsedService
@@ -113,6 +113,7 @@ public class StlDBComponentImpl
                         s57ChartComponentServices,
                         databaseServices,
                         delaunayServices,
+                        demComponentServices,
                         displayServices,
                         bathymetryDBServices,
                         instrumentDriverManagerServices,

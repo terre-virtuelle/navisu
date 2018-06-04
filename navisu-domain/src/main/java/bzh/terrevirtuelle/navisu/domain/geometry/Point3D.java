@@ -108,10 +108,9 @@ public class Point3D
 
     @Override
     public String toString() {
-        return "Point3D{" + "id=" + id + ", longitude=" + longitude + ", latitude=" + latitude + ", elevation=" + elevation + '}';
+       // return "Point3D{" + "id=" + id + ", latitude=" + latitude + ", longitude=" + longitude + ", elevation=" + elevation + '}';
+        return  latitude + " " + longitude + " " + elevation ;
     }
-
-    
 
     @Override
     public int hashCode() {

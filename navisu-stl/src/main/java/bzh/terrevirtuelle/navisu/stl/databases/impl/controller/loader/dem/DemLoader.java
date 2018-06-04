@@ -30,6 +30,7 @@ public class DemLoader {
         double lonRange = lonMax - lonMin;
         return null;
     }
+    
     /*
     public double[][] getElevations(List<? extends Position> positions,
             int ptsCountX, int ptsCountY,

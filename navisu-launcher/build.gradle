@@ -14,6 +14,7 @@ dependencies {
     compile project(':navisu-client')
     compile project(':navisu-core')
     compile project(':navisu-currents')
+    compile project(':navisu-dem')
     compile project(':navisu-extensions')
     compile project(':navisu-gazeteer')
     compile project(':navisu-geometry')
@@ -38,6 +39,6 @@ dependencies {
     compile project(':navisu-weather')
     compile project(':navisu-wms')
     compile project(':navisu-visualization')
-    compile project(':navisu-architecture')
+
     compile fileTree(dir: 'lib', include: '*.jar')
 }

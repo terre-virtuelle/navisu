@@ -15,6 +15,8 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 import gov.nasa.worldwind.layers.Layer;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -41,7 +43,8 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
     protected static final String EXTENSION_0 = ".kap";
     private static final String EXTENSION_1 = ".KAP";
     protected static final String GROUP = "BSB/KAP charts";
-
+    protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
+    
     @UsedService
     GeoViewServices geoViewServices;
 
@@ -104,7 +107,7 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
 
             Path tmpTif = Paths.get(inputFile.toString() + ".tif");
             cmd += " -b 1 " + file + " " + tmpTif.toString();
-            
+
             Proc.BUILDER.create()
                     .setCmd(cmd)
                     .execSh();
@@ -136,6 +139,11 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
 
     private String startCmd(String command) {
         Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream(CONFIG_FILE_NAME));
+        } catch (IOException ex) {
+            Logger.getLogger(KapChartImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String cmd = null;
         if (OS.isWindows()) {
             cmd = "gdal\\win" + "\\" + command;

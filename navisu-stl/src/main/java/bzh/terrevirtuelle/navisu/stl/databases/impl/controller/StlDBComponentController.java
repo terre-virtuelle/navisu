@@ -35,6 +35,7 @@ import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import bzh.terrevirtuelle.navisu.dem.DemComponentServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
@@ -129,6 +130,7 @@ public class StlDBComponentController
     protected BathymetryDBServices bathymetryDBServices;
     protected DatabaseServices databaseServices;
     protected DelaunayServices delaunayServices;
+    protected DemComponentServices demComponentServices;
     protected DisplayServices displayServices;
     protected GeodesyServices geodesyServices;
     protected GuiAgentServices guiAgentServices;
@@ -299,6 +301,7 @@ public class StlDBComponentController
             S57ChartComponentServices s57ChartComponentServices,
             DatabaseServices databaseServices,
             DelaunayServices delaunayServices,
+            DemComponentServices demComponentServices,
             DisplayServices displayServices,
             BathymetryDBServices bathymetryDBServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
@@ -322,6 +325,7 @@ public class StlDBComponentController
         this.layersManagerServices = layersManagerServices;
         this.databaseServices = databaseServices;
         this.delaunayServices = delaunayServices;
+        this.demComponentServices = demComponentServices;
         this.displayServices = displayServices;
         this.bathymetryDBServices = bathymetryDBServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
@@ -548,6 +552,7 @@ public class StlDBComponentController
             double latMax, double lonMax) {
 
         guiAgentServices.getJobsManager().newJob("Load S57 objects", (progressHandle) -> {
+
             //Define TopMak for all buoyages, default is 0 : no topmark
             TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
             topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
@@ -659,13 +664,19 @@ public class StlDBComponentController
             }
 
             if (selectedObjects.contains("ALL") || demRB.isSelected()) {
-                bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
-                Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
-                displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
+                //   bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
+                //    Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
+                //    displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
 
-                GridBox3D box = new GridBox3D(ptsTab);
-                boolean isBaseDisplayed = false;
-                displayServices.displayGrid(box, Material.MAGENTA, s57Layer, verticalExaggeration, isBaseDisplayed);
+                Point3D[][] ptsTab = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, 100.0);
+                //  displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
+                double targetResolution = Angle.fromDegrees(1d).radians / 3600;
+                Point3D[][] dem = demComponentServices.retrieveElevations(wwd, ptsTab, targetResolution);
+                displayServices.displayGrid(dem, Material.GREEN, s57Layer, verticalExaggeration);
+
+                //  GridBox3D box = new GridBox3D(ptsTab);
+                // boolean isBaseDisplayed = false;
+                //  displayServices.displayGrid(box, Material.MAGENTA, s57Layer, verticalExaggeration, isBaseDisplayed);
             }
 
             if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
