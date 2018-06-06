@@ -1,25 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package bzh.terrevirtuelle.navisu.bathymetry.db.impl;
+package bzh.terrevirtuelle.navisu.dem.db.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
-import bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer.BathymetryEventProducerServices;
-import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDB;
-import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
-import bzh.terrevirtuelle.navisu.bathymetry.db.impl.controller.BathymetryDBController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import gov.nasa.worldwind.WorldWindow;
+import org.capcaval.c3.component.ComponentState;
+
+import java.util.logging.Logger;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
-import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -29,18 +23,23 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
-import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
+import bzh.terrevirtuelle.navisu.dem.db.DemDBComponentServices;
+import bzh.terrevirtuelle.navisu.dem.db.DemDBComponent;
+import bzh.terrevirtuelle.navisu.dem.db.impl.controller.DemDBComponentController;
 
 /**
- * @date 13 mars 2015
  * @author Serge Morvan
+ * @date 11/05/2014 12:49
  */
-public class BathymetryDBImpl
-        implements BathymetryDB, BathymetryDBServices, DatabaseDriver, ComponentState {
+public class DemDBComponentImpl
+        implements DemDBComponent, DemDBComponentServices, DatabaseDriver, ComponentState {
 
-    
+    protected final String COMPONENT_KEY_NAME_0 = "DbElevation";
+    protected String componentKeyName;
+    protected static final Logger LOGGER = Logger.getLogger(DemDBComponentImpl.class.getName());
+    protected WorldWindow wwd;
+
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
@@ -51,10 +50,7 @@ public class BathymetryDBImpl
     LayerTreeServices layerTreeServices;
     @UsedService
     DatabaseServices databaseServices;
-    @UsedService
-    BathymetryEventProducerServices bathymetryEventProducerServices;
-    
-    protected static final Logger LOGGER = Logger.getLogger(BathymetryDBImpl.class.getName());
+
     protected final String NAME = "Bathy";
     protected final String LAYER_NAME = "BathyShom";
     protected final double LIMIT = 100.0;
@@ -63,7 +59,7 @@ public class BathymetryDBImpl
     protected PreparedStatement preparedStatement;
     protected Statement statement;
     protected List<Point3D> points3d;
-    protected WorldWindow wwd;
+
     protected RenderableLayer layer;
     protected static final String GROUP = "Bathymetry data";
     double longitude;
@@ -71,7 +67,7 @@ public class BathymetryDBImpl
     NumberFormat nf4 = new DecimalFormat("0.0000");
     NumberFormat nf1 = new DecimalFormat("0.0");
     int i = 0;
-    BathymetryDBController controller;
+    DemDBComponentController controller;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -80,8 +76,8 @@ public class BathymetryDBImpl
         wwd = GeoWorldWindViewImpl.getWW();
         layer = layersManagerServices.getLayer(GROUP, LAYER_NAME);
         //   layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
-        controller = BathymetryDBController.getInstance(this,
-                databaseServices, guiAgentServices, bathymetryEventProducerServices,
+        controller = DemDBComponentController.getInstance(this,
+                databaseServices, guiAgentServices,
                 LIMIT, layer);
 
     }

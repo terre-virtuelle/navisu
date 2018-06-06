@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package bzh.terrevirtuelle.navisu.bathymetry.db;
+package bzh.terrevirtuelle.navisu.dem.db;
 
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriver;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
@@ -15,10 +10,12 @@ import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
 /**
- * @date 13 mars 2015
+ * NaVisu
+ *
  * @author Serge Morvan
+ * @date 14/02/2018 12:49
  */
-public interface BathymetryDBServices
+public interface DemDBComponentServices
         extends ComponentService {
 
     Connection connect(String dbName, String hostName, String protocol, String port,
@@ -45,6 +42,8 @@ public interface BathymetryDBServices
 
     List<Point3D> retrieveAround(double lat, double lon, double limit);
 
+   // Point3D[][] retrieveElevations(WorldWindow wwd, Point3D[][] latLonTab, double targetResolution);
+
     List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax);
 
     List<Point3D> retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax);
@@ -56,4 +55,5 @@ public interface BathymetryDBServices
     Point3D[][] mergeData(Point3D[][] orgData, List<Triangle_dt> triangles, double depth);
 
     DatabaseDriver getDriver();
+
 }

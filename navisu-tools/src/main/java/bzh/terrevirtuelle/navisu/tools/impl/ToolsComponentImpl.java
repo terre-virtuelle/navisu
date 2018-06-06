@@ -6,6 +6,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import bzh.terrevirtuelle.navisu.dem.db.DemDBComponentServices;
 import bzh.terrevirtuelle.navisu.tools.ToolsComponent;
 import bzh.terrevirtuelle.navisu.tools.ToolsComponentServices;
 import bzh.terrevirtuelle.navisu.tools.impl.controller.ToolsComponentController;
@@ -31,10 +32,13 @@ public class ToolsComponentImpl
     @UsedService
     BathymetryDBServices bathymetryDBServices;
     @UsedService
+    DemDBComponentServices demDBComponentServices;
+    @UsedService
     InstrumentDriverManagerServices instrumentDriverManagerServices;
-    
+
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
     private final String COMPONENT_KEY_NAME_1 = "DbBathy";
+    private final String COMPONENT_KEY_NAME_2 = "DbElevation";
     private String componentKeyName;
     ToolsComponentController controller;
 
@@ -46,16 +50,15 @@ public class ToolsComponentImpl
 
     @Override
     public void on(String... files) {
-        
-        
+
         String[] cmd = files;
         if (cmd != null) {
             componentKeyName = cmd[0];
-            System.out.println("componentKeyName : "+componentKeyName);
-            if (cmd[0].equals(COMPONENT_KEY_NAME_0) || cmd[0].equals(COMPONENT_KEY_NAME_1)) {
+            System.out.println("componentKeyName : " + componentKeyName);
+            if (cmd[0].equals(COMPONENT_KEY_NAME_0) || cmd[0].equals(COMPONENT_KEY_NAME_1) || cmd[0].equals(COMPONENT_KEY_NAME_2)) {
                 controller = new ToolsComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
-                        guiAgentServices, s57ChartComponentServices, 
-                        databaseServices, bathymetryDBServices,
+                        guiAgentServices, s57ChartComponentServices,
+                        databaseServices, bathymetryDBServices, demDBComponentServices,
                         instrumentDriverManagerServices);
                 controller.setVisible(true);
             }
@@ -76,7 +79,8 @@ public class ToolsComponentImpl
         boolean canOpen = false;
 
         if (category.equals(COMPONENT_KEY_NAME_0)
-                || category.equals(COMPONENT_KEY_NAME_1)) {
+                || category.equals(COMPONENT_KEY_NAME_1)
+                || category.equals(COMPONENT_KEY_NAME_2)) {
             canOpen = true;
         }
         return canOpen;

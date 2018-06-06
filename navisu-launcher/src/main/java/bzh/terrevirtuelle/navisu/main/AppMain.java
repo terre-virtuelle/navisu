@@ -133,8 +133,7 @@ import bzh.terrevirtuelle.navisu.bathymetry.view.impl.DisplayBathymetryImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.S57DBComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
-import bzh.terrevirtuelle.navisu.dem.DemComponentServices;
-import bzh.terrevirtuelle.navisu.dem.impl.DemComponentImpl;
+import bzh.terrevirtuelle.navisu.dem.db.impl.DemDBComponentImpl;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
@@ -175,6 +174,7 @@ import java.util.logging.FileHandler;
 import bzh.terrevirtuelle.navisu.stl.charts.StlChartComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.StlDBComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
+import bzh.terrevirtuelle.navisu.dem.db.DemDBComponentServices;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -248,7 +248,7 @@ public class AppMain extends Application {
                         DatabaseImpl.class,
                         DatabaseDriverManagerImpl.class,
                         DelaunayImpl.class,
-                        DemComponentImpl.class,
+                        DemDBComponentImpl.class,
                         DirectoryDriverManagerImpl.class,
                         DpAgentImpl.class,
                         DriverManagerImpl.class,
@@ -328,7 +328,7 @@ public class AppMain extends Application {
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
         DelaunayServices delaunayServices = componentManager.getComponentService(DelaunayServices.class);
-        DemComponentServices demComponentServices = componentManager.getComponentService(DemComponentServices.class);
+        DemDBComponentServices demComponentServices = componentManager.getComponentService(DemDBComponentServices.class);
         DisplayServices displayServices = componentManager.getComponentService(DisplayServices.class);
         DisplayBathymetryServices displayBathymetryServices = componentManager.getComponentService(DisplayBathymetryServices.class);
 
@@ -402,6 +402,7 @@ public class AppMain extends Application {
 
         DatabaseDriverManagerServices databaseDriverManagerServices = componentManager.getComponentService(DatabaseDriverManagerServices.class);
         databaseDriverManagerServices.registerNewDriver(bathymetryDBServices.getDriver());
+        databaseDriverManagerServices.registerNewDriver(demComponentServices.getDriver());
         //  DirectoryDriverManagerServices ddriverServices = componentManager.getComponentService(DirectoryDriverManagerServices.class);
         //     ddriverServices.init();
         //     ddriverServices.registerNewDriver(catalogS57Services.getDriver());
@@ -434,7 +435,6 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(configurationComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(clocksServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(demComponentServices.getDriver());
         // instrumentDriverManagerServices.registerNewDriver(displayServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(displayBathymetryServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());

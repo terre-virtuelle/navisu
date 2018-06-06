@@ -22,7 +22,6 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDBLoader;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
-import bzh.terrevirtuelle.navisu.dem.DemComponentServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
@@ -44,6 +43,7 @@ import java.util.Set;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import bzh.terrevirtuelle.navisu.dem.db.DemDBComponentServices;
 
 /**
  * @author Serge Morvan
@@ -59,7 +59,7 @@ public class StlDBComponentImpl
     @UsedService
     DelaunayServices delaunayServices;
     @UsedService
-    DemComponentServices demComponentServices;
+    DemDBComponentServices demComponentServices;
     @UsedService
     DisplayServices displayServices;
     @UsedService

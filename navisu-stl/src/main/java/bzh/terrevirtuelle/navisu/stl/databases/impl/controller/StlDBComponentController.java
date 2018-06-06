@@ -35,7 +35,6 @@ import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
-import bzh.terrevirtuelle.navisu.dem.DemComponentServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
@@ -116,6 +115,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import org.controlsfx.control.CheckComboBox;
+import bzh.terrevirtuelle.navisu.dem.db.DemDBComponentServices;
 
 /**
  * @author Serge Morvan
@@ -130,7 +130,7 @@ public class StlDBComponentController
     protected BathymetryDBServices bathymetryDBServices;
     protected DatabaseServices databaseServices;
     protected DelaunayServices delaunayServices;
-    protected DemComponentServices demComponentServices;
+    protected DemDBComponentServices demComponentServices;
     protected DisplayServices displayServices;
     protected GeodesyServices geodesyServices;
     protected GuiAgentServices guiAgentServices;
@@ -159,6 +159,17 @@ public class StlDBComponentController
     protected static final String BATHYMETRY_LAYER = "S57StlBathy";
     protected static final String S57_LAYER = "S57Stl";
     protected static final String LIGHTS_LAYER = "LIGHTS";
+    protected static final String LAT_MIN = "48.21";
+    protected static final String LON_MIN = "-4.61";
+    protected static final String LAT_MAX = "48.42";
+    protected static final String LON_MAX = "-4.30";
+
+    /*
+    lat0TF.setText("48.21");
+        lat1TF.setText("48.42");
+        lon0TF.setText("-4.61");
+        lon1TF.setText("-4.30");
+     */
     protected RenderableLayer bathymetryLayer;
     protected RenderableLayer s57Layer;
     protected RenderableLayer lightsLayer;
@@ -301,7 +312,7 @@ public class StlDBComponentController
             S57ChartComponentServices s57ChartComponentServices,
             DatabaseServices databaseServices,
             DelaunayServices delaunayServices,
-            DemComponentServices demComponentServices,
+            DemDBComponentServices demComponentServices,
             DisplayServices displayServices,
             BathymetryDBServices bathymetryDBServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
@@ -622,10 +633,9 @@ public class StlDBComponentController
             if (selectedObjects.contains("ALL") || selectedObjects.contains("LIGHTS")) {
 
                 List<Light> lights = new LightDBLoader(topologyServices, s57Connection, marsys)
-                      //  .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                .retrieveObjectsIn(48.36,-4.51,48.32,-4.62);
+                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 for (Light l : lights) {
-                        System.out.println("light : " + l);
+                    System.out.println("light : " + l);
                 }
                 new LightView(lightsLayer)
                         .display(lights);
@@ -667,19 +677,22 @@ public class StlDBComponentController
             }
 
             if (selectedObjects.contains("ALL") || demRB.isSelected()) {
-                //   bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
-                //    Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
-                //    displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
+                bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
+                Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
+                displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
 
-                Point3D[][] ptsTab = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, 100.0);
+                /*
+                Test Dem
+               // Point3D[][] ptsTab = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, 100.0);
                 //  displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
-                double targetResolution = Angle.fromDegrees(1d).radians / 3600;
-                Point3D[][] dem = demComponentServices.retrieveElevations(wwd, ptsTab, targetResolution);
-                displayServices.displayGrid(dem, Material.GREEN, s57Layer, verticalExaggeration);
-
-                //  GridBox3D box = new GridBox3D(ptsTab);
-                // boolean isBaseDisplayed = false;
-                //  displayServices.displayGrid(box, Material.MAGENTA, s57Layer, verticalExaggeration, isBaseDisplayed);
+               // double targetResolution = Angle.fromDegrees(1d).radians / 3600;
+          //Pb load Dem  
+//   Point3D[][] dem = demComponentServices.retrieveElevations(wwd, ptsTab, targetResolution);
+             //   displayServices.displayGrid(dem, Material.GREEN, s57Layer, verticalExaggeration);
+                 */
+                GridBox3D box = new GridBox3D(ptsTab);
+                boolean isBaseDisplayed = false;
+                displayServices.displayGrid(box, Material.MAGENTA, s57Layer, verticalExaggeration, isBaseDisplayed);
             }
 
             if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
@@ -809,10 +822,10 @@ public class StlDBComponentController
         TextField lon1TF = new TextField();
 
         //Default values
-        lat0TF.setText("48.21");
-        lat1TF.setText("48.42");
-        lon0TF.setText("-4.80");//-4.61
-        lon1TF.setText("-4.30");
+        lat0TF.setText(LAT_MIN);
+        lat1TF.setText(LAT_MAX);
+        lon0TF.setText(LON_MIN);
+        lon1TF.setText(LON_MAX);
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);

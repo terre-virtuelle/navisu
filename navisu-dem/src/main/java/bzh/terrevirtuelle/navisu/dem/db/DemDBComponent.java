@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.dem;
+package bzh.terrevirtuelle.navisu.dem.db;
 
 import org.capcaval.c3.component.Component;
 
@@ -8,6 +8,6 @@ import org.capcaval.c3.component.Component;
  * @author serge
  * @date 28/05/2018 12:49
  */
-public interface DemComponent
+public interface DemDBComponent
         extends Component {
 }
