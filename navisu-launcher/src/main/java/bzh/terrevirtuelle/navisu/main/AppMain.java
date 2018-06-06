@@ -150,6 +150,10 @@ import bzh.terrevirtuelle.navisu.leapmotion.impl.LeapMotionComponentImpl;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
 import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
+import bzh.terrevirtuelle.navisu.projection.lambert.LambertServices;
+import bzh.terrevirtuelle.navisu.projection.lambert.impl.LambertImpl;
+import static bzh.terrevirtuelle.navisu.projection.lambert.impl.LambertZone.Lambert93;
+import bzh.terrevirtuelle.navisu.projection.lambert.impl.Pt3D;
 import bzh.terrevirtuelle.navisu.stl.charts.impl.StlChartComponentImpl;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.DisplayImpl;
@@ -265,6 +269,7 @@ public class AppMain extends Application {
                         JTSImpl.class,
                         KapChartImpl.class,
                         KmlComponentImpl.class,
+                        LambertImpl.class,
                         LayersManagerImpl.class,
                         LeapMotionComponentImpl.class,
                         MagneticImpl.class,
@@ -353,6 +358,7 @@ public class AppMain extends Application {
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         KmlComponentServices kmlComponentServices = componentManager.getComponentService(KmlComponentServices.class);
 
+        LambertServices lambertServices = componentManager.getComponentService(LambertServices.class);
         LayersManagerServices layersManagerServices = componentManager.getComponentService(LayersManagerServices.class);
         LeapMotionComponentServices leapMotionComponentServices = componentManager.getComponentService(LeapMotionComponentServices.class);
 
@@ -628,6 +634,11 @@ public class AppMain extends Application {
         RenderableLayer layer = layersManagerServices.getLayer("S57 charts", "BUOYAGE");
         s57ChartComponentServices.s57BuoyageView(layer, buoyages);
          */
+        //test cartographic services Lambert93
+        //  Pt3D pt = lambertServices.convertToWGS84Deg(1029705.083, 272723.849, Lambert93);
+        Pt3D pt = lambertServices.convertToWGS84Deg(74962.5, 6750037.5, Lambert93);
+        System.out.println("pt : " + pt);
+
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");

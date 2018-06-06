@@ -106,11 +106,10 @@ public class Point3D
         this.elevation = elevation;
     }
 
-    
     @Override
     public String toString() {
-        // return "Point3D{" + "id=" + id + ", latitude=" + latitude + ", longitude=" + longitude + ", elevation=" + elevation + '}';
-        return latitude + " " + longitude + " " + elevation;
+       // return "Point3D{" + "id=" + id + ", latitude=" + latitude + ", longitude=" + longitude + ", elevation=" + elevation + '}';
+        return  latitude + " " + longitude + " " + elevation ;
     }
 
     @Override

@@ -394,48 +394,11 @@ public abstract class Buoyage
 
     @Override
     public String toString() {
-        /*
-        String str = "{"
-              //  + objectName != "" || objectName != null ? "objectName=" + objectName : ""
-                + "Lat : " + Double.toString(getLatitude())
-                + ", Lon : " + Double.toString(longitude)
-                + " , shape=" + shape
-                        +  ", categoryOfMark=" + categoryOfMark : ""
-                                + colour != null ? ", colour=" + colour : ""
-                                        + colourPattern != null ? ", colourPattern=" + colourPattern : ""
-                                                + navigationalSystemOfMarks != null ? ", navigationalSystemOfMarks=" + navigationalSystemOfMarks : ""
-                                                        + condition != null ? ", condition=" + condition : ""
-                                                                + conspicuousRadar != null ? ", conspicuousRadar=" + conspicuousRadar : ""
-                                                                        + conspicuousVisually != null ? ", conspicuousVisually=" + conspicuousVisually : ""
-                                                                                + dateEnd != null ? ", dateEnd=" + dateEnd : ""
-                                                                                        + dateStart != null ? ", dateStart=" + dateStart : ""
-                                                                                                + elevation != null ? ", elevation=" + elevation : ""
-                                                                                                        + height != null ? ", height=" + height : ""
-                                                                                                                + natureOfConstruction != null ? ", natureOfConstruction=" + natureOfConstruction : ""
-                                                                                                                        + periodicDateStart != null ? ", periodicDateStart=" + periodicDateStart : ""
-                                                                                                                                + periodicDateEnd != null ? ", periodicDateEnd=" + periodicDateEnd : ""
-                                                                                                                                        + pictorialRepresentation != null ? ", pictorialRepresentation=" + pictorialRepresentation : ""
-                                                                                                                                                + recordIngdate != null ? ", recordIngdate=" + recordIngdate : ""
-                                                                                                                                                        + scaleMaximum != null ? ", scaleMaximum=" + scaleMaximum : ""
-                                                                                                                                                                + verticalAccuracy != null ? ", verticalAccuracy=" + verticalAccuracy : ""
-                                                                                                                                                                        + recordingIndication != null ? ", recordingIndication=" + recordingIndication : ""
-                                                                                                                                                                                + verticaldatum != null ? ", verticaldatum=" + verticaldatum : ""
-                                                                                                                                                                                        + verticalLength != null ? ", verticalLength=" + verticalLength : ""
-                                                                                                                                                                                                + objectNameInNationalLanguage != null ? ", objectNameInNationalLanguage=" + objectNameInNationalLanguage : ""
-                                                                                                                                                                                                        + status != null ? ", status=" + status : ""
-                                                                                                                                                                                                                + marsys != null ? ", marsys=" + marsys : ""
-                                                                                                                                                                                                                        //  + super.toString() 
-      
-      + '}';
-         */
-        String str = "";
-        if (objectName != null && !objectName.equals("")) {
-            str = "Name = " + objectName + ", ";
-        }
-        str += "Lat : " + Double.toString(getLatitude()) + ", Lon : " + Double.toString(longitude);
-        return str;
+        return "Buoyage{" + super.toString()+ "shape=" + shape + ", categoryOfMark=" + categoryOfMark + ", colour=" + colour + ", colourPattern=" + colourPattern + ", navigationalSystemOfMarks=" + navigationalSystemOfMarks + ", condition=" + condition + ", conspicuousRadar=" + conspicuousRadar + ", conspicuousVisually=" + conspicuousVisually + ", dateEnd=" + dateEnd + ", dateStart=" + dateStart + ", elevation=" + elevation + ", height=" + height + ", natureOfConstruction=" + natureOfConstruction + ", objectName=" + objectName + ", periodicDateStart=" + periodicDateStart + ", periodicDateEnd=" + periodicDateEnd + ", pictorialRepresentation=" + pictorialRepresentation + ", recordIngdate=" + recordIngdate + ", scaleMaximum=" + scaleMaximum + ", verticalAccuracy=" + verticalAccuracy + ", recordingIndication=" + recordingIndication + ", verticaldatum=" + verticaldatum + ", verticalLength=" + verticalLength + ", objectNameInNationalLanguage=" + objectNameInNationalLanguage + ", status=" + status + ", marsys=" + marsys + ", label=" + label + ", imageAddress=" + imageAddress + ", topMark=" + topMark + '}';
     }
 
+    
+    
     public String getLabel() {
         return label;
     }

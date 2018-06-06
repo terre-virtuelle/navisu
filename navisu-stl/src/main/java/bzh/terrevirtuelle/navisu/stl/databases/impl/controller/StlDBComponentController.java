@@ -622,8 +622,11 @@ public class StlDBComponentController
             if (selectedObjects.contains("ALL") || selectedObjects.contains("LIGHTS")) {
 
                 List<Light> lights = new LightDBLoader(topologyServices, s57Connection, marsys)
-                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-
+                      //  .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                .retrieveObjectsIn(48.36,-4.51,48.32,-4.62);
+                for (Light l : lights) {
+                        System.out.println("light : " + l);
+                }
                 new LightView(lightsLayer)
                         .display(lights);
 
@@ -808,7 +811,7 @@ public class StlDBComponentController
         //Default values
         lat0TF.setText("48.21");
         lat1TF.setText("48.42");
-        lon0TF.setText("-4.61");
+        lon0TF.setText("-4.80");//-4.61
         lon1TF.setText("-4.30");
 
         GridPane grid = new GridPane();

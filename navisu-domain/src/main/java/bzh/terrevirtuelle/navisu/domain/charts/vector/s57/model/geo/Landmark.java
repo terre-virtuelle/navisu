@@ -47,4 +47,10 @@ public class Landmark extends Buoyage
     public String spatialRequest(double lat0, double lon0, double lat1, double lon1) {
         return spatialRequest(lat0, lon0, lat1, lon1, "4326");
     }
+
+    @Override
+    public String toString() {
+        return "Landmark{" + super.toString()+'}';
+    }
+    
 }

@@ -21,6 +21,7 @@ public class Point3Df {
     public Point3Df() {
     }
 
+    
     public Point3Df(float lat, float lon, float elevation) {
         this.lon = lon;
         this.lat = lat;
