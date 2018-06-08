@@ -8,6 +8,6 @@ import org.capcaval.c3.component.Component;
  * @author serge
  * @date 28/05/2018 12:49
  */
-public interface DemDBComponent
+public interface DemDB
         extends Component {
 }

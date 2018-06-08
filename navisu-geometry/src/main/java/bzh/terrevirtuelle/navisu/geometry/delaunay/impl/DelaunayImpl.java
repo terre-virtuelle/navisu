@@ -52,6 +52,7 @@ public class DelaunayImpl
         List<Triangle_dt> triangles = new ArrayList<>();
         for (int k = 0; k < nbLat - 1; k++) {
             for (int l = 0; l < nbLon - 1; l++) {
+              //  System.out.println("k : "+k+" l : "+l);
                 Point3D pt0 = points[k][l];
                 Point3D pt1 = points[k + 1][l];
                 Point3D pt2 = points[k][l + 1];

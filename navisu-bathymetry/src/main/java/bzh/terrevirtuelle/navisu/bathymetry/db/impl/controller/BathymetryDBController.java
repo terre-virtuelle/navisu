@@ -11,7 +11,7 @@ import bzh.terrevirtuelle.navisu.bathymetry.db.impl.BathymetryDBImpl;
 import bzh.terrevirtuelle.navisu.bathymetry.view.impl.controller.DisplayBathymetryController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
-import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Point_dt;
@@ -123,13 +123,13 @@ public class BathymetryDBController {
         return INSTANCE;
     }
 
-    public Connection connect(String dbName, String hostName, String protocol, String port,
+    public Connection connect(String dbName, String table, String hostName, String protocol, String port,
             String driverName, String userName, String passwd,
             String dataFileName) {
         this.dataFileName = dataFileName;
         this.connection = databaseServices.connect(dbName, hostName, protocol, port, driverName, userName, passwd);
         System.out.println(dbName + " " + hostName + " " + protocol + " " + port + " " + driverName + " " + userName + " " + passwd);
-        String sql = "INSERT INTO " + "bathy" + " (coord, elevation) "
+        String sql = "INSERT INTO " + table + " (coord, elevation) "
                 + "VALUES ( ST_SetSRID(ST_MakePoint(?, ?), 4326), ?);";
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -137,7 +137,7 @@ public class BathymetryDBController {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         //  create(dataFileName);
-        createIndex();
+        createIndex(table);
         return connection;
     }
 
@@ -148,8 +148,8 @@ public class BathymetryDBController {
         return connection;
     }
 
-    public void create(String filename) {
-        String sql = "INSERT INTO " + "bathy" + " (coord, elevation) "
+    public void create(String filename, String table) {
+        String sql = "INSERT INTO " + table + " (coord, elevation) "
                 + "VALUES ( ST_SetSRID(ST_MakePoint(?, ?), 4326), ?);";
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -157,8 +157,8 @@ public class BathymetryDBController {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         guiAgentServices.getJobsManager().newJob("create", (progressHandle) -> {
-            String query = "DROP TABLE IF EXISTS  bathy; "
-                    + "CREATE TABLE bathy("
+            String query = "DROP TABLE IF EXISTS  " + table + "; "
+                    + "CREATE TABLE " + table + "("
                     + "gid SERIAL PRIMARY KEY,"
                     + "coord GEOMETRY(POINT, 4326), "
                     + "elevation FLOAT); ";
@@ -204,10 +204,10 @@ public class BathymetryDBController {
         });
     }
 
-    public final void createIndex() {
+    public final void createIndex(String table) {
         guiAgentServices.getJobsManager().newJob("createIndex", (progressHandle) -> {
             try {
-                connection.createStatement().executeUpdate("CREATE INDEX bathyindex ON bathy USING GIST (coord)");
+                connection.createStatement().executeUpdate("CREATE INDEX " + table + "index ON " + table + " USING GIST (coord)");
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
@@ -238,7 +238,7 @@ public class BathymetryDBController {
         return tmp1;
     }
 
-    public List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
+    public List<Point3D> retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax) {
         List<Point3D> tmp1 = new ArrayList<>();
         PGgeometry geom;
         double depth;
@@ -248,7 +248,7 @@ public class BathymetryDBController {
             try {
                 r = connection.createStatement().executeQuery(
                         "SELECT *"
-                        + "FROM bathy "
+                        + "FROM " + table + "  "
                         + "WHERE coord @ ST_MakeEnvelope ("
                         + latMin + ", " + lonMin + ", "
                         + latMax + ", " + lonMax
@@ -274,11 +274,11 @@ public class BathymetryDBController {
         return tmp1;
     }
 
-    public List<Point3D> retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax) {
+    public List<Point3D> retrieveIn(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax) {
 
         Connection tmp0 = this.connection;
         this.connection = connection;
-        List<Point3D> tmp1 = retrieveIn(latMin, lonMin, latMax, lonMax);
+        List<Point3D> tmp1 = retrieveIn(table, latMin, lonMin, latMax, lonMax);
         this.connection = tmp0;
         return tmp1;
     }
@@ -311,7 +311,7 @@ public class BathymetryDBController {
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-        bathymetryEventProducerServices.setBathymetry(new Bathymetry(points3d));
+        bathymetryEventProducerServices.setBathymetry(new DEM(points3d));
         return points3d;
     }
 
@@ -332,9 +332,21 @@ public class BathymetryDBController {
         int nbLat = orgData[0].length;
         int nbLon = orgData[1].length;
         Point3D[][] tmp = new Point3D[nbLat][nbLon];
+      //  System.out.println(nbLat+" "+nbLon);
+       /* 
         for (int k = 0; k < nbLat; k++) {
             System.arraycopy(orgData[k], 0, tmp[k], 0, nbLon);
+            System.out.println("k : "+k);
+      }
+      */
+         
+        for (int i = 0; i < nbLat; i++) {
+            for (int j = 0; j < nbLon; j++) {
+              //  System.out.println("i : " + i + "j : "+j);
+                tmp[i][j] = orgData[i][j];
+            }
         }
+        
         for (int k = 0; k < nbLat - 1; k++) {
             for (int l = 0; l < nbLon - 1; l++) {
                 //Select one point
@@ -413,7 +425,7 @@ public class BathymetryDBController {
     }
 
     public void writePointList(List<Point3D> points, Path pathname, boolean latLon) {
-       
+
         List<String> lines = new ArrayList<>();
         if (points != null) {
             if (latLon == true) {

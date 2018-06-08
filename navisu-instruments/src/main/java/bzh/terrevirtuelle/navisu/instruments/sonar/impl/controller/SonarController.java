@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.instruments.sonar.impl.controller;
 
 import bzh.terrevirtuelle.navisu.bathymetry.controller.events.BathymetryEvent;
-import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.instruments.sonar.impl.SonarImpl;
 import bzh.terrevirtuelle.navisu.widgets.sonar.sonar3D.Points3D;
@@ -48,7 +48,7 @@ public class SonarController {
         bathyES.subscribe(new BathymetryEvent() {
 
             @Override
-            public void notifyBathymetryMessageChanged(Bathymetry data) {
+            public void notifyBathymetryMessageChanged(DEM data) {
                 if (data.size() != 0) {
                     List<Point3D> points = data.getGrid();
                     minLat = 90.0;

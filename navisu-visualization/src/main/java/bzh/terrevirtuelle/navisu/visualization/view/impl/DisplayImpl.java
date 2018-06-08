@@ -23,7 +23,10 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.awt.Color;
@@ -58,13 +61,23 @@ public class DisplayImpl
 
     @Override
     public void displayPoints3D(List<Point3D> points, RenderableLayer layer) {
+        List<PointPlacemark> pointPlacemarks = new ArrayList<>();
+        PointPlacemark pointPlacemark;
+        PointPlacemarkAttributes attrs = new PointPlacemarkAttributes();
+        attrs.setImageAddress("images/point.png");
+        attrs.setScale(1.0);
+        for (Point3D p : points) {
+            pointPlacemark = new PointPlacemark(Position.fromDegrees(p.getLatitude(), p.getLongitude(), p.getElevation()));
+            pointPlacemark.setAttributes(attrs);
+            pointPlacemarks.add(pointPlacemark);
+        }
+        layer.addRenderables(pointPlacemarks);
     }
 
     @Override
     public void displayGrid(List<List<Point3D>> latLons, Material material, RenderableLayer layer) {
-        
-    }
 
+    }
 
     @Override
     public void displayGrid(Point3D[][] latLons, Material material, RenderableLayer layer, double verticalExaggeration) {
@@ -81,7 +94,6 @@ public class DisplayImpl
             }
             latPaths.add(path0);
         }
-      
 
         layer.addRenderables(latPaths);
 

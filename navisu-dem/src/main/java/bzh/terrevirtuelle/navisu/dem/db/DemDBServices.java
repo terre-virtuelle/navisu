@@ -15,7 +15,7 @@ import org.capcaval.c3.component.ComponentService;
  * @author Serge Morvan
  * @date 14/02/2018 12:49
  */
-public interface DemDBComponentServices
+public interface DemDBServices
         extends ComponentService {
 
     Connection connect(String dbName, String hostName, String protocol, String port,
@@ -38,15 +38,16 @@ public interface DemDBComponentServices
 
     List<Point3D> retrieveAll();
 
+    List<Point3D> retrieveAll(Connection connection);
+
     List<Point3D> retrieveAround(double lat, double lon);
 
     List<Point3D> retrieveAround(double lat, double lon, double limit);
 
-   // Point3D[][] retrieveElevations(WorldWindow wwd, Point3D[][] latLonTab, double targetResolution);
+    // Point3D[][] retrieveElevations(WorldWindow wwd, Point3D[][] latLonTab, double targetResolution);
+    List<Point3D> retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax);
 
-    List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax);
-
-    List<Point3D> retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax);
+    List<Point3D> retrieveIn(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax);
 
     void writePointList(List<Point3D> points, Path pathname, boolean latLon);
 

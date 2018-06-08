@@ -99,7 +99,7 @@ public class BathymetryDBImpl
             String driverName, String userName, String passwd,
             String dataFileName) {
         this.dataFileName = dataFileName;
-        this.connection = controller.connect(dbName, hostName, protocol, port, driverName, userName, passwd, dataFileName);
+        this.connection = controller.connect(dbName, "bathy", hostName, protocol, port, driverName, userName, passwd, dataFileName);
         return connection;
     }
 
@@ -111,8 +111,8 @@ public class BathymetryDBImpl
     }
 
     @Override
-    public void create(String filename) {
-        controller.create(filename);
+    public void create(String filename, String table) {
+        controller.create(filename, table);
     }
 
     @Override
@@ -126,8 +126,8 @@ public class BathymetryDBImpl
     }
 
     @Override
-    public void createIndex() {
-        controller.createIndex();
+    public void createIndex(String table) {
+        controller.createIndex(table);
     }
 
     @Override
@@ -146,13 +146,13 @@ public class BathymetryDBImpl
     }
 
     @Override
-    public List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
-        return controller.retrieveIn(latMin, lonMin, latMax, lonMax);
+    public List<Point3D> retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax) {
+        return controller.retrieveIn(table, latMin, lonMin, latMax, lonMax);
     }
 
     @Override
-    public List<Point3D> retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax) {
-        return controller.retrieveIn(connection, latMin, lonMin, latMax, lonMax);
+    public List<Point3D> retrieveIn(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax) {
+        return controller.retrieveIn(connection, table, latMin, lonMin, latMax, lonMax);
     }
 
     @Override

@@ -133,7 +133,7 @@ import bzh.terrevirtuelle.navisu.bathymetry.view.impl.DisplayBathymetryImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.S57DBComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
-import bzh.terrevirtuelle.navisu.dem.db.impl.DemDBComponentImpl;
+import bzh.terrevirtuelle.navisu.dem.db.impl.DemDBImpl;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
@@ -174,7 +174,7 @@ import java.util.logging.FileHandler;
 import bzh.terrevirtuelle.navisu.stl.charts.StlChartComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.StlDBComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
-import bzh.terrevirtuelle.navisu.dem.db.DemDBComponentServices;
+import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -248,7 +248,7 @@ public class AppMain extends Application {
                         DatabaseImpl.class,
                         DatabaseDriverManagerImpl.class,
                         DelaunayImpl.class,
-                        DemDBComponentImpl.class,
+                        DemDBImpl.class,
                         DirectoryDriverManagerImpl.class,
                         DpAgentImpl.class,
                         DriverManagerImpl.class,
@@ -328,7 +328,7 @@ public class AppMain extends Application {
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
         DelaunayServices delaunayServices = componentManager.getComponentService(DelaunayServices.class);
-        DemDBComponentServices demComponentServices = componentManager.getComponentService(DemDBComponentServices.class);
+        DemDBServices demComponentServices = componentManager.getComponentService(DemDBServices.class);
         DisplayServices displayServices = componentManager.getComponentService(DisplayServices.class);
         DisplayBathymetryServices displayBathymetryServices = componentManager.getComponentService(DisplayBathymetryServices.class);
 
@@ -634,11 +634,12 @@ public class AppMain extends Application {
         RenderableLayer layer = layersManagerServices.getLayer("S57 charts", "BUOYAGE");
         s57ChartComponentServices.s57BuoyageView(layer, buoyages);
          */
+ /*
         //test cartographic services Lambert93
-        //  Pt3D pt = lambertServices.convertToWGS84Deg(1029705.083, 272723.849, Lambert93);
         Pt3D pt = lambertServices.convertToWGS84Deg(74962.5, 6750037.5, Lambert93);
         System.out.println("pt : " + pt);
-
+*/
+ 
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");

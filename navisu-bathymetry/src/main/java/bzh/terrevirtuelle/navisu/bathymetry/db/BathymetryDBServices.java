@@ -31,11 +31,11 @@ public interface BathymetryDBServices
 
     void close();
 
-    void create(String filename);
+    void create(String filename, String table);
 
     List<Point3Df> readFromFile(String filename);
 
-    void createIndex();
+    void createIndex(String table);
 
     void insert(List<Point3Df> points);
 
@@ -45,9 +45,9 @@ public interface BathymetryDBServices
 
     List<Point3D> retrieveAround(double lat, double lon, double limit);
 
-    List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax);
+    List<Point3D> retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax);
 
-    List<Point3D> retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax);
+    List<Point3D> retrieveIn(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax);
 
     void writePointList(List<Point3D> points, Path pathname, boolean latLon);
 

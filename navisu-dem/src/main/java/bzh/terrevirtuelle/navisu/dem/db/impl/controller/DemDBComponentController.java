@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.dem.db.impl.controller;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
-import bzh.terrevirtuelle.navisu.dem.db.impl.DemDBComponentImpl;
+import bzh.terrevirtuelle.navisu.dem.db.impl.DemDBImpl;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Point_dt;
@@ -46,8 +46,9 @@ import org.postgis.PGgeometry;
  * @author serge
  */
 public class DemDBComponentController {
+
     private static DemDBComponentController INSTANCE = null;
-    DemDBComponentImpl component;
+    DemDBImpl component;
     protected static final Logger LOGGER = Logger.getLogger(DemDBComponentController.class.getName());
     DatabaseServices databaseServices;
     GuiAgentServices guiAgentServices;
@@ -80,7 +81,7 @@ public class DemDBComponentController {
     Geometry concaveHull;
     protected Charset charset = Charset.forName("UTF-8");
 
-    private DemDBComponentController(DemDBComponentImpl component,
+    private DemDBComponentController(DemDBImpl component,
             DatabaseServices databaseServices,
             GuiAgentServices guiAgentServices,
             double limit, RenderableLayer layer) {
@@ -103,12 +104,12 @@ public class DemDBComponentController {
         });
     }
 
-    public static DemDBComponentController getInstance(DemDBComponentImpl component,
+    public static DemDBComponentController getInstance(DemDBImpl component,
             DatabaseServices databaseServices, GuiAgentServices guiAgentServices,
             double limit, RenderableLayer layer) {
         if (INSTANCE == null) {
             INSTANCE = new DemDBComponentController(component,
-                    databaseServices, guiAgentServices, 
+                    databaseServices, guiAgentServices,
                     limit, layer);
         }
         return INSTANCE;
@@ -211,10 +212,10 @@ public class DemDBComponentController {
         PGgeometry geom;
         double depth;
         try {
-            ResultSet r = connection.createStatement().executeQuery("SELECT  coord, elevation FROM bathy");
+            ResultSet r = connection.createStatement().executeQuery("SELECT  * FROM elevation");
             while (r.next()) {
-                geom = (PGgeometry) r.getObject(1);
-                depth = r.getFloat(2);
+                geom = (PGgeometry) r.getObject(2);
+                depth = r.getFloat(3);
                 if (depth >= MIN_DEPTH) {
                     Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
                             geom.getGeometry().getFirstPoint().getY(),
@@ -229,7 +230,31 @@ public class DemDBComponentController {
         return tmp1;
     }
 
-    public List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
+    public List<Point3D> retrieveAll(Connection connect) {
+        List<Point3D> tmp1 = new ArrayList<>();
+        //  guiAgentServices.getJobsManager().newJob("retrieveAll", (progressHandle) -> {
+        PGgeometry geom;
+        double depth;
+        try {
+            ResultSet r = connect.createStatement().executeQuery("SELECT  * FROM elevation");
+            while (r.next()) {
+                geom = (PGgeometry) r.getObject(2);
+                depth = r.getFloat(3);
+                if (depth >= MIN_DEPTH) {
+                    Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
+                            geom.getGeometry().getFirstPoint().getY(),
+                            depth);
+                    tmp1.add(pt);
+                }
+            }
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+        }
+        // });
+        return tmp1;
+    }
+
+    public List<Point3D> retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax) {
         List<Point3D> tmp1 = new ArrayList<>();
         PGgeometry geom;
         double depth;
@@ -239,15 +264,16 @@ public class DemDBComponentController {
             try {
                 r = connection.createStatement().executeQuery(
                         "SELECT *"
-                        + "FROM bathy "
+                        + "FROM " + table + " "
                         + "WHERE coord @ ST_MakeEnvelope ("
                         + latMin + ", " + lonMin + ", "
                         + latMax + ", " + lonMax
                         + ", 4326) ");
-
+                // System.out.println("r : " + r);
                 while (r.next()) {
                     geom = (PGgeometry) r.getObject(2);
                     depth = r.getFloat(3);
+                    //  System.out.println("depth : " + depth);
                     if (depth >= MIN_DEPTH) {
                         Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
                                 geom.getGeometry().getFirstPoint().getY(),
@@ -265,11 +291,11 @@ public class DemDBComponentController {
         return tmp1;
     }
 
-    public List<Point3D> retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax) {
+    public List<Point3D> retrieveIn(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax) {
 
         Connection tmp0 = this.connection;
         this.connection = connection;
-        List<Point3D> tmp1 = retrieveIn(latMin, lonMin, latMax, lonMax);
+        List<Point3D> tmp1 = retrieveIn(table, latMin, lonMin, latMax, lonMax);
         this.connection = tmp0;
         return tmp1;
     }
@@ -302,7 +328,7 @@ public class DemDBComponentController {
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-       
+
         return points3d;
     }
 
@@ -404,7 +430,7 @@ public class DemDBComponentController {
     }
 
     public void writePointList(List<Point3D> points, Path pathname, boolean latLon) {
-       
+
         List<String> lines = new ArrayList<>();
         if (points != null) {
             if (latLon == true) {

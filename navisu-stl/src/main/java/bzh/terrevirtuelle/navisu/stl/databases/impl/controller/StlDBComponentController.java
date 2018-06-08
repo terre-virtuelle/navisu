@@ -35,7 +35,7 @@ import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
-import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
@@ -46,7 +46,6 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
-import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.bathy.BathyLoader;
@@ -115,7 +114,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import org.controlsfx.control.CheckComboBox;
-import bzh.terrevirtuelle.navisu.dem.db.DemDBComponentServices;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemLoader;
+import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 
 /**
  * @author Serge Morvan
@@ -130,7 +130,7 @@ public class StlDBComponentController
     protected BathymetryDBServices bathymetryDBServices;
     protected DatabaseServices databaseServices;
     protected DelaunayServices delaunayServices;
-    protected DemDBComponentServices demComponentServices;
+    protected DemDBServices demDBServices;
     protected DisplayServices displayServices;
     protected GeodesyServices geodesyServices;
     protected GuiAgentServices guiAgentServices;
@@ -159,17 +159,20 @@ public class StlDBComponentController
     protected static final String BATHYMETRY_LAYER = "S57StlBathy";
     protected static final String S57_LAYER = "S57Stl";
     protected static final String LIGHTS_LAYER = "LIGHTS";
-    protected static final String LAT_MIN = "48.21";
+    /*
+    protected static final String LAT_MIN = "48.21";//Original
     protected static final String LON_MIN = "-4.61";
     protected static final String LAT_MAX = "48.42";
     protected static final String LON_MAX = "-4.30";
-
-    /*
-    lat0TF.setText("48.21");
-        lat1TF.setText("48.42");
-        lon0TF.setText("-4.61");
-        lon1TF.setText("-4.30");
      */
+  
+    protected static final String LAT_MIN = "47";
+    protected static final String LON_MIN = "-4";
+    protected static final String LAT_MAX = "48.11";
+    protected static final String LON_MAX = "-3";
+     
+    
+
     protected RenderableLayer bathymetryLayer;
     protected RenderableLayer s57Layer;
     protected RenderableLayer lightsLayer;
@@ -201,7 +204,9 @@ public class StlDBComponentController
     protected List<Buoyage> buoyages = new ArrayList<>();
     protected Connection s57Connection;
     protected Connection bathyConnection;
-    protected Bathymetry bathymetry;
+    protected Connection elevationConnection;
+    protected DEM bathymetry;
+    protected DEM elevation;
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
     protected String marsys;
     protected List<String> selectedObjects = new ArrayList<>();
@@ -280,12 +285,19 @@ public class StlDBComponentController
     public ChoiceBox<String> tilesCountCB;
     @FXML
     public GridPane paneGP;
+    @FXML
+    public TextField elevationDatabaseTF;
+    @FXML
+    public ChoiceBox<String> elevationDatabasesCB;
+    @FXML
+    public RadioButton elevationRB;
 
     protected CheckComboBox<String> checkComboBox;
     final ToggleGroup bathyGroup = new ToggleGroup();
 
     protected ObservableList<String> s57DbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
+    protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("AltiV2_2-0_75mIgnDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
 
     private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
@@ -312,7 +324,7 @@ public class StlDBComponentController
             S57ChartComponentServices s57ChartComponentServices,
             DatabaseServices databaseServices,
             DelaunayServices delaunayServices,
-            DemDBComponentServices demComponentServices,
+            DemDBServices demServices,
             DisplayServices displayServices,
             BathymetryDBServices bathymetryDBServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
@@ -336,7 +348,7 @@ public class StlDBComponentController
         this.layersManagerServices = layersManagerServices;
         this.databaseServices = databaseServices;
         this.delaunayServices = delaunayServices;
-        this.demComponentServices = demComponentServices;
+        this.demDBServices = demServices;
         this.displayServices = displayServices;
         this.bathymetryDBServices = bathymetryDBServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
@@ -378,6 +390,14 @@ public class StlDBComponentController
                         -> bathyDatabaseTF.setText(bathyDatabasesCB.getValue())
                 );
 
+        elevationDatabasesCB.setItems(elevationDbCbData);
+        elevationDatabasesCB.getSelectionModel().select("AltiV2_2-0_75mIgnDB");
+        elevationDatabaseTF.setText("AltiV2_2-0_75mIgnDB");
+        elevationDatabasesCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue)
+                        -> elevationDatabaseTF.setText(elevationDatabasesCB.getValue())
+                );
         tilesCountCB.setItems(tilesCbData);
         tilesCountCB.getSelectionModel().select("1x1");
         tilesCountTF.setText("1");
@@ -536,6 +556,7 @@ public class StlDBComponentController
         });
 
         requestButton.setOnMouseClicked((MouseEvent event) -> {
+
             if (bathymetryLayer.getNumRenderables() != 0) {
                 //  bathymetryLayer.removeAllRenderables();
             }
@@ -677,24 +698,21 @@ public class StlDBComponentController
             }
 
             if (selectedObjects.contains("ALL") || demRB.isSelected()) {
+
                 bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
                 Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
                 displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
-
-                /*
-                Test Dem
-               // Point3D[][] ptsTab = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, 100.0);
-                //  displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
-               // double targetResolution = Angle.fromDegrees(1d).radians / 3600;
-          //Pb load Dem  
-//   Point3D[][] dem = demComponentServices.retrieveElevations(wwd, ptsTab, targetResolution);
-             //   displayServices.displayGrid(dem, Material.GREEN, s57Layer, verticalExaggeration);
-                 */
-                GridBox3D box = new GridBox3D(ptsTab);
-                boolean isBaseDisplayed = false;
-                displayServices.displayGrid(box, Material.MAGENTA, s57Layer, verticalExaggeration, isBaseDisplayed);
+                // GridBox3D box = new GridBox3D(ptsTab);
+                // boolean isBaseDisplayed = false;
+                //  displayServices.displayGrid(box, Material.MAGENTA, s57Layer, verticalExaggeration, isBaseDisplayed);
             }
-
+            if (selectedObjects.contains("ALL") || elevationRB.isSelected()) {
+                elevation = createElevation(lat0, lon0, lat1, lon1);
+             // List<Triangle_dt>  tris=  delaunayServices.createDelaunay(elevation.getGrid(), elevation.getMaxElevation());
+               
+              //  Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
+              //  displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
+            }
             if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
                 bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
                 Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
@@ -766,21 +784,32 @@ public class StlDBComponentController
         });
     }
 
-    private Bathymetry createBathymetry(double latMin, double lonMin, double latMax, double lonMax) {
-        Bathymetry bathy;
+    private DEM createBathymetry(double latMin, double lonMin, double latMax, double lonMax) {
+        DEM bathy;
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(),
                 "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
-        bathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
+        bathy = new BathyLoader(bathyConnection, bathymetryDBServices)
+                .retrieveIn(latMin, lonMin, latMax, lonMax);
         return bathy;
     }
 
-    private Point3D[][] createGridFromDelaunayBathymetry(Bathymetry bathymetry,
+    private DEM createElevation(double latMin, double lonMin, double latMax, double lonMax) {
+        DEM dem;
+        elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(),
+                "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD); 
+     //   dem = new DemLoader(elevationConnection, demComponentServices)
+     //           .retrieveIn(latMin, lonMin, latMax, lonMax);
+     List<Point3D> pts = demDBServices.retrieveAll(elevationConnection);
+      displayServices.displayPoints3D(pts, s57Layer);
+              return null;
+    }
+
+    private Point3D[][] createGridFromDelaunayBathymetry(DEM bathymetry,
             double latMin, double lonMin, double latMax, double lonMax, double elevation) {
         List<Triangle_dt> triangles = delaunayServices.createDelaunay(bathymetry.getGrid(), Math.round(bathymetry.getMaxElevation()));
         triangles = delaunayServices.filterLargeEdges(triangles, 0.001);
-
+        // displayServices.displayDelaunay(triangles, initX, verticalExaggeration, Material.YELLOW, s57Layer);
         Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, Math.round(bathymetry.getMaxElevation()));
-        //  displayServices.displayGrid(pts, Material.RED, s57Layer, 1);
 
         Point3D[][] pts1;
         if (Double.isNaN(elevation)) {//If NaN, elevations are take on the bathymetry triangles
@@ -871,7 +900,16 @@ public class StlDBComponentController
                 alert.show();
             }
 //Faire un carre
-
+//Make choice polygone square
+            double latRan = geodesyServices.getDistanceM(lat0, lon0, lat1, lon0);
+            double lonRan = geodesyServices.getDistanceM(lat0, lon0, lat0, lon1);
+            if (latRan > lonRan) {
+                Position position = geodesyServices.getPosition(lat1, lon0, 90.0, latRan);
+                lon1 = position.getLongitude().getDegrees();
+            } else {
+                Position position = geodesyServices.getPosition(lat0, lon1, 0.0, lonRan);
+                lat1 = position.getLatitude().getDegrees();
+            }
             event.consume();
             dialog.close();
             latMinLabel.setText(Double.toString(lat0));

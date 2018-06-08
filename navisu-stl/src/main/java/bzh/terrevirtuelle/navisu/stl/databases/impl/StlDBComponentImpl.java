@@ -43,7 +43,7 @@ import java.util.Set;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import bzh.terrevirtuelle.navisu.dem.db.DemDBComponentServices;
+import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 
 /**
  * @author Serge Morvan
@@ -59,7 +59,7 @@ public class StlDBComponentImpl
     @UsedService
     DelaunayServices delaunayServices;
     @UsedService
-    DemDBComponentServices demComponentServices;
+    DemDBServices demComponentServices;
     @UsedService
     DisplayServices displayServices;
     @UsedService

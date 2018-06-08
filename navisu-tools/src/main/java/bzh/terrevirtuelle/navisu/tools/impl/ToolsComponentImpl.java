@@ -6,7 +6,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
-import bzh.terrevirtuelle.navisu.dem.db.DemDBComponentServices;
 import bzh.terrevirtuelle.navisu.tools.ToolsComponent;
 import bzh.terrevirtuelle.navisu.tools.ToolsComponentServices;
 import bzh.terrevirtuelle.navisu.tools.impl.controller.ToolsComponentController;
@@ -15,6 +14,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
+import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 
 /**
  * @author Serge Morvan
@@ -32,7 +32,7 @@ public class ToolsComponentImpl
     @UsedService
     BathymetryDBServices bathymetryDBServices;
     @UsedService
-    DemDBComponentServices demDBComponentServices;
+    DemDBServices demDBComponentServices;
     @UsedService
     InstrumentDriverManagerServices instrumentDriverManagerServices;
 

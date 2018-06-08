@@ -101,7 +101,7 @@ public class DisplayBathymetryController {
     public void displayAllSounding(double minLat, double minLon, double maxLat, double maxLon, int nbLat, int nbLon) {
 
         guiAgentServices.getJobsManager().newJob("displayAllSounding", (progressHandle) -> {
-            points3d = bathymetryDBServices.retrieveIn(minLat, minLon, maxLat, maxLon);
+            points3d = bathymetryDBServices.retrieveIn("bathy", minLat, minLon, maxLat, maxLon);
             double latM = 90.0;
             double lonM = 0.0;
             for (Point3D p : points3d) {

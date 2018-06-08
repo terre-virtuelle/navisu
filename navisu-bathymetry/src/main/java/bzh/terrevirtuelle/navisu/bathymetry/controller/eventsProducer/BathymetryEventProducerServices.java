@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer;
 
-import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -17,6 +17,6 @@ import org.capcaval.c3.component.ComponentService;
 public interface BathymetryEventProducerServices
         extends ComponentService {
 
-    public void setBathymetry(Bathymetry data);
+    public void setBathymetry(DEM data);
 
 }

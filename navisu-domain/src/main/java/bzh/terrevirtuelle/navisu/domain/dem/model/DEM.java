@@ -16,17 +16,17 @@ import java.util.List;
  * @date 4 avr. 2015
  * @author Serge Morvan
  */
-public class Dem {
+public class DEM {
 
     private List<Point3D> grid;
 
     private double maxElevation;
 
-    public Dem() {
+    public DEM() {
         grid = new ArrayList<>();
     }
 
-    public Dem(List<Point3D> grid) {
+    public DEM(List<Point3D> grid) {
         this.grid = grid;
     }
 
@@ -76,7 +76,7 @@ public class Dem {
 
     @Override
     public String toString() {
-        return "Dem{" + "grid=" + grid + '}';
+        return "Bathymetry{" + "grid=" + grid + '}';
     }
 
 }

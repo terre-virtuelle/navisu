@@ -15,17 +15,17 @@ import java.util.List;
  * @date 4 avr. 2015
  * @author Serge Morvan
  */
-public class Bathymetry {
+public class DEM {
 
     private List<Point3D> grid;
 
     private double maxElevation;
 
-    public Bathymetry() {
+    public DEM() {
         grid = new ArrayList<>();
     }
 
-    public Bathymetry(List<Point3D> grid) {
+    public DEM(List<Point3D> grid) {
         this.grid = grid;
     }
 
@@ -75,7 +75,7 @@ public class Bathymetry {
 
     @Override
     public String toString() {
-        return "Bathymetry{" + "grid=" + grid + '}';
+        return "DEM{" + "grid=" + grid + '}';
     }
 
 }

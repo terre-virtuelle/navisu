@@ -48,7 +48,7 @@ public class BathymetryCmd
         double lon = depth.getLongitude();
        
         navigationDataSet = new NavigationDataSet();
-        List<Point3D> points = bathymetryDBServices.retrieveIn(lat, lon, lat + 0.0015, lon + 0.0015);
+        List<Point3D> points = bathymetryDBServices.retrieveIn("bathy", lat, lon, lat + 0.0015, lon + 0.0015);
         points.forEach((p) -> {
             navigationDataSet.add(p);
         });

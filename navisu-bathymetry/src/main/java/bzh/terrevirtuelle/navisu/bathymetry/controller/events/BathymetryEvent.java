@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.bathymetry.controller.events;
 
-import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
 import org.capcaval.c3.component.ComponentEvent;
 
 /**
@@ -21,5 +21,5 @@ public interface BathymetryEvent
      *
      * @param data
      */
-    public void notifyBathymetryMessageChanged(Bathymetry data);
+    public void notifyBathymetryMessageChanged(DEM data);
 }

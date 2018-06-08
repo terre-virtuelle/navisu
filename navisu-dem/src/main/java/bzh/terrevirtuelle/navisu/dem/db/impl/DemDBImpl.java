@@ -24,20 +24,20 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.capcaval.c3.component.annotation.UsedService;
-import bzh.terrevirtuelle.navisu.dem.db.DemDBComponentServices;
-import bzh.terrevirtuelle.navisu.dem.db.DemDBComponent;
 import bzh.terrevirtuelle.navisu.dem.db.impl.controller.DemDBComponentController;
+import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.dem.db.DemDB;
 
 /**
  * @author Serge Morvan
  * @date 11/05/2014 12:49
  */
-public class DemDBComponentImpl
-        implements DemDBComponent, DemDBComponentServices, DatabaseDriver, ComponentState {
+public class DemDBImpl
+        implements DemDB, DemDBServices, DatabaseDriver, ComponentState {
 
     protected final String COMPONENT_KEY_NAME_0 = "DbElevation";
     protected String componentKeyName;
-    protected static final Logger LOGGER = Logger.getLogger(DemDBComponentImpl.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(DemDBImpl.class.getName());
     protected WorldWindow wwd;
 
     @UsedService
@@ -130,7 +130,10 @@ public class DemDBComponentImpl
     public List<Point3D> retrieveAll() {
         return controller.retrieveAll();
     }
-
+@Override
+    public List<Point3D> retrieveAll(Connection connection) {
+        return controller.retrieveAll(connection);
+    }
     @Override
     public List<Point3D> retrieveAround(double lat, double lon) {
         return controller.retrieveAround(lat, lon, LIMIT);
@@ -142,13 +145,13 @@ public class DemDBComponentImpl
     }
 
     @Override
-    public List<Point3D> retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
-        return controller.retrieveIn(latMin, lonMin, latMax, lonMax);
+    public List<Point3D> retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax) {
+        return controller.retrieveIn(table, latMin, lonMin, latMax, lonMax);
     }
 
     @Override
-    public List<Point3D> retrieveIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax) {
-        return controller.retrieveIn(connection, latMin, lonMin, latMax, lonMax);
+    public List<Point3D> retrieveIn(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax) {
+        return controller.retrieveIn(connection, table, latMin, lonMin, latMax, lonMax);
     }
 
     @Override

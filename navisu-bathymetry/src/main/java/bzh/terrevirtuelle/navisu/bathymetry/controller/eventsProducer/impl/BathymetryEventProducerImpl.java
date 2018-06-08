@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer.impl;
 import bzh.terrevirtuelle.navisu.bathymetry.controller.events.BathymetryEvent;
 import bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer.BathymetryEventProducer;
 import bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer.BathymetryEventProducerServices;
-import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
 import org.capcaval.c3.component.annotation.ProducedEvent;
 
 /**
@@ -28,7 +28,7 @@ public class BathymetryEventProducerImpl
      * @param evt
      */
     @Override
-    public void setBathymetry(Bathymetry evt) {
+    public void setBathymetry(DEM evt) {
         bathymetryEvent.notifyBathymetryMessageChanged(evt);
     }
 
