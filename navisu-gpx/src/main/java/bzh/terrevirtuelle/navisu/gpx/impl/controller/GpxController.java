@@ -100,6 +100,7 @@ public class GpxController {
 
             BasicMarkerAttributes attrs
             = new BasicMarkerAttributes(Material.RED, BasicMarkerShape.SPHERE, 1.d);
+            // max value for MarkerSize about 50
             attrs.setMaxMarkerSize(20.0);
             ArrayList<Marker> markers = new ArrayList<>();
             while (positions.hasNext()) {

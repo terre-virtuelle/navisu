@@ -47,7 +47,7 @@ public class TextAreaController
     String DEFAULT = "textArea.fxml";
     String filename;
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
-    protected String viewgroupstyle = "textarea.css";
+    protected String viewgroupstyle = "common.css";
     public TextAreaController() {
         filename = DEFAULT;
         setMouseTransparent(false);
