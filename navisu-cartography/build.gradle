@@ -1,4 +1,5 @@
 dependencies {
+    compile project(':navisu-app')
     compile project(':navisu-topology')
     compile project(':navisu-domain')
     compile fileTree(dir: 'lib', include: '*.jar')

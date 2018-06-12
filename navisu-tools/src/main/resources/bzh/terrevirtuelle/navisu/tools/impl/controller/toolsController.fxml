@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="570.0" styleClass="background-pane">
             <children>
@@ -176,11 +176,8 @@
                                        </opaqueInsets>
                                        <children>
                                           <Label prefHeight="15.0" prefWidth="160.0" text="Configuration" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <Label prefHeight="15.0" prefWidth="153.0" text="Elevation data file" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <Label text="Elevation database name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <TextField fx:id="elevationDataTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                           <TextField fx:id="elevationDatabaseNameTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <Button fx:id="elevationDataButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                           <Label prefHeight="15.0" prefWidth="156.0" text="psql Path" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                           <TextField fx:id="psqlTF11" prefWidth="80.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                           <Button fx:id="psqlButton11" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="6" />
@@ -189,6 +186,9 @@
                                           <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                                           <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                                           <Button fx:id="createButton11" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Create" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+                                          <Label text="IGN .asc elevation data directory" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="ignDataTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <Button fx:id="ignDataButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
                                  </children>

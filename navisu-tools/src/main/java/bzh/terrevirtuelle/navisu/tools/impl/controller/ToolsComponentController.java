@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverMa
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
+import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
@@ -65,6 +66,7 @@ public class ToolsComponentController
     protected BathymetryDBServices bathymetryDBServices;
     protected DemDBServices demDBComponentServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
+    protected LambertServices lambertServices;
 
     private final String FXML = "toolsController.fxml";
 
@@ -157,9 +159,9 @@ public class ToolsComponentController
     @FXML
     public Button psqlButton11;
     @FXML
-    public TextField elevationDataTF;
+    public TextField ignDataTF;
     @FXML
-    public Button elevationDataButton;
+    public Button ignDataButton;
     @FXML
     public TextField elevationDatabaseNameTF;
     @FXML
@@ -178,6 +180,7 @@ public class ToolsComponentController
     private final String ENC_CATALOG_HOME = "data/charts/vector/s57/catalog/";
     private final String BATHY_DB_NAME = "BathyShomDB";
     private final String ELEVATION_DB_NAME = "AltiV2_2-0_75mIgnDB";
+    private final String ELEVATION_DB_ORG_FILE = "privateData/elevation/output.glz";
     private String componentKeyName;
 
     /**
@@ -201,7 +204,8 @@ public class ToolsComponentController
             DatabaseServices databaseServices,
             BathymetryDBServices bathymetryDBServices,
             DemDBServices demDBComponentServices,
-            InstrumentDriverManagerServices instrumentDriverManagerServices) {
+            InstrumentDriverManagerServices instrumentDriverManagerServices,
+            LambertServices lambertServices) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -221,6 +225,7 @@ public class ToolsComponentController
         this.bathymetryDBServices = bathymetryDBServices;
         this.demDBComponentServices = demDBComponentServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
+        this.lambertServices = lambertServices;
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
@@ -347,16 +352,20 @@ public class ToolsComponentController
             });
         });
         createButton11.setOnMouseClicked((MouseEvent event) -> {
-
-            if (elevationsTab.isSelected()) {
-                psqlPath = psqlTF11.getText();
-                saveConfiguration();
-            }
-            elevationData = elevationDataTF.getText();
             guiAgentServices.getJobsManager().newJob("Load DB : " + ELEVATION_DB_NAME, (progressHandle) -> {
-                bathymetryDBServices.connect(ELEVATION_DB_NAME, "localhost", "jdbc:postgresql://",
-                        "5432", "org.postgresql.Driver", "admin", "admin");
-                bathymetryDBServices.create(elevationData, "elevation");
+                if (ignDataTF != null) {
+                    if (elevationsTab.isSelected()) {
+                        psqlPath = psqlTF11.getText();
+                        saveConfiguration();
+                    }
+                    elevationData = ELEVATION_DB_ORG_FILE;
+                    lambertServices.readLambertDirWriteWGS84File(ignDataTF.getText(), elevationData);
+                    bathymetryDBServices.connect(ELEVATION_DB_NAME, "localhost", "jdbc:postgresql://",
+                            "5432", "org.postgresql.Driver", "admin", "admin");
+                    bathymetryDBServices.create(elevationData, "elevation");
+                } else {
+                    //Alert
+                }
             });
         });
         helpButton.setOnMouseClicked((MouseEvent event) -> {
@@ -399,8 +408,8 @@ public class ToolsComponentController
         bathyDataButton.setOnMouseClicked((MouseEvent event) -> {
             openFile(bathyDataTF);
         });
-        elevationDataButton.setOnMouseClicked((MouseEvent event) -> {
-            openFile(elevationDataTF);
+        ignDataButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(ignDataTF);
         });
     }
 

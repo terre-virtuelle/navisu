@@ -68,6 +68,8 @@ public class DisplayImpl
         attrs.setScale(1.0);
         for (Point3D p : points) {
             pointPlacemark = new PointPlacemark(Position.fromDegrees(p.getLatitude(), p.getLongitude(), p.getElevation()));
+            String label=String.format("%4f°, %4f° \n %2d m", p.getLatitude(), p.getLongitude(), (int)p.getElevation());
+            pointPlacemark.setValue(AVKey.DISPLAY_NAME, label);
             pointPlacemark.setAttributes(attrs);
             pointPlacemarks.add(pointPlacemark);
         }

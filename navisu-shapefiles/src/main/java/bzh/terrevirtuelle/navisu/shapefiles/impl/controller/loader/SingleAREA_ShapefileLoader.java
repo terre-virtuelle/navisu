@@ -10,16 +10,14 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.ExtrudedPolygon;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
-import gov.nasa.worldwind.util.VecBuffer;
-import gov.nasa.worldwind.util.WWMath;
 import java.awt.Color;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +44,8 @@ public class SingleAREA_ShapefileLoader
     private Map<String, Integer> keys;
     int i = 0;
     private Shapefile shp;
-Double height;
+    Double height;
+
     public SingleAREA_ShapefileLoader(List<List<String>> dbList, Map<String, Integer> keys) {
         this.dbList = dbList;
         this.keys = keys;
@@ -60,10 +59,12 @@ Double height;
         RenderableLayer layer = new RenderableLayer();
         this.shp = shp;
         layers.add(layer);
+
         while (shp.hasNext()) {
             try {
                 record = shp.nextRecord();
                 if (record != null) {
+                    label = "";
                     if (record.getAttributes() != null) {
                         entries = record.getAttributes().getEntries();
                         entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
@@ -73,7 +74,8 @@ Double height;
                                 color = new Color((int) (Math.random() * 255),
                                         (int) (Math.random() * 255), (int) (Math.random() * 255));
                             }
-                            // System.out.println("e.getKey() : " + e.getKey());
+                            label += e.getKey() + " : " + e.getValue() + "\n";
+                            //  System.out.println("e.getKey() : " + e.getKey());
                         });
                     }
                     if (!Shapefile.isPolygonType(record.getShapeType())) {
@@ -84,7 +86,6 @@ Double height;
                     ShapeAttributes attrs = this.createPolygonAttributes(color);
                     this.createPolygon(record, attrs, layer);
 
-                    label = "";
                 }
             } catch (Exception ex) {
                 Logger.getLogger(SingleAREA_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
@@ -98,29 +99,33 @@ Double height;
             RenderableLayer layer) {
         this.record = record;
         // = this.getHeight(record);
-        
-        
-            shape = new SurfacePolygons(
-                    Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
-                    record.getCompoundPointBuffer());
 
-            shape.setAttributes(attrs);
-            //  System.out.println("attrs : " + shape.getAttributes());
-            shape.setWindingRule(AVKey.CLOCKWISE);
-            shape.setPolygonRingGroups(new int[]{0});
+        shape = new SurfacePolygons(
+                Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
+                record.getCompoundPointBuffer());
 
-            ShapeAttributes highlightAttributes = new BasicShapeAttributes(attrs);
-            highlightAttributes.setOutlineOpacity(1);
-            highlightAttributes.setDrawInterior(true);
-            highlightAttributes.setInteriorMaterial(new Material(Color.WHITE));
-            highlightAttributes.setInteriorOpacity(.5);
-            highlightAttributes.setEnableLighting(true);
+        shape.setAttributes(attrs);
+        //  System.out.println("attrs : " + shape.getAttributes());
+        shape.setWindingRule(AVKey.CLOCKWISE);
+        shape.setPolygonRingGroups(new int[]{0});
+        Iterable<? extends LatLon> latLon = shape.getBuffer().getLocations();
+        for (LatLon l : latLon) {
+            label += l.getLatitude().getDegrees() + " " + l.getLongitude().getDegrees() + "\n";
+        }
+        shape.setValue(AVKey.DISPLAY_NAME, label);
 
-            shape.setHighlightAttributes(highlightAttributes);
+        ShapeAttributes highlightAttributes = new BasicShapeAttributes(attrs);
+        highlightAttributes.setOutlineOpacity(1);
+        highlightAttributes.setDrawInterior(true);
+        highlightAttributes.setInteriorMaterial(new Material(Color.WHITE));
+        highlightAttributes.setInteriorOpacity(.5);
+        highlightAttributes.setEnableLighting(true);
 
-            layer.addRenderable(shape);
-            i++;
-        
+        shape.setHighlightAttributes(highlightAttributes);
+
+        layer.addRenderable(shape);
+        i++;
+
     }
 
     public List<SurfacePolygons> createPolygons(Shapefile shp, RenderableLayer layer) {

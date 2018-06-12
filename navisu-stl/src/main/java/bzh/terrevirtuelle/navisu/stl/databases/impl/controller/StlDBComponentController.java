@@ -159,19 +159,11 @@ public class StlDBComponentController
     protected static final String BATHYMETRY_LAYER = "S57StlBathy";
     protected static final String S57_LAYER = "S57Stl";
     protected static final String LIGHTS_LAYER = "LIGHTS";
-    /*
+
     protected static final String LAT_MIN = "48.21";//Original
     protected static final String LON_MIN = "-4.61";
     protected static final String LAT_MAX = "48.42";
     protected static final String LON_MAX = "-4.30";
-     */
-  
-    protected static final String LAT_MIN = "47";
-    protected static final String LON_MIN = "-4";
-    protected static final String LAT_MAX = "48.11";
-    protected static final String LON_MAX = "-3";
-     
-    
 
     protected RenderableLayer bathymetryLayer;
     protected RenderableLayer s57Layer;
@@ -708,10 +700,10 @@ public class StlDBComponentController
             }
             if (selectedObjects.contains("ALL") || elevationRB.isSelected()) {
                 elevation = createElevation(lat0, lon0, lat1, lon1);
-             // List<Triangle_dt>  tris=  delaunayServices.createDelaunay(elevation.getGrid(), elevation.getMaxElevation());
-               
-              //  Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
-              //  displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
+                // List<Triangle_dt>  tris=  delaunayServices.createDelaunay(elevation.getGrid(), elevation.getMaxElevation());
+
+                //  Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
+                //  displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
             }
             if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
                 bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
@@ -794,14 +786,13 @@ public class StlDBComponentController
     }
 
     private DEM createElevation(double latMin, double lonMin, double latMax, double lonMax) {
-        DEM dem;
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(),
-                "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD); 
-     //   dem = new DemLoader(elevationConnection, demComponentServices)
-     //           .retrieveIn(latMin, lonMin, latMax, lonMax);
-     List<Point3D> pts = demDBServices.retrieveAll(elevationConnection);
-      displayServices.displayPoints3D(pts, s57Layer);
-              return null;
+                "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
+        DEM dem = new DemLoader(elevationConnection, demDBServices)
+                .retrieveIn(latMin, lonMin, latMax, lonMax);
+        // List<Point3D> pts = demDBServices.retrieveAll(elevationConnection);
+        displayServices.displayPoints3D(dem.getGrid(), s57Layer);
+        return null;
     }
 
     private Point3D[][] createGridFromDelaunayBathymetry(DEM bathymetry,
