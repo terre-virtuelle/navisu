@@ -140,6 +140,10 @@ public interface TopologyServices
      */
     List<Polygon> wktMultiLineToWwjMultiPolygon(String geometry);
 
+    
+    List<Polygon> wktPolygonsToWwjPolygons(List<Geometry> polygons);
+    
+     List<Path> wktPolygonsToWwjPaths(List<Geometry> polygons);
     /**
      *
      * @param geometry

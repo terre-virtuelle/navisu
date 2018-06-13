@@ -119,7 +119,8 @@ public class StlDBComponentImpl
                         instrumentDriverManagerServices,
                         topologyServices,
                         shapefileObjectServices,
-                        geodesyServices);
+                        geodesyServices,
+                        jtsServices);
                 controller.setVisible(true);
             }
         }

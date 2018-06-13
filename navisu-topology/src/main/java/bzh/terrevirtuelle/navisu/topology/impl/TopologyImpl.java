@@ -506,4 +506,53 @@ public class TopologyImpl
         }
         return result;
     }
+
+    @Override
+    public List<Polygon> wktPolygonsToWwjPolygons(List<Geometry> polygons) {
+        /*
+      POLYGON ((-4.548440933227539 48.32429885864258, 
+        -4.549448013305664 48.32423400878906, 
+        -4.549351692199707 48.32356262207031, 
+        -4.548440933227539 48.32429885864258))
+         */
+        List<Polygon> result = new ArrayList<>();
+        List<Position> positions;
+        for (Geometry g : polygons) {
+            // System.out.println("length : " + g.getArea());
+            if (g.getArea() < 3.42E-7) {
+                Coordinate[] coordinateTab = g.getCoordinates();
+                positions = new ArrayList<>();
+                for (int i = 0; i < coordinateTab.length; i++) {
+                    positions.add(new Position(Angle.fromDegrees(coordinateTab[i].y),
+                            Angle.fromDegrees(coordinateTab[i].x), coordinateTab[i].z+100));
+                }
+                result.add(new Polygon(positions));
+            }
+        }
+        return result;
+    }
+    @Override
+    public List<Path> wktPolygonsToWwjPaths(List<Geometry> polygons) {
+        /*
+      POLYGON ((-4.548440933227539 48.32429885864258, 
+        -4.549448013305664 48.32423400878906, 
+        -4.549351692199707 48.32356262207031, 
+        -4.548440933227539 48.32429885864258))
+         */
+        List<Path> result = new ArrayList<>();
+        List<Position> positions;
+        for (Geometry g : polygons) {
+            // System.out.println("length : " + g.getArea());
+            if (g.getArea() < 3.42E-7) {
+                Coordinate[] coordinateTab = g.getCoordinates();
+                positions = new ArrayList<>();
+                for (int i = 0; i < coordinateTab.length; i++) {
+                    positions.add(new Position(Angle.fromDegrees(coordinateTab[i].y),
+                            Angle.fromDegrees(coordinateTab[i].x), coordinateTab[i].z*5));
+                }
+                result.add(new Path(positions));
+            }
+        }
+        return result;
+    }
 }

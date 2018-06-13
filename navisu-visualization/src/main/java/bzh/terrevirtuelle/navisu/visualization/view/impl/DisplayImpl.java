@@ -23,7 +23,6 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
@@ -295,4 +294,17 @@ public class DisplayImpl
         displayGrid(box.getSideLon1(), material, s57Layer, verticalExaggeration);
     }
 
+    @Override
+    public void displayPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration) {
+    ShapeAttributes attrs0 = new BasicShapeAttributes();
+        attrs0.setOutlineOpacity(1.0);
+        attrs0.setOutlineWidth(1d);
+        attrs0.setOutlineMaterial(material);
+        List<Path> tmp =new ArrayList<>();
+        
+       
+      // p.setAltitudeMode(WorldWind.ABSOLUTE);
+      //  p.setAttributes(attrs0);
+        }
+   
 }

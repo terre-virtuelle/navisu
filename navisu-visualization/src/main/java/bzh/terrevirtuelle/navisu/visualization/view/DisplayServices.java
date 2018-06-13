@@ -26,6 +26,8 @@ public interface DisplayServices
 
     void displayPoints3D(List<Point3D> points, RenderableLayer layer);
 
+    void displayPaths(List<Path> points, RenderableLayer layer, Material material, double verticalExaggeration);
+
     void displayGrid(List<List<Point3D>> latLons, Material material, RenderableLayer layer);
 
     void displayGrid(Point3D[][] latLons, Material material, RenderableLayer layer, double verticalExaggeration);

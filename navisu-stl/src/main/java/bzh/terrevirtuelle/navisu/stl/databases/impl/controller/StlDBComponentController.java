@@ -116,6 +116,13 @@ import javafx.scene.text.Text;
 import org.controlsfx.control.CheckComboBox;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemLoader;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.MultiPoint;
+import com.vividsolutions.jts.triangulate.DelaunayTriangulationBuilder;
 
 /**
  * @author Serge Morvan
@@ -134,6 +141,7 @@ public class StlDBComponentController
     protected DisplayServices displayServices;
     protected GeodesyServices geodesyServices;
     protected GuiAgentServices guiAgentServices;
+    protected JTSServices jtsServices;
     protected LayersManagerServices layersManagerServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected ShapefileObjectServices shapefileObjectServices;
@@ -322,7 +330,8 @@ public class StlDBComponentController
             InstrumentDriverManagerServices instrumentDriverManagerServices,
             TopologyServices topologyServices,
             ShapefileObjectServices shapefileObjectServices,
-            GeodesyServices geodesyServices) {
+            GeodesyServices geodesyServices,
+            JTSServices jtsServices) {
         super(keyCode, keyCombination);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
         fxmlLoader.setRoot(this);
@@ -345,6 +354,7 @@ public class StlDBComponentController
         this.bathymetryDBServices = bathymetryDBServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.topologyServices = topologyServices;
+        this.jtsServices = jtsServices;
         this.shapefileObjectServices = shapefileObjectServices;
         this.geodesyServices = geodesyServices;
 
@@ -404,7 +414,7 @@ public class StlDBComponentController
                         initScale();
                     }
                     if (selectedPolygons != null) {
-                        selectedPolygons = createAndDisplayTiles(s57Layer, lat0, lon0, lat1, lon1, tileCount, tileCount);
+                        selectedPolygons = createAndDisplayTiles(s57Layer, Material.RED, lat0, lon0, lat1, lon1, tileCount, tileCount);
                     }
                 });
 
@@ -704,6 +714,7 @@ public class StlDBComponentController
 
                 //  Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
                 //  displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
+                //displayServices.displayPoints3D(elevation.getGrid(), s57Layer);
             }
             if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
                 bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
@@ -788,11 +799,86 @@ public class StlDBComponentController
     private DEM createElevation(double latMin, double lonMin, double latMax, double lonMax) {
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(),
                 "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
-        DEM dem = new DemLoader(elevationConnection, demDBServices)
-                .retrieveIn(latMin, lonMin, latMax, lonMax);
-        // List<Point3D> pts = demDBServices.retrieveAll(elevationConnection);
-        displayServices.displayPoints3D(dem.getGrid(), s57Layer);
-        return null;
+        DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
+        /*
+        private ArrayList<Geometry> toTriangles(Geometry g){
+    ArrayList<Geometry> valid = new ArrayList<Geometry>();
+    DelaunayTriangulationBuilder triator = new DelaunayTriangulationBuilder();
+    triator.setSites(g);
+    Geometry tris = triator.getTriangles(gf);
+    for(int i=0; i<tris.getNumGeometries(); i++){
+      if(g.contains(tris.getGeometryN(i))) valid.add(tris.getGeometryN(i));
+    }
+    return valid;
+  }
+         */
+        ArrayList<Geometry> valid = new ArrayList<>();
+        Coordinate[] coordinateTab = jtsServices.toTabCoordinates(dem.getGrid());
+        MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
+        DelaunayTriangulationBuilder triator = new DelaunayTriangulationBuilder();
+        triator.setSites(points);
+        Geometry tris = triator.getTriangles(new GeometryFactory());
+        for (int i = 0; i < tris.getNumGeometries(); i++) {
+            valid.add(tris.getGeometryN(i));
+        }
+        List<gov.nasa.worldwind.render.Path> paths = topologyServices.wktPolygonsToWwjPaths(valid);
+        ShapeAttributes attrs0 = new BasicShapeAttributes();
+        attrs0.setOutlineOpacity(1.0);
+        attrs0.setOutlineWidth(1d);
+        attrs0.setOutlineMaterial(Material.GREEN);
+        for (gov.nasa.worldwind.render.Path p : paths) {
+            p.setAttributes(normalAttributes);
+        }
+        s57Layer.addRenderables(paths);
+        wwd.redrawNow();
+        /*
+        //The real coordinates are not exactly on the selection square
+        Coordinate[] coordinateTab = jtsServices.toTabCoordinates(dem.getGrid());
+        MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
+        Geometry envelope = points.getEnvelope();
+        Geometry boundary = envelope.getBoundary();
+        Coordinate[] boundarytab = boundary.getCoordinates();
+        createAndDisplayTiles(s57Layer, Material.GREEN, boundarytab[0].y, boundarytab[0].x, boundarytab[2].y, boundarytab[2].x, 1, 1);
+
+        lat0 = boundarytab[0].y;
+        lon0 = boundarytab[0].x;
+        lat1 = boundarytab[2].y;
+        lon1 = boundarytab[2].x;
+
+
+        lat0=((int)(lat0*100000))/100000.0;
+        lon0=((int)(lon0*100000))/100000.0;
+        lat1=((int)(lat1*100000))/100000.0;
+        lon1=((int)(lon1*100000))/100000.0;
+        
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                latMinLabel.setText(String.format("%.2f", lat0));
+                lonMinLabel.setText(String.format("%.2f", lon0));
+                latMaxLabel.setText(String.format("%.2f", lat1));
+                lonMaxLabel.setText(String.format("%.2f", lon1));
+
+                initScale();
+            }
+        });
+        List<Point3D> point3Ds = new ArrayList<>();
+        for(Point3D p : dem.getGrid()){
+           point3Ds.add(new Point3D(((int)(p.getLatitude()*100000))/100000.0,
+                   ((int)(p.getLongitude()*100000))/100000.0,
+                   p.getElevation()));
+        }
+        
+        List<Point3D> tmp = new ArrayList<>(); 
+        for (Point3D p : point3Ds) {
+            if (p.getLongitude()< lon1) {
+                tmp.add(p);
+            }
+        }
+        System.out.println("point3Ds : " + point3Ds.size());
+        System.out.println("tmp : " + tmp.size());
+         */
+        return dem;
     }
 
     private Point3D[][] createGridFromDelaunayBathymetry(DEM bathymetry,
@@ -802,6 +888,9 @@ public class StlDBComponentController
         // displayServices.displayDelaunay(triangles, initX, verticalExaggeration, Material.YELLOW, s57Layer);
         Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, Math.round(bathymetry.getMaxElevation()));
 
+        displayServices.displayDelaunay(triangles, initX, verticalExaggeration, Material.YELLOW, s57Layer);
+
+        /*
         Point3D[][] pts1;
         if (Double.isNaN(elevation)) {//If NaN, elevations are take on the bathymetry triangles
             pts1 = bathymetryDBServices.mergeData(pts, triangles);
@@ -809,7 +898,9 @@ public class StlDBComponentController
             pts1 = bathymetryDBServices.mergeData(pts, triangles, elevation);
             // pts1 = bathymetryDBServices.mergeData(pts, triangles);
         }
-        return pts1;
+         */
+        // return pts1;
+        return null;
     }
 
     private void makeAttributes() {
@@ -908,7 +999,7 @@ public class StlDBComponentController
             latMaxLabel.setText(Double.toString(lat1));
             lonMaxLabel.setText(Double.toString(lon1));
             initScale();
-            selectedPolygons = createAndDisplayTiles(s57Layer, lat0, lon0, lat1, lon1, tileCount, tileCount);
+            selectedPolygons = createAndDisplayTiles(s57Layer, Material.RED, lat0, lon0, lat1, lon1, tileCount, tileCount);
         });
 
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
@@ -940,7 +1031,7 @@ public class StlDBComponentController
 
     }
 
-    private List<Polygon> createAndDisplayTiles(RenderableLayer layer,
+    private List<Polygon> createAndDisplayTiles(RenderableLayer layer, Material material,
             double latMin, double lonMin, double latMax, double lonMax,
             int line, int col) {
         if (layer.getNumRenderables() >= 1) {
@@ -971,19 +1062,19 @@ public class StlDBComponentController
                 Polygon polygon = new Polygon(positions);
 
                 normalAttributes = new BasicShapeAttributes();
-                normalAttributes.setInteriorMaterial(Material.RED);
+                normalAttributes.setInteriorMaterial(material);
                 normalAttributes.setOutlineOpacity(0.5);
                 normalAttributes.setInteriorOpacity(0.1);
-                normalAttributes.setOutlineMaterial(Material.RED);
+                normalAttributes.setOutlineMaterial(material);
                 normalAttributes.setOutlineWidth(2);
                 normalAttributes.setDrawOutline(true);
                 normalAttributes.setDrawInterior(true);
                 normalAttributes.setEnableLighting(true);
 
                 highlightAttributes = new BasicShapeAttributes(normalAttributes);
-                highlightAttributes.setOutlineMaterial(Material.RED);
+                highlightAttributes.setOutlineMaterial(material);
                 highlightAttributes.setOutlineOpacity(1);
-                highlightAttributes.setInteriorMaterial(Material.RED);
+                highlightAttributes.setInteriorMaterial(material);
                 highlightAttributes.setInteriorOpacity(0.2);
 
                 polygon.setAltitudeMode(WorldWind.ABSOLUTE);
