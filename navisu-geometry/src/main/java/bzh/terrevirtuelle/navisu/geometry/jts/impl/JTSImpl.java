@@ -8,17 +8,21 @@ package bzh.terrevirtuelle.navisu.geometry.jts.impl;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTS;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.triangulate.DelaunayTriangulationBuilder;
+import gov.nasa.worldwind.render.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.UsedService;
 import org.opensphere.geometry.algorithm.ConcaveHull;
 
 /**
@@ -27,6 +31,9 @@ import org.opensphere.geometry.algorithm.ConcaveHull;
  */
 public class JTSImpl
         implements JTS, JTSServices, ComponentState {
+
+    @UsedService
+    TopologyServices topologyServices;
 
     @Override
     public List<Coordinate> toListCoordinates(List<Point3D> pts) {
@@ -112,5 +119,73 @@ public class JTSImpl
 
     @Override
     public void componentStopped() {
+    }
+
+    @Override
+    public List<Path> createDelaunay(List<Point3D> pts) {
+        Coordinate[] coordinateTab = toTabCoordinates(pts);
+        MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
+        ArrayList<Geometry> triangles = new ArrayList<>();
+        DelaunayTriangulationBuilder triator = new DelaunayTriangulationBuilder();
+        triator.setSites(points);
+        Geometry tris = triator.getTriangles(new GeometryFactory());
+        for (int i = 0; i < tris.getNumGeometries(); i++) {
+            triangles.add(tris.getGeometryN(i));
+        }
+        List<Path> paths = topologyServices.wktPolygonsToWwjPaths(triangles);
+        return paths;
+    }
+
+    @Override
+    public List<Path> createDelaunay(List<Point3D> pts, double maxElevation) {
+        List<Point3D> bathy = new ArrayList();
+        for (Point3D p : pts) {
+            bathy.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
+        }
+        Coordinate[] coordinateTab = toTabCoordinates(bathy);
+        MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
+        ArrayList<Geometry> triangles = new ArrayList<>();
+        DelaunayTriangulationBuilder triator = new DelaunayTriangulationBuilder();
+        triator.setSites(points);
+        Geometry tris = triator.getTriangles(new GeometryFactory());
+        for (int i = 0; i < tris.getNumGeometries(); i++) {
+            triangles.add(tris.getGeometryN(i));
+        }
+        List<Path> paths = topologyServices.wktPolygonsToWwjPaths(triangles);
+        return paths;
+    }
+
+    @Override
+    public List<Path> createDelaunayWithFilter(List<Point3D> pts, double filter) {
+        Coordinate[] coordinateTab = toTabCoordinates(pts);
+        MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
+        ArrayList<Geometry> triangles = new ArrayList<>();
+        DelaunayTriangulationBuilder triator = new DelaunayTriangulationBuilder();
+        triator.setSites(points);
+        Geometry tris = triator.getTriangles(new GeometryFactory());
+        for (int i = 0; i < tris.getNumGeometries(); i++) {
+            triangles.add(tris.getGeometryN(i));
+        }
+        List<Path> paths = topologyServices.wktPolygonsToWwjPaths(triangles, filter);
+        return paths;
+    }
+
+    @Override
+    public List<Path> createDelaunayWithFilter(List<Point3D> pts, double filter, double maxElevation) {
+        List<Point3D> bathy = new ArrayList();
+        pts.forEach((p) -> {
+            bathy.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
+        });
+        Coordinate[] coordinateTab = toTabCoordinates(bathy);
+        MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
+        ArrayList<Geometry> triangles = new ArrayList<>();
+        DelaunayTriangulationBuilder triator = new DelaunayTriangulationBuilder();
+        triator.setSites(points);
+        Geometry tris = triator.getTriangles(new GeometryFactory());
+        for (int i = 0; i < tris.getNumGeometries(); i++) {
+            triangles.add(tris.getGeometryN(i));
+        }
+        List<Path> paths = topologyServices.wktPolygonsToWwjPaths(triangles, filter);
+        return paths;
     }
 }

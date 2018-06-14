@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.geometry.jts;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import gov.nasa.worldwind.render.Path;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
@@ -30,4 +31,11 @@ public interface JTSServices
 
     List<Point3D> merge(List<Point3D> pts0, List<Point3D> pts1);
 
+    List<Path> createDelaunay(List<Point3D> pts);
+
+    List<Path> createDelaunay(List<Point3D> pts, double maxElevation);
+
+    List<Path> createDelaunayWithFilter(List<Point3D> pts, double filter);
+
+    List<Path> createDelaunayWithFilter(List<Point3D> pts, double filter, double maxElevation);
 }

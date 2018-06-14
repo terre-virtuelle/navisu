@@ -180,7 +180,7 @@ public class BathymetryDBController {
         try {
             tmp = Files.lines(new File(filename).toPath())
                     .map(line -> line.trim())
-                    .map(line -> line.split(" "))
+                    .map(line -> line.split("\\s+"))
                     .map(tab -> new Point3Df(Float.parseFloat(tab[0]),
                     Float.parseFloat(tab[1]),
                     Float.parseFloat(tab[2])))

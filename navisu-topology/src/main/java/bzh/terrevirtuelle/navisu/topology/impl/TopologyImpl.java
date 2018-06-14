@@ -524,17 +524,18 @@ public class TopologyImpl
                 positions = new ArrayList<>();
                 for (int i = 0; i < coordinateTab.length; i++) {
                     positions.add(new Position(Angle.fromDegrees(coordinateTab[i].y),
-                            Angle.fromDegrees(coordinateTab[i].x), coordinateTab[i].z+100));
+                            Angle.fromDegrees(coordinateTab[i].x), coordinateTab[i].z + 100));
                 }
                 result.add(new Polygon(positions));
             }
         }
         return result;
     }
+
     @Override
     public List<Path> wktPolygonsToWwjPaths(List<Geometry> polygons) {
         /*
-      POLYGON ((-4.548440933227539 48.32429885864258, 
+        POLYGON ((-4.548440933227539 48.32429885864258, 
         -4.549448013305664 48.32423400878906, 
         -4.549351692199707 48.32356262207031, 
         -4.548440933227539 48.32429885864258))
@@ -542,13 +543,35 @@ public class TopologyImpl
         List<Path> result = new ArrayList<>();
         List<Position> positions;
         for (Geometry g : polygons) {
-            // System.out.println("length : " + g.getArea());
-            if (g.getArea() < 3.42E-7) {
+
+            Coordinate[] coordinateTab = g.getCoordinates();
+            positions = new ArrayList<>();
+            for (int i = 0; i < coordinateTab.length; i++) {
+                positions.add(new Position(Angle.fromDegrees(coordinateTab[i].y),
+                        Angle.fromDegrees(coordinateTab[i].x), coordinateTab[i].z * 5));
+            }
+            result.add(new Path(positions));
+        }
+        return result;
+    }
+
+    @Override
+    public List<Path> wktPolygonsToWwjPaths(List<Geometry> polygons, double filter) {
+        /*
+         POLYGON ((-4.548440933227539 48.32429885864258, 
+        -4.549448013305664 48.32423400878906, 
+        -4.549351692199707 48.32356262207031, 
+        -4.548440933227539 48.32429885864258))
+         */
+        List<Path> result = new ArrayList<>();
+        List<Position> positions;
+        for (Geometry g : polygons) {
+            if (g.getArea() < filter) { //3.42E-7
                 Coordinate[] coordinateTab = g.getCoordinates();
                 positions = new ArrayList<>();
                 for (int i = 0; i < coordinateTab.length; i++) {
                     positions.add(new Position(Angle.fromDegrees(coordinateTab[i].y),
-                            Angle.fromDegrees(coordinateTab[i].x), coordinateTab[i].z*5));
+                            Angle.fromDegrees(coordinateTab[i].x), coordinateTab[i].z));
                 }
                 result.add(new Path(positions));
             }

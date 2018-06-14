@@ -24,6 +24,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LandmarkView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57ObjectView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.ShapefileView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.AnchorageAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DockAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DredgedAreaDBLoader;
@@ -123,6 +124,17 @@ import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.triangulate.DelaunayTriangulationBuilder;
+import gov.nasa.worldwindx.examples.kml.KMLDocumentBuilder;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 /**
  * @author Serge Morvan
@@ -195,7 +207,7 @@ public class StlDBComponentController
     protected double globalScale;
     protected List<Polygon> selectedPolygons;
     protected int tileCount = 1;
-    protected double DEFAULT_EXAGGERATION = 10;
+    protected double DEFAULT_EXAGGERATION = 5;
     protected double verticalExaggeration = DEFAULT_EXAGGERATION;
     protected double simplifyFactor;
     protected S57ObjectView s57Viewer;
@@ -207,6 +219,7 @@ public class StlDBComponentController
     protected Connection elevationConnection;
     protected DEM bathymetry;
     protected DEM elevation;
+    protected double maxElevation;
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
     protected String marsys;
     protected List<String> selectedObjects = new ArrayList<>();
@@ -698,24 +711,20 @@ public class StlDBComponentController
                     s57Viewer.display(g, normalAttributes, highlightAttributes);
                 });
             }
-
-            if (selectedObjects.contains("ALL") || demRB.isSelected()) {
-
+            if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && demRB.isSelected())) {
+                elevation = createBathymetryAndElevation(lat0, lon0, lat1, lon1);
+            }
+            if (selectedObjects.contains("ALL") || (demRB.isSelected() && !elevationRB.isSelected())) {
                 bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
-                Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
-                displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
+
                 // GridBox3D box = new GridBox3D(ptsTab);
                 // boolean isBaseDisplayed = false;
                 //  displayServices.displayGrid(box, Material.MAGENTA, s57Layer, verticalExaggeration, isBaseDisplayed);
             }
-            if (selectedObjects.contains("ALL") || elevationRB.isSelected()) {
+            if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && !demRB.isSelected())) {
                 elevation = createElevation(lat0, lon0, lat1, lon1);
-                // List<Triangle_dt>  tris=  delaunayServices.createDelaunay(elevation.getGrid(), elevation.getMaxElevation());
-
-                //  Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, Double.NaN);
-                //  displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
-                //displayServices.displayPoints3D(elevation.getGrid(), s57Layer);
             }
+
             if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
                 bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
                 Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
@@ -788,97 +797,68 @@ public class StlDBComponentController
     }
 
     private DEM createBathymetry(double latMin, double lonMin, double latMax, double lonMax) {
-        DEM bathy;
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(),
                 "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
-        bathy = new BathyLoader(bathyConnection, bathymetryDBServices)
+        DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices)
                 .retrieveIn(latMin, lonMin, latMax, lonMax);
-        return bathy;
+        maxElevation = dem.getMaxElevation();
+
+        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilter(dem.getGrid(), 1E-6, maxElevation);
+        displayServices.displayPaths(paths, s57Layer, Material.GREEN, 10, maxElevation);
+        return dem;
     }
 
     private DEM createElevation(double latMin, double lonMin, double latMax, double lonMax) {
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(),
                 "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
         DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
-        /*
-        private ArrayList<Geometry> toTriangles(Geometry g){
-    ArrayList<Geometry> valid = new ArrayList<Geometry>();
-    DelaunayTriangulationBuilder triator = new DelaunayTriangulationBuilder();
-    triator.setSites(g);
-    Geometry tris = triator.getTriangles(gf);
-    for(int i=0; i<tris.getNumGeometries(); i++){
-      if(g.contains(tris.getGeometryN(i))) valid.add(tris.getGeometryN(i));
-    }
-    return valid;
-  }
-         */
-        ArrayList<Geometry> valid = new ArrayList<>();
-        Coordinate[] coordinateTab = jtsServices.toTabCoordinates(dem.getGrid());
-        MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
-        DelaunayTriangulationBuilder triator = new DelaunayTriangulationBuilder();
-        triator.setSites(points);
-        Geometry tris = triator.getTriangles(new GeometryFactory());
-        for (int i = 0; i < tris.getNumGeometries(); i++) {
-            valid.add(tris.getGeometryN(i));
-        }
-        List<gov.nasa.worldwind.render.Path> paths = topologyServices.wktPolygonsToWwjPaths(valid);
-        ShapeAttributes attrs0 = new BasicShapeAttributes();
-        attrs0.setOutlineOpacity(1.0);
-        attrs0.setOutlineWidth(1d);
-        attrs0.setOutlineMaterial(Material.GREEN);
-        for (gov.nasa.worldwind.render.Path p : paths) {
-            p.setAttributes(normalAttributes);
-        }
-        s57Layer.addRenderables(paths);
-        wwd.redrawNow();
-        /*
-        //The real coordinates are not exactly on the selection square
-        Coordinate[] coordinateTab = jtsServices.toTabCoordinates(dem.getGrid());
-        MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
-        Geometry envelope = points.getEnvelope();
-        Geometry boundary = envelope.getBoundary();
-        Coordinate[] boundarytab = boundary.getCoordinates();
-        createAndDisplayTiles(s57Layer, Material.GREEN, boundarytab[0].y, boundarytab[0].x, boundarytab[2].y, boundarytab[2].x, 1, 1);
-
-        lat0 = boundarytab[0].y;
-        lon0 = boundarytab[0].x;
-        lat1 = boundarytab[2].y;
-        lon1 = boundarytab[2].x;
-
-
-        lat0=((int)(lat0*100000))/100000.0;
-        lon0=((int)(lon0*100000))/100000.0;
-        lat1=((int)(lat1*100000))/100000.0;
-        lon1=((int)(lon1*100000))/100000.0;
-        
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                latMinLabel.setText(String.format("%.2f", lat0));
-                lonMinLabel.setText(String.format("%.2f", lon0));
-                latMaxLabel.setText(String.format("%.2f", lat1));
-                lonMaxLabel.setText(String.format("%.2f", lon1));
-
-                initScale();
-            }
-        });
-        List<Point3D> point3Ds = new ArrayList<>();
-        for(Point3D p : dem.getGrid()){
-           point3Ds.add(new Point3D(((int)(p.getLatitude()*100000))/100000.0,
-                   ((int)(p.getLongitude()*100000))/100000.0,
-                   p.getElevation()));
-        }
-        
-        List<Point3D> tmp = new ArrayList<>(); 
-        for (Point3D p : point3Ds) {
-            if (p.getLongitude()< lon1) {
-                tmp.add(p);
-            }
-        }
-        System.out.println("point3Ds : " + point3Ds.size());
-        System.out.println("tmp : " + tmp.size());
-         */
+        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilter(dem.getGrid(), 3.42E-7);
+        displayServices.displayPaths(paths, s57Layer, Material.RED, 10, maxElevation);
         return dem;
+    }
+
+    private DEM createBathymetryAndElevation(double latMin, double lonMin, double latMax, double lonMax) {
+        // Search for x,y,z bathy, z>0 in the DB
+        bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(),
+                "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
+        DEM bathy = new BathyLoader(bathyConnection, bathymetryDBServices)
+                .retrieveIn(latMin, lonMin, latMax, lonMax);
+        maxElevation = bathy.getMaxElevation();
+        // Offset from zero
+        List<Point3D> elevations = new ArrayList();
+        for (Point3D p : bathy.getGrid()) {
+            elevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
+        }
+        //Search for x,y,z alti, z>0 in the DB
+        elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(),
+                "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
+        DEM alti = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
+        // Merge all pts
+        elevations.addAll(alti.getGrid());
+        // Triangulation of all points
+        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunay(elevations);
+        //Display with z exagerration and vertical offset
+        displayServices.displayPaths(paths, s57Layer, Material.GREEN, 3, maxElevation);
+
+        gov.nasa.worldwind.render.Path[] pathTab = new gov.nasa.worldwind.render.Path[paths.size()];
+        for (int i = 0; i < paths.size(); i++) {
+            pathTab[i] = paths.get(i);
+        }
+        try {
+            Writer stringWriter = new StringWriter();
+            KMLDocumentBuilder kmlBuilder = new KMLDocumentBuilder(stringWriter);
+            kmlBuilder.writeObjects(pathTab);
+            kmlBuilder.close();
+            String xmlString = stringWriter.toString();
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            transformer.transform(new StreamSource(new StringReader(xmlString)), new StreamResult(new File("privateData/kml/output.kml")));
+        } catch (IOException | IllegalArgumentException | XMLStreamException | TransformerException ex) {
+            Logger.getLogger(ShapefileView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+
+        return bathy;
     }
 
     private Point3D[][] createGridFromDelaunayBathymetry(DEM bathymetry,

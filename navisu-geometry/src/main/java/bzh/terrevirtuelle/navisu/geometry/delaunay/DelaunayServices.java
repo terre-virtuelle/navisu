@@ -9,7 +9,6 @@ package bzh.terrevirtuelle.navisu.geometry.delaunay;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Delaunay_Triangulation;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
-import java.util.ArrayList;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 

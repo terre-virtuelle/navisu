@@ -67,7 +67,7 @@ public class DisplayImpl
         attrs.setScale(1.0);
         for (Point3D p : points) {
             pointPlacemark = new PointPlacemark(Position.fromDegrees(p.getLatitude(), p.getLongitude(), p.getElevation()));
-            String label=String.format("%4f°, %4f° \n %2d m", p.getLatitude(), p.getLongitude(), (int)p.getElevation());
+            String label = String.format("%4f°, %4f° \n %2d m", p.getLatitude(), p.getLongitude(), (int) p.getElevation());
             pointPlacemark.setValue(AVKey.DISPLAY_NAME, label);
             pointPlacemark.setAttributes(attrs);
             pointPlacemarks.add(pointPlacemark);
@@ -269,9 +269,16 @@ public class DisplayImpl
     protected ShapeAttributes createAttributes(Color col) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();
         normAttributes.setDrawInterior(false);
-        // normAttributes.setInteriorMaterial(new Material(col));
         normAttributes.setDrawOutline(true);
         normAttributes.setOutlineMaterial(new Material(col));
+        return normAttributes;
+    }
+
+    protected ShapeAttributes createAttributes(Material material) {
+        ShapeAttributes normAttributes = new BasicShapeAttributes();
+        normAttributes.setDrawInterior(false);
+        normAttributes.setDrawOutline(true);
+        normAttributes.setOutlineMaterial(material);
         return normAttributes;
     }
 
@@ -296,15 +303,43 @@ public class DisplayImpl
 
     @Override
     public void displayPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration) {
-    ShapeAttributes attrs0 = new BasicShapeAttributes();
-        attrs0.setOutlineOpacity(1.0);
-        attrs0.setOutlineWidth(1d);
-        attrs0.setOutlineMaterial(material);
-        List<Path> tmp =new ArrayList<>();
+        ShapeAttributes attrs0 = createAttributes(material);
+        List<Path> result = new ArrayList<>();
+        paths.forEach((p) -> {
+            Iterable<? extends Position> positions = p.getPositions();
+            List<Position> tmpPos  = new ArrayList<>();
+            for (Position pp : positions) {
+                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), pp.getElevation() * verticalExaggeration));
+            }
+            result.add(new Path(tmpPos));
+        });
+        result.forEach((p) -> {
+            p.setAltitudeMode(WorldWind.ABSOLUTE);
+            p.setAttributes(attrs0);
+        });
         
-       
-      // p.setAltitudeMode(WorldWind.ABSOLUTE);
-      //  p.setAttributes(attrs0);
-        }
-   
+        layer.addRenderables(result);
+        wwd.redrawNow();
+    }
+
+    @Override
+    public void displayPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration, double verticalOffset) {
+        ShapeAttributes attrs0 = createAttributes(material);
+        List<Path> result = new ArrayList<>();
+        paths.forEach((p) -> {
+            Iterable<? extends Position> positions = p.getPositions();
+            List<Position> tmpPos = new ArrayList<>();
+            for (Position pp : positions) {
+                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), (pp.getElevation() * verticalExaggeration) + verticalOffset));
+            }
+            result.add(new Path(tmpPos));
+        });
+        result.forEach((p) -> {
+            p.setAltitudeMode(WorldWind.ABSOLUTE);
+            p.setAttributes(attrs0);
+        });
+        layer.addRenderables(result);
+        wwd.redrawNow();
+    }
+
 }
