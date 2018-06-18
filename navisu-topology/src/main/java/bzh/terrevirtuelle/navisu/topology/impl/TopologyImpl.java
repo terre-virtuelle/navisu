@@ -23,7 +23,11 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolylines;
+import java.io.File;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -564,9 +568,11 @@ public class TopologyImpl
         -4.548440933227539 48.32429885864258))
          */
         List<Path> result = new ArrayList<>();
+        List<Double> areas = new ArrayList<>();
         List<Position> positions;
         for (Geometry g : polygons) {
-            if (g.getArea() < filter) { //3.42E-7
+            areas.add(g.getArea());
+            if (g.getArea() < filter) {
                 Coordinate[] coordinateTab = g.getCoordinates();
                 positions = new ArrayList<>();
                 for (int i = 0; i < coordinateTab.length; i++) {
@@ -576,6 +582,11 @@ public class TopologyImpl
                 result.add(new Path(positions));
             }
         }
+      //  Collections.sort(areas);
+       // Collections.reverse(areas);
+       // for(int i = 0; i <1000; i++){
+        //    System.out.println(areas.get(i));
+       // }
         return result;
     }
 }

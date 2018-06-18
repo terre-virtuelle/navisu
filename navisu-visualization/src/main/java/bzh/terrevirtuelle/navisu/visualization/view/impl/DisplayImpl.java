@@ -28,10 +28,25 @@ import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwindx.examples.kml.KMLDocumentBuilder;
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import org.capcaval.c3.component.ComponentState;
 
 /**
@@ -307,7 +322,7 @@ public class DisplayImpl
         List<Path> result = new ArrayList<>();
         paths.forEach((p) -> {
             Iterable<? extends Position> positions = p.getPositions();
-            List<Position> tmpPos  = new ArrayList<>();
+            List<Position> tmpPos = new ArrayList<>();
             for (Position pp : positions) {
                 tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), pp.getElevation() * verticalExaggeration));
             }
@@ -317,7 +332,7 @@ public class DisplayImpl
             p.setAltitudeMode(WorldWind.ABSOLUTE);
             p.setAttributes(attrs0);
         });
-        
+
         layer.addRenderables(result);
         wwd.redrawNow();
     }
@@ -340,6 +355,32 @@ public class DisplayImpl
         });
         layer.addRenderables(result);
         wwd.redrawNow();
+    }
+
+    @Override
+    public void exportKLM(String outputFilename, List<Path> paths) {
+        Path[] pathTab = new Path[paths.size()];
+        for (int i = 0; i < paths.size(); i++) {
+            pathTab[i] = paths.get(i);
+        }
+        try {
+            Writer stringWriter = new StringWriter();
+            KMLDocumentBuilder kmlBuilder = new KMLDocumentBuilder(stringWriter);
+            kmlBuilder.writeObjects(pathTab);
+            kmlBuilder.close();
+            String xmlString = stringWriter.toString();
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            transformer.transform(new StreamSource(new StringReader(xmlString)), new StreamResult(new File(outputFilename)));
+        } catch (IOException | IllegalArgumentException | XMLStreamException | TransformerException ex) {
+            Logger.getLogger(DisplayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+    }
+
+    @Override
+    public void exportKLM(List<Path> paths) {
+        exportKLM("privateData/kml/output.kml", paths);
     }
 
 }

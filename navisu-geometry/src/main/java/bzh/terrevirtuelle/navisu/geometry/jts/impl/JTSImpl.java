@@ -138,7 +138,7 @@ public class JTSImpl
 
     @Override
     public List<Path> createDelaunay(List<Point3D> pts, double maxElevation) {
-        List<Point3D> bathy = new ArrayList();
+        List<Point3D> bathy = new ArrayList<>();
         for (Point3D p : pts) {
             bathy.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
         }
@@ -172,7 +172,7 @@ public class JTSImpl
 
     @Override
     public List<Path> createDelaunayWithFilter(List<Point3D> pts, double filter, double maxElevation) {
-        List<Point3D> bathy = new ArrayList();
+        List<Point3D> bathy = new ArrayList<>();
         pts.forEach((p) -> {
             bathy.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
         });

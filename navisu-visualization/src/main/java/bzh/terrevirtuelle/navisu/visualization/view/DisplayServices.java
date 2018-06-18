@@ -55,4 +55,8 @@ public interface DisplayServices
     Path createPath(List<Position> pathPositions, Material material);
 
     Map<Double, Material> createCLUT(String fileName);
+
+    void exportKLM(String outputFilename, List<Path> paths);
+
+    void exportKLM(List<Path> paths);
 }

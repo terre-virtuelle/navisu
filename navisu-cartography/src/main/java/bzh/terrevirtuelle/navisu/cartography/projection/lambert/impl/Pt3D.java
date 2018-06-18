@@ -6,11 +6,12 @@ public class Pt3D {
     private double y;
     private double z;
 
-    Pt3D(double x, double y , double z){
+    Pt3D(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
+
     public double getX() {
         return x;
     }
@@ -19,11 +20,11 @@ public class Pt3D {
         this.x = x;
     }
 
-   public double getY() {
+    public double getY() {
         return y;
     }
 
-   public void setY(double y) {
+    public void setY(double y) {
         this.y = y;
     }
 
@@ -35,24 +36,24 @@ public class Pt3D {
         this.z = z;
     }
 
-    public void translate(double x , double y, double z){
+    public void translate(double x, double y, double z) {
 
-        this.x+= x;
-        this.y+= y;
-        this.z+= z;
+        this.x += x;
+        this.y += y;
+        this.z += z;
     }
 
-    public Pt3D toDegree(){
-        this.x = this.x * 180/Math.PI;
-        this.y = this.y * 180/Math.PI;
-        this.z = this.z * 180/Math.PI;
+    public Pt3D toDegree() {
+        this.x = this.x * 180 / Math.PI;
+        this.y = this.y * 180 / Math.PI;
+        this.z = this.z * 180 / Math.PI;
 
         return this;
     }
 
     @Override
     public String toString() {
-        return "Point3D{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
+        return x + " " + y + " " + z + " \n";
     }
-    
+
 }

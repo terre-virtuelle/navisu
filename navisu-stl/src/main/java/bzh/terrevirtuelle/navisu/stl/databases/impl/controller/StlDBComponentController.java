@@ -802,9 +802,9 @@ public class StlDBComponentController
         DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices)
                 .retrieveIn(latMin, lonMin, latMax, lonMax);
         maxElevation = dem.getMaxElevation();
-
         List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilter(dem.getGrid(), 1E-6, maxElevation);
         displayServices.displayPaths(paths, s57Layer, Material.GREEN, 10, maxElevation);
+        displayServices.exportKLM(paths);
         return dem;
     }
 
@@ -814,6 +814,7 @@ public class StlDBComponentController
         DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
         List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilter(dem.getGrid(), 3.42E-7);
         displayServices.displayPaths(paths, s57Layer, Material.RED, 10, maxElevation);
+        displayServices.exportKLM(paths);
         return dem;
     }
 
@@ -821,43 +822,31 @@ public class StlDBComponentController
         // Search for x,y,z bathy, z>0 in the DB
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(),
                 "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
-        DEM bathy = new BathyLoader(bathyConnection, bathymetryDBServices)
-                .retrieveIn(latMin, lonMin, latMax, lonMax);
+        DEM bathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
         maxElevation = bathy.getMaxElevation();
         // Offset from zero
-        List<Point3D> elevations = new ArrayList();
-        for (Point3D p : bathy.getGrid()) {
-            elevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
-        }
+        List<Point3D> bathyElevations = new ArrayList<>();
+        bathy.getGrid().forEach((p) -> {
+            bathyElevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
+        });
+
         //Search for x,y,z alti, z>0 in the DB
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(),
                 "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
         DEM alti = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
+        List<Point3D> altiElevations = new ArrayList<>();
+        alti.getGrid().forEach((p) -> {
+            altiElevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation + p.getElevation()));
+        });
         // Merge all pts
-        elevations.addAll(alti.getGrid());
+        bathyElevations.addAll(altiElevations);
         // Triangulation of all points
-        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunay(elevations);
+        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunay(bathyElevations);
+        
         //Display with z exagerration and vertical offset
         displayServices.displayPaths(paths, s57Layer, Material.GREEN, 3, maxElevation);
-
-        gov.nasa.worldwind.render.Path[] pathTab = new gov.nasa.worldwind.render.Path[paths.size()];
-        for (int i = 0; i < paths.size(); i++) {
-            pathTab[i] = paths.get(i);
-        }
-        try {
-            Writer stringWriter = new StringWriter();
-            KMLDocumentBuilder kmlBuilder = new KMLDocumentBuilder(stringWriter);
-            kmlBuilder.writeObjects(pathTab);
-            kmlBuilder.close();
-            String xmlString = stringWriter.toString();
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-            transformer.transform(new StreamSource(new StringReader(xmlString)), new StreamResult(new File("privateData/kml/output.kml")));
-        } catch (IOException | IllegalArgumentException | XMLStreamException | TransformerException ex) {
-            Logger.getLogger(ShapefileView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-
+        // Export in kml
+        displayServices.exportKLM(paths);
         return bathy;
     }
 

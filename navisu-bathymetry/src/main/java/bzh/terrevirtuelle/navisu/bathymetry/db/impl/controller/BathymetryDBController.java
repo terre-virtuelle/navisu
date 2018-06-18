@@ -171,7 +171,7 @@ public class BathymetryDBController {
 
             points3df = readFromFile(filename);
             insert(points3df);
-            // createIndex();
+            createIndex(table);
         });
     }
 
@@ -332,21 +332,21 @@ public class BathymetryDBController {
         int nbLat = orgData[0].length;
         int nbLon = orgData[1].length;
         Point3D[][] tmp = new Point3D[nbLat][nbLon];
-      //  System.out.println(nbLat+" "+nbLon);
-       /* 
+        //  System.out.println(nbLat+" "+nbLon);
+        /* 
         for (int k = 0; k < nbLat; k++) {
             System.arraycopy(orgData[k], 0, tmp[k], 0, nbLon);
             System.out.println("k : "+k);
       }
-      */
-         
+         */
+
         for (int i = 0; i < nbLat; i++) {
             for (int j = 0; j < nbLon; j++) {
-              //  System.out.println("i : " + i + "j : "+j);
+                //  System.out.println("i : " + i + "j : "+j);
                 tmp[i][j] = orgData[i][j];
             }
         }
-        
+
         for (int k = 0; k < nbLat - 1; k++) {
             for (int l = 0; l < nbLon - 1; l++) {
                 //Select one point

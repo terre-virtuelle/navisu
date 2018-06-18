@@ -348,12 +348,16 @@ http:/
         }
     }
 
+    public void init0(String s) {
+        String[] tab = s.trim().split("\\s+");
+        parameters.add(Double.valueOf(tab[1]));
+    }
+
     public final void readAndCompute(String filename) {
-        System.out.println("Compute filename : " + filename);
         try {
             parameters.clear();
-            Files.lines(Paths.get(filename)).limit(6).forEach(this::init);
-            init1();
+            Files.lines(Paths.get(filename)).limit(6).forEach(this::init0);
+            init();
             pts.clear();
             Files.lines(Paths.get(filename)).skip(6).forEach(this::compute);
         } catch (IOException ex) {
@@ -361,14 +365,7 @@ http:/
         }
     }
 
-    public void init(String s) {
-
-        String[] tab = s.trim().split("\\s+");
-        parameters.add(Double.valueOf(tab[1]));
-        //  System.out.println("parameters : " + parameters);
-    }
-
-    public void init1() {
+    public void init() {
         double tmp = parameters.get(0);
         ncols = (int) tmp;
         tmp = parameters.get(1);
