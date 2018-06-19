@@ -24,7 +24,6 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LandmarkView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57ObjectView;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.ShapefileView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.AnchorageAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DockAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DredgedAreaDBLoader;
@@ -118,23 +117,6 @@ import org.controlsfx.control.CheckComboBox;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemLoader;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.triangulate.DelaunayTriangulationBuilder;
-import gov.nasa.worldwindx.examples.kml.KMLDocumentBuilder;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 /**
  * @author Serge Morvan
@@ -803,8 +785,8 @@ public class StlDBComponentController
                 .retrieveIn(latMin, lonMin, latMax, lonMax);
         maxElevation = dem.getMaxElevation();
         List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilter(dem.getGrid(), 1E-6, maxElevation);
-        displayServices.displayPaths(paths, s57Layer, Material.GREEN, 10, maxElevation);
-        displayServices.exportKLM(paths);
+        displayServices.displayPaths(paths, s57Layer, Material.GREEN, verticalExaggeration, maxElevation);
+        displayServices.exportKLM(paths,verticalExaggeration);
         return dem;
     }
 
@@ -812,9 +794,9 @@ public class StlDBComponentController
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(),
                 "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
         DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
-        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilter(dem.getGrid(), 3.42E-7);
-        displayServices.displayPaths(paths, s57Layer, Material.RED, 10, maxElevation);
-        displayServices.exportKLM(paths);
+        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilterOnArea(dem.getGrid(), 3.42E-7);
+        displayServices.displayPaths(paths, s57Layer, Material.RED, verticalExaggeration, maxElevation);
+        displayServices.exportKLM(paths, verticalExaggeration);
         return dem;
     }
 
@@ -838,15 +820,16 @@ public class StlDBComponentController
         alti.getGrid().forEach((p) -> {
             altiElevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation + p.getElevation()));
         });
-        // Merge all pts
+        // Merge all pts(
         bathyElevations.addAll(altiElevations);
         // Triangulation of all points
-        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunay(bathyElevations);
+       // List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunay(bathyElevations);
+        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilterOnLength(bathyElevations,0.02);
         
         //Display with z exagerration and vertical offset
-        displayServices.displayPaths(paths, s57Layer, Material.GREEN, 3, maxElevation);
+        displayServices.displayPaths(paths, s57Layer, Material.GREEN, verticalExaggeration, maxElevation);
         // Export in kml
-        displayServices.exportKLM(paths);
+        displayServices.exportKLM(paths, verticalExaggeration);
         return bathy;
     }
 
@@ -854,21 +837,11 @@ public class StlDBComponentController
             double latMin, double lonMin, double latMax, double lonMax, double elevation) {
         List<Triangle_dt> triangles = delaunayServices.createDelaunay(bathymetry.getGrid(), Math.round(bathymetry.getMaxElevation()));
         triangles = delaunayServices.filterLargeEdges(triangles, 0.001);
-        // displayServices.displayDelaunay(triangles, initX, verticalExaggeration, Material.YELLOW, s57Layer);
+
         Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, Math.round(bathymetry.getMaxElevation()));
 
         displayServices.displayDelaunay(triangles, initX, verticalExaggeration, Material.YELLOW, s57Layer);
 
-        /*
-        Point3D[][] pts1;
-        if (Double.isNaN(elevation)) {//If NaN, elevations are take on the bathymetry triangles
-            pts1 = bathymetryDBServices.mergeData(pts, triangles);
-        } else {
-            pts1 = bathymetryDBServices.mergeData(pts, triangles, elevation);
-            // pts1 = bathymetryDBServices.mergeData(pts, triangles);
-        }
-         */
-        // return pts1;
         return null;
     }
 

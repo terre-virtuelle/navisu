@@ -110,6 +110,13 @@ public class JTSImpl
     }
 
     @Override
+    public List<Point3D> pointsToGrid(List<Point3D> points, Point3D[][] grid) {
+        List<Point3D> tmp = new ArrayList<>();
+
+        return tmp;
+    }
+
+    @Override
     public void componentInitiated() {
     }
 
@@ -156,7 +163,7 @@ public class JTSImpl
     }
 
     @Override
-    public List<Path> createDelaunayWithFilter(List<Point3D> pts, double filter) {
+    public List<Path> createDelaunayWithFilterOnArea(List<Point3D> pts, double filter) {
         Coordinate[] coordinateTab = toTabCoordinates(pts);
         MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
         ArrayList<Geometry> triangles = new ArrayList<>();
@@ -166,7 +173,22 @@ public class JTSImpl
         for (int i = 0; i < tris.getNumGeometries(); i++) {
             triangles.add(tris.getGeometryN(i));
         }
-        List<Path> paths = topologyServices.wktPolygonsToWwjPaths(triangles, filter);
+        List<Path> paths = topologyServices.wktPolygonsToWwjPathsWithFilterOnArea(triangles, filter);
+        return paths;
+    }
+
+    @Override
+    public List<Path> createDelaunayWithFilterOnLength(List<Point3D> pts, double filter) {
+        Coordinate[] coordinateTab = toTabCoordinates(pts);
+        MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
+        ArrayList<Geometry> triangles = new ArrayList<>();
+        DelaunayTriangulationBuilder triator = new DelaunayTriangulationBuilder();
+        triator.setSites(points);
+        Geometry tris = triator.getTriangles(new GeometryFactory());
+        for (int i = 0; i < tris.getNumGeometries(); i++) {
+            triangles.add(tris.getGeometryN(i));
+        }
+        List<Path> paths = topologyServices.wktPolygonsToWwjPathsWithFilterOnLength(triangles, filter);
         return paths;
     }
 
@@ -185,7 +207,8 @@ public class JTSImpl
         for (int i = 0; i < tris.getNumGeometries(); i++) {
             triangles.add(tris.getGeometryN(i));
         }
-        List<Path> paths = topologyServices.wktPolygonsToWwjPaths(triangles, filter);
+        List<Path> paths = topologyServices.wktPolygonsToWwjPathsWithFilterOnArea(triangles, filter);
         return paths;
     }
+
 }

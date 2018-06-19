@@ -358,10 +358,19 @@ public class DisplayImpl
     }
 
     @Override
-    public void exportKLM(String outputFilename, List<Path> paths) {
-        Path[] pathTab = new Path[paths.size()];
-        for (int i = 0; i < paths.size(); i++) {
-            pathTab[i] = paths.get(i);
+    public void exportKLM(String outputFilename, List<Path> paths, double verticalExaggeration) {
+        List<Path> result = new ArrayList<>();
+        paths.forEach((p) -> {
+            Iterable<? extends Position> positions = p.getPositions();
+            List<Position> tmpPos = new ArrayList<>();
+            for (Position pp : positions) {
+                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), (pp.getElevation() * verticalExaggeration)));
+            }
+            result.add(new Path(tmpPos));
+        });
+        Path[] pathTab = new Path[result.size()];
+        for (int i = 0; i < result.size(); i++) {
+            pathTab[i] = result.get(i);
         }
         try {
             Writer stringWriter = new StringWriter();
@@ -379,8 +388,8 @@ public class DisplayImpl
     }
 
     @Override
-    public void exportKLM(List<Path> paths) {
-        exportKLM("privateData/kml/output.kml", paths);
+    public void exportKLM(List<Path> paths, double verticalExaggeration) {
+        exportKLM("privateData/kml/output.kml", paths, verticalExaggeration);
     }
 
 }

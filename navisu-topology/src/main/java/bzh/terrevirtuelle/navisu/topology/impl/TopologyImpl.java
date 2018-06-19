@@ -23,9 +23,6 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolylines;
-import java.io.File;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -560,18 +557,11 @@ public class TopologyImpl
     }
 
     @Override
-    public List<Path> wktPolygonsToWwjPaths(List<Geometry> polygons, double filter) {
-        /*
-         POLYGON ((-4.548440933227539 48.32429885864258, 
-        -4.549448013305664 48.32423400878906, 
-        -4.549351692199707 48.32356262207031, 
-        -4.548440933227539 48.32429885864258))
-         */
+    public List<Path> wktPolygonsToWwjPathsWithFilterOnArea(List<Geometry> polygons, double filter) {
+       
         List<Path> result = new ArrayList<>();
-        List<Double> areas = new ArrayList<>();
         List<Position> positions;
         for (Geometry g : polygons) {
-            areas.add(g.getArea());
             if (g.getArea() < filter) {
                 Coordinate[] coordinateTab = g.getCoordinates();
                 positions = new ArrayList<>();
@@ -582,11 +572,24 @@ public class TopologyImpl
                 result.add(new Path(positions));
             }
         }
-      //  Collections.sort(areas);
-       // Collections.reverse(areas);
-       // for(int i = 0; i <1000; i++){
-        //    System.out.println(areas.get(i));
-       // }
+        return result;
+    }
+    @Override
+    public List<Path> wktPolygonsToWwjPathsWithFilterOnLength(List<Geometry> polygons, double filter) {
+        
+        List<Path> result = new ArrayList<>();
+        List<Position> positions;
+        for (Geometry g : polygons) {
+            if (g.getLength() < filter) {
+                Coordinate[] coordinateTab = g.getCoordinates();
+                positions = new ArrayList<>();
+                for (int i = 0; i < coordinateTab.length; i++) {
+                    positions.add(new Position(Angle.fromDegrees(coordinateTab[i].y),
+                            Angle.fromDegrees(coordinateTab[i].x), coordinateTab[i].z));
+                }
+                result.add(new Path(positions));
+            }
+        }
         return result;
     }
 }

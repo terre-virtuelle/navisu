@@ -143,10 +143,13 @@ public interface TopologyServices
     List<Polygon> wktPolygonsToWwjPolygons(List<Geometry> polygons);
 
     List<Path> wktPolygonsToWwjPaths(List<Geometry> polygons);
-/*
+
+    /*
     Filter on area of each polygon
-    */
-    List<Path> wktPolygonsToWwjPaths(List<Geometry> polygons, double filter);
+     */
+    List<Path> wktPolygonsToWwjPathsWithFilterOnArea(List<Geometry> polygons, double filter);
+
+    List<Path> wktPolygonsToWwjPathsWithFilterOnLength(List<Geometry> polygons, double filter);
 
     /**
      *
