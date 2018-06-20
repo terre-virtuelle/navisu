@@ -41,5 +41,5 @@ public interface JTSServices
 
     List<Path> createDelaunayWithFilter(List<Point3D> pts, double filter, double maxElevation);
 
-    List<Point3D> pointsToGrid(List<Point3D> points, Point3D[][] grid);
+    Point3D[][] mergePointsToGrid(List<Point3D> points, Point3D[][] grid);
 }

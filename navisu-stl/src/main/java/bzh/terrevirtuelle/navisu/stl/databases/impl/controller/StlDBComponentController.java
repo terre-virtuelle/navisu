@@ -694,7 +694,8 @@ public class StlDBComponentController
                 });
             }
             if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && demRB.isSelected())) {
-                elevation = createBathymetryAndElevation(lat0, lon0, lat1, lon1);
+                //elevation = createBathymetryAndElevation(lat0, lon0, lat1, lon1);
+                elevation = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
             }
             if (selectedObjects.contains("ALL") || (demRB.isSelected() && !elevationRB.isSelected())) {
                 bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
@@ -705,6 +706,7 @@ public class StlDBComponentController
             }
             if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && !demRB.isSelected())) {
                 elevation = createElevation(lat0, lon0, lat1, lon1);
+
             }
 
             if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
@@ -786,7 +788,7 @@ public class StlDBComponentController
         maxElevation = dem.getMaxElevation();
         List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilter(dem.getGrid(), 1E-6, maxElevation);
         displayServices.displayPaths(paths, s57Layer, Material.GREEN, verticalExaggeration, maxElevation);
-        displayServices.exportKLM(paths,verticalExaggeration);
+        displayServices.exportKLM(paths, verticalExaggeration);
         return dem;
     }
 
@@ -798,6 +800,69 @@ public class StlDBComponentController
         displayServices.displayPaths(paths, s57Layer, Material.RED, verticalExaggeration, maxElevation);
         displayServices.exportKLM(paths, verticalExaggeration);
         return dem;
+    }
+
+    private DEM createBathymetryAndElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
+        // Search for x,y,z bathy, z>0 in the DB
+        bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(),
+                "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
+        DEM bathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
+        maxElevation = bathy.getMaxElevation();
+        // Offset from zero
+        List<Point3D> bathyElevations = new ArrayList<>();
+        bathy.getGrid().forEach((p) -> {
+            bathyElevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
+        });
+
+        //Search for x,y,z alti, z>0 in the DB
+        elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(),
+                "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
+        DEM alti = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
+        List<Point3D> altiElevations = new ArrayList<>();
+        alti.getGrid().forEach((p) -> {
+            altiElevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation + p.getElevation()));
+        });
+        // Merge all pts(
+        bathyElevations.addAll(altiElevations);
+        // Triangulation of all points
+        // List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunay(bathyElevations);
+        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilterOnLength(bathyElevations, 0.02);
+        Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 75, 75, maxElevation);
+
+        grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
+
+        System.out.println("grid : " + grid[0].length);
+        int bound = grid[0].length / tileCount;
+        System.out.println("bound : " + bound);
+        Point3D[][] realGrid = new Point3D[bound][bound];
+        for (int i = 0; i < bound; i++) {
+            for (int j = 0; j < bound; j++) {
+                realGrid[i][j] = new Point3D(grid[i][j].getLatitude(), grid[i][j].getLongitude(), grid[i][j].getElevation());
+            }
+        }
+        displayServices.displayGrid(realGrid, Material.MAGENTA, s57Layer, verticalExaggeration);
+        for (int i = 0; i < bound; i++) {
+            for (int j = 0; j <  bound; j++) {
+                realGrid[i][j] = new Point3D(grid[i][j+bound-1].getLatitude(), grid[i][j+bound-1].getLongitude(), grid[i][j+bound-1].getElevation());
+            }
+        }
+        displayServices.displayGrid(realGrid, Material.GREEN, s57Layer, verticalExaggeration);
+       /*
+        for (int i = 0; i < bound; i++) {
+            for (int j = 0; j <  bound; j++) {
+                realGrid[i][j] = new Point3D(grid[i+bound+1][j+bound].getLatitude(), grid[i+bound+1][j+bound].getLongitude(), grid[i+bound+1][j+bound].getElevation());
+            }
+        }
+        displayServices.displayGrid(realGrid, Material.RED, s57Layer, verticalExaggeration);
+        
+        for (int i = 0; i <= bound; i++) {
+            for (int j = 0; j <=  bound; j++) {
+                realGrid[i][j] = new Point3D(grid[i+bound][j].getLatitude(), grid[i+bound][j].getLongitude(), grid[i+bound][j].getElevation());
+            }
+        }
+        displayServices.displayGrid(realGrid, Material.YELLOW, s57Layer, verticalExaggeration);
+*/
+        return bathy;
     }
 
     private DEM createBathymetryAndElevation(double latMin, double lonMin, double latMax, double lonMax) {
@@ -823,9 +888,9 @@ public class StlDBComponentController
         // Merge all pts(
         bathyElevations.addAll(altiElevations);
         // Triangulation of all points
-       // List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunay(bathyElevations);
-        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilterOnLength(bathyElevations,0.02);
-        
+        // List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunay(bathyElevations);
+        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilterOnLength(bathyElevations, 0.02);
+
         //Display with z exagerration and vertical offset
         displayServices.displayPaths(paths, s57Layer, Material.GREEN, verticalExaggeration, maxElevation);
         // Export in kml

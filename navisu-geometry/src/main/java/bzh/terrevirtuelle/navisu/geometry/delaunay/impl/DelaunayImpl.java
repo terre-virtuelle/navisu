@@ -108,21 +108,22 @@ public class DelaunayImpl
     }
 
     @Override
-    public Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax,
-            double y, double x, double elevation) {
+    public Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax, double y, double x, double elevation) {
         Position p = geodesyServices.getPosition(Position.fromDegrees(latMin, lonMin), 0.0, y);
         double latInc = latMin - p.getLatitude().getDegrees();
         latInc = Math.abs(latInc);
         double lat = latMin;
+
         p = geodesyServices.getPosition(Position.fromDegrees(latMin, lonMin), 90.0, x);
         double lonInc = lonMin - p.getLongitude().getDegrees();
         lonInc = Math.abs(lonInc);
         double lon = lonMin;
+
         List<List<Point3D>> ptsList = new ArrayList<>();
-        while (lat < latMax) {
+        while (lat <= latMax) {
             List<Point3D> l = new ArrayList<>();
             ptsList.add(l);
-            while (lon < lonMax) {
+            while (lon <= lonMax) {
                 l.add(new Point3D(lat, lon, elevation));
                 lon += lonInc;
             }
@@ -139,15 +140,22 @@ public class DelaunayImpl
 
         int latCount = ptsList.size();
         int lonCount = ptsList.get(0).size();
-        Point3D[][] ptsTab = new Point3D[latCount][lonCount];
-        for (int i = 0; i < latCount; i++) {
-            for (int j = 0; j < lonCount; j++) {
+        int latLonCount;
+        if (latCount > lonCount) {
+            latLonCount = lonCount;
+        } else {
+            latLonCount = latCount;
+        }
+
+        Point3D[][] ptsTab = new Point3D[latLonCount][latLonCount];
+        for (int i = 0; i < latLonCount; i++) {
+            for (int j = 0; j < latLonCount; j++) {
                 ptsTab[i][j] = ptsList.get(i).get(j);
             }
         }
         return ptsTab;
     }
-
+/*
     @Override
     public Point3D[][] toGrid(double orgLat, double orgLon,
             double latMax, double lonMax,
@@ -174,7 +182,7 @@ public class DelaunayImpl
         // tab[v][nbLon - 1] = new Point3D(pp.getLatitude().getDegrees(), pp.getLongitude().getDegrees(), elevation);
         return tab;
     }
-
+*/
     @Override
     public List<Triangle_dt> filterLargeEdges(List<Triangle_dt> triangles, double threshold) {
         List<Triangle_dt> tmp1 = new ArrayList<>();

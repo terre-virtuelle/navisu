@@ -17,6 +17,7 @@ import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.triangulate.DelaunayTriangulationBuilder;
 import gov.nasa.worldwind.render.Path;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -110,10 +111,50 @@ public class JTSImpl
     }
 
     @Override
-    public List<Point3D> pointsToGrid(List<Point3D> points, Point3D[][] grid) {
-        List<Point3D> tmp = new ArrayList<>();
+    public Point3D[][] mergePointsToGrid(List<Point3D> points, Point3D[][] grid) {
+        int line = grid[0].length;
+        int col = grid[1].length;
+        GeometryFactory geometryFactory = new GeometryFactory();
 
-        return tmp;
+        List<Point> data = new ArrayList<>();
+        for (Point3D p : points) {
+            data.add(geometryFactory.createPoint(new Coordinate(p.getLongitude(), p.getLatitude(), p.getElevation())));
+        }
+        Point3D[][] result = new Point3D[line][col];
+        Point[][] gridCoord = new Point[line][col];
+        for (int i = 0; i < line; i++) {
+            for (int j = 0; j < col; j++) {
+                result[i][j] = new Point3D(grid[i][j].getLatitude(), grid[i][j].getLongitude(), grid[i][j].getElevation());
+                gridCoord[i][j] = geometryFactory.createPoint(new Coordinate(grid[i][j].getLongitude(), grid[i][j].getLatitude(), grid[i][j].getElevation()));
+            }
+        }
+        double distance = gridCoord[0][0].distance(gridCoord[0][1]);
+        double nearDistance;
+        Point resultP = null;
+        List<Point> gridData = new ArrayList<>();
+        for (int i = 0; i < line; i++) {
+            for (int j = 0; j < col; j++) {
+                Geometry buffer = gridCoord[i][j].buffer(distance*2, 4);
+                gridData.clear();
+                nearDistance = Double.MAX_VALUE;
+                data.stream().filter((p) -> (buffer.contains(p))).forEachOrdered((p) -> {
+                    gridData.add(p);
+                });
+                resultP = null;
+                for (Point p : gridData) {
+                    if (nearDistance >= gridCoord[i][j].distance(p)) {
+                        nearDistance = gridCoord[i][j].distance(p);
+                        resultP = p;
+                    }
+                }
+                if (resultP != null) {
+                    result[i][j].setElevation(resultP.getCoordinates()[0].z);
+                } else {
+                   // System.out.println(i + " " + j + " resultP==null");
+                }
+            }
+        }
+        return result;
     }
 
     @Override

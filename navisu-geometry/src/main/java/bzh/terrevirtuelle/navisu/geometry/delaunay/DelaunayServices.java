@@ -30,12 +30,12 @@ public interface DelaunayServices
 
     Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax,
             double y, double x, double elevation);
-
+/*
     Point3D[][] toGrid(double orgLat, double orgLon, 
             double latMax, double lonMax,
             double dy, double dx,
             int nbLat, int nbLon, double elevation);
-
+*/
     List<Triangle_dt> filterLargeEdges(List<Triangle_dt> triangles, double threshold);
 
 }
