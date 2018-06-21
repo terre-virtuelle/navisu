@@ -30,13 +30,13 @@ public interface DisplayServices
 
     void displayPaths(List<Path> points, RenderableLayer layer, Material material, double verticalExaggeration, double verticalOffset);
 
-    void displayGrid(List<List<Point3D>> latLons, Material material, RenderableLayer layer);
+    void displayGrid(List<List<Point3D>> latLons, RenderableLayer layer, Material material);
 
-    void displayGrid(Point3D[][] latLons, Material material, RenderableLayer layer, double verticalExaggeration);
+    void displayGrid(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration);
 
-    void displayGrid(GridBox3D gridBox3D, Material material, RenderableLayer layer, double verticalExaggeration, boolean isBaseDisplayed);
+    void displayGrid(GridBox3D gridBox3D, RenderableLayer layer, Material material, double verticalExaggeration, boolean isBaseDisplayed);
 
-    void displayGridAsPolygon(Point3D[][] latLons, Material material, RenderableLayer layer, double verticalExaggeration);
+    void displayGridAsPolygon(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration);
 
     void displayPlane(double minLat, double minLon, double maxLat, double maxLon, double height,
             Material material, RenderableLayer l);

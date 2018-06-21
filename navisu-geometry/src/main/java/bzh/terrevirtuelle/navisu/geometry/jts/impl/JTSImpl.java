@@ -134,7 +134,7 @@ public class JTSImpl
         List<Point> gridData = new ArrayList<>();
         for (int i = 0; i < line; i++) {
             for (int j = 0; j < col; j++) {
-                Geometry buffer = gridCoord[i][j].buffer(distance*2, 4);
+                Geometry buffer = gridCoord[i][j].buffer(distance * 2, 4);
                 gridData.clear();
                 nearDistance = Double.MAX_VALUE;
                 data.stream().filter((p) -> (buffer.contains(p))).forEachOrdered((p) -> {
@@ -150,7 +150,7 @@ public class JTSImpl
                 if (resultP != null) {
                     result[i][j].setElevation(resultP.getCoordinates()[0].z);
                 } else {
-                   // System.out.println(i + " " + j + " resultP==null");
+                    // System.out.println(i + " " + j + " resultP==null");
                 }
             }
         }
@@ -185,12 +185,23 @@ public class JTSImpl
     }
 
     @Override
-    public List<Path> createDelaunay(List<Point3D> pts, double maxElevation) {
-        List<Point3D> bathy = new ArrayList<>();
-        for (Point3D p : pts) {
-            bathy.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
+    public List<Path> createDelaunay(Point3D[][] pts) {
+        List<Point3D> data = new ArrayList<>();
+        for (int i = 0; i < pts[0].length; i++) {
+            for (int j = 0; j < pts[1].length; j++) {
+                data.add(pts[i][j]);
+            }
         }
-        Coordinate[] coordinateTab = toTabCoordinates(bathy);
+        return createDelaunay(data);
+    }
+
+    @Override
+    public List<Path> createDelaunay(List<Point3D> pts, double maxElevation) {
+        List<Point3D> data = new ArrayList<>();
+        for (Point3D p : pts) {
+            data.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
+        }
+        Coordinate[] coordinateTab = toTabCoordinates(data);
         MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
         ArrayList<Geometry> triangles = new ArrayList<>();
         DelaunayTriangulationBuilder triator = new DelaunayTriangulationBuilder();
@@ -201,6 +212,17 @@ public class JTSImpl
         }
         List<Path> paths = topologyServices.wktPolygonsToWwjPaths(triangles);
         return paths;
+    }
+
+    @Override
+    public List<Path> createDelaunay(Point3D[][] pts, double maxElevation) {
+        List<Point3D> data = new ArrayList<>();
+        for (int i = 0; i < pts[0].length; i++) {
+            for (int j = 0; j < pts[1].length; j++) {
+                data.add(pts[i][j]);
+            }
+        }
+        return createDelaunay(data, maxElevation);
     }
 
     @Override

@@ -117,6 +117,7 @@ import org.controlsfx.control.CheckComboBox;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemLoader;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 
 /**
  * @author Serge Morvan
@@ -700,7 +701,7 @@ public class StlDBComponentController
             if (selectedObjects.contains("ALL") || (demRB.isSelected() && !elevationRB.isSelected())) {
                 bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
 
-                // GridBox3D box = new GridBox3D(ptsTab);
+                //GridBox3D box = new GridBox3D(ptsTab);
                 // boolean isBaseDisplayed = false;
                 //  displayServices.displayGrid(box, Material.MAGENTA, s57Layer, verticalExaggeration, isBaseDisplayed);
             }
@@ -712,7 +713,7 @@ public class StlDBComponentController
             if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
                 bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
                 Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
-                displayServices.displayGrid(ptsTab, Material.GREEN, s57Layer, verticalExaggeration);
+                displayServices.displayGrid(ptsTab, s57Layer, Material.GREEN, verticalExaggeration);
 
                 Shapefile shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
                         .retrieveIn(latMin, lonMin, latMax, lonMax);
@@ -727,7 +728,7 @@ public class StlDBComponentController
             if (selectedObjects.contains("ALL") || depareUlhyssesRB.isSelected()) {
                 bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
                 Point3D[][] pts = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
-                displayServices.displayGrid(pts, Material.GREEN, s57Layer, verticalExaggeration);
+                displayServices.displayGrid(pts, s57Layer, Material.GREEN, verticalExaggeration);
 
                 List<Point3D> points = bathymetry.getGrid();
                 bathymetryDBServices.writePointList(points, Paths.get(System.getProperty("user.dir") + "/privateData/ulhysses", "bathy.csv"), false);
@@ -831,38 +832,34 @@ public class StlDBComponentController
 
         grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
 
-        System.out.println("grid : " + grid[0].length);
         int bound = grid[0].length / tileCount;
-        System.out.println("bound : " + bound);
-        Point3D[][] realGrid = new Point3D[bound][bound];
-        for (int i = 0; i < bound; i++) {
-            for (int j = 0; j < bound; j++) {
-                realGrid[i][j] = new Point3D(grid[i][j].getLatitude(), grid[i][j].getLongitude(), grid[i][j].getElevation());
+        Point3D[][] realGrid = new Point3D[bound + 1][bound + 1];
+        String root = outFileTF.getText();
+        String outputName;
+        for (int l = 0; l < tileCount; l++) {
+            for (int c = 0; c < tileCount; c++) {
+                for (int i = 0; i < bound + 1; i++) {
+                    for (int j = 0; j < bound + 1; j++) {
+                        realGrid[i][j] = new Point3D(grid[i + l * bound][j + c * bound].getLatitude(), grid[i + l * bound][j + c * bound].getLongitude(), grid[i + l * bound][j + c * bound].getElevation());
+
+                    }
+                }
+                displayServices.displayGrid(realGrid, s57Layer, Material.MAGENTA, 1);
+                List<gov.nasa.worldwind.render.Path> realPaths = jtsServices.createDelaunay(realGrid);
+                outputName = "privateData/kml/" + root + "_" + l + "," + c + ".kml";
+                outFileTF.setText(outputName);
+                displayServices.exportKLM(outputName, realPaths, 1);
             }
         }
-        displayServices.displayGrid(realGrid, Material.MAGENTA, s57Layer, verticalExaggeration);
-        for (int i = 0; i < bound; i++) {
-            for (int j = 0; j <  bound; j++) {
-                realGrid[i][j] = new Point3D(grid[i][j+bound-1].getLatitude(), grid[i][j+bound-1].getLongitude(), grid[i][j+bound-1].getElevation());
-            }
-        }
-        displayServices.displayGrid(realGrid, Material.GREEN, s57Layer, verticalExaggeration);
-       /*
-        for (int i = 0; i < bound; i++) {
-            for (int j = 0; j <  bound; j++) {
-                realGrid[i][j] = new Point3D(grid[i+bound+1][j+bound].getLatitude(), grid[i+bound+1][j+bound].getLongitude(), grid[i+bound+1][j+bound].getElevation());
-            }
-        }
-        displayServices.displayGrid(realGrid, Material.RED, s57Layer, verticalExaggeration);
-        
-        for (int i = 0; i <= bound; i++) {
-            for (int j = 0; j <=  bound; j++) {
-                realGrid[i][j] = new Point3D(grid[i+bound][j].getLatitude(), grid[i+bound][j].getLongitude(), grid[i+bound][j].getElevation());
-            }
-        }
-        displayServices.displayGrid(realGrid, Material.YELLOW, s57Layer, verticalExaggeration);
-*/
+
+        /*
+       
+        // GridBox3D box = new GridBox3D(realGrid);
+        // boolean isBaseDisplayed = true;
+        // displayServices.displayGrid(box,  s57Layer, Material.MAGENTA,verticalExaggeration, isBaseDisplayed);
+         */
         return bathy;
+
     }
 
     private DEM createBathymetryAndElevation(double latMin, double lonMin, double latMax, double lonMax) {

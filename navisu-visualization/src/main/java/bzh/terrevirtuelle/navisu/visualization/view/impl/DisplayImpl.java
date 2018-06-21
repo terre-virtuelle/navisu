@@ -91,12 +91,12 @@ public class DisplayImpl
     }
 
     @Override
-    public void displayGrid(List<List<Point3D>> latLons, Material material, RenderableLayer layer) {
+    public void displayGrid(List<List<Point3D>> latLons, RenderableLayer layer, Material material) {
 
     }
 
     @Override
-    public void displayGrid(Point3D[][] latLons, Material material, RenderableLayer layer, double verticalExaggeration) {
+    public void displayGrid(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration) {
         ArrayList<Position> pathIsoLatPositions;
         List<Path> latPaths = new ArrayList<>();
         Path path0 = null;
@@ -129,6 +129,7 @@ public class DisplayImpl
             lonPaths.add(path1);
         }
         layer.addRenderables(lonPaths);
+        wwd.redrawNow();
     }
 
     /*
@@ -137,7 +138,7 @@ public class DisplayImpl
         matrice[1].length  //  7
      */
     @Override
-    public void displayGridAsPolygon(Point3D[][] latLons, Material material, RenderableLayer layer, double verticalExaggeration) {
+    public void displayGridAsPolygon(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration) {
         ArrayList<Polygon> polygons = null;
 
         int latLength = latLons[0].length;
@@ -305,15 +306,15 @@ public class DisplayImpl
     }
 
     @Override
-    public void displayGrid(GridBox3D box, Material material, RenderableLayer s57Layer, double verticalExaggeration, boolean isBaseDisplayed) {
-        displayGrid(box.getGridElevation(), material, s57Layer, verticalExaggeration);
+    public void displayGrid(GridBox3D box, RenderableLayer s57Layer, Material material, double verticalExaggeration, boolean isBaseDisplayed) {
+        displayGrid(box.getGridElevation(), s57Layer, material, verticalExaggeration);
         if (isBaseDisplayed == true) {
-            displayGrid(box.getGridBase(), material, s57Layer, verticalExaggeration);
+            displayGrid(box.getGridBase(), s57Layer, material, verticalExaggeration);
         }
-        displayGrid(box.getSideLat0(), material, s57Layer, verticalExaggeration);
-        displayGrid(box.getSideLat1(), material, s57Layer, verticalExaggeration);
-        displayGrid(box.getSideLon0(), material, s57Layer, verticalExaggeration);
-        displayGrid(box.getSideLon1(), material, s57Layer, verticalExaggeration);
+        displayGrid(box.getSideLat0(), s57Layer, material, verticalExaggeration);
+        displayGrid(box.getSideLat1(), s57Layer, material, verticalExaggeration);
+        displayGrid(box.getSideLon0(), s57Layer, material, verticalExaggeration);
+        displayGrid(box.getSideLon1(), s57Layer, material, verticalExaggeration);
     }
 
     @Override
