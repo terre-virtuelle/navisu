@@ -829,34 +829,45 @@ public class StlDBComponentController
         // List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunay(bathyElevations);
         List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilterOnLength(bathyElevations, 0.02);
         Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 75, 75, maxElevation);
-
-        grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
-
-        int bound = grid[0].length / tileCount;
-        Point3D[][] realGrid = new Point3D[bound + 1][bound + 1];
-        String root = outFileTF.getText();
         String outputName;
-        for (int l = 0; l < tileCount; l++) {
-            for (int c = 0; c < tileCount; c++) {
-                for (int i = 0; i < bound + 1; i++) {
-                    for (int j = 0; j < bound + 1; j++) {
-                        realGrid[i][j] = new Point3D(grid[i + l * bound][j + c * bound].getLatitude(), grid[i + l * bound][j + c * bound].getLongitude(), grid[i + l * bound][j + c * bound].getElevation());
+        grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
+        if (tileCount == 1) {
+            displayServices.displayGrid(grid, s57Layer, Material.MAGENTA, 1);
+            List<gov.nasa.worldwind.render.Path> realPaths = jtsServices.createDelaunay(grid);
+            outputName = "privateData/kml/" + outFileTF.getText() + ".kml";
+            outFileTF.setText(outputName);
+            displayServices.exportKLM(outputName, realPaths, 1);
+        } else {
+            int bound = grid[0].length / tileCount;
+            Point3D[][] realGrid = new Point3D[bound + 1][bound + 1];
+            String root = outFileTF.getText();
 
+            for (int l = 0; l < tileCount; l++) {
+                for (int c = 0; c < tileCount; c++) {
+                    for (int i = 0; i < bound + 1; i++) {
+                        for (int j = 0; j < bound + 1; j++) {
+                            realGrid[i][j] = new Point3D(grid[i + l * bound][j + c * bound].getLatitude(),
+                                    grid[i + l * bound][j + c * bound].getLongitude(),
+                                    grid[i + l * bound][j + c * bound].getElevation());
+
+                        }
                     }
+                    displayServices.displayGrid(realGrid, s57Layer, Material.MAGENTA, 1);
+                    List<gov.nasa.worldwind.render.Path> realPaths = jtsServices.createDelaunay(realGrid);
+                    outputName = "privateData/kml/" + root + "_" + l + "," + c + ".kml";
+                    outFileTF.setText(outputName);
+                    displayServices.exportKLM(outputName, realPaths, 1);
                 }
-                displayServices.displayGrid(realGrid, s57Layer, Material.MAGENTA, 1);
-                List<gov.nasa.worldwind.render.Path> realPaths = jtsServices.createDelaunay(realGrid);
-                outputName = "privateData/kml/" + root + "_" + l + "," + c + ".kml";
-                outFileTF.setText(outputName);
-                displayServices.exportKLM(outputName, realPaths, 1);
             }
         }
-
         /*
-       
-        // GridBox3D box = new GridBox3D(realGrid);
-        // boolean isBaseDisplayed = true;
-        // displayServices.displayGrid(box,  s57Layer, Material.MAGENTA,verticalExaggeration, isBaseDisplayed);
+        GridBox3D box = new GridBox3D(realGrid);
+        boolean isBaseDisplayed = false;
+        displayServices.displayGrid(box, s57Layer, Material.GREEN, 1, isBaseDisplayed);
+        Point3D[][] boxSideLat0 = box.getSideLat0();
+        System.out.println("boxSideLat0 : "+boxSideLat0[0].length+" "+boxSideLat0[1].length);
+        List<gov.nasa.worldwind.render.Path> boxPaths0 = jtsServices.createDelaunay(boxSideLat0);
+        displayServices.exportKLM("box0.kml", boxPaths0, 1);
          */
         return bathy;
 

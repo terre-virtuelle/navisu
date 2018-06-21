@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -262,6 +261,22 @@ public class GridBox3D {
 
     public double getVerticalExaggeration() {
         return verticalExaggeration;
+    }
+
+    public Path getLatPath0() {
+        return latPath0;
+    }
+
+    public Path getLatPath1() {
+        return latPath1;
+    }
+
+    public Path getLonPath0() {
+        return lonPath0;
+    }
+
+    public Path getLonPath1() {
+        return lonPath1;
     }
 
 }
