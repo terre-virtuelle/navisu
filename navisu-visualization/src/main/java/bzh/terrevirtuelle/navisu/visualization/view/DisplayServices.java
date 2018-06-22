@@ -34,7 +34,7 @@ public interface DisplayServices
 
     void displayGrid(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration);
 
-    void displayGrid(GridBox3D gridBox3D, RenderableLayer layer, Material material, double verticalExaggeration, boolean isBaseDisplayed);
+    void displayGrid(GridBox3D gridBox3D, RenderableLayer layer, Material material, double verticalExaggeration);
 
     void displayGridAsPolygon(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration);
 

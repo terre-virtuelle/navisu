@@ -306,15 +306,10 @@ public class DisplayImpl
     }
 
     @Override
-    public void displayGrid(GridBox3D box, RenderableLayer s57Layer, Material material, double verticalExaggeration, boolean isBaseDisplayed) {
-        displayGrid(box.getGridElevation(), s57Layer, material, verticalExaggeration);
-        if (isBaseDisplayed == true) {
-            displayGrid(box.getGridBase(), s57Layer, material, verticalExaggeration);
-        }
-        displayGrid(box.getSideLat0(), s57Layer, material, verticalExaggeration);
-        displayGrid(box.getSideLat1(), s57Layer, material, verticalExaggeration);
-        displayGrid(box.getSideLon0(), s57Layer, material, verticalExaggeration);
-        displayGrid(box.getSideLon1(), s57Layer, material, verticalExaggeration);
+    public void displayGrid(GridBox3D box, RenderableLayer s57Layer, Material material, double verticalExaggeration) {
+        
+        displayPaths(box.getSidePaths(), s57Layer, material, verticalExaggeration);
+        
     }
 
     @Override

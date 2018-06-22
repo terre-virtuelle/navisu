@@ -831,16 +831,20 @@ public class StlDBComponentController
         Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 75, 75, maxElevation);
         String outputName;
         grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
+        String root = outFileTF.getText();
         if (tileCount == 1) {
             displayServices.displayGrid(grid, s57Layer, Material.MAGENTA, 1);
             List<gov.nasa.worldwind.render.Path> realPaths = jtsServices.createDelaunay(grid);
             outputName = "privateData/kml/" + outFileTF.getText() + ".kml";
             outFileTF.setText(outputName);
             displayServices.exportKLM(outputName, realPaths, 1);
+            GridBox3D box = new GridBox3D(grid);
+            boolean isBaseDisplayed = false;
+            displayServices.displayGrid(box, s57Layer, Material.GREEN, 1);
+            displayServices.exportKLM("privateData/kml/" + root + "Box" + "," + ".kml", box.getSidePaths(), verticalExaggeration);
         } else {
             int bound = grid[0].length / tileCount;
             Point3D[][] realGrid = new Point3D[bound + 1][bound + 1];
-            String root = outFileTF.getText();
 
             for (int l = 0; l < tileCount; l++) {
                 for (int c = 0; c < tileCount; c++) {
@@ -857,18 +861,16 @@ public class StlDBComponentController
                     outputName = "privateData/kml/" + root + "_" + l + "," + c + ".kml";
                     outFileTF.setText(outputName);
                     displayServices.exportKLM(outputName, realPaths, 1);
+
+                    GridBox3D box = new GridBox3D(realGrid);
+                    boolean isBaseDisplayed = false;
+                    displayServices.displayGrid(box, s57Layer, Material.GREEN, 1);
+                    displayServices.exportKLM("privateData/kml/" + root + "Box_" + l + "," + c + ".kml", box.getSidePaths(), verticalExaggeration);
                 }
             }
+
         }
-        /*
-        GridBox3D box = new GridBox3D(realGrid);
-        boolean isBaseDisplayed = false;
-        displayServices.displayGrid(box, s57Layer, Material.GREEN, 1, isBaseDisplayed);
-        Point3D[][] boxSideLat0 = box.getSideLat0();
-        System.out.println("boxSideLat0 : "+boxSideLat0[0].length+" "+boxSideLat0[1].length);
-        List<gov.nasa.worldwind.render.Path> boxPaths0 = jtsServices.createDelaunay(boxSideLat0);
-        displayServices.exportKLM("box0.kml", boxPaths0, 1);
-         */
+
         return bathy;
 
     }
