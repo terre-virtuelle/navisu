@@ -35,6 +35,11 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -307,9 +312,9 @@ public class DisplayImpl
 
     @Override
     public void displayGrid(GridBox3D box, RenderableLayer s57Layer, Material material, double verticalExaggeration) {
-        
+
         displayPaths(box.getSidePaths(), s57Layer, material, verticalExaggeration);
-        
+
     }
 
     @Override
@@ -354,7 +359,7 @@ public class DisplayImpl
     }
 
     @Override
-    public void exportKLM(String outputFilename, List<Path> paths, double verticalExaggeration) {
+    public void exportKML(String outputFilename, List<Path> paths, double verticalExaggeration) {
         List<Path> result = new ArrayList<>();
         paths.forEach((p) -> {
             Iterable<? extends Position> positions = p.getPositions();
@@ -384,8 +389,39 @@ public class DisplayImpl
     }
 
     @Override
-    public void exportKLM(List<Path> paths, double verticalExaggeration) {
-        exportKLM("privateData/kml/output.kml", paths, verticalExaggeration);
+    public void exportKML(List<Path> paths, double verticalExaggeration) {
+        exportKML("privateData/kml/out.kml", paths, verticalExaggeration);
     }
 
+    @Override
+    public void mergeKML(String inputFilename, String outputFilename) {
+        java.nio.file.Path path = Paths.get("privateData/kml/tmp.kml");
+        try {
+            Files.deleteIfExists(path);
+            File file = new File("privateData/kml/tmp.kml");
+            file.createNewFile();
+            Files.lines(Paths.get(inputFilename)).forEach(this::init);
+            Files.lines(Paths.get(outputFilename)).skip(2).forEach(this::init);
+            String s = "</Document>\n";
+            Files.write(path, s.getBytes(), StandardOpenOption.APPEND);
+            s = "</kml>\n";
+            Files.write(path, s.getBytes(), StandardOpenOption.APPEND);
+            Files.copy(path, Paths.get(inputFilename), StandardCopyOption.REPLACE_EXISTING);
+            Files.deleteIfExists(path);
+        } catch (IOException ex) {
+            Logger.getLogger(DisplayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+    }
+
+    private void init(String s) {
+        if (!s.trim().contains("</Document>") && !s.trim().contains("</kml>")) {
+            s = s.trim();
+            s += "\n";
+            try {
+                Files.write(Paths.get("privateData/kml/tmp.kml"), s.getBytes(), StandardOpenOption.APPEND);
+            } catch (IOException ex) {
+                Logger.getLogger(DisplayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+    }
 }

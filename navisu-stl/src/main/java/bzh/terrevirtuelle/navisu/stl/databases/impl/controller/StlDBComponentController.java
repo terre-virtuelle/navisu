@@ -167,7 +167,12 @@ public class StlDBComponentController
     protected static final String LON_MIN = "-4.61";
     protected static final String LAT_MAX = "48.42";
     protected static final String LON_MAX = "-4.30";
-
+/*
+    protected static final String LAT_MIN = "48.21";
+    protected static final String LON_MIN = "-4.61";
+    protected static final String LAT_MAX = "48.22";
+    protected static final String LON_MAX = "-4.55";
+*/
     protected RenderableLayer bathymetryLayer;
     protected RenderableLayer s57Layer;
     protected RenderableLayer lightsLayer;
@@ -789,7 +794,7 @@ public class StlDBComponentController
         maxElevation = dem.getMaxElevation();
         List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilter(dem.getGrid(), 1E-6, maxElevation);
         displayServices.displayPaths(paths, s57Layer, Material.GREEN, verticalExaggeration, maxElevation);
-        displayServices.exportKLM(paths, verticalExaggeration);
+        displayServices.exportKML(paths, verticalExaggeration);
         return dem;
     }
 
@@ -799,7 +804,7 @@ public class StlDBComponentController
         DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
         List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilterOnArea(dem.getGrid(), 3.42E-7);
         displayServices.displayPaths(paths, s57Layer, Material.RED, verticalExaggeration, maxElevation);
-        displayServices.exportKLM(paths, verticalExaggeration);
+        displayServices.exportKML(paths, verticalExaggeration);
         return dem;
     }
 
@@ -823,29 +828,24 @@ public class StlDBComponentController
         alti.getGrid().forEach((p) -> {
             altiElevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation + p.getElevation()));
         });
-        // Merge all pts(
         bathyElevations.addAll(altiElevations);
-        // Triangulation of all points
-        // List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunay(bathyElevations);
         List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilterOnLength(bathyElevations, 0.02);
         Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 75, 75, maxElevation);
         String outputName;
         grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
-        String root = outFileTF.getText();
         if (tileCount == 1) {
             displayServices.displayGrid(grid, s57Layer, Material.MAGENTA, 1);
             List<gov.nasa.worldwind.render.Path> realPaths = jtsServices.createDelaunay(grid);
             outputName = "privateData/kml/" + outFileTF.getText() + ".kml";
             outFileTF.setText(outputName);
-            displayServices.exportKLM(outputName, realPaths, 1);
+            displayServices.exportKML(outputName, realPaths, 1);
             GridBox3D box = new GridBox3D(grid);
-            boolean isBaseDisplayed = false;
             displayServices.displayGrid(box, s57Layer, Material.GREEN, 1);
-            displayServices.exportKLM("privateData/kml/" + root + "Box" + "," + ".kml", box.getSidePaths(), verticalExaggeration);
+            displayServices.exportKML("privateData/kml/box.kml", box.getSidePaths(), verticalExaggeration);
+            displayServices.mergeKML(outputName, "privateData/kml/box.kml");
         } else {
             int bound = grid[0].length / tileCount;
             Point3D[][] realGrid = new Point3D[bound + 1][bound + 1];
-
             for (int l = 0; l < tileCount; l++) {
                 for (int c = 0; c < tileCount; c++) {
                     for (int i = 0; i < bound + 1; i++) {
@@ -858,21 +858,19 @@ public class StlDBComponentController
                     }
                     displayServices.displayGrid(realGrid, s57Layer, Material.MAGENTA, 1);
                     List<gov.nasa.worldwind.render.Path> realPaths = jtsServices.createDelaunay(realGrid);
-                    outputName = "privateData/kml/" + root + "_" + l + "," + c + ".kml";
-                    outFileTF.setText(outputName);
-                    displayServices.exportKLM(outputName, realPaths, 1);
-
+                    outputName = "privateData/kml/" + outFileTF.getText() + "_" + l + "," + c + ".kml";
+                    displayServices.exportKML(outputName, realPaths, 1);
+                   
                     GridBox3D box = new GridBox3D(realGrid);
-                    boolean isBaseDisplayed = false;
                     displayServices.displayGrid(box, s57Layer, Material.GREEN, 1);
-                    displayServices.exportKLM("privateData/kml/" + root + "Box_" + l + "," + c + ".kml", box.getSidePaths(), verticalExaggeration);
+                    
+                    String outputFileName = "privateData/kml/box_" + l + "," + c + ".kml";
+                    displayServices.exportKML(outputFileName, box.getSidePaths(), verticalExaggeration);
+                    displayServices.mergeKML(outputName, outputFileName);
                 }
             }
-
         }
-
         return bathy;
-
     }
 
     private DEM createBathymetryAndElevation(double latMin, double lonMin, double latMax, double lonMax) {
@@ -904,7 +902,7 @@ public class StlDBComponentController
         //Display with z exagerration and vertical offset
         displayServices.displayPaths(paths, s57Layer, Material.GREEN, verticalExaggeration, maxElevation);
         // Export in kml
-        displayServices.exportKLM(paths, verticalExaggeration);
+        displayServices.exportKML(paths, verticalExaggeration);
         return bathy;
     }
 

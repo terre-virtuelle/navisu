@@ -56,7 +56,9 @@ public interface DisplayServices
 
     Map<Double, Material> createCLUT(String fileName);
 
-    void exportKLM(String outputFilename, List<Path> paths, double verticalExaggeration);
+    void exportKML(String outputFilename, List<Path> paths, double verticalExaggeration);
 
-    void exportKLM(List<Path> paths, double verticalExaggeration);
+    void exportKML(List<Path> paths, double verticalExaggeration);
+
+    void mergeKML(String inputFilename, String outputFilename);
 }
