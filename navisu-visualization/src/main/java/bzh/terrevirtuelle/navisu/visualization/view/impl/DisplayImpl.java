@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -135,6 +134,53 @@ public class DisplayImpl
         }
         layer.addRenderables(lonPaths);
         wwd.redrawNow();
+    }
+
+    @Override
+    public List<Path> displayGridAsTriangles(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration) {
+        List<Position> positions = new ArrayList<>();
+        List<Path> result = new ArrayList<>();
+        Path path;
+        int latLength = latLons[0].length;
+        int lonLength = latLons[1].length;
+
+        for (int i = 0; i < latLength - 1; i++) {
+            for (int j = 0; j < lonLength - 1; j++) {
+                positions = new ArrayList<>();
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i][j + 1].getLatitude(),
+                        latLons[i][j + 1].getLongitude(),
+                        latLons[i][j + 1].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j + 1].getLatitude(),
+                        latLons[i + 1][j + 1].getLongitude(),
+                        latLons[i + 1][j + 1].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                path = new Path(positions);
+                result.add(path);
+                positions = new ArrayList<>();
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j + 1].getLatitude(),
+                        latLons[i + 1][j + 1].getLongitude(),
+                        latLons[i + 1][j + 1].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j].getLatitude(),
+                        latLons[i + 1][j].getLongitude(),
+                        latLons[i + 1][j].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                path = new Path(positions);
+                result.add(path);
+            }
+        }
+        layer.addRenderables(result);
+        wwd.redrawNow();
+        return result;
     }
 
     /*
@@ -313,7 +359,7 @@ public class DisplayImpl
     @Override
     public void displayGrid(GridBox3D box, RenderableLayer s57Layer, Material material, double verticalExaggeration) {
 
-        displayPaths(box.getSidePaths(), s57Layer, material, verticalExaggeration);
+        displayPolygons(box.getSidePolygons(), s57Layer, material, verticalExaggeration);
 
     }
 
@@ -359,7 +405,48 @@ public class DisplayImpl
     }
 
     @Override
-    public void exportKML(String outputFilename, List<Path> paths, double verticalExaggeration) {
+    public void displayPolygons(List<Polygon> polygons, RenderableLayer layer, Material material, double verticalExaggeration) {
+        ShapeAttributes attrs0 = createAttributes(material);
+        List<Polygon> result = new ArrayList<>();
+        polygons.forEach((p) -> {
+            Iterable<? extends Position> positions = p.getBoundaries().get(0);
+            List<Position> tmpPos = new ArrayList<>();
+            for (Position pp : positions) {
+                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), pp.getElevation() * verticalExaggeration));
+            }
+            result.add(new Polygon(tmpPos));
+        });
+        result.forEach((p) -> {
+            p.setAltitudeMode(WorldWind.ABSOLUTE);
+            p.setAttributes(attrs0);
+        });
+
+        layer.addRenderables(result);
+        wwd.redrawNow();
+    }
+
+    @Override
+    public void displayPolygons(List<Polygon> polygons, RenderableLayer layer, Material material, double verticalExaggeration, double verticalOffset) {
+        ShapeAttributes attrs0 = createAttributes(material);
+        List<Path> result = new ArrayList<>();
+        polygons.forEach((p) -> {
+            Iterable<? extends Position> positions = p.getBoundaries().get(0);
+            List<Position> tmpPos = new ArrayList<>();
+            for (Position pp : positions) {
+                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), (pp.getElevation() * verticalExaggeration) + verticalOffset));
+            }
+            result.add(new Path(tmpPos));
+        });
+        result.forEach((p) -> {
+            p.setAltitudeMode(WorldWind.ABSOLUTE);
+            p.setAttributes(attrs0);
+        });
+        layer.addRenderables(result);
+        wwd.redrawNow();
+    }
+
+    @Override
+    public void exportWKML(String outputFilename, List<Path> paths, double verticalExaggeration) {
         List<Path> result = new ArrayList<>();
         paths.forEach((p) -> {
             Iterable<? extends Position> positions = p.getPositions();
@@ -389,12 +476,57 @@ public class DisplayImpl
     }
 
     @Override
+    public void exportKML(String outputFilename, List<Path> paths, double verticalExaggeration) {
+
+    }
+
+    @Override
+    public void exportWKMLPolygons(String outputFilename, List<Polygon> paths, double verticalExaggeration) {
+        List<Polygon> result = new ArrayList<>();
+        paths.forEach((p) -> {
+            Iterable<? extends Position> positions = p.getBoundaries().get(0);
+            List<Position> tmpPos = new ArrayList<>();
+            for (Position pp : positions) {
+                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), (pp.getElevation() * verticalExaggeration)));
+            }
+            result.add(new Polygon(tmpPos));
+        });
+        Polygon[] pathTab = new Polygon[result.size()];
+        for (int i = 0; i < result.size(); i++) {
+            pathTab[i] = result.get(i);
+        }
+        try {
+            Writer stringWriter = new StringWriter();
+            KMLDocumentBuilder kmlBuilder = new KMLDocumentBuilder(stringWriter);
+            kmlBuilder.writeObjects(pathTab);
+            kmlBuilder.close();
+            String xmlString = stringWriter.toString();
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            transformer.transform(new StreamSource(new StringReader(xmlString)), new StreamResult(new File(outputFilename)));
+        } catch (IOException | IllegalArgumentException | XMLStreamException | TransformerException ex) {
+            Logger.getLogger(DisplayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+    }
+
+    @Override
+    public void exportWKML(List<Path> paths, double verticalExaggeration) {
+        exportWKML("privateData/kml/out.kml", paths, verticalExaggeration);
+    }
+
+    @Override
     public void exportKML(List<Path> paths, double verticalExaggeration) {
         exportKML("privateData/kml/out.kml", paths, verticalExaggeration);
     }
 
     @Override
-    public void mergeKML(String inputFilename, String outputFilename) {
+    public void exportWKMLPolygons(List<Polygon> polygons, double verticalExaggeration) {
+        DisplayImpl.this.exportWKMLPolygons("privateData/kml/out.kml", polygons, verticalExaggeration);
+    }
+
+    @Override
+    public String mergeKML(String inputFilename, String outputFilename) {
         java.nio.file.Path path = Paths.get("privateData/kml/tmp.kml");
         try {
             Files.deleteIfExists(path);
@@ -408,9 +540,11 @@ public class DisplayImpl
             Files.write(path, s.getBytes(), StandardOpenOption.APPEND);
             Files.copy(path, Paths.get(inputFilename), StandardCopyOption.REPLACE_EXISTING);
             Files.deleteIfExists(path);
+
         } catch (IOException ex) {
             Logger.getLogger(DisplayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+        return inputFilename;
     }
 
     private void init(String s) {
@@ -424,4 +558,15 @@ public class DisplayImpl
             }
         }
     }
+
+    @Override
+    public List<Polygon> createPolygons(List<Path> paths) {
+        List<Polygon> result = new ArrayList<>();
+        for (Path p : paths) {
+            Iterable<? extends Position> poly = p.getPositions();
+            result.add(new Polygon(poly));
+        }
+        return result;
+    }
+
 }

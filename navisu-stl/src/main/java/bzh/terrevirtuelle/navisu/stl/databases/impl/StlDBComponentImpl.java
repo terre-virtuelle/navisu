@@ -44,6 +44,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 
 /**
  * @author Serge Morvan
@@ -80,6 +81,8 @@ public class StlDBComponentImpl
     ShapefileObjectServices shapefileObjectServices;
     @UsedService
     S57ChartComponentServices s57ChartComponentServices;
+    @UsedService
+    StlComponentServices stlComponentServices;
     @UsedService
     TopologyServices topologyServices;
 
@@ -120,7 +123,8 @@ public class StlDBComponentImpl
                         topologyServices,
                         shapefileObjectServices,
                         geodesyServices,
-                        jtsServices);
+                        jtsServices,
+                        stlComponentServices);
                 controller.setVisible(true);
             }
         }

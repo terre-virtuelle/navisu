@@ -13,6 +13,7 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.Polygon;
 import java.util.List;
 import java.util.Map;
 import org.capcaval.c3.component.ComponentService;
@@ -30,9 +31,15 @@ public interface DisplayServices
 
     void displayPaths(List<Path> points, RenderableLayer layer, Material material, double verticalExaggeration, double verticalOffset);
 
+    void displayPolygons(List<Polygon> points, RenderableLayer layer, Material material, double verticalExaggeration);
+
+    void displayPolygons(List<Polygon> points, RenderableLayer layer, Material material, double verticalExaggeration, double verticalOffset);
+
     void displayGrid(List<List<Point3D>> latLons, RenderableLayer layer, Material material);
 
     void displayGrid(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration);
+
+    List<Path> displayGridAsTriangles(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration);
 
     void displayGrid(GridBox3D gridBox3D, RenderableLayer layer, Material material, double verticalExaggeration);
 
@@ -54,11 +61,21 @@ public interface DisplayServices
 
     Path createPath(List<Position> pathPositions, Material material);
 
+    List<Polygon> createPolygons(List<Path> paths);
+
     Map<Double, Material> createCLUT(String fileName);
+
+    void exportWKML(String outputFilename, List<Path> paths, double verticalExaggeration);
+
+    void exportWKML(List<Path> paths, double verticalExaggeration);
 
     void exportKML(String outputFilename, List<Path> paths, double verticalExaggeration);
 
     void exportKML(List<Path> paths, double verticalExaggeration);
 
-    void mergeKML(String inputFilename, String outputFilename);
+    void exportWKMLPolygons(String outputFilename, List<Polygon> polygons, double verticalExaggeration);
+
+    void exportWKMLPolygons(List<Polygon> polygons, double verticalExaggeration);
+
+    String mergeKML(String inputFilename, String outputFilename);
 }
