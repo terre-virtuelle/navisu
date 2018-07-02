@@ -191,7 +191,7 @@ public class Configuration {
     private static void initPrivateData() {
 
         String path = "privateData/";
-        List<String> subDirs = new ArrayList<>(Arrays.asList("gpx", "kml", "nds", "obj", "x3d"));
+        List<String> subDirs = new ArrayList<>(Arrays.asList("gpx", "kml", "nds", "obj", "x3d", "stl", "ulhysses", "nmea"));
 
         for (String s : subDirs) {
             File file = new File(path + s);

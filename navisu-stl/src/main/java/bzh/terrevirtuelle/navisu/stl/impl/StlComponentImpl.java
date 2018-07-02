@@ -118,12 +118,14 @@ public class StlComponentImpl
         String[] c = triangleString.split(",");
         double elvScale = (latScale + lonScale) / 2;
        // System.out.println("triangleString : " + triangleString);
-        double lon = Double.parseDouble(c[0]);
+      
+       double lon = Double.parseDouble(c[0]);
         double lat = Double.parseDouble(c[1]);
         double latM = geodesyServices.getDistanceM(latMin, lonMin, lat, lonMin);
         double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
         latM /= latScale;
         lonM /= lonScale;
+
         double elv = Double.parseDouble(c[2]) * elvScale;
 
         return new Vec3d(lonM / 1000, latM / 1000, elv);//retour en xyz

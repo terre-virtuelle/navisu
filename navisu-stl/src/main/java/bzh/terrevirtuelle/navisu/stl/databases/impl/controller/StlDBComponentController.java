@@ -848,15 +848,7 @@ public class StlDBComponentController
         grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
         if (tileCount == 1) {
             java.nio.file.Path path = Paths.get("privateData/kml/out.kml");
-            try {
-                Files.deleteIfExists(path);
-                path = Paths.get("privateData/kml/box.kml");
-                Files.deleteIfExists(path);
-                path = Paths.get("privateData/stl/out.kml");
-                Files.deleteIfExists(path);
-            } catch (IOException ex) {
-                Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
+            
             outputName = "privateData/kml/" + outFileTF.getText() + ".kml";
             outFileTF.setText(outputName);
             List<gov.nasa.worldwind.render.Path> gridPath = displayServices.displayGridAsTriangles(grid, s57Layer, Material.CYAN, 1);
@@ -864,7 +856,7 @@ public class StlDBComponentController
             if (!wireframeCB.isSelected()) {
                 List<Polygon> polygons = displayServices.createPolygons(gridPath);
                 displayServices.exportWKMLPolygons(outputName, polygons, verticalExaggeration);
-                System.out.println("size : " + box.getSidePolygons().size());
+               // System.out.println("size : " + box.getSidePolygons().size());
                 displayServices.exportWKMLPolygons("privateData/kml/box.kml", box.getSidePolygons(), verticalExaggeration);
             } else {
                 displayServices.exportWKML(outputName, gridPath, verticalExaggeration);
