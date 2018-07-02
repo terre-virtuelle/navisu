@@ -182,8 +182,8 @@
                               <RadioButton fx:id="elevationRB" mnemonicParsing="false" text="DEM" />
                            </children>
                         </GridPane>
-                        <CheckBox fx:id="wireframeCB" mnemonicParsing="false" selected="true" text="Wireframe/Solid" GridPane.columnIndex="4" GridPane.rowIndex="14" />
-                        <CheckBox fx:id="stlpreviewCB" mnemonicParsing="false" text="STL Preview" GridPane.columnIndex="4" GridPane.rowIndex="15" />
+                        <CheckBox fx:id="wireframeCB" mnemonicParsing="false" text="Wireframe/Solid" GridPane.columnIndex="4" GridPane.rowIndex="14" />
+                        <CheckBox fx:id="stlpreviewCB" mnemonicParsing="false" selected="true" text="STL Preview" GridPane.columnIndex="4" GridPane.rowIndex="15" />
                               </children>
                           </GridPane>
                         <GridPane maxHeight="80.0" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="80.0" prefWidth="420.0" styleClass="grid-pane-fixvalue" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.valignment="CENTER">
