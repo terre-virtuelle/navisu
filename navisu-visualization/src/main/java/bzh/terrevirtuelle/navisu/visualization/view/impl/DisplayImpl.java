@@ -138,7 +138,7 @@ public class DisplayImpl
 
     @Override
     public List<Path> displayGridAsTriangles(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration) {
-        List<Position> positions = new ArrayList<>();
+        List<Position> positions;
         List<Path> result = new ArrayList<>();
         Path path;
         int latLength = latLons[0].length;

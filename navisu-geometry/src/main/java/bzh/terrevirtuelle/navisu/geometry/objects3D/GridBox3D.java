@@ -90,7 +90,7 @@ public class GridBox3D {
     }
 
     public List<Polygon> getSidePolygons() {
-         //South
+        //South
         for (int l = 0; l < col - 1; l++) {
             List<Position> b0 = new ArrayList<>();
             b0.add(baseIsoLatPositions0.get(l));
@@ -98,14 +98,14 @@ public class GridBox3D {
             b0.add(topIsoLatPositions0.get(l + 1));
             b0.add(baseIsoLatPositions0.get(l));
             sidePolygons.add(new Polygon(b0));
-            
+
             List<Position> t0 = new ArrayList<>();
             t0.add(baseIsoLatPositions0.get(l));
             t0.add(topIsoLatPositions0.get(l + 1));
             t0.add(topIsoLatPositions0.get(l));
             t0.add(baseIsoLatPositions0.get(l));
             sidePolygons.add(new Polygon(t0));
-             
+
         }
         //East
         for (int l = 0; l < line - 1; l++) {
@@ -115,14 +115,14 @@ public class GridBox3D {
             b1.add(topIsoLonPositions1.get(l + 1));
             b1.add(baseIsoLonPositions1.get(l));
             sidePolygons.add(new Polygon(b1));
-            
+
             List<Position> t1 = new ArrayList<>();
             t1.add(baseIsoLonPositions1.get(l));
             t1.add(topIsoLonPositions1.get(l + 1));
             t1.add(topIsoLonPositions1.get(l));
             t1.add(baseIsoLonPositions1.get(l));
             sidePolygons.add(new Polygon(t1));
-             
+
         }
         //North
         for (int l = 0; l < col - 1; l++) {
@@ -147,17 +147,18 @@ public class GridBox3D {
             b3.add(topIsoLonPositions0.get(l + 1));
             b3.add(baseIsoLonPositions0.get(l + 1));
             b3.add(baseIsoLonPositions0.get(l));
-           sidePolygons.add(new Polygon(b3));
-        
+            sidePolygons.add(new Polygon(b3));
+
             List<Position> t3 = new ArrayList<>();
             t3.add(baseIsoLonPositions0.get(l));
             t3.add(topIsoLonPositions0.get(l));
             t3.add(topIsoLonPositions0.get(l + 1));
             t3.add(baseIsoLonPositions0.get(l));
             sidePolygons.add(new Polygon(t3));
-             
+
         }
         //Base
+        /*
         List<Position> b4 = new ArrayList<>();
         b4.add(baseIsoLatPositions0.get(0));
         b4.add(baseIsoLatPositions1.get(col - 1));
@@ -170,23 +171,23 @@ public class GridBox3D {
         t4.add(baseIsoLatPositions1.get(0));
         t4.add(baseIsoLatPositions1.get(col-1));
         t4.add(baseIsoLatPositions0.get(0));
-     //   sidePolygons.add(new Polygon(t4));
-        
-       /* 
-        List<Position> b = new ArrayList<>();
-        b.add(baseIsoLatPositions0.get(0));
-        b.add(baseIsoLatPositions1.get(0));
-        b.add(baseIsoLatPositions1.get(col - 1));
-        b.add(baseIsoLatPositions0.get(0));
-        sidePolygons.add(new Polygon(b));
-*//*
+        sidePolygons.add(new Polygon(t4));
+         */
+
+        List<Position> b4 = new ArrayList<>();
+        b4.add(baseIsoLatPositions0.get(0));
+        b4.add(baseIsoLatPositions0.get(col - 1));
+        b4.add(baseIsoLatPositions1.get(col - 1));
+        b4.add(baseIsoLatPositions0.get(0));
+        sidePolygons.add(new Polygon(b4));
+
         List<Position> t4 = new ArrayList<>();
         t4.add(baseIsoLatPositions0.get(0));
         t4.add(baseIsoLatPositions1.get(col - 1));
-        t4.add(baseIsoLatPositions0.get(col - 1));
+        t4.add(baseIsoLatPositions1.get(0));
         t4.add(baseIsoLatPositions0.get(0));
-      //  sidePolygons.add(new Polygon(t4));
-    */   
+        sidePolygons.add(new Polygon(t4));
+
         return sidePolygons;
     }
 
