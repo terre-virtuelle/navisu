@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import org.postgis.PGgeometry;
 
@@ -67,16 +68,17 @@ public class TopmarDBLoader {
                     geom = (PGgeometry) r.getObject(1);
                     topMarksMap.put(new Pair(geom.getGeometry().getFirstPoint().getY(),
                             geom.getGeometry().getFirstPoint().getX()), tm);
-                   // System.out.println("geom : " + geom+" ym : "+tm);
                 }
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Platform.runLater(() -> {
+               Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Database connection fail");
                 alert.show();
+            });    
         }
         return topMarksMap;
     }

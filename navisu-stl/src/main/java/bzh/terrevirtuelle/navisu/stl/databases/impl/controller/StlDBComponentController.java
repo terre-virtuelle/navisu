@@ -576,8 +576,7 @@ public class StlDBComponentController
         requestButton.setOnMouseClicked((MouseEvent event) -> {
 
             s57Connection = databaseServices.connect(s57DatabaseTF.getText(),
-                    "localhost", "jdbc:postgresql:" + sep + sep + "", "5432", "org.postgresql.Driver",
-                    USER, PASSWD);
+                    "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver",USER, PASSWD);
             if (lat0 != 0 && lon0 != 0 && lat1 != 0 && lon1 != 0) {
                 retrieveIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
             } else {
@@ -665,13 +664,8 @@ public class StlDBComponentController
             if (selectedObjects.contains("ALL") || selectedObjects.contains("LIGHTS")) {
 
                 List<Light> lights = new LightDBLoader(topologyServices, s57Connection, marsys)
-                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                for (Light l : lights) {
-                    System.out.println("light : " + l);
-                }
-                new LightView(lightsLayer)
-                        .display(lights);
-
+                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax); 
+                new LightView(lightsLayer).display(lights);
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("NAVLNE")) {
                 objects = new NavigationLineDBLoader(s57Connection)
