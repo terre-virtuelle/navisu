@@ -151,6 +151,7 @@ public class StlDBComponentController
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
+    protected static final String DEFAULT_KML_PATH = "privateData/kml/";
     private final String USER = "admin";
     private final String PASSWD = "admin";
     protected Properties properties = new Properties();
@@ -165,24 +166,26 @@ public class StlDBComponentController
     protected static final String BATHYMETRY_LAYER = "S57StlBathy";
     protected static final String S57_LAYER = "S57Stl";
     protected static final String LIGHTS_LAYER = "LIGHTS";
-
+    /*
     protected static final String LAT_MIN = "48.21";//Original
     protected static final String LON_MIN = "-4.61";
     protected static final String LAT_MAX = "48.42";
     protected static final String LON_MAX = "-4.30";
-    /*
+     */
+
     protected static final String LAT_MIN = "48.21";
     protected static final String LON_MIN = "-4.61";
     protected static final String LAT_MAX = "48.22";
     protected static final String LON_MAX = "-4.55";
-     */
+
     protected RenderableLayer bathymetryLayer;
     protected RenderableLayer s57Layer;
     protected RenderableLayer lightsLayer;
     protected ShapeAttributes normalAttributes;
     protected ShapeAttributes highlightAttributes;
 
-    protected double DEFAULT_SIDE = 200.0;
+    protected double DEFAULT_SIDE = 180.0;
+    protected double DEFAULT_BASE_HEIGHT = 4.0;
     protected double tileSideX = DEFAULT_SIDE;
     protected double tileSideY = DEFAULT_SIDE;
     protected double DEFAULT_GRID = 75.0;
@@ -197,7 +200,7 @@ public class StlDBComponentController
     protected double latScale;
     protected double lonScale;
     protected double globalScale;
-    protected List<Polygon> selectedPolygons;
+    protected List<Polygon> selectedPolygons= new ArrayList<>();;
     protected int tileCount = 1;
     protected double DEFAULT_EXAGGERATION = 5;
     protected double verticalExaggeration = DEFAULT_EXAGGERATION;
@@ -426,7 +429,7 @@ public class StlDBComponentController
                         initScale();
                     }
                     if (selectedPolygons != null) {
-                        selectedPolygons = createAndDisplayTiles(s57Layer, Material.RED, lat0, lon0, lat1, lon1, tileCount, tileCount);
+                        selectedPolygons.addAll(createAndDisplayTiles(s57Layer, Material.RED, lat0, lon0, lat1, lon1, tileCount, tileCount));
                     }
                 });
         tileSideXTF.setText(Double.toString(DEFAULT_SIDE));
@@ -568,7 +571,7 @@ public class StlDBComponentController
                 }
                 measureTool.setArmed(false);
                 measureTool.dispose();
-                selectedPolygons = createAndDisplayTiles(s57Layer, Material.RED, lat0, lon0, lat1, lon1, tileCount, tileCount);
+                selectedPolygons.addAll(createAndDisplayTiles(s57Layer, Material.RED, lat0, lon0, lat1, lon1, tileCount, tileCount));
             }
 
         });
@@ -576,7 +579,7 @@ public class StlDBComponentController
         requestButton.setOnMouseClicked((MouseEvent event) -> {
 
             s57Connection = databaseServices.connect(s57DatabaseTF.getText(),
-                    "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver",USER, PASSWD);
+                    "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
             if (lat0 != 0 && lon0 != 0 && lat1 != 0 && lon1 != 0) {
                 retrieveIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
             } else {
@@ -664,7 +667,7 @@ public class StlDBComponentController
             if (selectedObjects.contains("ALL") || selectedObjects.contains("LIGHTS")) {
 
                 List<Light> lights = new LightDBLoader(topologyServices, s57Connection, marsys)
-                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax); 
+                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 new LightView(lightsLayer).display(lights);
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("NAVLNE")) {
@@ -833,16 +836,16 @@ public class StlDBComponentController
         grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
         System.out.println("grid : " + grid[0].length + " " + grid[1].length);
         if (tileCount == 1) {
-            String outputName = "privateData/kml/" + outFileTF.getText() + ".kml";
+            String outputName = DEFAULT_KML_PATH + outFileTF.getText() + ".kml";
 
             List<gov.nasa.worldwind.render.Path> gridPath = displayServices.displayGridAsTriangles(grid, s57Layer, Material.CYAN, 1);
             GridBox3D box = new GridBox3D(grid);
 
             List<Polygon> polygons = displayServices.createPolygons(gridPath);
             displayServices.exportWKMLPolygons(outputName, polygons, verticalExaggeration);
-            displayServices.exportWKMLPolygons("privateData/kml/box.kml", box.getSidePolygons(), verticalExaggeration);
+            displayServices.exportWKMLPolygons(DEFAULT_KML_PATH + "box.kml", box.getSidePolygons(), verticalExaggeration);
 
-            String resultKmlFilename = displayServices.mergeKML(outputName, "privateData/kml/box.kml");
+            String resultKmlFilename = displayServices.mergeKML(outputName, DEFAULT_KML_PATH + "box.kml");
             double realLatMin = grid[0][0].getLatitude();
             double realLonMin = grid[0][0].getLongitude();
             scaleCompute(grid);
@@ -852,8 +855,12 @@ public class StlDBComponentController
             }
         } else {
             int bound = grid[0].length / tileCount;
+            if (grid[0].length <= tileCount * bound) {
+                Point3D[][] tmpTab = suppress(grid, grid[0].length - 1);
+                grid = copy(tmpTab);
+                bound = grid[0].length / tileCount;
+            }
             Point3D[][] realGrid = new Point3D[bound + 1][bound + 1];
-            System.out.println(tileCount + " " + bound);
             for (int l = 0; l < tileCount; l++) {
                 for (int c = 0; c < tileCount; c++) {
                     for (int i = 0; i < bound + 1; i++) {
@@ -861,11 +868,10 @@ public class StlDBComponentController
                             realGrid[i][j] = new Point3D(grid[i + l * bound][j + c * bound].getLatitude(),
                                     grid[i + l * bound][j + c * bound].getLongitude(),
                                     grid[i + l * bound][j + c * bound].getElevation());
-
                         }
                     }
-                    String outputName = "privateData/kml/" + outFileTF.getText() + l + "," + c + ".kml";
-                    String boxName = "privateData/kml/box" + l + "," + c + ".kml";
+                    String outputName = DEFAULT_KML_PATH + outFileTF.getText() + l + "," + c + ".kml";
+                    String boxName = DEFAULT_KML_PATH + l + "," + c + ".kml";
                     List<gov.nasa.worldwind.render.Path> gridPath = displayServices.displayGridAsTriangles(realGrid, s57Layer, Material.CYAN, 1);
                     GridBox3D box = new GridBox3D(realGrid);
                     List<Polygon> polygons = displayServices.createPolygons(gridPath);
@@ -882,6 +888,7 @@ public class StlDBComponentController
                     }
                 }
             }
+
         }
         return bathy;
     }
@@ -1038,7 +1045,7 @@ public class StlDBComponentController
             latMaxLabel.setText(Double.toString(lat1));
             lonMaxLabel.setText(Double.toString(lon1));
             initScale();
-            selectedPolygons = createAndDisplayTiles(s57Layer, Material.RED, lat0, lon0, lat1, lon1, tileCount, tileCount);
+            selectedPolygons.addAll(createAndDisplayTiles(s57Layer, Material.RED, lat0, lon0, lat1, lon1, tileCount, tileCount));
         });
 
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
@@ -1141,5 +1148,48 @@ public class StlDBComponentController
             System.out.println("OS not found");
         }
         return cmd;
+    }
+
+    public Point3D[][] suppress(Point3D[][] tableau, int index) {
+        int nRows = tableau.length;
+        int nColumns = tableau[0].length;
+
+        if (index >= nRows || index >= nColumns) {
+            // Return exception ?
+            return new Point3D[0][0];
+        }
+
+        Point3D[][] newTab = new Point3D[nRows - 1][nColumns - 1];
+        int newTabRow = 0;
+        int newTabCol = 0;
+
+        for (int i = 0; i < nRows; ++i) {
+            if (i != index) {
+                for (int j = 0; j < nColumns; ++j) {
+                    if (j != index) {
+                        newTab[newTabRow][newTabCol] = new Point3D(tableau[i][j].getLatitude(),
+                                tableau[i][j].getLongitude(), tableau[i][j].getElevation());
+                        ++newTabCol;
+                    }
+                }
+                ++newTabRow;
+                newTabCol = 0;
+            }
+        }
+        return newTab;
+    }
+
+    protected Point3D[][] copy(Point3D[][] tableau) {
+        int nRows = tableau[0].length;
+        int nColumns = tableau[0].length;
+        Point3D[][] newTab = new Point3D[nRows][nColumns];
+        for (int i = 0; i < nRows; ++i) {
+            for (int j = 0; j < nColumns; ++j) {
+                newTab[i][j] = new Point3D(tableau[i][j].getLatitude(),
+                        tableau[i][j].getLongitude(), tableau[i][j].getElevation());
+            }
+        }
+
+        return newTab;
     }
 }
