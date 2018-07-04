@@ -152,6 +152,11 @@ public class StlDBComponentController
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String DEFAULT_KML_PATH = "privateData/kml/";
+
+    private final String HOST = "localhost";
+    private final String PROTOCOL = "jdbc:postgresql://";
+    private final String PORT = "5432";
+    private final String DRIVER = "org.postgresql.Driver";
     private final String USER = "admin";
     private final String PASSWD = "admin";
     protected Properties properties = new Properties();
@@ -166,6 +171,7 @@ public class StlDBComponentController
     protected static final String BATHYMETRY_LAYER = "S57StlBathy";
     protected static final String S57_LAYER = "S57Stl";
     protected static final String LIGHTS_LAYER = "LIGHTS";
+    protected static final String SELECTED_LAYER = "TargetCmd";
     /*
     protected static final String LAT_MIN = "48.21";//Original
     protected static final String LON_MIN = "-4.61";
@@ -180,6 +186,7 @@ public class StlDBComponentController
 
     protected RenderableLayer bathymetryLayer;
     protected RenderableLayer s57Layer;
+    protected RenderableLayer selectLayer;
     protected RenderableLayer lightsLayer;
     protected ShapeAttributes normalAttributes;
     protected ShapeAttributes highlightAttributes;
@@ -200,7 +207,8 @@ public class StlDBComponentController
     protected double latScale;
     protected double lonScale;
     protected double globalScale;
-    protected List<Polygon> selectedPolygons= new ArrayList<>();;
+    protected List<Polygon> selectedPolygons = new ArrayList<>();
+    ;
     protected int tileCount = 1;
     protected double DEFAULT_EXAGGERATION = 5;
     protected double verticalExaggeration = DEFAULT_EXAGGERATION;
@@ -379,6 +387,7 @@ public class StlDBComponentController
         s57Layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
         bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
         lightsLayer = layersManagerServices.getLayer(GROUP_0, LIGHTS_LAYER);
+        selectLayer = layersManagerServices.getLayer(GROUP_0, SELECTED_LAYER);
         try {
             properties.load(new FileInputStream(CONFIG_FILE_NAME));
         } catch (IOException ex) {
@@ -428,9 +437,7 @@ public class StlDBComponentController
                     if (lat0 != 520) {
                         initScale();
                     }
-                    if (selectedPolygons != null) {
-                        selectedPolygons.addAll(createAndDisplayTiles(s57Layer, Material.RED, lat0, lon0, lat1, lon1, tileCount, tileCount));
-                    }
+                    selectedPolygons.addAll(createAndDisplayTiles(selectLayer, Material.RED, lat0, lon0, lat1, lon1, tileCount, tileCount));
                 });
         tileSideXTF.setText(Double.toString(DEFAULT_SIDE));
         tileSideXTF.setOnAction((ActionEvent event) -> {
@@ -571,7 +578,7 @@ public class StlDBComponentController
                 }
                 measureTool.setArmed(false);
                 measureTool.dispose();
-                selectedPolygons.addAll(createAndDisplayTiles(s57Layer, Material.RED, lat0, lon0, lat1, lon1, tileCount, tileCount));
+                selectedPolygons.addAll(createAndDisplayTiles(selectLayer, Material.RED, lat0, lon0, lat1, lon1, tileCount, tileCount));
             }
 
         });
@@ -605,7 +612,21 @@ public class StlDBComponentController
             //Define IALA system for all buoyages, default is 1
             MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
             marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-
+            if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && demRB.isSelected())) {
+                elevation = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
+            }
+            if (selectedObjects.contains("ALL") || (demRB.isSelected() && !elevationRB.isSelected())) {
+                bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
+            }
+            if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && !demRB.isSelected())) {
+                elevation = createElevation(lat0, lon0, lat1, lon1);
+            }
+            if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
+                createElevationAndDepare(latMin, lonMin, latMax, lonMax);
+            }
+            if (selectedObjects.contains("ALL") || depareUlhyssesRB.isSelected()) {
+                createElevationAndUlhyssesDepare(latMin, lonMin, latMax, lonMax);
+            }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
 
                 Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
@@ -704,94 +725,18 @@ public class StlDBComponentController
                     s57Viewer.display(g, normalAttributes, highlightAttributes);
                 });
             }
-            if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && demRB.isSelected())) {
-                elevation = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
-            }
-            if (selectedObjects.contains("ALL") || (demRB.isSelected() && !elevationRB.isSelected())) {
-                bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
-
-            }
-            if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && !demRB.isSelected())) {
-                elevation = createElevation(lat0, lon0, lat1, lon1);
-
-            }
-
-            if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
-                bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
-                Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
-                displayServices.displayGrid(ptsTab, s57Layer, Material.GREEN, verticalExaggeration);
-
-                Shapefile shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                        .retrieveIn(latMin, lonMin, latMax, lonMax);
-
-                new DepareView(s57Layer, s57Layer, s57Layer,
-                        simplifyFactor,
-                        Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
-                        true, true)
-                        .display(shapefile);
-            }
-
-            if (selectedObjects.contains("ALL") || depareUlhyssesRB.isSelected()) {
-                bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
-                Point3D[][] pts = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
-                displayServices.displayGrid(pts, s57Layer, Material.GREEN, verticalExaggeration);
-
-                List<Point3D> points = bathymetry.getGrid();
-                bathymetryDBServices.writePointList(points, Paths.get(System.getProperty("user.dir") + "/privateData/ulhysses", "bathy.csv"), false);
-
-                String ulhyssesPath = "" + sep + "opt" + sep + "ULHYSSES" + sep + "app";
-                String command
-                        = "cd " + ulhyssesPath + " \n"
-                        + System.getProperty("java.home") + sep + "bin" + sep + "java "
-                        + "-Dlog4j.configuration=file:" + ulhyssesPath + "" + sep + "conf-tools" + sep + "toolsLog4j.properties "
-                        + "-Xmx14g -Xms1024m -jar " + ulhyssesPath + "" + sep + "" + "ULHYSSES.jar "
-                        + "--outputDirectory=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses "
-                        + "--inputFile=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses" + sep + "bathy.csv "
-                        + "--compilationScale=1000 --fileType=0 --isoValues='" + isoValuesUlhysses + "' "
-                        + "--codeAgency=4G --baseName=0001";
-                try {
-                    Proc.BUILDER.create()
-                            .setCmd(command)
-                            .execSh();
-                } catch (IOException | InterruptedException ex) {
-                    LOGGER.log(Level.SEVERE, ex.toString(), ex);
-                }
-
-                new File("data" + sep + "shp").mkdir();
-                new File("data" + sep + "shp" + sep + "shp_0").mkdir();
-                String cmd0 = startCmd("ogr2ogr");
-                String cmd;
-                String sep = File.separator;
-                try {
-                    Path tmp = Paths.get(new File(System.getProperty("user.dir") + sep + "privateData" + sep + "ulhysses" + sep + "bathy" + sep + "ENC" + sep + "4G600010.000").toString());
-                    cmd = cmd0 + " -skipfailures -overwrite " + "data" + sep + "shp" + sep + "shp_0" + " " + tmp.toString();
-                    Proc.BUILDER.create()
-                            .setCmd(cmd)
-                            .execSh();
-                } catch (IOException | InterruptedException e) {
-                    LOGGER.log(Level.SEVERE, e.toString(), e);
-                }
-
-                Shapefile shp = new Shapefile(new File("data" + sep + "shp" + sep + "shp_0" + sep + "DEPARE.shp"));
-
-                new DepareView(s57Layer, s57Layer, s57Layer,
-                        simplifyFactor,
-                        Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
-                        true, true)
-                        .display(shp);
-            }
 
             instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
-            for (Renderable r : selectedPolygons) {
-                s57Layer.removeRenderable(r);
-            }
+            //  for (Renderable r : selectedPolygons) {
+            //    selectLayer.removeRenderable(r);
+            selectLayer.removeAllRenderables();
+            // }
             wwd.redrawNow();
         });
     }
 
     private DEM createBathymetry(double latMin, double lonMin, double latMax, double lonMax) {
-        bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(),
-                "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
+        bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices)
                 .retrieveIn(latMin, lonMin, latMax, lonMax);
         maxElevation = dem.getMaxElevation();
@@ -802,8 +747,7 @@ public class StlDBComponentController
     }
 
     private DEM createElevation(double latMin, double lonMin, double latMax, double lonMax) {
-        elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(),
-                "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
+        elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
         List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilterOnArea(dem.getGrid(), 3.42E-7);
         displayServices.displayPaths(paths, s57Layer, Material.RED, verticalExaggeration, maxElevation);
@@ -811,10 +755,74 @@ public class StlDBComponentController
         return dem;
     }
 
+    private void createElevationAndDepare(double latMin, double lonMin, double latMax, double lonMax) {
+        bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
+        Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
+        displayServices.displayGrid(ptsTab, s57Layer, Material.GREEN, verticalExaggeration);
+
+        Shapefile shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                .retrieveIn(latMin, lonMin, latMax, lonMax);
+
+        new DepareView(s57Layer, s57Layer, s57Layer,
+                simplifyFactor,
+                Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
+                true, true)
+                .display(shapefile);
+    }
+
+    private void createElevationAndUlhyssesDepare(double latMin, double lonMin, double latMax, double lonMax) {
+        bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
+        Point3D[][] pts = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
+        displayServices.displayGrid(pts, s57Layer, Material.GREEN, verticalExaggeration);
+
+        List<Point3D> points = bathymetry.getGrid();
+        bathymetryDBServices.writePointList(points, Paths.get(System.getProperty("user.dir") + "/privateData/ulhysses", "bathy.csv"), false);
+
+        String ulhyssesPath = "" + sep + "opt" + sep + "ULHYSSES" + sep + "app";
+        String command
+                = "cd " + ulhyssesPath + " \n"
+                + System.getProperty("java.home") + sep + "bin" + sep + "java "
+                + "-Dlog4j.configuration=file:" + ulhyssesPath + "" + sep + "conf-tools" + sep + "toolsLog4j.properties "
+                + "-Xmx14g -Xms1024m -jar " + ulhyssesPath + "" + sep + "" + "ULHYSSES.jar "
+                + "--outputDirectory=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses "
+                + "--inputFile=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses" + sep + "bathy.csv "
+                + "--compilationScale=1000 --fileType=0 --isoValues='" + isoValuesUlhysses + "' "
+                + "--codeAgency=4G --baseName=0001";
+        try {
+            Proc.BUILDER.create()
+                    .setCmd(command)
+                    .execSh();
+        } catch (IOException | InterruptedException ex) {
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+        }
+
+        new File("data" + sep + "shp").mkdir();
+        new File("data" + sep + "shp" + sep + "shp_0").mkdir();
+        String cmd0 = startCmd("ogr2ogr");
+        String cmd;
+        String sep = File.separator;
+        try {
+            Path tmp = Paths.get(new File(System.getProperty("user.dir") + sep + "privateData" + sep + "ulhysses" + sep + "bathy" + sep + "ENC" + sep + "4G600010.000").toString());
+            cmd = cmd0 + " -skipfailures -overwrite " + "data" + sep + "shp" + sep + "shp_0" + " " + tmp.toString();
+            Proc.BUILDER.create()
+                    .setCmd(cmd)
+                    .execSh();
+        } catch (IOException | InterruptedException e) {
+            LOGGER.log(Level.SEVERE, e.toString(), e);
+        }
+
+        Shapefile shp = new Shapefile(new File("data" + sep + "shp" + sep + "shp_0" + sep + "DEPARE.shp"));
+
+        new DepareView(s57Layer, s57Layer, s57Layer,
+                simplifyFactor,
+                Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
+                true, true)
+                .display(shp);
+    }
+
     private DEM createBathymetryAndElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
         // Search for x,y,z bathy, z>0 in the DB
-        bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(),
-                "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
+        bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM bathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
         maxElevation = bathy.getMaxElevation();
         // Offset from zero
@@ -823,9 +831,7 @@ public class StlDBComponentController
             bathyElevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
         });
 
-        //Search for x,y,z alti, z>0 in the DB
-        elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(),
-                "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
+        elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM alti = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
         List<Point3D> altiElevations = new ArrayList<>();
         alti.getGrid().forEach((p) -> {
@@ -834,25 +840,8 @@ public class StlDBComponentController
         bathyElevations.addAll(altiElevations);
         Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, DEFAULT_GRID, DEFAULT_GRID, maxElevation);
         grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
-        System.out.println("grid : " + grid[0].length + " " + grid[1].length);
         if (tileCount == 1) {
-            String outputName = DEFAULT_KML_PATH + outFileTF.getText() + ".kml";
-
-            List<gov.nasa.worldwind.render.Path> gridPath = displayServices.displayGridAsTriangles(grid, s57Layer, Material.CYAN, 1);
-            GridBox3D box = new GridBox3D(grid);
-
-            List<Polygon> polygons = displayServices.createPolygons(gridPath);
-            displayServices.exportWKMLPolygons(outputName, polygons, verticalExaggeration);
-            displayServices.exportWKMLPolygons(DEFAULT_KML_PATH + "box.kml", box.getSidePolygons(), verticalExaggeration);
-
-            String resultKmlFilename = displayServices.mergeKML(outputName, DEFAULT_KML_PATH + "box.kml");
-            double realLatMin = grid[0][0].getLatitude();
-            double realLonMin = grid[0][0].getLongitude();
-            scaleCompute(grid);
-            String resultStlFilename = stlComponentServices.exportSTL(realLatMin, realLonMin, latScale, lonScale, resultKmlFilename);
-            if (stlpreviewCB.isSelected()) {
-                stlComponentServices.viewSTL("../" + resultStlFilename);
-            }
+            createBathymetryAndElevationTab1(grid, 0, 0);
         } else {
             int bound = grid[0].length / tileCount;
             if (grid[0].length <= tileCount * bound) {
@@ -870,27 +859,30 @@ public class StlDBComponentController
                                     grid[i + l * bound][j + c * bound].getElevation());
                         }
                     }
-                    String outputName = DEFAULT_KML_PATH + outFileTF.getText() + l + "," + c + ".kml";
-                    String boxName = DEFAULT_KML_PATH + l + "," + c + ".kml";
-                    List<gov.nasa.worldwind.render.Path> gridPath = displayServices.displayGridAsTriangles(realGrid, s57Layer, Material.CYAN, 1);
-                    GridBox3D box = new GridBox3D(realGrid);
-                    List<Polygon> polygons = displayServices.createPolygons(gridPath);
-                    displayServices.exportWKMLPolygons(outputName, polygons, verticalExaggeration);
-                    displayServices.exportWKMLPolygons(boxName, box.getSidePolygons(), verticalExaggeration);
-
-                    String resultKmlFilename = displayServices.mergeKML(outputName, boxName);
-                    double realLatMin = realGrid[0][0].getLatitude();
-                    double realLonMin = realGrid[0][0].getLongitude();
-                    scaleCompute(realGrid);
-                    String resultStlFilename = stlComponentServices.exportSTL(realLatMin, realLonMin, latScale, lonScale, resultKmlFilename);
-                    if (stlpreviewCB.isSelected()) {
-                        stlComponentServices.viewSTL("../" + resultStlFilename);
-                    }
+                    createBathymetryAndElevationTab1(realGrid, l, c);
                 }
             }
-
         }
         return bathy;
+    }
+
+    private void createBathymetryAndElevationTab1(Point3D[][] grid, int l, int c) {
+        String outputName = DEFAULT_KML_PATH + outFileTF.getText() + l + "," + c + ".kml";
+        String boxName = DEFAULT_KML_PATH + l + "," + c + ".kml";
+        List<gov.nasa.worldwind.render.Path> gridPath = displayServices.displayGridAsTriangles(grid, s57Layer, Material.CYAN, 1);
+        GridBox3D box = new GridBox3D(grid);
+        List<Polygon> polygons = displayServices.createPolygons(gridPath);
+        displayServices.exportWKMLPolygons(outputName, polygons, verticalExaggeration);
+        displayServices.exportWKMLPolygons(boxName, box.getSidePolygons(), verticalExaggeration);
+
+        String resultKmlFilename = displayServices.mergeKML(outputName, boxName);
+        double realLatMin = grid[0][0].getLatitude();
+        double realLonMin = grid[0][0].getLongitude();
+        scaleCompute(grid);
+        String resultStlFilename = stlComponentServices.exportSTL(realLatMin, realLonMin, latScale, lonScale, resultKmlFilename);
+        if (stlpreviewCB.isSelected()) {
+            stlComponentServices.viewSTL("../" + resultStlFilename);
+        }
     }
 
     private void scaleCompute(Point3D[][] grid) {
