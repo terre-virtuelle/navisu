@@ -45,7 +45,7 @@ public class StlComponentImpl
 
     @Override
     public void viewSTL(String filename) {
-       // System.out.println("System : " + System.getProperty("user.dir"));
+        // System.out.println("System : " + System.getProperty("user.dir"));
         String path = "stl";
         String command
                 = "cd " + path + " \n"
@@ -62,7 +62,7 @@ public class StlComponentImpl
     }
 
     @Override
-    public String exportSTL(double latMin, double lonMin, double latScale, double lonScale, 
+    public String exportSTL(double latMin, double lonMin, double latScale, double lonScale,
             String kmlFilename, double verticalOffset) {
         String stlFilename = "";
         try {
@@ -104,13 +104,16 @@ public class StlComponentImpl
         Vec3d edge1 = vec3d[1].sub(vec3d[2]);
         Vec3d edge2 = vec3d[2].sub(vec3d[0]);
         normal = Vec3d.cross(edge1, edge2).normalize();
+        double z0 = vec3d[0].z + verticalOffset;
+        double z1 = vec3d[1].z + verticalOffset;
+        double z2 = vec3d[2].z + verticalOffset;
 
         facet = "facet normal ";
         facet += normal.x + " " + normal.y + " " + normal.z + " \n";
         facet += "outer loop \n";
-        facet += "vertex " + vec3d[0].x + " " + vec3d[0].y + " " + vec3d[0].z + verticalOffset + " \n";
-        facet += "vertex " + vec3d[1].x + " " + vec3d[1].y + " " + vec3d[1].z + verticalOffset + " \n";
-        facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + vec3d[2].z + verticalOffset + " \n";
+        facet += "vertex " + vec3d[0].x + " " + vec3d[0].y + " " + z0 + " \n";
+        facet += "vertex " + vec3d[1].x + " " + vec3d[1].y + " " + z1 + " \n";
+        facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + z2 + " \n";
         facet += "endloop \n";
         facet += "endfacet \n";
 

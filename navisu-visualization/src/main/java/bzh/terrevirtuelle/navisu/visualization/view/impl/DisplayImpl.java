@@ -137,7 +137,9 @@ public class DisplayImpl
     }
 
     @Override
-    public List<Path> displayGridAsTriangles(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration) {
+    public List<Path> displayGridAsTriangles(Point3D[][] latLons, 
+            RenderableLayer layer, Material material, 
+            double verticalExaggeration) {
         List<Position> positions;
         List<Path> result = new ArrayList<>();
         Path path;
@@ -175,6 +177,7 @@ public class DisplayImpl
                         latLons[i][j].getLongitude(),
                         latLons[i][j].getElevation() * verticalExaggeration));
                 path = new Path(positions);
+                path.setAttributes(createAttributes(material.getDiffuse()));
                 result.add(path);
             }
         }

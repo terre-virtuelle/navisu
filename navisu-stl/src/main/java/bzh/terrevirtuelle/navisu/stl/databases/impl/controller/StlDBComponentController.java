@@ -208,8 +208,10 @@ public class StlDBComponentController
     protected double latScale;
     protected double lonScale;
     protected double globalScale;
+    protected List<String> stlFileNames;
+    protected List<String> kmlFileNames;
     protected List<Polygon> selectedPolygons = new ArrayList<>();
-    ;
+
     protected int tileCount = 1;
     protected double DEFAULT_EXAGGERATION = 5;
     protected double verticalExaggeration = DEFAULT_EXAGGERATION;
@@ -500,6 +502,7 @@ public class StlDBComponentController
                 simplifyTF.setText(Double.toString(simplifyFactor * 100000));
             }
         });
+        depthMagnificationTF.setText(Double.toString(DEFAULT_EXAGGERATION));
         depthMagnificationTF.setOnAction((ActionEvent event) -> {
             try {
                 verticalExaggeration = Double.valueOf(depthMagnificationTF.getText());
@@ -634,7 +637,7 @@ public class StlDBComponentController
                 grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
             }
             if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && !demRB.isSelected())) {
-                elevation = createElevation(lat0, lon0, lat1, lon1);
+                grids = createElevationTab(lat0, lon0, lat1, lon1);
             }
             if (selectedObjects.contains("ALL") || (demRB.isSelected() && !elevationRB.isSelected())) {
                 bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
@@ -764,18 +767,16 @@ public class StlDBComponentController
         return dem;
     }
 
-    private DEM createElevation(double latMin, double lonMin, double latMax, double lonMax) {
+    private List<Point3D[][]> createElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
+        List<Point3D[][]> grids;
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
-        List<Path> paths = jtsServices.createDelaunayWithFilterOnArea(dem.getGrid(), 3.42E-7);
-        displayServices.displayPaths(paths, s57Layer, Material.RED, verticalExaggeration, maxElevation);
-        displayServices.exportWKML(paths, verticalExaggeration);
-        return dem;
+        DEM alti = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
+        grids = exportKmlStl(latMin, lonMin, latMax, lonMax, alti.getGrid(), 0.0);
+        return grids;
     }
 
     private List<Point3D[][]> createBathymetryAndElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
-        List<Point3D[][]> grids = new ArrayList<>();
-        // Search for x,y,z bathy, z>0 in the DB
+        List<Point3D[][]> grids;
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM bathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
         maxElevation = bathy.getMaxElevation();
@@ -793,13 +794,23 @@ public class StlDBComponentController
         });
         bathyElevations.addAll(altiElevations);
 
+        grids = exportKmlStl(latMin, lonMin, latMax, lonMax, bathyElevations, maxElevation);
+        return grids;
+    }
+
+    protected List<Point3D[][]> exportKmlStl(double latMin, double lonMin, double latMax, double lonMax,
+            List<Point3D> elevations, double maxElevation) {
+        List<Point3D[][]> grids = new ArrayList<>();
+        stlFileNames = new ArrayList<>();
+        kmlFileNames = new ArrayList<>();
         Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, DEFAULT_GRID, DEFAULT_GRID, maxElevation);
-        grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
+        grid = jtsServices.mergePointsToGrid(elevations, grid);
         String outputName = DEFAULT_KML_PATH + outFileTF.getText() + ".kml";
         String boxName = DEFAULT_KML_PATH + "box.kml";
         if (tileCount == 1) {
-            exportKmlStlGridBoxed(outputName, boxName, grid);
+            stlFileNames.add(exportKmlStlGridBoxed(outputName, boxName, grid));
             grids.add(grid);
+
         } else {
             int bound = grid[0].length / tileCount;
             if (grid[0].length <= tileCount * bound) {
@@ -819,7 +830,7 @@ public class StlDBComponentController
                     }
                     outputName = DEFAULT_KML_PATH + outFileTF.getText() + l + "," + c + ".kml";
                     boxName = DEFAULT_KML_PATH + "box" + l + "," + c + ".kml";
-                    exportKmlStlGridBoxed(outputName, boxName, realGrid);
+                    stlFileNames.add(exportKmlStlGridBoxed(outputName, boxName, realGrid));
                     grids.add(realGrid);
                 }
             }
@@ -829,12 +840,12 @@ public class StlDBComponentController
 
     private String exportKmlStlGridBoxed(String outputName, String boxName, Point3D[][] grid) {
         String resultKmlFilename = exportKMLGridBoxed(outputName, boxName, grid);
-        String resultStlFilename = exportStlGridBoxed(resultKmlFilename, grid);
-        return resultStlFilename;
+        kmlFileNames.add(resultKmlFilename);
+        return exportStlGridBoxed(resultKmlFilename, grid);
     }
 
     private String exportKMLGridBoxed(String outputName, String boxName, Point3D[][] grid) {
-        List<Path> gridPath = displayServices.displayGridAsTriangles(grid, s57Layer, Material.CYAN, 1);
+        List<Path> gridPath = displayServices.displayGridAsTriangles(grid, s57Layer, Material.WHITE, 1);
         GridBox3D box = new GridBox3D(grid);
         List<Polygon> polygons = displayServices.createPolygons(gridPath);
         displayServices.exportWKMLPolygons(outputName, polygons, verticalExaggeration);
