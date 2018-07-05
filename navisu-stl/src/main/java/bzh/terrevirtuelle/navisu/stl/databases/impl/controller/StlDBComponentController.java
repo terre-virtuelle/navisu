@@ -76,7 +76,7 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
-import java.nio.file.Path;
+//import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -119,7 +119,7 @@ import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
-import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.Path;
 
 /**
  * @author Serge Morvan
@@ -172,18 +172,18 @@ public class StlDBComponentController
     protected static final String S57_LAYER = "S57Stl";
     protected static final String LIGHTS_LAYER = "LIGHTS";
     protected static final String SELECTED_LAYER = "TargetCmd";
-    /*
+
     protected static final String LAT_MIN = "48.21";//Original
     protected static final String LON_MIN = "-4.61";
     protected static final String LAT_MAX = "48.42";
     protected static final String LON_MAX = "-4.30";
-     */
 
+    /*
     protected static final String LAT_MIN = "48.21";
     protected static final String LON_MIN = "-4.61";
     protected static final String LAT_MAX = "48.22";
     protected static final String LON_MAX = "-4.55";
-
+     */
     protected RenderableLayer bathymetryLayer;
     protected RenderableLayer s57Layer;
     protected RenderableLayer selectLayer;
@@ -195,6 +195,7 @@ public class StlDBComponentController
     protected double DEFAULT_BASE_HEIGHT = 4.0;
     protected double tileSideX = DEFAULT_SIDE;
     protected double tileSideY = DEFAULT_SIDE;
+    protected double tileSideZ = DEFAULT_BASE_HEIGHT;
     protected double DEFAULT_GRID = 75.0;
     protected double lat0 = 520;
     protected double lon0;
@@ -287,6 +288,12 @@ public class StlDBComponentController
     @FXML
     public TextField tileSideYTF;
     @FXML
+    public TextField tileSideZTF;
+    @FXML
+    public TextField gridSideXTF;
+    @FXML
+    public TextField gridSideYTF;
+    @FXML
     public TextField encPortDBTF;
     @FXML
     public TextField ulhyssesTF;
@@ -308,8 +315,6 @@ public class StlDBComponentController
     public ChoiceBox<String> elevationDatabasesCB;
     @FXML
     public RadioButton elevationRB;
-    @FXML
-    public CheckBox wireframeCB;
     @FXML
     public CheckBox stlpreviewCB;
 
@@ -476,6 +481,16 @@ public class StlDBComponentController
                 initScale();
             }
         });
+        tileSideZTF.setText(Double.toString(DEFAULT_BASE_HEIGHT));
+        tileSideZTF.setOnAction((ActionEvent event) -> {
+            try {
+                tileSideZ = Double.parseDouble(tileSideZTF.getText());
+                tileSideZTF.setText(Double.toString(tileSideZ));
+            } catch (NumberFormatException e) {
+                tileSideZ = DEFAULT_BASE_HEIGHT;
+                tileSideZTF.setText(Double.toString(tileSideZ));
+            }
+        });
         simplifyTF.setOnAction((ActionEvent event) -> {
             try {
                 double tmp = Double.valueOf(simplifyTF.getText());
@@ -612,21 +627,27 @@ public class StlDBComponentController
             //Define IALA system for all buoyages, default is 1
             MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
             marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+
+            List<Point3D[][]> grids;
+            //BATHY, ELEVATION AND TILES
             if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && demRB.isSelected())) {
-                elevation = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
-            }
-            if (selectedObjects.contains("ALL") || (demRB.isSelected() && !elevationRB.isSelected())) {
-                bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
+                grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
             }
             if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && !demRB.isSelected())) {
                 elevation = createElevation(lat0, lon0, lat1, lon1);
             }
+            if (selectedObjects.contains("ALL") || (demRB.isSelected() && !elevationRB.isSelected())) {
+                bathymetry = createBathymetry(lat0, lon0, lat1, lon1);
+            }
+
+            //DEPARE
             if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
                 createElevationAndDepare(latMin, lonMin, latMax, lonMax);
             }
             if (selectedObjects.contains("ALL") || depareUlhyssesRB.isSelected()) {
                 createElevationAndUlhyssesDepare(latMin, lonMin, latMax, lonMax);
             }
+
             if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
 
                 Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
@@ -727,10 +748,7 @@ public class StlDBComponentController
             }
 
             instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
-            //  for (Renderable r : selectedPolygons) {
-            //    selectLayer.removeRenderable(r);
             selectLayer.removeAllRenderables();
-            // }
             wwd.redrawNow();
         });
     }
@@ -740,7 +758,7 @@ public class StlDBComponentController
         DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices)
                 .retrieveIn(latMin, lonMin, latMax, lonMax);
         maxElevation = dem.getMaxElevation();
-        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilter(dem.getGrid(), 1E-6, maxElevation);
+        List<Path> paths = jtsServices.createDelaunayWithFilter(dem.getGrid(), 1E-6, maxElevation);
         displayServices.displayPaths(paths, s57Layer, Material.GREEN, verticalExaggeration, maxElevation);
         displayServices.exportWKML(paths, verticalExaggeration);
         return dem;
@@ -749,78 +767,14 @@ public class StlDBComponentController
     private DEM createElevation(double latMin, double lonMin, double latMax, double lonMax) {
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
-        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilterOnArea(dem.getGrid(), 3.42E-7);
+        List<Path> paths = jtsServices.createDelaunayWithFilterOnArea(dem.getGrid(), 3.42E-7);
         displayServices.displayPaths(paths, s57Layer, Material.RED, verticalExaggeration, maxElevation);
         displayServices.exportWKML(paths, verticalExaggeration);
         return dem;
     }
 
-    private void createElevationAndDepare(double latMin, double lonMin, double latMax, double lonMax) {
-        bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
-        Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
-        displayServices.displayGrid(ptsTab, s57Layer, Material.GREEN, verticalExaggeration);
-
-        Shapefile shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                .retrieveIn(latMin, lonMin, latMax, lonMax);
-
-        new DepareView(s57Layer, s57Layer, s57Layer,
-                simplifyFactor,
-                Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
-                true, true)
-                .display(shapefile);
-    }
-
-    private void createElevationAndUlhyssesDepare(double latMin, double lonMin, double latMax, double lonMax) {
-        bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
-        Point3D[][] pts = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
-        displayServices.displayGrid(pts, s57Layer, Material.GREEN, verticalExaggeration);
-
-        List<Point3D> points = bathymetry.getGrid();
-        bathymetryDBServices.writePointList(points, Paths.get(System.getProperty("user.dir") + "/privateData/ulhysses", "bathy.csv"), false);
-
-        String ulhyssesPath = "" + sep + "opt" + sep + "ULHYSSES" + sep + "app";
-        String command
-                = "cd " + ulhyssesPath + " \n"
-                + System.getProperty("java.home") + sep + "bin" + sep + "java "
-                + "-Dlog4j.configuration=file:" + ulhyssesPath + "" + sep + "conf-tools" + sep + "toolsLog4j.properties "
-                + "-Xmx14g -Xms1024m -jar " + ulhyssesPath + "" + sep + "" + "ULHYSSES.jar "
-                + "--outputDirectory=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses "
-                + "--inputFile=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses" + sep + "bathy.csv "
-                + "--compilationScale=1000 --fileType=0 --isoValues='" + isoValuesUlhysses + "' "
-                + "--codeAgency=4G --baseName=0001";
-        try {
-            Proc.BUILDER.create()
-                    .setCmd(command)
-                    .execSh();
-        } catch (IOException | InterruptedException ex) {
-            LOGGER.log(Level.SEVERE, ex.toString(), ex);
-        }
-
-        new File("data" + sep + "shp").mkdir();
-        new File("data" + sep + "shp" + sep + "shp_0").mkdir();
-        String cmd0 = startCmd("ogr2ogr");
-        String cmd;
-        String sep = File.separator;
-        try {
-            Path tmp = Paths.get(new File(System.getProperty("user.dir") + sep + "privateData" + sep + "ulhysses" + sep + "bathy" + sep + "ENC" + sep + "4G600010.000").toString());
-            cmd = cmd0 + " -skipfailures -overwrite " + "data" + sep + "shp" + sep + "shp_0" + " " + tmp.toString();
-            Proc.BUILDER.create()
-                    .setCmd(cmd)
-                    .execSh();
-        } catch (IOException | InterruptedException e) {
-            LOGGER.log(Level.SEVERE, e.toString(), e);
-        }
-
-        Shapefile shp = new Shapefile(new File("data" + sep + "shp" + sep + "shp_0" + sep + "DEPARE.shp"));
-
-        new DepareView(s57Layer, s57Layer, s57Layer,
-                simplifyFactor,
-                Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
-                true, true)
-                .display(shp);
-    }
-
-    private DEM createBathymetryAndElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
+    private List<Point3D[][]> createBathymetryAndElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
+        List<Point3D[][]> grids = new ArrayList<>();
         // Search for x,y,z bathy, z>0 in the DB
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM bathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
@@ -838,10 +792,14 @@ public class StlDBComponentController
             altiElevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation + p.getElevation()));
         });
         bathyElevations.addAll(altiElevations);
+
         Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, DEFAULT_GRID, DEFAULT_GRID, maxElevation);
         grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
+        String outputName = DEFAULT_KML_PATH + outFileTF.getText() + ".kml";
+        String boxName = DEFAULT_KML_PATH + "box.kml";
         if (tileCount == 1) {
-            createBathymetryAndElevationTab1(grid, 0, 0);
+            exportKmlStlGridBoxed(outputName, boxName, grid);
+            grids.add(grid);
         } else {
             int bound = grid[0].length / tileCount;
             if (grid[0].length <= tileCount * bound) {
@@ -859,30 +817,41 @@ public class StlDBComponentController
                                     grid[i + l * bound][j + c * bound].getElevation());
                         }
                     }
-                    createBathymetryAndElevationTab1(realGrid, l, c);
+                    outputName = DEFAULT_KML_PATH + outFileTF.getText() + l + "," + c + ".kml";
+                    boxName = DEFAULT_KML_PATH + "box" + l + "," + c + ".kml";
+                    exportKmlStlGridBoxed(outputName, boxName, realGrid);
+                    grids.add(realGrid);
                 }
             }
         }
-        return bathy;
+        return grids;
     }
 
-    private void createBathymetryAndElevationTab1(Point3D[][] grid, int l, int c) {
-        String outputName = DEFAULT_KML_PATH + outFileTF.getText() + l + "," + c + ".kml";
-        String boxName = DEFAULT_KML_PATH + l + "," + c + ".kml";
-        List<gov.nasa.worldwind.render.Path> gridPath = displayServices.displayGridAsTriangles(grid, s57Layer, Material.CYAN, 1);
+    private String exportKmlStlGridBoxed(String outputName, String boxName, Point3D[][] grid) {
+        String resultKmlFilename = exportKMLGridBoxed(outputName, boxName, grid);
+        String resultStlFilename = exportStlGridBoxed(resultKmlFilename, grid);
+        return resultStlFilename;
+    }
+
+    private String exportKMLGridBoxed(String outputName, String boxName, Point3D[][] grid) {
+        List<Path> gridPath = displayServices.displayGridAsTriangles(grid, s57Layer, Material.CYAN, 1);
         GridBox3D box = new GridBox3D(grid);
         List<Polygon> polygons = displayServices.createPolygons(gridPath);
         displayServices.exportWKMLPolygons(outputName, polygons, verticalExaggeration);
         displayServices.exportWKMLPolygons(boxName, box.getSidePolygons(), verticalExaggeration);
-
         String resultKmlFilename = displayServices.mergeKML(outputName, boxName);
+        return resultKmlFilename;
+    }
+
+    private String exportStlGridBoxed(String resultKmlFilename, Point3D[][] grid) {
         double realLatMin = grid[0][0].getLatitude();
         double realLonMin = grid[0][0].getLongitude();
         scaleCompute(grid);
-        String resultStlFilename = stlComponentServices.exportSTL(realLatMin, realLonMin, latScale, lonScale, resultKmlFilename);
+        String resultStlFilename = stlComponentServices.exportSTL(realLatMin, realLonMin, latScale, lonScale, resultKmlFilename, tileSideZ);
         if (stlpreviewCB.isSelected()) {
             stlComponentServices.viewSTL("../" + resultStlFilename);
         }
+        return resultStlFilename;
     }
 
     private void scaleCompute(Point3D[][] grid) {
@@ -920,7 +889,7 @@ public class StlDBComponentController
         bathyElevations.addAll(altiElevations);
         // Triangulation of all points
         // List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunay(bathyElevations);
-        List<gov.nasa.worldwind.render.Path> paths = jtsServices.createDelaunayWithFilterOnLength(bathyElevations, 0.02);
+        List<Path> paths = jtsServices.createDelaunayWithFilterOnLength(bathyElevations, 0.02);
 
         //Display with z exagerration and vertical offset
         displayServices.displayPaths(paths, s57Layer, Material.GREEN, verticalExaggeration, maxElevation);
@@ -1184,4 +1153,70 @@ public class StlDBComponentController
 
         return newTab;
     }
+
+    private void createElevationAndDepare(double latMin, double lonMin, double latMax, double lonMax) {
+        bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
+        Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
+        displayServices.displayGrid(ptsTab, s57Layer, Material.GREEN, verticalExaggeration);
+
+        Shapefile shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                .retrieveIn(latMin, lonMin, latMax, lonMax);
+
+        new DepareView(s57Layer, s57Layer, s57Layer,
+                simplifyFactor,
+                Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
+                true, true)
+                .display(shapefile);
+    }
+
+    private void createElevationAndUlhyssesDepare(double latMin, double lonMin, double latMax, double lonMax) {
+        bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
+        Point3D[][] pts = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
+        displayServices.displayGrid(pts, s57Layer, Material.GREEN, verticalExaggeration);
+
+        List<Point3D> points = bathymetry.getGrid();
+        bathymetryDBServices.writePointList(points, Paths.get(System.getProperty("user.dir") + "/privateData/ulhysses", "bathy.csv"), false);
+
+        String ulhyssesPath = "" + sep + "opt" + sep + "ULHYSSES" + sep + "app";
+        String command
+                = "cd " + ulhyssesPath + " \n"
+                + System.getProperty("java.home") + sep + "bin" + sep + "java "
+                + "-Dlog4j.configuration=file:" + ulhyssesPath + "" + sep + "conf-tools" + sep + "toolsLog4j.properties "
+                + "-Xmx14g -Xms1024m -jar " + ulhyssesPath + "" + sep + "" + "ULHYSSES.jar "
+                + "--outputDirectory=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses "
+                + "--inputFile=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses" + sep + "bathy.csv "
+                + "--compilationScale=1000 --fileType=0 --isoValues='" + isoValuesUlhysses + "' "
+                + "--codeAgency=4G --baseName=0001";
+        try {
+            Proc.BUILDER.create()
+                    .setCmd(command)
+                    .execSh();
+        } catch (IOException | InterruptedException ex) {
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+        }
+
+        new File("data" + sep + "shp").mkdir();
+        new File("data" + sep + "shp" + sep + "shp_0").mkdir();
+        String cmd0 = startCmd("ogr2ogr");
+        String cmd;
+        String sep = File.separator;
+        try {
+            java.nio.file.Path tmp = Paths.get(new File(System.getProperty("user.dir") + sep + "privateData" + sep + "ulhysses" + sep + "bathy" + sep + "ENC" + sep + "4G600010.000").toString());
+            cmd = cmd0 + " -skipfailures -overwrite " + "data" + sep + "shp" + sep + "shp_0" + " " + tmp.toString();
+            Proc.BUILDER.create()
+                    .setCmd(cmd)
+                    .execSh();
+        } catch (IOException | InterruptedException e) {
+            LOGGER.log(Level.SEVERE, e.toString(), e);
+        }
+
+        Shapefile shp = new Shapefile(new File("data" + sep + "shp" + sep + "shp_0" + sep + "DEPARE.shp"));
+
+        new DepareView(s57Layer, s57Layer, s57Layer,
+                simplifyFactor,
+                Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
+                true, true)
+                .display(shp);
+    }
+
 }

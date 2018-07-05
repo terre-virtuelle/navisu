@@ -45,7 +45,7 @@ public class StlComponentImpl
 
     @Override
     public void viewSTL(String filename) {
-        System.out.println("System : " + System.getProperty("user.dir"));
+       // System.out.println("System : " + System.getProperty("user.dir"));
         String path = "stl";
         String command
                 = "cd " + path + " \n"
@@ -62,7 +62,8 @@ public class StlComponentImpl
     }
 
     @Override
-    public String exportSTL(double latMin, double lonMin, double latScale, double lonScale, String kmlFilename) {
+    public String exportSTL(double latMin, double lonMin, double latScale, double lonScale, 
+            String kmlFilename, double verticalOffset) {
         String stlFilename = "";
         try {
             String content = new String(Files.readAllBytes(Paths.get(kmlFilename)));
@@ -78,7 +79,7 @@ public class StlComponentImpl
                     s = s.replace("</coordinates>", "é");
                     String[] coord = s.split("é");
                     String[] triangleString = coord[1].split("\\s+");
-                    result += toFacet(triangleString, latMin, lonMin, latScale, lonScale);
+                    result += toFacet(triangleString, latMin, lonMin, latScale, lonScale, verticalOffset);
                 }
             }
             result += "endsolid " + stlFilename + "\n";
@@ -91,7 +92,9 @@ public class StlComponentImpl
         return "privateData/stl/" + stlFilename + ".stl";
     }
 
-    private String toFacet(String[] triangleString, double latMin, double lonMin, double latScale, double lonScale) {
+    private String toFacet(String[] triangleString,
+            double latMin, double lonMin, double latScale, double lonScale,
+            double verticalOffset) {
         String facet = "";
         Vec3d[] vec3d = new Vec3d[3];
         Vec3d normal;
@@ -105,9 +108,9 @@ public class StlComponentImpl
         facet = "facet normal ";
         facet += normal.x + " " + normal.y + " " + normal.z + " \n";
         facet += "outer loop \n";
-        facet += "vertex " + vec3d[0].x + " " + vec3d[0].y + " " + vec3d[0].z + " \n";
-        facet += "vertex " + vec3d[1].x + " " + vec3d[1].y + " " + vec3d[1].z + " \n";
-        facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + vec3d[2].z + " \n";
+        facet += "vertex " + vec3d[0].x + " " + vec3d[0].y + " " + vec3d[0].z + verticalOffset + " \n";
+        facet += "vertex " + vec3d[1].x + " " + vec3d[1].y + " " + vec3d[1].z + verticalOffset + " \n";
+        facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + vec3d[2].z + verticalOffset + " \n";
         facet += "endloop \n";
         facet += "endfacet \n";
 
@@ -128,6 +131,6 @@ public class StlComponentImpl
 
         double elv = Double.parseDouble(c[2]) * elvScale;
 
-        return new Vec3d(lonM , latM , elv);//retour en xyz
+        return new Vec3d(lonM, latM, elv);//retour en xyz
     }
 }
