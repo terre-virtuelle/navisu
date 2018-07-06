@@ -37,6 +37,9 @@ public class BuoyageView {
     protected String label;
     protected boolean dev = false;
 
+    public BuoyageView() {
+    }
+
     public BuoyageView(RenderableLayer layer) {
         this.layer = layer;
     }
@@ -106,6 +109,8 @@ public class BuoyageView {
             }
             pointPlacemarks.add(placemark);
         }
-        layer.addRenderables(pointPlacemarks);
+        if (layer != null) {
+            layer.addRenderables(pointPlacemarks);
+        }
     }
 }

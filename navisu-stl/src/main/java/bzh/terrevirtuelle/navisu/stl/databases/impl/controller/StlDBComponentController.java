@@ -119,6 +119,8 @@ import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.BuoyageExportKML;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.BuoyageExportSTL;
 import gov.nasa.worldwind.render.Path;
 
 /**
@@ -651,7 +653,7 @@ public class StlDBComponentController
             if (selectedObjects.contains("ALL") || depareUlhyssesRB.isSelected()) {
                 createElevationAndUlhyssesDepare(latMin, lonMin, latMax, lonMax);
             }
-
+            int i = 0;
             if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
                 if (grids != null) {
                     Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
@@ -664,6 +666,9 @@ public class StlDBComponentController
                                             g[g[0].length - 1][g[0].length - 1].getLongitude()));
                         }
                         new BuoyageView(s57Layer).display(buoyages);
+                        new BuoyageExportKML(kmlFileNames.get(i)).export(buoyages);
+                        new BuoyageExportSTL(kmlFileNames.get(i)).export(buoyages);
+                        i++;
                     }
                 } else {
                     System.out.println("grids : " + grids);
@@ -814,7 +819,7 @@ public class StlDBComponentController
         kmlFileNames = new ArrayList<>();
         Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, DEFAULT_GRID, DEFAULT_GRID, maxElevation);
         grid = jtsServices.mergePointsToGrid(elevations, grid);
-      
+
         String outputName = DEFAULT_KML_PATH + outFileTF.getText() + ".kml";
         String boxName = DEFAULT_KML_PATH + "box.kml";
         if (tileCount == 1) {
@@ -858,7 +863,7 @@ public class StlDBComponentController
 
     private String exportKMLGridBoxed(String outputName, String boxName, Point3D[][] grid) {
         List<Path> gridPath = displayServices.displayGridAsTriangles(grid, s57Layer, Material.WHITE, 1);
-      
+
         GridBox3D box = new GridBox3D(grid);
         if (solidRB.isSelected()) {
             List<Polygon> polygons = displayServices.createPolygons(gridPath);
