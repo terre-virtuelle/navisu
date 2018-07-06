@@ -13,8 +13,7 @@ import java.util.List;
  *
  * @author serge
  */
-public class BuoyageExportSTL
-        extends BuoyageView {
+public class BuoyageExportSTL {
 
     String filename;
 
@@ -22,7 +21,6 @@ public class BuoyageExportSTL
         this.filename = filename;
         System.out.println("BuoyageExportSTL : " + filename);
     }
-
 
     public void export(List<Buoyage> buoyages) {
 

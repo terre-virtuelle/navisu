@@ -142,6 +142,7 @@ public class DisplayImpl
             double verticalExaggeration) {
         List<Position> positions;
         List<Path> result = new ArrayList<>();
+        List<Path> view = new ArrayList<>();
         Path path;
         int latLength = latLons[0].length;
         int lonLength = latLons[1].length;
@@ -163,10 +164,27 @@ public class DisplayImpl
                         latLons[i][j].getElevation() * verticalExaggeration));
                 path = new Path(positions);
                 path.setAttributes(createAttributes(material.getDiffuse()));
+                view.add(path);
+                result.add(path);
+                positions = new ArrayList<>();
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j + 1].getLatitude(),
+                        latLons[i + 1][j + 1].getLongitude(),
+                        latLons[i + 1][j + 1].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j].getLatitude(),
+                        latLons[i + 1][j].getLongitude(),
+                        latLons[i + 1][j].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                path = new Path(positions);
+                path.setAttributes(createAttributes(material.getDiffuse()));
                 result.add(path);
             }
         }
-        layer.addRenderables(result);
+        layer.addRenderables(view);
         wwd.redrawNow();
         return result;
     }
