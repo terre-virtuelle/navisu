@@ -448,7 +448,6 @@ public class StlDBComponentController
                 });
         tileSideXTF.setText(Double.toString(DEFAULT_SIDE));
         tileSideXTF.setOnAction((ActionEvent event) -> {
-
             try {
                 tileSideX = Double.parseDouble(tileSideXTF.getText());
                 tileSideXTF.setText(Double.toString(tileSideX));
@@ -463,7 +462,6 @@ public class StlDBComponentController
             if (lat0 != 520) {
                 initScale();
             }
-
         });
         tileSideYTF.setText(Double.toString(DEFAULT_SIDE));
         tileSideYTF.setOnAction((ActionEvent event) -> {
@@ -763,7 +761,8 @@ public class StlDBComponentController
         maxElevation = dem.getMaxElevation();
         List<Path> paths = jtsServices.createDelaunayWithFilter(dem.getGrid(), 1E-6, maxElevation);
         displayServices.displayPaths(paths, s57Layer, Material.GREEN, verticalExaggeration, maxElevation);
-        displayServices.exportWKML(paths, verticalExaggeration);
+        String outputName = DEFAULT_KML_PATH + outFileTF.getText() + ".kml";
+        displayServices.exportWKML(outputName, paths, verticalExaggeration);
         return dem;
     }
 
