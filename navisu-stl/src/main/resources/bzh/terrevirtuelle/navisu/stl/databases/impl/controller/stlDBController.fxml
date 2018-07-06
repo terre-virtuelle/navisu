@@ -181,6 +181,7 @@
                           </rowConstraints>
                            <children>
                               <RadioButton fx:id="elevationRB" mnemonicParsing="false" text="DEM" />
+                              <RadioButton fx:id="solidRB" mnemonicParsing="false" text="Solid" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                         <CheckBox fx:id="stlpreviewCB" mnemonicParsing="false" selected="true" text="STL Preview" GridPane.columnIndex="4" GridPane.rowIndex="16" />
@@ -199,6 +200,7 @@
                               <TextField fx:id="gridSizeXTF" text="75" />
                            </children>
                         </GridPane>
+                        <RadioButton fx:id="wireframeRB" mnemonicParsing="false" text="Wireframe" GridPane.columnIndex="4" GridPane.rowIndex="15" />
                               </children>
                           </GridPane>
                         <GridPane maxHeight="80.0" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="80.0" prefWidth="420.0" styleClass="grid-pane-fixvalue" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.valignment="CENTER">

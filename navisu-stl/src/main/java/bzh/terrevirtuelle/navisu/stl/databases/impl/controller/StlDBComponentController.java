@@ -178,12 +178,6 @@ public class StlDBComponentController
     protected static final String LAT_MAX = "48.42";
     protected static final String LON_MAX = "-4.30";
 
-    /*
-    protected static final String LAT_MIN = "48.21";
-    protected static final String LON_MIN = "-4.61";
-    protected static final String LAT_MAX = "48.22";
-    protected static final String LON_MAX = "-4.55";
-     */
     protected RenderableLayer bathymetryLayer;
     protected RenderableLayer s57Layer;
     protected RenderableLayer selectLayer;
@@ -213,7 +207,7 @@ public class StlDBComponentController
     protected List<Polygon> selectedPolygons = new ArrayList<>();
 
     protected int tileCount = 1;
-    protected double DEFAULT_EXAGGERATION = 5;
+    protected double DEFAULT_EXAGGERATION = 2.0;
     protected double verticalExaggeration = DEFAULT_EXAGGERATION;
     protected double simplifyFactor;
     protected S57ObjectView s57Viewer;
@@ -319,9 +313,14 @@ public class StlDBComponentController
     public RadioButton elevationRB;
     @FXML
     public CheckBox stlpreviewCB;
+    @FXML
+    public RadioButton solidRB;
+    @FXML
+    public RadioButton wireframeRB;
 
     protected CheckComboBox<String> checkComboBox;
     final ToggleGroup bathyGroup = new ToggleGroup();
+    final ToggleGroup wsGroup = new ToggleGroup();
 
     protected ObservableList<String> s57DbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
@@ -528,6 +527,10 @@ public class StlDBComponentController
         depareRB.setToggleGroup(bathyGroup);
         depareUlhyssesRB.setToggleGroup(bathyGroup);
 
+        solidRB.setToggleGroup(wsGroup);
+        wireframeRB.setToggleGroup(wsGroup);
+        wireframeRB.setSelected(true);
+
         isoValuesUlhysses = ulhyssesTF.getText();
         ulhyssesTF.setOnAction((ActionEvent event) -> {
             isoValuesUlhysses = ulhyssesTF.getText();
@@ -629,7 +632,7 @@ public class StlDBComponentController
             MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
             marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
-            List<Point3D[][]> grids;
+            List<Point3D[][]> grids = null;
             //BATHY, ELEVATION AND TILES
             if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && demRB.isSelected())) {
                 grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
@@ -650,14 +653,21 @@ public class StlDBComponentController
             }
 
             if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
-
-                Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
-
-                for (String b : buoyageKeySet) {
-                    buoyages.addAll(new BuoyageDBLoader(topologyServices, s57Connection, b, topMarkMap, marsys)
-                            .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                if (grids != null) {
+                    Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
+                    for (Point3D[][] g : grids) {
+                        for (String b : buoyageKeySet) {
+                            buoyages.addAll(new BuoyageDBLoader(topologyServices, s57Connection, b, topMarkMap, marsys)
+                                    .retrieveObjectsIn(g[0][0].getLatitude(),
+                                            g[0][0].getLongitude(),
+                                            g[g[0].length - 1][g[0].length - 1].getLatitude(),
+                                            g[g[0].length - 1][g[0].length - 1].getLongitude()));
+                        }
+                        new BuoyageView(s57Layer).display(buoyages);
+                    }
+                } else {
+                    System.out.println("grids : " + grids);
                 }
-                new BuoyageView(s57Layer).display(buoyages);
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("ACHARE")) {
                 objects = new AnchorageAreaDBLoader(topologyServices, s57Connection)
@@ -817,9 +827,10 @@ public class StlDBComponentController
                 grid = copy(tmpTab);
                 bound = grid[0].length / tileCount;
             }
-            Point3D[][] realGrid = new Point3D[bound + 1][bound + 1];
+
             for (int l = 0; l < tileCount; l++) {
                 for (int c = 0; c < tileCount; c++) {
+                    Point3D[][] realGrid = new Point3D[bound + 1][bound + 1];
                     for (int i = 0; i < bound + 1; i++) {
                         for (int j = 0; j < bound + 1; j++) {
                             realGrid[i][j] = new Point3D(grid[i + l * bound][j + c * bound].getLatitude(),
@@ -833,6 +844,7 @@ public class StlDBComponentController
                     grids.add(realGrid);
                 }
             }
+
         }
         return grids;
     }
@@ -846,9 +858,14 @@ public class StlDBComponentController
     private String exportKMLGridBoxed(String outputName, String boxName, Point3D[][] grid) {
         List<Path> gridPath = displayServices.displayGridAsTriangles(grid, s57Layer, Material.WHITE, 1);
         GridBox3D box = new GridBox3D(grid);
-        List<Polygon> polygons = displayServices.createPolygons(gridPath);
-        displayServices.exportWKMLPolygons(outputName, polygons, verticalExaggeration);
-        displayServices.exportWKMLPolygons(boxName, box.getSidePolygons(), verticalExaggeration);
+        if (solidRB.isSelected()) {
+            List<Polygon> polygons = displayServices.createPolygons(gridPath);
+            displayServices.exportWKMLPolygons(outputName, polygons, verticalExaggeration);
+            displayServices.exportWKMLPolygons(boxName, box.getSidePolygons(), verticalExaggeration);
+        } else {
+            displayServices.exportWKML(outputName, gridPath, verticalExaggeration);
+            displayServices.exportWKML(boxName, box.getSidePaths(), verticalExaggeration);
+        }
         String resultKmlFilename = displayServices.mergeKML(outputName, boxName);
         return resultKmlFilename;
     }
