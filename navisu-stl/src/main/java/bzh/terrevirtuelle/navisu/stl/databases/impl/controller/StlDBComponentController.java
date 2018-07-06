@@ -814,6 +814,7 @@ public class StlDBComponentController
         kmlFileNames = new ArrayList<>();
         Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, DEFAULT_GRID, DEFAULT_GRID, maxElevation);
         grid = jtsServices.mergePointsToGrid(elevations, grid);
+      
         String outputName = DEFAULT_KML_PATH + outFileTF.getText() + ".kml";
         String boxName = DEFAULT_KML_PATH + "box.kml";
         if (tileCount == 1) {
@@ -857,6 +858,7 @@ public class StlDBComponentController
 
     private String exportKMLGridBoxed(String outputName, String boxName, Point3D[][] grid) {
         List<Path> gridPath = displayServices.displayGridAsTriangles(grid, s57Layer, Material.WHITE, 1);
+      
         GridBox3D box = new GridBox3D(grid);
         if (solidRB.isSelected()) {
             List<Polygon> polygons = displayServices.createPolygons(gridPath);
