@@ -882,6 +882,7 @@ public class StlDBComponentController
         double realLonMin = grid[0][0].getLongitude();
         scaleCompute(grid);
         String resultStlFilename = stlComponentServices.exportSTL(realLatMin, realLonMin, latScale, lonScale, resultKmlFilename, tileSideZ);
+        resultStlFilename = stlComponentServices.exportBaseSTL(resultStlFilename, "data/stl/base.stl");
         if (stlpreviewCB.isSelected()) {
             stlComponentServices.viewSTL("../" + resultStlFilename);
         }

@@ -88,8 +88,25 @@ public class StlComponentImpl
         } catch (IOException ex) {
             Logger.getLogger(StlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-
         return "privateData/stl/" + stlFilename + ".stl";
+    }
+
+    @Override
+    public String exportBaseSTL(String stlFilename, String stlBaseFilename) {
+        java.nio.file.Path path = null;
+        String header = "solid out \n";
+        try {
+            String base = new String(Files.readAllBytes(Paths.get(stlBaseFilename)));
+            String body = new String(Files.readAllBytes(Paths.get(stlFilename)));
+            body = body.replace(header, "");
+            header = header.concat(base);
+            header = header.concat(body);
+            path = Paths.get(stlFilename);
+            Files.write(path, header.getBytes(), StandardOpenOption.CREATE);
+        } catch (IOException ex) {
+            Logger.getLogger(StlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        return path.toString();
     }
 
     private String toFacet(String[] triangleString,
