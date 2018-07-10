@@ -9,19 +9,12 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE_INV;
-import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.Offset;
-import gov.nasa.worldwind.render.PointPlacemark;
-import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,25 +39,29 @@ public class BuoyageExportKML {
 
     public BuoyageExportKML(String filename) {
         this.filename = filename;
+
     }
 
-    public void export(List<Buoyage> buoyages) {
-        String base = "";
+    public void export(List<Buoyage> buoyages, double elevation) {
+        java.nio.file.Path path = Paths.get(filename);
+        String body = "";
         try {
-            base = new String(Files.readAllBytes(Paths.get(filename)));
+            body = new String(Files.readAllBytes(Paths.get(filename)));
         } catch (IOException ex) {
             Logger.getLogger(BuoyageExportKML.class.getName()).log(Level.SEVERE, null, ex);
         }
-        base = base.replace("</Document>", "");
-        base = base.replace("</kml>", "");
+        body = body.replace("</Document>", "");
+        body = body.replace("</kml>", "");
         String buoys = "";
         for (Buoyage buoyage : buoyages) {
             acronym = BUOYAGE_INV.ATT.get(buoyage.getClass().getSimpleName());
             lat = buoyage.getLatitude();
             lon = buoyage.getLongitude();
-            elv = Double.valueOf(buoyage.getElevation());
+            
             String imageAddress = "";
             if (acronym.equals("LNDMRK")) {
+                elv = Double.valueOf(buoyage.getElevation());
+                buoys = buoys.concat(insertedFile(lat, lon, elv, "fish01.dae"));
                 imageAddress = "img/landmarks_" + buoyage.getMarsys() + "/"
                         + acronym + "_"
                         + buoyage.getCategoryOfMark() + "_"
@@ -87,7 +84,7 @@ public class BuoyageExportKML {
                             + buoyage.getMarsys()
                             + ".png";
                 } else {
-                    buoys = buoys.concat(insertedFile(lat, lon, 0.0, "lithops_0.dae"));
+                    buoys = buoys.concat(insertedFile(lat, lon, elevation, "lithops_0.dae"));
                     imageAddress = "img/buoyage_"
                             + buoyage.getMarsys() + "/"
                             + acronym + "_"
@@ -100,11 +97,11 @@ public class BuoyageExportKML {
                 }
             }
         }
-        java.nio.file.Path path = Paths.get(filename);
-        base = base.concat(buoys);
-        base = base.concat("</Document>\n </kml>\n");
+
+        body = body.concat(buoys);
+        body = body.concat("</Document>\n </kml>\n");
         try {
-            Files.write(path, base.getBytes(), StandardOpenOption.CREATE);
+            Files.write(path, body.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
             Logger.getLogger(BuoyageExportKML.class.getName()).log(Level.SEVERE, null, ex);
         }

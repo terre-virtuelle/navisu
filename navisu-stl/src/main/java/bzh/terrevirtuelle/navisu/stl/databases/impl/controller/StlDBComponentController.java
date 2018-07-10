@@ -531,7 +531,7 @@ public class StlDBComponentController
 
         solidRB.setToggleGroup(wsGroup);
         wireframeRB.setToggleGroup(wsGroup);
-        wireframeRB.setSelected(true);
+        solidRB.setSelected(true);
 
         isoValuesUlhysses = ulhyssesTF.getText();
         ulhyssesTF.setOnAction((ActionEvent event) -> {
@@ -666,8 +666,8 @@ public class StlDBComponentController
                                             g[g[0].length - 1][g[0].length - 1].getLongitude()));
                         }
                         new BuoyageView(s57Layer).display(buoyages);
-                        new BuoyageExportKML(kmlFileNames.get(i)).export(buoyages);
-                        new BuoyageExportSTL(kmlFileNames.get(i)).export(buoyages);
+                        new BuoyageExportKML(kmlFileNames.get(i)).export(buoyages, maxElevation + tileSideZ);
+                        new BuoyageExportSTL(stlFileNames.get(i)).export(buoyages, maxElevation + tileSideZ);
                         i++;
                     }
                 } else {
@@ -720,7 +720,27 @@ public class StlDBComponentController
                 List<Landmark> landmarks = new LandmarkDBLoader(topologyServices, s57Connection, marsys)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 new LandmarkView(s57Layer).display(landmarks);
-
+                /*
+                if (grids != null) {
+                    Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
+                    for (Point3D[][] g : grids) {
+                        for (String b : buoyageKeySet) {
+                            buoyages.addAll(new LandmarkDBLoader(topologyServices, s57Connection, marsys)
+                                    .retrieveObjectsIn(g[0][0].getLatitude(),
+                                            g[0][0].getLongitude(),
+                                            g[g[0].length - 1][g[0].length - 1].getLatitude(),
+                                            g[g[0].length - 1][g[0].length - 1].getLongitude()));
+                        }
+                        new BuoyageView(s57Layer).display(buoyages);
+                        new BuoyageExportKML(kmlFileNames.get(i)).export(buoyages);
+                        new BuoyageExportSTL(kmlFileNames.get(i)).export(buoyages);
+                        i++;
+                    }
+                } else {
+                    System.out.println("grids : " + grids);
+                }
+                 */
+                // 
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("LIGHTS")) {
 

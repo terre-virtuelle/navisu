@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class BuoyageExportSTL {
         System.out.println("BuoyageExportSTL : " + filename);
     }
 
-    public void export(List<Buoyage> buoyages) {
+    public void export(List<Buoyage> buoyages, double elevation) {
 
     }
 }

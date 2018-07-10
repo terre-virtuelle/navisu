@@ -181,7 +181,7 @@
                           </rowConstraints>
                            <children>
                               <RadioButton fx:id="elevationRB" mnemonicParsing="false" selected="true" text="DEM" />
-                              <RadioButton fx:id="solidRB" mnemonicParsing="false" text="Solid" GridPane.columnIndex="1" />
+                              <RadioButton fx:id="solidRB" mnemonicParsing="false" selected="true" text="Solid" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                         <CheckBox fx:id="stlpreviewCB" mnemonicParsing="false" selected="true" text="STL Preview" GridPane.columnIndex="4" GridPane.rowIndex="16" />
