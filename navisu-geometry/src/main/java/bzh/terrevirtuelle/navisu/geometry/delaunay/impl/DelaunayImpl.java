@@ -108,7 +108,10 @@ public class DelaunayImpl
     }
 
     @Override
-    public Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax, double y, double x, double elevation) {
+    public Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax, 
+            double y, double x, 
+            double elevation) {
+        System.out.println("y : "+y+" x : "+x);
         Position p = geodesyServices.getPosition(Position.fromDegrees(latMin, lonMin), 0.0, y);
         double latInc = latMin - p.getLatitude().getDegrees();
         latInc = Math.abs(latInc);
@@ -131,6 +134,7 @@ public class DelaunayImpl
             lon = lonMin;
             lat += latInc;
         }
+        
         List<Point3D> l = new ArrayList<>();
         ptsList.add(l);
         lat = latMax;
@@ -153,6 +157,7 @@ public class DelaunayImpl
                 ptsTab[i][j] = ptsList.get(i).get(j);
             }
         }
+        System.out.println("ptsTab " + ptsTab[0].length+" "+ptsTab[1].length);
         return ptsTab;
     }
 

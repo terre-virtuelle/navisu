@@ -157,6 +157,7 @@ public class BathymetryDBController {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         guiAgentServices.getJobsManager().newJob("create", (progressHandle) -> {
+           //
             String query = "DROP TABLE IF EXISTS  " + table + "; "
                     + "CREATE TABLE " + table + "("
                     + "gid SERIAL PRIMARY KEY,"
@@ -168,7 +169,7 @@ public class BathymetryDBController {
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
-
+            //
             points3df = readFromFile(filename);
             insert(points3df);
             createIndex(table);

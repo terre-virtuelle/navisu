@@ -7,6 +7,7 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.Vec3d;
 import org.capcaval.c3.component.ComponentState;
 import bzh.terrevirtuelle.navisu.stl.StlComponent;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -93,20 +94,23 @@ public class StlComponentImpl
 
     @Override
     public String exportBaseSTL(String stlFilename, String stlBaseFilename) {
+        String header;
+        String result;
         java.nio.file.Path path = null;
-        String header = "solid out \n";
         try {
             String base = new String(Files.readAllBytes(Paths.get(stlBaseFilename)));
             String body = new String(Files.readAllBytes(Paths.get(stlFilename)));
-            body = body.replace(header, "");
-            header = header.concat(base);
-            header = header.concat(body);
+            String[] fileSTL = body.split("\n");
+            header = fileSTL[0] + "\n";
+            body = body.replaceFirst(header, "");
+            result = header.concat(base);
+            result = result.concat(body);
             path = Paths.get(stlFilename);
-            Files.write(path, header.getBytes(), StandardOpenOption.CREATE);
+            Files.write(path, result.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
             Logger.getLogger(StlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        return path.toString();
+        return path != null ? path.toString() : null;
     }
 
     private String toFacet(String[] triangleString,

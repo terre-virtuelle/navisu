@@ -193,6 +193,8 @@ public class StlDBComponentController
     protected double tileSideY = DEFAULT_SIDE;
     protected double tileSideZ = DEFAULT_BASE_HEIGHT;
     protected double DEFAULT_GRID = 75.0;
+    protected double gridX = DEFAULT_GRID;
+    protected double gridY = DEFAULT_GRID;
     protected double lat0 = 520;
     protected double lon0;
     protected double lat1;
@@ -447,6 +449,34 @@ public class StlDBComponentController
                     }
                     selectedPolygons.addAll(createAndDisplayTiles(selectLayer, Material.RED, lat0, lon0, lat1, lon1, tileCount, tileCount));
                 });
+        gridSideXTF.setText(Double.toString(DEFAULT_GRID));
+        gridSideXTF.setOnAction((ActionEvent event) -> {
+            try {
+                gridX = Double.parseDouble(gridSideXTF.getText());
+                gridSideXTF.setText(Double.toString(gridX));
+                gridX = gridX;
+                gridSideXTF.setText(Double.toString(gridX));
+            } catch (NumberFormatException e) {
+                gridX = DEFAULT_SIDE;
+                gridSideXTF.setText(Double.toString(gridX));
+                gridX = DEFAULT_SIDE;
+                gridSideXTF.setText(Double.toString(gridX));
+            }
+        });
+        gridSideYTF.setText(Double.toString(DEFAULT_GRID));
+        gridSideYTF.setOnAction((ActionEvent event) -> {
+            try {
+                gridY = Double.parseDouble(gridSideYTF.getText());
+                gridSideYTF.setText(Double.toString(gridY));
+                gridY = gridY;
+                gridSideYTF.setText(Double.toString(gridY));
+            } catch (NumberFormatException e) {
+                gridY = DEFAULT_SIDE;
+                gridSideYTF.setText(Double.toString(gridY));
+                gridY = DEFAULT_SIDE;
+                gridSideYTF.setText(Double.toString(gridY));
+            }
+        });
         tileSideXTF.setText(Double.toString(DEFAULT_SIDE));
         tileSideXTF.setOnAction((ActionEvent event) -> {
             try {
@@ -837,7 +867,7 @@ public class StlDBComponentController
         List<Point3D[][]> grids = new ArrayList<>();
         stlFileNames = new ArrayList<>();
         kmlFileNames = new ArrayList<>();
-        Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, DEFAULT_GRID, DEFAULT_GRID, maxElevation);
+        Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxElevation);
         grid = jtsServices.mergePointsToGrid(elevations, grid);
 
         String outputName = DEFAULT_KML_PATH + outFileTF.getText() + ".kml";
@@ -956,7 +986,7 @@ public class StlDBComponentController
     private Point3D[][] createGridFromDelaunayBathymetry(DEM bathymetry,
             double latMin, double lonMin, double latMax, double lonMax, double elevation) {
         List<Triangle_dt> triangles = delaunayServices.createDelaunay(bathymetry.getGrid(), Math.round(bathymetry.getMaxElevation()));
-        triangles = delaunayServices.filterLargeEdges(triangles, 0.001);
+        //    triangles = delaunayServices.filterLargeEdges(triangles, 0.001);
 
         Point3D[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, Math.round(bathymetry.getMaxElevation()));
 
