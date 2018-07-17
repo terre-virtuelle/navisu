@@ -132,7 +132,7 @@ public class BuoyageExportKML {
                 + "<z>1</z>\n"
                 + "</Scale>\n"
                 + "<Link>\n"
-                + "<href>" + dataDir + sep + "data" + sep + "collada" + sep + "buoys" + sep + "" + model + "</href>"
+                + "<href>" + dataDir + sep + "data" + sep + "collada" + sep + "buoys" + sep  + model + "</href>"
                 + "</Link>\n"
                 + "</Model>\n"
                 + "</Placemark>\n";
