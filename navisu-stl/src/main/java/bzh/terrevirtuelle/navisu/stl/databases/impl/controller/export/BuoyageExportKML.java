@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE_INV;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -28,6 +29,7 @@ import java.util.logging.Logger;
 public class BuoyageExportKML {
 
     String filename;
+    String sep = File.separator;
     protected RenderableLayer layer;
     protected List<Buoyage> buoyages;
     static int id = 0;
@@ -57,11 +59,11 @@ public class BuoyageExportKML {
             acronym = BUOYAGE_INV.ATT.get(buoyage.getClass().getSimpleName());
             lat = buoyage.getLatitude();
             lon = buoyage.getLongitude();
-            
+
             String imageAddress = "";
             if (acronym.equals("LNDMRK")) {
                 elv = Double.valueOf(buoyage.getElevation());
-                buoys = buoys.concat(insertedFile(lat, lon, elv, "fish01.dae"));
+                buoys = buoys.concat(insertedFile(lat, lon, elv, "lithops_0.dae"));
                 imageAddress = "img/landmarks_" + buoyage.getMarsys() + "/"
                         + acronym + "_"
                         + buoyage.getCategoryOfMark() + "_"
@@ -108,9 +110,10 @@ public class BuoyageExportKML {
     }
 
     private String insertedFile(double latitude, double longitude, double altitude, String model) {
+        String dataDir = System.getProperty("user.dir");
         String result = "<Placemark>\n"
-                + "<name>SketchUp Model of Macky Auditorium</name>\n"
-                + "<description>University of Colorado, Boulder; model created by Noël Nemcik.</description>\n"
+                + "<name>SketchUp Model</name>\n"
+                + "<description>NaVisu</description>\n"
                 + "<Model id=\"model_" + id + "\">\n"
                 + "<altitudeMode>relativeToGround</altitudeMode>\n"
                 + "<Location>\n"
@@ -129,7 +132,7 @@ public class BuoyageExportKML {
                 + "<z>1</z>\n"
                 + "</Scale>\n"
                 + "<Link>\n"
-                + "<href>/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-launcher/data/collada/buoys/" + model + "</href>"
+                + "<href>" + dataDir + sep + "data" + sep + "collada" + sep + "buoys" + sep + "" + model + "</href>"
                 + "</Link>\n"
                 + "</Model>\n"
                 + "</Placemark>\n";

@@ -78,4 +78,8 @@ public interface DisplayServices
     void exportWKMLPolygons(List<Polygon> polygons, double verticalExaggeration);
 
     String mergeKML(String inputFilename, String outputFilename);
+
+    void exportASC(String outputFilename, Point3D[][] pts);
+    
+    Point3D[][] importASC(String outputFilename);
 }

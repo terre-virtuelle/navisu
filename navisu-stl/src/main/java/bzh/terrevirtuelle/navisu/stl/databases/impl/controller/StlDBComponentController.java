@@ -318,6 +318,8 @@ public class StlDBComponentController
     @FXML
     public CheckBox stlpreviewCB;
     @FXML
+    public CheckBox generateStlCB;
+    @FXML
     public RadioButton solidRB;
     @FXML
     public RadioButton wireframeRB;
@@ -697,7 +699,8 @@ public class StlDBComponentController
                         }
                         new BuoyageView(s57Layer).display(buoyages);
                         new BuoyageExportKML(kmlFileNames.get(i)).export(buoyages, maxElevation + tileSideZ);
-                        new BuoyageExportSTL(stlFileNames.get(i)).export(buoyages, maxElevation + tileSideZ);
+                        new BuoyageExportSTL(geodesyServices, g, stlFileNames.get(i))
+                                .export(buoyages, maxElevation + tileSideZ);
                         i++;
                     }
                 } else {
@@ -750,27 +753,6 @@ public class StlDBComponentController
                 List<Landmark> landmarks = new LandmarkDBLoader(topologyServices, s57Connection, marsys)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                 new LandmarkView(s57Layer).display(landmarks);
-                /*
-                if (grids != null) {
-                    Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
-                    for (Point3D[][] g : grids) {
-                        for (String b : buoyageKeySet) {
-                            buoyages.addAll(new LandmarkDBLoader(topologyServices, s57Connection, marsys)
-                                    .retrieveObjectsIn(g[0][0].getLatitude(),
-                                            g[0][0].getLongitude(),
-                                            g[g[0].length - 1][g[0].length - 1].getLatitude(),
-                                            g[g[0].length - 1][g[0].length - 1].getLongitude()));
-                        }
-                        new BuoyageView(s57Layer).display(buoyages);
-                        new BuoyageExportKML(kmlFileNames.get(i)).export(buoyages);
-                        new BuoyageExportSTL(kmlFileNames.get(i)).export(buoyages);
-                        i++;
-                    }
-                } else {
-                    System.out.println("grids : " + grids);
-                }
-                 */
-                // 
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("LIGHTS")) {
 
@@ -875,7 +857,8 @@ public class StlDBComponentController
         if (tileCount == 1) {
             stlFileNames.add(exportKmlStlGridBoxed(outputName, boxName, grid));
             grids.add(grid);
-
+            displayServices.exportASC("privateData/asc/out.asc", grid);
+            displayServices.importASC("privateData/asc/out.asc");
         } else {
             int bound = grid[0].length / tileCount;
             if (grid[0].length <= tileCount * bound) {
@@ -948,6 +931,10 @@ public class StlDBComponentController
         lonRangeMetric = geodesyServices.getDistanceM(realLatMin, realLonMin, realLatMin, realLonMax);
         latScale = tileSideY / latRangeMetric;
         lonScale = tileSideX / lonRangeMetric;
+        Platform.runLater(() -> {
+            rangeLatTF.setText(Integer.toString((int) latRangeMetric));
+            rangeLonTF.setText(Integer.toString((int) lonRangeMetric));
+        });
     }
 
     private DEM createBathymetryAndElevation(double latMin, double lonMin, double latMax, double lonMax) {

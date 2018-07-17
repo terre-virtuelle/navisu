@@ -141,6 +141,7 @@
                                           <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                                           <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                                           <Button fx:id="createButton1" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Create" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+                                          <Button fx:id="updateButton1" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Update" GridPane.columnIndex="2" GridPane.rowIndex="9" />
                                        </children>
                                     </GridPane>
                                  </children>

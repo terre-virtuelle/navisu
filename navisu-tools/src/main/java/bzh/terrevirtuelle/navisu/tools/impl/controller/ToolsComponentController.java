@@ -147,6 +147,8 @@ public class ToolsComponentController
     public TextField bathyDatabaseNameTF;
     @FXML
     public Button createButton1;
+    @FXML
+    public Button updateButton1;
 
     // protected String bathyDataBaseName;
     protected String bathyData;
@@ -166,6 +168,7 @@ public class ToolsComponentController
     public TextField elevationDatabaseNameTF;
     @FXML
     public Button createButton11;
+    
 
     protected String elevationData;
 

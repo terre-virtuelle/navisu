@@ -137,8 +137,8 @@ public class DisplayImpl
     }
 
     @Override
-    public List<Path> displayGridAsTriangles(Point3D[][] latLons, 
-            RenderableLayer layer, Material material, 
+    public List<Path> displayGridAsTriangles(Point3D[][] latLons,
+            RenderableLayer layer, Material material,
             double verticalExaggeration) {
         List<Position> positions;
         List<Path> result = new ArrayList<>();
@@ -575,4 +575,81 @@ public class DisplayImpl
         return result;
     }
 
+    @Override
+    public void exportASC(String outputFilename, Point3D[][] pts) {
+        int nrows = pts[0].length;
+        int ncols = pts[1].length;
+        double xllcorner = pts[0][0].getLongitude();
+        double yllcorner = pts[0][0].getLatitude();
+        double cellsize = Math.abs(pts[0][0].getLongitude() - pts[0][1].getLongitude());
+        double NODATA_value = -99999.00;
+        String result = "ncols " + ncols + "\n";
+        result += "nrows " + ncols + "\n";
+        result += "xllcorner " + xllcorner + "\n";
+        result += "yllcorner " + yllcorner + "\n";
+        result += "cellsize " + cellsize + "\n";
+        result += "NODATA_value " + NODATA_value + "\n";
+        for (int i = nrows - 1; i >= 0; i--) {
+            for (int j = 0; j < ncols; j++) {
+                double z = pts[i][j].getElevation();
+                result += z + " ";
+            }
+            result += "\n";
+        }
+        try {
+            Files.write(Paths.get(outputFilename), result.getBytes(), StandardOpenOption.CREATE);
+        } catch (IOException ex) {
+            Logger.getLogger(DisplayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+    }
+
+    @Override
+    public Point3D[][] importASC(String inputFilename) {
+        /*
+    ncols        1000
+nrows        1000
+xllcorner    599962.500000000000
+yllcorner    6825037.500000000000
+cellsize     75.000000000000
+NODATA_value  -99999.00
+ 111.10 110.60 110.60
+    }
+         */
+
+        String data = "";
+        int ncols;
+        int nrows;
+        double xllcorner;
+        double yllcorner;
+        double cellsize;
+        double NODATA_value;
+        try {
+            data = new String(Files.readAllBytes(Paths.get(inputFilename)));
+        } catch (IOException ex) {
+            Logger.getLogger(DisplayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        String[] dataTab = data.split("\n");
+        ncols = Integer.parseInt(dataTab[0].split("\\s+")[1]);
+        nrows = Integer.parseInt(dataTab[1].split("\\s+")[1]);
+        xllcorner = Double.parseDouble(dataTab[2].split("\\s+")[1]);
+        yllcorner = Double.parseDouble(dataTab[3].split("\\s+")[1]);
+        cellsize = Double.parseDouble(dataTab[4].split("\\s+")[1]);
+        NODATA_value = Double.parseDouble(dataTab[5].split("\\s+")[1]);
+
+        Point3D[][] result = new Point3D[nrows][ncols];
+        for (int i = 6; i < dataTab.length; i++) {
+            String[] rowTab = dataTab[i].split("\\s+");
+            System.out.println("rowTab : " + rowTab.length);
+            for (String z : rowTab) {
+                if (z != null) {
+                    
+                  //  System.out.println("z : " + Double.parseDouble(z));
+                }else{
+                    System.out.println("z : " + z);
+                }
+            }
+            System.out.println("\n");
+        }
+        return result;
+    }
 }

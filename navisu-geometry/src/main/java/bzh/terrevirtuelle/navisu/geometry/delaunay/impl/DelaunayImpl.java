@@ -111,7 +111,7 @@ public class DelaunayImpl
     public Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax, 
             double y, double x, 
             double elevation) {
-        System.out.println("y : "+y+" x : "+x);
+
         Position p = geodesyServices.getPosition(Position.fromDegrees(latMin, lonMin), 0.0, y);
         double latInc = latMin - p.getLatitude().getDegrees();
         latInc = Math.abs(latInc);
