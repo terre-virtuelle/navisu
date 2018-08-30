@@ -181,10 +181,10 @@
                           </rowConstraints>
                            <children>
                               <RadioButton fx:id="elevationRB" mnemonicParsing="false" selected="true" text="DEM" />
-                              <RadioButton fx:id="solidRB" mnemonicParsing="false" selected="true" text="Solid" GridPane.columnIndex="1" />
+                              <RadioButton fx:id="solidRB" mnemonicParsing="false" text="Solid" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
-                        <CheckBox fx:id="stlpreviewCB" mnemonicParsing="false" selected="true" text="STL Preview" GridPane.columnIndex="4" GridPane.rowIndex="16" />
+                        <CheckBox fx:id="stlPreviewCB" mnemonicParsing="false" selected="true" text="STL Preview" GridPane.columnIndex="4" GridPane.rowIndex="16" />
                         <TextField fx:id="tileSideZTF" text="4" GridPane.columnIndex="4" GridPane.rowIndex="6" />
                         <Label alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" text="Grid sizes (m)" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
                         <GridPane GridPane.columnIndex="3" GridPane.rowIndex="7">
@@ -200,8 +200,20 @@
                               <TextField fx:id="gridSideXTF" text="75" />
                            </children>
                         </GridPane>
-                        <RadioButton fx:id="wireframeRB" mnemonicParsing="false" text="Wireframe" GridPane.columnIndex="4" GridPane.rowIndex="15" />
-                        <CheckBox fx:id="generateStlCB" mnemonicParsing="false" selected="true" text="Generate STL" GridPane.columnIndex="3" GridPane.rowIndex="16" />
+                        <RadioButton fx:id="wireframeRB" mnemonicParsing="false" selected="true" text="Wireframe" GridPane.columnIndex="4" GridPane.rowIndex="15" />
+                        <GridPane GridPane.columnIndex="3" GridPane.rowIndex="16">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <CheckBox fx:id="generateKmlCB" mnemonicParsing="false" selected="true" text="Generate KML" GridPane.columnIndex="1" />
+                              <CheckBox fx:id="generateStlCB" mnemonicParsing="false" selected="true" text="Generate STL" />
+                           </children>
+                        </GridPane>
                               </children>
                           </GridPane>
                         <GridPane maxHeight="80.0" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="80.0" prefWidth="420.0" styleClass="grid-pane-fixvalue" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.valignment="CENTER">

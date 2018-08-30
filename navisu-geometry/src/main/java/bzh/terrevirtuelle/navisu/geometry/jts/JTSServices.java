@@ -31,19 +31,23 @@ public interface JTSServices
 
     List<Point3D> merge(List<Point3D> pts0, List<Point3D> pts1);
 
-    List<Path> createDelaunay(List<Point3D> pts);
+    List<Path> createDelaunayToPath(List<Point3D> pts);
 
-    List<Path> createDelaunay(Point3D[][] pts);
+    List<Geometry> createDelaunay(List<Point3D> pts);
 
-    List<Path> createDelaunay(Point3D[][] pts, double maxElevation);
+    List<Path> createDelaunayToPath(Point3D[][] pts);
 
-    List<Path> createDelaunay(List<Point3D> pts, double maxElevation);
+    List<Path> createDelaunayToPath(Point3D[][] pts, double maxElevation);
 
-    List<Path> createDelaunayWithFilterOnArea(List<Point3D> pts, double filter);
+    List<Path> createDelaunayToPath(List<Point3D> pts, double maxElevation);
 
-    List<Path> createDelaunayWithFilterOnLength(List<Point3D> pts, double filter);
+    List<Path> createDelaunayWithFilterOnAreaToPath(List<Point3D> pts, double filter);
 
-    List<Path> createDelaunayWithFilter(List<Point3D> pts, double filter, double maxElevation);
+    List<Path> createDelaunayWithFilterOnLengthToPath(List<Point3D> pts, double filter);
+
+    List<Geometry> createDelaunayWithFilterOnArea(List<Point3D> pts, double filter);
+
+    List<Path> createDelaunayWithFilterToPath(List<Point3D> pts, double filter, double maxElevation);
 
     Point3D[][] mergePointsToGrid(List<Point3D> points, Point3D[][] grid);
 }

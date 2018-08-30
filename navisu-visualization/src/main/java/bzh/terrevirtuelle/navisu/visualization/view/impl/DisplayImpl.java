@@ -100,6 +100,16 @@ public class DisplayImpl
     }
 
     @Override
+    public void displayPoints3DAsTriangles(List<Point3D> points, RenderableLayer layer, Material material) {
+
+    }
+
+    @Override
+    public void displayPaths(GridBox3D gridBox3D, RenderableLayer layer, Material material) {
+        displayPaths(gridBox3D.getPaths(), layer, material, 1);
+    }
+
+    @Override
     public void displayGrid(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration) {
         ArrayList<Position> pathIsoLatPositions;
         List<Path> latPaths = new ArrayList<>();
@@ -111,7 +121,9 @@ public class DisplayImpl
                         pp.getLongitude(),
                         pp.getElevation() * verticalExaggeration));
                 path0 = createPath(pathIsoLatPositions, material);
+                path0.setValue(AVKey.DISPLAY_NAME, pp.getElevation());
             }
+
             latPaths.add(path0);
         }
 
@@ -128,21 +140,103 @@ public class DisplayImpl
                         row[i].getLongitude(),
                         row[i].getElevation() * verticalExaggeration));
                 path1 = createPath(pathIsoLonPositions, material);
+                path1.setValue(AVKey.DISPLAY_NAME, row[i].getElevation());
             }
             i++;
             lonPaths.add(path1);
+
         }
         layer.addRenderables(lonPaths);
         wwd.redrawNow();
     }
 
     @Override
+    public List<Path> createPaths(Point3D[][] latLons, double verticalExaggeration) {
+        List<Position> positions;
+        List<Path> result = new ArrayList<>();
+
+        Path path;
+        int latLength = latLons[0].length;
+        int lonLength = latLons[1].length;
+
+        for (int i = 0; i < latLength - 1; i++) {
+            for (int j = 0; j < lonLength - 1; j++) {
+                positions = new ArrayList<>();
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i][j + 1].getLatitude(),
+                        latLons[i][j + 1].getLongitude(),
+                        latLons[i][j + 1].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j + 1].getLatitude(),
+                        latLons[i + 1][j + 1].getLongitude(),
+                        latLons[i + 1][j + 1].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                path = new Path(positions);
+
+                result.add(path);
+                // All triangles are created
+                positions = new ArrayList<>();
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j + 1].getLatitude(),
+                        latLons[i + 1][j + 1].getLongitude(),
+                        latLons[i + 1][j + 1].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j].getLatitude(),
+                        latLons[i + 1][j].getLongitude(),
+                        latLons[i + 1][j].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                path = new Path(positions);
+
+                result.add(path);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Path createPath(List<Position> pathPositions, Material material) {
+        Path p = new Path(pathPositions);
+        ShapeAttributes attrs0 = new BasicShapeAttributes();
+        attrs0.setOutlineOpacity(1.0);
+        attrs0.setOutlineWidth(1d);
+        attrs0.setOutlineMaterial(material);
+        p.setAltitudeMode(WorldWind.ABSOLUTE);
+        p.setAttributes(attrs0);
+        return p;
+    }
+
+    @Override
+    public List<List<Path>> createPaths(List<Point3D[][]> latLons, double verticalExaggeration) {
+        List<List<Path>> result = new ArrayList<>();
+        for (Point3D[][] pts : latLons) {
+            result.add(createPaths(pts, verticalExaggeration));
+        }
+        return result;
+    }
+
+    @Override
+    public List<List<Path>> createPaths(GridBox3D box3D, double verticalExaggeration) {
+        List<Point3D[][]> latLons = new ArrayList<>();
+        latLons.add(box3D.getGrid());
+        List<List<Path>> result = createPaths(latLons, verticalExaggeration);
+        result.add(box3D.getSidePaths());
+        return result;
+    }
+
+    @Override
     public List<Path> displayGridAsTriangles(Point3D[][] latLons,
             RenderableLayer layer, Material material,
             double verticalExaggeration) {
+
         List<Position> positions;
         List<Path> result = new ArrayList<>();
-        List<Path> view = new ArrayList<>();
+
         Path path;
         int latLength = latLons[0].length;
         int lonLength = latLons[1].length;
@@ -164,36 +258,16 @@ public class DisplayImpl
                         latLons[i][j].getElevation() * verticalExaggeration));
                 path = new Path(positions);
                 path.setAttributes(createAttributes(material.getDiffuse()));
-                view.add(path);
+                // Only South triangles are display, for optimization
                 result.add(path);
-                positions = new ArrayList<>();
-                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
-                        latLons[i][j].getLongitude(),
-                        latLons[i][j].getElevation() * verticalExaggeration));
-                positions.add(Position.fromDegrees(latLons[i + 1][j + 1].getLatitude(),
-                        latLons[i + 1][j + 1].getLongitude(),
-                        latLons[i + 1][j + 1].getElevation() * verticalExaggeration));
-                positions.add(Position.fromDegrees(latLons[i + 1][j].getLatitude(),
-                        latLons[i + 1][j].getLongitude(),
-                        latLons[i + 1][j].getElevation() * verticalExaggeration));
-                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
-                        latLons[i][j].getLongitude(),
-                        latLons[i][j].getElevation() * verticalExaggeration));
-                path = new Path(positions);
-                path.setAttributes(createAttributes(material.getDiffuse()));
-                result.add(path);
+
             }
         }
-        layer.addRenderables(view);
+        layer.addRenderables(result);
         wwd.redrawNow();
         return result;
     }
 
-    /*
-        matrice.length     //  2
-        matrice[0].length  //  4
-        matrice[1].length  //  7
-     */
     @Override
     public void displayGridAsPolygon(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration) {
         ArrayList<Polygon> polygons = null;
@@ -327,18 +401,6 @@ public class DisplayImpl
         wwd.redrawNow();
     }
 
-    @Override
-    public Path createPath(List<Position> pathPositions, Material material) {
-        Path p = new Path(pathPositions);
-        ShapeAttributes attrs0 = new BasicShapeAttributes();
-        attrs0.setOutlineOpacity(1.0);
-        attrs0.setOutlineWidth(1d);
-        attrs0.setOutlineMaterial(material);
-        p.setAltitudeMode(WorldWind.ABSOLUTE);
-        p.setAttributes(attrs0);
-        return p;
-    }
-
     protected ShapeAttributes createAttributes(Color col) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();
         normAttributes.setDrawInterior(false);
@@ -363,9 +425,9 @@ public class DisplayImpl
     }
 
     @Override
-    public void displayGrid(GridBox3D box, RenderableLayer s57Layer, Material material, double verticalExaggeration) {
-
-        displayPolygons(box.getSidePolygons(), s57Layer, material, verticalExaggeration);
+    public void displayGrid(GridBox3D box, RenderableLayer layer, Material material, double verticalExaggeration) {
+        displayGridAsTriangles(box.getGrid(), layer, material, verticalExaggeration);
+        displayPaths(box.getSidePaths(), layer, material, verticalExaggeration);
 
     }
 
@@ -452,13 +514,13 @@ public class DisplayImpl
     }
 
     @Override
-    public void exportWKML(String outputFilename, List<Path> paths, double verticalExaggeration) {
+    public void exportWKML(String outputFilename, List<Path> paths) {
         List<Path> result = new ArrayList<>();
         paths.forEach((p) -> {
             Iterable<? extends Position> positions = p.getPositions();
             List<Position> tmpPos = new ArrayList<>();
             for (Position pp : positions) {
-                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), (pp.getElevation() * verticalExaggeration)));
+                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), pp.getElevation()));
             }
             result.add(new Path(tmpPos));
         });
@@ -482,18 +544,18 @@ public class DisplayImpl
     }
 
     @Override
-    public void exportKML(String outputFilename, List<Path> paths, double verticalExaggeration) {
+    public void exportKML(String outputFilename, List<Path> paths) {
 
     }
 
     @Override
-    public void exportWKMLPolygons(String outputFilename, List<Polygon> paths, double verticalExaggeration) {
+    public void exportWKMLPolygons(String outputFilename, List<Polygon> paths) {
         List<Polygon> result = new ArrayList<>();
         paths.forEach((p) -> {
             Iterable<? extends Position> positions = p.getBoundaries().get(0);
             List<Position> tmpPos = new ArrayList<>();
             for (Position pp : positions) {
-                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), (pp.getElevation() * verticalExaggeration)));
+                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), pp.getElevation()));
             }
             result.add(new Polygon(tmpPos));
         });
@@ -517,18 +579,18 @@ public class DisplayImpl
     }
 
     @Override
-    public void exportWKML(List<Path> paths, double verticalExaggeration) {
-        exportWKML("privateData/kml/out.kml", paths, verticalExaggeration);
+    public void exportWKML(List<Path> paths) {
+        exportWKML("privateData/kml/out.kml", paths);
     }
 
     @Override
-    public void exportKML(List<Path> paths, double verticalExaggeration) {
-        exportKML("privateData/kml/out.kml", paths, verticalExaggeration);
+    public void exportKML(List<Path> paths) {
+        exportKML("privateData/kml/out.kml", paths);
     }
 
     @Override
-    public void exportWKMLPolygons(List<Polygon> polygons, double verticalExaggeration) {
-        DisplayImpl.this.exportWKMLPolygons("privateData/kml/out.kml", polygons, verticalExaggeration);
+    public void exportWKMLPolygons(List<Polygon> polygons) {
+        DisplayImpl.this.exportWKMLPolygons("privateData/kml/out.kml", polygons);
     }
 
     @Override
@@ -577,11 +639,15 @@ public class DisplayImpl
 
     @Override
     public void exportASC(String outputFilename, Point3D[][] pts) {
-        int nrows = pts[0].length;
-        int ncols = pts[1].length;
+        // System.out.println(" exportASC " + pts[0][0] + " " + pts[pts[1].length - 1][pts[1].length - 1]);
+        int nrows = pts[0].length - 1;
+        int ncols = pts[1].length - 1;
         double xllcorner = pts[0][0].getLongitude();
         double yllcorner = pts[0][0].getLatitude();
-        double cellsize = Math.abs(pts[0][0].getLongitude() - pts[0][1].getLongitude());
+        // System.out.println("pts[0][0].getLongitude() : " + pts[0][0].getLongitude());
+        // System.out.println("pts[0][ncols-1].getLongitude() : " + pts[0][ncols - 1].getLongitude());
+        double cellsize = Math.abs((pts[0][0].getLongitude() - pts[0][ncols].getLongitude()) / ncols);
+        System.out.println("exportASC cellsize : " + cellsize);
         double NODATA_value = -99999.00;
         String result = "ncols " + ncols + "\n";
         result += "nrows " + ncols + "\n";
@@ -589,13 +655,14 @@ public class DisplayImpl
         result += "yllcorner " + yllcorner + "\n";
         result += "cellsize " + cellsize + "\n";
         result += "NODATA_value " + NODATA_value + "\n";
-        for (int i = nrows - 1; i >= 0; i--) {
+        for (int i = nrows; i >= 0; i--) {
             for (int j = 0; j < ncols; j++) {
                 double z = pts[i][j].getElevation();
-                result += z + " ";
+                result += Double.toString(z) + " ";
             }
             result += "\n";
         }
+        //     System.out.println(result);
         try {
             Files.write(Paths.get(outputFilename), result.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
@@ -625,6 +692,7 @@ NODATA_value  -99999.00
         double NODATA_value;
         try {
             data = new String(Files.readAllBytes(Paths.get(inputFilename)));
+            // System.out.println("data : " +data);
         } catch (IOException ex) {
             Logger.getLogger(DisplayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
@@ -637,18 +705,34 @@ NODATA_value  -99999.00
         NODATA_value = Double.parseDouble(dataTab[5].split("\\s+")[1]);
 
         Point3D[][] result = new Point3D[nrows][ncols];
-        for (int i = 6; i < dataTab.length; i++) {
+
+        int u = 0, v = 0;
+        for (int i = dataTab.length - 1; i > 6; i--) {
             String[] rowTab = dataTab[i].split("\\s+");
-            System.out.println("rowTab : " + rowTab.length);
-            for (String z : rowTab) {
-                if (z != null) {
-                    
-                  //  System.out.println("z : " + Double.parseDouble(z));
-                }else{
-                    System.out.println("z : " + z);
+            // System.out.println("rowTab : " + rowTab.length);
+            for (int j = 0; j < rowTab.length - 1; j++) {
+                try {
+                    result[u][v] = new Point3D(yllcorner + u * cellsize, xllcorner + v * cellsize, Double.valueOf(rowTab[j]));
+                } catch (java.lang.NumberFormatException e) {
+                    result[u][v] = new Point3D(yllcorner + u * cellsize, xllcorner + v * cellsize, 0.0);
                 }
+                v++;
             }
-            System.out.println("\n");
+            u++;
+            v = 0;
+        }
+        System.out.println("importASC " + result[0][0] + " " + result[nrows - 1][ncols - 1]);
+        return result;
+    }
+
+    @Override
+    public List<List<Path>> displayGridAsTriangles(List<Point3D[][]> grids, RenderableLayer layer, double verticalExaggeration) {
+        Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
+            Material.GRAY, Material.MAGENTA, Material.ORANGE, Material.RED};
+        List<List<Path>> result = new ArrayList<>();
+        int i = 0;
+        for (Point3D[][] g : grids) {
+            result.add(displayGridAsTriangles(g, layer, materials[i++ % 8], 2));
         }
         return result;
     }

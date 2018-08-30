@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.domain.geometry;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -106,7 +107,59 @@ public class Point3D
         this.elevation = elevation;
     }
 
-    
+    public static Point3D[][] copy(Point3D[][] tableau) {
+        int nRows = tableau[0].length;
+        int nColumns = tableau[0].length;
+        Point3D[][] newTab = new Point3D[nRows][nColumns];
+        for (int i = 0; i < nRows; i++) {
+            for (int j = 0; j < nColumns; j++) {
+                newTab[i][j] = new Point3D(tableau[i][j].getLatitude(),
+                        tableau[i][j].getLongitude(), tableau[i][j].getElevation());
+            }
+        }
+        return newTab;
+    }
+
+    public static Point3D[][] toGrid(List<Point3D> pts, int rows, int cols) {
+        Point3D[][] result = new Point3D[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = new Point3D(pts.get(i + j).getLatitude(),
+                        pts.get(i + j).getLongitude(), pts.get(i + j).getElevation());
+            }
+        }
+        return result;
+    }
+
+    public static Point3D[][] suppress(Point3D[][] tableau, int index) {
+        int nRows = tableau[0].length;
+        int nColumns = tableau[1].length;
+
+        if (index >= nRows || index >= nColumns) {
+            // Return exception ?
+            return new Point3D[0][0];
+        }
+
+        Point3D[][] newTab = new Point3D[nRows - 1][nColumns - 1];
+        int newTabRow = 0;
+        int newTabCol = 0;
+
+        for (int i = 0; i < nRows; ++i) {
+            if (i != index) {
+                for (int j = 0; j < nColumns; ++j) {
+                    if (j != index) {
+                        newTab[newTabRow][newTabCol] = new Point3D(tableau[i][j].getLatitude(),
+                                tableau[i][j].getLongitude(), tableau[i][j].getElevation());
+                        ++newTabCol;
+                    }
+                }
+                ++newTabRow;
+                newTabCol = 0;
+            }
+        }
+        return newTab;
+    }
+
     @Override
     public String toString() {
         // return "Point3D{" + "id=" + id + ", latitude=" + latitude + ", longitude=" + longitude + ", elevation=" + elevation + '}';

@@ -81,6 +81,7 @@ public class DockManagerImpl<TrackTool>
     protected RadialMenu navigationRadialMenu;
     protected RadialMenu systemRadialMenu;
     protected RadialMenu tracksRadialMenu;
+    protected RadialMenu shomRadialMenu;
 
     protected ImageView centerImg;
     protected int width;
@@ -139,6 +140,10 @@ public class DockManagerImpl<TrackTool>
         DockItemFactory.newImageItem("medias", ICON_PATH + "dock_icons/medias.png",
         (e) -> {
             MediasRadialMenu.setVisible(!MediasRadialMenu.isVisible());
+        }),
+        DockItemFactory.newImageItem("shom", ICON_PATH + "dock_icons/shom.png",
+        (e) -> {
+            shomRadialMenu.setVisible(!shomRadialMenu.isVisible());
         })
     };
     final Dock dock = new Dock(ICONS);
@@ -169,6 +174,7 @@ public class DockManagerImpl<TrackTool>
         createNavigationRadialWidget();
         createSystemRadialWidget();
         createStlWidget();
+        createShomWidget();
         createMediasRadialWidget();
     }
 
@@ -202,13 +208,31 @@ public class DockManagerImpl<TrackTool>
                 .createNode(1, "bathy.png", 1, "vide.png", 0, "vide.png", (e) -> open())
                 .createNode(2, "charts.png", 1, "files.png", 0, "vide.png", (e) -> open())
                 .createNode(2, "charts.png", 2, "db.png", 0, "scales.png", (e) -> open("StlDbS57"))
-              //  .createNode(1, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> open())
-              //  .createNode(1, "vide.png", 1, "vide.png", 1, "vide.png", (e) -> open())
+                //  .createNode(1, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> open())
+                //  .createNode(1, "vide.png", 1, "vide.png", 1, "vide.png", (e) -> open())
                 .build();
         stlRadialMenu.setLayoutX((width / 2) - 10);
         stlRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(stlRadialMenu);
         radialMenus.add(stlRadialMenu);
+    }
+//--------------SHOM------------------
+
+    private void createShomWidget() {
+        shomRadialMenu = RadialMenuBuilder.create()
+                .centralImage("shom_2.png")
+                .createNode(0, "bathy.png", 0, "read.png", 0, "dalles.png", (e) -> open())
+                .createNode(0, "bathy.png", 0, "read.png", 1, "mnt.png", (e) -> open())
+                .createNode(1, "sediment.png", 0, "read.png", 0, "vide.png", (e) -> open())
+                .createNode(2, "litto3D.png", 0, "read.png", 0, "vide.png", (e) -> open())
+                .createNode(3, "marees.png", 0, "read.png", 0, "vide.png", (e) -> open())
+                .createNode(4, "aires.png", 0, "read.png", 0, "vide.png", (e) -> open())
+                .createNode(4, "epaves.png", 0, "read.png", 0, "vide.png", (e) -> open())
+                .build();
+        shomRadialMenu.setLayoutX((width / 2) - 10);
+        shomRadialMenu.setLayoutY(height / 2);
+        root.getChildren().add(shomRadialMenu);
+        radialMenus.add(shomRadialMenu);
     }
 
     //--------------BOOKS------------------
@@ -370,6 +394,7 @@ public class DockManagerImpl<TrackTool>
                 .createNode(3, "db.png", 0, "spatiales.png", 0, "s57.png", (e) -> open("DbS57"))
                 .createNode(3, "db.png", 0, "spatiales.png", 1, "bathy.png", (e) -> open("DbBathy"))
                 .createNode(3, "db.png", 0, "spatiales.png", 2, "elevations.png", (e) -> open("DbElevation"))
+                .createNode(3, "db.png", 0, "spatiales.png", 3, "aires.png", (e) -> open())
                 .build();
         toolsRadialMenu.setLayoutX((width / 2));
         toolsRadialMenu.setLayoutY(height / 2);

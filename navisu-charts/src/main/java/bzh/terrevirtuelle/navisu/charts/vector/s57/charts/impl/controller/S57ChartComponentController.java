@@ -124,7 +124,7 @@ public class S57ChartComponentController
     protected RenderableLayer transponderZoneLayer;
     protected final String NAME = "Transponder";
     protected final String GROUP = "Navigation";
-    protected final boolean DEV = true;
+    protected final boolean DEV = false;
     //protected final boolean DEV = true;
     protected final Set<S57Controller> s57Controllers = new HashSet<>();
     protected boolean first = false;

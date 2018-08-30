@@ -48,6 +48,15 @@ public class DelaunayImpl
     }
 
     @Override
+    public List<Triangle_dt> createDelaunay(List<Point3D> points) {
+        Delaunay_Triangulation dt = new Delaunay_Triangulation();
+        points.stream().forEach((pt) -> {
+            dt.insertPoint(new Point_dt(pt.getLatitude(), pt.getLongitude(), pt.getElevation()));
+        });
+        return dt.get_triangles();
+    }
+
+    @Override
     public List<Triangle_dt> createDelaunay(Point3D[][] points, int nbLat, int nbLon, double elevation) {
         List<Triangle_dt> triangles = new ArrayList<>();
         for (int k = 0; k < nbLat - 1; k++) {
@@ -108,8 +117,8 @@ public class DelaunayImpl
     }
 
     @Override
-    public Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax, 
-            double y, double x, 
+    public Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax,
+            double y, double x,
             double elevation) {
 
         Position p = geodesyServices.getPosition(Position.fromDegrees(latMin, lonMin), 0.0, y);
@@ -134,7 +143,7 @@ public class DelaunayImpl
             lon = lonMin;
             lat += latInc;
         }
-        
+
         List<Point3D> l = new ArrayList<>();
         ptsList.add(l);
         lat = latMax;
@@ -157,7 +166,7 @@ public class DelaunayImpl
                 ptsTab[i][j] = ptsList.get(i).get(j);
             }
         }
-        System.out.println("ptsTab " + ptsTab[0].length+" "+ptsTab[1].length);
+       // System.out.println("ptsTab " + ptsTab[0].length + " " + ptsTab[1].length);
         return ptsTab;
     }
 
@@ -180,6 +189,52 @@ public class DelaunayImpl
 
     @Override
     public void componentStopped() {
+    }
+
+    @Override
+    public Point3D[][] mergePointsToGrid(List<Point3D> points, Point3D[][] grid) {
+        int line = grid[0].length;
+        int col = grid[1].length;
+        Point3D[][] result = new Point3D[line][col];
+        Point_dt[][] pointsDt = new Point_dt[line][col];
+        for (int i = 0; i < line; i++) {
+            for (int j = 0; j < col; j++) {
+                result[i][j] = new Point3D(grid[i][j].getLatitude(), grid[i][j].getLongitude(), grid[i][j].getElevation());
+                pointsDt[i][j] = new Point_dt(grid[i][j].getLatitude(), grid[i][j].getLongitude(), grid[i][j].getElevation());
+            }
+        }
+
+        List<Triangle_dt> triangles = createDelaunay(points);
+        System.out.println("triangles : " + triangles.size());
+        double dA;
+        double dB;
+        double dC;
+        double min;
+        for (Triangle_dt t : triangles) {
+            System.out.println("t : "+ t);
+            for (int i = 0; i < line; i++) {
+                for (int j = 0; j < col; j++) {
+                    if (t.contains(pointsDt[i][j])) {
+                        dA = geodesyServices.getDistanceM(t.A.y, t.A.x, pointsDt[i][j].y, pointsDt[i][j].x);
+                        dB = geodesyServices.getDistanceM(t.B.y, t.B.x, pointsDt[i][j].y, pointsDt[i][j].x);
+                        dC = geodesyServices.getDistanceM(t.C.y, t.C.x, pointsDt[i][j].y, pointsDt[i][j].x);
+                        min = Double.MAX_VALUE;
+                        if (min > dA) {
+                            min = dA;
+                            result[i][j].setElevation(t.A.z);
+                        }
+                        if (min > dB) {
+                            min = dB;
+                            result[i][j].setElevation(t.B.z);
+                        }
+                        if (min > dC) {
+                            result[i][j].setElevation(t.C.z);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
 }

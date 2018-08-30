@@ -8,7 +8,6 @@ package bzh.terrevirtuelle.navisu.geometry.objects3D;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
-import gov.nasa.worldwind.render.Polygon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +18,9 @@ import java.util.List;
  */
 public class GridBox3D {
 
-    private double baseAltitude;
-
+    private final double baseAltitude = 0.0;
     private double verticalExaggeration;
+    Point3D[][] grid;
     ArrayList<Position> topIsoLatPositions0 = new ArrayList<>();
     ArrayList<Position> baseIsoLatPositions0 = new ArrayList<>();
     ArrayList<Position> topIsoLatPositions1 = new ArrayList<>();
@@ -30,25 +29,20 @@ public class GridBox3D {
     ArrayList<Position> baseIsoLonPositions0 = new ArrayList<>();
     ArrayList<Position> topIsoLonPositions1 = new ArrayList<>();
     ArrayList<Position> baseIsoLonPositions1 = new ArrayList<>();
-    private List<Polygon> sidePolygons;
     private List<Path> sidePaths;
+    private List<Path> gridPaths;
+
     int line;
     int col;
 
     public GridBox3D(Point3D[][] grid) {
-        this(grid, 0.0, 1.0);
+        this(grid, 1.0);
     }
 
-    public GridBox3D(Point3D[][] grid, double baseAltitude) {
-        this(grid, baseAltitude, 1.0);
-    }
-
-    public GridBox3D(Point3D[][] grid, double baseAltitude, double verticalExaggeration) {
-        this.baseAltitude = baseAltitude;
-        this.verticalExaggeration = verticalExaggeration;
-        sidePolygons = new ArrayList<>();
+    public GridBox3D(Point3D[][] grid, double verticalExaggeration) {
+        this.grid = grid;
         sidePaths = new ArrayList<>();
-
+        this.verticalExaggeration = verticalExaggeration;
         line = grid[0].length;
         col = grid[1].length;
 
@@ -87,108 +81,62 @@ public class GridBox3D {
                     grid[i][col - 1].getLongitude(),
                     baseAltitude));
         }
+        gridPaths = createPaths(grid);
     }
 
-    public List<Polygon> getSidePolygons() {
-        //South
-        for (int l = 0; l < col - 1; l++) {
-            List<Position> b0 = new ArrayList<>();
-            b0.add(baseIsoLatPositions0.get(l));
-            b0.add(baseIsoLatPositions0.get(l + 1));
-            b0.add(topIsoLatPositions0.get(l + 1));
-            b0.add(baseIsoLatPositions0.get(l));
-            sidePolygons.add(new Polygon(b0));
+    public Point3D[][] getGrid() {
+        return this.grid;
+    }
 
-            List<Position> t0 = new ArrayList<>();
-            t0.add(baseIsoLatPositions0.get(l));
-            t0.add(topIsoLatPositions0.get(l + 1));
-            t0.add(topIsoLatPositions0.get(l));
-            t0.add(baseIsoLatPositions0.get(l));
-            sidePolygons.add(new Polygon(t0));
+    public List<Path> getPaths() {
+        List<Path> result = new ArrayList<>();
+        result.addAll(gridPaths);
+        result.addAll(getSidePaths());
+        return result;
+    }
 
+    private List<Path> createPaths(Point3D[][] latLons) {
+        List<Position> positions;
+        List<Path> result = new ArrayList<>();
+
+        Path path;
+        int latLength = latLons[0].length;
+        int lonLength = latLons[1].length;
+
+        for (int i = 0; i < latLength - 1; i++) {
+            for (int j = 0; j < lonLength - 1; j++) {
+                positions = new ArrayList<>();
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i][j + 1].getLatitude(),
+                        latLons[i][j + 1].getLongitude(),
+                        latLons[i][j + 1].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j + 1].getLatitude(),
+                        latLons[i + 1][j + 1].getLongitude(),
+                        latLons[i + 1][j + 1].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+             
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j + 1].getLatitude(),
+                        latLons[i + 1][j + 1].getLongitude(),
+                        latLons[i + 1][j + 1].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j].getLatitude(),
+                        latLons[i + 1][j].getLongitude(),
+                        latLons[i + 1][j].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                path = new Path(positions);
+
+                result.add(path);
+            }
         }
-        //East
-        for (int l = 0; l < line - 1; l++) {
-            List<Position> b1 = new ArrayList<>();
-            b1.add(baseIsoLonPositions1.get(l));
-            b1.add(baseIsoLonPositions1.get(l + 1));
-            b1.add(topIsoLonPositions1.get(l + 1));
-            b1.add(baseIsoLonPositions1.get(l));
-            sidePolygons.add(new Polygon(b1));
-
-            List<Position> t1 = new ArrayList<>();
-            t1.add(baseIsoLonPositions1.get(l));
-            t1.add(topIsoLonPositions1.get(l + 1));
-            t1.add(topIsoLonPositions1.get(l));
-            t1.add(baseIsoLonPositions1.get(l));
-            sidePolygons.add(new Polygon(t1));
-
-        }
-        //North
-        for (int l = 0; l < col - 1; l++) {
-            List<Position> b2 = new ArrayList<>();
-            b2.add(baseIsoLatPositions1.get(l));
-            b2.add(topIsoLatPositions1.get(l + 1));
-            b2.add(baseIsoLatPositions1.get(l + 1));
-            b2.add(baseIsoLatPositions1.get(l));
-            sidePolygons.add(new Polygon(b2));
-
-            List<Position> t2 = new ArrayList<>();
-            t2.add(baseIsoLatPositions1.get(l));
-            t2.add(topIsoLatPositions1.get(l));
-            t2.add(topIsoLatPositions1.get(l + 1));
-            t2.add(baseIsoLatPositions1.get(l));
-            sidePolygons.add(new Polygon(t2));
-        }
-        //West
-        for (int l = 0; l < line - 1; l++) {
-            List<Position> b3 = new ArrayList<>();
-            b3.add(baseIsoLonPositions0.get(l));
-            b3.add(topIsoLonPositions0.get(l + 1));
-            b3.add(baseIsoLonPositions0.get(l + 1));
-            b3.add(baseIsoLonPositions0.get(l));
-            sidePolygons.add(new Polygon(b3));
-
-            List<Position> t3 = new ArrayList<>();
-            t3.add(baseIsoLonPositions0.get(l));
-            t3.add(topIsoLonPositions0.get(l));
-            t3.add(topIsoLonPositions0.get(l + 1));
-            t3.add(baseIsoLonPositions0.get(l));
-            sidePolygons.add(new Polygon(t3));
-
-        }
-        //Base
-        /*
-        List<Position> b4 = new ArrayList<>();
-        b4.add(baseIsoLatPositions0.get(0));
-        b4.add(baseIsoLatPositions1.get(col - 1));
-        b4.add(baseIsoLatPositions0.get(col - 1));
-        b4.add(baseIsoLatPositions0.get(0));
-        sidePolygons.add(new Polygon(b4));
-
-        List<Position> t4 = new ArrayList<>();
-        t4.add(baseIsoLatPositions0.get(0));
-        t4.add(baseIsoLatPositions1.get(0));
-        t4.add(baseIsoLatPositions1.get(col-1));
-        t4.add(baseIsoLatPositions0.get(0));
-        sidePolygons.add(new Polygon(t4));
-         */
-
-        List<Position> b4 = new ArrayList<>();
-        b4.add(baseIsoLatPositions0.get(0));
-        b4.add(baseIsoLatPositions0.get(col - 1));
-        b4.add(baseIsoLatPositions1.get(col - 1));
-        b4.add(baseIsoLatPositions0.get(0));
-        sidePolygons.add(new Polygon(b4));
-
-        List<Position> t4 = new ArrayList<>();
-        t4.add(baseIsoLatPositions0.get(0));
-        t4.add(baseIsoLatPositions1.get(col - 1));
-        t4.add(baseIsoLatPositions1.get(0));
-        t4.add(baseIsoLatPositions0.get(0));
-        sidePolygons.add(new Polygon(t4));
-
-        return sidePolygons;
+        return result;
     }
 
     public List<Path> getSidePaths() {
@@ -206,16 +154,8 @@ public class GridBox3D {
             t.add(topIsoLatPositions0.get(l + 1));
             t.add(topIsoLatPositions0.get(l));
             t.add(baseIsoLatPositions0.get(l));
-            sidePaths.add(new Path(b));
+            sidePaths.add(new Path(t));
 
-            /*
-            List<Position> t = new ArrayList<>();
-            t.add(baseIsoLatPositions0.get(l));
-            t.add(topIsoLatPositions0.get(l));
-            t.add(topIsoLatPositions0.get(l + 1));
-            t.add(baseIsoLatPositions0.get(l));
-            sidePaths.add(new Path(b));
-             */
         }
         for (int l = 0; l < line - 1; l++) {
             List<Position> b = new ArrayList<>();
@@ -230,16 +170,7 @@ public class GridBox3D {
             t.add(topIsoLonPositions1.get(l + 1));
             t.add(topIsoLonPositions1.get(l));
             t.add(baseIsoLonPositions1.get(l));
-            sidePaths.add(new Path(b));
-
-            /*
-            List<Position> t = new ArrayList<>();
-            t.add(baseIsoLonPositions1.get(l));
-            t.add(topIsoLonPositions1.get(l));
-            t.add(topIsoLonPositions1.get(l + 1));
-            t.add(baseIsoLonPositions1.get(l));
-            sidePaths.add(new Path(b));
-             */
+            sidePaths.add(new Path(t));
         }
         for (int l = 0; l < col - 1; l++) {
             List<Position> b = new ArrayList<>();
@@ -254,16 +185,7 @@ public class GridBox3D {
             t.add(topIsoLatPositions1.get(l + 1));
             t.add(topIsoLatPositions1.get(l));
             t.add(baseIsoLatPositions1.get(l));
-            sidePaths.add(new Path(b));
-
-            /*
-            List<Position> t = new ArrayList<>();
-            t.add(baseIsoLatPositions1.get(l));
-            t.add(topIsoLatPositions1.get(l));
-            t.add(topIsoLatPositions1.get(l + 1));
-            t.add(baseIsoLatPositions1.get(l));
-            sidePaths.add(new Path(b));
-             */
+            sidePaths.add(new Path(t));
         }
         for (int l = 0; l < line - 1; l++) {
             List<Position> b = new ArrayList<>();
@@ -278,16 +200,7 @@ public class GridBox3D {
             t.add(topIsoLonPositions0.get(l + 1));
             t.add(topIsoLonPositions0.get(l));
             t.add(baseIsoLonPositions0.get(l));
-            sidePaths.add(new Path(b));
-
-            /*
-            List<Position> t = new ArrayList<>();
-            t.add(baseIsoLonPositions0.get(l));
-            t.add(topIsoLonPositions0.get(l));
-            t.add(topIsoLonPositions0.get(l + 1));
-            t.add(baseIsoLonPositions0.get(l));
-            sidePaths.add(new Path(b));
-             */
+            sidePaths.add(new Path(t));
         }
         List<Position> b = new ArrayList<>();
         b.add(baseIsoLatPositions0.get(0));
@@ -295,12 +208,13 @@ public class GridBox3D {
         b.add(baseIsoLatPositions1.get(col - 1));
         b.add(baseIsoLatPositions0.get(0));
         sidePaths.add(new Path(b));
+
         List<Position> t = new ArrayList<>();
         t.add(baseIsoLatPositions0.get(0));
         t.add(baseIsoLatPositions1.get(col - 1));
         t.add(baseIsoLatPositions1.get(0));
         t.add(baseIsoLatPositions0.get(0));
-        sidePaths.add(new Path(b));
+        sidePaths.add(new Path(t));
         return sidePaths;
     }
 }
