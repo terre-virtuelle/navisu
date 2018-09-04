@@ -741,7 +741,7 @@ public class StlDBComponentController
                                                 g[g[0].length - 1][g[0].length - 1].getLatitude(),
                                                 g[g[0].length - 1][g[0].length - 1].getLongitude()));
                             }
-                            new BuoyageView(s57Layer).display(buoyages);
+                            new BuoyageView(s57Layer).display(buoyages, 1.0);
                           //  new BuoyageExportKML(kmlFileNames.get(i)).export(buoyages, maxDepth + tileSideZ);
                           String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + ".stl";
                          
@@ -847,11 +847,8 @@ public class StlDBComponentController
 
     /*
     Create a list of points on a regular grid.
-    
-    
      */
     private List<Point3D[][]> createElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
-        System.out.println("createElevationTab");
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
         maxDepth = 0.0;
@@ -866,7 +863,6 @@ public class StlDBComponentController
     These grids are translate vertically with the max of depth
      */
     private List<Point3D[][]> createBathymetryTab(double latMin, double lonMin, double latMax, double lonMax) {
-        System.out.println("createBathymetry");
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices)
                 .retrieveIn(latMin, lonMin, latMax, lonMax);
@@ -882,8 +878,6 @@ public class StlDBComponentController
     These grids are translate vertically with the max of depth
      */
     private List<Point3D[][]> createBathymetryAndElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
-        System.out.println("createBathymetryAndElevationTab");
-
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM bathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
         maxDepth = bathy.getMaxElevation();

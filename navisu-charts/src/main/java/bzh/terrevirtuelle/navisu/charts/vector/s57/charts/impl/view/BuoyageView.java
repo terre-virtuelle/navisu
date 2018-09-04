@@ -46,6 +46,11 @@ public class BuoyageView {
 
     @SuppressWarnings("unchecked")
     public void display(List<Buoyage> buoyages) {
+        display(buoyages, 0.8);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void display(List<Buoyage> buoyages, double scale) {
 
         List<PointPlacemark> pointPlacemarks = new ArrayList<>();
         for (Buoyage buoyage : buoyages) {
@@ -102,7 +107,7 @@ public class BuoyageView {
             attrs = new PointPlacemarkAttributes();
             attrs.setImageAddress(imageAddress);
             attrs.setImageOffset(Offset.BOTTOM_CENTER);
-            attrs.setScale(0.65);//0.9
+            attrs.setScale(scale);//0.9
             placemark.setAttributes(attrs);
             if (dev) {
                 placemark.setValue(AVKey.DISPLAY_NAME, imageAddress);

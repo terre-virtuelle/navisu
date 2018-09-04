@@ -54,14 +54,7 @@ public class BuoyageExportSTL {
         String result;
         String buoys = "";
         java.nio.file.Path path = null;
-        /*
-        *double lon = position.getLongitude().getDegrees();
-        double lat = position.getLatitude().getDegrees();
-        double latM = geodesyServices.getDistanceM(latMin, lonMin, lat, lonMin);
-        double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
-        latM *= latScale;
-        lonM *= lonScale;
-         */
+
         try {
             String body = new String(Files.readAllBytes(Paths.get(stlFilename)));
             String[] fileSTL = body.split("\n");
@@ -75,14 +68,16 @@ public class BuoyageExportSTL {
                 double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
                 latM *= latScale;
                 lonM *= lonScale;
-               // System.out.println(latM + " " + lonM);
                 if (acronym.equals("BCNCAR") || acronym.equals("BOYCAR")) {
                     buoys = buoys.concat(insertedFile(latM, lonM, elevation, "BCNCAR_" + buoyage.getCategoryOfMark() + ".stl"));
                 } else if (acronym.equals("BCNLAT") || acronym.equals("BOYLAT")) {
                     buoys = buoys.concat(insertedFile(latM, lonM, elevation, "BCNLAT_" + buoyage.getCategoryOfMark() + ".stl"));
+                } else if (acronym.equals("MORFAC")) {
+                    buoys = buoys.concat(insertedFile(latM, lonM, elevation, "MORFAC.stl"));
+                }else if (acronym.equals("BCNISD")) {
+                    buoys = buoys.concat(insertedFile(latM, lonM, elevation, "danger.stl"));
                 }
             }
-           // System.out.println(buoys);
             result = buoys.concat(body);
             path = Paths.get(stlFilename);
             Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
@@ -94,11 +89,11 @@ public class BuoyageExportSTL {
     private String insertedFile(double latitude, double longitude, double altitude, String buoyFilename) {
         String buoyName = "data/stl/" + buoyFilename;
         String buoy = "";
-        String result="";
+        String result = "";
         try {
             buoy = new String(Files.readAllBytes(Paths.get(buoyName)));
-            result=new TransformSTL().transform(buoy, latitude, longitude, elv);
-            
+            result = new TransformSTL().transform(buoy, latitude, longitude, elv);
+
         } catch (IOException ex) {
             Logger.getLogger(BuoyageExportSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
