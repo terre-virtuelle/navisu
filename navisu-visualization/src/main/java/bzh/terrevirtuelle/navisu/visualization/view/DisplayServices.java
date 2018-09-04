@@ -36,6 +36,8 @@ public interface DisplayServices
     void displayPaths(List<Path> points, RenderableLayer layer, Material material, double verticalExaggeration, double verticalOffset);
 
     void displayPolygons(List<Polygon> points, RenderableLayer layer, Material material, double verticalExaggeration);
+    
+    void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration);
 
     void displayPolygons(List<Polygon> points, RenderableLayer layer, Material material, double verticalExaggeration, double verticalOffset);
 

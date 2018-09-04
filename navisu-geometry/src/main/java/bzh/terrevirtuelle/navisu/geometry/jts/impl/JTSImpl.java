@@ -138,7 +138,7 @@ public class JTSImpl
         }
 
         List<Geometry> triangles = createDelaunayWithFilterOnArea(points, 1E-6);
-       // System.out.println("triangles : " + triangles.size());
+       
         double dA;
         double dB;
         double dC;
@@ -148,8 +148,7 @@ public class JTSImpl
                 for (int j = 0; j < col; j++) {
                     if (t.contains(gridCoord[i][j])) {
                         Coordinate[] coordinates = t.getCoordinates();
-                      //  System.out.println(coordinates[0] + " " + coordinates[1] + " " + coordinates[3]);
-
+                      
                         dA = geodesyServices.getDistanceM(coordinates[0].y, coordinates[0].x,
                                 gridCoord[i][j].getCoordinate().y, gridCoord[i][j].getCoordinate().x);
                         dB = geodesyServices.getDistanceM(coordinates[1].y, coordinates[1].x,

@@ -130,9 +130,11 @@ public class DisplayBathymetryController {
                     //Create Delaunay triangulation with bathymetry data
                     List<Triangle_dt> triangles = delaunayServices.createDelaunay(points3d, maxElevation);
                     //Suppress large edges
+
                     List<Triangle_dt> triangles1 = delaunayServices.filterLargeEdges(triangles, THRESHOLD);
                     displayServices.displayDelaunay(triangles1, maxElevation, 10.0, Material.GREEN, layer);
 
+                    //  displayServices.displayDelaunay(triangles, maxElevation, 10.0, Material.GREEN, layer);
                     //Create concaveHull from points with bathy information
                     //  concaveHull = jtsServices.getConcaveHull(points3d, THRESHOLD);
                     // displayServices.displayConcaveHull(concaveHull, maxElevation, 10.0, Material.RED, layer);

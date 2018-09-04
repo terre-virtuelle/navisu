@@ -7,7 +7,6 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.Vec3d;
 import org.capcaval.c3.component.ComponentState;
 import bzh.terrevirtuelle.navisu.stl.StlComponent;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;

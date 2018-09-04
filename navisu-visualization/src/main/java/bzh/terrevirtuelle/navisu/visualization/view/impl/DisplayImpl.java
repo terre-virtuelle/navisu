@@ -28,6 +28,7 @@ import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.util.WWUtil;
 import gov.nasa.worldwindx.examples.kml.KMLDocumentBuilder;
 import java.awt.Color;
 import java.io.File;
@@ -63,6 +64,7 @@ public class DisplayImpl
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected RenderableLayer layer;
     protected DisplayController displayController;
+ShapeAttributes attrs0;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -162,6 +164,7 @@ public class DisplayImpl
         for (int i = 0; i < latLength - 1; i++) {
             for (int j = 0; j < lonLength - 1; j++) {
                 positions = new ArrayList<>();
+                /*
                 positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
                         latLons[i][j].getLongitude(),
                         latLons[i][j].getElevation() * verticalExaggeration));
@@ -174,11 +177,26 @@ public class DisplayImpl
                 positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
                         latLons[i][j].getLongitude(),
                         latLons[i][j].getElevation() * verticalExaggeration));
+                 */
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j + 1].getLatitude(),
+                        latLons[i + 1][j + 1].getLongitude(),
+                        latLons[i + 1][j + 1].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i][j + 1].getLatitude(),
+                        latLons[i][j + 1].getLongitude(),
+                        latLons[i][j + 1].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+
                 path = new Path(positions);
 
                 result.add(path);
                 // All triangles are created
                 positions = new ArrayList<>();
+
                 positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
                         latLons[i][j].getLongitude(),
                         latLons[i][j].getElevation() * verticalExaggeration));
@@ -192,7 +210,21 @@ public class DisplayImpl
                         latLons[i][j].getLongitude(),
                         latLons[i][j].getElevation() * verticalExaggeration));
                 path = new Path(positions);
-
+                /*
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j].getLatitude(),
+                        latLons[i + 1][j ].getLongitude(),
+                        latLons[i + 1][j ].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i + 1][j+1].getLatitude(),
+                        latLons[i + 1][j+1].getLongitude(),
+                        latLons[i + 1][j+1].getElevation() * verticalExaggeration));
+                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
+                        latLons[i][j].getLongitude(),
+                        latLons[i][j].getElevation() * verticalExaggeration));
+                
+                 */
                 result.add(path);
             }
         }
@@ -411,9 +443,10 @@ public class DisplayImpl
 
     protected ShapeAttributes createAttributes(Material material) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();
-        normAttributes.setDrawInterior(false);
-        normAttributes.setDrawOutline(true);
-        normAttributes.setOutlineMaterial(material);
+        normAttributes.setDrawInterior(true);
+        normAttributes.setDrawOutline(false);
+        normAttributes.setInteriorMaterial(material);
+        
         return normAttributes;
     }
 
@@ -448,6 +481,26 @@ public class DisplayImpl
             p.setAttributes(attrs0);
         });
 
+        layer.addRenderables(result);
+        wwd.redrawNow();
+    }
+
+    @Override
+    public void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration) {
+        List<Polygon> result = new ArrayList<>();
+        paths.forEach((p) -> {
+            Iterable<? extends Position> positions = p.getPositions();
+            List<Position> tmpPos = new ArrayList<>();
+            for (Position pp : positions) {
+                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), (pp.getElevation() * verticalExaggeration)));
+            }
+            result.add(new Polygon(tmpPos));
+        });
+        result.forEach((p) -> {
+            attrs0 = createAttributes(new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+            p.setAltitudeMode(WorldWind.ABSOLUTE);
+            p.setAttributes(attrs0);
+        });
         layer.addRenderables(result);
         wwd.redrawNow();
     }

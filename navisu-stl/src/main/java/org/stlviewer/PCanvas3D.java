@@ -1,6 +1,5 @@
 package org.stlviewer;
 
-import java.awt.Font;
 import java.awt.GraphicsConfiguration;
 import java.util.ArrayList;
 
@@ -12,13 +11,10 @@ import javax.media.j3d.Bounds;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.DirectionalLight;
-import javax.media.j3d.Font3D;
-import javax.media.j3d.FontExtrusion;
 import javax.media.j3d.GeometryArray;
 import javax.media.j3d.LineArray;
 import javax.media.j3d.Locale;
 import javax.media.j3d.Shape3D;
-import javax.media.j3d.Text3D;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
@@ -27,7 +23,6 @@ import javax.vecmath.Point3f;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
-import org.stlviewer.PModel;
 
 import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
 import com.sun.j3d.utils.universe.SimpleUniverse;

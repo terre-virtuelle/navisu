@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.DisplayImpl;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwindx.examples.kml.KMLDocumentBuilder;
 import java.io.File;
 import java.io.IOException;
@@ -57,8 +58,9 @@ public class GridBox3DExportKML {
         this.gridBox = gridBox;
     }
 
-    public void exportWKML(String outputFilename) {
+    public void exportWKML(String outputFilename, boolean solid) {
         List<Path> result = new ArrayList<>();
+        List<Polygon> res = new ArrayList<>();
         gridBox.getPaths().forEach((p) -> {
             Iterable<? extends Position> positions = p.getPositions();
             List<Position> tmpPos = new ArrayList<>();
@@ -66,15 +68,30 @@ public class GridBox3DExportKML {
                 tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), pp.getElevation()));
             }
             result.add(new Path(tmpPos));
+            res.add(new Polygon(tmpPos));
         });
-        Path[] pathTab = new Path[result.size()];
-        for (int i = 0; i < result.size(); i++) {
-            pathTab[i] = result.get(i);
+        Path[] pathTab = null;
+        Polygon[] polyTab = null;
+        if (solid == false) {
+            pathTab = new Path[result.size()];
+            for (int i = 0; i < result.size(); i++) {
+                pathTab[i] = result.get(i);
+            }
+        } else {
+
+            polyTab = new Polygon[result.size()];
+            for (int i = 0; i < result.size(); i++) {
+                polyTab[i] = res.get(i);
+            }
         }
         try {
             Writer stringWriter = new StringWriter();
             KMLDocumentBuilder kmlBuilder = new KMLDocumentBuilder(stringWriter);
-            kmlBuilder.writeObjects(pathTab);
+            if (solid == false) {
+                kmlBuilder.writeObjects(pathTab);
+            } else {
+                kmlBuilder.writeObjects(polyTab);
+            }
             kmlBuilder.close();
             String xmlString = stringWriter.toString();
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
