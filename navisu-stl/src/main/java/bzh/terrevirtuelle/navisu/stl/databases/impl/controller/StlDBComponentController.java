@@ -119,12 +119,9 @@ import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.BuoyageExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportSTL;
-import gov.nasa.worldwind.render.Path;
-import gov.nasa.worldwind.util.WWUtil;
 
 /**
  * @author Serge Morvan
@@ -701,8 +698,8 @@ public class StlDBComponentController
 
                     if (stlPreviewCB.isSelected()) {
                         gridBoxes.forEach((gb) -> {
-                           // displayServices.displayGridAsTriangles(gb.getGrid(), bathymetryLayer, Material.GREEN, verticalExaggeration);
-                           // displayServices.displayPaths(gb.getSidePathsWest(), bathymetryLayer, Material.YELLOW, verticalExaggeration);
+                            // displayServices.displayGridAsTriangles(gb.getGrid(), bathymetryLayer, Material.GREEN, verticalExaggeration);
+                            // displayServices.displayPaths(gb.getSidePathsWest(), bathymetryLayer, Material.YELLOW, verticalExaggeration);
                         });
                     }
 
@@ -742,10 +739,10 @@ public class StlDBComponentController
                                                 g[g[0].length - 1][g[0].length - 1].getLongitude()));
                             }
                             new BuoyageView(s57Layer).display(buoyages, 1.0);
-                          //  new BuoyageExportKML(kmlFileNames.get(i)).export(buoyages, maxDepth + tileSideZ);
-                          String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + ".stl";
-                         
-                            new BuoyageExportSTL(geodesyServices, g, filename,latScale, lonScale)
+                            //  new BuoyageExportKML(kmlFileNames.get(i)).export(buoyages, maxDepth + tileSideZ);
+                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + ".stl";
+
+                            new BuoyageExportSTL(geodesyServices, g, filename, latScale, lonScale)
                                     .export(buoyages, maxDepth + tileSideZ);
                             i++;
                         }
@@ -853,7 +850,13 @@ public class StlDBComponentController
         DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
         maxDepth = 0.0;
         Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
+        System.out.println("grid : "+latMin+" "+ lonMin+" "+ latMax+" "+ lonMax);
         grid = jtsServices.mergePointsToGrid(dem.getGrid(), grid);
+      //  grid = resample("privateData/asc/out.asc", grid);
+      
+       displayServices.exportASC("privateData/asc/out.asc", grid);
+      displayServices.importASC("privateData/asc/out.asc");
+      
         List<Point3D[][]> grids = createGrids(grid, tileCount);
         return grids;
     }
@@ -1060,13 +1063,13 @@ public class StlDBComponentController
                 .display(shapefile);
     }
 
-    public Point3D[][] resample(Point3D[][] grid, java.nio.file.Path path) {
+    public Point3D[][] resample(String filename, Point3D[][] grid) {
         //  System.out.println("grid : " + grid[0][0] + " " + grid[grid[0].length - 1][grid[1].length - 1]);
-        displayServices.exportASC(path.toString(), grid);
+        displayServices.exportASC(filename, grid);
 
-        String name = path.getFileName().toString();
-        String tmpTif = path.toString().replace(".asc", ".tif");
-        String tmpAsc = path.toString().replace(".asc", "1.asc");
+        
+        String tmpTif = filename.replace(".asc", ".tif");
+        String tmpAsc = filename.replace(".asc", "1.asc");
         String command = startCmd("gdalwarp");
         command += " -overwrite"
                 + " -s_srs EPSG:4326 -t_srs EPSG:4326 "
@@ -1076,7 +1079,7 @@ public class StlDBComponentController
                 + grid[0][0].getLatitude() + " "
                 + grid[grid[0].length - 1][grid[1].length - 1].getLongitude() + " "
                 + grid[grid[0].length - 1][grid[1].length - 1].getLatitude() + " "
-                + path.toString() + " "
+                + filename + " "
                 + tmpTif;
         try {
             Proc.BUILDER.create()
@@ -1099,6 +1102,7 @@ public class StlDBComponentController
         }
         return displayServices.importASC(tmpAsc);
         // return displayServices.importASC(path.toString());
+
     }
 
     private void createElevationAndUlhyssesDepare(double latMin, double lonMin, double latMax, double lonMax) {

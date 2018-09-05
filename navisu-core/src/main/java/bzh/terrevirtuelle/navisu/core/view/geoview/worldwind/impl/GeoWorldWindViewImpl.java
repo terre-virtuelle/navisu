@@ -47,6 +47,7 @@ public class GeoWorldWindViewImpl
 
     protected final WorldWindLayerManager layerManager;
     protected final static WorldWindow wwd = new WorldWindowGLJPanel();
+  // protected final static WorldWindow wwd = new WorldWindowGLCanvas();
 
     protected EarthFlat globe;
 
@@ -100,7 +101,7 @@ public class GeoWorldWindViewImpl
         if (wwd instanceof WorldWindowGLCanvas) {
             JPanel container = new JPanel(new BorderLayout());
             container.add((WorldWindowGLCanvas) wwd, BorderLayout.CENTER);
-            swingNode.setContent(container);
+            swingNode.setContent(container);;
         } else {
             swingNode.setContent((WorldWindowGLJPanel) wwd);
         }

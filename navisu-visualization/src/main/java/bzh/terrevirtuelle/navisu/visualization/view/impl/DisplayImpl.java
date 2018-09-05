@@ -64,7 +64,7 @@ public class DisplayImpl
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected RenderableLayer layer;
     protected DisplayController displayController;
-ShapeAttributes attrs0;
+    ShapeAttributes attrs0;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -446,7 +446,7 @@ ShapeAttributes attrs0;
         normAttributes.setDrawInterior(true);
         normAttributes.setDrawOutline(false);
         normAttributes.setInteriorMaterial(material);
-        
+
         return normAttributes;
     }
 
@@ -692,18 +692,18 @@ ShapeAttributes attrs0;
 
     @Override
     public void exportASC(String outputFilename, Point3D[][] pts) {
-        // System.out.println(" exportASC " + pts[0][0] + " " + pts[pts[1].length - 1][pts[1].length - 1]);
+        System.out.println(" exportASC " + pts[0][0] + " " + pts[pts[1].length - 1][pts[1].length - 1]);
         int nrows = pts[0].length - 1;
         int ncols = pts[1].length - 1;
         double xllcorner = pts[0][0].getLongitude();
         double yllcorner = pts[0][0].getLatitude();
         // System.out.println("pts[0][0].getLongitude() : " + pts[0][0].getLongitude());
         // System.out.println("pts[0][ncols-1].getLongitude() : " + pts[0][ncols - 1].getLongitude());
-        double cellsize = Math.abs((pts[0][0].getLongitude() - pts[0][ncols].getLongitude()) / ncols);
-        System.out.println("exportASC cellsize : " + cellsize);
+        double cellsize = Math.abs((pts[0][0].getLatitude() - pts[nrows][0].getLatitude()) / ncols);
+       // System.out.println("exportASC cellsize : " + cellsize);
         double NODATA_value = -99999.00;
         String result = "ncols " + ncols + "\n";
-        result += "nrows " + ncols + "\n";
+        result += "nrows " + nrows + "\n";
         result += "xllcorner " + xllcorner + "\n";
         result += "yllcorner " + yllcorner + "\n";
         result += "cellsize " + cellsize + "\n";
@@ -726,14 +726,13 @@ ShapeAttributes attrs0;
     @Override
     public Point3D[][] importASC(String inputFilename) {
         /*
-    ncols        1000
-nrows        1000
-xllcorner    599962.500000000000
-yllcorner    6825037.500000000000
-cellsize     75.000000000000
-NODATA_value  -99999.00
- 111.10 110.60 110.60
-    }
+          ncols        1000
+          nrows        1000
+          xllcorner    599962.500000000000
+          yllcorner    6825037.500000000000
+          cellsize     75.000000000000
+          NODATA_value  -99999.00
+          111.10 110.60 110.60
          */
 
         String data = "";
@@ -745,10 +744,10 @@ NODATA_value  -99999.00
         double NODATA_value;
         try {
             data = new String(Files.readAllBytes(Paths.get(inputFilename)));
-            // System.out.println("data : " +data);
         } catch (IOException ex) {
             Logger.getLogger(DisplayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+        
         String[] dataTab = data.split("\n");
         ncols = Integer.parseInt(dataTab[0].split("\\s+")[1]);
         nrows = Integer.parseInt(dataTab[1].split("\\s+")[1]);
@@ -756,25 +755,28 @@ NODATA_value  -99999.00
         yllcorner = Double.parseDouble(dataTab[3].split("\\s+")[1]);
         cellsize = Double.parseDouble(dataTab[4].split("\\s+")[1]);
         NODATA_value = Double.parseDouble(dataTab[5].split("\\s+")[1]);
-
-        Point3D[][] result = new Point3D[nrows][ncols];
+        System.out.println("ncols : " + ncols +" nrows : " + nrows);
+        Point3D[][] result = new Point3D[nrows+1][ncols+1];
 
         int u = 0, v = 0;
-        for (int i = dataTab.length - 1; i > 6; i--) {
+        System.out.println("dataTab.length - 1 : " + dataTab.length);
+        for (int i = dataTab.length-1; i >= 6; i--) {
+           // System.out.println("dataTab[i] : " + dataTab[i]);
             String[] rowTab = dataTab[i].split("\\s+");
-            // System.out.println("rowTab : " + rowTab.length);
-            for (int j = 0; j < rowTab.length - 1; j++) {
-                try {
+            for (int j = 0; j < rowTab.length ; j++) {
+             //   try {
                     result[u][v] = new Point3D(yllcorner + u * cellsize, xllcorner + v * cellsize, Double.valueOf(rowTab[j]));
-                } catch (java.lang.NumberFormatException e) {
-                    result[u][v] = new Point3D(yllcorner + u * cellsize, xllcorner + v * cellsize, 0.0);
-                }
+              //  } catch (java.lang.NumberFormatException e) {
+             //       result[u][v] = new Point3D(yllcorner + u * cellsize, xllcorner + v * cellsize, 0.0);
+             //   }
+            // System.out.println("u : " + u +" v : "+ v + " "+result[u][v]);
                 v++;
             }
+            
             u++;
             v = 0;
         }
-        System.out.println("importASC " + result[0][0] + " " + result[nrows - 1][ncols - 1]);
+        System.out.println("importASC  " + result[0][0] + " " + result[nrows][ncols-1]);
         return result;
     }
 
