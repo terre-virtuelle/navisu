@@ -697,10 +697,8 @@ public class DisplayImpl
         int ncols = pts[1].length - 1;
         double xllcorner = pts[0][0].getLongitude();
         double yllcorner = pts[0][0].getLatitude();
-        // System.out.println("pts[0][0].getLongitude() : " + pts[0][0].getLongitude());
-        // System.out.println("pts[0][ncols-1].getLongitude() : " + pts[0][ncols - 1].getLongitude());
-        double cellsize = Math.abs((pts[0][0].getLatitude() - pts[nrows][0].getLatitude()) / ncols);
-       // System.out.println("exportASC cellsize : " + cellsize);
+        double cellsize = Math.abs((pts[0][0].getLatitude() - pts[nrows][0].getLatitude()) / nrows);
+
         double NODATA_value = -99999.00;
         String result = "ncols " + ncols + "\n";
         result += "nrows " + nrows + "\n";
@@ -747,7 +745,7 @@ public class DisplayImpl
         } catch (IOException ex) {
             Logger.getLogger(DisplayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        
+
         String[] dataTab = data.split("\n");
         ncols = Integer.parseInt(dataTab[0].split("\\s+")[1]);
         nrows = Integer.parseInt(dataTab[1].split("\\s+")[1]);
@@ -755,28 +753,31 @@ public class DisplayImpl
         yllcorner = Double.parseDouble(dataTab[3].split("\\s+")[1]);
         cellsize = Double.parseDouble(dataTab[4].split("\\s+")[1]);
         NODATA_value = Double.parseDouble(dataTab[5].split("\\s+")[1]);
-        System.out.println("ncols : " + ncols +" nrows : " + nrows);
-        Point3D[][] result = new Point3D[nrows+1][ncols+1];
+        //  System.out.println("ncols : " + ncols + " nrows : " + nrows);
+        Point3D[][] result = new Point3D[nrows + 1][ncols + 1];
 
-        int u = 0, v = 0;
-        System.out.println("dataTab.length - 1 : " + dataTab.length);
-        for (int i = dataTab.length-1; i >= 6; i--) {
-           // System.out.println("dataTab[i] : " + dataTab[i]);
+        int u = 0;
+        int v = 0;
+       // int l = dataTab.length - 7;
+      //  System.out.println("l : " + l);
+        for (int i = dataTab.length - 1; i >= 6; i--) {
             String[] rowTab = dataTab[i].split("\\s+");
-            for (int j = 0; j < rowTab.length ; j++) {
-             //   try {
-                    result[u][v] = new Point3D(yllcorner + u * cellsize, xllcorner + v * cellsize, Double.valueOf(rowTab[j]));
-              //  } catch (java.lang.NumberFormatException e) {
-             //       result[u][v] = new Point3D(yllcorner + u * cellsize, xllcorner + v * cellsize, 0.0);
-             //   }
-            // System.out.println("u : " + u +" v : "+ v + " "+result[u][v]);
+            for (int j = 0; j < rowTab.length; j++) {  
+                result[u][v]= new Point3D(yllcorner + u * cellsize, xllcorner + v * cellsize, Double.valueOf(rowTab[j]));
                 v++;
             }
-            
             u++;
             v = 0;
         }
-        System.out.println("importASC  " + result[0][0] + " " + result[nrows][ncols-1]);
+        /*
+        System.out.println("import Asc");
+        for (int i = 0; i < 78; i++) {
+            for (int j = 0; j < 78; j++) {
+                 System.out.print(result[i][j].getLongitude()+" ");
+            }
+             System.out.println("");
+        }
+*/
         return result;
     }
 

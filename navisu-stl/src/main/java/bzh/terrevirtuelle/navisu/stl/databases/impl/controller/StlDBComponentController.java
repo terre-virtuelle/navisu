@@ -76,7 +76,6 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
-//import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -122,6 +121,8 @@ import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportSTL;
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.geom.Angle;
 
 /**
  * @author Serge Morvan
@@ -155,12 +156,21 @@ public class StlDBComponentController
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String DEFAULT_KML_PATH = "privateData/kml/";
     protected static final String DEFAULT_STL_PATH = "privateData/stl/";
+    protected static final String DEFAULT_ASC_PATH = "privateData/asc/";
     private final String HOST = "localhost";
     private final String PROTOCOL = "jdbc:postgresql://";
     private final String PORT = "5432";
     private final String DRIVER = "org.postgresql.Driver";
     private final String USER = "admin";
     private final String PASSWD = "admin";
+
+    private final String S57_DEFAULT_DATABASE_1 = "s57NP1DB";
+    private final String S57_DEFAULT_DATABASE_2 = "s57NP2DB";
+    private final String S57_DEFAULT_DATABASE_3 = "s57NP53B";
+    private final String S57_DEFAULT_DATABASE_4 = "s57NP4DB";
+    private final String S57_DEFAULT_DATABASE_5 = "s57NP5DB";
+    private final String S57_DEFAULT_DATABASE_6 = "s57NP6DB";
+
     protected Properties properties = new Properties();
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     protected String viewgroupstyle = "configuration.css";
@@ -174,12 +184,7 @@ public class StlDBComponentController
     protected static final String S57_LAYER = "S57Stl";
     protected static final String LIGHTS_LAYER = "LIGHTS";
     protected static final String SELECTED_LAYER = "TargetCmd";
-    /*
-    protected static final String LAT_MIN = "48.21";//Original
-    protected static final String LON_MIN = "-4.61";
-    protected static final String LAT_MAX = "48.42";
-    protected static final String LON_MAX = "-4.30";
-     */
+
     protected static final String LAT_MIN = "48.3000252668706";//Original
     protected static final String LON_MIN = " -4.585605557107784";
     protected static final String LAT_MAX = "48.35162043824935";
@@ -338,7 +343,8 @@ public class StlDBComponentController
     final ToggleGroup bathyGroup = new ToggleGroup();
     final ToggleGroup wsGroup = new ToggleGroup();
 
-    protected ObservableList<String> s57DbCbData = FXCollections.observableArrayList("s57NP1DB", "s57NP2DB", "s57NP3DB", "s57NP4DB", "s57NP5DB", "s57NP6DB");
+    protected ObservableList<String> s57DbCbData
+            = FXCollections.observableArrayList(S57_DEFAULT_DATABASE_1, S57_DEFAULT_DATABASE_2, S57_DEFAULT_DATABASE_3, S57_DEFAULT_DATABASE_4, S57_DEFAULT_DATABASE_5, S57_DEFAULT_DATABASE_6);
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
     protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("AltiV2_2-0_75mIgnDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
@@ -424,8 +430,8 @@ public class StlDBComponentController
         makeAttributes();
 
         s57DatabasesCB.setItems(s57DbCbData);
-        s57DatabasesCB.getSelectionModel().select("s57NP5DB");
-        s57DatabaseTF.setText("s57NP5DB");
+        s57DatabasesCB.getSelectionModel().select(S57_DEFAULT_DATABASE_5);
+        s57DatabaseTF.setText(S57_DEFAULT_DATABASE_5);
         s57DatabasesCB.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue)
@@ -612,6 +618,7 @@ public class StlDBComponentController
             MeasureToolController measureToolController = new MeasureToolController();
             measureTool.setController(measureToolController);
             measureTool.setMeasureShapeType(MeasureTool.SHAPE_SQUARE);
+            measureTool.setPathType(AVKey.GREAT_CIRCLE);
             measureTool.setArmed(true);
         });
 
@@ -687,13 +694,15 @@ public class StlDBComponentController
                 if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && demRB.isSelected())) {
                     grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
                 }
-
+                i = 0;
                 if (grids != null) {
                     List<GridBox3D> gridBoxes = new ArrayList<>();
                     for (Point3D[][] g : grids) {
                         scaleCompute(g);
                         GridBox3D gb = new GridBox3D(g, verticalExaggeration);
                         gridBoxes.add(gb);
+                        String filename = DEFAULT_ASC_PATH + outFileTF.getText() + "_" + i + ".asc";
+                        displayServices.exportASC(filename, g);
                     }
 
                     if (stlPreviewCB.isSelected()) {
@@ -709,6 +718,7 @@ public class StlDBComponentController
                         new GridBox3DExportKML(gb).exportWKML(filename, solid);
                         i++;
                     });
+
                     i = 0;
                     gridBoxes.forEach((gb) -> {
                         String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + ".stl";
@@ -849,16 +859,7 @@ public class StlDBComponentController
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
         maxDepth = 0.0;
-        Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
-        System.out.println("grid : "+latMin+" "+ lonMin+" "+ latMax+" "+ lonMax);
-        grid = jtsServices.mergePointsToGrid(dem.getGrid(), grid);
-      //  grid = resample("privateData/asc/out.asc", grid);
-      
-       displayServices.exportASC("privateData/asc/out.asc", grid);
-      displayServices.importASC("privateData/asc/out.asc");
-      
-        List<Point3D[][]> grids = createGrids(grid, tileCount);
-        return grids;
+        return createGrids(dem, latMin, lonMin, latMax, lonMax);
     }
 
     /*
@@ -867,13 +868,9 @@ public class StlDBComponentController
      */
     private List<Point3D[][]> createBathymetryTab(double latMin, double lonMin, double latMax, double lonMax) {
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices)
-                .retrieveIn(latMin, lonMin, latMax, lonMax);
-        maxDepth = dem.getMaxElevation();
-        Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
-        grid = jtsServices.mergePointsToGrid(dem.getGrid(), grid);
-        List<Point3D[][]> grids = createGrids(grid, tileCount);
-        return grids;
+        DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
+        maxDepth = dem.getMaxElevation(); 
+        return createGrids(dem, latMin, lonMin, latMax, lonMax);
     }
 
     /*
@@ -898,10 +895,33 @@ public class StlDBComponentController
         });
         // Merge all alti and bathy points
         bathyElevations.addAll(altiElevations);
+        
         Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
         grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
         List<Point3D[][]> grids = createGrids(grid, tileCount);
+        return grids;
+    }
 
+    private List<Point3D[][]> createGrids(DEM dem, double latMin, double lonMin, double latMax, double lonMax) {
+        /*
+        // Si export vers ASC
+        Position orig = new Position(Angle.fromDegrees(latMin), Angle.fromDegrees(lonMin), 0);
+        Position p0 = geodesyServices.getPosition(orig, 90, gridX);
+        Position p1 = geodesyServices.getPosition(orig, 0, gridY);
+
+        Double y = Math.abs(Math.abs(orig.getLatitude().getDegrees()) - Math.abs(p1.getLatitude().getDegrees()));
+        double x = Math.abs(Math.abs(orig.getLongitude().getDegrees()) - Math.abs(p0.getLongitude().getDegrees()));
+        double yy = orig.getLatitude().getDegrees() + y;
+        double xx = orig.getLongitude().getDegrees() - y;
+
+        gridY = geodesyServices.getDistanceM(orig.getLatitude().getDegrees(), orig.getLongitude().getDegrees(),
+                yy, orig.getLongitude().getDegrees());
+        gridX = geodesyServices.getDistanceM(orig.getLatitude().getDegrees(), orig.getLongitude().getDegrees(),
+                orig.getLatitude().getDegrees(), xx);
+*/
+        Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
+        grid = jtsServices.mergePointsToGrid(dem.getGrid(), grid);
+        List<Point3D[][]> grids = createGrids(grid, tileCount);
         return grids;
     }
 
@@ -1067,7 +1087,6 @@ public class StlDBComponentController
         //  System.out.println("grid : " + grid[0][0] + " " + grid[grid[0].length - 1][grid[1].length - 1]);
         displayServices.exportASC(filename, grid);
 
-        
         String tmpTif = filename.replace(".asc", ".tif");
         String tmpAsc = filename.replace(".asc", "1.asc");
         String command = startCmd("gdalwarp");
