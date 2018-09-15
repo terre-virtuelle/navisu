@@ -123,6 +123,8 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.Buoyag
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportSTL;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 
 /**
  * @author Serge Morvan
@@ -189,6 +191,7 @@ public class StlDBComponentController
     protected static final String LON_MIN = " -4.585605557107784";
     protected static final String LAT_MAX = "48.35162043824935";
     protected static final String LON_MAX = " -4.508006397642742";
+    protected static final double RETRIEVE_OFFSET = 0.002;
 
     protected RenderableLayer bathymetryLayer;
     protected RenderableLayer s57Layer;
@@ -699,6 +702,7 @@ public class StlDBComponentController
                     List<GridBox3D> gridBoxes = new ArrayList<>();
                     for (Point3D[][] g : grids) {
                         scaleCompute(g);
+                        //   System.out.println("verticalExaggeration : " + verticalExaggeration);
                         GridBox3D gb = new GridBox3D(g, verticalExaggeration);
                         gridBoxes.add(gb);
                         String filename = DEFAULT_ASC_PATH + outFileTF.getText() + "_" + i + ".asc";
@@ -707,8 +711,11 @@ public class StlDBComponentController
 
                     if (stlPreviewCB.isSelected()) {
                         gridBoxes.forEach((gb) -> {
-                            // displayServices.displayGridAsTriangles(gb.getGrid(), bathymetryLayer, Material.GREEN, verticalExaggeration);
+                            displayServices.displayGridAsTriangles(gb.getGrid(), bathymetryLayer, Material.GREEN, verticalExaggeration);
                             // displayServices.displayPaths(gb.getSidePathsWest(), bathymetryLayer, Material.YELLOW, verticalExaggeration);
+                            //  System.out.println("size : " + gb.getSidePaths().size());
+                            // displayServices.displayPaths(gb.getSidePaths(), bathymetryLayer, Material.YELLOW, verticalExaggeration);
+                            //  displayServices.displayPolygonsFromPaths(gb.getSidePaths(), bathymetryLayer, Material.MAGENTA, verticalExaggeration);
                         });
                     }
 
@@ -857,8 +864,12 @@ public class StlDBComponentController
      */
     private List<Point3D[][]> createElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
+        DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET, 
+                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
         maxDepth = 0.0;
+        dem.getGrid().forEach((p) -> {
+            System.out.println(p.getElevation());
+        });
         return createGrids(dem, latMin, lonMin, latMax, lonMax);
     }
 
@@ -868,8 +879,15 @@ public class StlDBComponentController
      */
     private List<Point3D[][]> createBathymetryTab(double latMin, double lonMin, double latMax, double lonMax) {
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
-        maxDepth = dem.getMaxElevation(); 
+        DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET, 
+                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
+        maxDepth = dem.getMaxElevation();
+        // Offset from maxDepth
+        System.out.println("maxDepth : " + maxDepth);
+        dem.getGrid().forEach((p) -> {
+            p.setElevation(maxDepth - p.getElevation());
+            System.out.println(p.getElevation());
+        });
         return createGrids(dem, latMin, lonMin, latMax, lonMax);
     }
 
@@ -878,26 +896,31 @@ public class StlDBComponentController
     These grids are translate vertically with the max of depth
      */
     private List<Point3D[][]> createBathymetryAndElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
+
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM bathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
+        DEM bathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
+                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
         maxDepth = bathy.getMaxElevation();
         // Offset from maxDepth
         List<Point3D> bathyElevations = new ArrayList<>();
         bathy.getGrid().forEach((p) -> {
             bathyElevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxDepth - p.getElevation()));
         });
+
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM alti = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin, lonMin, latMax, lonMax);
+        DEM alti = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin - 0.1, lonMin - 0.1, latMax + 0.1, lonMax + 0.1);
         // Offset from maxDepth
-        List<Point3D> altiElevations = new ArrayList<>();
         alti.getGrid().forEach((p) -> {
-            altiElevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxDepth + p.getElevation()));
+            bathyElevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxDepth + p.getElevation()));
         });
+
         // Merge all alti and bathy points
-        bathyElevations.addAll(altiElevations);
-        
         Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
+        
+
+
         grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
+           
         List<Point3D[][]> grids = createGrids(grid, tileCount);
         return grids;
     }
@@ -918,10 +941,39 @@ public class StlDBComponentController
                 yy, orig.getLongitude().getDegrees());
         gridX = geodesyServices.getDistanceM(orig.getLatitude().getDegrees(), orig.getLongitude().getDegrees(),
                 orig.getLatitude().getDegrees(), xx);
-*/
+         */
+
         Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
         grid = jtsServices.mergePointsToGrid(dem.getGrid(), grid);
         List<Point3D[][]> grids = createGrids(grid, tileCount);
+        return grids;
+    }
+
+    private List<Point3D[][]> createGrids(Point3D[][] grid, int tileCount) {
+        List<Point3D[][]> grids = new ArrayList<>();
+        if (tileCount == 1) {
+            grids.add(grid);
+        } else {
+            int bound = grid[0].length / tileCount;
+            if (grid[0].length <= tileCount * bound) {
+                Point3D[][] tmpTab = Point3D.suppress(grid, grid[0].length - 1);
+                grid = Point3D.copy(tmpTab);
+                bound = grid[0].length / tileCount;
+            }
+            for (int l = 0; l < tileCount; l++) {
+                for (int c = 0; c < tileCount; c++) {
+                    Point3D[][] realGrid = new Point3D[bound + 1][bound + 1];
+                    for (int i = 0; i < bound + 1; i++) {
+                        for (int j = 0; j < bound + 1; j++) {
+                            realGrid[i][j] = new Point3D(grid[i + l * bound][j + c * bound].getLatitude(),
+                                    grid[i + l * bound][j + c * bound].getLongitude(),
+                                    grid[i + l * bound][j + c * bound].getElevation());
+                        }
+                    }
+                    grids.add(realGrid);
+                }
+            }
+        }
         return grids;
     }
 
@@ -1172,34 +1224,6 @@ public class StlDBComponentController
                 Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
                 true, true)
                 .display(shp);
-    }
-
-    private List<Point3D[][]> createGrids(Point3D[][] grid, int tileCount) {
-        List<Point3D[][]> grids = new ArrayList<>();
-        if (tileCount == 1) {
-            grids.add(grid);
-        } else {
-            int bound = grid[0].length / tileCount;
-            if (grid[0].length <= tileCount * bound) {
-                Point3D[][] tmpTab = Point3D.suppress(grid, grid[0].length - 1);
-                grid = Point3D.copy(tmpTab);
-                bound = grid[0].length / tileCount;
-            }
-            for (int l = 0; l < tileCount; l++) {
-                for (int c = 0; c < tileCount; c++) {
-                    Point3D[][] realGrid = new Point3D[bound + 1][bound + 1];
-                    for (int i = 0; i < bound + 1; i++) {
-                        for (int j = 0; j < bound + 1; j++) {
-                            realGrid[i][j] = new Point3D(grid[i + l * bound][j + c * bound].getLatitude(),
-                                    grid[i + l * bound][j + c * bound].getLongitude(),
-                                    grid[i + l * bound][j + c * bound].getElevation());
-                        }
-                    }
-                    grids.add(realGrid);
-                }
-            }
-        }
-        return grids;
     }
 
 }

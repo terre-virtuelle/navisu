@@ -38,6 +38,7 @@ public class JTSImpl
     TopologyServices topologyServices;
     @UsedService
     GeodesyServices geodesyServices;
+    boolean[][] isInit;
 
     @Override
     public List<Coordinate> toListCoordinates(List<Point3D> pts) {
@@ -114,16 +115,16 @@ public class JTSImpl
     }
 
     @Override
+    public boolean[][] getPoint3DInit() {
+        return isInit;
+    }
+
+    @Override
     public Point3D[][] mergePointsToGrid(List<Point3D> points, Point3D[][] grid) {
         int line = grid[0].length;
         int col = grid[1].length;
         GeometryFactory geometryFactory = new GeometryFactory();
-
-        // points to JTS Point
-        List<Point> data = new ArrayList<>();
-        for (Point3D p : points) {
-            data.add(geometryFactory.createPoint(new Coordinate(p.getLongitude(), p.getLatitude(), p.getElevation())));
-        }
+        isInit = new boolean[line][col];
         /*
         New grid
         gridCoord with JTS Point
@@ -138,17 +139,23 @@ public class JTSImpl
         }
 
         List<Geometry> triangles = createDelaunayWithFilterOnArea(points, 1E-6);
-       
+
         double dA;
         double dB;
         double dC;
         double min;
+
+        for (int i = 0; i < line; i++) {
+            for (int j = 0; j < col; j++) {
+                isInit[i][j] = false;
+            }
+        }
         for (Geometry t : triangles) {
             for (int i = 0; i < line; i++) {
                 for (int j = 0; j < col; j++) {
                     if (t.contains(gridCoord[i][j])) {
                         Coordinate[] coordinates = t.getCoordinates();
-                      
+                        isInit[i][j] = true;
                         dA = geodesyServices.getDistanceM(coordinates[0].y, coordinates[0].x,
                                 gridCoord[i][j].getCoordinate().y, gridCoord[i][j].getCoordinate().x);
                         dB = geodesyServices.getDistanceM(coordinates[1].y, coordinates[1].x,

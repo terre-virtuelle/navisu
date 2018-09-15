@@ -30,9 +30,13 @@ public class BathyLoader {
 
     public DEM retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
         points = bathymetryDBServices.retrieveIn(connection, "bathy", latMin, lonMin, latMax, lonMax);
+        for(Point3D p : points){
+            
+        }
         points.stream().filter((p) -> (p.getElevation() > maxDepth)).forEachOrdered((p) -> {
             maxDepth = p.getElevation();
         });
+        
         DEM tmp = new DEM(points);
         tmp.setMaxElevation(maxDepth);
         return tmp;

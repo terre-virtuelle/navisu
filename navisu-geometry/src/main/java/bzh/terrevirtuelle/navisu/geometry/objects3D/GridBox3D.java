@@ -44,7 +44,7 @@ public class GridBox3D {
     public GridBox3D(Point3D[][] grid, double verticalExaggeration) {
         this.grid = grid;
         this.verticalExaggeration = verticalExaggeration;
-       
+        System.out.println("verticalExaggeration : "+ verticalExaggeration);
         sidePaths = new ArrayList<>();
         sidePathsBySide = new ArrayList<>();
         basePaths = new ArrayList<>();
@@ -101,7 +101,7 @@ public class GridBox3D {
     public List<Path> getPaths() {
         List<Path> result = new ArrayList<>();
         result.addAll(gridPaths);
-       // result.addAll(getSidePaths());
+        result.addAll(getSidePaths());
         return result;
     }
 
@@ -118,6 +118,8 @@ public class GridBox3D {
 
         for (int i = 0; i < latLength - 1; i++) {
             for (int j = 0; j < lonLength - 1; j++) {
+             //   System.out.println(latLons[i][j].getElevation() * verticalExaggeration+" "+
+             //           latLons[i][j + 1].getElevation() * verticalExaggeration+" "+latLons[i + 1][j + 1].getElevation() * verticalExaggeration);
                 positions0 = new ArrayList<>();
                 positions0.add(Position.fromDegrees(latLons[i][j].getLatitude(),
                         latLons[i][j].getLongitude(),
