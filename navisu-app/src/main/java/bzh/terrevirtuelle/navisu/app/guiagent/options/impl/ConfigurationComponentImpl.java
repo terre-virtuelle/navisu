@@ -16,6 +16,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.Option;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.eventsProducer.impl.ConfEventProducerImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
+import java.util.Properties;
 import java.util.logging.Level;
 import org.capcaval.c3.component.annotation.SubComponent;
 
@@ -125,5 +126,10 @@ public class ConfigurationComponentImpl
         } catch (Exception e) {
             Logger.getLogger(ConfigurationComponentImpl.class.getName()).log(Level.WARNING, e.toString(), e);
         }
+    }
+
+    @Override
+    public Properties readCacheProperties() {
+        return null;
     }
 }

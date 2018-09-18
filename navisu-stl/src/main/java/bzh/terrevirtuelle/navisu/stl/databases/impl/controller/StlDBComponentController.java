@@ -118,13 +118,17 @@ import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.BuoyageExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportSTL;
 import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.render.PointPlacemark;
-import gov.nasa.worldwind.render.PointPlacemarkAttributes;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import org.apache.commons.io.FileUtils;
 
 /**
  * @author Serge Morvan
@@ -153,7 +157,9 @@ public class StlDBComponentController
     protected static final Logger LOGGER = Logger.getLogger(StlDBComponentController.class.getName());
 
     private final String FXML = "stlDBController.fxml";
+    protected final String SEP = File.separator;
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
+    protected String CACHE_FILE_NAME = System.getProperty("user.home") + "/.navisu/caches/caches.properties";
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String DEFAULT_KML_PATH = "privateData/kml/";
@@ -173,7 +179,9 @@ public class StlDBComponentController
     private final String S57_DEFAULT_DATABASE_5 = "s57NP5DB";
     private final String S57_DEFAULT_DATABASE_6 = "s57NP6DB";
 
-    protected Properties properties = new Properties();
+    protected Properties configProperties = new Properties();
+    protected Properties cacheProperties = new Properties();
+
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     protected String viewgroupstyle = "configuration.css";
     protected Map<String, String> acronyms;
@@ -187,10 +195,16 @@ public class StlDBComponentController
     protected static final String LIGHTS_LAYER = "LIGHTS";
     protected static final String SELECTED_LAYER = "TargetCmd";
 
+    protected String LAT_MIN;
+    protected String LON_MIN;
+    protected String LAT_MAX;
+    protected String LON_MAX;
+    /*
     protected static final String LAT_MIN = "48.3000252668706";//Original
     protected static final String LON_MIN = " -4.585605557107784";
     protected static final String LAT_MAX = "48.35162043824935";
     protected static final String LON_MAX = " -4.508006397642742";
+     */
     protected static final double RETRIEVE_OFFSET = 0.002;
 
     protected RenderableLayer bathymetryLayer;
@@ -421,15 +435,33 @@ public class StlDBComponentController
         lightsLayer = layersManagerServices.getLayer(GROUP_0, LIGHTS_LAYER);
         selectLayer = layersManagerServices.getLayer(GROUP_0, SELECTED_LAYER);
         try {
-            properties.load(new FileInputStream(CONFIG_FILE_NAME));
+            configProperties.load(new FileInputStream(CONFIG_FILE_NAME));
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         stlGuiController = new StlGuiController(geodesyServices);
+        InputStream input = null;
+        try {
+            input = new FileInputStream(CACHE_FILE_NAME);
+            cacheProperties.load(input);
+            input.close();
+        } catch (IOException ex) {
+            Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        LAT_MIN = cacheProperties.getProperty("LAT_MIN");
+        LON_MIN = cacheProperties.getProperty("LON_MIN");
+        LAT_MAX = cacheProperties.getProperty("LAT_MAX");
+        LON_MAX = cacheProperties.getProperty("LON_MAX");
+        kmlFileNames = new ArrayList<>();
+        //  System.out.println("cacheProperties : " + cacheProperties);
+        /*
+        test valeurs nulles
+         */
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources
+    ) {
         makeAttributes();
 
         s57DatabasesCB.setItems(s57DbCbData);
@@ -702,7 +734,6 @@ public class StlDBComponentController
                     List<GridBox3D> gridBoxes = new ArrayList<>();
                     for (Point3D[][] g : grids) {
                         scaleCompute(g);
-                        //   System.out.println("verticalExaggeration : " + verticalExaggeration);
                         GridBox3D gb = new GridBox3D(g, verticalExaggeration);
                         gridBoxes.add(gb);
                         String filename = DEFAULT_ASC_PATH + outFileTF.getText() + "_" + i + ".asc";
@@ -711,21 +742,22 @@ public class StlDBComponentController
 
                     if (stlPreviewCB.isSelected()) {
                         gridBoxes.forEach((gb) -> {
-                            displayServices.displayGridAsTriangles(gb.getGrid(), bathymetryLayer, Material.GREEN, verticalExaggeration);
+                            //displayServices.displayGridAsTriangles(gb.getGrid(), bathymetryLayer, Material.GREEN, verticalExaggeration);
                             // displayServices.displayPaths(gb.getSidePathsWest(), bathymetryLayer, Material.YELLOW, verticalExaggeration);
                             //  System.out.println("size : " + gb.getSidePaths().size());
                             // displayServices.displayPaths(gb.getSidePaths(), bathymetryLayer, Material.YELLOW, verticalExaggeration);
                             //  displayServices.displayPolygonsFromPaths(gb.getSidePaths(), bathymetryLayer, Material.MAGENTA, verticalExaggeration);
                         });
                     }
-
-                    i = 0;
-                    gridBoxes.forEach((gb) -> {
-                        String filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + ".kml";
-                        new GridBox3DExportKML(gb).exportWKML(filename, solid);
-                        i++;
-                    });
-
+                    if (generateKmlCB.isSelected()) {
+                        i = 0;
+                        gridBoxes.forEach((gb) -> {
+                            String filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + ".kml";
+                            kmlFileNames.add(filename);
+                            new GridBox3DExportKML(gb).exportWKML(filename, solid);
+                            i++;
+                        });
+                    }
                     i = 0;
                     gridBoxes.forEach((gb) -> {
                         String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + ".stl";
@@ -744,7 +776,7 @@ public class StlDBComponentController
                         createElevationAndUlhyssesDepare(latMin, lonMin, latMax, lonMax);
                     }
 
-                    int i = 0;
+                    i = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
                         Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
                         for (Point3D[][] g : grids) {
@@ -756,9 +788,17 @@ public class StlDBComponentController
                                                 g[g[0].length - 1][g[0].length - 1].getLongitude()));
                             }
                             new BuoyageView(s57Layer).display(buoyages, 1.0);
-                            //  new BuoyageExportKML(kmlFileNames.get(i)).export(buoyages, maxDepth + tileSideZ);
+                            if (generateKmlCB.isSelected()) {
+                                File src = new File(System.getProperty("user.dir") + SEP + "data" + SEP + "collada" + SEP + "buoys");
+                                File dest = new File(System.getProperty("user.dir") + SEP + "privateData" + SEP + "kml" + SEP + "buoys");
+                                try {
+                                    FileUtils.copyDirectory(src, dest);
+                                } catch (IOException ex) {
+                                    Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                                }
+                                new BuoyageExportKML(kmlFileNames.get(i)).export(buoyages, maxDepth + tileSideZ);
+                            }
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + ".stl";
-
                             new BuoyageExportSTL(geodesyServices, g, filename, latScale, lonScale)
                                     .export(buoyages, maxDepth + tileSideZ);
                             i++;
@@ -864,12 +904,13 @@ public class StlDBComponentController
      */
     private List<Point3D[][]> createElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET, 
+        DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
                 lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
         maxDepth = 0.0;
-        dem.getGrid().forEach((p) -> {
-            System.out.println(p.getElevation());
-        });
+        //  dem.getGrid().forEach((p) -> {
+        //      System.out.println(p.getElevation());
+        //  });
+        //48.42/-4.30 & 48.21/-4.61  
         return createGrids(dem, latMin, lonMin, latMax, lonMax);
     }
 
@@ -879,7 +920,7 @@ public class StlDBComponentController
      */
     private List<Point3D[][]> createBathymetryTab(double latMin, double lonMin, double latMax, double lonMax) {
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET, 
+        DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
                 lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
         maxDepth = dem.getMaxElevation();
         // Offset from maxDepth
@@ -916,11 +957,9 @@ public class StlDBComponentController
 
         // Merge all alti and bathy points
         Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
-        
-
 
         grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
-           
+
         List<Point3D[][]> grids = createGrids(grid, tileCount);
         return grids;
     }
@@ -1015,16 +1054,15 @@ public class StlDBComponentController
     }
 
     private void initSelectedZone() {
-
         Dialog dialog = new Dialog<>();
         dialog.setTitle("Create Area");
         dialog.setHeaderText("Please enter selected area coordinates.");
         dialog.setResizable(false);
 
-        Label lat0Label = new Label("Northwest point latitude : ");
-        Label lon0Label = new Label("Northwest point longitude : ");
-        Label lat1Label = new Label("Southeast point latitude : ");
-        Label lon1Label = new Label("Southeast point longitude : ");
+        Label lat0Label = new Label("Southwest point latitude : ");
+        Label lon0Label = new Label("Southwest point longitude : ");
+        Label lat1Label = new Label("Northeast point latitude : ");
+        Label lon1Label = new Label("Northeast point longitude : ");
 
         TextField lat0TF = new TextField();
         TextField lat1TF = new TextField();
@@ -1080,8 +1118,13 @@ public class StlDBComponentController
                 alert.setHeaderText("Range longitude : -180° <= Longitude <= 180°");
                 alert.show();
             }
-//Faire un carre
-//Make choice polygone square
+            if (lon1 < lon0 || lat1 < lat0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Right inputs are LatMin, LonMin & LatMax, LonMax");
+                alert.show();
+            }
+
             double latRan = geodesyServices.getDistanceM(lat0, lon0, lat1, lon0);
             double lonRan = geodesyServices.getDistanceM(lat0, lon0, lat0, lon1);
             if (latRan > lonRan) {
@@ -1097,6 +1140,23 @@ public class StlDBComponentController
             lonMinLabel.setText(Double.toString(lon0));
             latMaxLabel.setText(Double.toString(lat1));
             lonMaxLabel.setText(Double.toString(lon1));
+            LAT_MIN = Double.toString(lat0);
+            LON_MIN = Double.toString(lon0);
+            LAT_MAX = Double.toString(lat1);
+            LON_MAX = Double.toString(lon1);
+            OutputStream output = null;
+            Properties properties = new Properties();
+            try {
+                output = new FileOutputStream(CACHE_FILE_NAME);
+                properties.setProperty("LAT_MIN", LAT_MIN);
+                properties.setProperty("LON_MIN", LON_MIN);
+                properties.setProperty("LAT_MAX", LAT_MAX);
+                properties.setProperty("LON_MAX", LON_MAX);
+                properties.store(output, null);
+                output.close();
+            } catch (IOException ex) {
+                Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
             selectedPolygons.addAll(stlGuiController.createAndDisplayTiles(s57Layer, Material.RED, 100, lat0, lon0, lat1, lon1, tileCount, tileCount));
         });
 
@@ -1113,7 +1173,7 @@ public class StlDBComponentController
         if (OS.isWindows()) {
             cmd = "gdal\\win\\" + command;
         } else if (OS.isLinux()) {
-            cmd = properties.getProperty("gdalPath") + "/" + command;
+            cmd = configProperties.getProperty("gdalPath") + "/" + command;
         } else {
             System.out.println("OS not found");
         }

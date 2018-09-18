@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 public class BuoyageExportKML {
 
     String filename;
+    String model;
     String sep = File.separator;
     protected RenderableLayer layer;
     protected List<Buoyage> buoyages;
@@ -41,7 +42,6 @@ public class BuoyageExportKML {
 
     public BuoyageExportKML(String filename) {
         this.filename = filename;
-
     }
 
     public void export(List<Buoyage> buoyages, double elevation) {
@@ -50,7 +50,7 @@ public class BuoyageExportKML {
         try {
             body = new String(Files.readAllBytes(Paths.get(filename)));
         } catch (IOException ex) {
-            Logger.getLogger(BuoyageExportKML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuoyageExportKML.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         body = body.replace("</Document>", "");
         body = body.replace("</kml>", "");
@@ -63,7 +63,7 @@ public class BuoyageExportKML {
             String imageAddress = "";
             if (acronym.equals("LNDMRK")) {
                 elv = Double.valueOf(buoyage.getElevation());
-                buoys = buoys.concat(insertedFile(lat, lon, elv, "lithops_0.dae"));
+                buoys = buoys.concat(insertedFile(lat, lon, elv, "Babord-blender.dae"));
                 imageAddress = "img/landmarks_" + buoyage.getMarsys() + "/"
                         + acronym + "_"
                         + buoyage.getCategoryOfMark() + "_"
@@ -86,16 +86,40 @@ public class BuoyageExportKML {
                             + buoyage.getMarsys()
                             + ".png";
                 } else {
-                    buoys = buoys.concat(insertedFile(lat, lon, elevation, "lithops_0.dae"));
-                    imageAddress = "img/buoyage_"
-                            + buoyage.getMarsys() + "/"
-                            + acronym + "_"
-                            + buoyage.getShape() + "_"
-                            + buoyage.getCategoryOfMark() + "_"
-                            + buoyage.getColour() + "_"
-                            + buoyage.getColourPattern() + "_"
-                            + buoyage.getTopMark() + "_"
-                            + buoyage.getMarsys() + ".png";
+                    if (acronym.equals("BCNLAT") || acronym.equals("BOYLAT")) {
+                        if (buoyage.getMarsys().equals("1")) {
+                            if (buoyage.getCategoryOfMark().equals("1")) {
+                                model = "latRed.dae";
+                            }
+                            if (buoyage.getCategoryOfMark().equals("2")) {
+                                model = "latGreen.dae";
+                            }
+                        }
+                        if (buoyage.getMarsys().equals("2")) {
+                            if (buoyage.getCategoryOfMark().equals("1")) {
+                                model = "latGreen.dae";
+                            }
+                            if (buoyage.getCategoryOfMark().equals("2")) {
+                                model = "latRed.dae";
+                            }
+                        }
+                        buoys = buoys.concat(insertedFile(lat, lon, elevation, model));
+                    }
+                    if (acronym.equals("BCNCAR") || acronym.equals("BOYCAR")) {
+                        if (buoyage.getCategoryOfMark().equals("1")) {
+                            model = "north.dae";
+                        }
+                        if (buoyage.getCategoryOfMark().equals("2")) {
+                            model = "east.dae";
+                        }
+                        if (buoyage.getCategoryOfMark().equals("3")) {
+                            model = "south.dae";
+                        }
+                        if (buoyage.getCategoryOfMark().equals("4")) {
+                            model = "west.dae";
+                        }
+                        buoys = buoys.concat(insertedFile(lat, lon, elevation, model));
+                    }
                 }
             }
         }
@@ -105,14 +129,14 @@ public class BuoyageExportKML {
         try {
             Files.write(path, body.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
-            Logger.getLogger(BuoyageExportKML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuoyageExportKML.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
     private String insertedFile(double latitude, double longitude, double altitude, String model) {
         String dataDir = System.getProperty("user.dir");
         String result = "<Placemark>\n"
-                + "<name>SketchUp Model</name>\n"
+                + "<name>Buoyage</name>\n"
                 + "<description>NaVisu</description>\n"
                 + "<Model id=\"model_" + id + "\">\n"
                 + "<altitudeMode>relativeToGround</altitudeMode>\n"
@@ -127,12 +151,13 @@ public class BuoyageExportKML {
                 + "<roll>0</roll>\n"
                 + "</Orientation>\n"
                 + "<Scale>\n"
-                + "<x>1</x>\n"
-                + "<y>1</y>\n"
-                + "<z>1</z>\n"
+                + "<x>25</x>\n"
+                + "<y>25</y>\n"
+                + "<z>25</z>\n"
                 + "</Scale>\n"
                 + "<Link>\n"
-                + "<href>" + dataDir + sep + "data" + sep + "collada" + sep + "buoys" + sep  + model + "</href>"
+              //  + "<href>" + dataDir + sep + "data" + sep + "collada" + sep + "buoys" + sep + model + "</href>"
+                + "<href>" +"buoys" + sep + model + "</href>"
                 + "</Link>\n"
                 + "</Model>\n"
                 + "</Placemark>\n";

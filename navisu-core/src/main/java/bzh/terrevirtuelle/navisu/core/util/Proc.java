@@ -90,7 +90,7 @@ public class Proc {
         args.stream().forEach((arg) -> {
             sb.append(arg).append(SPACE);
         });
-        System.out.println("cmd : " + sb);
+       // System.out.println("cmd : " + sb);
         String[] envp = new String[environment.size()];
         int count = 0;
         for (Map.Entry<String, String> entry : environment.entrySet()) {
@@ -130,7 +130,7 @@ public class Proc {
         } else if (OS.isLinux()) {
             cmdFile = "cmd/cmd.sh";
         }
-        System.out.println("cmd : " + cmd);
+      //  System.out.println("cmd : " + cmd);
         try {
             Files.write(Paths.get(cmdFile), cmd.getBytes());
         } catch (IOException ex) {

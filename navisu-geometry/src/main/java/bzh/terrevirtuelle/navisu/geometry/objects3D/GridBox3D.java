@@ -44,7 +44,7 @@ public class GridBox3D {
     public GridBox3D(Point3D[][] grid, double verticalExaggeration) {
         this.grid = grid;
         this.verticalExaggeration = verticalExaggeration;
-        System.out.println("verticalExaggeration : "+ verticalExaggeration);
+       
         sidePaths = new ArrayList<>();
         sidePathsBySide = new ArrayList<>();
         basePaths = new ArrayList<>();

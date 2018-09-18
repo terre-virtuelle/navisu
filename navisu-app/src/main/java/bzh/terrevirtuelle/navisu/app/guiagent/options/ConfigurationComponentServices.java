@@ -1,6 +1,7 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.options;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import java.util.Properties;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -17,4 +18,7 @@ public interface ConfigurationComponentServices
     boolean canOpen(String category);
 
     InstrumentDriver getDriver();
+    
+    Properties readCacheProperties();
+    //void writeCacheProperties()
 }

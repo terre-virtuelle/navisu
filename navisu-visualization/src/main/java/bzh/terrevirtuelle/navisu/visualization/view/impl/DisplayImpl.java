@@ -693,7 +693,7 @@ public class DisplayImpl
     
     @Override
     public void exportASC(String outputFilename, Point3D[][] pts) {
-        System.out.println(" exportASC " + pts[0][0] + " " + pts[pts[1].length - 1][pts[1].length - 1]);
+        
         int nrows = pts[0].length - 1;
         int ncols = pts[1].length - 1;
         double xllcorner = pts[0][0].getLongitude();

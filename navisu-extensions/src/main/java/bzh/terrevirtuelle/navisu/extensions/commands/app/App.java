@@ -38,7 +38,7 @@ public class App {
         } catch (JAXBException | FileNotFoundException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("cmd : " + cmd);
+       // System.out.println("cmd : " + cmd);
     }
 
     public static void main(String[] args) {
