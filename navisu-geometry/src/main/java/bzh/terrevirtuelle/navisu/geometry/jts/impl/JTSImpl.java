@@ -16,8 +16,12 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.operation.buffer.BufferOp;
+import com.vividsolutions.jts.operation.buffer.BufferParameters;
 import com.vividsolutions.jts.triangulate.DelaunayTriangulationBuilder;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.Polygon;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -332,5 +336,22 @@ public class JTSImpl
 
     @Override
     public void componentStopped() {
+    }
+
+    @Override
+    public List<Point3D> getBuffer(Geometry geom, double bufferDistance, int capSize) {
+        List<Point3D> result = new ArrayList<>();
+        BufferOp bufferOp = new BufferOp(geom);
+        bufferOp.setEndCapStyle(capSize);//CAP_ROUND);
+        Geometry offsetBuffer = bufferOp.getResultGeometry(bufferDistance);
+        List<Position> offsetPathPositions = new ArrayList<>();
+        for (Coordinate c : offsetBuffer.getCoordinates()) {
+            offsetPathPositions.add(Position.fromDegrees(c.y, c.x, 100));
+        }
+        Polygon poly = new Polygon(offsetPathPositions);
+        poly.outerBoundary().forEach((p) -> {
+            result.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(),p.getElevation()));
+        });
+        return result;
     }
 }

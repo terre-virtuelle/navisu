@@ -7,6 +7,8 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.Vec3d;
 import org.capcaval.c3.component.ComponentState;
 import bzh.terrevirtuelle.navisu.stl.StlComponent;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.render.Path;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -112,7 +114,7 @@ public class StlComponentImpl
         return path != null ? path.toString() : null;
     }
 
-    private String toFacet(String[] triangleString,
+    public String toFacet(String[] triangleString,
             double latMin, double lonMin, double latScale, double lonScale,
             double verticalOffset) {
         String facet = "";
@@ -153,6 +155,57 @@ public class StlComponentImpl
         lonM *= lonScale;
 
         double elv = Double.parseDouble(c[2]) * elvScale;
+
+        return new Vec3d(lonM, latM, elv);//retour en xyz
+    }
+
+    @Override
+    public String toFacet(Path path,
+            double latMin, double lonMin, double latScale, double lonScale,
+            double verticalOffset) {
+        String facet = "";
+        Vec3d[] vec3d = new Vec3d[3];
+        Vec3d normal;
+        int i = 0;
+        Iterable<? extends Position> positions = path.getPositions();
+        for (Position pp : positions) {
+            if (i < 3) {
+                vec3d[i] = toVec3d(pp, latMin, lonMin, latScale, lonScale);
+            }
+            i++;
+        }
+        Vec3d edge1 = vec3d[1].sub(vec3d[2]);
+        Vec3d edge2 = vec3d[2].sub(vec3d[0]);
+        normal = Vec3d.cross(edge1, edge2).normalize();
+
+        double z0 = vec3d[0].z + verticalOffset;
+        double z1 = vec3d[1].z + verticalOffset;
+        double z2 = vec3d[2].z + verticalOffset;
+
+        facet = "facet normal ";
+        facet += normal.x + " " + normal.y + " " + normal.z + " \n";
+        facet += "outer loop \n";
+        facet += "vertex " + vec3d[0].x + " " + vec3d[0].y + " " + z0 + " \n";
+        facet += "vertex " + vec3d[1].x + " " + vec3d[1].y + " " + z1 + " \n";
+        facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + z2 + " \n";
+        facet += "endloop \n";
+        facet += "endfacet \n";
+
+        return facet;
+    }
+
+    private Vec3d toVec3d(Position position, double latMin, double lonMin, double latScale, double lonScale) {
+
+        double elvScale = (latScale + lonScale) / 2;
+
+        double lon = position.getLongitude().getDegrees();
+        double lat = position.getLatitude().getDegrees();
+        double latM = geodesyServices.getDistanceM(latMin, lonMin, lat, lonMin);
+        double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
+        latM *= latScale;
+        lonM *= lonScale;
+
+        double elv = position.getElevation() * elvScale;
 
         return new Vec3d(lonM, latM, elv);//retour en xyz
     }

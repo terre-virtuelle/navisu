@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.stl;
 
+import gov.nasa.worldwind.render.Path;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -17,4 +18,8 @@ public interface StlComponentServices
     String exportBaseSTL(String stlFilename, String stlBaseFilename);
 
     void viewSTL(String filename);
+
+    String toFacet(Path path,
+            double latMin, double lonMin, double latScale, double lonScale,
+            double verticalOffset);
 }

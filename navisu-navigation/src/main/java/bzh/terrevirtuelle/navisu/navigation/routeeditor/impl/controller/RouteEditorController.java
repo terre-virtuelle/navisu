@@ -560,6 +560,7 @@ private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.
 
             bufferOp = new BufferOp(geom);
             bufferOp.setEndCapStyle(BufferParameters.CAP_FLAT);
+         
             bufferOp.setQuadrantSegments(1);
 
             highwayBuffer = bufferOp.getResultGeometry(highwayDistance);

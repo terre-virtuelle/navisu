@@ -140,11 +140,11 @@ public class StlChartController
                       //  load(new DEPARE_Stl_ShapefileLoader(outPathname.toString(), polyEnveloppe), "DEPARE", "DEPARE", "/");
                         break;
                     case "PONTON.shp":
-                        PONTON_Stl_ShapefileWriter ponton_Stl_ShapefileLoader
+                        PONTON_Stl_ShapefileWriter ponton_Stl_ShapefileWriter
                                 = new PONTON_Stl_ShapefileWriter(outPathname.toString(), polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor, tileSideX);
-                        load(ponton_Stl_ShapefileLoader, "HARBOUR", "PONTON", "/");
-                        String resultPonton = ponton_Stl_ShapefileLoader.compute();
+                        load(ponton_Stl_ShapefileWriter, "HARBOUR", "PONTON", "/");
+                        String resultPonton = ponton_Stl_ShapefileWriter.compute();
                         if (resultPonton != null) {
                             write(outPathname, resultPonton);
                         }

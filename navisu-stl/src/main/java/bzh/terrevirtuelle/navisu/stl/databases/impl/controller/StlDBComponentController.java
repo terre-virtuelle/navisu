@@ -122,12 +122,11 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.Buoyag
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExport;
 import gov.nasa.worldwind.avlist.AVKey;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -242,6 +241,7 @@ public class StlDBComponentController
     protected double verticalExaggeration = DEFAULT_EXAGGERATION;
     protected double simplifyFactor;
     protected S57ObjectView s57Viewer;
+    protected S57ObjectsExport s57ObjectsExport;
     protected List<? extends Geo> objects = new ArrayList<>();
     protected List<DepthContour> depthContours = new ArrayList<>();
     protected List<Buoyage> buoyages = new ArrayList<>();
@@ -804,6 +804,28 @@ public class StlDBComponentController
                             i++;
                         }
                     }
+                    if (selectedObjects.contains("ALL") || selectedObjects.contains("PONTON")) {
+                        objects = new PontoonDBLoader(s57Connection)
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                        s57Viewer = new S57ObjectView("PONTON", topologyServices, s57Layer);
+                        objects.forEach((g) -> {
+                            s57Viewer.display(g);
+                        });
+                        objects.forEach((g) -> {
+                            s57ObjectsExport = new S57ObjectsExport(topologyServices, stlComponentServices, jtsServices,
+                                    lat0, lon0, latScale, lonScale, maxDepth + tileSideZ);
+                            s57ObjectsExport.export(g);
+                        });
+                    }
+                    if (selectedObjects.contains("ALL") || selectedObjects.contains("SLCONS")) {
+                        objects = new ShorelineConstructionDBLoader(s57Connection)
+                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                        s57Viewer = new S57ObjectView("SLCONS", topologyServices, s57Layer);
+                        objects.forEach((g) -> {
+                            s57Viewer.display(g);
+                        });
+                    }
+
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("ACHARE")) {
                         objects = new AnchorageAreaDBLoader(topologyServices, s57Connection)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
@@ -811,6 +833,7 @@ public class StlDBComponentController
                         objects.forEach((g) -> {
                             s57Viewer.display(g);
                         });
+
                     }
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("COALNE")) {
                         objects = new CoastlineDBLoader(s57Connection)
@@ -861,22 +884,6 @@ public class StlDBComponentController
                         objects = new NavigationLineDBLoader(s57Connection)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                         s57Viewer = new S57ObjectView("NAVLNE", topologyServices, s57Layer);
-                        objects.forEach((g) -> {
-                            s57Viewer.display(g);
-                        });
-                    }
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("PONTON")) {
-                        objects = new PontoonDBLoader(s57Connection)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                        s57Viewer = new S57ObjectView("PONTON", topologyServices, s57Layer);
-                        objects.forEach((g) -> {
-                            s57Viewer.display(g);
-                        });
-                    }
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("SLCONS")) {
-                        objects = new ShorelineConstructionDBLoader(s57Connection)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                        s57Viewer = new S57ObjectView("SLCONS", topologyServices, s57Layer);
                         objects.forEach((g) -> {
                             s57Viewer.display(g);
                         });
