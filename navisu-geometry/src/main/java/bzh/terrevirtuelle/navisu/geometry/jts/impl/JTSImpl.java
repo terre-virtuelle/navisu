@@ -292,6 +292,29 @@ public class JTSImpl
         return result;
     }
 
+    public List<Geometry> createDelaunay(Point3D[][] pts) {
+        List<Point3D> data = new ArrayList<>();
+        for (int i = 0; i < pts[0].length; i++) {
+            for (int j = 0; j < pts[1].length; j++) {
+                data.add(pts[i][j]);
+            }
+        }
+        Coordinate[] coordinateTab = toTabCoordinates(data);
+        MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
+        ArrayList<Geometry> triangles = new ArrayList<>();
+        DelaunayTriangulationBuilder triator = new DelaunayTriangulationBuilder();
+        triator.setSites(points);
+        Geometry tris = triator.getTriangles(new GeometryFactory());
+        for (int i = 0; i < tris.getNumGeometries(); i++) {
+            triangles.add(tris.getGeometryN(i));
+        }
+        ArrayList<Geometry> result = new ArrayList<>();
+        triangles.forEach((g) -> {
+            result.add(g);
+        });
+        return result;
+    }
+
     @Override
     public List<Path> createDelaunayWithFilterOnLengthToPath(List<Point3D> pts, double filter) {
         Coordinate[] coordinateTab = toTabCoordinates(pts);
@@ -350,7 +373,7 @@ public class JTSImpl
         }
         Polygon poly = new Polygon(offsetPathPositions);
         poly.outerBoundary().forEach((p) -> {
-            result.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(),p.getElevation()));
+            result.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
         });
         return result;
     }

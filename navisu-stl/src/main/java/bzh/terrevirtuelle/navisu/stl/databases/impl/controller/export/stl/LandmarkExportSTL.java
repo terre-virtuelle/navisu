@@ -5,11 +5,14 @@
  */
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE_INV;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
+import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.globes.ElevationModel;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,11 +25,12 @@ import java.util.logging.Logger;
  *
  * @author serge
  */
-public class BuoyageExportSTL {
+public class LandmarkExportSTL {
 
+    protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected String stlFilename;
     protected GeodesyServices geodesyServices;
-    protected List<Buoyage> buoyages;
+    protected List<Landmark> landmarks;
     protected String acronym;
 
     protected double lat;
@@ -37,9 +41,8 @@ public class BuoyageExportSTL {
     protected double latScale;
     protected double lonScale;
 
-    public BuoyageExportSTL(GeodesyServices geodesyServices, Point3D[][] gb, 
-            String stlFilename,
-            double latScale, double lonScale) {
+    public LandmarkExportSTL(GeodesyServices geodesyServices, Point3D[][] gb,
+            String stlFilename, double latScale, double lonScale) {
         this.stlFilename = stlFilename;
         this.geodesyServices = geodesyServices;
         latMin = gb[0][0].getLatitude();
@@ -48,11 +51,11 @@ public class BuoyageExportSTL {
         this.lonScale = lonScale;
     }
 
-    public void export(List<Buoyage> buoyages, double elevation) {
-        this.buoyages = buoyages;
+    public void export(List<Landmark> landmarks, double elevation) {
+        this.landmarks = landmarks;
         String header;
         String result;
-        String buoys = "";
+        String landmark = "";
         java.nio.file.Path path = null;
 
         try {
@@ -60,25 +63,20 @@ public class BuoyageExportSTL {
             String[] fileSTL = body.split("\n");
             header = fileSTL[0] + "\n";
             body = body.replaceFirst(header, "");
-            for (Buoyage buoyage : buoyages) {
-                acronym = BUOYAGE_INV.ATT.get(buoyage.getClass().getSimpleName());
-                lat = buoyage.getLatitude();
-                lon = buoyage.getLongitude();
+            for (Landmark l : landmarks) {
+                lat = l.getLatitude();
+                lon = l.getLongitude();
+
                 double latM = geodesyServices.getDistanceM(latMin, lonMin, lat, lonMin);
                 double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
                 latM *= latScale;
                 lonM *= lonScale;
-                if (acronym.equals("BCNCAR") || acronym.equals("BOYCAR")) {
-                    buoys = buoys.concat(insertedFile(latM, lonM, elevation, "BCNCAR_" + buoyage.getCategoryOfMark() + ".stl"));
-                } else if (acronym.equals("BCNLAT") || acronym.equals("BOYLAT")) {
-                    buoys = buoys.concat(insertedFile(latM, lonM, elevation, "BCNLAT_" + buoyage.getCategoryOfMark() + ".stl"));
-                } else if (acronym.equals("MORFAC")) {
-                    buoys = buoys.concat(insertedFile(latM, lonM, elevation, "MORFAC.stl"));
-                }else if (acronym.equals("BCNISD")) {
-                    buoys = buoys.concat(insertedFile(latM, lonM, elevation, "danger.stl"));
-                }
+                ElevationModel model = this.wwd.getModel().getGlobe().getElevationModel();
+                elevation += model.getElevation(Angle.fromDegreesLatitude(lat), Angle.fromDegreesLongitude(lon))*2;
+                landmark = landmark.concat(insertedFile(latM, lonM, elevation, "LNDMRK.stl"));
+
             }
-            result = buoys.concat(body);
+            result = landmark.concat(body);
             path = Paths.get(stlFilename);
             Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException ex) {
@@ -86,14 +84,13 @@ public class BuoyageExportSTL {
         }
     }
 
-    private String insertedFile(double latitude, double longitude, double altitude, String buoyFilename) {
-        String buoyName = "data/stl/" + buoyFilename;
-        String buoy = "";
+    private String insertedFile(double latitude, double longitude, double altitude, String filename) {
+        String name = "data/stl/" + filename;
+        String obj = "";
         String result = "";
         try {
-            buoy = new String(Files.readAllBytes(Paths.get(buoyName)));
-            result = new TransformSTL().transform(buoy, latitude, longitude, altitude);
-
+            obj = new String(Files.readAllBytes(Paths.get(name)));
+            result = new TransformSTL().transform(obj, latitude, longitude, altitude);
         } catch (IOException ex) {
             Logger.getLogger(BuoyageExportSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }

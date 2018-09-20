@@ -13,18 +13,8 @@ public class TransformSTL {
 
     public String transform(String root, double lat, double lon, double elv) {
         String result = "";
-
-        /*
-        facet normal 1.695421e-07 1.000000e+00 0.000000e+00
-              outer loop
-                vertex 0.000000e+00 -4.461072e+00 5.000000e+00
-                vertex -3.000000e+00 -6.193123e+00 5.000000e+00
-                vertex 3.000000e+00 -6.193123e+00 5.000000e+00
-              endloop
-            endfacet
-         */
+   
         String[] facetTab = root.split("\n");
-        // System.out.println("facetTab : " + facetTab[0]);
         for (String s : facetTab) {
             if (s.contains("facet")) {
                 result += s + "\n";

@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.stl.StlComponent;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -48,10 +49,9 @@ public class StlComponentImpl
     @Override
     public void viewSTL(String filename) {
         // System.out.println("System : " + System.getProperty("user.dir"));
-        String path = "stl";
-        String command
-                = "cd " + path + " \n"
-                + System.getProperty("java.home") + "/" + "bin" + "/" + "java -jar STL-viewer.jar " + filename;
+       // String path = "stl";
+        String command = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java -jar stl/STL-viewer.jar " + filename;
+        //    System.getProperty("java.home") + File.separator + "bin" + File.separator + "java -jar STL-viewer.jar "+"out_0.stl";
         guiAgentServices.getJobsManager().newJob("Viewing STL objects", (progressHandle) -> {
             try {
                 Proc.BUILDER.create()
