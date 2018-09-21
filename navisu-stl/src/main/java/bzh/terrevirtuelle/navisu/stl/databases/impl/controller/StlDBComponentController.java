@@ -129,6 +129,8 @@ import gov.nasa.worldwind.avlist.AVKey;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -735,7 +737,7 @@ public class StlDBComponentController
                     List<GridBox3D> gridBoxes = new ArrayList<>();
                     for (Point3D[][] g : grids) {
                         scaleCompute(g);
-                       // System.out.println("scale : " + latScale + " " + lonScale);
+                        // System.out.println("scale : " + latScale + " " + lonScale);
                         GridBox3D gb = new GridBox3D(g, verticalExaggeration);
                         gridBoxes.add(gb);
                         String filename = DEFAULT_ASC_PATH + outFileTF.getText() + "_" + i + ".asc";
@@ -763,7 +765,7 @@ public class StlDBComponentController
                     i = 0;
                     gridBoxes.forEach((gb) -> {
                         String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + ".stl";
-                        new GridBox3DExportSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, DEFAULT_BASE_HEIGHT);
+                        new GridBox3DExportSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                         stlComponentServices.exportBaseSTL(filename, "data/stl/base.stl");
                         i++;
                     });
@@ -800,7 +802,7 @@ public class StlDBComponentController
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + ".stl";
                             scaleCompute(g);
                             new BuoyageExportSTL(geodesyServices, g, filename, latScale, lonScale)
-                                    .export(buoyages, maxDepth + tileSideZ + 5);
+                                    .export(buoyages, maxDepth + tileSideZ);
                             i++;
                         }
                     }
@@ -915,11 +917,20 @@ public class StlDBComponentController
                     }
                     i = 0;
                     if (stlPreviewCB.isSelected()) {
+                        String result;
                         for (Point3D[][] g : grids) {
                             String filename = outFileTF.getText() + "_" + i + ".stl";
+                            result = "endsolid " + filename + "\n";
+                            filename = System.getProperty("user.dir") + File.separator + "privateData" + File.separator + "stl" + File.separator + filename;
+                            try {
+                                java.nio.file.Path path = Paths.get(filename);
+                                Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
+                            } catch (IOException ex) {
+                                Logger.getLogger(GridBox3DExportSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                            }
                             try {
                                 Thread.sleep(1000);
-                                stlComponentServices.viewSTL(System.getProperty("user.dir") + File.separator + "privateData" + File.separator + "stl" + File.separator + filename);
+                                stlComponentServices.viewSTL(filename);
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, null, ex);
                             }

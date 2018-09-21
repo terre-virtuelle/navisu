@@ -13,7 +13,7 @@ public class TransformSTL {
 
     public String transform(String root, double lat, double lon, double elv) {
         String result = "";
-   
+
         String[] facetTab = root.split("\n");
         for (String s : facetTab) {
             if (s.contains("facet")) {
@@ -27,7 +27,7 @@ public class TransformSTL {
                 result += "vertex "
                         + Double.toString(Double.valueOf(vTab[1]) + lon) + " "
                         + Double.toString(Double.valueOf(vTab[2]) + lat) + " "
-                        + vTab[3] + "\n";
+                        + Double.toString(Double.valueOf(vTab[3]) + elv) + "\n";
             }
             if (s.contains("endloop")) {
                 result += s + "\n";

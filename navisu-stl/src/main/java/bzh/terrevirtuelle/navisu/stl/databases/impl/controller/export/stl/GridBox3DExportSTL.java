@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.Vec3d;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -40,9 +41,9 @@ public class GridBox3DExportSTL {
         this.filename = filename;
         double latMin = gridBox.getGrid()[0][0].getLatitude();
         double lonMin = gridBox.getGrid()[0][0].getLongitude();
-
+        String[] head = filename.split(File.separator);
         try {
-            result = "solid " + filename + "\n";
+            result = "solid " + head[head.length-1] + "\n";
             List<Path> gridPaths = gridBox.getPaths();
             gridPaths.forEach((p) -> {
                 result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
@@ -53,8 +54,8 @@ public class GridBox3DExportSTL {
             gridPaths.forEach((p) -> {
                 result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
             });
-            */
-            result += "endsolid " + filename + "\n";
+             */
+            //    result += "endsolid " + filename + "\n";
             java.nio.file.Path path = Paths.get(filename);
             Files.write(path, result.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {

@@ -72,7 +72,8 @@ public class LandmarkExportSTL {
                 latM *= latScale;
                 lonM *= lonScale;
                 ElevationModel model = this.wwd.getModel().getGlobe().getElevationModel();
-                elevation += model.getElevation(Angle.fromDegreesLatitude(lat), Angle.fromDegreesLongitude(lon))*2;
+                elevation += model.getElevation(Angle.fromDegreesLatitude(lat), Angle.fromDegreesLongitude(lon));
+                elevation *= latScale;
                 landmark = landmark.concat(insertedFile(latM, lonM, elevation, "LNDMRK.stl"));
 
             }
