@@ -41,7 +41,7 @@ public class GridBox3DExportSTL {
         this.filename = filename;
         double latMin = gridBox.getGrid()[0][0].getLatitude();
         double lonMin = gridBox.getGrid()[0][0].getLongitude();
-        String[] head = filename.split(File.separator);
+        String[] head = filename.split("/");
         try {
             result = "solid " + head[head.length-1] + "\n";
             List<Path> gridPaths = gridBox.getPaths();
