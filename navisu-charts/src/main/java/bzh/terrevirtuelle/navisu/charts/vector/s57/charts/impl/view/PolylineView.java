@@ -11,7 +11,9 @@ import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.ExtrudedPolygon;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.util.Map;
 
@@ -24,11 +26,11 @@ public class PolylineView
 
     protected TopologyServices topologyServices;
     protected RenderableLayer layer;
-    String acronym;
+    protected String acronym;
     protected Path path;
-    protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
-    String label = "";
-    String tmp = "";
+   // protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
+    protected String label = "";
+    protected String tmp = "";
 
     public PolylineView(String acronym, TopologyServices topologyServices, RenderableLayer layer) {
         this.topologyServices = topologyServices;
@@ -41,7 +43,6 @@ public class PolylineView
     public void display(String geometry,
             ShapeAttributes attrs, ShapeAttributes hattrs,
             Map<String, String> labels) {
-        // System.out.println("geometry : " + geometry);
         path = topologyServices.wktMultiLineToWwjPath(geometry, 1.0);
         path.setAttributes(attrs);
         path.setHighlightAttributes(hattrs);
@@ -54,9 +55,9 @@ public class PolylineView
             labels.keySet().forEach((key) -> {
                 tmp = labels.get(key);
                 if (tmp != null && !key.equals(acronym)) {
-                   if (!key.equals("")) {
+                    if (!key.equals("")) {
                         label += key + " : " + tmp + "\n";
-                    }else{
+                    } else {
                         label += tmp + "\n";
                     }
                 }

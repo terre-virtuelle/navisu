@@ -212,10 +212,20 @@ public class TopologyImpl
             List<Position> positions = new ArrayList<>();
             for (String s : posTab0) {
                 String[] posTab1 = s.split("\\s+");
-                positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1])),
-                        Angle.fromDegrees(Double.valueOf(posTab1[0])), 0));
+                try {
+                    positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1])),
+                            Angle.fromDegrees(Double.valueOf(posTab1[0])), 0));
+                } catch (Exception e) {
+
+                }
             }
-            return new Polygon(positions);
+            Polygon p = null;
+            try {
+                p = new Polygon(positions);
+            } catch (Exception e) {
+
+            }
+            return p;
         } else {
             return null;
         }
@@ -246,6 +256,11 @@ public class TopologyImpl
             }
         }
         return new Path(positions);
+    }
+
+    @Override
+    public List<Polygon> wktMultiLineToWwjMultiPolygon(String geometry) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -434,11 +449,6 @@ public class TopologyImpl
         return geometryFiltered;
     }
 
-    @Override
-    public List<Polygon> wktMultiLineToWwjMultiPolygon(String geometry) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public List<String> clipWKTMultiString(List<String> data, double latMin, double lonMin, double latMax, double lonMax) {
@@ -558,7 +568,7 @@ public class TopologyImpl
 
     @Override
     public List<Path> wktPolygonsToWwjPathsWithFilterOnArea(List<Geometry> polygons, double filter) {
-       
+
         List<Path> result = new ArrayList<>();
         List<Position> positions;
         for (Geometry g : polygons) {
@@ -574,9 +584,10 @@ public class TopologyImpl
         }
         return result;
     }
+
     @Override
     public List<Path> wktPolygonsToWwjPathsWithFilterOnLength(List<Geometry> polygons, double filter) {
-        
+
         List<Path> result = new ArrayList<>();
         List<Position> positions;
         for (Geometry g : polygons) {

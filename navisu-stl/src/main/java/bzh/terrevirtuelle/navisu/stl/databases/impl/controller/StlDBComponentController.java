@@ -120,11 +120,11 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.BuoyageExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.SlConsExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.LandmarkExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExport;
-import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import gov.nasa.worldwind.avlist.AVKey;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -202,12 +202,7 @@ public class StlDBComponentController
     protected String LON_MIN;
     protected String LAT_MAX;
     protected String LON_MAX;
-    /*
-    protected static final String LAT_MIN = "48.3000252668706";//Original
-    protected static final String LON_MIN = " -4.585605557107784";
-    protected static final String LAT_MAX = "48.35162043824935";
-    protected static final String LON_MAX = " -4.508006397642742";
-     */
+
     protected static final double RETRIEVE_OFFSET = 0.002;
 
     protected RenderableLayer bathymetryLayer;
@@ -358,7 +353,9 @@ public class StlDBComponentController
     public RadioButton solidRB;
     @FXML
     public RadioButton wireframeRB;
+    int k = 0;
     int i = 0;
+    int j = 0;
     String resultStlFilename = null;
     boolean solid;
 
@@ -732,7 +729,7 @@ public class StlDBComponentController
                 if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && demRB.isSelected())) {
                     grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
                 }
-                i = 0;
+                k = 0;
                 if (grids != null) {
                     List<GridBox3D> gridBoxes = new ArrayList<>();
                     for (Point3D[][] g : grids) {
@@ -740,7 +737,9 @@ public class StlDBComponentController
                         // System.out.println("scale : " + latScale + " " + lonScale);
                         GridBox3D gb = new GridBox3D(g, verticalExaggeration);
                         gridBoxes.add(gb);
-                        String filename = DEFAULT_ASC_PATH + outFileTF.getText() + "_" + i + ".asc";
+                        i = k / tileCount + 1;
+                        j = k % tileCount + 1;
+                        String filename = DEFAULT_ASC_PATH + outFileTF.getText() + "_" + i + "," + j + ".asc";
                         displayServices.exportASC(filename, g);
                     }
 
@@ -754,20 +753,24 @@ public class StlDBComponentController
                         });
                     }
                     if (generateKmlCB.isSelected()) {
-                        i = 0;
+                        k = 0;
                         gridBoxes.forEach((gb) -> {
-                            String filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + ".kml";
+                            i = k / tileCount + 1;
+                            j = k % tileCount + 1;
+                            String filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
                             kmlFileNames.add(filename);
                             new GridBox3DExportKML(gb).exportWKML(filename, solid);
-                            i++;
+                            k++;
                         });
                     }
-                    i = 0;
+                    k = 0;
                     gridBoxes.forEach((gb) -> {
-                        String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + ".stl";
+                        i = k / tileCount + 1;
+                        j = k % tileCount + 1;
+                        String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                         new GridBox3DExportSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                         stlComponentServices.exportBaseSTL(filename, "data/stl/base.stl");
-                        i++;
+                        k++;
                     });
                     //DEPARE
                     if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
@@ -776,7 +779,7 @@ public class StlDBComponentController
                     if (selectedObjects.contains("ALL") || depareUlhyssesRB.isSelected()) {
                         createElevationAndUlhyssesDepare(latMin, lonMin, latMax, lonMax);
                     }
-                    i = 0;
+                    k = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
                         Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
                         for (Point3D[][] g : grids) {
@@ -797,16 +800,18 @@ public class StlDBComponentController
                                 } catch (IOException ex) {
                                     Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                                 }
-                                new BuoyageExportKML(kmlFileNames.get(i)).export(buoyages, maxDepth + tileSideZ);
+                                new BuoyageExportKML(kmlFileNames.get(k)).export(buoyages, maxDepth + tileSideZ);
                             }
-                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + ".stl";
+                            i = k / tileCount + 1;
+                            j = k % tileCount + 1;
+                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
                             new BuoyageExportSTL(geodesyServices, g, filename, latScale, lonScale)
                                     .export(buoyages, maxDepth + tileSideZ);
-                            i++;
+                            k++;
                         }
                     }
-                    i = 0;
+                    k = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("LNDMRK")) {
                         landmarks.clear();
                         for (Point3D[][] g : grids) {
@@ -818,33 +823,40 @@ public class StlDBComponentController
                                             g[g[0].length - 1][g[0].length - 1].getLongitude()));
 
                             new LandmarkView(s57Layer).display(landmarks);
-                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + ".stl";
+                            i = k / tileCount + 1;
+                            j = k % tileCount + 1;
+                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
                             new LandmarkExportSTL(geodesyServices, g, filename, latScale, lonScale)
                                     .export(landmarks, maxDepth + tileSideZ);
-                            i++;
+                            k++;
                         }
                     }
-
+                    k = 0;
+                    if (selectedObjects.contains("ALL") || selectedObjects.contains("SLCONS")) {
+                        for (Point3D[][] g : grids) {
+                            objects.clear();
+                            i = k / tileCount + 1;
+                            j = k % tileCount + 1;
+                            objects = new ShorelineConstructionDBLoader(s57Connection)
+                                    .retrieveObjectsIn(g[0][0].getLatitude(),
+                                            g[0][0].getLongitude(),
+                                            g[g[0].length - 1][g[0].length - 1].getLatitude(),
+                                            g[g[0].length - 1][g[0].length - 1].getLongitude());
+                            new S57ObjectView("SLCONS", topologyServices, s57Layer).display(objects);
+                            String filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
+                            new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
+                            k++;
+                        }
+                    }
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("PONTON")) {
                         objects = new PontoonDBLoader(s57Connection)
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                        s57Viewer = new S57ObjectView("PONTON", topologyServices, s57Layer);
-                        objects.forEach((g) -> {
-                            s57Viewer.display(g);
-                        });
+                        new S57ObjectView("PONTON", topologyServices, s57Layer).display(objects);
                         objects.forEach((g) -> {
                             s57ObjectsExport = new S57ObjectsExport(topologyServices, stlComponentServices, jtsServices,
                                     lat0, lon0, latScale, lonScale, maxDepth + tileSideZ);
                             s57ObjectsExport.export(g);
-                        });
-                    }
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("SLCONS")) {
-                        objects = new ShorelineConstructionDBLoader(s57Connection)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                        s57Viewer = new S57ObjectView("SLCONS", topologyServices, s57Layer);
-                        objects.forEach((g) -> {
-                            s57Viewer.display(g);
                         });
                     }
 
@@ -915,11 +927,13 @@ public class StlDBComponentController
                             s57Viewer.display(g, normalAttributes, highlightAttributes);
                         });
                     }
-                    i = 0;
+                    k = 0;
                     if (stlPreviewCB.isSelected()) {
                         String result;
                         for (Point3D[][] g : grids) {
-                            String filename = outFileTF.getText() + "_" + i + ".stl";
+                            i = k / tileCount + 1;
+                            j = k % tileCount + 1;
+                            String filename = outFileTF.getText() + "_" + i + "," + j + ".stl";
                             result = "endsolid " + filename + "\n";
                             filename = System.getProperty("user.dir") + File.separator + "privateData" + File.separator + "stl" + File.separator + filename;
                             try {
@@ -934,7 +948,7 @@ public class StlDBComponentController
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                            i++;
+                            k++;
                         }
                     }
                     instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");

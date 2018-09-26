@@ -11,7 +11,6 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.Vec3d;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;

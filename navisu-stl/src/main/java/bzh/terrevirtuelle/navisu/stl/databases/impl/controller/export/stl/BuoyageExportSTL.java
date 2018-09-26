@@ -37,7 +37,7 @@ public class BuoyageExportSTL {
     protected double latScale;
     protected double lonScale;
 
-    public BuoyageExportSTL(GeodesyServices geodesyServices, Point3D[][] gb, 
+    public BuoyageExportSTL(GeodesyServices geodesyServices, Point3D[][] gb,
             String stlFilename,
             double latScale, double lonScale) {
         this.stlFilename = stlFilename;
@@ -74,8 +74,10 @@ public class BuoyageExportSTL {
                     buoys = buoys.concat(insertedFile(latM, lonM, elevation, "BCNLAT_" + buoyage.getCategoryOfMark() + ".stl"));
                 } else if (acronym.equals("MORFAC")) {
                     buoys = buoys.concat(insertedFile(latM, lonM, elevation, "MORFAC.stl"));
-                }else if (acronym.equals("BCNISD")) {
+                } else if (acronym.equals("BCNISD")) {
                     buoys = buoys.concat(insertedFile(latM, lonM, elevation, "danger.stl"));
+                } else if (acronym.equals("BOYSPP") || acronym.equals("BCNSPP")) {
+                    buoys = buoys.concat(insertedFile(latM, lonM, elevation, "spp.stl"));
                 }
             }
             result = buoys.concat(body);

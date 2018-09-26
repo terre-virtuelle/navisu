@@ -74,8 +74,12 @@ public class LandmarkExportSTL {
                 ElevationModel model = this.wwd.getModel().getGlobe().getElevationModel();
                 elevation += model.getElevation(Angle.fromDegreesLatitude(lat), Angle.fromDegreesLongitude(lon));
                 elevation *= latScale;
-                landmark = landmark.concat(insertedFile(latM, lonM, elevation, "LNDMRK.stl"));
-
+                System.out.println("l.getFunction() : " +l.getFunction());
+                if (l.getFunction().contains("33")) {
+                    landmark = landmark.concat(insertedFile(latM, lonM, elevation, "Phare.stl"));
+                } else {
+                    landmark = landmark.concat(insertedFile(latM, lonM, elevation, "LNDMRK.stl"));
+                }
             }
             result = landmark.concat(body);
             path = Paths.get(stlFilename);

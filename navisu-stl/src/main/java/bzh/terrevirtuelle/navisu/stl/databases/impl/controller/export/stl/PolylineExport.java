@@ -5,13 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
-import com.vividsolutions.jts.operation.buffer.BufferParameters;
 import gov.nasa.worldwind.render.Path;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,7 +46,7 @@ public class PolylineExport
     public void export(String geometry, Map<String, String> labels) {
         path = topologyServices.wktMultiLineToWwjPath(geometry, verticalOffset);
         //  System.out.println("PolylineExport geometry : " + geometry);
-        System.out.println("path : " + path.getPositions());
+     //   System.out.println("path : " + path.getPositions());
    //     List<Point3D> pts = stlComponentServices.getBuffer(geometry, 10.0, BufferParameters.CAP_FLAT);
 
         //BufferParameters.CAP_FLAT

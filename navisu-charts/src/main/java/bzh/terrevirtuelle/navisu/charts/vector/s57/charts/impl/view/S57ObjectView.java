@@ -14,6 +14,7 @@ import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.awt.Color;
+import java.util.List;
 
 /**
  *
@@ -35,7 +36,7 @@ public class S57ObjectView {
         this.layer = layer;
 
         normAttributes = new BasicShapeAttributes();
-        normAttributes.setOutlineMaterial(new Material(Color.WHITE));
+        normAttributes.setOutlineMaterial(new Material(Color.RED));
         normAttributes.setOutlineWidth(1.0);
         normAttributes.setEnableLighting(true);
 
@@ -65,17 +66,26 @@ public class S57ObjectView {
         displayP(object, normAttributes, highlightAttributes);
     }
 
+    @SuppressWarnings("unchecked")
+    public void display(List<? extends Geo> objects) {
+        objects.forEach((g) -> {
+            display(g);
+        });
+    }
+
     private void displayP(Geo object, ShapeAttributes normAttributes, ShapeAttributes highlightAttributes) {
         String geometry = object.getGeom();
-       // System.out.println("geometry : " + geometry);
+
         if ((geometry.contains("LINESTRING") && !geometry.contains("MULTILINESTRING")) && !geometry.contains("EMPTY")) {
             polyView = new LineView(acronym, topologyServices, layer);
             polyView.display(geometry, normAttributes, highlightAttributes, object.getLabels());
         }
+
         if (geometry.contains("MULTILINESTRING") && !geometry.contains("EMPTY")) {
             polyView = new PolylineView(acronym, topologyServices, layer);
             polyView.display(geometry, normAttributes, highlightAttributes, object.getLabels());
         }
+
         if (geometry.contains("POLYGON") && !geometry.contains("MULTIPOLYGON") && !geometry.contains("EMPTY")) {
             polyView = new PolygonView(acronym, topologyServices, layer);
             polyView.display(geometry, normAttributes, highlightAttributes, object.getLabels());
@@ -84,5 +94,6 @@ public class S57ObjectView {
             polyView = new MultiPolygonView(acronym, topologyServices, layer);
             polyView.display(geometry, normAttributes, highlightAttributes, object.getLabels());
         }
+
     }
 }

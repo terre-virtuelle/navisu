@@ -48,8 +48,7 @@ public class S57ObjectsExport {
         }
          */
         if (geometry.contains("MULTILINESTRING") && !geometry.contains("EMPTY")) {
-            // polyView = new PolylineView(acronym, topologyServices, layer);
-            // polyView.export(geometry);
+           
             polyGeomExport = new PolylineExport(topologyServices, stlComponentServices, jtsServices,
                     latMin, lonMin, latScale, lonScale, verticalOffset);
             polyGeomExport.export(geometry, object.getLabels());
