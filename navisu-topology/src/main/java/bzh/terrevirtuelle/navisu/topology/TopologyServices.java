@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.topology;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPoint;
@@ -190,4 +191,7 @@ public interface TopologyServices
 
     String clipWKTMultiLineString(String data, double latMin, double lonMin,
             double latMax, double lonMax);
+
+    List<? extends Geo> clip(List<? extends Geo> geos, double latMin, double lonMin, double latMax, double lonMax);
+
 }

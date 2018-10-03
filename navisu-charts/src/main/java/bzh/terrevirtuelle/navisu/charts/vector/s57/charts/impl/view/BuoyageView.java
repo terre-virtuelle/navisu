@@ -116,6 +116,7 @@ public class BuoyageView {
         }
         if (layer != null) {
             layer.addRenderables(pointPlacemarks);
+            wwd.redrawNow();
         }
     }
 }

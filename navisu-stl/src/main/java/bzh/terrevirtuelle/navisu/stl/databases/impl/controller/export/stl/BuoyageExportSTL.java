@@ -88,18 +88,35 @@ public class BuoyageExportSTL {
         }
     }
 
-    private String insertedFile(double latitude, double longitude, double altitude, String buoyFilename) {
+    public String insertedFile(double latitude, double longitude, double altitude, String buoyFilename) {
         String buoyName = "data/stl/" + buoyFilename;
         String buoy = "";
         String result = "";
         try {
             buoy = new String(Files.readAllBytes(Paths.get(buoyName)));
             result = new TransformSTL().transform(buoy, latitude, longitude, altitude);
-
         } catch (IOException ex) {
             Logger.getLogger(BuoyageExportSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return result;
     }
 
+    public void writeInsertedFile(double latitude, double longitude, double altitude, String buoyFilename) {
+        String buoyName = "data/stl/" + buoyFilename;
+        String buoy = "";
+        String result = "";
+        java.nio.file.Path path = null;
+        double latM = geodesyServices.getDistanceM(latMin, lonMin, latitude, lonMin);
+        double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, longitude);
+        latM *= latScale;
+        lonM *= lonScale;
+        try {
+            buoy = new String(Files.readAllBytes(Paths.get(buoyName)));
+            result = new TransformSTL().transformAndScale(buoy, 1000, latM, lonM, altitude);
+            path = Paths.get(stlFilename);
+            Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException ex) {
+            Logger.getLogger(StlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+    }
 }

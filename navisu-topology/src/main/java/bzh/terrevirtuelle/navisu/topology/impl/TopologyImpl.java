@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.topology.impl;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.topology.Topology;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
@@ -16,6 +17,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiPoint;
+import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
@@ -24,7 +26,6 @@ import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolylines;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -40,6 +41,8 @@ import org.capcaval.c3.component.ComponentState;
 public class TopologyImpl
         implements Topology, TopologyServices, ComponentState {
 
+    String geometry = null;
+
     @Override
     public void componentStarted() {
         /* Nothing to do here */ }
@@ -54,7 +57,7 @@ public class TopologyImpl
 
     @Override
     public String wwjPositionsToPolygonWkt(List<? extends Position> positions) {
-        String geometry = "POLYGON((";
+        geometry = "POLYGON((";
         int l = positions.size();
         for (int i = 0; i < l - 1; i++) {
             geometry += positions.get(i).getLongitude().getDegrees() + " " + positions.get(i).getLatitude().getDegrees() + ",";
@@ -65,7 +68,7 @@ public class TopologyImpl
 
     @Override
     public String wwjLatLonsToPolygonWkt(List<LatLon> positions) {
-        String geometry = "POLYGON((";
+        geometry = "POLYGON((";
         int l = positions.size();
         for (int i = 0; i < l - 1; i++) {
             geometry += positions.get(i).getLongitude().getDegrees() + " " + positions.get(i).getLatitude().getDegrees() + ",";
@@ -77,7 +80,7 @@ public class TopologyImpl
     @Override
     public String wwjPositionsToLineWkt(List<? extends Position> positions) {
         if (positions != null && positions.size() > 2) {
-            String geometry = "LINESTRING(";
+            geometry = "LINESTRING(";
             int l = positions.size();
             for (int i = 0; i < l - 1; i++) {
                 geometry += positions.get(i).getLongitude().getDegrees() + " " + positions.get(i).getLatitude().getDegrees() + ",";
@@ -113,7 +116,7 @@ public class TopologyImpl
             }).forEach((listLatLon) -> {
                 listListLatLon.add(listLatLon);
             });
-            String geometry = "MULTILINESTRING(";
+            geometry = "MULTILINESTRING(";
             int size0 = listListLatLon.size();
             for (int i = 0; i < size0 - 1; i++) {
                 List<LatLon> l = listListLatLon.get(i);
@@ -159,7 +162,7 @@ public class TopologyImpl
                 }
             }
         }
-        String geometry = "LINESTRING(";
+        geometry = "LINESTRING(";
         int size = listLatLon.size();
         for (int j = 0; j < size - 1; j++) {
             geometry += listLatLon.get(j).longitude.degrees + " " + listLatLon.get(j).latitude.degrees + ",";
@@ -520,16 +523,10 @@ public class TopologyImpl
 
     @Override
     public List<Polygon> wktPolygonsToWwjPolygons(List<Geometry> polygons) {
-        /*
-      POLYGON ((-4.548440933227539 48.32429885864258, 
-        -4.549448013305664 48.32423400878906, 
-        -4.549351692199707 48.32356262207031, 
-        -4.548440933227539 48.32429885864258))
-         */
+
         List<Polygon> result = new ArrayList<>();
         List<Position> positions;
         for (Geometry g : polygons) {
-            // System.out.println("length : " + g.getArea());
             if (g.getArea() < 3.42E-7) {
                 Coordinate[] coordinateTab = g.getCoordinates();
                 positions = new ArrayList<>();
@@ -545,12 +542,7 @@ public class TopologyImpl
 
     @Override
     public List<Path> wktPolygonsToWwjPaths(List<Geometry> polygons) {
-        /*
-        POLYGON ((-4.548440933227539 48.32429885864258, 
-        -4.549448013305664 48.32423400878906, 
-        -4.549351692199707 48.32356262207031, 
-        -4.548440933227539 48.32429885864258))
-         */
+
         List<Path> result = new ArrayList<>();
         List<Position> positions;
         for (Geometry g : polygons) {
@@ -601,6 +593,36 @@ public class TopologyImpl
                 result.add(new Path(positions));
             }
         }
+        return result;
+    }
+
+    @Override
+    public List<? extends Geo> clip(List<? extends Geo> objects, double latMin, double lonMin, double latMax, double lonMax) {
+        List<Geo> result = new ArrayList<>();
+        GeometryFactory geometryFactory = new GeometryFactory();
+        Coordinate[] coord = new Coordinate[5];
+        coord[0] = new Coordinate(lonMin, latMin, 0);
+        coord[1] = new Coordinate(lonMax, latMin, 0);
+        coord[2] = new Coordinate(lonMax, latMax, 0);
+        coord[3] = new Coordinate(lonMin, latMax, 0);
+        coord[4] = new Coordinate(lonMin, latMin, 0);
+        com.vividsolutions.jts.geom.Polygon clipper = geometryFactory.createPolygon(coord);
+        objects.forEach((g) -> {
+            geometry = g.getGeom();
+            if (geometry.contains("MULTILINESTRING") && !geometry.contains("EMPTY")) {
+             WKTReader wktReader =  new WKTReader(geometryFactory);
+                try {
+                    Geometry geom = wktReader.read(geometry);
+                    Geometry geomClipped = geom.intersection(clipper);
+                    g.setGeom(geomClipped.toString());
+                    result.add(g);
+                  //  System.out.println("geom : " + geomClipped);
+                } catch (ParseException ex) {
+                    Logger.getLogger(TopologyImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                }
+            }
+        });
+
         return result;
     }
 }

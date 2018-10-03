@@ -39,4 +39,40 @@ public class TransformSTL {
         return result;
     }
 
+    public String transformAndScale(String root, double scale, double lat, double lon, double elv) {
+        String result = "";
+        double x;
+        double y;
+        double z;
+        String[] facetTab = root.split("\n");
+        for (String s : facetTab) {
+            if (s.contains("facet")) {
+                result += s + "\n";
+            }
+            if (s.contains("outer")) {
+                result += s + "\n";
+            }
+            if (s.contains("vertex")) {
+                String[] vTab = s.trim().split("\\s+");
+                x = Double.valueOf(vTab[1]);
+                x /= scale;
+                y = Double.valueOf(vTab[2]);
+                y /= scale;
+                z = Double.valueOf(vTab[3]);
+                z /= scale;
+                result += "vertex "
+                        + Double.toString(x + lon ) + " "
+                        + Double.toString(y + lat ) + " "
+                        + Double.toString(z + elv) + "\n";
+            }
+            if (s.contains("endloop")) {
+                result += s + "\n";
+            }
+            if (s.contains("endfacet")) {
+                result += s + "\n";
+            }
+        }
+        return result;
+    }
+
 }

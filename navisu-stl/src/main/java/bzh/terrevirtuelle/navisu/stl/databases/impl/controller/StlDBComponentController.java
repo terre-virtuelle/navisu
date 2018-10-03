@@ -131,6 +131,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -706,11 +709,14 @@ public class StlDBComponentController
         });
     }
 
+  
     public void retrieveIn(String object, double latMin, double lonMin, double latMax, double lonMax) {
 
         guiAgentServices.getJobsManager().newJob("Load S57 objects", new Job() {
+
             @Override
             public void run(ProgressHandle progressHandle) {
+                long startTime = System.currentTimeMillis();
                 //Define TopMak for all buoyages, default is 0 : no topmark
                 TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
                 topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
@@ -806,8 +812,9 @@ public class StlDBComponentController
                             j = k % tileCount + 1;
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
-                            new BuoyageExportSTL(geodesyServices, g, filename, latScale, lonScale)
-                                    .export(buoyages, maxDepth + tileSideZ);
+                            BuoyageExportSTL buoyageExportSTL = new BuoyageExportSTL(geodesyServices, g, filename, latScale, lonScale);
+                            buoyageExportSTL.export(buoyages, maxDepth + tileSideZ);
+                            //    buoyageExportSTL.writeInsertedFile(48.383988, -4.493537, maxDepth + tileSideZ, "chateau.stl");
                             k++;
                         }
                     }
@@ -838,15 +845,19 @@ public class StlDBComponentController
                             objects.clear();
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
+                            double latitudeMin = g[0][0].getLatitude();
+                            double longitudeMin = g[0][0].getLongitude();
+                            double latitudeMax = g[g[0].length - 1][g[0].length - 1].getLatitude();
+                            double longitudeMax = g[g[0].length - 1][g[0].length - 1].getLongitude();
                             objects = new ShorelineConstructionDBLoader(s57Connection)
-                                    .retrieveObjectsIn(g[0][0].getLatitude(),
-                                            g[0][0].getLongitude(),
-                                            g[g[0].length - 1][g[0].length - 1].getLatitude(),
-                                            g[g[0].length - 1][g[0].length - 1].getLongitude());
-                            new S57ObjectView("SLCONS", topologyServices, s57Layer).display(objects);
+                                    .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
+                            
+                           // new S57ObjectView("SLCONS", topologyServices, s57Layer).display(objects);
                             String filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
-                            new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
-                            k++;
+                           // new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
+                          List<? extends Geo> clippedObjects= topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
+                           new S57ObjectView("SLCONS", topologyServices, s57Layer).display(clippedObjects);
+                          k++;
                         }
                     }
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("PONTON")) {
@@ -955,8 +966,17 @@ public class StlDBComponentController
                     selectLayer.removeAllRenderables();
                     wwd.redrawNow();
                 }
+                long duration = System.currentTimeMillis() - startTime;
+                long seconds = duration / 1000;
+                long minutes = seconds / 60;
+                long hours = minutes / 60;
+                long days = hours / 24;
+                String time = hours % 24 + ":" + minutes % 60 + ":" + seconds % 60;
+                System.out.println("Temps de traitement : " + time);
             }
+
         });
+
     }
 
     /*
