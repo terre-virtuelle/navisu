@@ -122,6 +122,7 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.Buoyag
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.SlConsExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.DaeStlExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.LandmarkExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExport;
@@ -356,13 +357,46 @@ public class StlDBComponentController
     public RadioButton solidRB;
     @FXML
     public RadioButton wireframeRB;
+    /*--------------------------------------Checkboxes ----*/
+    @FXML
+    public CheckBox allCB;
+    @FXML
+    public CheckBox achareCB;
+    @FXML
+    public CheckBox buoyageCB;
+    @FXML
+    public CheckBox coalneCB;
+    @FXML
+    public CheckBox depcntCB;
+    @FXML
+    public CheckBox docareCB;
+    @FXML
+    public CheckBox drgareCB;
+    @FXML
+    public CheckBox lightsCB;
+    @FXML
+    public CheckBox lndmrkCB;
+    @FXML
+    public CheckBox navlneCB;
+    @FXML
+    public CheckBox slconsCB;
+    @FXML
+    public CheckBox pontonCB;
+    @FXML
+    public CheckBox resareCB;
+    
+ /*-----------------------------------*/   
+    
+    
+    
+    
+    
     int k = 0;
     int i = 0;
     int j = 0;
     String resultStlFilename = null;
     boolean solid;
 
-    protected CheckComboBox<String> checkComboBox;
     final ToggleGroup bathyGroup = new ToggleGroup();
     final ToggleGroup wsGroup = new ToggleGroup();
 
@@ -371,23 +405,7 @@ public class StlDBComponentController
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
     protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("AltiV2_2-0_75mIgnDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
-
-    private ObservableList<String> objectsCbData = FXCollections.observableArrayList(
-            "ALL",
-            "ACHARE",
-            "BUOYAGE",
-            "COALNE",
-            "DEPCNT",
-            "DOCARE",
-            "DRGARE",
-            "LNDMRK",
-            "LIGHTS",
-            "NAVLNE",
-            "PONTON",
-            "RESARE",
-            "SLCONS",
-            "LIGHT"
-    );
+    
     protected StlGuiController stlGuiController;
 
     public StlDBComponentController(StlDBComponentImpl component,
@@ -590,17 +608,103 @@ public class StlDBComponentController
                 depthMagnificationTF.setText(Double.toString(verticalExaggeration));
             }
         });
-        checkComboBox = new CheckComboBox<>(objectsCbData);
-        paneGP.add(checkComboBox, 4, 2);
-        checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener.Change<? extends String> change) -> {
-            selectedObjects.clear();
-            selectedObjects.addAll(change.getList());
-            objectsTF.clear();
-            for (int i = 0; i < selectedObjects.size() - 1; i++) {
-                objectsTF.appendText(selectedObjects.get(i));
-                objectsTF.appendText("; ");
+        selectedObjects.clear();
+        objectsTF.clear();
+        buoyageCB.setOnAction((ActionEvent event) -> {
+            if (!selectedObjects.contains("BUOYAGE")) {
+                selectedObjects.add("BUOYAGE");
+                objectsTF.appendText("BUOYAGE");
+                objectsTF.appendText(" ; ");
+            } else {
+                selectedObjects.remove("BUOYAGE");
             }
-            objectsTF.appendText(selectedObjects.get(selectedObjects.size() - 1));
+        });
+        lndmrkCB.setOnAction((ActionEvent event) -> {
+            if (!selectedObjects.contains("LNDMRK")) {
+                selectedObjects.add("LNDMRK");
+                objectsTF.appendText("LNDMRK");
+                objectsTF.appendText(" ; ");
+            } else {
+                selectedObjects.remove("LNDMRK");
+            }
+        });
+        achareCB.setOnAction((ActionEvent event) -> {
+            if (!selectedObjects.contains("ACHARE")) {
+                selectedObjects.add("ACHARE");
+            } else {
+                selectedObjects.remove("ACHARE");
+            }
+        });
+        coalneCB.setOnAction((ActionEvent event) -> {
+            if (!selectedObjects.contains("COALNE")) {
+                selectedObjects.add("COALNE");
+            } else {
+                selectedObjects.remove("COALNE");
+            }
+        });
+        depcntCB.setOnAction((ActionEvent event) -> {
+            if (!selectedObjects.contains("DEPCNT")) {
+                selectedObjects.add("DEPCNT");
+            } else {
+                selectedObjects.remove("DEPCNT");
+            }
+        });
+        docareCB.setOnAction((ActionEvent event) -> {
+            if (!selectedObjects.contains("DOCARE")) {
+                selectedObjects.add("DOCARE");
+            } else {
+                selectedObjects.remove("DOCARE");
+            }
+        });
+        drgareCB.setOnAction((ActionEvent event) -> {
+            if (!selectedObjects.contains("DRGARE")) {
+                selectedObjects.add("DRGARE");
+            } else {
+                selectedObjects.remove("DRGARE");
+            }
+        });
+        navlneCB.setOnAction((ActionEvent event) -> {
+            if (!selectedObjects.contains("NAVLNE")) {
+                selectedObjects.add("NAVLNE");
+            } else {
+                selectedObjects.remove("NAVLNE");
+            }
+        });
+        slconsCB.setOnAction((ActionEvent event) -> {
+            if (!selectedObjects.contains("SLCONS")) {
+                selectedObjects.add("SLCONS");
+            } else {
+                selectedObjects.remove("SLCONS");
+            }
+        });
+        lightsCB.setOnAction((ActionEvent event) -> {
+            if (!selectedObjects.contains("LIGHTS")) {
+                selectedObjects.add("LIGHTS");
+            } else {
+                selectedObjects.remove("LIGHTS");
+            }
+        });
+        pontonCB.setOnAction((ActionEvent event) -> {
+            if (!selectedObjects.contains("PONTON")) {
+                selectedObjects.add("PONTON");
+            } else {
+                selectedObjects.remove("PONTON");
+            }
+        });
+        resareCB.setOnAction((ActionEvent event) -> {
+            if (!selectedObjects.contains("RESARE")) {
+                selectedObjects.add("RESARE");
+            } else {
+                selectedObjects.remove("RESARE");
+            }
+        });
+        
+        allCB.setOnAction((ActionEvent event) -> {
+            if (!selectedObjects.contains("ALL")) {
+                selectedObjects.add("ALL");
+            } else {
+                selectedObjects.remove("ALL");
+            }
         });
 
         outFileTF.setText("out");
@@ -709,7 +813,6 @@ public class StlDBComponentController
         });
     }
 
-  
     public void retrieveIn(String object, double latMin, double lonMin, double latMax, double lonMax) {
 
         guiAgentServices.getJobsManager().newJob("Load S57 objects", new Job() {
@@ -851,13 +954,15 @@ public class StlDBComponentController
                             double longitudeMax = g[g[0].length - 1][g[0].length - 1].getLongitude();
                             objects = new ShorelineConstructionDBLoader(s57Connection)
                                     .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
-                            
-                           // new S57ObjectView("SLCONS", topologyServices, s57Layer).display(objects);
+
+                            // new S57ObjectView("SLCONS", topologyServices, s57Layer).display(objects);
                             String filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
-                           // new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
-                          List<? extends Geo> clippedObjects= topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
-                           new S57ObjectView("SLCONS", topologyServices, s57Layer).display(clippedObjects);
-                          k++;
+                            // new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
+                            List<? extends Geo> clippedObjects = topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
+                            new S57ObjectView("SLCONS", topologyServices, s57Layer).display(clippedObjects);
+                          //  DaeStlExportSTL daeStlExportSTL = new DaeStlExportSTL(geodesyServices, "data/stl/chateau.stl", 48.383988, -4.49353);
+                          //  daeStlExportSTL.export();
+                            k++;
                         }
                     }
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("PONTON")) {

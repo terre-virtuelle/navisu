@@ -610,13 +610,19 @@ public class TopologyImpl
         objects.forEach((g) -> {
             geometry = g.getGeom();
             if (geometry.contains("MULTILINESTRING") && !geometry.contains("EMPTY")) {
-             WKTReader wktReader =  new WKTReader(geometryFactory);
+                WKTReader wktReader = new WKTReader(geometryFactory);
                 try {
                     Geometry geom = wktReader.read(geometry);
+                   /*
+                    geom.getCoordinates();
+                    CoordinateList list = new CoordinateList(geom.getCoordinates());
+                    list.closeRing();
+                    LinearRing ring = geometryFactory.createLinearRing(list.toCoordinateArray());
+                    com.vividsolutions.jts.geom.Polygon polygonEnv = geometryFactory.createPolygon(ring, null);
+*/
                     Geometry geomClipped = geom.intersection(clipper);
                     g.setGeom(geomClipped.toString());
                     result.add(g);
-                  //  System.out.println("geom : " + geomClipped);
                 } catch (ParseException ex) {
                     Logger.getLogger(TopologyImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                 }

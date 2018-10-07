@@ -44,6 +44,7 @@ public class ShorelineConstructionDBLoader
         } catch (SQLException ex) {
             Logger.getLogger(PontoonDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+        
         return objects;
     }
 }

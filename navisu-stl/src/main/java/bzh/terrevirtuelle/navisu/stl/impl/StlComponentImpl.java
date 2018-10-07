@@ -1,6 +1,7 @@
 package bzh.terrevirtuelle.navisu.stl.impl;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.Vec3d;
@@ -29,6 +30,7 @@ public class StlComponentImpl
     GuiAgentServices guiAgentServices;
     @UsedService
     GeodesyServices geodesyServices;
+    String command;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -48,10 +50,21 @@ public class StlComponentImpl
 
     @Override
     public void viewSTL(String filename) {
-        // System.out.println("System : " + System.getProperty("user.dir"));
-       // String path = "stl";
-        String command = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java -jar stl/STL-viewer.jar " + filename;
-        //    System.getProperty("java.home") + File.separator + "bin" + File.separator + "java -jar STL-viewer.jar "+"out_0.stl";
+        command = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java -jar stl/STL-viewer.jar " + filename;
+        if (OS.isWindows()) {
+            String tmp = "";
+            String[] tmpTab = command.split("\\\\");
+            for (String s : tmpTab) {
+                if (s.contains("Program Files")) {
+                    s = s.replace("Program Files", "\"Program Files\"");
+                }
+            }
+            for (int i = 0; i < tmpTab.length - 1; i++) {
+                tmp += tmpTab[i] + "\\";
+            }
+            tmp = command.replace("../", "");
+            command = tmp;
+        }
         guiAgentServices.getJobsManager().newJob("Viewing STL objects", (progressHandle) -> {
             try {
                 Proc.BUILDER.create()

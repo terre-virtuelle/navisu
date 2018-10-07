@@ -60,12 +60,23 @@ public class GeodesyImpl
     }
 
     @Override
+    public Position getPosition(Position posA, double bearing, double distance, double elevation) {
+        double[] endBearing = new double[1];
+        GeodeticCalculator geoCalc = new GeodeticCalculator();
+        GlobalCoordinates locA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
+        GlobalCoordinates coordinates = geoCalc.calculateEndingGlobalCoordinates(REFERENCE, locA, bearing, distance, endBearing);
+
+        Position p = new Position(Angle.fromDegrees(coordinates.getLatitude()),
+                Angle.fromDegrees(coordinates.getLongitude()), elevation);
+        return p;
+    }
+
+    @Override
     public Position getPosition(double latA, double lonA, double bearing, double distance) {
         double[] endBearing = new double[1];
         GeodeticCalculator geoCalc = new GeodeticCalculator();
         GlobalCoordinates locA = new GlobalCoordinates(latA, lonA);
-        GlobalCoordinates coordinates = geoCalc.calculateEndingGlobalCoordinates(REFERENCE,
-                locA, bearing, distance, endBearing);
+        GlobalCoordinates coordinates = geoCalc.calculateEndingGlobalCoordinates(REFERENCE, locA, bearing, distance, endBearing);
 
         Position p = new Position(Angle.fromDegrees(coordinates.getLatitude()),
                 Angle.fromDegrees(coordinates.getLongitude()), 0);
@@ -104,9 +115,7 @@ public class GeodesyImpl
 
     @Override
     public List<Pair<Position, Position>> split(int count, Position a, Position b) {
-        
-        
-        
+
         return null;
     }
 

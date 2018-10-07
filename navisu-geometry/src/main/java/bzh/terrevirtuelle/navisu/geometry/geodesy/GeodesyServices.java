@@ -23,6 +23,8 @@ public interface GeodesyServices
 
     Position getPosition(Position posA, double bearing, double distance);
 
+    Position getPosition(Position posA, double bearing, double distance, double elevation);
+
     Position getPosition(double latA, double lonA, double bearing, double distance);
 
     List<Pair<Position, Position>> split(int count, Position a, Position b);
