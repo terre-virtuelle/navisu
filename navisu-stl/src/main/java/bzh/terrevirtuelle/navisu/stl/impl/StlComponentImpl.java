@@ -32,38 +32,11 @@ public class StlComponentImpl
     GeodesyServices geodesyServices;
     String command;
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public void componentInitiated() {
-
-    }
-
-    @Override
-    public void componentStarted() {
-
-    }
-
-    @Override
-    public void componentStopped() {
-
-    }
-
     @Override
     public void viewSTL(String filename) {
         command = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java -jar stl/STL-viewer.jar " + filename;
         if (OS.isWindows()) {
-            String tmp = "";
-            String[] tmpTab = command.split("\\\\");
-            for (String s : tmpTab) {
-                if (s.contains("Program Files")) {
-                    s = s.replace("Program Files", "\"Program Files\"");
-                }
-            }
-            for (int i = 0; i < tmpTab.length - 1; i++) {
-                tmp += tmpTab[i] + "\\";
-            }
-            tmp = command.replace("../", "");
-            command = tmp;
+            command = command.replace("Program Files", "\"Program Files\"");
         }
         guiAgentServices.getJobsManager().newJob("Viewing STL objects", (progressHandle) -> {
             try {
@@ -221,5 +194,21 @@ public class StlComponentImpl
         double elv = position.getElevation() * elvScale;
 
         return new Vec3d(lonM, latM, elv);//retour en xyz
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void componentInitiated() {
+
+    }
+
+    @Override
+    public void componentStarted() {
+
+    }
+
+    @Override
+    public void componentStopped() {
+
     }
 }
