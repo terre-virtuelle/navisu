@@ -871,7 +871,7 @@ public class StlDBComponentController
                                     .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
                            
                             objects.forEach((gg) -> {
-                                System.out.println(gg.getGeom());
+                               // System.out.println(gg.getGeom());
                             });
                            
                             List<? extends Geo> clippedObjects = topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
