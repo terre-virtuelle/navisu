@@ -609,6 +609,7 @@ public class TopologyImpl
         com.vividsolutions.jts.geom.Polygon clipper = geometryFactory.createPolygon(coord);
         objects.forEach((g) -> {
             geometry = g.getGeom();
+            
             if (geometry.contains("MULTILINESTRING") && !geometry.contains("EMPTY")) {
                 WKTReader wktReader = new WKTReader(geometryFactory);
                 try {
