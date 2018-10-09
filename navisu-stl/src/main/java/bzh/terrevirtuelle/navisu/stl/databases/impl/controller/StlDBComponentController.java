@@ -85,7 +85,6 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -112,7 +111,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import org.controlsfx.control.CheckComboBox;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemLoader;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
@@ -120,21 +118,17 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.BuoyageExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.SlConsExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportSTL;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.DaeStlExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.LandmarkExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExport;
+import com.google.common.collect.ImmutableMap;
 import gov.nasa.worldwind.avlist.AVKey;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -384,13 +378,9 @@ public class StlDBComponentController
     public CheckBox pontonCB;
     @FXML
     public CheckBox resareCB;
-    
- /*-----------------------------------*/   
-    
-    
-    
-    
-    
+
+    private List<CheckBox> s57CheckBoxes;
+    /*-----------------------------------*/
     int k = 0;
     int i = 0;
     int j = 0;
@@ -405,7 +395,7 @@ public class StlDBComponentController
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
     protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("AltiV2_2-0_75mIgnDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
-    
+    protected Map<String, CheckBox> s57SelectionMap;
     protected StlGuiController stlGuiController;
 
     public StlDBComponentController(StlDBComponentImpl component,
@@ -463,7 +453,7 @@ public class StlDBComponentController
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-        stlGuiController = new StlGuiController(geodesyServices);
+
         InputStream input = null;
         try {
             input = new FileInputStream(CACHE_FILE_NAME);
@@ -477,17 +467,37 @@ public class StlDBComponentController
         LAT_MAX = cacheProperties.getProperty("LAT_MAX");
         LON_MAX = cacheProperties.getProperty("LON_MAX");
         kmlFileNames = new ArrayList<>();
-        //  System.out.println("cacheProperties : " + cacheProperties);
-        /*
-        test valeurs nulles
-         */
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources
     ) {
         makeAttributes();
+        
+        // Init s57 selection Panel
+        s57SelectionMap = ImmutableMap.<String, CheckBox>builder()
+                .put("ACHARE", achareCB)
+                .put("BUOYAGE", buoyageCB)
+                .put("COALNE", coalneCB)
+                .put("DEPCNT", depcntCB)
+                .put("DOCARE", docareCB)
+                .put("DRGARE", drgareCB)
+                .put("LIGHTS", lightsCB)
+                .put("LNDMRK", lndmrkCB)
+                .put("NAVLNE", navlneCB)
+                .put("SLCONS", slconsCB)
+                .put("PONTON", pontonCB)
+                .put("RESARE", resareCB)
+                .build();
+        stlGuiController = new StlGuiController(geodesyServices, s57SelectionMap, allCB, selectedObjects, objectsTF);
+        selectedObjects.clear();
+        objectsTF.clear();
+        stlGuiController.initS57Gui();
+        allCB.setOnAction((ActionEvent event) -> {
+            stlGuiController.initS57Gui("ALL");
+        });
 
+        
         s57DatabasesCB.setItems(s57DbCbData);
         s57DatabasesCB.getSelectionModel().select(S57_DEFAULT_DATABASE_5);
         s57DatabaseTF.setText(S57_DEFAULT_DATABASE_5);
@@ -606,104 +616,6 @@ public class StlDBComponentController
             } catch (NumberFormatException e) {
                 verticalExaggeration = DEFAULT_EXAGGERATION;
                 depthMagnificationTF.setText(Double.toString(verticalExaggeration));
-            }
-        });
-        selectedObjects.clear();
-        objectsTF.clear();
-        buoyageCB.setOnAction((ActionEvent event) -> {
-            if (!selectedObjects.contains("BUOYAGE")) {
-                selectedObjects.add("BUOYAGE");
-                objectsTF.appendText("BUOYAGE");
-                objectsTF.appendText(" ; ");
-            } else {
-                selectedObjects.remove("BUOYAGE");
-            }
-        });
-        lndmrkCB.setOnAction((ActionEvent event) -> {
-            if (!selectedObjects.contains("LNDMRK")) {
-                selectedObjects.add("LNDMRK");
-                objectsTF.appendText("LNDMRK");
-                objectsTF.appendText(" ; ");
-            } else {
-                selectedObjects.remove("LNDMRK");
-            }
-        });
-        achareCB.setOnAction((ActionEvent event) -> {
-            if (!selectedObjects.contains("ACHARE")) {
-                selectedObjects.add("ACHARE");
-            } else {
-                selectedObjects.remove("ACHARE");
-            }
-        });
-        coalneCB.setOnAction((ActionEvent event) -> {
-            if (!selectedObjects.contains("COALNE")) {
-                selectedObjects.add("COALNE");
-            } else {
-                selectedObjects.remove("COALNE");
-            }
-        });
-        depcntCB.setOnAction((ActionEvent event) -> {
-            if (!selectedObjects.contains("DEPCNT")) {
-                selectedObjects.add("DEPCNT");
-            } else {
-                selectedObjects.remove("DEPCNT");
-            }
-        });
-        docareCB.setOnAction((ActionEvent event) -> {
-            if (!selectedObjects.contains("DOCARE")) {
-                selectedObjects.add("DOCARE");
-            } else {
-                selectedObjects.remove("DOCARE");
-            }
-        });
-        drgareCB.setOnAction((ActionEvent event) -> {
-            if (!selectedObjects.contains("DRGARE")) {
-                selectedObjects.add("DRGARE");
-            } else {
-                selectedObjects.remove("DRGARE");
-            }
-        });
-        navlneCB.setOnAction((ActionEvent event) -> {
-            if (!selectedObjects.contains("NAVLNE")) {
-                selectedObjects.add("NAVLNE");
-            } else {
-                selectedObjects.remove("NAVLNE");
-            }
-        });
-        slconsCB.setOnAction((ActionEvent event) -> {
-            if (!selectedObjects.contains("SLCONS")) {
-                selectedObjects.add("SLCONS");
-            } else {
-                selectedObjects.remove("SLCONS");
-            }
-        });
-        lightsCB.setOnAction((ActionEvent event) -> {
-            if (!selectedObjects.contains("LIGHTS")) {
-                selectedObjects.add("LIGHTS");
-            } else {
-                selectedObjects.remove("LIGHTS");
-            }
-        });
-        pontonCB.setOnAction((ActionEvent event) -> {
-            if (!selectedObjects.contains("PONTON")) {
-                selectedObjects.add("PONTON");
-            } else {
-                selectedObjects.remove("PONTON");
-            }
-        });
-        resareCB.setOnAction((ActionEvent event) -> {
-            if (!selectedObjects.contains("RESARE")) {
-                selectedObjects.add("RESARE");
-            } else {
-                selectedObjects.remove("RESARE");
-            }
-        });
-        
-        allCB.setOnAction((ActionEvent event) -> {
-            if (!selectedObjects.contains("ALL")) {
-                selectedObjects.add("ALL");
-            } else {
-                selectedObjects.remove("ALL");
             }
         });
 
@@ -960,8 +872,8 @@ public class StlDBComponentController
                             // new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
                             List<? extends Geo> clippedObjects = topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
                             new S57ObjectView("SLCONS", topologyServices, s57Layer).display(clippedObjects);
-                          //  DaeStlExportSTL daeStlExportSTL = new DaeStlExportSTL(geodesyServices, "data/stl/chateau.stl", 48.383988, -4.49353);
-                          //  daeStlExportSTL.export();
+                            //  DaeStlExportSTL daeStlExportSTL = new DaeStlExportSTL(geodesyServices, "data/stl/chateau.stl", 48.383988, -4.49353);
+                            //  daeStlExportSTL.export();
                             k++;
                         }
                     }
@@ -1083,6 +995,7 @@ public class StlDBComponentController
         });
 
     }
+
 
     /*
     Create a list of points on a regular grid.

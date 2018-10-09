@@ -17,6 +17,11 @@ import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polygon;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
 
 /**
  *
@@ -38,10 +43,21 @@ public class StlGuiController {
     protected int tileCount;
     protected GeodesyServices geodesyServices;
 
+    protected TextField objectsTF;
+    protected Map<String, CheckBox> s57SelectionMap;
+    protected List<String> selectedObjects;
+    protected CheckBox allCB;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
-    public StlGuiController(GeodesyServices geodesyServices) {
+    public StlGuiController(GeodesyServices geodesyServices,
+            Map<String, CheckBox> s57SelectionMap,CheckBox allCB,
+            List<String> selectedObjects, 
+            TextField objectsTF) {
         this.geodesyServices = geodesyServices;
+        this.s57SelectionMap = s57SelectionMap;
+        this.allCB = allCB;
+        this.selectedObjects = selectedObjects;
+        this.objectsTF = objectsTF;
     }
 
     public void setTileSideX(double tileSideX) {
@@ -149,4 +165,67 @@ public class StlGuiController {
         return tiles;
     }
 
+    public void initS57Gui() {
+        s57SelectionMap.keySet().forEach((cb) -> {
+            s57SelectionMap.get(cb).setOnAction((ActionEvent event) -> {
+                initS57Gui(cb);
+            });
+        });
+    }
+
+    public void initS57Gui(String selected) {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (!selectedObjects.contains("ALL")) {
+                    if (selected.contains("ALL")) {
+                        selectedObjects.clear();
+                        selectedObjects.add("ALL");
+                        objectsTF.setText("");
+                        for (String s : s57SelectionMap.keySet()) {
+                            objectsTF.appendText(s + " ; ");
+                            s57SelectionMap.get(s).setSelected(true);
+                        }
+                    } else {
+                        if (selectedObjects.contains(selected)) {
+                            selectedObjects.remove(selected);
+                            objectsTF.setText(objectsTF.getText().replace(selected + " ; ", ""));
+                        } else {
+                            selectedObjects.add(selected);
+                            objectsTF.appendText(selected + " ; ");
+                        }
+                    }
+                } else {//selectedObjects.contains("ALL")
+                    if (selected.contains("ALL")) {
+                        selectedObjects.clear();
+                        selectedObjects.remove("ALL");
+                        objectsTF.setText("");
+                        for (String s : s57SelectionMap.keySet()) {;
+                            s57SelectionMap.get(s).setSelected(false);
+                        }
+                    } else {
+                        selectedObjects.remove("ALL");
+                        objectsTF.setText("");
+                        allCB.setSelected(false);
+                        for (String s : s57SelectionMap.keySet()) {
+                            objectsTF.appendText(s + " ; ");
+                            selectedObjects.add(s);
+                        }
+                        if (selectedObjects.contains(selected)) {
+                            selectedObjects.remove(selected);
+                            s57SelectionMap.get(selected).setSelected(false);
+                            objectsTF.setText(objectsTF.getText().replace(selected + " ; ", ""));
+                        } else {
+                            selectedObjects.add(selected);
+                            objectsTF.appendText(selected + " ; ");
+                        }
+                    }
+                }
+                System.out.println("selectedObjects : " + selectedObjects);
+            }
+
+        });
+
+    }
 }

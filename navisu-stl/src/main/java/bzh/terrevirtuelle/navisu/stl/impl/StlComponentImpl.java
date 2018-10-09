@@ -36,7 +36,7 @@ public class StlComponentImpl
     public void viewSTL(String filename) {
         command = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java -jar stl/STL-viewer.jar " + filename;
         if (OS.isWindows()) {
-            command = command.replace("Program Files", "\"Program Files\"");
+            command = command.replace("Program Files", "\\\"Program Files\"");
         }
         guiAgentServices.getJobsManager().newJob("Viewing STL objects", (progressHandle) -> {
             try {
