@@ -85,6 +85,7 @@ public class StlGuiController {
 
     public String initScale(double latMin, double lonMin,
             double latMax, double lonMax) {
+        System.out.println("geodesyServices : "+geodesyServices);
         latRangeMetric = geodesyServices.getDistanceM(latMin, lonMin, latMax, lonMin);
         lonRangeMetric = geodesyServices.getDistanceM(latMin, lonMin, latMin, lonMax);
         double scaleLat = latRangeMetric / (tileSideY / 1000.0);
@@ -222,7 +223,7 @@ public class StlGuiController {
                         }
                     }
                 }
-                System.out.println("selectedObjects : " + selectedObjects);
+               // System.out.println("selectedObjects : " + selectedObjects);
             }
 
         });

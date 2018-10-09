@@ -415,17 +415,7 @@ public class StlDBComponentController
             JTSServices jtsServices,
             StlComponentServices stlComponentServices) {
         super(keyCode, keyCombination);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        try {
-            fxmlLoader.load();
-        } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, ex.toString(), ex);
-        }
-
-        String uri = CSS_STYLE_PATH + viewgroupstyle;
-        view.getStylesheets().add(uri);
+        
         this.component = component;
         this.guiAgentServices = guiAgentServices;
         this.layersManagerServices = layersManagerServices;
@@ -443,6 +433,20 @@ public class StlDBComponentController
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
+        
+        
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        try {
+            fxmlLoader.load();
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+        }
+
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        view.getStylesheets().add(uri);
+        
 
         s57Layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
         bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
@@ -473,7 +477,7 @@ public class StlDBComponentController
     public void initialize(URL location, ResourceBundle resources
     ) {
         makeAttributes();
-        
+
         // Init s57 selection Panel
         s57SelectionMap = ImmutableMap.<String, CheckBox>builder()
                 .put("ACHARE", achareCB)
@@ -497,7 +501,6 @@ public class StlDBComponentController
             stlGuiController.initS57Gui("ALL");
         });
 
-        
         s57DatabasesCB.setItems(s57DbCbData);
         s57DatabasesCB.getSelectionModel().select(S57_DEFAULT_DATABASE_5);
         s57DatabaseTF.setText(S57_DEFAULT_DATABASE_5);
@@ -866,12 +869,16 @@ public class StlDBComponentController
                             double longitudeMax = g[g[0].length - 1][g[0].length - 1].getLongitude();
                             objects = new ShorelineConstructionDBLoader(s57Connection)
                                     .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
-
-                            // new S57ObjectView("SLCONS", topologyServices, s57Layer).display(objects);
-                            String filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
-                            // new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
+                           
+                            objects.forEach((gg) -> {
+                                System.out.println(gg.getGeom());
+                            });
+                           
                             List<? extends Geo> clippedObjects = topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
+
                             new S57ObjectView("SLCONS", topologyServices, s57Layer).display(clippedObjects);
+                            //String filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
+                            // new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
                             //  DaeStlExportSTL daeStlExportSTL = new DaeStlExportSTL(geodesyServices, "data/stl/chateau.stl", 48.383988, -4.49353);
                             //  daeStlExportSTL.export();
                             k++;
