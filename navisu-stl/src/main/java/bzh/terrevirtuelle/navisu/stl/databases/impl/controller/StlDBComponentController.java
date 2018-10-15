@@ -118,10 +118,14 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.BuoyageExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportSTL;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportSTL;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.LandmarkExportSTL;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExport;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.SlConsExportKML;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.DaeStlExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.LandmarkExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsExportToSTL;
+import bzh.terrevirtuelle.navisu.util.io.IO;
 import com.google.common.collect.ImmutableMap;
 import gov.nasa.worldwind.avlist.AVKey;
 import java.io.FileOutputStream;
@@ -238,7 +242,7 @@ public class StlDBComponentController
     protected double verticalExaggeration = DEFAULT_EXAGGERATION;
     protected double simplifyFactor;
     protected S57ObjectView s57Viewer;
-    protected S57ObjectsExport s57ObjectsExport;
+    protected S57ObjectsExportToSTL s57ObjectsExport;
     protected List<? extends Geo> objects = new ArrayList<>();
     protected List<DepthContour> depthContours = new ArrayList<>();
     protected List<Buoyage> buoyages = new ArrayList<>();
@@ -378,8 +382,23 @@ public class StlDBComponentController
     public CheckBox pontonCB;
     @FXML
     public CheckBox resareCB;
+    @FXML
+    public TextField tileNumberUTF;
+    @FXML
+    public TextField tileNumberVTF;
+    @FXML
+    public TextField kmlLatTF;
+    @FXML
+    public TextField kmlLonTF;
+    @FXML
+    public Button kmlObjectsButton;
 
-    private List<CheckBox> s57CheckBoxes;
+    private int tileNumberU;
+    private int tileNumberV;
+    private double kmlLat;
+    private double kmlLon;
+    private Map<Pair<Integer, Integer>, String> kmlObjectMap = new HashMap<>();
+    private Map<String, Pair<Double, Double>> kmlObjectLocationMap = new HashMap<>();
     /*-----------------------------------*/
     int k = 0;
     int i = 0;
@@ -415,7 +434,7 @@ public class StlDBComponentController
             JTSServices jtsServices,
             StlComponentServices stlComponentServices) {
         super(keyCode, keyCombination);
-        
+
         this.component = component;
         this.guiAgentServices = guiAgentServices;
         this.layersManagerServices = layersManagerServices;
@@ -433,8 +452,7 @@ public class StlDBComponentController
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
-        
-        
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -446,7 +464,6 @@ public class StlDBComponentController
 
         String uri = CSS_STYLE_PATH + viewgroupstyle;
         view.getStylesheets().add(uri);
-        
 
         s57Layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
         bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
@@ -474,6 +491,7 @@ public class StlDBComponentController
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void initialize(URL location, ResourceBundle resources
     ) {
         makeAttributes();
@@ -709,6 +727,31 @@ public class StlDBComponentController
 
         });
 
+        kmlObjectsButton.setOnMouseClicked((MouseEvent event) -> {
+            try {
+                tileNumberU = Integer.parseInt(tileNumberUTF.getText());
+                tileNumberV = Integer.parseInt(tileNumberVTF.getText());
+                kmlLat = Double.parseDouble(kmlLatTF.getText());
+                kmlLon = Double.parseDouble(kmlLonTF.getText());
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Tile number or KML location is empty");
+                alert.show();
+            }
+            if (tileNumberU == 0 || tileNumberV == 0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Tile number is equal at zero");
+                alert.show();
+            } else {
+                File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl", "Georeferenced STL files (*.stl)", "*.STL", "*.stl");
+                if (file != null) {
+                    kmlObjectMap.put(new Pair(tileNumberU, tileNumberV), file.getAbsolutePath());
+                    kmlObjectLocationMap.put(file.getAbsolutePath(), new Pair(kmlLat, kmlLon));
+                }
+            }
+        });
         requestButton.setOnMouseClicked((MouseEvent event) -> {
 
             s57Connection = databaseServices.connect(s57DatabaseTF.getText(),
@@ -727,7 +770,7 @@ public class StlDBComponentController
             }
         });
     }
-
+    @SuppressWarnings("unchecked")
     public void retrieveIn(String object, double latMin, double lonMin, double latMax, double lonMax) {
 
         guiAgentServices.getJobsManager().newJob("Load S57 objects", new Job() {
@@ -792,7 +835,7 @@ public class StlDBComponentController
                         i = k / tileCount + 1;
                         j = k % tileCount + 1;
                         String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
-                        new GridBox3DExportSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
+                        new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                         stlComponentServices.exportBaseSTL(filename, "data/stl/base.stl");
                         k++;
                     });
@@ -830,9 +873,8 @@ public class StlDBComponentController
                             j = k % tileCount + 1;
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
-                            BuoyageExportSTL buoyageExportSTL = new BuoyageExportSTL(geodesyServices, g, filename, latScale, lonScale);
+                            BuoyageExportToSTL buoyageExportSTL = new BuoyageExportToSTL(geodesyServices, g, filename, latScale, lonScale);
                             buoyageExportSTL.export(buoyages, maxDepth + tileSideZ);
-                            //    buoyageExportSTL.writeInsertedFile(48.383988, -4.493537, maxDepth + tileSideZ, "chateau.stl");
                             k++;
                         }
                     }
@@ -852,7 +894,7 @@ public class StlDBComponentController
                             j = k % tileCount + 1;
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
-                            new LandmarkExportSTL(geodesyServices, g, filename, latScale, lonScale)
+                            new LandmarkExportToSTL(geodesyServices, g, filename, latScale, lonScale)
                                     .export(landmarks, maxDepth + tileSideZ);
                             k++;
                         }
@@ -863,24 +905,37 @@ public class StlDBComponentController
                             objects.clear();
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
+                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             double latitudeMin = g[0][0].getLatitude();
                             double longitudeMin = g[0][0].getLongitude();
                             double latitudeMax = g[g[0].length - 1][g[0].length - 1].getLatitude();
                             double longitudeMax = g[g[0].length - 1][g[0].length - 1].getLongitude();
                             objects = new ShorelineConstructionDBLoader(s57Connection)
                                     .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
-                           
-                            objects.forEach((gg) -> {
-                               // System.out.println(gg.getGeom());
-                            });
-                           
                             List<? extends Geo> clippedObjects = topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
+                            //  new S57ObjectView("SLCONS", topologyServices, s57Layer).display(clippedObjects);
+                            SLConsExportToSTL slConsExportToSTL = new SLConsExportToSTL(topologyServices, stlComponentServices,
+                                    jtsServices, displayServices,
+                                    filename,
+                                    latMin, lonMin,
+                                    latScale, lonScale,
+                                    maxDepth + tileSideZ,
+                                    s57Layer);
+                            slConsExportToSTL.export(clippedObjects);
+                            System.out.println(kmlObjectMap);
 
-                            new S57ObjectView("SLCONS", topologyServices, s57Layer).display(clippedObjects);
-                            //String filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
-                            // new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
-                            //  DaeStlExportSTL daeStlExportSTL = new DaeStlExportSTL(geodesyServices, "data/stl/chateau.stl", 48.383988, -4.49353);
-                            //  daeStlExportSTL.export();
+                            if (kmlObjectMap.keySet().contains(new Pair(i, j))) {
+                                DaeStlExportToSTL daeStlExportSTL = new DaeStlExportToSTL(geodesyServices,
+                                        filename,
+                                        latMin, lonMin,
+                                        latScale, lonScale,
+                                        maxDepth + tileSideZ);
+                                Pair loc = kmlObjectLocationMap.get(kmlObjectMap.get(new Pair(i, j)));
+                                daeStlExportSTL.export(kmlObjectMap.get(new Pair(i, j)), (double)loc.getX(), (double)loc.getY());
+                            }
+
+                            filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
+                            new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
                             k++;
                         }
                     }
@@ -889,7 +944,7 @@ public class StlDBComponentController
                                 .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
                         new S57ObjectView("PONTON", topologyServices, s57Layer).display(objects);
                         objects.forEach((g) -> {
-                            s57ObjectsExport = new S57ObjectsExport(topologyServices, stlComponentServices, jtsServices,
+                            s57ObjectsExport = new S57ObjectsExportToSTL(topologyServices, stlComponentServices, jtsServices,
                                     lat0, lon0, latScale, lonScale, maxDepth + tileSideZ);
                             s57ObjectsExport.export(g);
                         });
@@ -975,7 +1030,7 @@ public class StlDBComponentController
                                 java.nio.file.Path path = Paths.get(filename);
                                 Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
                             } catch (IOException ex) {
-                                Logger.getLogger(GridBox3DExportSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                                Logger.getLogger(GridBox3DExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                             }
                             try {
                                 Thread.sleep(1000);

@@ -48,4 +48,29 @@ public class DemElevationLoader {
         }
         return elevations;
     }
+
+    public double[][] getElevations(double latMin, double lonMin,
+            double latMax, double lonMax,
+            double latInc, double lonInc) {
+        double latitude = latMin;
+        double longitude = lonMin;
+        int ptsCountX = Math.abs((int) ((lonMax - lonMin) / lonInc));
+        int ptsCountY = Math.abs((int) ((latMax - latMin) / latInc));
+        int u = 0;
+        int v = 0;
+        double[][] elevations = new double[ptsCountX][ptsCountY];
+        while (latitude < latMax) {
+            latitude = latMin + latInc;
+            while (longitude < lonMax) {
+                double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
+                if (el < 0) {
+                    el = 0;
+                }
+                elevations[u][v] = el;
+                longitude += lonInc;
+            }
+            latitude += latInc;
+        }
+        return elevations;
+    }
 }

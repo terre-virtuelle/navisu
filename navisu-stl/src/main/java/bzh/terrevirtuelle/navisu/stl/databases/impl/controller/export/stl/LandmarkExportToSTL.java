@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.globes.ElevationModel;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,9 +26,10 @@ import java.util.logging.Logger;
  *
  * @author serge
  */
-public class LandmarkExportSTL {
+public class LandmarkExportToSTL {
 
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
+    
     protected String stlFilename;
     protected GeodesyServices geodesyServices;
     protected List<Landmark> landmarks;
@@ -41,7 +43,7 @@ public class LandmarkExportSTL {
     protected double latScale;
     protected double lonScale;
 
-    public LandmarkExportSTL(GeodesyServices geodesyServices, Point3D[][] gb,
+    public LandmarkExportToSTL(GeodesyServices geodesyServices, Point3D[][] gb,
             String stlFilename, double latScale, double lonScale) {
         this.stlFilename = stlFilename;
         this.geodesyServices = geodesyServices;
@@ -74,7 +76,6 @@ public class LandmarkExportSTL {
                 ElevationModel model = this.wwd.getModel().getGlobe().getElevationModel();
                 elevation += model.getElevation(Angle.fromDegreesLatitude(lat), Angle.fromDegreesLongitude(lon));
                 elevation *= latScale;
-                System.out.println("l.getFunction() : " +l.getFunction());
                 if (l.getFunction().contains("33")) {
                     landmark = landmark.concat(insertedFile(latM, lonM, elevation, "Phare.stl"));
                 } else {
@@ -97,7 +98,7 @@ public class LandmarkExportSTL {
             obj = new String(Files.readAllBytes(Paths.get(name)));
             result = new TransformSTL().transform(obj, latitude, longitude, altitude);
         } catch (IOException ex) {
-            Logger.getLogger(BuoyageExportSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(BuoyageExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return result;
     }

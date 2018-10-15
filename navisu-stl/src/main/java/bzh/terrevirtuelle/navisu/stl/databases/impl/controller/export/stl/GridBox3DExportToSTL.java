@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @author serge
  */
-public class GridBox3DExportSTL {
+public class GridBox3DExportToSTL {
 
     GeodesyServices geodesyServices;
     private GridBox3D gridBox;
@@ -31,7 +31,7 @@ public class GridBox3DExportSTL {
     String result;
     String tmp;
 
-    public GridBox3DExportSTL(GeodesyServices geodesyServices, GridBox3D gridBox) {
+    public GridBox3DExportToSTL(GeodesyServices geodesyServices, GridBox3D gridBox) {
         this.geodesyServices = geodesyServices;
         this.gridBox = gridBox;
     }
@@ -47,18 +47,12 @@ public class GridBox3DExportSTL {
             gridPaths.forEach((p) -> {
                 result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
             });
-            /*
-            gridPaths=gridBox.getSidePathsSouth();
-            String normal = "0 -1 0 ";
-            gridPaths.forEach((p) -> {
-                result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
-            });
-             */
+            
             //    result += "endsolid " + filename + "\n";
             java.nio.file.Path path = Paths.get(filename);
             Files.write(path, result.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
-            Logger.getLogger(GridBox3DExportSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(GridBox3DExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 

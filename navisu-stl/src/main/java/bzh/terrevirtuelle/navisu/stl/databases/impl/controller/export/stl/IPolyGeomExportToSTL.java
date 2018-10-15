@@ -5,13 +5,15 @@
  */
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import java.util.List;
 import java.util.Map;
 
 /**
  *
  * @author serge
  */
-public interface PolyGeomExport {
+public interface IPolyGeomExportToSTL {
 
-    void export(String geometries, Map<String, String> labels);
+    List<Point3D> export(String geometries, Map<String, String> labels);
 }

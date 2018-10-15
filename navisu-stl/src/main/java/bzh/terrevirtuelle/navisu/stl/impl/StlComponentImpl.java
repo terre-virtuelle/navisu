@@ -131,7 +131,6 @@ public class StlComponentImpl
     private Vec3d toVec3d(String triangleString, double latMin, double lonMin, double latScale, double lonScale) {
         String[] c = triangleString.split(",");
         double elvScale = (latScale + lonScale) / 2;
-        // System.out.println("triangleString : " + triangleString);
 
         double lon = Double.parseDouble(c[0]);
         double lat = Double.parseDouble(c[1]);

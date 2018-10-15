@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  *
  * @author serge
  */
-public class BuoyageExportSTL {
+public class BuoyageExportToSTL {
 
     protected String stlFilename;
     protected GeodesyServices geodesyServices;
@@ -37,7 +37,7 @@ public class BuoyageExportSTL {
     protected double latScale;
     protected double lonScale;
 
-    public BuoyageExportSTL(GeodesyServices geodesyServices, Point3D[][] gb,
+    public BuoyageExportToSTL(GeodesyServices geodesyServices, Point3D[][] gb,
             String stlFilename,
             double latScale, double lonScale) {
         this.stlFilename = stlFilename;
@@ -96,14 +96,14 @@ public class BuoyageExportSTL {
             buoy = new String(Files.readAllBytes(Paths.get(buoyName)));
             result = new TransformSTL().transform(buoy, latitude, longitude, altitude);
         } catch (IOException ex) {
-            Logger.getLogger(BuoyageExportSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(BuoyageExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return result;
     }
 
-    public void writeInsertedFile(double latitude, double longitude, double altitude, String buoyFilename) {
-        String buoyName = "data/stl/" + buoyFilename;
-        String buoy = "";
+    public void writeInsertedFile(double latitude, double longitude, double altitude, String name) {
+        String filename = "data/stl/" + name;
+        String object = "";
         String result = "";
         java.nio.file.Path path = null;
         double latM = geodesyServices.getDistanceM(latMin, lonMin, latitude, lonMin);
@@ -111,8 +111,8 @@ public class BuoyageExportSTL {
         latM *= latScale;
         lonM *= lonScale;
         try {
-            buoy = new String(Files.readAllBytes(Paths.get(buoyName)));
-            result = new TransformSTL().transformAndScale(buoy, 1000, latM, lonM, altitude);
+            object = new String(Files.readAllBytes(Paths.get(filename)));
+            result = new TransformSTL().transformAndScale(object, 1, latM, lonM, altitude);
             path = Paths.get(stlFilename);
             Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException ex) {

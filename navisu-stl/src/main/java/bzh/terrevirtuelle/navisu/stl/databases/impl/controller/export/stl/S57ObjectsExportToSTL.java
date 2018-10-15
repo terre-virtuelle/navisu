@@ -14,9 +14,9 @@ import bzh.terrevirtuelle.navisu.topology.TopologyServices;
  *
  * @author serge
  */
-public class S57ObjectsExport {
+public class S57ObjectsExportToSTL {
 
-    protected PolyGeomExport polyGeomExport;
+    protected IPolyGeomExportToSTL polyGeomExport;
     protected TopologyServices topologyServices;
     protected JTSServices jtsServices;
     protected StlComponentServices stlComponentServices;
@@ -26,7 +26,7 @@ public class S57ObjectsExport {
     protected double lonScale;
     protected double verticalOffset;
 
-    public S57ObjectsExport(TopologyServices topologyServices, StlComponentServices stlComponentServices, JTSServices jtsServices,
+    public S57ObjectsExportToSTL(TopologyServices topologyServices, StlComponentServices stlComponentServices, JTSServices jtsServices,
             double latMin, double lonMin, double latScale, double lonScale, double verticalOffset) {
         this.topologyServices = topologyServices;
         this.stlComponentServices = stlComponentServices;
@@ -49,7 +49,7 @@ public class S57ObjectsExport {
          */
         if (geometry.contains("MULTILINESTRING") && !geometry.contains("EMPTY")) {
            
-            polyGeomExport = new PolylineExport(topologyServices, stlComponentServices, jtsServices,
+            polyGeomExport = new PolylineExportToSTL(topologyServices, stlComponentServices, jtsServices,
                     latMin, lonMin, latScale, lonScale, verticalOffset);
             polyGeomExport.export(geometry, object.getLabels());
         }
