@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="346.0" styleClass="background-pane">
         </Pane>
@@ -26,6 +26,7 @@
                 <Slider fx:id="opacitySlider" layoutX="315.0" layoutY="88.0" max="1.0" orientation="VERTICAL" prefHeight="120.0" prefWidth="5.0" scaleX="0.8" scaleY="0.8" value="0.6">
                 </Slider>
                 <Label fx:id="visibleLabel" layoutX="280.0" layoutY="56.0" prefHeight="15.0" prefWidth="53.0" />
+            <Button fx:id="saveKMLButton" layoutX="75.0" layoutY="51.0" mnemonicParsing="false" text="Save KML" />
             </children>
         </Group>
     </children>

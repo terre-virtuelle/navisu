@@ -99,9 +99,9 @@ public class GpxController {
             //  List<Track> tracks = reader.getTracks();//TODO
 
             BasicMarkerAttributes attrs
-            = new BasicMarkerAttributes(Material.RED, BasicMarkerShape.SPHERE, 1.d);
+            = new BasicMarkerAttributes(Material.RED, BasicMarkerShape.SPHERE, 50.d);
             // max value for MarkerSize about 50
-            attrs.setMaxMarkerSize(20.0);
+            attrs.setMaxMarkerSize(1000.0);
             ArrayList<Marker> markers = new ArrayList<>();
             while (positions.hasNext()) {
                 markers.add(new BasicMarker(positions.next(), attrs));

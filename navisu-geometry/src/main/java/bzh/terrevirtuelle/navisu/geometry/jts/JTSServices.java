@@ -54,4 +54,6 @@ public interface JTSServices
     boolean[][] getPoint3DInit();
 
     List<Point3D> getBuffer(Geometry geom, double bufferDistance, int capSize);
+
+    List<Point3D> getBuffer(String geom, double bufferDistance, int capSize);
 }

@@ -6,16 +6,20 @@
 package bzh.terrevirtuelle.navisu.geometry.jts.impl;
 
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTS;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import bzh.terrevirtuelle.navisu.topology.impl.TopologyImpl;
+import com.vividsolutions.jts.algorithm.Centroid;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.io.WKTReader;
 import com.vividsolutions.jts.operation.buffer.BufferOp;
 import com.vividsolutions.jts.triangulate.DelaunayTriangulationBuilder;
 import gov.nasa.worldwind.geom.Position;
@@ -26,6 +30,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 import org.opensphere.geometry.algorithm.ConcaveHull;
@@ -349,18 +355,6 @@ public class JTSImpl
     }
 
     @Override
-    public void componentInitiated() {
-    }
-
-    @Override
-    public void componentStarted() {
-    }
-
-    @Override
-    public void componentStopped() {
-    }
-
-    @Override
     public List<Point3D> getBuffer(Geometry geom, double bufferDistance, int capSize) {
         List<Point3D> result = new ArrayList<>();
         BufferOp bufferOp = new BufferOp(geom);
@@ -375,5 +369,44 @@ public class JTSImpl
             result.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
         });
         return result;
+    }
+
+    @Override
+    public List<Point3D> getBuffer(String wkt, double bufferDistance, int capSize) {
+        List<Point3D> result = new ArrayList<>();
+        WKTReader wktReader = new WKTReader();
+        Geometry geometry = null;
+        Pair<Double, Double> location = null;
+        if (wkt != null) {
+            try {
+                geometry = wktReader.read(wkt);
+            } catch (com.vividsolutions.jts.io.ParseException ex) {
+                Logger.getLogger(TopologyImpl.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
+        BufferOp bufferOp = new BufferOp(geometry);
+        bufferOp.setEndCapStyle(capSize);//CAP_ROUND);
+        Geometry offsetBuffer = bufferOp.getResultGeometry(bufferDistance);
+        List<Position> offsetPathPositions = new ArrayList<>();
+        for (Coordinate c : offsetBuffer.getCoordinates()) {
+            offsetPathPositions.add(Position.fromDegrees(c.y, c.x, 100));
+        }
+        Polygon poly = new Polygon(offsetPathPositions);
+        poly.outerBoundary().forEach((p) -> {
+            result.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
+        });
+        return result;
+    }
+
+    @Override
+    public void componentInitiated() {
+    }
+
+    @Override
+    public void componentStarted() {
+    }
+
+    @Override
+    public void componentStopped() {
     }
 }

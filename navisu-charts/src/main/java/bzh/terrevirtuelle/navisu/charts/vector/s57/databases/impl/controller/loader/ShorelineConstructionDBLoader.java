@@ -29,7 +29,7 @@ public class ShorelineConstructionDBLoader
     public List<? extends Geo> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
         objects = new ArrayList<>();
         String geom = "";
-        double height;
+        double height;//height always null ?
         resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
         ShorelineConstruction object;
         //height tjrs 0
