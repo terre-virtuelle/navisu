@@ -11,6 +11,7 @@ import gov.nasa.worldwind.geom.Position;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -77,6 +78,7 @@ public class DaeStlExportToSTL {
             }
         }
         // write in file if necessary
+        /*
         filename = filename.replace(".stl", "");
         filename += "_geo.stl";
         try {
@@ -84,17 +86,9 @@ public class DaeStlExportToSTL {
         } catch (IOException ex) {
             Logger.getLogger(DaeStlExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+*/
         // Transform vertex angle coordinates in coordinates for one tile
-        /*
-        facet normal -0.000000e+00 0.000000e+00 1.000000e+00
-        outer loop
-          vertex -4.485794838093824 48.369454144272765 15.0
-          vertex -4.485840797724194 48.36959738641585 15.0
-          vertex -4.485852308891282 48.36938902420408 15.0
-        endloop
-        endfacet
-         */
-        stlResult+="solid \n";
+        stlResult += "solid \n";
         String[] resultTab = result.split("\n");
         for (String s : resultTab) {
             if (s.contains("facet") || s.contains("loop")) {
@@ -113,7 +107,8 @@ public class DaeStlExportToSTL {
                 }
             }
         }
-        stlResult+="endsolid \n";
+        stlResult += "endsolid \n";
+        /*
         filename = filename.replace("_geo.stl", "");
         filename += "_um3.stl";
         try {
@@ -121,6 +116,14 @@ public class DaeStlExportToSTL {
         } catch (IOException ex) {
             Logger.getLogger(DaeStlExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+*/
+        //Insert dae file in stlFile.stl
+        try {
+            Files.write(Paths.get(stlFilename), stlResult.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException ex) {
+            Logger.getLogger(DaeStlExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+
         return stlFilename;
     }
 

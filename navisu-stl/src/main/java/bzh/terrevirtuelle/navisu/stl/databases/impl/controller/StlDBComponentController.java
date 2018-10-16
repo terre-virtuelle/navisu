@@ -344,6 +344,8 @@ public class StlDBComponentController
     @FXML
     public ChoiceBox<String> elevationDatabasesCB;
     @FXML
+    public RadioButton srtmRB;
+    @FXML
     public RadioButton elevationRB;
     @FXML
     public CheckBox stlPreviewCB;
@@ -392,12 +394,14 @@ public class StlDBComponentController
     public TextField kmlLonTF;
     @FXML
     public Button kmlObjectsButton;
+    @FXML
+    public Button kmzFileButton;
 
     private int tileNumberU;
     private int tileNumberV;
     private double kmlLat;
     private double kmlLon;
-    private Map<Pair<Integer, Integer>, String> kmlObjectMap = new HashMap<>();
+    private Map<Pair<Integer, Integer>, List<String>> kmlObjectMap = new HashMap<>();
     private Map<String, Pair<Double, Double>> kmlObjectLocationMap = new HashMap<>();
     /*-----------------------------------*/
     int k = 0;
@@ -408,6 +412,7 @@ public class StlDBComponentController
 
     final ToggleGroup bathyGroup = new ToggleGroup();
     final ToggleGroup wsGroup = new ToggleGroup();
+    final ToggleGroup altiGroup = new ToggleGroup();
 
     protected ObservableList<String> s57DbCbData
             = FXCollections.observableArrayList(S57_DEFAULT_DATABASE_1, S57_DEFAULT_DATABASE_2, S57_DEFAULT_DATABASE_3, S57_DEFAULT_DATABASE_4, S57_DEFAULT_DATABASE_5, S57_DEFAULT_DATABASE_6);
@@ -646,9 +651,11 @@ public class StlDBComponentController
         depareRB.setToggleGroup(bathyGroup);
         depareUlhyssesRB.setToggleGroup(bathyGroup);
 
+        srtmRB.setToggleGroup(altiGroup);
+        elevationRB.setToggleGroup(altiGroup);
+
         solidRB.setToggleGroup(wsGroup);
         wireframeRB.setToggleGroup(wsGroup);
-        wireframeRB.setSelected(true);
 
         wireframeRB.setOnAction((ActionEvent event) -> {
             solid = false;
@@ -733,7 +740,7 @@ public class StlDBComponentController
                 tileNumberV = Integer.parseInt(tileNumberVTF.getText());
                 kmlLat = Double.parseDouble(kmlLatTF.getText());
                 kmlLon = Double.parseDouble(kmlLonTF.getText());
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Tile number or KML location is empty");
@@ -747,11 +754,22 @@ public class StlDBComponentController
             } else {
                 File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl", "Georeferenced STL files (*.stl)", "*.STL", "*.stl");
                 if (file != null) {
-                    kmlObjectMap.put(new Pair(tileNumberU, tileNumberV), file.getAbsolutePath());
+                    Pair pair = new Pair(tileNumberU, tileNumberV);
+                    if (kmlObjectMap.get(pair) == null) {
+                        kmlObjectMap.put(pair, new ArrayList<>());
+                    }
+                    kmlObjectMap.get(pair).add(file.getAbsolutePath());
                     kmlObjectLocationMap.put(file.getAbsolutePath(), new Pair(kmlLat, kmlLon));
                 }
             }
         });
+        kmzFileButton.setOnMouseClicked((MouseEvent event) -> {
+            File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl", "Georeferenced KML files (*.kmz)", "*.KMZ", "*.kmz");
+            if (file != null) {
+//dezipper
+            }
+        });
+
         requestButton.setOnMouseClicked((MouseEvent event) -> {
 
             s57Connection = databaseServices.connect(s57DatabaseTF.getText(),
@@ -770,6 +788,7 @@ public class StlDBComponentController
             }
         });
     }
+
     @SuppressWarnings("unchecked")
     public void retrieveIn(String object, double latMin, double lonMin, double latMax, double lonMax) {
 
@@ -905,33 +924,39 @@ public class StlDBComponentController
                             objects.clear();
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
-                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                            Pair pair = new Pair(i, j);
+
                             double latitudeMin = g[0][0].getLatitude();
                             double longitudeMin = g[0][0].getLongitude();
                             double latitudeMax = g[g[0].length - 1][g[0].length - 1].getLatitude();
                             double longitudeMax = g[g[0].length - 1][g[0].length - 1].getLongitude();
-                            objects = new ShorelineConstructionDBLoader(s57Connection)
-                                    .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
-                            List<? extends Geo> clippedObjects = topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
-                            //  new S57ObjectView("SLCONS", topologyServices, s57Layer).display(clippedObjects);
-                            SLConsExportToSTL slConsExportToSTL = new SLConsExportToSTL(topologyServices, stlComponentServices,
-                                    jtsServices, displayServices,
-                                    filename,
-                                    latMin, lonMin,
-                                    latScale, lonScale,
-                                    maxDepth + tileSideZ,
-                                    s57Layer);
-                            slConsExportToSTL.export(clippedObjects);
-                            System.out.println(kmlObjectMap);
 
-                            if (kmlObjectMap.keySet().contains(new Pair(i, j))) {
+                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                            if (!kmlObjectMap.keySet().contains(pair)) {
+                                objects = new ShorelineConstructionDBLoader(s57Connection)
+                                        .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
+                                List<? extends Geo> clippedObjects = topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
+                                // new S57ObjectView("SLCONS", topologyServices, s57Layer).display(clippedObjects);
+
+                                SLConsExportToSTL slConsExportToSTL = new SLConsExportToSTL(topologyServices, stlComponentServices,
+                                        jtsServices, displayServices,
+                                        filename,
+                                        latMin, lonMin,
+                                        latScale, lonScale,
+                                        maxDepth + tileSideZ,
+                                        s57Layer);
+                                slConsExportToSTL.export(clippedObjects);
+                            } else {
                                 DaeStlExportToSTL daeStlExportSTL = new DaeStlExportToSTL(geodesyServices,
                                         filename,
                                         latMin, lonMin,
                                         latScale, lonScale,
                                         maxDepth + tileSideZ);
-                                Pair loc = kmlObjectLocationMap.get(kmlObjectMap.get(new Pair(i, j)));
-                                daeStlExportSTL.export(kmlObjectMap.get(new Pair(i, j)), (double)loc.getX(), (double)loc.getY());
+                                List<String> objs = kmlObjectMap.get(pair);
+                                objs.forEach((s) -> {
+                                    Pair loc = kmlObjectLocationMap.get(s);
+                                    daeStlExportSTL.export(s, (double) loc.getX(), (double) loc.getY());
+                                });
                             }
 
                             filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
