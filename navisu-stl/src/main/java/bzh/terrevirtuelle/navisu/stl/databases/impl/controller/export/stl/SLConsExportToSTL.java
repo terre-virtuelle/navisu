@@ -10,14 +10,17 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.KMLWriter;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import com.vividsolutions.jts.operation.buffer.BufferParameters;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.ExtrudedPolygon;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.Polygon;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,12 +40,16 @@ public class SLConsExportToSTL {
     protected String stlFilename;
 
     protected Path path;
+    protected Polygon polygon;
+    protected ExtrudedPolygon extrudedPolygon = null;
     protected double latMin;
     protected double lonMin;
 
     protected double latScale;
     protected double lonScale;
     protected double verticalOffset;
+
+    protected final int TRESHOLD = 20000;
 
     public SLConsExportToSTL(TopologyServices topologyServices, StlComponentServices stlComponentServices,
             JTSServices jtsServices, DisplayServices displayServices,
@@ -66,25 +73,31 @@ public class SLConsExportToSTL {
     }
 
     public void export(List<? extends Geo> objects) {
+        List<ExtrudedPolygon> extrudedPolygons = new ArrayList<>();
         for (Geo geo : objects) {
-            // System.out.println(jtsServices.getBuffer(geo.getGeom(), 10.0, BufferParameters.CAP_FLAT));
-            if (geo.getGeom().contains("MULTILINESTRING")) {
-                path = topologyServices.wktMultiLineToWwjPath(geo.getGeom(), verticalOffset);
-                layer.addRenderable(path);
-            } else {
-                if (geo.getGeom().contains("LINESTRING")) {
-                    List<Point3D> points = jtsServices.getBuffer(geo.getGeom(), 0.0001, BufferParameters.CAP_FLAT);
-                    List<Position> positions = new ArrayList<>();
-                    for (Point3D p : points) {
-                        positions.add(Position.fromDegrees(p.getLatitude(),
-                                p.getLongitude(),
-                                p.getElevation() * verticalOffset));
-                    }
-                   // displayServices.displayPoints3D(points, layer);
-                    path = displayServices.createPath(positions, Material.GREEN);
-                    layer.addRenderable(path);
+            String geometry = geo.getGeom();
+            if (geometry.contains("MULTILINESTRING") || geometry.contains("LINESTRING")) {
+                List<Point3D> points = jtsServices.getBuffer(geometry, 0.0001, BufferParameters.CAP_FLAT);
+                List<Position> positions = new ArrayList<>();
+                points.forEach((p) -> {
+                    positions.add(Position.fromDegrees(p.getLatitude(),
+                            p.getLongitude(),
+                            p.getElevation()/10.0));
+                });
+                polygon = new Polygon(positions);
+
+                if (polygon != null) {
+                    extrudedPolygons.add(new ExtrudedPolygon(polygon.getOuterBoundary(), 0.005));
                 }
+                layer.addRenderables(extrudedPolygons);
             }
         }
+        ExtrudedPolygon[] extrudedPolygonTab = new ExtrudedPolygon[extrudedPolygons.size()];
+        int i = 0;
+        for (ExtrudedPolygon e : extrudedPolygons) {
+            extrudedPolygonTab[i++] = e;
+        }
+        KMLWriter kmlWriter = new KMLWriter("privateData/stl/tmp.kml");
+        kmlWriter.write(extrudedPolygonTab, StandardOpenOption.CREATE);
     }
 }

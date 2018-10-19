@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 public class DaeStlExportToSTL {
 
     private String content;
-    private String stlFilename;
+    private final String stlFilename;
     private String stlResult = "";
     private Position position0;
     private final GeodesyServices geodesyServices;
@@ -30,10 +30,13 @@ public class DaeStlExportToSTL {
     private final double lonMin;
     private final double latScale;//Scale for the tile
     private final double lonScale;
-    private final double height;
-    private double elvScale;
+    private final double maxdepth;
+    private final double tileSideZ;
+    private final double elvScale;
 
-    public DaeStlExportToSTL(GeodesyServices geodesyServices, String stlFilename, double latMin, double lonMin, double latScale, double lonScale, double height) {
+    public DaeStlExportToSTL(GeodesyServices geodesyServices, String stlFilename,
+            double latMin, double lonMin, double latScale, double lonScale,
+            double maxdepth, double tileSideZ) {
 
         this.geodesyServices = geodesyServices;
         this.stlFilename = stlFilename;
@@ -41,8 +44,10 @@ public class DaeStlExportToSTL {
         this.lonMin = lonMin;
         this.latScale = latScale;
         this.lonScale = lonScale;
-        this.height = height;
+        this.maxdepth = maxdepth;
+        this.tileSideZ = tileSideZ;
         elvScale = (latScale + lonScale) / 2;
+
     }
 
     public String export(String filename, double lat0, double lon0) {
@@ -72,7 +77,8 @@ public class DaeStlExportToSTL {
                 } else {
                     position2 = geodesyServices.getPosition(position1, 0.0, Double.valueOf(tmp[2]) / 1000, Double.valueOf(tmp[3]) / 1000);
                 }
-                result += "vertex " + position2.getLongitude().getDegrees() + " " + position2.getLatitude().getDegrees() + " " + position2.getElevation() + "\n";
+                double height = position2.getElevation() + maxdepth;
+                result += "vertex " + position2.getLongitude().getDegrees() + " " + position2.getLatitude().getDegrees() + " " + height + "\n";
             } else {
                 result += s + "\n";
             }
@@ -86,7 +92,7 @@ public class DaeStlExportToSTL {
         } catch (IOException ex) {
             Logger.getLogger(DaeStlExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-*/
+         */
         // Transform vertex angle coordinates in coordinates for one tile
         stlResult += "solid \n";
         String[] resultTab = result.split("\n");
@@ -102,7 +108,7 @@ public class DaeStlExportToSTL {
                     double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
                     latM *= latScale;
                     lonM *= lonScale;
-                    double elv = (Double.parseDouble(c[3]) * elvScale) + height;
+                    double elv = (Double.parseDouble(c[3]) * elvScale) + tileSideZ;
                     stlResult += "vertex " + lonM + " " + latM + " " + elv + "\n";
                 }
             }
@@ -116,7 +122,7 @@ public class DaeStlExportToSTL {
         } catch (IOException ex) {
             Logger.getLogger(DaeStlExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-*/
+         */
         //Insert dae file in stlFile.stl
         try {
             Files.write(Paths.get(stlFilename), stlResult.getBytes(), StandardOpenOption.APPEND);

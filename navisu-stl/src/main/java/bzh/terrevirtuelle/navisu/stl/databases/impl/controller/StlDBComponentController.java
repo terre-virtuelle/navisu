@@ -330,6 +330,8 @@ public class StlDBComponentController
     @FXML
     public RadioButton demRB;
     @FXML
+    public RadioButton noBathyRB;
+    @FXML
     public RadioButton depareRB;
     @FXML
     public RadioButton depareUlhyssesRB;
@@ -647,7 +649,7 @@ public class StlDBComponentController
 
         outFileTF.setText("out");
 
-        demRB.setToggleGroup(bathyGroup);
+        noBathyRB.setToggleGroup(bathyGroup);
         depareRB.setToggleGroup(bathyGroup);
         depareUlhyssesRB.setToggleGroup(bathyGroup);
 
@@ -733,7 +735,13 @@ public class StlDBComponentController
             }
 
         });
-
+        //Debug only
+        /*
+        tileNumberUTF.setText("1");
+        tileNumberVTF.setText("1");
+        kmlLatTF.setText("48.373862");
+        kmlLonTF.setText("-4.480619");
+*/
         kmlObjectsButton.setOnMouseClicked((MouseEvent event) -> {
             try {
                 tileNumberU = Integer.parseInt(tileNumberUTF.getText());
@@ -763,10 +771,11 @@ public class StlDBComponentController
                 }
             }
         });
+        kmzFileButton.setVisible(false);
         kmzFileButton.setOnMouseClicked((MouseEvent event) -> {
             File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl", "Georeferenced KML files (*.kmz)", "*.KMZ", "*.kmz");
             if (file != null) {
-//dezipper
+                //dezipper, voir services KML
             }
         });
 
@@ -806,13 +815,13 @@ public class StlDBComponentController
                 marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
                 //BATHY, ELEVATION AND TILES
-                if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && !demRB.isSelected())) {
+                if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && noBathyRB.isSelected())) {
                     grids = createElevationTab(lat0, lon0, lat1, lon1);
                 }
-                if (selectedObjects.contains("ALL") || (demRB.isSelected() && !elevationRB.isSelected())) {
+                if (selectedObjects.contains("ALL") || (!noBathyRB.isSelected() && !elevationRB.isSelected())) {
                     grids = createBathymetryTab(lat0, lon0, lat1, lon1);
                 }
-                if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && demRB.isSelected())) {
+                if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && !noBathyRB.isSelected())) {
                     grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
                 }
                 k = 0;
@@ -855,7 +864,7 @@ public class StlDBComponentController
                         j = k % tileCount + 1;
                         String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                         new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
-                        stlComponentServices.exportBaseSTL(filename, "data/stl/base.stl");
+                        stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
                         k++;
                     });
                     //DEPARE
@@ -951,7 +960,7 @@ public class StlDBComponentController
                                         filename,
                                         latMin, lonMin,
                                         latScale, lonScale,
-                                        maxDepth + tileSideZ);
+                                        maxDepth, tileSideZ);
                                 List<String> objs = kmlObjectMap.get(pair);
                                 objs.forEach((s) -> {
                                     Pair loc = kmlObjectLocationMap.get(s);
@@ -960,7 +969,7 @@ public class StlDBComponentController
                             }
 
                             filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
-                            new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
+                        //    new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
                             k++;
                         }
                     }
@@ -970,7 +979,7 @@ public class StlDBComponentController
                         new S57ObjectView("PONTON", topologyServices, s57Layer).display(objects);
                         objects.forEach((g) -> {
                             s57ObjectsExport = new S57ObjectsExportToSTL(topologyServices, stlComponentServices, jtsServices,
-                                    lat0, lon0, latScale, lonScale, maxDepth + tileSideZ);
+                                    lat0, lon0, latScale, lonScale, tileSideZ);
                             s57ObjectsExport.export(g);
                         });
                     }
