@@ -941,6 +941,7 @@ public class StlDBComponentController
                             double longitudeMax = g[g[0].length - 1][g[0].length - 1].getLongitude();
 
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                            scaleCompute(g);
                             if (!kmlObjectMap.keySet().contains(pair)) {
                                 objects = new ShorelineConstructionDBLoader(s57Connection)
                                         .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
@@ -951,10 +952,12 @@ public class StlDBComponentController
                                 
                                 SLConsExportToSTL slConsExportToSTL = new SLConsExportToSTL(jtsServices, geodesyServices,
                                         filename,
-                                        latMin, lonMin,
+                                        latitudeMin, longitudeMin,
                                         latScale, lonScale,
                                         maxDepth + tileSideZ);
                                 slConsExportToSTL.export(clippedObjects);
+                                
+                                //TODO export KML
                             } else {
                                 //TODO view
                                 DaeStlExportToSTL daeStlExportSTL = new DaeStlExportToSTL(geodesyServices,
