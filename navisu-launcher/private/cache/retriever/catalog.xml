@@ -4,4 +4,7 @@
     <system systemId="http://www.web3d.org/specifications/x3d-3.0-Web3dExtensionsPublic.xsd" uri="www.web3d.org/specifications/x3d-3.0-Web3dExtensionsPublic.xsd"/>
     <system systemId="http://www.web3d.org/specifications/x3d-3.0-Web3dExtensionsPrivate.xsd" uri="www.web3d.org/specifications/x3d-3.0-Web3dExtensionsPrivate.xsd"/>
     <system systemId="http://earth.google.com/kml/2.0" uri="earth.google.com/kml/2.0.xml"/>
+    <system systemId="http://www.opengis.net/kml/2.2" uri="schemas.opengis.net/kml/2.2.0/ogckml22.xsd"/>
+    <system systemId="http://schemas.opengis.net/kml/2.2.0/atom-author-link.xsd" uri="schemas.opengis.net/kml/2.2.0/atom-author-link.xsd"/>
+    <system systemId="http://docs.oasis-open.org/election/external/xAL.xsd" uri="docs.oasis-open.org/election/external/xAL.xsd"/>
 </catalog>

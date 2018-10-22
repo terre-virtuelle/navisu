@@ -28,7 +28,7 @@ public class GridBox3DExportToSTL {
     GeodesyServices geodesyServices;
     private GridBox3D gridBox;
     String filename;
-    String result;
+    String result="";
     String tmp;
 
     public GridBox3DExportToSTL(GeodesyServices geodesyServices, GridBox3D gridBox) {
@@ -36,24 +36,66 @@ public class GridBox3DExportToSTL {
         this.gridBox = gridBox;
     }
 
-    public void exportSTL(String filename, double latScale, double lonScale, double verticalOffset) {
+    public GridBox3DExportToSTL() {
+    }
+
+    public GridBox3DExportToSTL(GeodesyServices geodesyServices) {
+        this.geodesyServices = geodesyServices;
+    }
+
+    public String exportSTL(String filename, double latScale, double lonScale, double verticalOffset) {
         this.filename = filename;
         double latMin = gridBox.getGrid()[0][0].getLatitude();
         double lonMin = gridBox.getGrid()[0][0].getLongitude();
         String[] head = filename.split("/");
         try {
-            result = "solid " + head[head.length-1] + "\n";
+            result = "solid " + head[head.length - 1] + "\n";
             List<Path> gridPaths = gridBox.getPaths();
             gridPaths.forEach((p) -> {
                 result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
             });
-            
+
             //    result += "endsolid " + filename + "\n";
             java.nio.file.Path path = Paths.get(filename);
             Files.write(path, result.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
             Logger.getLogger(GridBox3DExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+        return result;
+    }
+
+    public String exportSTL(List<Path> paths, String filename,
+            double latMin, double lonMin,
+            double latScale, double lonScale,
+            double verticalOffset) {
+
+        this.filename = filename;
+        String[] head = filename.split("/");
+        try {
+            result = "solid " + head[head.length - 1] + "\n";
+            List<Path> gridPaths = paths;
+            gridPaths.forEach((p) -> {
+                result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
+            });
+
+            //    result += "endsolid " + filename + "\n";
+            java.nio.file.Path path = Paths.get(filename);
+            Files.write(path, result.getBytes(), StandardOpenOption.CREATE);
+        } catch (IOException ex) {
+            Logger.getLogger(GridBox3DExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        return result;
+    }
+
+    public String exportSTL(List<Path> paths,
+            double latMin, double lonMin,
+            double latScale, double lonScale,
+            double verticalOffset) {
+        
+        paths.forEach((p) -> {
+            result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
+        });
+        return result;
     }
 
     private String toFacet(Path path,

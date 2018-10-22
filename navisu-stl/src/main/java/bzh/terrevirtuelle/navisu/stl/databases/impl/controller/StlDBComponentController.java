@@ -26,6 +26,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LandmarkView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57ObjectView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.SlConsView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.AnchorageAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DockAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DredgedAreaDBLoader;
@@ -118,7 +119,6 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.BuoyageExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.SlConsExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.DaeStlExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportToSTL;
@@ -741,7 +741,7 @@ public class StlDBComponentController
         tileNumberVTF.setText("1");
         kmlLatTF.setText("48.373862");
         kmlLonTF.setText("-4.480619");
-*/
+         */
         kmlObjectsButton.setOnMouseClicked((MouseEvent event) -> {
             try {
                 tileNumberU = Integer.parseInt(tileNumberUTF.getText());
@@ -945,17 +945,18 @@ public class StlDBComponentController
                                 objects = new ShorelineConstructionDBLoader(s57Connection)
                                         .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
                                 List<? extends Geo> clippedObjects = topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
-                                // new S57ObjectView("SLCONS", topologyServices, s57Layer).display(clippedObjects);
 
-                                SLConsExportToSTL slConsExportToSTL = new SLConsExportToSTL(topologyServices, stlComponentServices,
-                                        jtsServices, displayServices,
+                                SlConsView slConsView = new SlConsView(jtsServices, geodesyServices, s57Layer);
+                                slConsView.display(clippedObjects);
+                                
+                                SLConsExportToSTL slConsExportToSTL = new SLConsExportToSTL(jtsServices, geodesyServices,
                                         filename,
                                         latMin, lonMin,
                                         latScale, lonScale,
-                                        maxDepth + tileSideZ,
-                                        s57Layer);
+                                        maxDepth + tileSideZ);
                                 slConsExportToSTL.export(clippedObjects);
                             } else {
+                                //TODO view
                                 DaeStlExportToSTL daeStlExportSTL = new DaeStlExportToSTL(geodesyServices,
                                         filename,
                                         latMin, lonMin,
@@ -969,7 +970,7 @@ public class StlDBComponentController
                             }
 
                             filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
-                        //    new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
+                            //    new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
                             k++;
                         }
                     }

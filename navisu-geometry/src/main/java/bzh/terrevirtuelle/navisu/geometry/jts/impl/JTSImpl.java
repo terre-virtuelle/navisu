@@ -235,8 +235,13 @@ public class JTSImpl
     @Override
     public List<Path> createDelaunayToPath(List<Point3D> pts, double maxElevation) {
         List<Point3D> data = new ArrayList<>();
+        double height;
         for (Point3D p : pts) {
-            data.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
+            if (maxElevation != 0) {
+                data.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
+            }else{
+                data.add(new Point3D(p.getLatitude(), p.getLongitude(), p.getElevation()));
+            }
         }
         Coordinate[] coordinateTab = toTabCoordinates(data);
         MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
@@ -382,7 +387,7 @@ public class JTSImpl
                 geometry = wktReader.read(wkt);
             } catch (com.vividsolutions.jts.io.ParseException ex) {
                 Logger.getLogger(TopologyImpl.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }
         }
         BufferOp bufferOp = new BufferOp(geometry);
         bufferOp.setEndCapStyle(capSize);//CAP_ROUND);
