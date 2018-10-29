@@ -89,7 +89,19 @@ public class JTSImpl
         for (int c = 0; c < coord.length; c++) {
             coord[c] = coordinatesJTS.get(c);
         }
+        // new GeometryFactory().createPolygon(coord);
         LineString geom = new GeometryFactory().createLineString(coord);
+        return geom;
+    }
+
+    @Override
+    public Geometry getPolygon(List<Point3D> points) {
+        List<Coordinate> coordinatesJTS = toListCoordinates(points);
+        Coordinate[] coord = new Coordinate[coordinatesJTS.size()];
+        for (int c = 0; c < coord.length; c++) {
+            coord[c] = coordinatesJTS.get(c);
+        }
+        Geometry geom = new GeometryFactory().createPolygon(coord);
         return geom;
     }
 
@@ -239,7 +251,7 @@ public class JTSImpl
         for (Point3D p : pts) {
             if (maxElevation != 0) {
                 data.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
-            }else{
+            } else {
                 data.add(new Point3D(p.getLatitude(), p.getLongitude(), p.getElevation()));
             }
         }

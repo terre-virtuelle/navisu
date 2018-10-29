@@ -26,6 +26,8 @@ public interface JTSServices
     Geometry getConcaveHull(List<Point3D> points, double threshold);
 
     Geometry getLineString(List<Point3D> points);
+    
+    Geometry getPolygon(List<Point3D> points); 
 
     boolean contains(Geometry geom, Point3D pt3D);
 

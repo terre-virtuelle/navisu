@@ -112,11 +112,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemLoader;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemDbLoader;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
+import bzh.terrevirtuelle.navisu.stl.charts.impl.loader.dem.DemSrtmElevationLoader;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.BuoyageExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportToSTL;
@@ -219,7 +220,7 @@ public class StlDBComponentController
     protected double tileSideX = DEFAULT_SIDE;
     protected double tileSideY = DEFAULT_SIDE;
     protected double tileSideZ = DEFAULT_BASE_HEIGHT;
-    protected double DEFAULT_GRID = 75.0;
+    protected double DEFAULT_GRID = 50.0;
     protected double gridX = DEFAULT_GRID;
     protected double gridY = DEFAULT_GRID;
     protected double lat0 = 520;
@@ -288,6 +289,8 @@ public class StlDBComponentController
     @FXML
     public TextField objectsTF;
     @FXML
+    public TextField scaleDaeTF;
+    @FXML
     public TextField depthMagnificationTF;
     @FXML
     public TextField simplifyTF;
@@ -328,7 +331,7 @@ public class StlDBComponentController
     @FXML
     public TextField ulhyssesTF;
     @FXML
-    public RadioButton demRB;
+    public RadioButton bathyRB;
     @FXML
     public RadioButton noBathyRB;
     @FXML
@@ -423,6 +426,8 @@ public class StlDBComponentController
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
     protected Map<String, CheckBox> s57SelectionMap;
     protected StlGuiController stlGuiController;
+    
+    protected long startTime;
 
     public StlDBComponentController(StlDBComponentImpl component,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
@@ -735,13 +740,7 @@ public class StlDBComponentController
             }
 
         });
-        //Debug only
-        /*
-        tileNumberUTF.setText("1");
-        tileNumberVTF.setText("1");
-        kmlLatTF.setText("48.373862");
-        kmlLonTF.setText("-4.480619");
-         */
+        
         kmlObjectsButton.setOnMouseClicked((MouseEvent event) -> {
             try {
                 tileNumberU = Integer.parseInt(tileNumberUTF.getText());
@@ -805,7 +804,10 @@ public class StlDBComponentController
 
             @Override
             public void run(ProgressHandle progressHandle) {
-                long startTime = System.currentTimeMillis();
+                 startTime = System.currentTimeMillis();
+                 gridX = Double.parseDouble(gridSideXTF.getText());
+                 gridY = Double.parseDouble(gridSideYTF.getText());
+                time( "Début traitement : ");
                 //Define TopMak for all buoyages, default is 0 : no topmark
                 TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
                 topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
@@ -815,37 +817,41 @@ public class StlDBComponentController
                 marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
                 //BATHY, ELEVATION AND TILES
-                if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && noBathyRB.isSelected())) {
+                if (elevationRB.isSelected() && noBathyRB.isSelected()) {
                     grids = createElevationTab(lat0, lon0, lat1, lon1);
                 }
-                if (selectedObjects.contains("ALL") || (!noBathyRB.isSelected() && !elevationRB.isSelected())) {
+                if (bathyRB.isSelected() && !elevationRB.isSelected()) {
                     grids = createBathymetryTab(lat0, lon0, lat1, lon1);
                 }
-                if (selectedObjects.contains("ALL") || (elevationRB.isSelected() && !noBathyRB.isSelected())) {
+                if (elevationRB.isSelected() && bathyRB.isSelected()) {
                     grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
                 }
+                if (srtmRB.isSelected() && noBathyRB.isSelected()) {
+                    grids = createSrtmElevationTab(lat0, lon0, lat1, lon1, gridX);//~1m
+                }
+
                 k = 0;
                 if (grids != null) {
                     List<GridBox3D> gridBoxes = new ArrayList<>();
                     for (Point3D[][] g : grids) {
                         scaleCompute(g);
-                        // System.out.println("scale : " + latScale + " " + lonScale);
                         GridBox3D gb = new GridBox3D(g, verticalExaggeration);
                         gridBoxes.add(gb);
                         i = k / tileCount + 1;
                         j = k % tileCount + 1;
-                        String filename = DEFAULT_ASC_PATH + outFileTF.getText() + "_" + i + "," + j + ".asc";
-                        displayServices.exportASC(filename, g);
+                        //  String filename = DEFAULT_ASC_PATH + outFileTF.getText() + "_" + i + "," + j + ".asc";
+                        //  displayServices.exportASC(filename, g);
                     }
 
                     if (stlPreviewCB.isSelected()) {
                         gridBoxes.forEach((gb) -> {
-                            //displayServices.displayGridAsTriangles(gb.getGrid(), bathymetryLayer, Material.GREEN, verticalExaggeration);
+                            displayServices.displayGridAsTriangles(gb.getGrid(), bathymetryLayer, Material.GREEN, verticalExaggeration);
                             // displayServices.displayPaths(gb.getSidePathsWest(), bathymetryLayer, Material.YELLOW, verticalExaggeration);
                             //  System.out.println("size : " + gb.getSidePaths().size());
                             // displayServices.displayPaths(gb.getSidePaths(), bathymetryLayer, Material.YELLOW, verticalExaggeration);
                             //  displayServices.displayPolygonsFromPaths(gb.getSidePaths(), bathymetryLayer, Material.MAGENTA, verticalExaggeration);
                         });
+                        time("Affichage gridBoxes : ");
                     }
                     if (generateKmlCB.isSelected()) {
                         k = 0;
@@ -857,6 +863,7 @@ public class StlDBComponentController
                             new GridBox3DExportKML(gb).exportWKML(filename, solid);
                             k++;
                         });
+                        time( "Export GridBox3D en KML : ");
                     }
                     k = 0;
                     gridBoxes.forEach((gb) -> {
@@ -867,6 +874,7 @@ public class StlDBComponentController
                         stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
                         k++;
                     });
+                    time("Export GridBox3D en STL : ");
                     //DEPARE
                     if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
                         createElevationAndDepare(latMin, lonMin, latMax, lonMax);
@@ -905,6 +913,7 @@ public class StlDBComponentController
                             buoyageExportSTL.export(buoyages, maxDepth + tileSideZ);
                             k++;
                         }
+                        time("Export BUOYAGE en STL : ");
                     }
                     k = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("LNDMRK")) {
@@ -926,6 +935,7 @@ public class StlDBComponentController
                                     .export(landmarks, maxDepth + tileSideZ);
                             k++;
                         }
+                        time("Export LNDMRK en STL : ");
                     }
                     k = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("SLCONS")) {
@@ -949,14 +959,14 @@ public class StlDBComponentController
 
                                 SlConsView slConsView = new SlConsView(jtsServices, geodesyServices, s57Layer);
                                 slConsView.display(clippedObjects);
-                                
+
                                 SLConsExportToSTL slConsExportToSTL = new SLConsExportToSTL(jtsServices, geodesyServices,
                                         filename,
                                         latitudeMin, longitudeMin,
                                         latScale, lonScale,
                                         maxDepth + tileSideZ);
                                 slConsExportToSTL.export(clippedObjects);
-                                
+
                                 //TODO export KML
                             } else {
                                 //TODO view
@@ -976,6 +986,7 @@ public class StlDBComponentController
                             //    new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
                             k++;
                         }
+                        time("Export SLCONS en STL : ");
                     }
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("PONTON")) {
                         objects = new PontoonDBLoader(s57Connection)
@@ -1083,33 +1094,40 @@ public class StlDBComponentController
                     selectLayer.removeAllRenderables();
                     wwd.redrawNow();
                 }
-                long duration = System.currentTimeMillis() - startTime;
-                long seconds = duration / 1000;
-                long minutes = seconds / 60;
-                long hours = minutes / 60;
-                long days = hours / 24;
-                String time = hours % 24 + ":" + minutes % 60 + ":" + seconds % 60;
-                System.out.println("Temps de traitement : " + time);
+                time("Temps total de traitement : ");
             }
 
         });
 
     }
 
+    private void time(String comment) {
+        long duration = System.currentTimeMillis() - startTime;
+        long seconds = duration / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+        String time = hours % 24 + ":" + minutes % 60 + ":" + seconds % 60;
+        System.out.println(comment + time);
+    }
 
     /*
     Create a list of points on a regular grid.
      */
     private List<Point3D[][]> createElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM dem = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
+        DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
                 lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
         maxDepth = 0.0;
-        //  dem.getGrid().forEach((p) -> {
-        //      System.out.println(p.getElevation());
-        //  });
-        //48.42/-4.30 & 48.21/-4.61  
         return createGrids(dem, latMin, lonMin, latMax, lonMax);
+    }
+
+    private List<Point3D[][]> createSrtmElevationTab(double latMin, double lonMin,
+            double latMax, double lonMax, double range) {
+        Point3D[][] points = new DemSrtmElevationLoader(geodesyServices).getElevations(latMin, lonMin, latMax, lonMax, range);
+        maxDepth = 0.0;
+        time("createSrtmElevationTab : ");
+        return createGrids(points, tileCount);
     }
 
     /*
@@ -1125,7 +1143,6 @@ public class StlDBComponentController
         System.out.println("maxDepth : " + maxDepth);
         dem.getGrid().forEach((p) -> {
             p.setElevation(maxDepth - p.getElevation());
-            //  System.out.println(p.getElevation());
         });
         return createGrids(dem, latMin, lonMin, latMax, lonMax);
     }
@@ -1147,7 +1164,7 @@ public class StlDBComponentController
         });
 
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM alti = new DemLoader(elevationConnection, demDBServices).retrieveIn(latMin - 0.1, lonMin - 0.1, latMax + 0.1, lonMax + 0.1);
+        DEM alti = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(latMin - 0.1, lonMin - 0.1, latMax + 0.1, lonMax + 0.1);
         // Offset from maxDepth
         alti.getGrid().forEach((p) -> {
             bathyElevations.add(new Point3D(p.getLatitude(), p.getLongitude(), maxDepth + p.getElevation()));
@@ -1211,12 +1228,14 @@ public class StlDBComponentController
                 }
             }
         }
+        time("createGrids : ");
         return grids;
     }
 
     private void scaleCompute(Point3D[][] grid) {
         double realLatMin = grid[0][0].getLatitude();
         double realLonMin = grid[0][0].getLongitude();
+
         double realLatMax = grid[grid[0].length - 1][0].getLatitude();
         double realLonMax = grid[1][grid[1].length - 1].getLongitude();
         latRangeMetric = geodesyServices.getDistanceM(realLatMin, realLonMin, realLatMax, realLonMin);
@@ -1227,6 +1246,7 @@ public class StlDBComponentController
             rangeLatTF.setText(Integer.toString((int) latRangeMetric));
             rangeLonTF.setText(Integer.toString((int) lonRangeMetric));
         });
+
     }
 
     private Point3D[][] createGridFromDelaunayBathymetry(DEM bathymetry,

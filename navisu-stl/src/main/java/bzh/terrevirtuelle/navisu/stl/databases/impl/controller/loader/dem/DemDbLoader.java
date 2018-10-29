@@ -16,14 +16,14 @@ import java.util.List;
  * @author serge
  * @date Oct 19, 2017
  */
-public class DemLoader {
+public class DemDbLoader {
 
     private final Connection connection;
     private final DemDBServices demDBServices;
     private List<Point3D> points;
     private double maxDepth = 0.0;
 
-    public DemLoader(Connection connection, DemDBServices demDBServices) {
+    public DemDbLoader(Connection connection, DemDBServices demDBServices) {
         this.connection = connection;
         this.demDBServices = demDBServices;
     }

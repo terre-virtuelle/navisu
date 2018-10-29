@@ -12,6 +12,7 @@ import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import com.vividsolutions.jts.operation.buffer.BufferParameters;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.ExtrudedPolygon;
@@ -44,20 +45,21 @@ public class SlConsView {
             String geometry = geo.getGeom();
             if (geometry.contains("MULTILINESTRING") || geometry.contains("LINESTRING")) {
                 List<Point3D> points = jtsServices.getBuffer(geometry, 0.00012, BufferParameters.CAP_FLAT);
-
-                List<Position> positions = new ArrayList<>();
-                points.forEach((p) -> {
-                    positions.add(Position.fromDegrees(p.getLatitude(),
-                            p.getLongitude(),
-                            p.getElevation() / 5));
-                });
-
-               // if (positions.get(0).getLatitude().getDegrees() == positions.get(positions.size() - 1).getLatitude().getDegrees()) {
+                double area = jtsServices.getPolygon(points).getArea();
+                if (area < 2E-5) {
+                    List<Position> positions = new ArrayList<>();
+                    points.forEach((p) -> {
+                        positions.add(Position.fromDegrees(p.getLatitude(),
+                                p.getLongitude(),
+                                p.getElevation() / 5));
+                    });
                     polygon = new Polygon(positions);
                     ExtrudedPolygon extrudedPolygon = new ExtrudedPolygon(positions, 5.0);
+                    extrudedPolygon.setValue(AVKey.DISPLAY_NAME, area);
                     extrudedPolygons.add(extrudedPolygon);
-               // }
+                }
             }
+
         }
         layer.addRenderables(extrudedPolygons);
         wwd.redrawNow();

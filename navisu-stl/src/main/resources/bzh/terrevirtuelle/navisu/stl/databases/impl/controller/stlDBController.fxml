@@ -249,6 +249,19 @@
                                              </children>
                                           </GridPane>
                                           <Button fx:id="kmzFileButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="Import Orig STL File" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label prefHeight="15.0" prefWidth="49.0" text="Scale : " textAlignment="RIGHT" GridPane.halignment="RIGHT" />
+                                                <TextField fx:id="scaleDaeTF" GridPane.columnIndex="1" />
+                                             </children>
+                                          </GridPane>
                                                 </children>
                                             </GridPane>
                                  </children>
@@ -293,7 +306,7 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
-                                                <RadioButton fx:id="demRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="114.0" text="Database DEM" GridPane.columnIndex="1" />
+                                                <RadioButton fx:id="bathyRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="114.0" text="Database DEM" GridPane.columnIndex="1" />
                                                 <RadioButton fx:id="depareRB" mnemonicParsing="false" text="DEPARE" GridPane.columnIndex="2" />
                                                 <RadioButton fx:id="noBathyRB" mnemonicParsing="false" selected="true" text="NoBathy" />
                                              </children>
@@ -342,8 +355,8 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <RadioButton fx:id="elevationRB" mnemonicParsing="false" selected="true" text="Database DEM" />
-                                                <RadioButton fx:id="srtmRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="137.0" text="SRTM DEM" GridPane.columnIndex="1" />
+                                                <RadioButton fx:id="elevationRB" mnemonicParsing="false" text="Database DEM" />
+                                                <RadioButton fx:id="srtmRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="137.0" selected="true" text="SRTM DEM" GridPane.columnIndex="1" />
                                              </children>
                                           </GridPane>
                                        </children>

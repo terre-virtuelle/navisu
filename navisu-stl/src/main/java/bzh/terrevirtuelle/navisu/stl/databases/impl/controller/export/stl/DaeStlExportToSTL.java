@@ -68,14 +68,14 @@ public class DaeStlExportToSTL {
             if (s.contains("vertex")) {
                 tmp = s.trim().split("\\s+");
                 if (tmp[1].contains("-")) {
-                    position1 = geodesyServices.getPosition(position0, 270.0, -Double.valueOf(tmp[1]) / 1000);
+                    position1 = geodesyServices.getPosition(position0, 270.0, -Double.valueOf(tmp[1]) / 100);//1000
                 } else {
-                    position1 = geodesyServices.getPosition(position0, 90.0, Double.valueOf(tmp[1]) / 1000);
+                    position1 = geodesyServices.getPosition(position0, 90.0, Double.valueOf(tmp[1]) / 100);
                 }
                 if (tmp[2].contains("-")) {
-                    position2 = geodesyServices.getPosition(position1, 180.0, -Double.valueOf(tmp[2]) / 1000, Double.valueOf(tmp[3]) / 1000);
+                    position2 = geodesyServices.getPosition(position1, 180.0, -Double.valueOf(tmp[2]) / 100, Double.valueOf(tmp[3]) / 100);
                 } else {
-                    position2 = geodesyServices.getPosition(position1, 0.0, Double.valueOf(tmp[2]) / 1000, Double.valueOf(tmp[3]) / 1000);
+                    position2 = geodesyServices.getPosition(position1, 0.0, Double.valueOf(tmp[2]) / 100, Double.valueOf(tmp[3]) / 100);
                 }
                 double height = position2.getElevation() + maxdepth;
                 result += "vertex " + position2.getLongitude().getDegrees() + " " + position2.getLatitude().getDegrees() + " " + height + "\n";
@@ -109,7 +109,7 @@ public class DaeStlExportToSTL {
                     latM *= latScale;
                     lonM *= lonScale;
                     double elv = (Double.parseDouble(c[3]) * elvScale) + tileSideZ;
-                    stlResult += "vertex " + lonM + " " + latM + " " + elv + "\n";
+                    stlResult += "vertex " + lonM+ " " + latM+ " " + elv + "\n";
                 }
             }
         }

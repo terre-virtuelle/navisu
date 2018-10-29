@@ -5,22 +5,14 @@
  */
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
-import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
-import bzh.terrevirtuelle.navisu.topology.TopologyServices;
-import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
+import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.operation.buffer.BufferParameters;
-import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.ExtrudedPolygon;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import java.io.IOException;
@@ -38,12 +30,12 @@ import java.util.logging.Logger;
  */
 public class SLConsExportToSTL {
 
-  //  protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
-  //  protected RenderableLayer layer;
- //   protected TopologyServices topologyServices;
-   // protected StlComponentServices stlComponentServices;
+    //  protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
+    //  protected RenderableLayer layer;
+    //   protected TopologyServices topologyServices;
+    // protected StlComponentServices stlComponentServices;
     protected JTSServices jtsServices;
-   // protected DisplayServices displayServices;
+    // protected DisplayServices displayServices;
     protected GeodesyServices geodesyServices;
 
     protected String stlFilename;
@@ -58,16 +50,15 @@ public class SLConsExportToSTL {
     protected double lonScale;
     protected double verticalOffset;
 
-
-    public SLConsExportToSTL(JTSServices jtsServices,  GeodesyServices geodesyServices,
+    public SLConsExportToSTL(JTSServices jtsServices, GeodesyServices geodesyServices,
             String stlFilename,
             double latMin, double lonMin,
             double latScale, double lonScale,
             double verticalOffset) {
-     //   this.topologyServices = topologyServices;
-      //  this.stlComponentServices = stlComponentServices;
+        //   this.topologyServices = topologyServices;
+        //  this.stlComponentServices = stlComponentServices;
         this.jtsServices = jtsServices;
-      //  this.displayServices = displayServices;
+        //  this.displayServices = displayServices;
         this.geodesyServices = geodesyServices;
         this.latMin = latMin;
         this.lonMin = lonMin;
@@ -75,11 +66,11 @@ public class SLConsExportToSTL {
         this.lonScale = lonScale;
         this.verticalOffset = verticalOffset;
         this.stlFilename = stlFilename;
-       // this.layer = layer;
+        // this.layer = layer;
     }
 
     public void export(List<? extends Geo> objects) {
-      //  List<ExtrudedPolygon> extrudedPolygons = new ArrayList<>();
+        //  List<ExtrudedPolygon> extrudedPolygons = new ArrayList<>();
         GridBox3DExportToSTL gridBox3DExportToSTL = new GridBox3DExportToSTL(geodesyServices);
         List<Path> paths = new ArrayList<>();
         String result = "";
@@ -89,42 +80,47 @@ public class SLConsExportToSTL {
                 if (geometry.contains("MULTILINESTRING") || geometry.contains("LINESTRING")) {
                     List<Point3D> points = jtsServices.getBuffer(geometry, 0.00012, BufferParameters.CAP_FLAT);//0.0001
 
-                    List<Position> positions = new ArrayList<>();
-                    points.forEach((p) -> {
-                        positions.add(Position.fromDegrees(p.getLatitude(),
-                                p.getLongitude(),
-                                p.getElevation() / 5));
-                    });
+                    Geometry geom = jtsServices.getPolygon(points);
+                    System.out.println(geom.getArea());
+                    if (geom.getArea() < 2.0E-5) {
 
-                    List<Position> highPositions = new ArrayList<>();
-                    List<Position> lowPositions = new ArrayList<>();
-                    if (positions.get(0).getLatitude().getDegrees() == positions.get(positions.size() - 1).getLatitude().getDegrees()) {
-                        polygon = new Polygon(positions);
-                        ExtrudedPolygon extrudedPolygon = new ExtrudedPolygon(positions, 5.0);
-                      //  extrudedPolygons.add(extrudedPolygon);
-
-                      //  layer.addRenderables(extrudedPolygons);
-                        highPositions.addAll(positions);
-                        positions.forEach((p) -> {
-                            lowPositions.add(new Position(p.getLatitude(), p.getLongitude(), 0.0));
+                        List<Position> positions = new ArrayList<>();
+                        points.forEach((p) -> {
+                            positions.add(Position.fromDegrees(p.getLatitude(),
+                                    p.getLongitude(),
+                                    p.getElevation() / 5));
                         });
 
-                        for (int i = 0; i < highPositions.size() - 1; i++) {
-                            List<Position> pos0 = new ArrayList<>();
-                            pos0.add(lowPositions.get(i));
-                            pos0.add(highPositions.get(i + 1));
-                            pos0.add(highPositions.get(i));
-                            pos0.add(lowPositions.get(i));
-                            Path path0 = new Path(pos0);
-                            paths.add(path0);
+                        List<Position> highPositions = new ArrayList<>();
+                        List<Position> lowPositions = new ArrayList<>();
+                        if (positions.get(0).getLatitude().getDegrees() == positions.get(positions.size() - 1).getLatitude().getDegrees()) {
+                            polygon = new Polygon(positions);
 
-                            List<Position> pos1 = new ArrayList<>();
-                            pos1.add(lowPositions.get(i));
-                            pos1.add(lowPositions.get(i + 1));
-                            pos1.add(highPositions.get(i + 1));
-                            pos1.add(lowPositions.get(i));
-                            Path path1 = new Path(pos1);
-                            paths.add(path1);
+                            //  ExtrudedPolygon extrudedPolygon = new ExtrudedPolygon(positions, 5.0);
+                            //  extrudedPolygons.add(extrudedPolygon);
+                            //  layer.addRenderables(extrudedPolygons);
+                            highPositions.addAll(positions);
+                            positions.forEach((p) -> {
+                                lowPositions.add(new Position(p.getLatitude(), p.getLongitude(), 0.0));
+                            });
+
+                            for (int i = 0; i < highPositions.size() - 1; i++) {
+                                List<Position> pos0 = new ArrayList<>();
+                                pos0.add(lowPositions.get(i));
+                                pos0.add(highPositions.get(i + 1));
+                                pos0.add(highPositions.get(i));
+                                pos0.add(lowPositions.get(i));
+                                Path path0 = new Path(pos0);
+                                paths.add(path0);
+
+                                List<Position> pos1 = new ArrayList<>();
+                                pos1.add(lowPositions.get(i));
+                                pos1.add(lowPositions.get(i + 1));
+                                pos1.add(highPositions.get(i + 1));
+                                pos1.add(lowPositions.get(i));
+                                Path path1 = new Path(pos1);
+                                paths.add(path1);
+                            }
                         }
                     }
                 }
@@ -134,8 +130,7 @@ public class SLConsExportToSTL {
         } catch (IOException ex) {
             Logger.getLogger(StlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        
-        
+
         // System.out.println("positions : " + positions);
         /*
         ExtrudedPolygon[] extrudedPolygonTab = new ExtrudedPolygon[extrudedPolygons.size()];
