@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?><kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+    <Folder>
+        <name>model</name>
+        <description>Created with &lt;a href=&quot;http://sketchup.com&quot;&gt;SketchUp&lt;/a&gt;</description>
+        <visibility>1</visibility>
+        <LookAt>
+            <heading>6.630212231421</heading>
+            <tilt>88.91350193459</tilt>
+            <latitude>48.35828477597</latitude>
+            <longitude>-4.533998231871</longitude>
+            <range>70.76461359771</range>
+            <altitude>13.20744786419</altitude>
+        </LookAt>
+        <Folder>
+            <name>Tour</name>
+            <Placemark>
+                <name>Scene 1</name>
+                <visibility>1</visibility>
+                <LookAt>
+                    <heading>6.630212231421</heading>
+                    <tilt>88.91350193459</tilt>
+                    <latitude>48.35828477597</latitude>
+                    <longitude>-4.533998231871</longitude>
+                    <range>70.76461359771</range>
+                    <altitude>13.20744786419</altitude>
+                </LookAt>
+            </Placemark>
+        </Folder>
+        <Placemark>
+            <name>Model</name>
+            <description></description>
+            <Style id="default" />
+            <Model>
+                <altitudeMode>relativeToGround</altitudeMode>
+                <Location>
+                    <latitude>48.35834886887</latitude>
+                    <longitude>-4.534249851391</longitude>
+                    <altitude>0</altitude>
+                </Location>
+                <Orientation>
+                    <heading>-0</heading>
+                    <tilt>0</tilt>
+                    <roll>0</roll>
+                </Orientation>
+                <Scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                </Scale>
+                <Link>
+                    <href>models/untitled.dae</href>
+                </Link>
+            </Model>
+        </Placemark>
+    </Folder>
+</kml>

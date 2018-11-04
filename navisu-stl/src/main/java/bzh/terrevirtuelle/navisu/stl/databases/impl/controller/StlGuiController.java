@@ -7,6 +7,8 @@ package bzh.terrevirtuelle.navisu.stl.databases.impl.controller;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import bzh.terrevirtuelle.navisu.util.Pair;
+import bzh.terrevirtuelle.navisu.util.io.IO;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
@@ -15,11 +17,18 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polygon;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
@@ -50,8 +59,8 @@ public class StlGuiController {
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
     public StlGuiController(GeodesyServices geodesyServices,
-            Map<String, CheckBox> s57SelectionMap,CheckBox allCB,
-            List<String> selectedObjects, 
+            Map<String, CheckBox> s57SelectionMap, CheckBox allCB,
+            List<String> selectedObjects,
             TextField objectsTF) {
         this.geodesyServices = geodesyServices;
         this.s57SelectionMap = s57SelectionMap;
@@ -222,10 +231,82 @@ public class StlGuiController {
                         }
                     }
                 }
-               // System.out.println("selectedObjects : " + selectedObjects);
+                // System.out.println("selectedObjects : " + selectedObjects);
             }
 
         });
 
+    }
+
+    public Pair<Double, Double> getLatLonKML(String filename) {
+        Pair<Double, Double> result = null;
+        String latLonString = "";
+        String latString = "";
+        String lonString = "";
+        double latitude = 0.0;
+        double longitude = 0.0;
+/*
+        try {
+                tileNumberU = Integer.parseInt(tileNumberUTF.getText());
+                tileNumberV = Integer.parseInt(tileNumberVTF.getText());
+                kmlLat = Double.parseDouble(kmlLatTF.getText());
+                kmlLon = Double.parseDouble(kmlLonTF.getText()); 
+                
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Tile number or KML location is empty");
+                alert.show();
+            }
+            if (tileNumberU == 0 || tileNumberV == 0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Tile number is equal at zero");
+                alert.show();
+            } else {
+                File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl", "Georeferenced STL files (*.stl)", "*.STL", "*.stl");
+                if (file != null) {
+                    Pair pair = new Pair(tileNumberU, tileNumberV);
+                    if (kmlObjectMap.get(pair) == null) {
+                        kmlObjectMap.put(pair, new ArrayList<>());
+                    }
+                    kmlObjectMap.get(pair).add(file.getAbsolutePath());
+                    kmlObjectLocationMap.put(file.getAbsolutePath(), new Pair(kmlLat, kmlLon));
+                }
+            }
+        
+        */
+        
+        
+        
+        
+        
+        try {
+            latLonString = new String(Files.readAllBytes(Paths.get("data/stl/buildings/portzic/doc.kml")));
+        } catch (IOException ex) {
+            Logger.getLogger(StlGuiController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        String[] latLonTab = latLonString.split("\n");
+        boolean match = false;
+        for (int i = 0; i < latLonTab.length; i++) {
+            if (latLonTab[i].contains("<Model>")) {
+                while (!latLonTab[i].contains("<latitude>")) {
+                    i++;
+                }
+                latString = latLonTab[i];
+                lonString = latLonTab[i + 1];
+                match = true;
+            }
+        }
+        if (match == true) {
+            latString = latString.replace("<latitude>", "");
+            lonString = lonString.replace("<longitude>", "");
+            latitude = Double.parseDouble(latString);
+            longitude = Double.parseDouble(lonString);
+        }
+        double elevationModel = wwd.getModel().getGlobe().getElevation(Angle.fromDegreesLatitude(latitude),
+                Angle.fromDegreesLongitude(longitude));
+        return result;
     }
 }

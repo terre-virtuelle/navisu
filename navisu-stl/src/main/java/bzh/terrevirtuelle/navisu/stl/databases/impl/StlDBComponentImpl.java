@@ -44,6 +44,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 
 /**
@@ -85,6 +86,8 @@ public class StlDBComponentImpl
     StlComponentServices stlComponentServices;
     @UsedService
     TopologyServices topologyServices;
+    @UsedService
+    KmlComponentServices kmlComponentServices;
 
     protected final String COMPONENT_KEY_NAME_0 = "StlDbS57";
     protected String componentKeyName;
@@ -124,7 +127,8 @@ public class StlDBComponentImpl
                         shapefileObjectServices,
                         geodesyServices,
                         jtsServices,
-                        stlComponentServices);
+                        stlComponentServices,
+                        kmlComponentServices);
                 controller.setVisible(true);
             }
         }

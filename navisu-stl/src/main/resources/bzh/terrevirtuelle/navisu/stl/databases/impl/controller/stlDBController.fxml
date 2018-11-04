@@ -222,33 +222,19 @@
                                             <rowConstraints>
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
-                                             <children>
-                                                <Label prefHeight="15.0" prefWidth="105.0" text=" Tile number" />
-                                                <TextField fx:id="tileNumberUTF" GridPane.columnIndex="1" />
-                                                <TextField fx:id="tileNumberVTF" GridPane.columnIndex="2" />
-                                             </children>
                                           </GridPane>
-                                          <Button fx:id="kmlObjectsButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Import STL File" GridPane.columnIndex="5" GridPane.rowIndex="5">
-                                             <GridPane.margin>
-                                                <Insets />
-                                             </GridPane.margin>
-                                          </Button>
                                           <GridPane GridPane.columnIndex="3" GridPane.rowIndex="6">
                                             <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="10.0" prefWidth="75.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="10.0" prefWidth="75.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="150.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="50.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label prefHeight="15.0" prefWidth="89.0" text="Origin location" />
-                                                <TextField fx:id="kmlLatTF" GridPane.columnIndex="1" />
-                                                <TextField fx:id="kmlLonTF" GridPane.columnIndex="2" />
+                                                <Button fx:id="kmlObjectButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="Import DAE/STL File" />
                                              </children>
                                           </GridPane>
-                                          <Button fx:id="kmzFileButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="Import Orig STL File" GridPane.columnIndex="5" GridPane.rowIndex="6" />
                                           <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -283,6 +269,7 @@
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -332,7 +319,6 @@
                                                 <RadioButton fx:id="wireframeRB" mnemonicParsing="false" selected="true" text="Wireframe" GridPane.columnIndex="1" />
                                              </children>
                                           </GridPane>
-                                          <CheckBox fx:id="stlPreviewCB" mnemonicParsing="false" selected="true" text="STL Preview" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
                                           <Label text="Visualization" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
                                           <GridPane GridPane.columnIndex="3" GridPane.rowIndex="5">
                                             <columnConstraints>
@@ -357,6 +343,19 @@
                                              <children>
                                                 <RadioButton fx:id="elevationRB" mnemonicParsing="false" text="Database DEM" />
                                                 <RadioButton fx:id="srtmRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="137.0" selected="true" text="SRTM DEM" GridPane.columnIndex="1" />
+                                             </children>
+                                          </GridPane>
+                                          <GridPane GridPane.columnIndex="3" GridPane.rowIndex="7">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <CheckBox fx:id="stlPreviewCB" mnemonicParsing="false" selected="true" text="STL Preview" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                                <CheckBox fx:id="wwjPreviewCB" mnemonicParsing="false" text="WWJ preview" />
                                              </children>
                                           </GridPane>
                                        </children>

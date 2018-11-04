@@ -116,6 +116,7 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemDbL
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
+import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.charts.impl.loader.dem.DemSrtmElevationLoader;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.BuoyageExportKML;
@@ -159,6 +160,7 @@ public class StlDBComponentController
     protected ShapefileObjectServices shapefileObjectServices;
     protected StlComponentServices stlComponentServices;
     protected TopologyServices topologyServices;
+    protected KmlComponentServices kmlComponentServices;
 
     protected static final Logger LOGGER = Logger.getLogger(StlDBComponentController.class.getName());
 
@@ -353,6 +355,8 @@ public class StlDBComponentController
     @FXML
     public RadioButton elevationRB;
     @FXML
+    public CheckBox wwjPreviewCB;
+    @FXML
     public CheckBox stlPreviewCB;
     @FXML
     public CheckBox generateStlCB;
@@ -390,27 +394,15 @@ public class StlDBComponentController
     @FXML
     public CheckBox resareCB;
     @FXML
-    public TextField tileNumberUTF;
-    @FXML
-    public TextField tileNumberVTF;
-    @FXML
-    public TextField kmlLatTF;
-    @FXML
-    public TextField kmlLonTF;
-    @FXML
-    public Button kmlObjectsButton;
-    @FXML
-    public Button kmzFileButton;
+    public Button kmlObjectButton;
+    
 
-    private int tileNumberU;
-    private int tileNumberV;
-    private double kmlLat;
-    private double kmlLon;
-    private Map<Pair<Integer, Integer>, List<String>> kmlObjectMap = new HashMap<>();
-    private Map<String, Pair<Double, Double>> kmlObjectLocationMap = new HashMap<>();
+    private Map<Point3D, String> daeLocationObjectMap = new HashMap<>();
+
     /*-----------------------------------*/
     int k = 0;
     int i = 0;
+    
     int j = 0;
     String resultStlFilename = null;
     boolean solid;
@@ -426,7 +418,7 @@ public class StlDBComponentController
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
     protected Map<String, CheckBox> s57SelectionMap;
     protected StlGuiController stlGuiController;
-    
+
     protected long startTime;
 
     public StlDBComponentController(StlDBComponentImpl component,
@@ -444,7 +436,8 @@ public class StlDBComponentController
             ShapefileObjectServices shapefileObjectServices,
             GeodesyServices geodesyServices,
             JTSServices jtsServices,
-            StlComponentServices stlComponentServices) {
+            StlComponentServices stlComponentServices,
+            KmlComponentServices kmlComponentServices) {
         super(keyCode, keyCombination);
 
         this.component = component;
@@ -461,6 +454,7 @@ public class StlDBComponentController
         this.shapefileObjectServices = shapefileObjectServices;
         this.geodesyServices = geodesyServices;
         this.stlComponentServices = stlComponentServices;
+        this.kmlComponentServices = kmlComponentServices;
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
@@ -654,6 +648,8 @@ public class StlDBComponentController
 
         outFileTF.setText("out");
 
+        scaleDaeTF.setText("1");
+
         noBathyRB.setToggleGroup(bathyGroup);
         depareRB.setToggleGroup(bathyGroup);
         depareUlhyssesRB.setToggleGroup(bathyGroup);
@@ -740,44 +736,12 @@ public class StlDBComponentController
             }
 
         });
-        
-        kmlObjectsButton.setOnMouseClicked((MouseEvent event) -> {
-            try {
-                tileNumberU = Integer.parseInt(tileNumberUTF.getText());
-                tileNumberV = Integer.parseInt(tileNumberVTF.getText());
-                kmlLat = Double.parseDouble(kmlLatTF.getText());
-                kmlLon = Double.parseDouble(kmlLonTF.getText());
-            } catch (NumberFormatException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Tile number or KML location is empty");
-                alert.show();
-            }
-            if (tileNumberU == 0 || tileNumberV == 0) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Tile number is equal at zero");
-                alert.show();
-            } else {
-                File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl", "Georeferenced STL files (*.stl)", "*.STL", "*.stl");
-                if (file != null) {
-                    Pair pair = new Pair(tileNumberU, tileNumberV);
-                    if (kmlObjectMap.get(pair) == null) {
-                        kmlObjectMap.put(pair, new ArrayList<>());
-                    }
-                    kmlObjectMap.get(pair).add(file.getAbsolutePath());
-                    kmlObjectLocationMap.put(file.getAbsolutePath(), new Pair(kmlLat, kmlLon));
-                }
-            }
-        });
-        kmzFileButton.setVisible(false);
-        kmzFileButton.setOnMouseClicked((MouseEvent event) -> {
-            File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl", "Georeferenced KML files (*.kmz)", "*.KMZ", "*.kmz");
-            if (file != null) {
-                //dezipper, voir services KML
-            }
-        });
 
+        kmlObjectButton.setOnMouseClicked((MouseEvent event) -> {
+            System.out.println("+++++++++++++");
+           
+        });
+       
         requestButton.setOnMouseClicked((MouseEvent event) -> {
 
             s57Connection = databaseServices.connect(s57DatabaseTF.getText(),
@@ -804,10 +768,10 @@ public class StlDBComponentController
 
             @Override
             public void run(ProgressHandle progressHandle) {
-                 startTime = System.currentTimeMillis();
-                 gridX = Double.parseDouble(gridSideXTF.getText());
-                 gridY = Double.parseDouble(gridSideYTF.getText());
-                time( "Début traitement : ");
+                startTime = System.currentTimeMillis();
+                gridX = Double.parseDouble(gridSideXTF.getText());
+                gridY = Double.parseDouble(gridSideYTF.getText());
+                time("Début traitement : ");
                 //Define TopMak for all buoyages, default is 0 : no topmark
                 TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
                 topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
@@ -843,7 +807,7 @@ public class StlDBComponentController
                         //  displayServices.exportASC(filename, g);
                     }
 
-                    if (stlPreviewCB.isSelected()) {
+                    if (wwjPreviewCB.isSelected()) {
                         gridBoxes.forEach((gb) -> {
                             displayServices.displayGridAsTriangles(gb.getGrid(), bathymetryLayer, Material.GREEN, verticalExaggeration);
                             // displayServices.displayPaths(gb.getSidePathsWest(), bathymetryLayer, Material.YELLOW, verticalExaggeration);
@@ -863,7 +827,7 @@ public class StlDBComponentController
                             new GridBox3DExportKML(gb).exportWKML(filename, solid);
                             k++;
                         });
-                        time( "Export GridBox3D en KML : ");
+                        time("Export GridBox3D en KML : ");
                     }
                     k = 0;
                     gridBoxes.forEach((gb) -> {
@@ -938,6 +902,29 @@ public class StlDBComponentController
                         time("Export LNDMRK en STL : ");
                     }
                     k = 0;
+                    for (Point3D[][] g : grids) {
+                        objects.clear();
+                        i = k / tileCount + 1;
+                        j = k % tileCount + 1;
+                        Pair pair = new Pair(i, j);
+                        String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                        scaleCompute(g);
+                        double scaleDae = Double.parseDouble(scaleDaeTF.getText());
+                        if (daeLocationObjectMap.keySet().contains(pair)) {
+                            DaeStlExportToSTL daeStlExportSTL = new DaeStlExportToSTL(geodesyServices,
+                                    filename,
+                                    latMin, lonMin,
+                                    latScale, lonScale,
+                                    maxDepth, tileSideZ,
+                                    scaleDae);
+                           // List<String> objs = daeLocationObjectMap.get(pair);
+                           // objs.forEach((s) -> {
+                             
+                              //  daeStlExportSTL.export(s, (double) loc.getX(), (double) loc.getY());
+                            //});
+                        }
+                    }
+                    k = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("SLCONS")) {
                         for (Point3D[][] g : grids) {
                             objects.clear();
@@ -952,36 +939,21 @@ public class StlDBComponentController
 
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
-                            if (!kmlObjectMap.keySet().contains(pair)) {
-                                objects = new ShorelineConstructionDBLoader(s57Connection)
-                                        .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
-                                List<? extends Geo> clippedObjects = topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
+                            objects = new ShorelineConstructionDBLoader(s57Connection)
+                                    .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
+                            List<? extends Geo> clippedObjects = topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
 
-                                SlConsView slConsView = new SlConsView(jtsServices, geodesyServices, s57Layer);
-                                slConsView.display(clippedObjects);
+                            SlConsView slConsView = new SlConsView(jtsServices, geodesyServices, s57Layer);
+                            slConsView.display(clippedObjects);
 
-                                SLConsExportToSTL slConsExportToSTL = new SLConsExportToSTL(jtsServices, geodesyServices,
-                                        filename,
-                                        latitudeMin, longitudeMin,
-                                        latScale, lonScale,
-                                        maxDepth + tileSideZ);
-                                slConsExportToSTL.export(clippedObjects);
+                            SLConsExportToSTL slConsExportToSTL = new SLConsExportToSTL(jtsServices, geodesyServices,
+                                    filename,
+                                    latitudeMin, longitudeMin,
+                                    latScale, lonScale,
+                                    maxDepth + tileSideZ);
+                            slConsExportToSTL.export(clippedObjects);
 
-                                //TODO export KML
-                            } else {
-                                //TODO view
-                                DaeStlExportToSTL daeStlExportSTL = new DaeStlExportToSTL(geodesyServices,
-                                        filename,
-                                        latMin, lonMin,
-                                        latScale, lonScale,
-                                        maxDepth, tileSideZ);
-                                List<String> objs = kmlObjectMap.get(pair);
-                                objs.forEach((s) -> {
-                                    Pair loc = kmlObjectLocationMap.get(s);
-                                    daeStlExportSTL.export(s, (double) loc.getX(), (double) loc.getY());
-                                });
-                            }
-
+                            //TODO export KML
                             filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
                             //    new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
                             k++;
