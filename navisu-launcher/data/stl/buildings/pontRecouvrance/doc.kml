@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?><kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
     <Folder>
-        <name>portzic</name>
+        <name>pontRecouvrance</name>
         <description>Created with &lt;a href=&quot;http://sketchup.com&quot;&gt;SketchUp&lt;/a&gt;</description>
         <visibility>1</visibility>
         <LookAt>
             <heading>0</heading>
-            <tilt>90</tilt>
-            <latitude>48.35847964328</latitude>
-            <longitude>-4.533956713102</longitude>
-            <range>364.8521582299</range>
-            <altitude>6.951067053106</altitude>
+            <tilt>0</tilt>
+            <latitude>48.38251039087</latitude>
+            <longitude>-4.490409809229</longitude>
+            <range>2458.314089733</range>
+            <altitude>2474.764280045</altitude>
         </LookAt>
         <Folder>
             <name>Tour</name>
@@ -18,11 +18,11 @@
                 <visibility>1</visibility>
                 <LookAt>
                     <heading>0</heading>
-                    <tilt>90</tilt>
-                    <latitude>48.35847964328</latitude>
-                    <longitude>-4.533956713102</longitude>
-                    <range>364.8521582299</range>
-                    <altitude>6.951067053106</altitude>
+                    <tilt>0</tilt>
+                    <latitude>48.38251039087</latitude>
+                    <longitude>-4.490409809229</longitude>
+                    <range>2458.314089733</range>
+                    <altitude>2474.764280045</altitude>
                 </LookAt>
             </Placemark>
         </Folder>
@@ -33,12 +33,12 @@
             <Model>
                 <altitudeMode>relativeToGround</altitudeMode>
                 <Location>
-                    <latitude>48.35860163754</latitude>
-                    <longitude>-4.534204602242</longitude>
+                    <latitude>48.38434489949</latitude>
+                    <longitude>-4.496240615845</longitude>
                     <altitude>0</altitude>
                 </Location>
                 <Orientation>
-                    <heading>358.8532605316</heading>
+                    <heading>358.881127942</heading>
                     <tilt>0</tilt>
                     <roll>0</roll>
                 </Orientation>

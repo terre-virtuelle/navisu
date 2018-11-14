@@ -126,8 +126,8 @@
                                                 <String fx:value="grid-pane-fixvalue" />
                                              </styleClass>
                                           </TextField>
-                                          <CheckBox fx:id="closebox1" mnemonicParsing="false" selected="true" text="Close box" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-                                          <TextField fx:id="tileSideZTF" text="4" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                                          <CheckBox fx:id="closebox1" mnemonicParsing="false" selected="true" text="Close box" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                                          <TextField fx:id="tileSideZTF" editable="false" text="4" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                                           <Label alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" text="Grid sizes (m)" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
                                           <GridPane GridPane.columnIndex="3" GridPane.rowIndex="4">
                                              <columnConstraints>
@@ -232,7 +232,7 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Button fx:id="kmlObjectButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="Import DAE/STL File" />
+                                                <Button fx:id="daeStlObjectButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="Import DAE/STL File" />
                                              </children>
                                           </GridPane>
                                           <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
@@ -244,8 +244,8 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label prefHeight="15.0" prefWidth="49.0" text="Scale : " textAlignment="RIGHT" GridPane.halignment="RIGHT" />
-                                                <TextField fx:id="scaleDaeTF" GridPane.columnIndex="1" />
+                                                <Label prefHeight="15.0" prefWidth="49.0" text="Scale : " textAlignment="RIGHT" visible="false" GridPane.halignment="RIGHT" />
+                                                <TextField fx:id="scaleDaeTF" visible="false" GridPane.columnIndex="1" />
                                              </children>
                                           </GridPane>
                                                 </children>

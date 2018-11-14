@@ -54,7 +54,7 @@ public class Proc {
             out = new FileOutputStream("navisu.log", true);
             errors = new FileOutputStream("errors.log", true);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Proc.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Proc.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         properties = new Properties();
         try {

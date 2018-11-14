@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.globes.Earth;
@@ -17,6 +18,8 @@ import gov.nasa.worldwind.globes.ElevationModel;
 import gov.nasa.worldwind.terrain.HighResolutionTerrain;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,6 +28,7 @@ import java.util.List;
  */
 public class DemSrtmElevationLoader {
 
+    protected static final Logger LOGGER = Logger.getLogger(DemSrtmElevationLoader.class.getName());
     protected WorldWindow wwd;
     protected ElevationModel model;
     protected GeodesyServices geodesyServices;
@@ -58,7 +62,7 @@ public class DemSrtmElevationLoader {
     }
 
     public Point3D[][] getElevations(double latMin, double lonMin, double latMax, double lonMax, double range) {
-        
+
 // Range in meters
         double gridX = geodesyServices.getDistanceM(latMin, lonMin, latMin, lonMax);
         double gridY = geodesyServices.getDistanceM(latMin, lonMin, latMax, lonMin);
@@ -76,6 +80,7 @@ public class DemSrtmElevationLoader {
         double latInc = Math.abs((latMax - latMin) / ptsCountY);
 
         //Crete the grid
+        LOGGER.info("In Create the grid");
         Point3D[][] points = new Point3D[ptsCountX + 1][ptsCountY + 1];
         double latitude = latMin;
         double longitude = lonMin;
@@ -88,6 +93,7 @@ public class DemSrtmElevationLoader {
             latitude += latInc;
             longitude = lonMin;
         }
+        LOGGER.info("Out Create the grid");
         //Crete a List fo read the HighResolutionTerrain
 
         List<Position> positions = new ArrayList<>();
@@ -96,21 +102,25 @@ public class DemSrtmElevationLoader {
                 positions.add(Position.fromDegrees(points[i][j].getLatitude(), points[i][j].getLongitude(), 0.0));
             }
         }
-        System.out.println(positions);
+
         Sector sector = new Sector(Angle.fromDegreesLatitude(latMin), Angle.fromDegreesLatitude(latMax),
                 Angle.fromDegreesLongitude(lonMin), Angle.fromDegreesLongitude(lonMax));
 
-        System.out.println("sector : "+sector);
         HighResolutionTerrain highResolutionTerrain = new HighResolutionTerrain(new Earth(), sector, null, 1.0);
         List<Position> realPositions = new ArrayList<>();
-
+        LOGGER.info("In highResolutionTerrain.getElevation");
         positions.forEach((latLon) -> {
-            Double elevation =highResolutionTerrain.getElevation(latLon);
-           if(elevation==null )
-               elevation=0.0;
+
+            Double elevation = highResolutionTerrain.getElevation(latLon);
+            if (elevation == null) {
+                elevation = 0.0;
+            }
+            //in( "elevation : " + Double.toString(elevation)+" ");
             realPositions.add(new Position(latLon, Math.round(elevation * 100000.0) / 100000.0));
         });
-
+        LOGGER.info("Out highResolutionTerrain.getElevation");
+        
+        LOGGER.info("In create tab Point3D");
         int k = 0;
         for (int i = 0; i <= ptsCountY; i++) {
             for (int j = 0; j <= ptsCountX; j++) {
@@ -121,6 +131,29 @@ public class DemSrtmElevationLoader {
             }
 
         }
+        LOGGER.info("Out create tab Point3D");
         return points;
+    }
+
+    public Point3D getElevation(double lat, double lon) {
+        //Creation d'un secteur à partir du point a mesurer
+        Sector sector = new Sector(Angle.fromDegreesLatitude(lat), Angle.fromDegreesLatitude(lat + 0.001),
+                Angle.fromDegreesLongitude(lon), Angle.fromDegreesLongitude(lon + 0.001));
+
+        HighResolutionTerrain highResolutionTerrain = new HighResolutionTerrain(new Earth(), sector, null, 1.0);
+
+        Double elevation = highResolutionTerrain.getElevation(new LatLon(Angle.fromDegrees(lat), Angle.fromDegrees(lon)));
+        if (elevation == null) {
+            elevation = 0.0;
+        }
+        return new Point3D(lat, lon, elevation);
+    }
+
+    protected void in(String comment) {
+        Logger.getLogger(getClass().getSimpleName()).log(Level.INFO, comment);
+    }
+
+    protected void out(String comment) {
+        Logger.getLogger(getClass().getSimpleName()).log(Level.INFO, comment);
     }
 }

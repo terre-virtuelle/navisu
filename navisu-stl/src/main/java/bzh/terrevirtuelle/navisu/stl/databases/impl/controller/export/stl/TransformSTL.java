@@ -16,10 +16,7 @@ public class TransformSTL {
 
         String[] facetTab = root.split("\n");
         for (String s : facetTab) {
-            if (s.contains("facet")) {
-                result += s + "\n";
-            }
-            if (s.contains("outer")) {
+            if (s.contains("facet")||s.contains("outer")||s.contains("solid")||s.contains("endloop")||s.contains("endfacet")) {
                 result += s + "\n";
             }
             if (s.contains("vertex")) {
@@ -29,12 +26,7 @@ public class TransformSTL {
                         + Double.toString(Double.valueOf(vTab[2]) + lat) + " "
                         + Double.toString(Double.valueOf(vTab[3]) + elv) + "\n";
             }
-            if (s.contains("endloop")) {
-                result += s + "\n";
-            }
-            if (s.contains("endfacet")) {
-                result += s + "\n";
-            }
+            
         }
         return result;
     }

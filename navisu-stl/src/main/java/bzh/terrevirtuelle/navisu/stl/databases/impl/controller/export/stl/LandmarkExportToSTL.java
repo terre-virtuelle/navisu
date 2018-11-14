@@ -9,11 +9,11 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import bzh.terrevirtuelle.navisu.stl.charts.impl.loader.dem.DemSrtmElevationLoader;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.globes.ElevationModel;
-import gov.nasa.worldwind.layers.RenderableLayer;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 public class LandmarkExportToSTL {
 
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
-    
+
     protected String stlFilename;
     protected GeodesyServices geodesyServices;
     protected List<Landmark> landmarks;
@@ -37,11 +37,11 @@ public class LandmarkExportToSTL {
 
     protected double lat;
     protected double lon;
-    protected double elv;
     protected double latMin;
     protected double lonMin;
     protected double latScale;
     protected double lonScale;
+    protected double elvScale;
 
     public LandmarkExportToSTL(GeodesyServices geodesyServices, Point3D[][] gb,
             String stlFilename, double latScale, double lonScale) {
@@ -51,12 +51,15 @@ public class LandmarkExportToSTL {
         lonMin = gb[0][0].getLongitude();
         this.latScale = latScale;
         this.lonScale = lonScale;
+        elvScale = (latScale + lonScale) / 2.0;
+        System.out.println(latScale+ " "+lonScale+" "+elvScale);
     }
 
-    public void export(List<Landmark> landmarks, double elevation) {
+    public void export(List<Landmark> landmarks, double maxDepth, double tileSideZ) {
         this.landmarks = landmarks;
         String header;
         String result;
+        double elevation;
         String landmark = "";
         java.nio.file.Path path = null;
 
@@ -68,16 +71,19 @@ public class LandmarkExportToSTL {
             for (Landmark l : landmarks) {
                 lat = l.getLatitude();
                 lon = l.getLongitude();
-
+                elevation = new DemSrtmElevationLoader(geodesyServices).getElevation(lat, lon).getElevation();
+               // elevation*=10;
+                System.out.println("MNT elevation " + elevation);
                 double latM = geodesyServices.getDistanceM(latMin, lonMin, lat, lonMin);
                 double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
                 latM *= latScale;
                 lonM *= lonScale;
-                ElevationModel model = this.wwd.getModel().getGlobe().getElevationModel();
-                elevation += model.getElevation(Angle.fromDegreesLatitude(lat), Angle.fromDegreesLongitude(lon));
-                elevation *= latScale;
+                elevation += maxDepth;
+                elevation *= elvScale;
+                elevation += tileSideZ;
+                System.out.println("elevation : "+elevation);
                 if (l.getFunction().contains("33")) {
-                    landmark = landmark.concat(insertedFile(latM, lonM, elevation, "Phare.stl"));
+                    landmark = landmark.concat(insertedFile(latM, lonM, elevation, "LNDMRK.stl"));
                 } else {
                     landmark = landmark.concat(insertedFile(latM, lonM, elevation, "LNDMRK.stl"));
                 }
@@ -90,13 +96,13 @@ public class LandmarkExportToSTL {
         }
     }
 
-    private String insertedFile(double latitude, double longitude, double altitude, String filename) {
+    private String insertedFile(double latitude, double longitude, double elevation, String filename) {
         String name = "data/stl/" + filename;
         String obj = "";
         String result = "";
         try {
             obj = new String(Files.readAllBytes(Paths.get(name)));
-            result = new TransformSTL().transform(obj, latitude, longitude, altitude);
+            result = new TransformSTL().transform(obj, latitude, longitude, elevation);
         } catch (IOException ex) {
             Logger.getLogger(BuoyageExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }

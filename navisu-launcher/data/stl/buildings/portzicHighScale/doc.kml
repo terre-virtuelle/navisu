@@ -5,11 +5,11 @@
         <visibility>1</visibility>
         <LookAt>
             <heading>0</heading>
-            <tilt>90</tilt>
-            <latitude>48.35847964328</latitude>
-            <longitude>-4.533956713102</longitude>
-            <range>364.8521582299</range>
-            <altitude>6.951067053106</altitude>
+            <tilt>0</tilt>
+            <latitude>48.36168912527</latitude>
+            <longitude>-4.531576410284</longitude>
+            <range>4144.324348616</range>
+            <altitude>4491.233017176</altitude>
         </LookAt>
         <Folder>
             <name>Tour</name>
@@ -18,11 +18,11 @@
                 <visibility>1</visibility>
                 <LookAt>
                     <heading>0</heading>
-                    <tilt>90</tilt>
-                    <latitude>48.35847964328</latitude>
-                    <longitude>-4.533956713102</longitude>
-                    <range>364.8521582299</range>
-                    <altitude>6.951067053106</altitude>
+                    <tilt>0</tilt>
+                    <latitude>48.36168912527</latitude>
+                    <longitude>-4.531576410284</longitude>
+                    <range>4144.324348616</range>
+                    <altitude>4491.233017176</altitude>
                 </LookAt>
             </Placemark>
         </Folder>
@@ -33,8 +33,8 @@
             <Model>
                 <altitudeMode>relativeToGround</altitudeMode>
                 <Location>
-                    <latitude>48.35860163754</latitude>
-                    <longitude>-4.534204602242</longitude>
+                    <latitude>48.36360591502</latitude>
+                    <longitude>-4.53821182251</longitude>
                     <altitude>0</altitude>
                 </Location>
                 <Orientation>

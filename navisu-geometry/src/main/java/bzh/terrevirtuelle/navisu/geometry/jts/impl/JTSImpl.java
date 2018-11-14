@@ -108,10 +108,10 @@ public class JTSImpl
     @Override
     public boolean contains(Geometry geom, Point3D pt3D) {
         boolean result;
-        Coordinate coord = new Coordinate(pt3D.getLongitude(), pt3D.getLatitude(), 100);
+        Coordinate coord = new Coordinate(pt3D.getLongitude(), pt3D.getLatitude(), 0);
         GeometryFactory geometryFactory = new GeometryFactory();
         Point pt = geometryFactory.createPoint(coord);
-        result = !geom.contains(pt);
+        result = geom.contains(pt);
         return result;
     }
 

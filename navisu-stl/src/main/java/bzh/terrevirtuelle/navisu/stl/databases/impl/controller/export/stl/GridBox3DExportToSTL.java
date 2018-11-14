@@ -25,10 +25,11 @@ import java.util.logging.Logger;
  */
 public class GridBox3DExportToSTL {
 
+    protected static final Logger LOGGER = Logger.getLogger(GridBox3DExportToSTL.class.getName());
     GeodesyServices geodesyServices;
     private GridBox3D gridBox;
     String filename;
-    String result="";
+    String result = "";
     String tmp;
 
     public GridBox3DExportToSTL(GeodesyServices geodesyServices, GridBox3D gridBox) {
@@ -91,7 +92,7 @@ public class GridBox3DExportToSTL {
             double latMin, double lonMin,
             double latScale, double lonScale,
             double verticalOffset) {
-        
+
         paths.forEach((p) -> {
             result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
         });
