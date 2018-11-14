@@ -58,7 +58,7 @@ public class DaeStlExportToSTL {
         this.daeLocationObjectMap = new HashMap<>();
     }
 
-    public void loadDae() {
+    public boolean loadDae() {
         File file = null;
         try {
             String latString = "";
@@ -103,6 +103,8 @@ public class DaeStlExportToSTL {
                     + "\n avec les coordonnées géographiques du repère.");
             alert.show();
         }
+
+        return !daeLocationObjectMap.isEmpty();
 
     }
 
@@ -179,7 +181,7 @@ public class DaeStlExportToSTL {
                             double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
                             latM *= latScale;
                             lonM *= lonScale;
-                            
+
                             double elv = Double.parseDouble(c[3]) * elvScale + tileSideZ;
                             stlResult += "vertex " + lonM + " " + latM + " " + elv + "\n";
                         }

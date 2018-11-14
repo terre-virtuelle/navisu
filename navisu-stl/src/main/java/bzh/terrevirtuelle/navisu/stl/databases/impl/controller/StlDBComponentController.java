@@ -419,6 +419,7 @@ public class StlDBComponentController
 
     protected StlGuiController stlGuiController;
     protected DaeStlExportToSTL daeStlExportToSTL;
+    protected boolean isDaeObject = false;
 
     protected long startTime;
 
@@ -750,7 +751,7 @@ public class StlDBComponentController
         });
 
         daeStlObjectButton.setOnMouseClicked((MouseEvent event) -> {
-            daeStlExportToSTL.loadDae();
+            isDaeObject = daeStlExportToSTL.loadDae();
         });
 
         requestButton.setOnMouseClicked((MouseEvent event) -> {
@@ -915,22 +916,24 @@ public class StlDBComponentController
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
                             new LandmarkExportToSTL(geodesyServices, g, filename, latScale, lonScale)
-                                    .export(landmarks, maxDepth , tileSideZ); 
+                                    .export(landmarks, maxDepth, tileSideZ);
                             k++;
                         }
 
                     }
                     // DAE
                     k = 0;
-                    for (Point3D[][] g : grids) {
-                        objects.clear();
-                        i = k / tileCount + 1;
-                        j = k % tileCount + 1;
-                        String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
-                        scaleCompute(g);
-                        double scaleDae = Double.parseDouble(scaleDaeTF.getText());
-                        daeStlExportToSTL.export(g, filename, latScale, lonScale, scaleDae, tileSideZ, maxDepth);
-                        k++;
+                    if (isDaeObject == true) {
+                        for (Point3D[][] g : grids) {
+                            objects.clear();
+                            i = k / tileCount + 1;
+                            j = k % tileCount + 1;
+                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                            scaleCompute(g);
+                            double scaleDae = Double.parseDouble(scaleDaeTF.getText());
+                            daeStlExportToSTL.export(g, filename, latScale, lonScale, scaleDae, tileSideZ, maxDepth);
+                            k++;
+                        }
                     }
                     k = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("SLCONS")) {
