@@ -852,7 +852,8 @@ public class StlDBComponentController
                         GridBox3D gb = gridBoxes.get(0);
                         new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                         LOGGER.info("In export exportBaseSTL en STL");
-                        stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
+                       // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
+                       stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
                         LOGGER.info("Out export exportBaseSTL en STL");
                         LOGGER.info("Out export GridBox3D en STL");
                     } else {
