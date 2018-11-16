@@ -640,6 +640,7 @@ public class StlDBComponentController
                 tileSideZTF.setText(Double.toString(tileSideZ));
             }
         });
+        tileSideZ -= 0.1;
         simplifyTF.setOnAction((ActionEvent event) -> {
             try {
                 double tmp = Double.valueOf(simplifyTF.getText());
@@ -844,19 +845,31 @@ public class StlDBComponentController
                         });
 
                     }
-                    k = 0;
-                    gridBoxes.forEach((gb) -> {
+                    if (gridBoxes.size() == 1) {
+                        //special treatment for large area
                         LOGGER.info("In export GridBox3D en STL");
-                        i = k / tileCount + 1;
-                        j = k % tileCount + 1;
-                        String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                        String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + 1 + "," + 1 + ".stl";
+                        GridBox3D gb = gridBoxes.get(0);
                         new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                         LOGGER.info("In export exportBaseSTL en STL");
                         stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
                         LOGGER.info("Out export exportBaseSTL en STL");
-                        k++;
                         LOGGER.info("Out export GridBox3D en STL");
-                    });
+                    } else {
+                        k = 0;
+                        gridBoxes.forEach((gb) -> {
+                            LOGGER.info("In export GridBox3D en STL");
+                            i = k / tileCount + 1;
+                            j = k % tileCount + 1;
+                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                            new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
+                            LOGGER.info("In export exportBaseSTL en STL");
+                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
+                            LOGGER.info("Out export exportBaseSTL en STL");
+                            k++;
+                            LOGGER.info("Out export GridBox3D en STL");
+                        });
+                    }
                     //DEPARE
                     if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
                         createElevationAndDepare(latMin, lonMin, latMax, lonMax);

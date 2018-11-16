@@ -65,6 +65,43 @@ public class GridBox3DExportToSTL {
         return result;
     }
 
+    public String exportLargeSTL(String filename, double latScale, double lonScale, double verticalOffset) {
+        this.filename = filename;
+        double latMin = gridBox.getGrid()[0][0].getLatitude();
+        double lonMin = gridBox.getGrid()[0][0].getLongitude();
+        String[] head = filename.split("/");
+        result = "solid " + head[head.length - 1] + "\n";
+        try {
+            java.nio.file.Path path = Paths.get(filename);
+            Files.write(path, result.getBytes(), StandardOpenOption.CREATE);
+        } catch (IOException ex) {
+            Logger.getLogger(GridBox3DExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+
+        GridBox3D[] boxes = gridBox.split(3);
+        for (GridBox3D gb : boxes) {
+            result = "";
+            List<Path> gridPaths = gb.getPaths();
+            gridPaths.forEach((p) -> {
+                result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
+            });
+            try {
+                java.nio.file.Path path = Paths.get(filename);
+                Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
+            } catch (IOException ex) {
+                Logger.getLogger(GridBox3DExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+        result = "endsolid " + filename + "\n";
+        try {
+            java.nio.file.Path path = Paths.get(filename);
+            Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException ex) {
+            Logger.getLogger(GridBox3DExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        return result;
+    }
+
     public String exportSTL(List<Path> paths, String filename,
             double latMin, double lonMin,
             double latScale, double lonScale,
@@ -136,7 +173,7 @@ public class GridBox3DExportToSTL {
     private String toFacet(Path path, String normal,
             double latMin, double lonMin, double latScale, double lonScale,
             double verticalOffset) {
-        String facet = "";
+        String facet;
         Vec3d[] vec3d = new Vec3d[3];
 
         int i = 0;
@@ -182,7 +219,7 @@ public class GridBox3DExportToSTL {
 
     public String exportBaseSTL(String stlFilename, String stlBaseFilename) {
         String header;
-        String result;
+        // String result;
         java.nio.file.Path path = null;
         try {
             String base = new String(Files.readAllBytes(Paths.get(stlBaseFilename)));

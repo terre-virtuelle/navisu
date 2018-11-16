@@ -44,14 +44,14 @@ public class GridBox3D {
     public GridBox3D(Point3D[][] grid, double verticalExaggeration) {
         this.grid = grid;
         this.verticalExaggeration = verticalExaggeration;
-       
+
         sidePaths = new ArrayList<>();
         sidePathsBySide = new ArrayList<>();
         basePaths = new ArrayList<>();
 
         line = grid[0].length;
         col = grid[1].length;
-        
+
         // Sides
         // South
         for (int i = 0; i < col; i++) {
@@ -90,7 +90,7 @@ public class GridBox3D {
                     grid[i][col - 1].getLongitude(),
                     baseAltitude));
         }
-       
+
         gridPaths = createPaths(grid);
     }
 
@@ -112,14 +112,14 @@ public class GridBox3D {
 
         Path path0;
         Path path1;
-        
+
         int latLength = latLons[0].length;
         int lonLength = latLons[1].length;
 
         for (int i = 0; i < latLength - 1; i++) {
             for (int j = 0; j < lonLength - 1; j++) {
-             //   System.out.println(latLons[i][j].getElevation() * verticalExaggeration+" "+
-             //           latLons[i][j + 1].getElevation() * verticalExaggeration+" "+latLons[i + 1][j + 1].getElevation() * verticalExaggeration);
+                //   System.out.println(latLons[i][j].getElevation() * verticalExaggeration+" "+
+                //           latLons[i][j + 1].getElevation() * verticalExaggeration+" "+latLons[i + 1][j + 1].getElevation() * verticalExaggeration);
                 positions0 = new ArrayList<>();
                 positions0.add(Position.fromDegrees(latLons[i][j].getLatitude(),
                         latLons[i][j].getLongitude(),
@@ -135,7 +135,7 @@ public class GridBox3D {
                         latLons[i][j].getElevation() * verticalExaggeration));
                 path0 = new Path(positions0);
                 result.add(path0);
-                
+
                 positions1 = new ArrayList<>();
                 positions1.add(Position.fromDegrees(latLons[i][j].getLatitude(),
                         latLons[i][j].getLongitude(),
@@ -207,7 +207,7 @@ public class GridBox3D {
             sides0.add(t0);
         }
         sidePathsBySide.add(sides0);
-        
+
         List<Path> sides1 = new ArrayList<>();
         for (int l = 0; l < line - 1; l++) {
             List<Position> b = new ArrayList<>();
@@ -230,7 +230,7 @@ public class GridBox3D {
             sides1.add(t0);
         }
         sidePathsBySide.add(sides1);
-        
+
         List<Path> sides2 = new ArrayList<>();
         for (int l = 0; l < col - 1; l++) {
             List<Position> b = new ArrayList<>();
@@ -252,7 +252,7 @@ public class GridBox3D {
             sides2.add(t0);
         }
         sidePathsBySide.add(sides2);
-        
+
         List<Path> sides3 = new ArrayList<>();
         for (int l = 0; l < line - 1; l++) {
             List<Position> b = new ArrayList<>();
@@ -283,7 +283,7 @@ public class GridBox3D {
         Path p4 = (new Path(b));
         sidePaths.add(p4);
         basePaths.add(p4);
-        
+
         List<Position> t = new ArrayList<>();
         t.add(baseIsoLatPositions0.get(0));
         t.add(baseIsoLatPositions1.get(0));
@@ -292,7 +292,42 @@ public class GridBox3D {
         Path p5 = (new Path(t));
         sidePaths.add(p5);
         basePaths.add(p5);
-        
+
         return sidePaths;
+    }
+
+    public double getVerticalExaggeration() {
+        return verticalExaggeration;
+    }
+
+    public GridBox3D[] split(int n) {
+        GridBox3D[] result = new GridBox3D[n*n];
+        
+        int k = 0;
+        int l0 = line / (n - 1);
+        int l1 = line / (n - 1) + line % n;
+        int c0 = col / (n - 1);
+        int c1 = col / (n - 1) + col % n;
+        System.out.println(line +" "+col+" "+l0+" "+c0+" "+l1+" "+c1);
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1; j++) {
+                Point3D[][] gTab = new Point3D[l0][c0];
+                for (int u = 0; u < l0; u++) {
+                    for (int v = 0; v < c0; v++) {
+                        gTab[u][v] = grid[u + i][v + j];
+                    }
+                }
+                result[k++] = new GridBox3D(gTab, verticalExaggeration);
+            }
+        }
+        Point3D[][] gTab = new Point3D[l1][c1];
+        for (int u = 0; u < l1; u++) {
+            for (int v = 0; v < c1; v++) {
+                gTab[u][v] = grid[u + n - 1][v + n - 1];
+            }
+        }
+        result[k] = new GridBox3D(gTab, verticalExaggeration);
+        
+        return result;
     }
 }

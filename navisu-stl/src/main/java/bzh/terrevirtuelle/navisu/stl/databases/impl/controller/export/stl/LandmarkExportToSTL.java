@@ -12,8 +12,6 @@ import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.stl.charts.impl.loader.dem.DemSrtmElevationLoader;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.globes.ElevationModel;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -83,7 +81,7 @@ public class LandmarkExportToSTL {
                 elevation += tileSideZ;
                 System.out.println("elevation : "+elevation);
                 if (l.getFunction().contains("33")) {
-                    landmark = landmark.concat(insertedFile(latM, lonM, elevation, "LNDMRK.stl"));
+                    landmark = landmark.concat(insertedFile(latM, lonM, elevation, "PhareASCII.stl"));
                 } else {
                     landmark = landmark.concat(insertedFile(latM, lonM, elevation, "LNDMRK.stl"));
                 }
