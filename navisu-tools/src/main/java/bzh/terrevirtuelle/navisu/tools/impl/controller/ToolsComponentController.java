@@ -47,6 +47,7 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import javafx.scene.control.CheckBox;
 
 /**
  *
@@ -167,14 +168,24 @@ public class ToolsComponentController
     @FXML
     public TextField elevationDatabaseNameTF;
     @FXML
-    public Button createButton11;
-    
+    public Button createElevationButton;
+    @FXML
+    public Button alterElevationButton;
+    @FXML
+    public Button dropElevationButton;
+    @FXML
+    public ChoiceBox<String> elevationDbCB;
+    @FXML
+    public CheckBox tiff2AscCB;
+    @FXML
+    public CheckBox lambert2Wgs84CB;
 
     protected String elevationData;
 
     private ObservableList<String> catalogCbData = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
     private ObservableList<String> countryCbData = FXCollections.observableArrayList("FR", "ALL", "CA", "DE", "KR", "NO", "PE",
             "PH", "PT", "RU", "TR", "US", "ZA");
+    private ObservableList<String> dbCbData = FXCollections.observableArrayList("Choice DB", "IGN75m", "SRTM30m");
     protected FileChooser fileChooser;
 
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
@@ -182,7 +193,8 @@ public class ToolsComponentController
     private final String COMPONENT_KEY_NAME_2 = "DbElevation";
     private final String ENC_CATALOG_HOME = "data/charts/vector/s57/catalog/";
     private final String BATHY_DB_NAME = "BathyShomDB";
-    private final String ELEVATION_DB_NAME = "AltiV2_2-0_75mIgnDB";
+    private final String ELEVATION_DB_NAME_0 = "AltiV2_2-0_75mIgnDB";
+    private final String ELEVATION_DB_NAME_1 = "SRTM30mDB";
     private final String ELEVATION_DB_ORG_FILE = "privateData/elevation/output.glz";
     private String componentKeyName;
 
@@ -198,6 +210,7 @@ public class ToolsComponentController
      * @param bathymetryDBServices
      * @param demDBComponentServices
      * @param instrumentDriverManagerServices
+     * @param lambertServices
      */
     @SuppressWarnings("unchecked")
     public ToolsComponentController(ToolsComponentImpl component, String componentKeyName,
@@ -262,7 +275,6 @@ public class ToolsComponentController
             Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         bathyDatabaseNameTF.setText(BATHY_DB_NAME);
-        elevationDatabaseNameTF.setText(ELEVATION_DB_NAME);
 
         String p = properties.getProperty("s57ChartsDir");
         if (p != null) {
@@ -296,6 +308,7 @@ public class ToolsComponentController
         catalogCB.getSelectionModel().select("5");
         catalogTF.setText("ENC_NP5.kml");
         s57DatabaseTF.setText("s57NP5DB");
+
         catalogCB.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((ObservableValue<? extends String> observable,
@@ -304,7 +317,31 @@ public class ToolsComponentController
                     s7DataBaseName = "s57NP" + newValue + "DB";
                     s57DatabaseTF.setText(s7DataBaseName);
                 });
-
+        elevationDbCB.setItems(dbCbData);
+        elevationDbCB.getSelectionModel().select("Choice DB");
+        //  elevationDatabaseNameTF.setText(ELEVATION_DB_NAME_0);
+        elevationDbCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) -> {
+                    if (newValue.equals("IGN75m")) {
+                        elevationDatabaseNameTF.setText(ELEVATION_DB_NAME_0);
+                        elevationDbCB.getSelectionModel().select("Choice DB");
+                    } else {
+                        if (newValue.equals("SRTM30m")) {
+                            elevationDatabaseNameTF.setText(ELEVATION_DB_NAME_1);
+                            elevationDbCB.getSelectionModel().select("Choice DB");
+                        }
+                    }
+                });
+        catalogCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) -> {
+                    catalogTF.setText("ENC_NP" + newValue + ".kml");
+                    s7DataBaseName = "s57NP" + newValue + "DB";
+                    s57DatabaseTF.setText(s7DataBaseName);
+                });
         countryCB.setItems(countryCbData);
         countryCB.getSelectionModel().select("FR");
         countryTF.setText("FR");
@@ -354,8 +391,8 @@ public class ToolsComponentController
                 bathymetryDBServices.create(bathyData, "bathy");
             });
         });
-        createButton11.setOnMouseClicked((MouseEvent event) -> {
-            guiAgentServices.getJobsManager().newJob("Load DB : " + ELEVATION_DB_NAME, (progressHandle) -> {
+        createElevationButton.setOnMouseClicked((MouseEvent event) -> {
+            guiAgentServices.getJobsManager().newJob("Load DB : " + ELEVATION_DB_NAME_0, (progressHandle) -> {
                 if (ignDataTF != null) {
                     if (elevationsTab.isSelected()) {
                         psqlPath = psqlTF11.getText();
@@ -363,7 +400,7 @@ public class ToolsComponentController
                     }
                     elevationData = ELEVATION_DB_ORG_FILE;
                     lambertServices.readLambertDirWriteWGS84File(ignDataTF.getText(), elevationData);
-                    bathymetryDBServices.connect(ELEVATION_DB_NAME, "localhost", "jdbc:postgresql://",
+                    bathymetryDBServices.connect(ELEVATION_DB_NAME_0, "localhost", "jdbc:postgresql://",
                             "5432", "org.postgresql.Driver", "admin", "admin");
                     bathymetryDBServices.create(elevationData, "elevation");
                 } else {
