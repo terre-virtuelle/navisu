@@ -865,7 +865,8 @@ public class StlDBComponentController
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                             LOGGER.info("In export exportBaseSTL en STL");
-                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
+                           // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
+                           stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
                             LOGGER.info("Out export exportBaseSTL en STL");
                             k++;
                             LOGGER.info("Out export GridBox3D en STL");
