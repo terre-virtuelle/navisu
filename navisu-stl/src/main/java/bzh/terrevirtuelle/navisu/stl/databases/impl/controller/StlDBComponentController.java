@@ -866,7 +866,7 @@ public class StlDBComponentController
                             new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                             LOGGER.info("In export exportBaseSTL en STL");
                            // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
-                           stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
+                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
                             LOGGER.info("Out export exportBaseSTL en STL");
                             k++;
                             LOGGER.info("Out export GridBox3D en STL");
@@ -1067,24 +1067,16 @@ public class StlDBComponentController
                     }
                     k = 0;
                     if (stlPreviewCB.isSelected()) {
-                        String result;
                         for (Point3D[][] g : grids) {
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
                             String filename = outFileTF.getText() + "_" + i + "," + j + ".stl";
-                            result = "endsolid " + filename + "\n";
                             filename = System.getProperty("user.dir") + File.separator + "privateData" + File.separator + "stl" + File.separator + filename;
-                            try {
-                                java.nio.file.Path path = Paths.get(filename);
-                                Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
-                            } catch (IOException ex) {
-                                Logger.getLogger(GridBox3DExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-                            }
                             try {
                                 Thread.sleep(1000);
                                 stlComponentServices.viewSTL(filename);
                             } catch (InterruptedException ex) {
-                                Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                             }
                             k++;
                         }

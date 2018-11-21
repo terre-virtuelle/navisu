@@ -50,28 +50,18 @@ public class LandmarkExportToSTL {
         this.latScale = latScale;
         this.lonScale = lonScale;
         elvScale = (latScale + lonScale) / 2.0;
-        System.out.println(latScale+ " "+lonScale+" "+elvScale);
     }
 
     public void export(List<Landmark> landmarks, double maxDepth, double tileSideZ) {
-        this.landmarks = landmarks;
-        String header;
-        String result;
+        this.landmarks = landmarks;;
+        String result="";
         double elevation;
-        String landmark = "";
         java.nio.file.Path path = null;
-
         try {
-            String body = new String(Files.readAllBytes(Paths.get(stlFilename)));
-            String[] fileSTL = body.split("\n");
-            header = fileSTL[0] + "\n";
-            body = body.replaceFirst(header, "");
             for (Landmark l : landmarks) {
                 lat = l.getLatitude();
                 lon = l.getLongitude();
                 elevation = new DemSrtmElevationLoader(geodesyServices).getElevation(lat, lon).getElevation();
-               // elevation*=10;
-                System.out.println("MNT elevation " + elevation);
                 double latM = geodesyServices.getDistanceM(latMin, lonMin, lat, lonMin);
                 double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
                 latM *= latScale;
@@ -79,14 +69,12 @@ public class LandmarkExportToSTL {
                 elevation += maxDepth;
                 elevation *= elvScale;
                 elevation += tileSideZ;
-                System.out.println("elevation : "+elevation);
                 if (l.getFunction().contains("33")) {
-                    landmark = landmark.concat(insertedFile(latM, lonM, elevation, "PhareASCII.stl"));
+                    result = result.concat(insertedFile(latM, lonM, elevation, "PHARE.stl"));
                 } else {
-                    landmark = landmark.concat(insertedFile(latM, lonM, elevation, "LNDMRK.stl"));
+                    result = result.concat(insertedFile(latM, lonM, elevation, "LNDMRK.stl"));
                 }
             }
-            result = landmark.concat(body);
             path = Paths.get(stlFilename);
             Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException ex) {

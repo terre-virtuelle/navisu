@@ -1,4 +1,4 @@
-solid Interdit
+solid IINTERDICTION
   facet normal -7.071068e-01 7.071068e-01 0.000000e+00
     outer loop
       vertex -1.590990e+00 2.651650e+00 0.000000e+00
@@ -307,4 +307,4 @@ solid Interdit
       vertex 2.651651e+00 1.590990e+00 4.000000e+00
     endloop
   endfacet
-endsolid Interdit
+endsolid IINTERDICTION

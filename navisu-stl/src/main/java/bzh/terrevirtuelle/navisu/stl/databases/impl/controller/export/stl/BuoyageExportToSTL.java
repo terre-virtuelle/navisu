@@ -12,6 +12,7 @@ import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
@@ -49,17 +50,8 @@ public class BuoyageExportToSTL {
     }
 
     public void export(List<Buoyage> buoyages, double elevation) {
-        this.buoyages = buoyages;
-        String header;
-        String result;
-        String buoys = "";
-        java.nio.file.Path path = null;
-
+        String result = "";
         try {
-            String body = new String(Files.readAllBytes(Paths.get(stlFilename)));
-            String[] fileSTL = body.split("\n");
-            header = fileSTL[0] + "\n";
-            body = body.replaceFirst(header, "");
             for (Buoyage buoyage : buoyages) {
                 acronym = BUOYAGE_INV.ATT.get(buoyage.getClass().getSimpleName());
                 lat = buoyage.getLatitude();
@@ -69,19 +61,18 @@ public class BuoyageExportToSTL {
                 latM *= latScale;
                 lonM *= lonScale;
                 if (acronym.equals("BCNCAR") || acronym.equals("BOYCAR")) {
-                    buoys = buoys.concat(insertedFile(latM, lonM, elevation, "BCNCAR_" + buoyage.getCategoryOfMark() + ".stl"));
+                    result = result.concat(insertedFile(latM, lonM, elevation, "BCNCAR_" + buoyage.getCategoryOfMark() + ".stl"));
                 } else if (acronym.equals("BCNLAT") || acronym.equals("BOYLAT")) {
-                    buoys = buoys.concat(insertedFile(latM, lonM, elevation, "BCNLAT_" + buoyage.getCategoryOfMark() + ".stl"));
+                    result = result.concat(insertedFile(latM, lonM, elevation, "BCNLAT_" + buoyage.getCategoryOfMark() + ".stl"));
                 } else if (acronym.equals("MORFAC")) {
-                    buoys = buoys.concat(insertedFile(latM, lonM, elevation, "MORFAC.stl"));
+                    result = result.concat(insertedFile(latM, lonM, elevation, "MORFAC.stl"));
                 } else if (acronym.equals("BCNISD")) {
-                    buoys = buoys.concat(insertedFile(latM, lonM, elevation, "danger.stl"));
+                    result = result.concat(insertedFile(latM, lonM, elevation, "DANGER.stl"));
                 } else if (acronym.equals("BOYSPP") || acronym.equals("BCNSPP")) {
-                    buoys = buoys.concat(insertedFile(latM, lonM, elevation, "spp.stl"));
+                    result = result.concat(insertedFile(latM, lonM, elevation, "SPP.stl"));
                 }
             }
-            result = buoys.concat(body);
-            path = Paths.get(stlFilename);
+            Path path = Paths.get(stlFilename);
             Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException ex) {
             Logger.getLogger(StlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
@@ -99,24 +90,5 @@ public class BuoyageExportToSTL {
             Logger.getLogger(BuoyageExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return result;
-    }
-
-    public void writeInsertedFile(double latitude, double longitude, double altitude, String name) {
-        String filename = "data/stl/" + name;
-        String object = "";
-        String result = "";
-        java.nio.file.Path path = null;
-        double latM = geodesyServices.getDistanceM(latMin, lonMin, latitude, lonMin);
-        double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, longitude);
-        latM *= latScale;
-        lonM *= lonScale;
-        try {
-            object = new String(Files.readAllBytes(Paths.get(filename)));
-            result = new TransformSTL().transformAndScale(object, 1, latM, lonM, altitude);
-            path = Paths.get(stlFilename);
-            Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
-        } catch (IOException ex) {
-            Logger.getLogger(StlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
     }
 }

@@ -1,3 +1,4 @@
+solid MORFAC
 facet normal 9.934098e-01 1.146168e-01 0.000000e+00
     outer loop
       vertex 2.500000e+00 -2.980232e-08 0.000000e+00
@@ -810,3 +811,4 @@ facet normal 9.934098e-01 1.146168e-01 0.000000e+00
       vertex -9.378595e-01 1.170231e+00 5.000000e+00
     endloop
   endfacet
+endsolid MORFAC

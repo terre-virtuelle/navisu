@@ -1,3 +1,4 @@
+solid DANGER
 facet normal -0.000000e+00 0.000000e+00 -1.000000e+00
     outer loop
       vertex 9.304047e-03 -3.485001e+00 -3.675587e-07
@@ -2014,3 +2015,4 @@ facet normal -0.000000e+00 0.000000e+00 -1.000000e+00
       vertex 2.490696e+00 3.485001e+00 4.999999e+00
     endloop
   endfacet
+endsolid DANGER

@@ -55,8 +55,7 @@ public class GridBox3DExportToSTL {
             gridPaths.forEach((p) -> {
                 result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
             });
-
-            //    result += "endsolid " + filename + "\n";
+            result += "endsolid " + head[head.length - 1] + "\n";
             java.nio.file.Path path = Paths.get(filename);
             Files.write(path, result.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
@@ -92,7 +91,7 @@ public class GridBox3DExportToSTL {
                 Logger.getLogger(GridBox3DExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-        result = "endsolid " + filename + "\n";
+        result += "endsolid " + filename + "\n";
         try {
             java.nio.file.Path path = Paths.get(filename);
             Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
@@ -115,8 +114,7 @@ public class GridBox3DExportToSTL {
             gridPaths.forEach((p) -> {
                 result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
             });
-
-            //    result += "endsolid " + filename + "\n";
+            result += "endsolid " + filename + "\n";
             java.nio.file.Path path = Paths.get(filename);
             Files.write(path, result.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
