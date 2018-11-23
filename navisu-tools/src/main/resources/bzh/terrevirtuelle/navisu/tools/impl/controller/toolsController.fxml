@@ -203,7 +203,7 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Button fx:id="alterElevationButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Alter" GridPane.columnIndex="1" />
+                                                <Button fx:id="insertElevationButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Insert" GridPane.columnIndex="1" />
                                                 <Button fx:id="createElevationButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Create" />
                                                 <Button fx:id="dropElevationButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" styleClass="quitbutton" text="Drop" GridPane.columnIndex="2" />
                                              </children>

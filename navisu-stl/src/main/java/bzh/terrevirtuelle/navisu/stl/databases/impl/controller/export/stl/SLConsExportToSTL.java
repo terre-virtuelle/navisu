@@ -77,7 +77,7 @@ public class SLConsExportToSTL {
                         points.forEach((p) -> {
                             positions.add(Position.fromDegrees(p.getLatitude(),
                                     p.getLongitude(),
-                                    p.getElevation() / 5));
+                                    p.getElevation() / 4));//5
                         });
 
                         List<Position> highPositions = new ArrayList<>();

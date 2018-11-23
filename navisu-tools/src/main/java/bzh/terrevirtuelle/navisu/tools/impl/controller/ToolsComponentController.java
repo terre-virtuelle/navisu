@@ -170,7 +170,7 @@ public class ToolsComponentController
     @FXML
     public Button createElevationButton;
     @FXML
-    public Button alterElevationButton;
+    public Button insertElevationButton;
     @FXML
     public Button dropElevationButton;
     @FXML
@@ -366,7 +366,6 @@ public class ToolsComponentController
 
             s7DataBaseName = s57DatabaseTF.getText();
             guiAgentServices.getJobsManager().newJob("Load DB : " + s7DataBaseName, (progressHandle) -> {
-                // System.out.println("dataS57CatalogTF.getText() : " + catalogTF.getText());
                 String shpDir = s57ChartComponentServices.s57FromCatalogToShapeFile(s57TF.getText(),
                         ENC_CATALOG_HOME + catalogTF.getText(),
                         countryTF.getText(),

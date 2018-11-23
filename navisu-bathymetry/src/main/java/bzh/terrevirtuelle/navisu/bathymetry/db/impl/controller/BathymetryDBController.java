@@ -157,7 +157,7 @@ public class BathymetryDBController {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         guiAgentServices.getJobsManager().newJob("create", (progressHandle) -> {
-           //
+            //
             String query = "DROP TABLE IF EXISTS  " + table + "; "
                     + "CREATE TABLE " + table + "("
                     + "gid SERIAL PRIMARY KEY,"
@@ -202,6 +202,21 @@ public class BathymetryDBController {
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
+        });
+    }
+
+    public final void insert(String table, String filename) {
+        String sql = "INSERT INTO " + table + " (coord, elevation) "
+                + "VALUES ( ST_SetSRID(ST_MakePoint(?, ?), 4326), ?);";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+        }
+        guiAgentServices.getJobsManager().newJob("insert", (progressHandle) -> {
+            List<Point3Df> points = readFromFile(filename);
+            insert(points);
+            createIndex(table);
         });
     }
 

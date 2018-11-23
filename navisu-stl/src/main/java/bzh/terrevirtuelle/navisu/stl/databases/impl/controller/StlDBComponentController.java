@@ -396,6 +396,8 @@ public class StlDBComponentController
     @FXML
     public CheckBox resareCB;
     @FXML
+    public CheckBox baseCB;
+    @FXML
     public Button daeStlObjectButton;
 
     /*-----------------------------------*/
@@ -806,7 +808,9 @@ public class StlDBComponentController
                 if (srtmRB.isSelected() && noBathyRB.isSelected()) {
                     grids = createSrtmElevationTab(lat0, lon0, lat1, lon1, gridX);//~1m
                 }
-
+                if (srtmRB.isSelected() && depareRB.isSelected()) {
+                    //createElevationAndDepare(latMin, lonMin, latMax, lonMax);
+                }
                 k = 0;
                 if (grids != null) {
                     List<GridBox3D> gridBoxes = new ArrayList<>();
@@ -824,12 +828,7 @@ public class StlDBComponentController
                         gridBoxes.forEach((gb) -> {
                             LOGGER.info("In affichage gridBoxes");
                             displayServices.displayGridAsTriangles(gb.getGrid(), bathymetryLayer, Material.GREEN, verticalExaggeration);
-                            // displayServices.displayPaths(gb.getSidePathsWest(), bathymetryLayer, Material.YELLOW, verticalExaggeration);
-                            //  System.out.println("size : " + gb.getSidePaths().size());
-                            // displayServices.displayPaths(gb.getSidePaths(), bathymetryLayer, Material.YELLOW, verticalExaggeration);
-                            //  displayServices.displayPolygonsFromPaths(gb.getSidePaths(), bathymetryLayer, Material.MAGENTA, verticalExaggeration);
                         });
-
                     }
                     if (generateKmlCB.isSelected()) {
                         k = 0;
@@ -852,9 +851,11 @@ public class StlDBComponentController
                         GridBox3D gb = gridBoxes.get(0);
                         new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                         LOGGER.info("In export exportBaseSTL en STL");
-                       // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
-                       stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
-                        LOGGER.info("Out export exportBaseSTL en STL");
+                        if (baseCB.isSelected()) {
+                            // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
+                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
+                            LOGGER.info("Out export exportBaseSTL en STL");
+                        }
                         LOGGER.info("Out export GridBox3D en STL");
                     } else {
                         k = 0;
@@ -865,9 +866,11 @@ public class StlDBComponentController
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                             LOGGER.info("In export exportBaseSTL en STL");
-                           // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
-                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
-                            LOGGER.info("Out export exportBaseSTL en STL");
+                            if (baseCB.isSelected()) {
+                                // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
+                                stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
+                                LOGGER.info("Out export exportBaseSTL en STL");
+                            }
                             k++;
                             LOGGER.info("Out export GridBox3D en STL");
                         });
@@ -1394,7 +1397,7 @@ public class StlDBComponentController
     }
      */
     private void createElevationAndDepare(double latMin, double lonMin, double latMax, double lonMax) {
-        //    bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
+        // bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
         Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
         displayServices.displayGrid(ptsTab, s57Layer, Material.GREEN, verticalExaggeration);
 

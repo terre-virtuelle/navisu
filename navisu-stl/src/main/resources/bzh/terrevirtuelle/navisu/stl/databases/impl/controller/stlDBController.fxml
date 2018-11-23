@@ -120,7 +120,7 @@
                                              </children>
                                           </GridPane>
                                           <Label text="Scale" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-                                          <TextField fx:id="scaleTF" editable="false" style="-fx-border-radius: 2;" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+                                          <TextField fx:id="scaleTF" editable="false" prefHeight="27.0" prefWidth="92.0" style="-fx-border-radius: 2;" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                                              <styleClass>
                                                 <String fx:value="label-fixvalue" />
                                                 <String fx:value="grid-pane-fixvalue" />
@@ -342,7 +342,7 @@
                                             </rowConstraints>
                                              <children>
                                                 <RadioButton fx:id="elevationRB" mnemonicParsing="false" text="Database DEM" />
-                                                <RadioButton fx:id="srtmRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="137.0" selected="true" text="SRTM DEM" GridPane.columnIndex="1" />
+                                                <RadioButton fx:id="srtmRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="137.0" selected="true" text="SRTM NaVisu DEM" GridPane.columnIndex="1" />
                                              </children>
                                           </GridPane>
                                           <GridPane GridPane.columnIndex="3" GridPane.rowIndex="7">
@@ -388,6 +388,7 @@
                                           <CheckBox fx:id="generateKmlCB" mnemonicParsing="false" selected="true" text="Generate KML" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                           <CheckBox mnemonicParsing="false" text="GeoTIFF" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                           <CheckBox mnemonicParsing="false" text="ASCII" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                          <CheckBox fx:id="baseCB" mnemonicParsing="false" selected="true" text="Include base" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                        </children>
                                     </GridPane></children>
 						                                </AnchorPane>
