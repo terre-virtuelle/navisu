@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.geometry.objects3D.obj;
+package bzh.terrevirtuelle.navisu.geometry.objects3D.obj.simple;
 
 /**
  *

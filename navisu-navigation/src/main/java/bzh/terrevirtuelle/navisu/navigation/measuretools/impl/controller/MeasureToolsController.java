@@ -12,9 +12,9 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
 import bzh.terrevirtuelle.navisu.domain.geometry.model.AreaBuilder;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.Face;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.simple.Face;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.Point3D;
-import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.WavefrontOBJBuilder;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.simple.WavefrontOBJBuilder;
 import bzh.terrevirtuelle.navisu.navigation.measuretools.impl.MeasureToolsImpl;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteEditorController;
 import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;

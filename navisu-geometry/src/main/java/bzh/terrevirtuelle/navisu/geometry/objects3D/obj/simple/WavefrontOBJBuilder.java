@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.geometry.objects3D.obj;
+package bzh.terrevirtuelle.navisu.geometry.objects3D.obj.simple;
 
 import bzh.terrevirtuelle.navisu.geometry.objects3D.Point3D;
 import java.awt.geom.Point2D;

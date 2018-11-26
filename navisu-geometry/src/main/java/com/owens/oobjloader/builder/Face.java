@@ -8,7 +8,6 @@ package com.owens.oobjloader.builder;
 // license.  (I generally don't care so I'll almost certainly say yes.)
 // In addition this code may also be used under the "unlicense" described
 // at http://unlicense.org/ .  See the file UNLICENSE in the repo.
-
 import java.util.*;
 
 public class Face {
@@ -16,6 +15,7 @@ public class Face {
     public ArrayList<FaceVertex> vertices = new ArrayList<>();
     public Material material = null;
     public Material map = null;
+    public VertexNormal faceNormal = new VertexNormal(0, 0, 0);
 
     public Face() {
     }
@@ -23,7 +23,6 @@ public class Face {
     public void add(FaceVertex vertex) {
         vertices.add(vertex);
     }
-    public VertexNormal faceNormal = new VertexNormal(0, 0, 0);
 
     // @TODO: This code assumes the face is a triangle.  
     public void calculateTriangleNormal() {
@@ -53,11 +52,49 @@ public class Face {
         faceNormal.y = normal[1];
         faceNormal.z = normal[2];
     }
-    
+
+    public void calculateNormedTriangleNormal() {
+        float[] edge1 = new float[3];
+        float[] edge2 = new float[3];
+        float[] normal = new float[3];
+        VertexGeometric v1 = vertices.get(0).v;
+        VertexGeometric v2 = vertices.get(1).v;
+        VertexGeometric v3 = vertices.get(2).v;
+        float[] p1 = {v1.x, v1.y, v1.z};
+        float[] p2 = {v2.x, v2.y, v2.z};
+        float[] p3 = {v3.x, v3.y, v3.z};
+
+        edge1[0] = p2[0] - p1[0];
+        edge1[1] = p2[1] - p1[1];
+        edge1[2] = p2[2] - p1[2];
+
+        edge2[0] = p3[0] - p2[0];
+        edge2[1] = p3[1] - p2[1];
+        edge2[2] = p3[2] - p2[2];
+
+        normal[0] = edge1[1] * edge2[2] - edge1[2] * edge2[1];
+        normal[1] = edge1[2] * edge2[0] - edge1[0] * edge2[2];
+        normal[2] = edge1[0] * edge2[1] - edge1[1] * edge2[0];
+
+        faceNormal.x = normal[0];
+        faceNormal.y = normal[1];
+        faceNormal.z = normal[2];
+    }
+
     @Override
-    public String toString() { 
-        String result = "\tvertices: "+vertices.size()+" :\n";
-        result = vertices.stream().map((f) -> " \t\t( "+f.toString()+" )\n").reduce(result, String::concat);
+    public String toString() {
+        String result = "\tvertices: " + vertices.size() + " :\n";
+        result = vertices.stream().map((f) -> " \t\t( " + f.toString() + " )\n").reduce(result, String::concat);
+
         return result;
     }
-}   
+
+    public ArrayList<FaceVertex> getVertices() {
+        return vertices;
+    }
+
+    public VertexNormal getFaceNormal() {
+        return faceNormal;
+    }
+
+}

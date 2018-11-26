@@ -17,6 +17,20 @@ public class FaceVertex {
     public VertexNormal n = null;
 
     public String toString() {
-        return v + "|" + n + "|" + t ;
+       // return v + "|" + n + "|" + t ;
+       return v.toString();
     }
+
+    public VertexGeometric getV() {
+        return v;
+    }
+
+    public VertexTexture getT() {
+        return t;
+    }
+
+    public VertexNormal getN() {
+        return n;
+    }
+    
 }
