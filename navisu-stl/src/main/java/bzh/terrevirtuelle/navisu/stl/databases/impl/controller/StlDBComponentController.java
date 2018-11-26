@@ -399,6 +399,10 @@ public class StlDBComponentController
     public CheckBox baseCB;
     @FXML
     public Button daeStlObjectButton;
+    @FXML
+    public Button daeButton;
+    @FXML
+    public Button objButton;
 
     /*-----------------------------------*/
     int k = 0;
@@ -756,7 +760,12 @@ public class StlDBComponentController
         daeStlObjectButton.setOnMouseClicked((MouseEvent event) -> {
             isDaeObject = daeStlExportToSTL.loadDae();
         });
-
+        daeButton.setOnMouseClicked((MouseEvent event) -> {
+            daeStlExportToSTL.loadKmzAndSaveStlWgs84();
+        });
+        objButton.setOnMouseClicked((MouseEvent event) -> {
+            //daeStlExportToSTL.loadAndSaveKMZ();
+        });
         requestButton.setOnMouseClicked((MouseEvent event) -> {
 
             s57Connection = databaseServices.connect(s57DatabaseTF.getText(),
@@ -948,8 +957,7 @@ public class StlDBComponentController
                             j = k % tileCount + 1;
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
-                            double scaleDae = Double.parseDouble(scaleDaeTF.getText());
-                            daeStlExportToSTL.export(g, filename, latScale, lonScale, scaleDae, tileSideZ, maxDepth);
+                            daeStlExportToSTL.export(g, filename, latScale, lonScale, tileSideZ, maxDepth);
                             k++;
                         }
                     }
