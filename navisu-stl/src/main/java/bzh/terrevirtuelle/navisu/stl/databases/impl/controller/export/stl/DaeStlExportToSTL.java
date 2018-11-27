@@ -17,8 +17,10 @@ import bzh.terrevirtuelle.navisu.util.io.IO;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
+import java.io.BufferedReader;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -55,7 +57,6 @@ public class DaeStlExportToSTL {
     }
 
     public boolean loadDae() {
-
         double latitude;
         double longitude;
         double elevation;
@@ -89,27 +90,27 @@ public class DaeStlExportToSTL {
                     }
                 }
             } else {
-                // File STL is not with with Geographics coordinates
-                // Parse doc.kml
-                Point3D point = parseDocKmlFile(file);
-                // Update stl files map
-                daeLocationObjectMap.put(new Point3D(point.getLatitude(), point.getLongitude(), point.getElevation()), file.getAbsolutePath());
-                // Save x.stl as xWgs84.stl
-                saveWGS84(file, point);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Bad format file STL. \n"
+                        + "Use item : Import/export 3D object from STL/KMZ \n"
+                        + "in Tools menu, \n"
+                        + "to transform metric coordinates\n"
+                        + "in geographic coordinates");
+                alert.show();
             }
         }
         return !daeLocationObjectMap.isEmpty();
-
     }
 
     public void loadKmzAndSaveStlWgs84() {
         File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl", "Georeferenced STL files (*.stl)", "*.STL", "*.stl");
         Point3D point = parseDocKmlFile(file);
-        daeLocationObjectMap.put(new Point3D(point.getLatitude(), point.getLongitude(), point.getElevation()), file.getAbsolutePath());
-        saveWGS84(file, point);
+        // daeLocationObjectMap.put(new Point3D(point.getLatitude(), point.getLongitude(), point.getElevation()), file.getAbsolutePath());
+        toGeographicWGS84CoordAndSave(file, point);
     }
 
-    public void saveWGS84(File file, Point3D point) {
+    public void toGeographicWGS84CoordAndSave(File file, Point3D point) {
         guiAgentServices.getJobsManager().newJob("Load KMZ objects", new Job() {
 
             @Override
@@ -178,7 +179,6 @@ public class DaeStlExportToSTL {
     }
 
     public void export(Point3D[][] g, String filename, double latScale, double lonScale, double tileSideZ, double maxdepth) {
-
         double elvScale = (latScale + lonScale) / 2;
         latMin = g[0][0].getLatitude();
         lonMin = g[0][0].getLongitude();
@@ -205,6 +205,9 @@ public class DaeStlExportToSTL {
                 Logger.getLogger(DaeStlExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
             if (content != null) {
+                if (!content.contains("Origin")) {
+
+                }
                 // Transform vertex angle coordinates in coordinates for one tile
                 String stlResult = "";
                 String[] resultTab = content.split("\n");
