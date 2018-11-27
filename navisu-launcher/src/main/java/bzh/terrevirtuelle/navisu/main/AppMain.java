@@ -151,6 +151,8 @@ import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.impl.LambertImpl;
+import static bzh.terrevirtuelle.navisu.cartography.projection.lambert.impl.LambertZone.Lambert93;
+import bzh.terrevirtuelle.navisu.cartography.projection.lambert.impl.Pt3D;
 import bzh.terrevirtuelle.navisu.stl.charts.impl.StlChartComponentImpl;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.DisplayImpl;
@@ -173,6 +175,8 @@ import bzh.terrevirtuelle.navisu.stl.charts.StlChartComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.StlDBComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.impl.ObjComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 
@@ -282,6 +286,7 @@ public class AppMain extends Application {
                         NavigationServerImpl.class,
                         NavigationCmdComponentImpl.class,
                         NmeaClientImpl.class,
+                        ObjComponentImpl.class,
                         ProjectionsComponentImpl.class,
                         RouteDataEditorImpl.class,
                         RouteEditorImpl.class,
@@ -375,8 +380,11 @@ public class AppMain extends Application {
         NavigationServerServices navigationServerServices = componentManager.getComponentService(NavigationServerServices.class);
         NavigationCmdComponentServices navigationCmdComponentServices = componentManager.getComponentService(NavigationCmdComponentServices.class);
         navigationCmdComponentServices.init();
+       
+        ObjComponentServices objComponentServices = componentManager.getComponentService(ObjComponentServices.class);
         
         ProjectionsComponentServices projectionsComponentServices = componentManager.getComponentService(ProjectionsComponentServices.class);
+       
         RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
         RouteDataEditorServices routeDataEditorServices = componentManager.getComponentService(RouteDataEditorServices.class);
         RoutePhotoEditorServices routePhotoEditorServices = componentManager.getComponentService(RoutePhotoEditorServices.class);
@@ -640,8 +648,9 @@ public class AppMain extends Application {
         RenderableLayer layer = layersManagerServices.getLayer("S57 charts", "BUOYAGE");
         s57ChartComponentServices.s57BuoyageView(layer, buoyages);
          */
- /*
+ 
         //test cartographic services Lambert93
+        /*
         Pt3D pt = lambertServices.convertToWGS84Deg(74962.5, 6750037.5, Lambert93);
         System.out.println("pt : " + pt);
          */

@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverMa
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
+import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDBLoader;
@@ -116,15 +117,17 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemDbL
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.charts.impl.loader.dem.DemSrtmElevationLoader;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.BuoyageExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportToSTL;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.DaeStlExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.DaeExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.LandmarkExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.ObjExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsExportToSTL;
 
@@ -133,8 +136,6 @@ import gov.nasa.worldwind.avlist.AVKey;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.util.logging.FileHandler;
 import org.apache.commons.io.FileUtils;
 
@@ -156,12 +157,14 @@ public class StlDBComponentController
     protected GeodesyServices geodesyServices;
     protected GuiAgentServices guiAgentServices;
     protected JTSServices jtsServices;
+    protected LambertServices lambertServices;
     protected LayersManagerServices layersManagerServices;
+    protected KmlComponentServices kmlComponentServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
+    protected ObjComponentServices objComponentServices;
     protected ShapefileObjectServices shapefileObjectServices;
     protected StlComponentServices stlComponentServices;
     protected TopologyServices topologyServices;
-    protected KmlComponentServices kmlComponentServices;
 
     protected static final Logger LOGGER = Logger.getLogger(StlDBComponentController.class.getName());
     private final String NAVISU_HOME = System.getProperty("user.home") + "/.navisu";
@@ -404,7 +407,12 @@ public class StlDBComponentController
     @FXML
     public Button objButton;
 
-    /*-----------------------------------*/
+    /*-----------------------------Tools------*/
+    @FXML
+    public TextField objXOffsetTF;
+    @FXML
+    public TextField objYOffsetTF;
+
     int k = 0;
     int i = 0;
 
@@ -424,8 +432,11 @@ public class StlDBComponentController
     protected Map<String, CheckBox> s57SelectionMap;
 
     protected StlGuiController stlGuiController;
-    protected DaeStlExportToSTL daeStlExportToSTL;
+    protected DaeExportToSTL daeStlExportToSTL;
+    protected ObjExportToSTL objExportToSTL;
+
     protected boolean isDaeObject = false;
+    protected boolean isObjObject = false;
 
     protected long startTime;
 
@@ -445,7 +456,9 @@ public class StlDBComponentController
             GeodesyServices geodesyServices,
             JTSServices jtsServices,
             StlComponentServices stlComponentServices,
-            KmlComponentServices kmlComponentServices) {
+            KmlComponentServices kmlComponentServices,
+            ObjComponentServices objComponentServices,
+            LambertServices lambertServices) {
         super(keyCode, keyCombination);
 
         this.component = component;
@@ -463,7 +476,11 @@ public class StlDBComponentController
         this.geodesyServices = geodesyServices;
         this.stlComponentServices = stlComponentServices;
         this.kmlComponentServices = kmlComponentServices;
-        this.daeStlExportToSTL = new DaeStlExportToSTL(geodesyServices, guiAgentServices, jtsServices);
+        this.objComponentServices = objComponentServices;
+        this.lambertServices=lambertServices;
+
+        this.daeStlExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices);
+        this.objExportToSTL = new ObjExportToSTL(geodesyServices, guiAgentServices, jtsServices, objComponentServices, lambertServices);
 
         LOGGER.setLevel(Level.INFO);
         FileHandler fh = null;
@@ -764,7 +781,7 @@ public class StlDBComponentController
             daeStlExportToSTL.loadKmzAndSaveStlWgs84();
         });
         objButton.setOnMouseClicked((MouseEvent event) -> {
-            //daeStlExportToSTL.loadAndSaveKMZ();
+            objExportToSTL.loadObj(Double.valueOf(objXOffsetTF.getText()),Double.valueOf(objYOffsetTF.getText()));
         });
         requestButton.setOnMouseClicked((MouseEvent event) -> {
 

@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
+import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
@@ -44,6 +45,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 
@@ -75,6 +77,8 @@ public class StlDBComponentImpl
     @UsedService
     JTSServices jtsServices;
     @UsedService
+    LambertServices lambertServices;
+    @UsedService
     LayersManagerServices layersManagerServices;
     @UsedService
     LayerTreeServices layerTreeServices;
@@ -88,6 +92,8 @@ public class StlDBComponentImpl
     TopologyServices topologyServices;
     @UsedService
     KmlComponentServices kmlComponentServices;
+    @UsedService
+    ObjComponentServices objComponentServices;
 
     protected final String COMPONENT_KEY_NAME_0 = "StlDbS57";
     protected String componentKeyName;
@@ -128,7 +134,9 @@ public class StlDBComponentImpl
                         geodesyServices,
                         jtsServices,
                         stlComponentServices,
-                        kmlComponentServices);
+                        kmlComponentServices,
+                        objComponentServices,
+                        lambertServices);
                 controller.setVisible(true);
             }
         }
