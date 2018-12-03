@@ -333,6 +333,7 @@
                                           <Label text="Altimetry" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                                           <GridPane GridPane.columnIndex="3" GridPane.rowIndex="1">
                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
@@ -340,8 +341,9 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <RadioButton fx:id="elevationRB" mnemonicParsing="false" text="Database DEM" />
-                                                <RadioButton fx:id="srtmRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="137.0" selected="true" text="SRTM NaVisu DEM" GridPane.columnIndex="1" />
+                                                <RadioButton fx:id="elevationRB" mnemonicParsing="false" text="Database DEM" GridPane.columnIndex="1" />
+                                                <RadioButton fx:id="srtmRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="137.0" selected="true" text="SRTM NaVisu DEM" GridPane.columnIndex="2" />
+                                                <RadioButton fx:id="noAltiRB" mnemonicParsing="false" text="NoAlti" />
                                              </children>
                                           </GridPane>
                                           <GridPane GridPane.columnIndex="3" GridPane.rowIndex="7">

@@ -129,13 +129,13 @@ public class Parse {
             } else if (line.startsWith(OBJ_MTLLIB)) {
                 processMaterialLib(line);
             } else {
-                log.log(WARNING, "line {0} unknown line |{1}|", new Object[]{lineCount, line});
+               // log.log(WARNING, "line {0} unknown line |{1}|", new Object[]{lineCount, line});
             }
             lineCount++;
         }
         bufferedReader.close();
 
-        log.log(INFO, "Loaded {0} lines", lineCount);
+       // log.log(INFO, "Loaded {0} lines", lineCount);
     }
 
     // @TODO: processVertex calls parseFloatList with params expecting
@@ -694,7 +694,7 @@ public class Parse {
         }
         bufferedReader.close();
 
-        log.log(INFO, "Parse.parseMtlFile: Loaded " + lineCount + " lines");
+       // log.log(INFO, "Parse.parseMtlFile: Loaded " + lineCount + " lines");
     }
 
     private void processNewmtl(String line) {

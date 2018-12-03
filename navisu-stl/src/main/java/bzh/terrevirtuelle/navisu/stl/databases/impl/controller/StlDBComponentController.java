@@ -12,6 +12,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
+import bzh.terrevirtuelle.navisu.cartography.projection.lambert.impl.Pt3D;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDBLoader;
@@ -133,6 +134,8 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLCons
 
 import com.google.common.collect.ImmutableMap;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.PointPlacemark;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -360,6 +363,8 @@ public class StlDBComponentController
     @FXML
     public RadioButton elevationRB;
     @FXML
+    public RadioButton noAltiRB;
+    @FXML
     public CheckBox wwjPreviewCB;
     @FXML
     public CheckBox stlPreviewCB;
@@ -477,7 +482,7 @@ public class StlDBComponentController
         this.stlComponentServices = stlComponentServices;
         this.kmlComponentServices = kmlComponentServices;
         this.objComponentServices = objComponentServices;
-        this.lambertServices=lambertServices;
+        this.lambertServices = lambertServices;
 
         this.daeStlExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices);
         this.objExportToSTL = new ObjExportToSTL(geodesyServices, guiAgentServices, jtsServices, objComponentServices, lambertServices);
@@ -781,7 +786,20 @@ public class StlDBComponentController
             daeStlExportToSTL.loadKmzAndSaveStlWgs84();
         });
         objButton.setOnMouseClicked((MouseEvent event) -> {
-            objExportToSTL.loadObj(Double.valueOf(objXOffsetTF.getText()),Double.valueOf(objYOffsetTF.getText()));
+            Pair<Pt3D, Pt3D> bounds = objExportToSTL.loadObj(Double.valueOf(objXOffsetTF.getText()), Double.valueOf(objYOffsetTF.getText()));
+            PointPlacemark p0 = new PointPlacemark(Position.fromDegrees(bounds.getX().getY(),bounds.getX().getX(), 1e4));
+            PointPlacemark p1 = new PointPlacemark(Position.fromDegrees(bounds.getY().getY(),bounds.getY().getX(), 1e4));
+            s57Layer.addRenderable(p0);
+            s57Layer.addRenderable(p1);
+           /* 
+            ArrayList<Position> pathPositions = new ArrayList<>();
+            pathPositions.add(Position.fromDegrees(bounds.getX().getY(),bounds.getX().getX(), 1e4));
+            pathPositions.add(Position.fromDegrees(bounds.getY().getY(),bounds.getY().getX(), 1e4));
+            pathPositions.add(Position.fromDegrees(bounds.getX().getX(),bounds.getY().getX(), 1e4));
+            
+            Path path = new Path(pathPositions);
+            wwd.redrawNow();
+            */
         });
         requestButton.setOnMouseClicked((MouseEvent event) -> {
 
@@ -828,14 +846,21 @@ public class StlDBComponentController
                 if (bathyRB.isSelected() && !elevationRB.isSelected()) {
                     grids = createBathymetryTab(lat0, lon0, lat1, lon1);
                 }
-                if (elevationRB.isSelected() && bathyRB.isSelected()) {
-                    grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
-                }
-                if (srtmRB.isSelected() && noBathyRB.isSelected()) {
-                    grids = createSrtmElevationTab(lat0, lon0, lat1, lon1, gridX);//~1m
-                }
-                if (srtmRB.isSelected() && depareRB.isSelected()) {
-                    //createElevationAndDepare(latMin, lonMin, latMax, lonMax);
+                //DEBUG
+               // noAltiRB.setSelected(true);
+                if (!noAltiRB.isSelected()) {
+                    if (elevationRB.isSelected() && bathyRB.isSelected()) {
+                        grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
+                    }
+                    if (srtmRB.isSelected() && noBathyRB.isSelected()) {
+                        grids = createSrtmElevationTab(lat0, lon0, lat1, lon1, gridX);//~1m
+                    }
+                    if (srtmRB.isSelected() && depareRB.isSelected()) {
+                        //createElevationAndDepare(latMin, lonMin, latMax, lonMax);
+                    }
+                } else {
+                    Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
+                    grids = createGrids(grid, tileCount);
                 }
                 k = 0;
                 if (grids != null) {
@@ -901,6 +926,7 @@ public class StlDBComponentController
                             LOGGER.info("Out export GridBox3D en STL");
                         });
                     }
+
                     //DEPARE
                     if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
                         createElevationAndDepare(latMin, lonMin, latMax, lonMax);

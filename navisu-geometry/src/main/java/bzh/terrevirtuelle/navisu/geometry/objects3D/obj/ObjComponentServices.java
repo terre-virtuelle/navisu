@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.geometry.objects3D.obj;
 
 import com.owens.oobjloader.builder.Face;
+import com.owens.oobjloader.builder.VertexGeometric;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
@@ -16,4 +17,6 @@ public interface ObjComponentServices
         extends ComponentService {
 
     List<Face> getFaces(String filename);
+
+    List<VertexGeometric> getVerticesG(String filename);
 }

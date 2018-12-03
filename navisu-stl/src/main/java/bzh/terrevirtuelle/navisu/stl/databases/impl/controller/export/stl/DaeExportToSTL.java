@@ -19,7 +19,11 @@ import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -27,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,15 +47,31 @@ public class DaeExportToSTL {
     private final GuiAgentServices guiAgentServices;
     protected JTSServices jtsServices;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
+    protected String CACHE_FILE_NAME = System.getProperty("user.home") + "/.navisu/caches/caches.properties";
+    protected String OBJECT_DIR;
+    protected Properties cacheProperties = new Properties();
     private double latMin;
     private double lonMin;
-    private final Map<Point3D, String> daeLocationObjectMap;
+    private final Map<Point3D, List<String>> meshObjectsLocationMap;
 
     public DaeExportToSTL(GeodesyServices geodesyServices, GuiAgentServices guiAgentServices, JTSServices jtsServices) {
         this.guiAgentServices = guiAgentServices;
         this.geodesyServices = geodesyServices;//  elvScale = (latScale + lonScale) / 2;
         this.jtsServices = jtsServices;
-        this.daeLocationObjectMap = new HashMap<>();
+        this.meshObjectsLocationMap = new HashMap<>();
+
+        InputStream input = null;
+        try {
+            input = new FileInputStream(CACHE_FILE_NAME);
+            cacheProperties.load(input);
+            input.close();
+        } catch (IOException ex) {
+            Logger.getLogger(DaeExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        OBJECT_DIR = cacheProperties.getProperty("OBJECT_DIR");
+        if (OBJECT_DIR == null) {
+            OBJECT_DIR = "data/stl/kmz";
+        }
     }
 
     public boolean loadDae() {
@@ -58,46 +79,67 @@ public class DaeExportToSTL {
         double longitude;
         double elevation;
 
-        File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl/kmz", "Georeferenced STL files (*.stl)", "*.STL", "*.stl");
-        String content = null;
-        try {
-            content = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
-        } catch (IOException ex) {
-            Logger.getLogger(DaeExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-        if (content != null) {
-            // File STL with Geographics coordinates
-            // Update stl files map
-            if (content.contains("Origin")) {
-                String[] contentTab = content.split("\n");
-                for (String s : contentTab) {
-                    if (s.contains("solid") && !s.contains("endsolid")) {
-                        try {
-                            String[] tmp = s.trim().split("\\s+");
-                            latitude = Double.parseDouble(tmp[4]);
-                            longitude = Double.parseDouble(tmp[5]);
-                            elevation = Double.parseDouble(tmp[6]);
-                            daeLocationObjectMap.put(new Point3D(latitude, longitude, elevation), file.getAbsolutePath());
-                        } catch (NumberFormatException e) {
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("Error");
-                            alert.setHeaderText("Bad format file STL");
-                            alert.show();
+        List<File> files = IO.multipleFileChooser(guiAgentServices.getStage(), OBJECT_DIR, "Georeferenced STL files (*.stl)", "*.STL", "*.stl");
+        if (files != null) {
+            OBJECT_DIR = files.get(0).getParent();
+            OutputStream output = null;
+            Properties properties = new Properties();
+            try {
+                output = new FileOutputStream(CACHE_FILE_NAME);
+                properties.setProperty("OBJECT_DIR", OBJECT_DIR);
+                properties.store(output, null);
+                output.close();
+            } catch (IOException ex) {
+                Logger.getLogger(DaeExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+            for (File file : files) {
+
+                String content = null;
+                try {
+                    content = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
+                } catch (IOException ex) {
+                    Logger.getLogger(DaeExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                }
+                if (content != null) {
+                    // File STL with Geographics coordinates
+                    // Update stl files map
+                    if (content.contains("Origin")||content.contains("bounds")) {
+                        String[] contentTab = content.split("\n");
+                        for (String s : contentTab) {
+                            if (s.contains("solid") && !s.contains("endsolid")) {
+                                try {
+                                    String[] tmp = s.trim().split("\\s+");
+                                    latitude = Double.parseDouble(tmp[4]);
+                                    longitude = Double.parseDouble(tmp[5]);
+                                    elevation = Double.parseDouble(tmp[6]);
+                                    Point3D key = new Point3D(latitude, longitude, elevation);
+                                    if (!meshObjectsLocationMap.containsKey(key)) {
+                                        meshObjectsLocationMap.put(key, new ArrayList<>());
+                                    }
+                                    meshObjectsLocationMap.get(key).add(file.getAbsolutePath());
+                                } catch (NumberFormatException e) {
+                                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                                    alert.setTitle("Error");
+                                    alert.setHeaderText("Bad format file STL");
+                                    alert.show();
+                                }
+                            }
                         }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText("Bad format file STL. \n"
+                                + "Use item : Import/export 3D object from STL/KMZ \n"
+                                + "in Tools menu, \n"
+                                + "to transform metric coordinates\n"
+                                + "in geographic coordinates");
+                        alert.show();
                     }
                 }
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Bad format file STL. \n"
-                        + "Use item : Import/export 3D object from STL/KMZ \n"
-                        + "in Tools menu, \n"
-                        + "to transform metric coordinates\n"
-                        + "in geographic coordinates");
-                alert.show();
             }
         }
-        return !daeLocationObjectMap.isEmpty();
+        //  System.out.println("daeLocationObjectMap : " + daeLocationObjectMap);
+        return !meshObjectsLocationMap.isEmpty();
     }
 
     public void loadKmzAndSaveStlWgs84() {
@@ -187,51 +229,55 @@ public class DaeExportToSTL {
         bounds.add(g[0][0]);
 
         List<Point3D> locInBound = new ArrayList<>();
-        Set<Point3D> locations = daeLocationObjectMap.keySet();
-
+        Set<Point3D> locations = meshObjectsLocationMap.keySet();
+       // System.out.println("meshObjectsLocationMap : " + meshObjectsLocationMap);
         locations.stream().filter((loc) -> (jtsServices.contains(jtsServices.getPolygon(bounds), loc))).forEachOrdered((loc) -> {
             locInBound.add(loc);
         });
 
         for (Point3D p : locInBound) {
+            List<String> contents = meshObjectsLocationMap.get(p);
             String content = null;
             // Transform vertex coordinates in angles
-            try {
-                content = new String(Files.readAllBytes(Paths.get(daeLocationObjectMap.get(p))));
-            } catch (IOException ex) {
-                Logger.getLogger(DaeExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
-            if (content != null) {
-                if (!content.contains("Origin")) {
-
-                }
-                // Transform vertex angle coordinates in coordinates for one tile
-                String stlResult = "";
-                String[] resultTab = content.split("\n");
-                for (String s : resultTab) {
-                    if (s.contains("facet") || s.contains("loop") || s.contains("solid")) {
-                        stlResult += s + "\n";
-                    } else {
-                        if (s.contains("vertex")) {
-                            String[] c = s.trim().split("\\s+");
-                            double lon = Double.parseDouble(c[1]);
-                            double lat = Double.parseDouble(c[2]);
-
-                            double latM = geodesyServices.getDistanceM(latMin, lonMin, lat, lonMin);
-                            double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
-                            latM *= latScale;
-                            lonM *= lonScale;
-
-                            double elv = Double.parseDouble(c[3]) * elvScale + tileSideZ;
-                            stlResult += "vertex " + lonM + " " + latM + " " + elv + "\n";
-                        }
-                    }
-                }
-                //Insert dae file in stlFile.stl
+            for (String ss : contents) {
                 try {
-                    Files.write(Paths.get(filename), stlResult.getBytes(), StandardOpenOption.APPEND);
+                    content = new String(Files.readAllBytes(Paths.get(ss)));
                 } catch (IOException ex) {
                     Logger.getLogger(DaeExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                }
+                if (content != null) {
+                    if (content.contains("Origin")||content.contains("bounds")) {
+
+                        // Transform vertex angle coordinates in coordinates for one tile
+                        String stlResult = "";
+                        String[] resultTab = content.split("\n");
+                        for (String s : resultTab) {
+                            if (s.contains("facet") || s.contains("loop") || s.contains("solid")) {
+                                stlResult += s + "\n";
+                            } else {
+                                if (s.contains("vertex")) {
+                                    String[] c = s.trim().split("\\s+");
+                                    double lon = Double.parseDouble(c[1]);
+                                    double lat = Double.parseDouble(c[2]);
+
+                                    double latM = geodesyServices.getDistanceM(latMin, lonMin, lat, lonMin);
+                                    double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
+                                    latM *= latScale;
+                                    lonM *= lonScale;
+
+                                    double elv = Double.parseDouble(c[3]) * elvScale + tileSideZ;
+                                    stlResult += "vertex " + lonM + " " + latM + " " + elv + "\n";
+                                }
+                            }
+                        }
+
+                        //Insert dae file in stlFile.stl
+                        try {
+                            Files.write(Paths.get(filename), stlResult.getBytes(), StandardOpenOption.APPEND);
+                        } catch (IOException ex) {
+                            Logger.getLogger(DaeExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                        }
+                    }
                 }
             }
         }

@@ -164,7 +164,9 @@ public class GridBox3DExportToSTL {
         facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + z2 + " \n";
         facet += "endloop \n";
         facet += "endfacet \n";
-
+        if (facet.contains("NaN")){
+            facet="";
+        }
         return facet;
     }
 
