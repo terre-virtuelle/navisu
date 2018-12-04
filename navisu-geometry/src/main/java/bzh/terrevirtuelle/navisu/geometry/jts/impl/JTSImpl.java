@@ -83,6 +83,15 @@ public class JTSImpl
     }
 
     @Override
+    public List<Point3D> toListPoint3D(Coordinate[] coord) {
+        List<Point3D> result = new ArrayList<>();
+        for (Coordinate c : coord) {
+            result.add(new Point3D(c.y, c.x, c.z));
+        }
+        return result;
+    }
+
+    @Override
     public Geometry getLineString(List<Point3D> points) {
         List<Coordinate> coordinatesJTS = toListCoordinates(points);
         Coordinate[] coord = new Coordinate[coordinatesJTS.size()];

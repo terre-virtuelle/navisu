@@ -5,6 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.geometry.objects3D.obj;
 
+
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import com.owens.oobjloader.builder.Face;
 import com.owens.oobjloader.builder.VertexGeometric;
 import java.util.List;
@@ -19,4 +21,8 @@ public interface ObjComponentServices
     List<Face> getFaces(String filename);
 
     List<VertexGeometric> getVerticesG(String filename);
+
+    Point3D toPoint3D(VertexGeometric vertexGeometric);
+
+    List<Point3D> toPoint3Ds(List<VertexGeometric> vertexGeometric);
 }

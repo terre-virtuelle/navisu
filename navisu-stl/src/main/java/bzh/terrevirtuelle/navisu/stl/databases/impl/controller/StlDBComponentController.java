@@ -440,8 +440,9 @@ public class StlDBComponentController
     protected DaeExportToSTL daeStlExportToSTL;
     protected ObjExportToSTL objExportToSTL;
 
-    protected boolean isDaeObject = false;
-    protected boolean isObjObject = false;
+    // protected boolean isDaeObject = false;
+    // protected boolean isObjObject = false;
+    protected List<Pair<Point3D, Point3D>> boundList;
 
     protected long startTime;
 
@@ -485,7 +486,8 @@ public class StlDBComponentController
         this.lambertServices = lambertServices;
 
         this.daeStlExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices);
-        this.objExportToSTL = new ObjExportToSTL(geodesyServices, guiAgentServices, jtsServices, objComponentServices, lambertServices);
+        this.objExportToSTL = new ObjExportToSTL(geodesyServices, guiAgentServices, jtsServices, 
+                objComponentServices, lambertServices, displayServices);
 
         LOGGER.setLevel(Level.INFO);
         FileHandler fh = null;
@@ -780,26 +782,42 @@ public class StlDBComponentController
         });
 
         daeStlObjectButton.setOnMouseClicked((MouseEvent event) -> {
-            isDaeObject = daeStlExportToSTL.loadDae();
+            boundList = daeStlExportToSTL.loadDae();
+            for (Pair<Point3D, Point3D> bounds : boundList) {
+                if (bounds.getY() != null) {
+                    ArrayList<Position> pathPositions = new ArrayList<>();
+                    pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getX().getLongitude(), 100));
+                    pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getY().getLongitude(), 100));
+                    pathPositions.add(Position.fromDegrees(bounds.getY().getLatitude(), bounds.getY().getLongitude(), 100));
+                    pathPositions.add(Position.fromDegrees(bounds.getY().getLatitude(), bounds.getX().getLongitude(), 100));
+                    pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getX().getLongitude(), 100));
+                    Path path = new Path(pathPositions);
+                    normalAttributes.setOutlineMaterial(Material.GREEN);
+                    path.setAttributes(normalAttributes);
+                    s57Layer.addRenderable(path);
+                    wwd.redrawNow();
+                }else{
+                    PointPlacemark pp = new PointPlacemark(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getX().getLongitude(), 100));
+                    s57Layer.addRenderable(pp);
+                    wwd.redrawNow();
+                }
+            }
         });
         daeButton.setOnMouseClicked((MouseEvent event) -> {
             daeStlExportToSTL.loadKmzAndSaveStlWgs84();
         });
         objButton.setOnMouseClicked((MouseEvent event) -> {
-            Pair<Pt3D, Pt3D> bounds = objExportToSTL.loadObj(Double.valueOf(objXOffsetTF.getText()), Double.valueOf(objYOffsetTF.getText()));
-            PointPlacemark p0 = new PointPlacemark(Position.fromDegrees(bounds.getX().getY(),bounds.getX().getX(), 1e4));
-            PointPlacemark p1 = new PointPlacemark(Position.fromDegrees(bounds.getY().getY(),bounds.getY().getX(), 1e4));
-            s57Layer.addRenderable(p0);
-            s57Layer.addRenderable(p1);
-           /* 
+            Pair<Point3D, Point3D> bounds = objExportToSTL.loadObj(s57Layer, Double.valueOf(objXOffsetTF.getText()), Double.valueOf(objYOffsetTF.getText()));
             ArrayList<Position> pathPositions = new ArrayList<>();
-            pathPositions.add(Position.fromDegrees(bounds.getX().getY(),bounds.getX().getX(), 1e4));
-            pathPositions.add(Position.fromDegrees(bounds.getY().getY(),bounds.getY().getX(), 1e4));
-            pathPositions.add(Position.fromDegrees(bounds.getX().getX(),bounds.getY().getX(), 1e4));
-            
+            pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getX().getLongitude(), 100));
+            pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getY().getLongitude(), 100));
+            pathPositions.add(Position.fromDegrees(bounds.getY().getLatitude(), bounds.getY().getLongitude(), 100));
+            pathPositions.add(Position.fromDegrees(bounds.getY().getLatitude(), bounds.getX().getLongitude(), 100));
+            pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getX().getLongitude(), 100));
             Path path = new Path(pathPositions);
+            path.setAttributes(normalAttributes);
+            s57Layer.addRenderable(path);
             wwd.redrawNow();
-            */
         });
         requestButton.setOnMouseClicked((MouseEvent event) -> {
 
@@ -847,7 +865,7 @@ public class StlDBComponentController
                     grids = createBathymetryTab(lat0, lon0, lat1, lon1);
                 }
                 //DEBUG
-               // noAltiRB.setSelected(true);
+                noAltiRB.setSelected(true);
                 if (!noAltiRB.isSelected()) {
                     if (elevationRB.isSelected() && bathyRB.isSelected()) {
                         grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
@@ -993,7 +1011,7 @@ public class StlDBComponentController
                     }
                     // DAE
                     k = 0;
-                    if (isDaeObject == true) {
+                    if (!boundList.isEmpty()) {
                         for (Point3D[][] g : grids) {
                             objects.clear();
                             i = k / tileCount + 1;
@@ -1438,15 +1456,6 @@ public class StlDBComponentController
         return cmd;
     }
 
-    /*
-    protected void in(String comment) {
-        Logger.getLogger(getClass().getSimpleName()).log(Level.INFO, comment);
-    }
-
-    protected void out(String comment) {
-        Logger.getLogger(getClass().getSimpleName()).log(Level.INFO, comment);
-    }
-     */
     private void createElevationAndDepare(double latMin, double lonMin, double latMax, double lonMax) {
         // bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
         Point3D[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);

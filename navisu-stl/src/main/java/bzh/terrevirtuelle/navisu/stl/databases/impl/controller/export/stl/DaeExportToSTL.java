@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.stl.charts.impl.loader.dem.DemSrtmElevationLoader;
+import bzh.terrevirtuelle.navisu.util.Pair;
 import bzh.terrevirtuelle.navisu.util.io.IO;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
@@ -74,11 +75,12 @@ public class DaeExportToSTL {
         }
     }
 
-    public boolean loadDae() {
+    @SuppressWarnings("unchecked")
+    public List<Pair<Point3D, Point3D>> loadDae() {
         double latitude;
         double longitude;
         double elevation;
-
+        List<Pair<Point3D, Point3D>> boundList = new ArrayList<>();
         List<File> files = IO.multipleFileChooser(guiAgentServices.getStage(), OBJECT_DIR, "Georeferenced STL files (*.stl)", "*.STL", "*.stl");
         if (files != null) {
             OBJECT_DIR = files.get(0).getParent();
@@ -92,6 +94,7 @@ public class DaeExportToSTL {
             } catch (IOException ex) {
                 Logger.getLogger(DaeExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
+
             for (File file : files) {
 
                 String content = null;
@@ -101,9 +104,11 @@ public class DaeExportToSTL {
                     Logger.getLogger(DaeExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                 }
                 if (content != null) {
-                    // File STL with Geographics coordinates
-                    // Update stl files map
-                    if (content.contains("Origin")||content.contains("bounds")) {
+                    /* File STL with Geographics coordinates
+                       Update stl files map
+                     solid 65_103_terrain.obj  Origin :  48.374021741300346 -4.530830948390423 0.0 
+                     */
+                    if (content.contains("Origin")) {
                         String[] contentTab = content.split("\n");
                         for (String s : contentTab) {
                             if (s.contains("solid") && !s.contains("endsolid")) {
@@ -117,6 +122,41 @@ public class DaeExportToSTL {
                                         meshObjectsLocationMap.put(key, new ArrayList<>());
                                     }
                                     meshObjectsLocationMap.get(key).add(file.getAbsolutePath());
+                                    boundList.add(new Pair(key, null));
+                                } catch (NumberFormatException e) {
+                                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                                    alert.setTitle("Error");
+                                    alert.setHeaderText("Bad format file STL");
+                                    alert.show();
+                                }
+                            }
+                        }
+                    }
+                    /*
+                    solid 65_101_terrain.obj  Bounds :  48.359348292699565 -4.528724655254703 0.0, 48.367386281705485 -4.518766981307323 0.0
+                     */
+                    if (content.contains("Bounds")) {
+                        String[] contentTab = content.split("\n");
+                        for (String s : contentTab) {
+                            if (s.contains("solid") && !s.contains("endsolid")) {
+                                try {
+                                    String[] tmp0 = s.trim().split(",");
+                                    String[] tmp = tmp0[0].trim().split("\\s+");
+                                    latitude = Double.parseDouble(tmp[4]);
+                                    longitude = Double.parseDouble(tmp[5]);
+                                    elevation = Double.parseDouble(tmp[6]);
+                                    Point3D key = new Point3D(latitude, longitude, elevation);
+                                    if (!meshObjectsLocationMap.containsKey(key)) {
+                                        meshObjectsLocationMap.put(key, new ArrayList<>());
+                                    }
+                                    meshObjectsLocationMap.get(key).add(file.getAbsolutePath());
+                                    // System.out.println("tmp0[1] : "+tmp0[1]);
+                                    String[] tmp1 = tmp0[1].trim().split("\\s+");
+                                    latitude = Double.parseDouble(tmp1[0]);
+                                    longitude = Double.parseDouble(tmp1[1]);
+                                    elevation = Double.parseDouble(tmp1[2]);
+                                    Point3D key1 = new Point3D(latitude, longitude, elevation);
+                                    boundList.add(new Pair(key, key1));
                                 } catch (NumberFormatException e) {
                                     Alert alert = new Alert(Alert.AlertType.ERROR);
                                     alert.setTitle("Error");
@@ -138,8 +178,7 @@ public class DaeExportToSTL {
                 }
             }
         }
-        //  System.out.println("daeLocationObjectMap : " + daeLocationObjectMap);
-        return !meshObjectsLocationMap.isEmpty();
+        return boundList;
     }
 
     public void loadKmzAndSaveStlWgs84() {
@@ -217,6 +256,7 @@ public class DaeExportToSTL {
         });
     }
 
+    @SuppressWarnings("unchecked")
     public void export(Point3D[][] g, String filename, double latScale, double lonScale, double tileSideZ, double maxdepth) {
         double elvScale = (latScale + lonScale) / 2;
         latMin = g[0][0].getLatitude();
@@ -227,10 +267,8 @@ public class DaeExportToSTL {
         bounds.add(g[g[0].length - 1][g[1].length - 1]);
         bounds.add(g[g[0].length - 1][0]);
         bounds.add(g[0][0]);
-
         List<Point3D> locInBound = new ArrayList<>();
         Set<Point3D> locations = meshObjectsLocationMap.keySet();
-       // System.out.println("meshObjectsLocationMap : " + meshObjectsLocationMap);
         locations.stream().filter((loc) -> (jtsServices.contains(jtsServices.getPolygon(bounds), loc))).forEachOrdered((loc) -> {
             locInBound.add(loc);
         });
@@ -246,7 +284,7 @@ public class DaeExportToSTL {
                     Logger.getLogger(DaeExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                 }
                 if (content != null) {
-                    if (content.contains("Origin")||content.contains("bounds")) {
+                    if (content.contains("Origin") || content.contains("Bounds")) {
 
                         // Transform vertex angle coordinates in coordinates for one tile
                         String stlResult = "";

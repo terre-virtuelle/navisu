@@ -27,6 +27,8 @@ public interface DisplayServices
 
     void displayPoints3D(List<Point3D> points, RenderableLayer layer);
 
+    void displayPoints3DToPath(List<Point3D> points, RenderableLayer layer);
+
     void displayPoints3DAsTriangles(List<Point3D> points, RenderableLayer layer, Material material);
 
     void displayPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration);
@@ -36,7 +38,7 @@ public interface DisplayServices
     void displayPaths(List<Path> points, RenderableLayer layer, Material material, double verticalExaggeration, double verticalOffset);
 
     void displayPolygons(List<Polygon> points, RenderableLayer layer, Material material, double verticalExaggeration);
-    
+
     void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration);
 
     void displayPolygons(List<Polygon> points, RenderableLayer layer, Material material, double verticalExaggeration, double verticalOffset);

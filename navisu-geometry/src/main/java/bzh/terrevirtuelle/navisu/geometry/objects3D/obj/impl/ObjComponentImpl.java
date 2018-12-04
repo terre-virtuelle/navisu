@@ -5,6 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.geometry.objects3D.obj.impl;
 
+
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import org.capcaval.c3.component.ComponentState;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponent;
@@ -13,6 +15,7 @@ import com.owens.oobjloader.builder.Face;
 import com.owens.oobjloader.builder.VertexGeometric;
 import com.owens.oobjloader.parser.Parse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,6 +61,20 @@ public class ObjComponentImpl
 
     @Override
     public void componentStopped() {
+    }
+
+    @Override
+    public Point3D toPoint3D(VertexGeometric vertexGeometric) {
+        return new Point3D(vertexGeometric.x, vertexGeometric.y, vertexGeometric.z);
+    }
+
+    @Override
+    public List<Point3D> toPoint3Ds(List<VertexGeometric> vertexGeometrics) {
+        List<Point3D> result = new ArrayList<>();
+        vertexGeometrics.forEach((v) -> {
+            result.add(new Point3D(v.x, v.y, v.z));
+        });
+        return result;
     }
 
 }

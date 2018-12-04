@@ -21,13 +21,15 @@ public interface JTSServices
 
     List<Coordinate> toListCoordinates(List<Point3D> pts);
 
+    List<Point3D> toListPoint3D(Coordinate[] coord);
+
     Coordinate[] toTabCoordinates(List<Point3D> pts);
 
     Geometry getConcaveHull(List<Point3D> points, double threshold);
 
     Geometry getLineString(List<Point3D> points);
-    
-    Geometry getPolygon(List<Point3D> points); 
+
+    Geometry getPolygon(List<Point3D> points);
 
     boolean contains(Geometry geom, Point3D pt3D);
 
