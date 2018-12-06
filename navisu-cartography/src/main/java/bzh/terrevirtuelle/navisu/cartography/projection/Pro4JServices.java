@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package bzh.terrevirtuelle.navisu.cartography.projection;
 
-import bzh.terrevirtuelle.navisu.cartography.projection.lambert.*;
-import org.capcaval.c3.component.Component;
+import org.capcaval.c3.component.ComponentService;
 
 /**
- * @date 13 sept 2017
+ * @date 
  * @author Serge Morvan
  */
-public interface Proj
-        extends Component {
+public interface Pro4JServices 
+ extends ComponentService{
 
 }
