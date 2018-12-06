@@ -31,10 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,13 +45,11 @@ public class ObjExportToSTL {
     protected JTSServices jtsServices;
     protected LambertServices lambertServices;
     protected ObjComponentServices objComponentServices;
-    protected DisplayServices displayServices;
-    double objXOffset;
-    double objYOffset;
+    protected double objXOffset;
+    protected double objYOffset;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
-    String content;
-    List<Face> faces = null;
-    private final Map<Point3D, String> objLocationObjectMap;
+    protected String content;
+    protected List<Face> faces = null;
 
     public ObjExportToSTL(GeodesyServices geodesyServices,
             GuiAgentServices guiAgentServices,
@@ -67,44 +62,20 @@ public class ObjExportToSTL {
         this.jtsServices = jtsServices;
         this.objComponentServices = objComponentServices;
         this.lambertServices = lambertServices;
-        this.displayServices = displayServices;
-        this.objLocationObjectMap = new HashMap<>();
     }
 
-    public Pair<Point3D, Point3D> loadObj(RenderableLayer s57Layer, double objXOffset, double objYOffset) {
+    public Pair<Point3D, Point3D> loadObj(RenderableLayer s57Layer, double objXOffset, double objYOffset, boolean isTerrain) {
         File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl/obj", "Georeferenced STL files (*.obj)", "*.OBJ", "*.obj");
-        // System.out.println("file : "+file);
         Path path = filter(file);
-        List<VertexGeometric> verticesG = objComponentServices.getVerticesG(path.toString());
-/*
-        List<Point3D> pts = objComponentServices.toPoint3Ds(verticesG);
-        List<Point3D> points=new ArrayList<>();
-        for(Point3D p : pts){
-            if(p.getElevation()>=1.0){
-                points.add(p);
-            }
-        }
-        List<Point3D> concaveHull = jtsServices.toListPoint3D(jtsServices.getConcaveHull(points, 150).getCoordinates());
-        List<Point3D> concaveHullWgs84 = new ArrayList<>();
-        for (Point3D p : concaveHull) {
-            Pt3D pt = lambertServices.convertToWGS84Deg(p.getLatitude()+objXOffset, p.getLongitude()+objYOffset, LambertZone.Lambert93);
-            concaveHullWgs84.add(new Point3D(pt.getY(), pt.getX(), pt.getZ()));
-        }
 
-        System.out.println("concaveHull : " + concaveHullWgs84);
-        displayServices.displayPoints3DToPath(concaveHullWgs84, s57Layer);
-*/
-        Pair<Point3D, Point3D> bounds = getBounds(verticesG, objXOffset, objYOffset);
+        List<VertexGeometric> verticesG = objComponentServices.getVerticesG(path.toString());
+
+        Pair<Point3D, Point3D> bounds = getBounds(verticesG, objXOffset, objYOffset, isTerrain);
         double latMin = bounds.getX().getLatitude();
         double lonMin = bounds.getX().getLongitude();
         double latMax = bounds.getY().getLatitude();
         double lonMax = bounds.getY().getLongitude();
-        Pt3D ptMin = lambertServices.convertToWGS84Deg(latMin, lonMin, LambertZone.Lambert93);
-        Pt3D ptMax=lambertServices.convertToWGS84Deg(latMax, lonMax, LambertZone.Lambert93);
-        latMin=ptMin.getX();
-        lonMin=ptMin.getY();
-        latMax=ptMax.getX();
-        lonMax=ptMax.getY();
+
         content = "solid " + file.getName() + "  Bounds :  " + latMin + " " + lonMin + " 0.0, " + latMax + " " + lonMax + " 0.0\n";
 
         guiAgentServices.getJobsManager().newJob("Load Obj objects", new Job() {
@@ -112,7 +83,7 @@ public class ObjExportToSTL {
             public void run(ProgressHandle progressHandle) {
                 faces = objComponentServices.getFaces(path.toString());
                 faces.stream().map((f) -> f.getVertices()).forEachOrdered((fvs) -> {
-                    content += toFacet(fvs, objXOffset, objYOffset);
+                    content += toFacet(fvs, objXOffset, objYOffset, isTerrain);
                 });
 
                 content += "endsolid " + file.getName() + "\n";
@@ -128,7 +99,7 @@ public class ObjExportToSTL {
         return bounds;
     }
 
-    private Pair<Point3D, Point3D> getBounds(List<VertexGeometric> verticesG, double objXOffset, double objYOffset) {
+    private Pair<Point3D, Point3D> getBounds(List<VertexGeometric> verticesG, double objXOffset, double objYOffset, boolean isTerrain) {
         double lonMax93 = Double.NEGATIVE_INFINITY;
         double latMax93 = Double.NEGATIVE_INFINITY;
         double latMin93 = Double.MAX_VALUE;
@@ -160,36 +131,66 @@ public class ObjExportToSTL {
 
         Point3D pMin = new Point3D(ptMin.getY(), ptMin.getX(), ptMin.getZ());
         Point3D pMax = new Point3D(ptMax.getY(), ptMax.getX(), ptMax.getZ());
-        // System.out.println(ptMin + " " + ptMax);
         return new Pair<>(pMin, pMax);
+
     }
 
-    private String toFacet(List<FaceVertex> fvs, double objXOffset, double objYOffset) {
+    private String toFacet(List<FaceVertex> fvs, double objXOffset, double objYOffset, boolean isTerrain) {
         String facet = "";
-        Vec3d[] vec3d = new Vec3d[3];
-        Vec3d normal;
+        Vec3d[] mainFace = new Vec3d[3];
         int i = 0;
+        // Main face
         for (FaceVertex fv : fvs) {
             double x = (fv.getV().x + objXOffset);
             double y = (fv.getV().y + objYOffset);
             Pt3D pt = lambertServices.convertToWGS84Deg(x, y, LambertZone.Lambert93);
-            vec3d[i++] = new Vec3d(pt.getX(), pt.getY(), fv.getV().z * 2);
+            mainFace[i++] = new Vec3d(pt.getX(), pt.getY(), fv.getV().z);
         }
+        facet += facetToSTL(mainFace);
+        if (isTerrain == true) {
+            //Create new vertices and faces to close the volume
+            Vec3d ww0 = new Vec3d(mainFace[0].x, mainFace[0].y, 0.0);
+            Vec3d ww1 = new Vec3d(mainFace[1].x, mainFace[1].y, 0.0);
+            Vec3d ww2 = new Vec3d(mainFace[2].x, mainFace[2].y, 0.0);
 
-        Vec3d edge1 = vec3d[1].sub(vec3d[2]);
-        Vec3d edge2 = vec3d[2].sub(vec3d[0]);
+            Vec3d[] f0 = {mainFace[0], ww0, mainFace[1]};
+            facet += facetToSTL(f0);
+
+            Vec3d[] f1 = {ww0, ww1, mainFace[1]};
+            facet += facetToSTL(f1);
+
+            Vec3d[] f2 = {ww1, mainFace[1], ww2};
+            facet += facetToSTL(f2);
+
+            Vec3d[] f3 = {ww2, mainFace[1], mainFace[1]};
+            facet += facetToSTL(f3);
+
+            Vec3d[] f4 = {ww2, mainFace[0], mainFace[2]};
+            facet += facetToSTL(f4);
+
+            Vec3d[] f5 = {ww0, mainFace[0], ww2};
+            facet += facetToSTL(f5);
+        }
+        return facet;
+    }
+
+    private String facetToSTL(Vec3d[] face) {
+        String facet = "";
+        Vec3d normal;
+        Vec3d edge1 = face[1].sub(face[2]);
+        Vec3d edge2 = face[2].sub(face[0]);
         normal = Vec3d.cross(edge1, edge2).normalize();
 
-        double z0 = vec3d[0].z;
-        double z1 = vec3d[1].z;
-        double z2 = vec3d[2].z;
+        double z0 = face[0].z;
+        double z1 = face[1].z;
+        double z2 = face[2].z;
 
         facet = "facet normal ";
         facet += normal.x + " " + normal.y + " " + normal.z + " \n";
         facet += "outer loop \n";
-        facet += "vertex " + vec3d[0].x + " " + vec3d[0].y + " " + z0 + " \n";
-        facet += "vertex " + vec3d[1].x + " " + vec3d[1].y + " " + z1 + " \n";
-        facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + z2 + " \n";
+        facet += "vertex " + face[0].x + " " + face[0].y + " " + z0 + " \n";
+        facet += "vertex " + face[1].x + " " + face[1].y + " " + z1 + " \n";
+        facet += "vertex " + face[2].x + " " + face[2].y + " " + z2 + " \n";
         facet += "endloop \n";
         facet += "endfacet \n";
         return facet;

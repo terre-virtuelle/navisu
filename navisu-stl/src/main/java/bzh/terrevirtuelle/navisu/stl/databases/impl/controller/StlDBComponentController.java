@@ -12,7 +12,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
-import bzh.terrevirtuelle.navisu.cartography.projection.lambert.impl.Pt3D;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDBLoader;
@@ -128,6 +127,7 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.Buoyag
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.DaeExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.LandmarkExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.MeshExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.ObjExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsExportToSTL;
@@ -402,11 +402,13 @@ public class StlDBComponentController
     @FXML
     public CheckBox pontonCB;
     @FXML
+    public CheckBox terrainCB;
+    @FXML
     public CheckBox resareCB;
     @FXML
     public CheckBox baseCB;
     @FXML
-    public Button daeStlObjectButton;
+    public Button meshStlObjectButton;
     @FXML
     public Button daeButton;
     @FXML
@@ -437,8 +439,9 @@ public class StlDBComponentController
     protected Map<String, CheckBox> s57SelectionMap;
 
     protected StlGuiController stlGuiController;
-    protected DaeExportToSTL daeStlExportToSTL;
+    protected DaeExportToSTL daeExportToSTL;
     protected ObjExportToSTL objExportToSTL;
+    protected MeshExportToSTL meshExportToSTL;
 
     // protected boolean isDaeObject = false;
     // protected boolean isObjObject = false;
@@ -485,9 +488,10 @@ public class StlDBComponentController
         this.objComponentServices = objComponentServices;
         this.lambertServices = lambertServices;
 
-        this.daeStlExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices);
-        this.objExportToSTL = new ObjExportToSTL(geodesyServices, guiAgentServices, jtsServices, 
+        this.daeExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices);
+        this.objExportToSTL = new ObjExportToSTL(geodesyServices, guiAgentServices, jtsServices,
                 objComponentServices, lambertServices, displayServices);
+        this.meshExportToSTL = new MeshExportToSTL(geodesyServices, guiAgentServices, jtsServices);
 
         LOGGER.setLevel(Level.INFO);
         FileHandler fh = null;
@@ -781,8 +785,8 @@ public class StlDBComponentController
 
         });
 
-        daeStlObjectButton.setOnMouseClicked((MouseEvent event) -> {
-            boundList = daeStlExportToSTL.loadDae();
+        meshStlObjectButton.setOnMouseClicked((MouseEvent event) -> {
+            boundList = meshExportToSTL.loadMesh();
             for (Pair<Point3D, Point3D> bounds : boundList) {
                 if (bounds.getY() != null) {
                     ArrayList<Position> pathPositions = new ArrayList<>();
@@ -796,7 +800,7 @@ public class StlDBComponentController
                     path.setAttributes(normalAttributes);
                     s57Layer.addRenderable(path);
                     wwd.redrawNow();
-                }else{
+                } else {
                     PointPlacemark pp = new PointPlacemark(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getX().getLongitude(), 100));
                     s57Layer.addRenderable(pp);
                     wwd.redrawNow();
@@ -804,10 +808,13 @@ public class StlDBComponentController
             }
         });
         daeButton.setOnMouseClicked((MouseEvent event) -> {
-            daeStlExportToSTL.loadKmzAndSaveStlWgs84();
+            daeExportToSTL.loadKmzAndSaveStlWgs84();
         });
         objButton.setOnMouseClicked((MouseEvent event) -> {
-            Pair<Point3D, Point3D> bounds = objExportToSTL.loadObj(s57Layer, Double.valueOf(objXOffsetTF.getText()), Double.valueOf(objYOffsetTF.getText()));
+            Pair<Point3D, Point3D> bounds = objExportToSTL.loadObj(s57Layer, 
+                    Double.valueOf(objXOffsetTF.getText()), Double.valueOf(objYOffsetTF.getText()),
+                    terrainCB.isSelected());
+           
             ArrayList<Position> pathPositions = new ArrayList<>();
             pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getX().getLongitude(), 100));
             pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getY().getLongitude(), 100));
@@ -865,7 +872,7 @@ public class StlDBComponentController
                     grids = createBathymetryTab(lat0, lon0, lat1, lon1);
                 }
                 //DEBUG
-                noAltiRB.setSelected(true);
+               // noAltiRB.setSelected(true);
                 if (!noAltiRB.isSelected()) {
                     if (elevationRB.isSelected() && bathyRB.isSelected()) {
                         grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
@@ -1018,7 +1025,7 @@ public class StlDBComponentController
                             j = k % tileCount + 1;
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
-                            daeStlExportToSTL.export(g, filename, latScale, lonScale, tileSideZ, maxDepth);
+                            meshExportToSTL.export(g, filename, latScale, lonScale, tileSideZ, maxDepth);
                             k++;
                         }
                     }

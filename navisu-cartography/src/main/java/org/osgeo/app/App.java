@@ -30,7 +30,7 @@ public class App {
 */
        CRSFactory factory = new CRSFactory();
         CoordinateReferenceSystem dstCrs = factory.createFromName("EPSG:4326");
-        CoordinateReferenceSystem srcCrs = factory.createFromName("EPSG:2154");
+        CoordinateReferenceSystem srcCrs = factory.createFromName("EPSG:2154");//Lambert93
 
         BasicCoordinateTransform transform = new BasicCoordinateTransform(srcCrs, dstCrs);
 
@@ -42,5 +42,6 @@ public class App {
 // Writes result into dstCoord
         transform.transform(srcCoord, dstCoord);
         System.out.println("dstCoord : " + dstCoord);
+        
     }
 }

@@ -11,7 +11,6 @@ package com.owens.oobjloader.builder;
 import com.owens.oobjloader.parser.BuilderInterface;
 
 import java.util.*;
-import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
 
