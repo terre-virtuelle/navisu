@@ -31,6 +31,8 @@ public interface DelaunayServices
     Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax,
             double y, double x, double elevation);
 
+    Point3D[][] toGridTab(List<Point3D> bounds, double y, double x, double elevation);
+
     /*
     Point3D[][] toGrid(double orgLat, double orgLon, 
             double latMax, double lonMax,

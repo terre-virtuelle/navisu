@@ -98,12 +98,23 @@ public class DisplayImpl
     }
 
     @Override
-    public void displayPoints3DToPath(List<Point3D> points, RenderableLayer layer) {
+    public void displayPoints3DAsPath(List<Point3D> points, RenderableLayer layer) {
         ArrayList<Position> pathPositions = new ArrayList<>();
         for (Point3D p : points) {
             pathPositions.add(Position.fromDegrees(p.getLatitude(), p.getLongitude(), 100));
         }
-        Path path = createPath(pathPositions, Material.BLUE);
+        Path path = createPath(pathPositions, Material.YELLOW);
+        layer.addRenderable(path);
+        wwd.redrawNow();
+    }
+
+    @Override
+    public void displayPoints3DAsPath(List<Point3D> points, double height, RenderableLayer layer, Material material) {
+        ArrayList<Position> pathPositions = new ArrayList<>();
+        for (Point3D p : points) {
+            pathPositions.add(Position.fromDegrees(p.getLatitude(), p.getLongitude(), height));
+        }
+        Path path = createPath(pathPositions, material);
         layer.addRenderable(path);
         wwd.redrawNow();
     }

@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.stl;
 
-import gov.nasa.worldwind.render.Path;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -12,8 +11,10 @@ import org.capcaval.c3.component.ComponentService;
 public interface StlComponentServices
         extends ComponentService {
 
-    String exportBaseSTL(String stlFilename, String stlBaseFilename);
+    void exportBaseSTL(String outFilename, String inFilename);
+
+    void exportRotateBaseSTL(String outFilename, String inFilename, double angle);
 
     void viewSTL(String filename);
-    
+
 }

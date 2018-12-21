@@ -165,8 +165,13 @@ public class DelaunayImpl
                 ptsTab[i][j] = ptsList.get(i).get(j);
             }
         }
-       // System.out.println("ptsTab " + ptsTab[0].length + " " + ptsTab[1].length);
+        // System.out.println("ptsTab " + ptsTab[0].length + " " + ptsTab[1].length);
         return ptsTab;
+    }
+
+    @Override
+    public Point3D[][] toGridTab(List<Point3D> bounds, double y, double x, double elevation) {
+        return null;
     }
 
     @Override
@@ -210,7 +215,7 @@ public class DelaunayImpl
         double dC;
         double min;
         for (Triangle_dt t : triangles) {
-            System.out.println("t : "+ t);
+            System.out.println("t : " + t);
             for (int i = 0; i < line; i++) {
                 for (int j = 0; j < col; j++) {
                     if (t.contains(pointsDt[i][j])) {

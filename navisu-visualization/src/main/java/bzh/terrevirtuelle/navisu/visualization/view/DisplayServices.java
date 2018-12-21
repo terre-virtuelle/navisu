@@ -27,7 +27,9 @@ public interface DisplayServices
 
     void displayPoints3D(List<Point3D> points, RenderableLayer layer);
 
-    void displayPoints3DToPath(List<Point3D> points, RenderableLayer layer);
+    void displayPoints3DAsPath(List<Point3D> points, RenderableLayer layer);
+
+    void displayPoints3DAsPath(List<Point3D> points, double height, RenderableLayer layer, Material material);
 
     void displayPoints3DAsTriangles(List<Point3D> points, RenderableLayer layer, Material material);
 

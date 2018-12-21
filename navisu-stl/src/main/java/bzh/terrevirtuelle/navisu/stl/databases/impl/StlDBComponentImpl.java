@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
+import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
@@ -82,6 +83,8 @@ public class StlDBComponentImpl
     LayersManagerServices layersManagerServices;
     @UsedService
     LayerTreeServices layerTreeServices;
+     @UsedService
+    Pro4JServices pro4JServices;
     @UsedService
     ShapefileObjectServices shapefileObjectServices;
     @UsedService
@@ -136,7 +139,7 @@ public class StlDBComponentImpl
                         stlComponentServices,
                         kmlComponentServices,
                         objComponentServices,
-                        lambertServices);
+                        pro4JServices);
                 controller.setVisible(true);
             }
         }

@@ -454,7 +454,7 @@
                                                 <Label alignment="CENTER" prefHeight="15.0" prefWidth="113.0" text="X Offset (m)" />
                                                 <Label alignment="CENTER" prefHeight="15.0" prefWidth="117.0" text="Y Offset (m)" GridPane.rowIndex="1" />
                                                 <TextField fx:id="objYOffsetTF" text="6836820" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="terrainCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="112.0" text="Terrain         " GridPane.rowIndex="2" />
+                                                <RadioButton fx:id="terrainRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="110.0" text="Terrain" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                              </children>
                                           </GridPane>
                                        </children>
@@ -465,7 +465,7 @@
                         </Tab>
                     </tabs>
                   </TabPane>
-                  <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="570.0" prefHeight="200.0" prefWidth="570.0" styleClass="grid-pane-contour" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP">
+                  <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="570.0" prefHeight="222.0" prefWidth="570.0" styleClass="grid-pane-contour" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -473,7 +473,7 @@
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints />
                         <RowConstraints />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" />
@@ -485,12 +485,13 @@
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" />
                     </rowConstraints>
                      <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="115.0" text="Bounds selection" GridPane.rowIndex="1" />
                         <Label alignment="CENTER" prefHeight="15.0" prefWidth="444.0" text="SELECTION MODE" GridPane.columnIndex="1" />
                         <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="15.0" prefWidth="120.0" text="Keyboard" textAlignment="CENTER" GridPane.rowIndex="2" />
                         <Button fx:id="interactiveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="176.0" text="Marquee tool" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Button fx:id="selectedButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Valid" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Button fx:id="selectedButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Valid" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                         <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="120.0" text="Graphic selection" textAlignment="CENTER" GridPane.rowIndex="3" />
-                        <Button fx:id="latLonButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="255.0" text="Enter coordinates" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button fx:id="latLonButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="175.0" text="Enter coordinates" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <GridPane maxHeight="80.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="420.0" styleClass="grid-pane-fixvalue" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                                   <columnConstraints>
                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="328.0" minWidth="10.0" prefWidth="100.0" />
@@ -553,6 +554,7 @@
                               <Insets bottom="10.0" />
                            </GridPane.margin>
                               </GridPane>
+                        <CheckBox fx:id="autoBoundCB" mnemonicParsing="false" text="Auto" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                      </children>
                      <GridPane.margin>
                         <Insets />

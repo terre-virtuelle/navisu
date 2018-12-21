@@ -82,7 +82,6 @@ public class GeodesyImpl
                 Angle.fromDegrees(coordinates.getLongitude()), 0);
         return p;
     }
-
     @Override
     public double getAzimuth(Position posA, Position posB) {
         GeodeticCalculator geoCalc = new GeodeticCalculator();

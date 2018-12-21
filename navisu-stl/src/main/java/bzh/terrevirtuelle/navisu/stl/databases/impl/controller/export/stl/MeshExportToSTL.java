@@ -5,19 +5,13 @@
  */
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
-import bzh.terrevirtuelle.navisu.api.progress.Job;
-import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
-import bzh.terrevirtuelle.navisu.stl.charts.impl.loader.dem.DemSrtmElevationLoader;
-import bzh.terrevirtuelle.navisu.util.Pair;
 import bzh.terrevirtuelle.navisu.util.io.IO;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.Position;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -76,11 +70,11 @@ public class MeshExportToSTL {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Pair<Point3D, Point3D>> loadMesh() {
+    public List<Point3D> loadMesh() {
         double latitude;
         double longitude;
         double elevation;
-        List<Pair<Point3D, Point3D>> boundList = new ArrayList<>();
+        List<Point3D> boundList = new ArrayList<>();
         List<File> files = IO.multipleFileChooser(guiAgentServices.getStage(), OBJECT_DIR, "Georeferenced STL files (*.stl)", "*.STL", "*.stl");
         if (files != null) {
             OBJECT_DIR = files.get(0).getParent();
@@ -122,7 +116,7 @@ public class MeshExportToSTL {
                                         meshObjectsLocationMap.put(key, new ArrayList<>());
                                     }
                                     meshObjectsLocationMap.get(key).add(file.getAbsolutePath());
-                                    boundList.add(new Pair(key, null));
+                                    boundList.add(key);
                                 } catch (NumberFormatException e) {
                                     Alert alert = new Alert(Alert.AlertType.ERROR);
                                     alert.setTitle("Error");
@@ -132,31 +126,34 @@ public class MeshExportToSTL {
                             }
                         }
                     }
-                    /*
-                    solid 65_101_terrain.obj  Bounds :  48.359348292699565 -4.528724655254703 0.0, 48.367386281705485 -4.518766981307323 0.0
-                     */
+                    
                     if (content.contains("Bounds")) {
                         String[] contentTab = content.split("\n");
                         for (String s : contentTab) {
                             if (s.contains("solid") && !s.contains("endsolid")) {
                                 try {
-                                    String[] tmp0 = s.trim().split(",");
-                                    String[] tmp = tmp0[0].trim().split("\\s+");
-                                    latitude = Double.parseDouble(tmp[4]);
-                                    longitude = Double.parseDouble(tmp[5]);
-                                    elevation = Double.parseDouble(tmp[6]);
+                                    
+                                    String[] tmp0 = s.trim().split("\\[");
+                                    tmp0[1] = tmp0[1].replace("]", "");
+                                    
+                                    String[] tmp1 = tmp0[1].trim().split(",");
+                                    String[] tmp2 = tmp1[0].trim().split("\\s+");
+                                   
+                                    latitude = Double.parseDouble(tmp2[0]);
+                                    longitude = Double.parseDouble(tmp2[1]);
+                                    elevation = Double.parseDouble(tmp2[2]);
+                                    
                                     Point3D key = new Point3D(latitude, longitude, elevation);
                                     if (!meshObjectsLocationMap.containsKey(key)) {
                                         meshObjectsLocationMap.put(key, new ArrayList<>());
                                     }
                                     meshObjectsLocationMap.get(key).add(file.getAbsolutePath());
-                                    // System.out.println("tmp0[1] : "+tmp0[1]);
-                                    String[] tmp1 = tmp0[1].trim().split("\\s+");
-                                    latitude = Double.parseDouble(tmp1[0]);
-                                    longitude = Double.parseDouble(tmp1[1]);
-                                    elevation = Double.parseDouble(tmp1[2]);
-                                    Point3D key1 = new Point3D(latitude, longitude, elevation);
-                                    boundList.add(new Pair(key, key1));
+                                  
+                                    for (int i = 0; i < 5; i++) {
+                                        String[] tmp3 = tmp1[i].trim().split("\\s+");
+                                        boundList.add(new Point3D(Double.parseDouble(tmp3[0]),Double.parseDouble(tmp3[1]),Double.parseDouble(tmp3[2])));
+                                    }
+
                                 } catch (NumberFormatException e) {
                                     Alert alert = new Alert(Alert.AlertType.ERROR);
                                     alert.setTitle("Error");
@@ -194,12 +191,19 @@ public class MeshExportToSTL {
         bounds.add(g[0][0]);
         List<Point3D> locInBound = new ArrayList<>();
         Set<Point3D> locations = meshObjectsLocationMap.keySet();
-        locations.stream().filter((loc) -> (jtsServices.contains(jtsServices.getPolygon(bounds), loc))).forEachOrdered((loc) -> {
-            locInBound.add(loc);
-        });
+        //DEBUG for mesh import
+       // locations.stream().filter((loc) -> (jtsServices.contains(jtsServices.getPolygon(bounds), loc))).forEachOrdered((loc) -> {
+      //      locInBound.add(loc);
+       // });
 
+       for(Point3D loc : locations){
+           locInBound.add(loc);
+       }
+       
+       
         for (Point3D p : locInBound) {
             List<String> contents = meshObjectsLocationMap.get(p);
+            System.out.println("p : "+p);
             String content = null;
             // Transform vertex coordinates in angles
             for (String ss : contents) {
@@ -225,6 +229,7 @@ public class MeshExportToSTL {
 
                                     double latM = geodesyServices.getDistanceM(latMin, lonMin, lat, lonMin);
                                     double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
+                                   
                                     latM *= latScale;
                                     lonM *= lonScale;
 
@@ -234,7 +239,7 @@ public class MeshExportToSTL {
                             }
                         }
 
-                        //Insert dae file in stlFile.stl
+                        //Insert mœesh file in stlFile.stl
                         try {
                             Files.write(Paths.get(filename), stlResult.getBytes(), StandardOpenOption.APPEND);
                         } catch (IOException ex) {

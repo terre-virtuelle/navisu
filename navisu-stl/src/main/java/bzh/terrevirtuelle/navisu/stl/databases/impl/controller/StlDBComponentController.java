@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverMa
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
+import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
@@ -134,8 +135,6 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLCons
 
 import com.google.common.collect.ImmutableMap;
 import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.render.Path;
-import gov.nasa.worldwind.render.PointPlacemark;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -165,6 +164,7 @@ public class StlDBComponentController
     protected KmlComponentServices kmlComponentServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected ObjComponentServices objComponentServices;
+    protected Pro4JServices pro4JServices;
     protected ShapefileObjectServices shapefileObjectServices;
     protected StlComponentServices stlComponentServices;
     protected TopologyServices topologyServices;
@@ -378,6 +378,8 @@ public class StlDBComponentController
     public RadioButton wireframeRB;
     /*--------------------------------------Checkboxes ----*/
     @FXML
+    public CheckBox autoBoundCB;
+    @FXML
     public CheckBox allCB;
     @FXML
     public CheckBox achareCB;
@@ -402,7 +404,7 @@ public class StlDBComponentController
     @FXML
     public CheckBox pontonCB;
     @FXML
-    public CheckBox terrainCB;
+    public RadioButton terrainRB;
     @FXML
     public CheckBox resareCB;
     @FXML
@@ -430,6 +432,7 @@ public class StlDBComponentController
     final ToggleGroup bathyGroup = new ToggleGroup();
     final ToggleGroup wsGroup = new ToggleGroup();
     final ToggleGroup altiGroup = new ToggleGroup();
+    final ToggleGroup terrainGroup = new ToggleGroup();
 
     protected ObservableList<String> s57DbCbData
             = FXCollections.observableArrayList(S57_DEFAULT_DATABASE_1, S57_DEFAULT_DATABASE_2, S57_DEFAULT_DATABASE_3, S57_DEFAULT_DATABASE_4, S57_DEFAULT_DATABASE_5, S57_DEFAULT_DATABASE_6);
@@ -445,7 +448,7 @@ public class StlDBComponentController
 
     // protected boolean isDaeObject = false;
     // protected boolean isObjObject = false;
-    protected List<Pair<Point3D, Point3D>> boundList;
+    protected List<Point3D> boundList;
 
     protected long startTime;
 
@@ -467,7 +470,7 @@ public class StlDBComponentController
             StlComponentServices stlComponentServices,
             KmlComponentServices kmlComponentServices,
             ObjComponentServices objComponentServices,
-            LambertServices lambertServices) {
+            Pro4JServices pro4JServices) {
         super(keyCode, keyCombination);
 
         this.component = component;
@@ -486,11 +489,11 @@ public class StlDBComponentController
         this.stlComponentServices = stlComponentServices;
         this.kmlComponentServices = kmlComponentServices;
         this.objComponentServices = objComponentServices;
-        this.lambertServices = lambertServices;
+        this.pro4JServices = pro4JServices;
 
         this.daeExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices);
         this.objExportToSTL = new ObjExportToSTL(geodesyServices, guiAgentServices, jtsServices,
-                objComponentServices, lambertServices, displayServices);
+                objComponentServices, pro4JServices, displayServices, instrumentDriverManagerServices);
         this.meshExportToSTL = new MeshExportToSTL(geodesyServices, guiAgentServices, jtsServices);
 
         LOGGER.setLevel(Level.INFO);
@@ -702,6 +705,9 @@ public class StlDBComponentController
         depareRB.setToggleGroup(bathyGroup);
         depareUlhyssesRB.setToggleGroup(bathyGroup);
 
+        noAltiRB.setToggleGroup(terrainGroup);
+        terrainRB.setToggleGroup(terrainGroup);
+
         srtmRB.setToggleGroup(altiGroup);
         elevationRB.setToggleGroup(altiGroup);
 
@@ -787,44 +793,26 @@ public class StlDBComponentController
 
         meshStlObjectButton.setOnMouseClicked((MouseEvent event) -> {
             boundList = meshExportToSTL.loadMesh();
-            for (Pair<Point3D, Point3D> bounds : boundList) {
-                if (bounds.getY() != null) {
-                    ArrayList<Position> pathPositions = new ArrayList<>();
-                    pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getX().getLongitude(), 100));
-                    pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getY().getLongitude(), 100));
-                    pathPositions.add(Position.fromDegrees(bounds.getY().getLatitude(), bounds.getY().getLongitude(), 100));
-                    pathPositions.add(Position.fromDegrees(bounds.getY().getLatitude(), bounds.getX().getLongitude(), 100));
-                    pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getX().getLongitude(), 100));
-                    Path path = new Path(pathPositions);
-                    normalAttributes.setOutlineMaterial(Material.GREEN);
-                    path.setAttributes(normalAttributes);
-                    s57Layer.addRenderable(path);
-                    wwd.redrawNow();
-                } else {
+            wwd.redrawNow();
+            displayServices.displayPoints3DAsPath(boundList, 150, s57Layer, Material.YELLOW);
+            /*else {
                     PointPlacemark pp = new PointPlacemark(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getX().getLongitude(), 100));
                     s57Layer.addRenderable(pp);
                     wwd.redrawNow();
                 }
-            }
+             */
+
         });
         daeButton.setOnMouseClicked((MouseEvent event) -> {
             daeExportToSTL.loadKmzAndSaveStlWgs84();
         });
         objButton.setOnMouseClicked((MouseEvent event) -> {
-            Pair<Point3D, Point3D> bounds = objExportToSTL.loadObj(s57Layer, 
+            boundList = objExportToSTL.loadObj(s57Layer,
                     Double.valueOf(objXOffsetTF.getText()), Double.valueOf(objYOffsetTF.getText()),
-                    terrainCB.isSelected());
-           
-            ArrayList<Position> pathPositions = new ArrayList<>();
-            pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getX().getLongitude(), 100));
-            pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getY().getLongitude(), 100));
-            pathPositions.add(Position.fromDegrees(bounds.getY().getLatitude(), bounds.getY().getLongitude(), 100));
-            pathPositions.add(Position.fromDegrees(bounds.getY().getLatitude(), bounds.getX().getLongitude(), 100));
-            pathPositions.add(Position.fromDegrees(bounds.getX().getLatitude(), bounds.getX().getLongitude(), 100));
-            Path path = new Path(pathPositions);
-            path.setAttributes(normalAttributes);
-            s57Layer.addRenderable(path);
-            wwd.redrawNow();
+                    terrainRB.isSelected());
+            if (boundList != null) {
+                displayServices.displayPoints3DAsPath(boundList, 150, s57Layer, Material.YELLOW);
+            }
         });
         requestButton.setOnMouseClicked((MouseEvent event) -> {
 
@@ -843,6 +831,7 @@ public class StlDBComponentController
                 alert.show();
             }
         });
+
     }
 
     @SuppressWarnings("unchecked")
@@ -863,6 +852,14 @@ public class StlDBComponentController
                 //Define IALA system for all buoyages, default is 1
                 MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
                 marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+                /*
+                System.out.println("azimuth : " + geodesyServices.getAzimuth(48.33833333, -4.6225972222, 48.356527778, -4.339583333));
+                List<Point3D> l = new ArrayList<>();
+                l.add(new Point3D(48.33833333, -4.625555556, 150.0));
+                l.add(new Point3D(48.35644444, -4.339388889, 100.0));
+                 */
+
+                stlGuiController.displayGuiGridBM(s57Layer);
 
                 //BATHY, ELEVATION AND TILES
                 if (elevationRB.isSelected() && noBathyRB.isSelected()) {
@@ -871,8 +868,6 @@ public class StlDBComponentController
                 if (bathyRB.isSelected() && !elevationRB.isSelected()) {
                     grids = createBathymetryTab(lat0, lon0, lat1, lon1);
                 }
-                //DEBUG
-               // noAltiRB.setSelected(true);
                 if (!noAltiRB.isSelected()) {
                     if (elevationRB.isSelected() && bathyRB.isSelected()) {
                         grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
@@ -884,7 +879,12 @@ public class StlDBComponentController
                         //createElevationAndDepare(latMin, lonMin, latMax, lonMax);
                     }
                 } else {
-                    Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
+                    Point3D[][] grid = null;
+                    if (autoBoundCB.isSelected()) {
+//TODO read boundList, create new delaunaysService with list
+                    } else {
+                        grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
+                    }
                     grids = createGrids(grid, tileCount);
                 }
                 k = 0;
@@ -925,11 +925,15 @@ public class StlDBComponentController
                         LOGGER.info("In export GridBox3D en STL");
                         String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + 1 + "," + 1 + ".stl";
                         GridBox3D gb = gridBoxes.get(0);
-                        new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
+                        System.out.println("gb : " + gb);
+                        //DEBUG for mesh import
+                        // new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                         LOGGER.info("In export exportBaseSTL en STL");
                         if (baseCB.isSelected()) {
                             // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
-                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
+                            // stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
+                            // stlComponentServices.exportRotateBaseSTL("data/stl/base/baseNewRotated.stl", "data/stl/base/baseNew.stl", 5.42);
+                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNewRotated.stl");
                             LOGGER.info("Out export exportBaseSTL en STL");
                         }
                         LOGGER.info("Out export GridBox3D en STL");
@@ -1018,8 +1022,16 @@ public class StlDBComponentController
                     }
                     // DAE
                     k = 0;
-                    if (!boundList.isEmpty()) {
+                    if (boundList != null && !boundList.isEmpty()) {
+
+                        System.out.println("boundList : " + boundList);
+                        System.out.println(geodesyServices.getAzimuth(boundList.get(0).getLatitude(), boundList.get(0).getLongitude(), boundList.get(1).getLatitude(), boundList.get(1).getLongitude()));
+                        System.out.println(geodesyServices.getAzimuth(boundList.get(1).getLatitude(), boundList.get(1).getLongitude(), boundList.get(2).getLatitude(), boundList.get(2).getLongitude()));
+                        System.out.println(geodesyServices.getAzimuth(boundList.get(2).getLatitude(), boundList.get(2).getLongitude(), boundList.get(3).getLatitude(), boundList.get(3).getLongitude()));
+                        System.out.println(geodesyServices.getAzimuth(boundList.get(3).getLatitude(), boundList.get(3).getLongitude(), boundList.get(4).getLatitude(), boundList.get(4).getLongitude()));
+                        // System.out.println("grids : "+ grids);
                         for (Point3D[][] g : grids) {
+                            System.out.println("g : " + g);
                             objects.clear();
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
