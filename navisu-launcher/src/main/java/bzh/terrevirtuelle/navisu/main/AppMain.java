@@ -177,6 +177,8 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.impl.ObjComponentImpl;
+import bzh.terrevirtuelle.navisu.osm.OsmComponentServices;
+import bzh.terrevirtuelle.navisu.osm.impl.OsmComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 
@@ -287,6 +289,7 @@ public class AppMain extends Application {
                         NavigationCmdComponentImpl.class,
                         NmeaClientImpl.class,
                         ObjComponentImpl.class,
+                        OsmComponentImpl.class,
                         ProjectionsComponentImpl.class,
                         Pro4JImpl.class,
                         RouteDataEditorImpl.class,
@@ -382,6 +385,7 @@ public class AppMain extends Application {
         NavigationCmdComponentServices navigationCmdComponentServices = componentManager.getComponentService(NavigationCmdComponentServices.class);
         navigationCmdComponentServices.init();
 
+        OsmComponentServices osmComponentServices= componentManager.getComponentService(OsmComponentServices.class);
         ObjComponentServices objComponentServices = componentManager.getComponentService(ObjComponentServices.class);
 
         ProjectionsComponentServices projectionsComponentServices = componentManager.getComponentService(ProjectionsComponentServices.class);
@@ -434,6 +438,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(kmlComponentServices.getDriver());
         driverServices.registerNewDriver(magneticServices.getDriver());
         driverServices.registerNewDriver((Driver) meteoNetCdfServices.getDriver());
+       // driverServices.registerNewDriver(osmComponentServices.getDriver());
         driverServices.registerNewDriver(sedimentologyServices.getDriver());
         driverServices.registerNewDriver(shapefileObjectServices.getDriver());
 
@@ -460,6 +465,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(leapMotionComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(osmComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(projectionsComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routeDataEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());

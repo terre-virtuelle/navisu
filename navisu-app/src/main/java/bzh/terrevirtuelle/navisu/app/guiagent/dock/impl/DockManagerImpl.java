@@ -82,6 +82,7 @@ public class DockManagerImpl<TrackTool>
     protected RadialMenu systemRadialMenu;
     protected RadialMenu tracksRadialMenu;
     protected RadialMenu shomRadialMenu;
+    protected RadialMenu osmBRadialMenu;
 
     protected ImageView centerImg;
     protected int width;
@@ -144,6 +145,10 @@ public class DockManagerImpl<TrackTool>
         DockItemFactory.newImageItem("shom", ICON_PATH + "dock_icons/shom.png",
         (e) -> {
             shomRadialMenu.setVisible(!shomRadialMenu.isVisible());
+        }),
+        DockItemFactory.newImageItem("osmb", ICON_PATH + "dock_icons/osmB.png",
+        (e) -> {
+            osmBRadialMenu.setVisible(!osmBRadialMenu.isVisible());
         })
     };
     final Dock dock = new Dock(ICONS);
@@ -172,6 +177,7 @@ public class DockManagerImpl<TrackTool>
         createTidesRadialWidget();
         createToolsRadialWidget();
         createNavigationRadialWidget();
+        createOsmBWidget();
         createSystemRadialWidget();
         createStlWidget();
         createShomWidget();
@@ -199,6 +205,20 @@ public class DockManagerImpl<TrackTool>
             }
         });
     }
+    //--------------OSMB------------------
+
+    private void createOsmBWidget() {
+        osmBRadialMenu = RadialMenuBuilder.create()
+                .centralImage("chantier.png")
+                .createNode(0, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> open())
+                .createNode(1, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> open())
+                .createNode(2, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> open())
+                .build();
+        osmBRadialMenu.setLayoutX((width / 2) - 10);
+        osmBRadialMenu.setLayoutY(height / 2);
+        root.getChildren().add(osmBRadialMenu);
+        radialMenus.add(osmBRadialMenu);
+    }
 //--------------STL------------------
 
     private void createStlWidget() {
@@ -208,8 +228,6 @@ public class DockManagerImpl<TrackTool>
                 .createNode(1, "bathy.png", 1, "vide.png", 0, "vide.png", (e) -> open())
                 .createNode(2, "charts.png", 1, "files.png", 0, "vide.png", (e) -> open())
                 .createNode(2, "charts.png", 2, "db.png", 0, "scales.png", (e) -> open("StlDbS57"))
-                //  .createNode(1, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> open())
-                //  .createNode(1, "vide.png", 1, "vide.png", 1, "vide.png", (e) -> open())
                 .build();
         stlRadialMenu.setLayoutX((width / 2) - 10);
         stlRadialMenu.setLayoutY(height / 2);

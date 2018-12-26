@@ -852,15 +852,17 @@ public class StlDBComponentController
                 //Define IALA system for all buoyages, default is 1
                 MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
                 marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-                /*
-                System.out.println("azimuth : " + geodesyServices.getAzimuth(48.33833333, -4.6225972222, 48.356527778, -4.339583333));
-                List<Point3D> l = new ArrayList<>();
-                l.add(new Point3D(48.33833333, -4.625555556, 150.0));
-                l.add(new Point3D(48.35644444, -4.339388889, 100.0));
-                 */
-
-                stlGuiController.displayGuiGridBM(s57Layer);
-
+                
+                
+                // DEBUG
+                autoBoundCB.setSelected(true);
+                stlPreviewCB.setSelected(false);
+                if (autoBoundCB.isSelected()) {
+                    stlGuiController.displayGuiGridBM(s57Layer);
+                }
+                
+                
+                
                 //BATHY, ELEVATION AND TILES
                 if (elevationRB.isSelected() && noBathyRB.isSelected()) {
                     grids = createElevationTab(lat0, lon0, lat1, lon1);
@@ -881,7 +883,7 @@ public class StlDBComponentController
                 } else {
                     Point3D[][] grid = null;
                     if (autoBoundCB.isSelected()) {
-//TODO read boundList, create new delaunaysService with list
+                       // stlGuiController.displayGuiGridBM(s57Layer);
                     } else {
                         grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
                     }

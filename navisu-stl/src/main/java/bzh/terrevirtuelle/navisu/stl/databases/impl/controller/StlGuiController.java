@@ -312,7 +312,7 @@ public class StlGuiController {
     public void displayGuiGridBM(RenderableLayer layer) {
      
         //Position origPos = new Position(Angle.fromDegrees(48.33713333), Angle.fromDegrees(-4.63665), 100.0);//21/12/18
-        Position origPos = new Position(Angle.fromDegrees(48.33748333), Angle.fromDegrees(-4.63665), 10.0);
+        Position origPos = new Position(Angle.fromDegrees(48.33748333), Angle.fromDegrees(-4.63665), 100.0);
         double x = 820;
         double y = 820;
         int xNbWest = 0;
@@ -324,16 +324,16 @@ public class StlGuiController {
         double bearing = 90 - azimuth;
         Position[][] posTab = new Position[yNbSouth + yNbNorth][xNbWest + xNbEast];
         for (int i = 0; i < yNbSouth; i++) {
-            Position position = geodesyServices.getPosition(origPos, azimuthS, y * (yNbSouth - i - 1), 10.0);
+            Position position = geodesyServices.getPosition(origPos, azimuthS, y * (yNbSouth - i - 1), 100.0);
             for (int j = 0; j < xNbEast; j++) {
                 posTab[i][j] = geodesyServices.getPosition(position, bearing, x * j, 100.0);
             }
         }
         azimuthS = 360 - azimuth;
         for (int i = yNbSouth; i < yNbNorth + yNbSouth; i++) {
-            Position position = geodesyServices.getPosition(origPos, azimuthS, y * (i - yNbSouth + 1), 10.0);
+            Position position = geodesyServices.getPosition(origPos, azimuthS, y * (i - yNbSouth + 1), 100.0);
             for (int j = 0; j < xNbEast; j++) {
-                posTab[i][j] = geodesyServices.getPosition(position, bearing, x * j, 10.0);
+                posTab[i][j] = geodesyServices.getPosition(position, bearing, x * j, 100.0);
             }
         }
         /*
@@ -414,13 +414,22 @@ public class StlGuiController {
     }
 
     private void addListener() {
+        Material material = new Material(Color.MAGENTA);
+        ShapeAttributes pickedAttributes = new BasicShapeAttributes();
+        pickedAttributes.setInteriorMaterial(material);
+        pickedAttributes.setDrawInterior(true);
+        pickedAttributes.setInteriorOpacity(1.0);
+        pickedAttributes.setOutlineMaterial(material);
         wwd.addSelectListener((SelectEvent event) -> {
             Object o = event.getTopObject();
             // System.out.println("o : "+o);
             if (event.isLeftClick() && o != null) {
                 if (o.getClass() == Polygon.class) {
-                    Object object = ((Polygon) o).getValue("Key");
-                    System.out.println(object);
+                    Polygon polygon = ((Polygon) o);
+                    System.out.println((polygon).getBoundaries());
+                    polygon.setAttributes(pickedAttributes);
+                    polygon.setHighlightAttributes(pickedAttributes);
+                    wwd.redrawNow();
                 }
             }
         });

@@ -26,7 +26,6 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.globes.EarthFlat;
 import gov.nasa.worldwind.globes.ElevationModel;
-import gov.nasa.worldwind.globes.GeographicProjection;
 import gov.nasa.worldwind.terrain.BathymetryFilterElevationModel;
 import gov.nasa.worldwind.util.PlacemarkClutterFilter;
 

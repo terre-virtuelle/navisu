@@ -6,8 +6,6 @@ package bzh.terrevirtuelle.navisu.core;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.GeoView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayerManager;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayers;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;

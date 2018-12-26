@@ -554,7 +554,7 @@
                               <Insets bottom="10.0" />
                            </GridPane.margin>
                               </GridPane>
-                        <CheckBox fx:id="autoBoundCB" mnemonicParsing="false" text="Auto" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <CheckBox fx:id="autoBoundCB" mnemonicParsing="false" text="From grid" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                      </children>
                      <GridPane.margin>
                         <Insets />

@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.weather.impl;
 
-import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
@@ -39,7 +38,7 @@ public class WeatherComponentImpl
 
     protected static final Logger LOGGER = Logger.getLogger(WeatherComponentImpl.class.getName());
     protected static int LAYER_INDEX = 0;
-    protected Driver driver;
+  //  protected Driver driver;
     protected DarkSkyComponentController weatherController;
     protected String category;
     private static final String NAME = "Weather";
