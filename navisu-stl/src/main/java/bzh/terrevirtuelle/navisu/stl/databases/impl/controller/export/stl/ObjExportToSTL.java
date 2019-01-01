@@ -55,7 +55,7 @@ public class ObjExportToSTL {
     protected List<Face> faces = null;
     protected static final String ALARM_SOUND = "/data/sounds/openSea.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
-   // List<Point3D> points = new ArrayList<>();
+    // List<Point3D> points = new ArrayList<>();
 
     public ObjExportToSTL(GeodesyServices geodesyServices,
             GuiAgentServices guiAgentServices,
@@ -82,7 +82,7 @@ public class ObjExportToSTL {
             Path path = filter(file);
 
             List<VertexGeometric> verticesG = objComponentServices.getVerticesG(path.toString());
-            bounds = getBounds(verticesG, objXOffset+3.8, objYOffset+.5, isTerrain);
+            bounds = getBounds(verticesG, objXOffset + 3.8, objYOffset + .5, isTerrain);
 
             content = "solid " + file.getName() + "  Bounds :  " + bounds + "\n";
             guiAgentServices.getJobsManager().newJob("Load Obj objects", new Job() {
@@ -100,7 +100,7 @@ public class ObjExportToSTL {
                     } catch (IOException ex) {
                         Logger.getLogger(ObjExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                     }
-                  //  displayServices.displayPoints3DAsPath(points, 150.0, layer, Material.GREEN);
+                    //  displayServices.displayPoints3DAsPath(points, 150.0, layer, Material.GREEN);
                     instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
                 }
             });
@@ -115,73 +115,73 @@ public class ObjExportToSTL {
         double lonMin93 = Double.MAX_VALUE;
         List<Point3D> result = new ArrayList<>();
         List<Point3D> tmp = new ArrayList<>();
-     //   if (isTerrain == true) {
-            List<Point3D> points = new ArrayList<>();
+        //   if (isTerrain == true) {
+        List<Point3D> points = new ArrayList<>();
 
-            for (VertexGeometric v : verticesG) {
-                points.add(pro4JServices.convertLambert93ToWGS84(v.y + objYOffset, v.x + objXOffset));
-            }
+        for (VertexGeometric v : verticesG) {
+            points.add(pro4JServices.convertLambert93ToWGS84(v.y + objYOffset, v.x + objXOffset));
+        }
 
-            for (Point3D p : points) {
-                double x = p.getLongitude();
-                double y = p.getLatitude();
-                if (x > lonMax93) {
-                    lonMax93 = x;
-                }
-                if (x < lonMin93) {
-                    lonMin93 = x;
-                }
-                if (y > latMax93) {
-                    latMax93 = y;
-                }
-                if (y < latMin93) {
-                    latMin93 = y;
-                }
+        for (Point3D p : points) {
+            double x = p.getLongitude();
+            double y = p.getLatitude();
+            if (x > lonMax93) {
+                lonMax93 = x;
             }
-            for (Point3D p : points) {
-                if (p.getLatitude() == latMin93) {
-                    //  ptSW = p;
+            if (x < lonMin93) {
+                lonMin93 = x;
+            }
+            if (y > latMax93) {
+                latMax93 = y;
+            }
+            if (y < latMin93) {
+                latMin93 = y;
+            }
+        }
+        for (Point3D p : points) {
+            if (p.getLatitude() == latMin93) {
+                //  ptSW = p;
+                tmp.add(p);
+            } else {
+                if (p.getLongitude() == lonMax93) {
+                    // ptSW = p;
                     tmp.add(p);
                 } else {
-                    if (p.getLongitude() == lonMax93) {
-                        // ptSW = p;
+                    if (p.getLatitude() == latMax93) {
+                        // ptNE = p;
                         tmp.add(p);
                     } else {
-                        if (p.getLatitude() == latMax93) {
-                            // ptNE = p;
+                        if (p.getLongitude() == lonMin93) {
+                            //  ptNW = p;
                             tmp.add(p);
-                        } else {
-                            if (p.getLongitude() == lonMin93) {
-                                //  ptNW = p;
-                                tmp.add(p);
-                            }
                         }
                     }
                 }
             }
+        }
 
-            for (int i = 0; i < tmp.size(); i++) {
-                if (tmp.get(i).getLatitude() == latMin93) {
-                    result.add(tmp.get(i));
-                }
+        for (int i = 0; i < tmp.size(); i++) {
+            if (tmp.get(i).getLatitude() == latMin93) {
+                result.add(tmp.get(i));
             }
-            for (int i = 0; i < tmp.size(); i++) {
-                if (tmp.get(i).getLongitude() == lonMax93) {
-                    result.add(tmp.get(i));
-                }
+        }
+        for (int i = 0; i < tmp.size(); i++) {
+            if (tmp.get(i).getLongitude() == lonMax93) {
+                result.add(tmp.get(i));
             }
-            for (int i = 0; i < tmp.size(); i++) {
-                if (tmp.get(i).getLatitude() == latMax93) {
-                    result.add(tmp.get(i));
-                }
+        }
+        for (int i = 0; i < tmp.size(); i++) {
+            if (tmp.get(i).getLatitude() == latMax93) {
+                result.add(tmp.get(i));
             }
-            for (int i = 0; i < tmp.size(); i++) {
-                if (tmp.get(i).getLongitude() == lonMin93) {
-                    result.add(tmp.get(i));
-                }
+        }
+        for (int i = 0; i < tmp.size(); i++) {
+            if (tmp.get(i).getLongitude() == lonMin93) {
+                result.add(tmp.get(i));
             }
-            result.add(result.get(0));
-       // }
+        }
+        result.add(result.get(0));
+        // }
         return result;
     }
 
@@ -189,19 +189,19 @@ public class ObjExportToSTL {
         String facet = "";
         Vec3d[] mainFace = new Vec3d[3];
         int i = 0;
-          List<Point3D> view = new ArrayList<>();
+        List<Point3D> view = new ArrayList<>();
         // Main face
         for (FaceVertex fv : fvs) {
-            double x = (fv.getV().x + objXOffset+3.8);//3.5
-            double y = (fv.getV().y + objYOffset+.5);//1
+            double x = (fv.getV().x + objXOffset + 3.8);//3.5
+            double y = (fv.getV().y + objYOffset + .5);//1
             Point3D pt = pro4JServices.convertLambert93ToWGS84(y, x);
             view.add(pt);
-           // displayServices.displayPoints3DAsPath(view, 150.0, layer, Material.GREEN);
+            // displayServices.displayPoints3DAsPath(view, 150.0, layer, Material.GREEN);
             mainFace[i++] = new Vec3d(pt.getLongitude(), pt.getLatitude(), fv.getV().z); //z * 2
         }
 
         facet += facetToSTL(mainFace);
-       // facet += rotateFacetToSTL(mainFace,5.42);
+        // facet += rotateFacetToSTL(mainFace,5.42);
         if (isTerrain == true) {
             //Create new vertices and faces to close the volume
             Vec3d ww0 = new Vec3d(mainFace[0].x, mainFace[0].y, 0.0);
@@ -242,7 +242,7 @@ public class ObjExportToSTL {
         double z0 = face[0].z;
         double z1 = face[1].z;
         double z2 = face[2].z;
- List<Point3D> points = new ArrayList<>();
+        List<Point3D> points = new ArrayList<>();
         for (Vec3d v : face) {
             Point3D p = new Point3D(v.y, v.x, v.z);
             points.add(p);
@@ -275,7 +275,6 @@ public class ObjExportToSTL {
         double z2 = face[2].z;
 
         //Rotation
-       
         double tetha = Math.toRadians(angle);
         double xx0 = x0;
         double yy0 = y0;

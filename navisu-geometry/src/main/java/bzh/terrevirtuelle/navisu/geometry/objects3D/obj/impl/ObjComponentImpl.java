@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 public class ObjComponentImpl
         implements ObjComponent, ObjComponentServices, ComponentState {
 
+    
     private static final Logger LOG = Logger.getLogger(ObjComponentImpl.class.getName());
 
     @Override
@@ -50,6 +51,8 @@ public class ObjComponentImpl
         }
         return builder.verticesG;
     }
+
+    
 
     @Override
     public void componentInitiated() {

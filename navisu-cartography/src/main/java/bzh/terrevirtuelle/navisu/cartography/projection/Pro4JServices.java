@@ -22,4 +22,7 @@ public interface Pro4JServices
     List<Point3D> convertLambert93ToWGS84(List<Point3D> pt);
     
     Point3D convertCoordinates(String epsgSrc, String epsgdest, Point3D pt);
+
+    String convertObjLambert93ToObjWGS84(String filename);
+     
 }

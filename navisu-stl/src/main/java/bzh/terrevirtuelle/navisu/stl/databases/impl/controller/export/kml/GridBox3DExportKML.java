@@ -6,11 +6,11 @@
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml;
 
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
+import bzh.terrevirtuelle.navisu.kml.impl.controller.wwj.KMLDocumentBuilder;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.DisplayImpl;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
-import gov.nasa.worldwindx.examples.kml.KMLDocumentBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;

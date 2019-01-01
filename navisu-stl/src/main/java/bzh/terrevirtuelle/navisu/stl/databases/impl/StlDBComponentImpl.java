@@ -83,7 +83,7 @@ public class StlDBComponentImpl
     LayersManagerServices layersManagerServices;
     @UsedService
     LayerTreeServices layerTreeServices;
-     @UsedService
+    @UsedService
     Pro4JServices pro4JServices;
     @UsedService
     ShapefileObjectServices shapefileObjectServices;

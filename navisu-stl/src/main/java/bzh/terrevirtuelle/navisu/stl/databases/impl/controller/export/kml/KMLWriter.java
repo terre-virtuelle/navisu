@@ -5,9 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml;
 
+import bzh.terrevirtuelle.navisu.kml.impl.controller.wwj.KMLDocumentBuilder;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.DisplayImpl;
 import gov.nasa.worldwind.render.AbstractShape;
-import gov.nasa.worldwindx.examples.kml.KMLDocumentBuilder;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;

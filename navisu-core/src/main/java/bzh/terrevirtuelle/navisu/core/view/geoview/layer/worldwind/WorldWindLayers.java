@@ -5,8 +5,22 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.basic.BingIma
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.basic.EarthAtNightLayer;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.basic.FogLayer;
-import gov.nasa.worldwind.layers.*;
-import gov.nasa.worldwind.layers.Earth.*;
+import gov.nasa.worldwind.layers.CompassLayer;
+import gov.nasa.worldwind.layers.Earth.BMNGOneImage;
+import gov.nasa.worldwind.layers.Earth.BMNGWMSLayer;
+import gov.nasa.worldwind.layers.Earth.CountryBoundariesLayer;
+import gov.nasa.worldwind.layers.Earth.LandsatI3WMSLayer;
+import gov.nasa.worldwind.layers.Earth.NASAWFSPlaceNameLayer;
+import gov.nasa.worldwind.layers.Earth.OSMMapnikLayer;
+import gov.nasa.worldwind.layers.LatLonGraticuleLayer;
+import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.ScalebarLayer;
+import gov.nasa.worldwind.layers.SkyGradientLayer;
+import gov.nasa.worldwind.layers.StarsLayer;
+import gov.nasa.worldwind.layers.WorldMapLayer;
+import org.osmbuildings.OSMBuildingsLayer;
+
+
 
 /**
  *
@@ -24,7 +38,7 @@ public enum WorldWindLayers {
     BingImagery(BingImageryLayer.class),
     EarthAtNight(EarthAtNightLayer.class, false),
     OpenStreetMap(OSMMapnikLayer.class, false),
-    OSMBuildings(OSMBuildingsLayer.class, false),
+ // OSMBuildings(OSMBuildingsLayer.class, false),
     CountryBoundaries(CountryBoundariesLayer.class, false),
     PlaceName(NASAWFSPlaceNameLayer.class),
     LatLonGraticule(LatLonGraticuleLayer.class, false),

@@ -8,9 +8,11 @@ package bzh.terrevirtuelle.navisu.cartography.projection.impl;
 import bzh.terrevirtuelle.navisu.cartography.projection.Pro4J;
 import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import java.util.ArrayList;
 import java.util.List;
 import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.UsedService;
 import org.osgeo.proj4j.BasicCoordinateTransform;
 import org.osgeo.proj4j.CRSFactory;
 import org.osgeo.proj4j.CoordinateReferenceSystem;
@@ -21,6 +23,9 @@ import org.osgeo.proj4j.ProjCoordinate;
  */
 public class Pro4JImpl
         implements Pro4J, Pro4JServices, ComponentState {
+
+    @UsedService
+    ObjComponentServices objComponentServices;
 
     @Override
     public Point3D convertLambert93ToWGS84(double lat, double lon) {
@@ -58,7 +63,7 @@ public class Pro4JImpl
         CRSFactory factory = new CRSFactory();
         CoordinateReferenceSystem srcCrs = factory.createFromName(epsgSrc);
         CoordinateReferenceSystem dstCrs = factory.createFromName(epsgdest);
-        
+
         BasicCoordinateTransform transform = new BasicCoordinateTransform(srcCrs, dstCrs);
 
         // Note these are x, y so lng, lat
@@ -67,6 +72,13 @@ public class Pro4JImpl
 
         transform.transform(srcCoord, dstCoord);
         return new Point3D(dstCoord.y, dstCoord.x, 0.0);
+    }
+
+    @Override
+    public String convertObjLambert93ToObjWGS84(String filename) {
+        String filenameResult = null;
+
+        return filenameResult;
     }
 
     @Override
