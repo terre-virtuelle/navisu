@@ -100,6 +100,7 @@ public class OsmbComponentController
             component.off();
         });
         requestButton.setOnMouseClicked((MouseEvent event) -> {
+            System.out.println("Work in progress");
         });
     }
 
