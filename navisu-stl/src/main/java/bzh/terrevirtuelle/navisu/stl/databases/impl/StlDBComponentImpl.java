@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.stl.databases.impl;
 
-import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
@@ -15,17 +14,11 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServi
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.Layer;
-import java.util.List;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.logging.Logger;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDBLoader;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
@@ -36,12 +29,9 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.StlDBComponentCon
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
-import gov.nasa.worldwind.geom.Position;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -164,10 +154,6 @@ public class StlDBComponentImpl
         return canOpen;
     }
 
-    @SuppressWarnings("unchecked")
-    protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-
-    }
 
     @Override
     public InstrumentDriver getDriver() {
@@ -187,39 +173,6 @@ public class StlDBComponentImpl
     @Override
     public Connection getConnnection(String database, String user, String passwd) {
         return controller.getConnection();
-    }
-
-    @Override
-    public List<Buoyage> retrieveBuoyagesIn(Connection connection, double latMin, double lonMin, double latMax, double lonMax) {
-        //Define TopMak for all buoyages, default is 0 : no topmark
-        TopmarDBLoader topmarDbLoader = new TopmarDBLoader(connection);
-        topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-
-        //Define IALA system for all buoyages, default is 1
-        MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(connection);
-        marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-
-        List<Buoyage> buoyages = new ArrayList<>();
-        Set<String> buoyageKeys = BUOYAGE.ATT.keySet();
-        buoyageKeys.forEach((b) -> {
-            buoyages.addAll(new BuoyageDBLoader(topologyServices, connection, b, topMarkMap, marsys)
-                    .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-        });
-        return buoyages;
-    }
-
-    @Override
-    public List<Buoyage> retrieveBuoyagesIn(Connection connection, double lat, double lon, double side) {
-        double r = side / 2;
-        Position position = geodesyServices.getPosition(lat, lon, 90.0, r);
-        position = geodesyServices.getPosition(position, 0, r);
-        double latMax = position.getLatitude().getDegrees();
-        double lonMax = position.getLongitude().getDegrees();
-        position = geodesyServices.getPosition(lat, lon, 270.0, r);
-        position = geodesyServices.getPosition(position, 180, r);
-        double latMin = position.getLatitude().getDegrees();
-        double lonMin = position.getLongitude().getDegrees();
-        return retrieveBuoyagesIn(connection, latMin, lonMin, latMax, lonMax);
     }
 
 }

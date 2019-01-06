@@ -1,37 +1,37 @@
-package bzh.terrevirtuelle.navisu.osm.impl;
-
-;
+package bzh.terrevirtuelle.navisu.buildings.osm.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
-import bzh.terrevirtuelle.navisu.osm.OsmComponent;
-import bzh.terrevirtuelle.navisu.osm.OsmComponentServices;
+import bzh.terrevirtuelle.navisu.buildings.osm.OsmComponent;
+import bzh.terrevirtuelle.navisu.buildings.osm.OsmComponentServices;
 import org.capcaval.c3.component.ComponentState;
 
 /**
- * @author sbodmer
- * @date 24/12/2018 12:49
+ * NaVisu
+ *
+ * @date Jan 3, 2019 10:09:49 AM
+ * @author Serge Morvan
  */
-
-
 public class OsmComponentImpl
         implements OsmComponent, OsmComponentServices, InstrumentDriver, ComponentState {
 
-    private static final String NAME = "BUILDING";
-    private static final String TYPE_0 = "OSM";
+    private static final String COMPONENT_KEY_NAME_0 = "OSM";
 
     @Override
-    public boolean canOpen(String type) {
+    public boolean canOpen(String category) {
         boolean canOpen = false;
-        if (type.equals(TYPE_0)) {
+        if (category.equals(COMPONENT_KEY_NAME_0)) {
             canOpen = true;
-        } else {
-
         }
         return canOpen;
     }
 
     @Override
     public void on(String... files) {
+
+    }
+
+    @Override
+    public void off() {
 
     }
 
@@ -54,7 +54,7 @@ public class OsmComponentImpl
     }
 
     public String getName() {
-        return NAME;
+        return COMPONENT_KEY_NAME_0;
     }
 
 }

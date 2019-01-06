@@ -852,17 +852,14 @@ public class StlDBComponentController
                 //Define IALA system for all buoyages, default is 1
                 MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
                 marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-                
-                
+
                 // DEBUG
                 autoBoundCB.setSelected(true);
                 stlPreviewCB.setSelected(false);
                 if (autoBoundCB.isSelected()) {
                     stlGuiController.displayGuiGridBM(s57Layer);
                 }
-                
-                
-                
+
                 //BATHY, ELEVATION AND TILES
                 if (elevationRB.isSelected() && noBathyRB.isSelected()) {
                     grids = createElevationTab(lat0, lon0, lat1, lon1);
@@ -883,7 +880,7 @@ public class StlDBComponentController
                 } else {
                     Point3D[][] grid = null;
                     if (autoBoundCB.isSelected()) {
-                       // stlGuiController.displayGuiGridBM(s57Layer);
+                        // stlGuiController.displayGuiGridBM(s57Layer);
                     } else {
                         grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
                     }

@@ -20,8 +20,6 @@ import gov.nasa.worldwind.layers.StarsLayer;
 import gov.nasa.worldwind.layers.WorldMapLayer;
 import org.osmbuildings.OSMBuildingsLayer;
 
-
-
 /**
  *
  * @author Thibault Pensec <thibault.pensec at gmail.com>
@@ -38,7 +36,7 @@ public enum WorldWindLayers {
     BingImagery(BingImageryLayer.class),
     EarthAtNight(EarthAtNightLayer.class, false),
     OpenStreetMap(OSMMapnikLayer.class, false),
- // OSMBuildings(OSMBuildingsLayer.class, false),
+    OSMBuildings(OSMBuildingsLayer.class, false),
     CountryBoundaries(CountryBoundariesLayer.class, false),
     PlaceName(NASAWFSPlaceNameLayer.class),
     LatLonGraticule(LatLonGraticuleLayer.class, false),
@@ -77,6 +75,7 @@ public enum WorldWindLayers {
 
         return GeoLayer.factory.newWorldWindGeoLayer(layer);
     }
+
     public GeoLayer<Layer> newInstance(String name) {
 
         Layer layer = null;
