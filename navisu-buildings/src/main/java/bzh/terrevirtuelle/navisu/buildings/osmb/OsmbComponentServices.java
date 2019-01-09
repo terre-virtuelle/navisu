@@ -1,6 +1,8 @@
 package bzh.terrevirtuelle.navisu.buildings.osmb;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import gov.nasa.worldwind.render.Renderable;
+import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -10,7 +12,8 @@ import org.capcaval.c3.component.ComponentService;
 public interface OsmbComponentServices
         extends ComponentService {
 
-   InstrumentDriver getDriver();
+    InstrumentDriver getDriver();
 
+    List<Renderable> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax);
 
 }

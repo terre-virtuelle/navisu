@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.visualization.view.impl;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_HOMONIM_BATHYMETRY_CLUT;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.lut.Clut;
@@ -407,24 +408,24 @@ public class DisplayImpl
         triangles.stream()
                 .filter((t) -> (t.A != null && t.B != null && t.C != null)).map((t) -> {
             ArrayList<Position> pathPositions = new ArrayList<>();
-            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * verticalExaggeration) + height));
-            pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, (t.B.z * verticalExaggeration) + height));
-            pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, (t.C.z * verticalExaggeration) + height));
-            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (t.A.z * verticalExaggeration) + height));
+            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (height - t.A.z) * verticalExaggeration));
+            pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, (height - t.B.z) * verticalExaggeration));
+            pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, (height - t.C.z) * verticalExaggeration));
+            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (height - t.A.z) * verticalExaggeration));
             Path p = new Path(pathPositions);
             ShapeAttributes attrs = new BasicShapeAttributes();
             attrs.setOutlineOpacity(1.0);
             attrs.setOutlineWidth(1.0);
-            /*
-            double h = (t.A.z+t.B.z+t.C.z)/3.0;
-            Color color = SHOM_LOW_BATHYMETRY_CLUT.getColor(h);
+
+            double h = (t.A.z + t.B.z + t.C.z) / 3.0;
+            Color color = SHOM_HOMONIM_BATHYMETRY_CLUT.getColor(h);
             attrs.setOutlineMaterial(new Material(color));
-             */
-            attrs.setOutlineMaterial(material);
             p.setAttributes(attrs);
-            p.setValue(AVKey.DISPLAY_NAME, (int) (height - t.A.z) + ", "
-                    + (int) (height - t.B.z) + ", "
-                    + (int) (height - t.C.z));
+            double az = t.A.z;
+            double bz = t.B.z;
+            double cz = t.C.z;
+            double moy = (az + bz + cz) / 3.0;
+            p.setValue(AVKey.DISPLAY_NAME, (int) az + ", " + (int) bz + ", " + (int) cz + ": " + (int) moy);
             return p;
         }
         ).map(

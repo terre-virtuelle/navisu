@@ -55,7 +55,7 @@ public class BathymetryDBImpl
     BathymetryEventProducerServices bathymetryEventProducerServices;
     
     protected static final Logger LOGGER = Logger.getLogger(BathymetryDBImpl.class.getName());
-    protected final String NAME = "Bathy";
+    protected final String DB_NAME = "BathyShomDB";
     protected final String LAYER_NAME = "BathyShom";
     protected final double LIMIT = 100.0;
     protected String dataFileName;
@@ -176,7 +176,7 @@ public class BathymetryDBImpl
 
     @Override
     public boolean canOpen(String dbName) {
-        return dbName.equalsIgnoreCase(NAME);
+        return dbName.trim().equalsIgnoreCase(DB_NAME);
     }
 
     @Override

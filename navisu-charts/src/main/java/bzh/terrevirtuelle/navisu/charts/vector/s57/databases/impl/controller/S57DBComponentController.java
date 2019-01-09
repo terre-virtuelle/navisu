@@ -656,6 +656,7 @@ public class S57DBComponentController
                     s57Viewer.display(g);
                 });
             }
+            /*
             if (selectedObjects.contains("ALL") || selectedObjects.contains("COALNE")) {
                 objects = new CoastlineDBLoader(s57Connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
@@ -680,6 +681,7 @@ public class S57DBComponentController
                     s57Viewer.display(g);
                 });
             }
+*/
             if (selectedObjects.contains("ALL") || selectedObjects.contains("LIGHTS")) {
 
                 List<Light> lights = new LightDBLoader(topologyServices, s57Connection, marsys)
@@ -697,6 +699,7 @@ public class S57DBComponentController
                     s57Viewer.display(g);
                 });
             }
+            /*
             if (selectedObjects.contains("ALL") || selectedObjects.contains("RESARE")) {
                 objects = new RestrictedAreaDBLoader(s57Connection)
                         .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
@@ -706,6 +709,7 @@ public class S57DBComponentController
                     s57Viewer.display(g, normalAttributes, highlightAttributes);
                 });
             }
+*/
             depareLayer.removeRenderable(pgon);
             wwd.redrawNow();
         });

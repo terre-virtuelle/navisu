@@ -10,10 +10,12 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.buildings.osmb.impl.OsmbComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.Renderable;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -104,4 +106,9 @@ public class OsmbComponentController
         });
     }
 
+    public List<Renderable> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
+        List<Renderable> result = null;
+        //osmbLayer ?
+        return result;
+    }
 }

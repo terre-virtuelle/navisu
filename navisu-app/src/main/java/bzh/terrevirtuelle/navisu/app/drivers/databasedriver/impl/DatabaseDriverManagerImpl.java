@@ -39,9 +39,8 @@ public class DatabaseDriverManagerImpl
     }
 
     protected DatabaseDriver findDriver(String category) {
-
+        
         DatabaseDriver compatibleDriver = null;
-
         for (DatabaseDriver driver : this.availableDriverList) {
             if (driver.canOpen(category)) {
                 compatibleDriver = driver;
@@ -55,7 +54,7 @@ public class DatabaseDriverManagerImpl
     public void registerNewDriver(DatabaseDriver driver) {
 
         Checker.notNull(driver, "Driver must not be null.");
-
+        System.out.println("registerNewDriver " + driver);
         // Hold the driver
         this.availableDriverList.add(driver);
     }
@@ -71,6 +70,7 @@ public class DatabaseDriverManagerImpl
 
     @Override
     public void connect(String dbName, String hostName, String protocol, String port, String driverName, String userName, String passwd) {
+        System.out.println("connect dbName : " + dbName);
         DatabaseDriver driver = findDriver(dbName);
         if (driver != null) {
             driver.connect(dbName, hostName, protocol, port, driverName, userName, passwd);

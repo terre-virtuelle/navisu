@@ -2,6 +2,8 @@ package bzh.terrevirtuelle.navisu.buildings.osmb.impl;
 
 ;
 
+import gov.nasa.worldwind.render.Renderable;
+import java.util.List;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
@@ -26,13 +28,18 @@ public class OsmbComponentImpl
         implements OsmbComponent, OsmbComponentServices, InstrumentDriver, ComponentState {
 
     private static final String COMPONENT_KEY_NAME_0 = "OSM_BUILDINGS";
-  
+
     protected OsmbComponentController controller;
     protected WorldWindow wwd;
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
     LayersManagerServices layersManagerServices;
+
+    @Override
+    public List<Renderable> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
+        return controller.retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+    }
 
     @Override
     public boolean canOpen(String category) {

@@ -66,6 +66,8 @@ public interface DisplayServices
     void displayDelaunay(List<Triangle_dt> triangles,
             double height, double verticalExaggeration,
             Material material, RenderableLayer l);
+    
+    
 
     void displayConcaveHull(Geometry concaveHull,
             double height, double verticalExaggeration,

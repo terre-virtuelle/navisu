@@ -230,7 +230,7 @@ public class StlDBComponentController
     protected double tileSideX = DEFAULT_SIDE;
     protected double tileSideY = DEFAULT_SIDE;
     protected double tileSideZ = DEFAULT_BASE_HEIGHT;
-    protected double DEFAULT_GRID = 50.0;
+    protected double DEFAULT_GRID = 100.0;
     protected double gridX = DEFAULT_GRID;
     protected double gridY = DEFAULT_GRID;
     protected double lat0 = 520;
@@ -249,7 +249,7 @@ public class StlDBComponentController
     protected List<Polygon> selectedPolygons = new ArrayList<>();
 
     protected int tileCount = 1;
-    protected double DEFAULT_EXAGGERATION = 2.0;
+    protected double DEFAULT_EXAGGERATION = 10.0;
     protected double verticalExaggeration = DEFAULT_EXAGGERATION;
     protected double simplifyFactor;
     protected S57ObjectView s57Viewer;
@@ -701,7 +701,7 @@ public class StlDBComponentController
 
         scaleDaeTF.setText("1");
 
-        noBathyRB.setToggleGroup(bathyGroup);
+        //  noBathyRB.setToggleGroup(bathyGroup);
         depareRB.setToggleGroup(bathyGroup);
         depareUlhyssesRB.setToggleGroup(bathyGroup);
 
@@ -854,7 +854,7 @@ public class StlDBComponentController
                 marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
                 // DEBUG
-                autoBoundCB.setSelected(true);
+                // autoBoundCB.setSelected(true);
                 stlPreviewCB.setSelected(false);
                 if (autoBoundCB.isSelected()) {
                     stlGuiController.displayGuiGridBM(s57Layer);
@@ -866,10 +866,12 @@ public class StlDBComponentController
                 }
                 if (bathyRB.isSelected() && !elevationRB.isSelected()) {
                     grids = createBathymetryTab(lat0, lon0, lat1, lon1);
+                    // displayServices.displayGridAsTriangles(grids.get(0), s57Layer, Material.GREEN, verticalExaggeration);
                 }
                 if (!noAltiRB.isSelected()) {
                     if (elevationRB.isSelected() && bathyRB.isSelected()) {
                         grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
+
                     }
                     if (srtmRB.isSelected() && noBathyRB.isSelected()) {
                         grids = createSrtmElevationTab(lat0, lon0, lat1, lon1, gridX);//~1m
@@ -902,7 +904,10 @@ public class StlDBComponentController
                     if (wwjPreviewCB.isSelected()) {
                         gridBoxes.forEach((gb) -> {
                             LOGGER.info("In affichage gridBoxes");
-                            displayServices.displayGridAsTriangles(gb.getGrid(), bathymetryLayer, Material.GREEN, verticalExaggeration);
+                            // System.out.println("In affichage gridBoxes " + gb);
+                            // System.out.println("verticalExaggeration : "+verticalExaggeration);
+                            // displayServices.displayGridAsTriangles(gb.getGrid(), s57Layer, Material.GREEN, verticalExaggeration);
+                            wwd.redrawNow();
                         });
                     }
                     if (generateKmlCB.isSelected()) {
@@ -924,7 +929,7 @@ public class StlDBComponentController
                         LOGGER.info("In export GridBox3D en STL");
                         String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + 1 + "," + 1 + ".stl";
                         GridBox3D gb = gridBoxes.get(0);
-                        System.out.println("gb : " + gb);
+                        // System.out.println("gb : " + gb);
                         //DEBUG for mesh import
                         // new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                         LOGGER.info("In export exportBaseSTL en STL");
@@ -1213,12 +1218,19 @@ public class StlDBComponentController
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
                 lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
+       // System.out.println("dem : "+dem.getGrid().size());
         maxDepth = dem.getMaxElevation();
         // Offset from maxDepth
         System.out.println("maxDepth : " + maxDepth);
+        /*
         dem.getGrid().forEach((p) -> {
             p.setElevation(maxDepth - p.getElevation());
         });
+*/
+        List<Triangle_dt> tri = delaunayServices.createDelaunay(dem.getGrid());
+        List<Triangle_dt> tri2 = delaunayServices.filterLargeEdges(tri, 0.001);
+        displayServices.displayDelaunay(tri2, maxDepth, 10, Material.WHITE, s57Layer);
+        //  displayServices.displayPoints3DAsTriangles(dem.getGrid(), s57Layer, Material.MAGENTA);
         return createGrids(dem, latMin, lonMin, latMax, lonMax);
     }
 

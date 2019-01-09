@@ -19,8 +19,10 @@ import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
+import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.PointPlacemark;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -65,7 +67,7 @@ public class BathymetryDBController {
     private PreparedStatement preparedStatement;
     private Statement statement;
     private List<Point3Df> points3df;
-    private List<Point3D> points3d;
+    private List<Point3D> points3d = new ArrayList<>();
     protected RenderableLayer layer;
     protected static final String GROUP = "Bathymetry data";
     double longitude;
@@ -98,17 +100,26 @@ public class BathymetryDBController {
         this.LIMIT = limit;
         this.layer = layer;
         wwd = GeoWorldWindViewImpl.getWW();
-
+        
         wwd.addPositionListener((PositionEvent event) -> {
             Position pos = event.getPosition();
+
             try {
                 if (pos != null && connection != null && !connection.isClosed() && pos.getAltitude() < 20.0) {
-                    //  points = bathymetryDBImpl.retrieve(pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees());
+                    //ystem.out.println("pos : "+pos.getLatitude().getDegrees()+" "+pos.getLongitude().getDegrees());
+                   points = retrieveIn("bathy",
+                           pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees(),
+                           pos.getLatitude().getDegrees()+0.001, pos.getLongitude().getDegrees()+0.001);
+                   
+                //   System.out.println("points : "+pos.getLatitude().getDegrees()+" "+pos.getLongitude().getDegrees());
+                // points = retrieveAround(pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees(),10);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(BathymetryDBController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         });
+         
+        
     }
 
     public static BathymetryDBController getInstance(BathymetryDBImpl component,
@@ -273,11 +284,15 @@ public class BathymetryDBController {
                 while (r.next()) {
                     geom = (PGgeometry) r.getObject(2);
                     depth = r.getFloat(3);
+                    
                     if (depth >= MIN_DEPTH) {
-                        Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
+                      Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
                                 geom.getGeometry().getFirstPoint().getY(),
-                                depth);
+                               depth);
                         tmp1.add(pt);
+                      //  PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(geom.getGeometry().getFirstPoint().getX(), geom.getGeometry().getFirstPoint().getY(), 0));
+                      //  layer.addRenderable(placemark);
+                      //  wwd.redrawNow();
                     }
                 }
 
@@ -316,6 +331,9 @@ public class BathymetryDBController {
                 geom = (PGgeometry) r0.getObject(1);
                 longitude = geom.getGeometry().getFirstPoint().getX();
                 latitude = geom.getGeometry().getFirstPoint().getY();
+                //System.out.println("geom " + geom.getGeometry());
+                System.out.println("r0 "+r0.getFloat(2));
+                /*
                 r1 = connection.createStatement().executeQuery(
                         "SELECT ST_DISTANCE("
                         + "ST_SetSRID(ST_MakePoint(" + longitude
@@ -323,6 +341,9 @@ public class BathymetryDBController {
                         + "ST_SetSRID(ST_MakePoint(" + Double.toString(lon)
                         + ", " + Double.toString(lat) + "), 4326)::geography"
                         + ");");
+                 */
+                //points3d.add(new Point3D(latitude,latitude,r1.getFloat(1)));
+                // System.out.println("r1 : "+r1);
             }
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);

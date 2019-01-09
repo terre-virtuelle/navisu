@@ -41,7 +41,7 @@ public abstract class ShapefilePolygonView
     protected void createPolygon(RenderableLayer layer, ShapefileRecord record,
             boolean isHeight, double magnify, double maxHeight) {
         this.record = record;
-        System.out.println("isHeight : " + isHeight);
+      //  System.out.println("isHeight : " + isHeight);
         if (isHeight == true) {
             if (record.getAttributes() != null) {
                 entries = record.getAttributes().getEntries();
@@ -61,6 +61,9 @@ public abstract class ShapefilePolygonView
                     }
                    
                     color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val1);
+                    if (e.getKey().equalsIgnoreCase("drval2")) {
+                        val2 = (Double) e.getValue();
+                    }
                 });
             }
             surface(layer, record);
