@@ -16,69 +16,46 @@ public class SHOM_HOMONIM_BATHYMETRY_CLUT {
 
     static {
         RANGES = new ArrayList<>();
-        /*
-        RANGES.add(Range.closedOpen(-15.0, 5.0));
-        RANGES.add(Range.closedOpen(5.0, 10.0));
-        RANGES.add(Range.closedOpen(10.0, 15.0));
-        RANGES.add(Range.closedOpen(15.0, 20.0));
-        RANGES.add(Range.closedOpen(7.0, 10.0));
-        RANGES.add(Range.closedOpen(20.0, 25.0));
-        RANGES.add(Range.closedOpen(25.0, 35.0));
-        RANGES.add(Range.closedOpen(35.0, MAX));
-        */
-
         RANGES.add(Range.closedOpen(-15.0, 0.0));
         RANGES.add(Range.closedOpen(0.0, 1.0));
         RANGES.add(Range.closedOpen(1.0, 3.0));
-        RANGES.add(Range.closedOpen(3.0, 7.0));
-        RANGES.add(Range.closedOpen(7.0, 10.0));
-        RANGES.add(Range.closedOpen(10.0, 14.0));
-        RANGES.add(Range.closedOpen(14.0, 19.0));
-        RANGES.add(Range.closedOpen(19.0, 25.0));
-        RANGES.add(Range.closed(25.0, 31.0));
-        RANGES.add(Range.closedOpen(31.0, 39.0));
-        RANGES.add(Range.closedOpen(39.0, 45.0));
-        RANGES.add(Range.closedOpen(45.0, 53.0));
-        RANGES.add(Range.closedOpen(53.0, 83.0));
-        RANGES.add(Range.closed(83.0, 94.0));
-        RANGES.add(Range.closedOpen(94.0, 107.0));
-        RANGES.add(Range.closedOpen(107.0, 120.0));
-        RANGES.add(Range.closedOpen(120.0, 149.0));
-        RANGES.add(Range.closed(149.0, MAX));
-        
+        RANGES.add(Range.closedOpen(3.0, 5.0));
+        RANGES.add(Range.closedOpen(5.0, 7.0));
+        RANGES.add(Range.closedOpen(7.0, 9.0));
+        RANGES.add(Range.closedOpen(9.0, 11.0));
+        RANGES.add(Range.closedOpen(11.0, 13.0));
+        RANGES.add(Range.closedOpen(13.0, 15.0));
+        RANGES.add(Range.closedOpen(15.0, 17.0));
+        RANGES.add(Range.closedOpen(17.0, 19.0));
+        RANGES.add(Range.closedOpen(19.0, 21.0));
+        RANGES.add(Range.closedOpen(21.0, 23.0));
+        RANGES.add(Range.closedOpen(23.0, 25.0));
+        RANGES.add(Range.closedOpen(25.0, 27.0));
+        RANGES.add(Range.closedOpen(27.0, 30.0));
+        RANGES.add(Range.closedOpen(30.0, 35.0));
+        RANGES.add(Range.closed(35.0, MAX));
     }
     private static final Map<Integer, Color> ATT = Collections.unmodifiableMap(new HashMap<Integer, Color>() {
         {
             
-            put(0, new Color(Integer.decode("#00FFB")));
-            put(1, new Color(Integer.decode("#00FF60")));
-            put(2, new Color(Integer.decode("#00FF25")));
-            put(3, new Color(Integer.decode("#15FF00")));
-            put(4, new Color(Integer.decode("#50FF00")));
-            put(5, new Color(Integer.decode("#8BFF00")));
-            put(6, new Color(Integer.decode("#C6FF00")));
-            put(7, new Color(Integer.decode("#FFFF00")));
-            put(8, new Color(Integer.decode("#FFC400")));
-            put(9, new Color(Integer.decode("#FF8900")));
-            put(10, new Color(Integer.decode("#FF4E00")));
-            put(11, new Color(Integer.decode("#FF1300")));
-            put(12, new Color(Integer.decode("#FF033E")));
-            put(13, new Color(Integer.decode("#FF00FF")));
-            put(14, new Color(Integer.decode("#FF4EFF")));
-            put(15, new Color(Integer.decode("#FF89FF")));
-            put(16, new Color(Integer.decode("#FF89FF")));
-            put(17, new Color(Integer.decode("#FFC4E7")));
-             
-            /*
-            put(7, new Color(Integer.decode("#192EF8")));
-            put(6, new Color(Integer.decode("#8FF5FE")));
-            put(5, new Color(Integer.decode("#7EDF3A")));
-            put(4, new Color(Integer.decode("#BAFC46")));
-            put(3, new Color(Integer.decode("#FCFD49")));
-            put(2, new Color(Integer.decode("#F9FD53")));
-            put(1, new Color(Integer.decode("#E15D22")));
-            put(0, new Color(Integer.decode("#D0321B")));
-*/
+            put(0, new Color(Integer.decode("#d0321b")));
+            put(1, new Color(Integer.decode("#dc4d1f")));
+            put(2, new Color(Integer.decode("#e15d22")));
+            put(3, new Color(Integer.decode("#e37226")));
+            put(4, new Color(Integer.decode("#e6882a")));
+            put(5, new Color(Integer.decode("#eeb534")));
+            put(6, new Color(Integer.decode("#f3cd3a")));
+            put(7, new Color(Integer.decode("#e7fd4f")));
+            put(8, new Color(Integer.decode("#d8fc4b")));
+            put(9, new Color(Integer.decode("#bafc46")));
+            put(10, new Color(Integer.decode("#98f741")));
+            put(11, new Color(Integer.decode("#7cdf42")));
+            put(12, new Color(Integer.decode("#8befca")));
+            put(13, new Color(Integer.decode("#7cd9fc")));
+            put(14, new Color(Integer.decode("#3561f9")));
+            put(15, new Color(Integer.decode("#192ef8")));
+            put(16, new Color(Integer.decode("#1e2cb5")));
+            put(17, new Color(Integer.decode("#1e2cb5")));
         }
     });
 
