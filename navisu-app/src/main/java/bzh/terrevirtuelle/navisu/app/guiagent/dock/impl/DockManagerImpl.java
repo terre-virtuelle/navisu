@@ -146,7 +146,7 @@ public class DockManagerImpl<TrackTool>
         (e) -> {
             shomRadialMenu.setVisible(!shomRadialMenu.isVisible());
         }),
-        DockItemFactory.newImageItem("osmb", ICON_PATH + "dock_icons/osmB.png",
+        DockItemFactory.newImageItem("osmb", ICON_PATH + "dock_icons/buildings.png",
         (e) -> {
             buildingsRadialMenu.setVisible(!buildingsRadialMenu.isVisible());
         })
@@ -209,7 +209,7 @@ public class DockManagerImpl<TrackTool>
 
     private void createBuildingsWidget() {
         buildingsRadialMenu = RadialMenuBuilder.create()
-                .centralImage("chantier.png")
+                .centralImage("buildingsradialmenu150.png")
                 .createNode(0, "osm.png", 0, "vide.png", 0, "vide.png", (e) -> open())
                 .createNode(2, "osmb.png", 0, "web.png", 0, "config.png", (e) -> open("OSM_BUILDINGS"))
                 .createNode(1, "brestPays3D.png", 0, "vide.png", 0, "vide.png", (e) -> open())
