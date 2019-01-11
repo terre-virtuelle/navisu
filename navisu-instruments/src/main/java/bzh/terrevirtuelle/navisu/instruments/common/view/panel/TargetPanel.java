@@ -11,6 +11,7 @@ import static bzh.terrevirtuelle.navisu.domain.ship.view.ShipType.TYPE;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -25,7 +26,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
@@ -89,8 +89,10 @@ public class TargetPanel
     NumberFormat nf = new DecimalFormat("0.###");
     SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
     protected GuiAgentServices guiAgentServices;
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    protected String viewgroupstyle = "configuration.css";
 
-    public TargetPanel(GuiAgentServices guiAgentServices, 
+    public TargetPanel(GuiAgentServices guiAgentServices,
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
         this.guiAgentServices = guiAgentServices;
@@ -102,6 +104,9 @@ public class TargetPanel
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        ais.getStylesheets().add(uri);
+        
         ais.setOpacity(0.8);
         quit.setOnMouseClicked((MouseEvent event) -> {
             ais.setVisible(false);
