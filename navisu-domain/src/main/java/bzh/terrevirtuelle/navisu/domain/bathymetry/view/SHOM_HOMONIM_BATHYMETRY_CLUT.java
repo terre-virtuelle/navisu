@@ -33,7 +33,10 @@ public class SHOM_HOMONIM_BATHYMETRY_CLUT {
         RANGES.add(Range.closedOpen(25.0, 27.0));
         RANGES.add(Range.closedOpen(27.0, 30.0));
         RANGES.add(Range.closedOpen(30.0, 35.0));
-        RANGES.add(Range.closed(35.0, MAX));
+        RANGES.add(Range.closedOpen(30.0, 70.0));
+        RANGES.add(Range.closedOpen(70.0, 90.0));
+        RANGES.add(Range.closedOpen(90.0, 110.0));
+        RANGES.add(Range.closed(110.0, MAX));
     }
     private static final Map<Integer, Color> ATT = Collections.unmodifiableMap(new HashMap<Integer, Color>() {
         {
@@ -54,8 +57,11 @@ public class SHOM_HOMONIM_BATHYMETRY_CLUT {
             put(13, new Color(Integer.decode("#7cd9fc")));
             put(14, new Color(Integer.decode("#3561f9")));
             put(15, new Color(Integer.decode("#192ef8")));
-            put(16, new Color(Integer.decode("#1e2cb5")));
-            put(17, new Color(Integer.decode("#1e2cb5")));
+            put(16, new Color(Integer.decode("#2132cc")));
+            put(17, new Color(Integer.decode("#1d2cb2")));
+            put(18, new Color(Integer.decode("#1a2799")));
+            put(19, new Color(Integer.decode("#172180")));
+            put(20, new Color(Integer.decode("#121b66")));
         }
     });
 

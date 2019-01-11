@@ -47,7 +47,7 @@ public class TextAreaController
     String DEFAULT = "textArea.fxml";
     String filename;
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
-    protected String viewgroupstyle = "common.css";
+    protected String viewgroupstyle = "configuration.css";
     public TextAreaController() {
         filename = DEFAULT;
         setMouseTransparent(false);
@@ -77,11 +77,10 @@ public class TextAreaController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        quit.setOnMouseClicked((MouseEvent event) -> {
-            setVisible(false);
         String uri = CSS_STYLE_PATH + viewgroupstyle;
         view.getStylesheets().add(uri);
-
+        quit.setOnMouseClicked((MouseEvent event) -> {
+            setVisible(false);
         });
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
