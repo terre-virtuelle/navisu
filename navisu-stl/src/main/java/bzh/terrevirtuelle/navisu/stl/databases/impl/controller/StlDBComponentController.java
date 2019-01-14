@@ -1222,11 +1222,7 @@ public class StlDBComponentController
         maxDepth = dem.getMaxElevation();
         // Offset from maxDepth
         System.out.println("maxDepth : " + maxDepth);
-        /*
-        dem.getGrid().forEach((p) -> {
-            p.setElevation(maxDepth - p.getElevation());
-        });
-*/
+        
         List<Triangle_dt> tri = delaunayServices.createDelaunay(dem.getGrid());
         List<Triangle_dt> tri2 = delaunayServices.filterLargeEdges(tri, 0.001);
         displayServices.displayDelaunay(tri2, maxDepth, 10, Material.WHITE, s57Layer);

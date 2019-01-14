@@ -6,6 +6,8 @@
 package bzh.terrevirtuelle.navisu.topology.impl;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.topology.Topology;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
@@ -17,6 +19,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiPoint;
+import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.geom.Angle;
@@ -268,10 +271,11 @@ public class TopologyImpl
 
     @Override
     public LatLon wktMultiPointToWwjLatLon(String geometry) {
+        LatLon latLon = null;
+
         String tmp = geometry.replace("MULTIPOINT(", "");
         tmp = tmp.replace("POINT(", "");
         tmp = tmp.replace(")", "");
-        LatLon latLon = null;
         if (!tmp.contains("EMPTY")) {
             String[] posTab0 = tmp.split("\\s+");
             if (posTab0.length != 0) {
@@ -284,6 +288,49 @@ public class TopologyImpl
             }
         }
         return latLon;
+    }
+
+    @Override
+    public List<Point3D> wktMultiPointZMToPoint3DList(String geometry) {
+        List<Point3D> result = new ArrayList<>();
+        if (geometry.contains("MULTIPOINT ZM")) {
+            String tmp = geometry.replace("MULTIPOINT ZM (", "");
+            tmp = tmp.replace(")", "");
+            if (!tmp.contains("EMPTY")) {
+                String[] posTab = tmp.split(",");
+                if (posTab.length != 0) {
+                    for (int i = 0; i < posTab.length; i++) {
+                        try {
+                            String[] posTab0 = posTab[i].split("\\s+");
+                            result.add(new Point3D(Double.valueOf(posTab0[1].trim()), Double.valueOf(posTab0[0].trim()), Double.valueOf(posTab0[2].trim())));
+                        } catch (NumberFormatException e) {
+
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Point3D wktPointZMToPoint3D(String geometry) {
+        Point3D result = null;
+        if (geometry.contains("POINT ZM")) {
+            String tmp = geometry.replace("POINT ZM (", "");
+            tmp = tmp.replace(")", "");
+            if (!tmp.contains("EMPTY")) {
+                String[] posTab = tmp.split("\\s+");
+                if (posTab.length != 0) {
+                    try {
+                        result = new Point3D(Double.valueOf(posTab[1].trim()), Double.valueOf(posTab[0].trim()), Double.valueOf(posTab[2].trim()));
+                    } catch (NumberFormatException e) {
+
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     @Override
@@ -434,8 +481,10 @@ public class TopologyImpl
         if (wkt != null) {
             try {
                 polygon = wktReader.read(wkt);
+
             } catch (com.vividsolutions.jts.io.ParseException ex) {
-                Logger.getLogger(TopologyImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                Logger.getLogger(TopologyImpl.class
+                        .getName()).log(Level.SEVERE, ex.toString(), ex);
             }
             if (polygonEnv.contains(polygon)) {
                 geometryFiltered = polygon;
@@ -609,18 +658,11 @@ public class TopologyImpl
         com.vividsolutions.jts.geom.Polygon clipper = geometryFactory.createPolygon(coord);
         objects.forEach((g) -> {
             geometry = g.getGeom();
-            
+
             if (geometry.contains("MULTILINESTRING") && !geometry.contains("EMPTY")) {
                 WKTReader wktReader = new WKTReader(geometryFactory);
                 try {
                     Geometry geom = wktReader.read(geometry);
-                   /*
-                    geom.getCoordinates();
-                    CoordinateList list = new CoordinateList(geom.getCoordinates());
-                    list.closeRing();
-                    LinearRing ring = geometryFactory.createLinearRing(list.toCoordinateArray());
-                    com.vividsolutions.jts.geom.Polygon polygonEnv = geometryFactory.createPolygon(ring, null);
-*/
                     Geometry geomClipped = geom.intersection(clipper);
                     g.setGeom(geomClipped.toString());
                     result.add(g);
@@ -629,7 +671,29 @@ public class TopologyImpl
                 }
             }
         });
+        return result;
+    }
 
+    @Override
+    public List<Point3D> clipPointsZM(List<String> geoms, double latMin, double lonMin, double latMax, double lonMax) {
+        List<Point3D> result = new ArrayList<>();
+        GeometryFactory geometryFactory = new GeometryFactory();
+        Coordinate[] coord = new Coordinate[5];
+        coord[0] = new Coordinate(lonMin, latMin, 0);
+        coord[1] = new Coordinate(lonMax, latMin, 0);
+        coord[2] = new Coordinate(lonMax, latMax, 0);
+        coord[3] = new Coordinate(lonMin, latMax, 0);
+        coord[4] = new Coordinate(lonMin, latMin, 0);
+        com.vividsolutions.jts.geom.Polygon clipper = geometryFactory.createPolygon(coord);
+        for (String g : geoms) {
+            g = g.replace("POINT ZM (", "");
+            g = g.replace(")", "");
+            String[] tab = g.trim().split("\\s+");
+            Point point = geometryFactory.createPoint(new Coordinate(Double.parseDouble(tab[0]), Double.parseDouble(tab[1])));
+            if (clipper.contains(point)) {
+                result.add(new Point3D(point.getY(), point.getX(), Double.parseDouble(tab[2])));
+            }
+        }
         return result;
     }
 }

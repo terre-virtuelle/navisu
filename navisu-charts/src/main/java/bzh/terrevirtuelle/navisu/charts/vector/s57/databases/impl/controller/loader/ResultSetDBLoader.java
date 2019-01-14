@@ -78,12 +78,11 @@ public abstract class ResultSetDBLoader {
         this.acronym = acronym;
     }
 
-
     abstract List<? extends Geo> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax);
 
     @SuppressWarnings("unchecked")
     public ResultSet retrieveResultSetIn(double latMin, double lonMin, double latMax, double lonMax) {
-
+        
         if (connection != null) {
             try {
                 request = "SELECT ST_AsText(ST_ClipByBox2D(geom, ST_MakeEnvelope";
@@ -107,5 +106,6 @@ public abstract class ResultSetDBLoader {
             alert.show();
         }
         return resultSet;
+         
     }
 }

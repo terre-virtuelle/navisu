@@ -13,29 +13,29 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServi
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.CoastlineDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DepareDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.PontoonDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.ShorelineConstructionDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.TopmarDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LandmarkView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57ObjectView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.SoundingView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.AnchorageAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DockAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DredgedAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.LandmarkDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.LightDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.NavigationLineDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.RestrictedAreaDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.SoundgDBLoader;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Sounding;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
@@ -55,6 +55,7 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.util.measure.MeasureTool;
@@ -253,7 +254,8 @@ public class S57DBComponentController
             "LNDMRK",
             "PONTON",
             "RESARE",
-            "SLCONS"
+            "SLCONS",
+            "SOUNDG"
     );
 
     public S57DBComponentController(S57DBComponentImpl component, String componentKeyName,
@@ -442,6 +444,7 @@ public class S57DBComponentController
             if (lightsSectorsLayer.getNumRenderables() != 0) {
                 lightsSectorsLayer.removeAllRenderables();
             }
+
             s57Connection = databaseServices.connect(databaseTF.getText(),
                     "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver",
                     USER, PASSWD);
@@ -681,7 +684,7 @@ public class S57DBComponentController
                     s57Viewer.display(g);
                 });
             }
-*/
+             */
             if (selectedObjects.contains("ALL") || selectedObjects.contains("LIGHTS")) {
 
                 List<Light> lights = new LightDBLoader(topologyServices, s57Connection, marsys)
@@ -699,6 +702,24 @@ public class S57DBComponentController
                     s57Viewer.display(g);
                 });
             }
+            if (selectedObjects.contains("ALL") || selectedObjects.contains("SOUNDG")) {
+                List<Sounding> soundings = new SoundgDBLoader(topologyServices, s57Connection)
+                        .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                System.out.println("soundings : " + soundings.size());
+
+                new SoundingView(bathymetryLayer).display(soundings);
+                
+                List<Point3D> points = new ArrayList<>();
+                for (Sounding s : soundings) {
+                    points.add(s.getPoint3D());
+                }
+
+                List<Path> tri = jtsServices.createDelaunayToPath(points);
+                // List<Triangle_dt> tri = delaunayServices.createDelaunay(points);
+                // List<Triangle_dt> tri2 = delaunayServices.filterLargeEdges(tri, 0.001);
+                // displayServices.displayDelaunay(tri2, 50, 10, Material.WHITE, bathymetryLayer);
+                displayServices.displayPaths(tri, bathymetryLayer, Material.MAGENTA, 1.0);
+            }
             /*
             if (selectedObjects.contains("ALL") || selectedObjects.contains("RESARE")) {
                 objects = new RestrictedAreaDBLoader(s57Connection)
@@ -709,7 +730,7 @@ public class S57DBComponentController
                     s57Viewer.display(g, normalAttributes, highlightAttributes);
                 });
             }
-*/
+             */
             depareLayer.removeRenderable(pgon);
             wwd.redrawNow();
         });

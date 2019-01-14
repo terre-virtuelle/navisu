@@ -1,9 +1,18 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "sounding")
 public class Sounding extends Location
-        implements Serializable {
+        implements Serializable, NavigationData {
 
     private String expositionOfSounding;
     private String objectName;
@@ -23,6 +32,19 @@ public class Sounding extends Location
     }
 
     public Sounding() {
+    }
+
+    public Sounding(double lat, double lon) {
+        super(lat, lon);
+    }
+
+    public Sounding(double lat, double lon, double depth) {
+        super(lat, lon);
+        this.depth = depth;
+    }
+
+    public Point3D getPoint3D() {
+        return new Point3D(latitude, longitude, depth);
     }
 
     /**

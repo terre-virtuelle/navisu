@@ -51,6 +51,11 @@ public class Location
         this.longitude = lon;
     }
 
+    public Location(double lat, double lon) {
+        this.latitude = lat;
+        this.longitude = lon;
+    }
+
     public Location(long id, String geometry) {
         super(id);
         this.geometry = geometry;
