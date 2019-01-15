@@ -58,38 +58,36 @@ public class CompassImpl
 
     @Override
     public void on(String... files) {
-        if (first == true) {
-            first = false;
-            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
-            guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
-            controller.setVisible(true);
-            hdgEvent.subscribe(new HDGEvent() {
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
+        guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
+        controller.setVisible(true);
+        hdgEvent.subscribe(new HDGEvent() {
 
-                @Override
-                public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-                    HDG data = (HDG) d;
-                    controller.notifyNmeaMessageChanged(data);
-                }
-            });
-        }
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+                HDG data = (HDG) d;
+                controller.notifyNmeaMessageChanged(data);
+            }
+        });
     }
 
-    @Override
-    public void off() {
-        if (first == false) {
+
+@Override
+        public void off() {
+        //if (first == false) {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller);
             guiAgentServices.getRoot().getChildren().remove(controller);
             controller.setVisible(false);
             controller.stop();
-        }
+        //}
     }
 
     @Override
-    public void componentStarted() {
+        public void componentStarted() {
     }
 
     @Override
-    public void componentStopped() {
+        public void componentStopped() {
     }
 
 }
