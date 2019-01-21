@@ -16,6 +16,7 @@ import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.controller.NavigationServerController;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import java.util.logging.Logger;
+import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -40,7 +41,7 @@ public class NavigationServerImpl
     DatabaseDriverManagerServices databaseDriverManagerServices;
 
     private final String KEY_NAME = "NavigationServer";
-    private NavigationServerController navigationServerController;
+    private NavigationServerController controller;
     protected static final Logger LOGGER = Logger.getLogger(NavigationServerImpl.class.getName());
 
     @Override
@@ -50,24 +51,24 @@ public class NavigationServerImpl
 
     @Override
     public void init() {
-        navigationServerController = NavigationServerController.getInstance(guiAgentServices,
+        controller = NavigationServerController.getInstance(guiAgentServices,
                 driverManagerServices,
                 webDriverManagerServices,
                 instrumentDriverManagerServices,
                 databaseDriverManagerServices,
                 navigationCmdComponentServices);
-        navigationServerController.init();
+        controller.init();
     }
 
     @Override
     public void init(int port) {
-        navigationServerController = NavigationServerController.getInstance(guiAgentServices,
+        controller = NavigationServerController.getInstance(guiAgentServices,
                 driverManagerServices,
                 webDriverManagerServices,
                 instrumentDriverManagerServices,
                 databaseDriverManagerServices,
                 navigationCmdComponentServices);
-        navigationServerController.init(port);
+        controller.init(port);
     }
 
     @Override
@@ -77,6 +78,21 @@ public class NavigationServerImpl
     @Override
     public void componentStopped() {
 
+    }
+
+    @Override
+    public void on(String... files) {
+        String[] cmd = files;
+        if (cmd != null) {
+            if (cmd[0].equals(KEY_NAME)) {
+                init(9090);
+            }
+        }
+    }
+
+    @Override
+    public void off() {//TODO
+        
     }
 
     @Override

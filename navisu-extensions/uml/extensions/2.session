@@ -1,15 +1,6 @@
-window_sizes 1280 1000 300 900 682 82
-diagrams
-  classdiagram_ref 128002 // extensions
-    974 844 100 4 36 0
-  active  classdiagram_ref 134530 // target
-    775 675 100 4 0 0
-end
+window_sizes 1987 1167 300 1681 1033 82
+cleanlooks_style
 show_stereotypes
 selected 
-  package_ref 129 // extensions
-open
-  classview_ref 129666 // model
-  classview_ref 137474 // target
-end
+package_ref 129 // extensions
 end

@@ -112,7 +112,7 @@ public class NavigationServerController {
     }
 
     private void initServer() {
-       // System.out.println("initServer");
+        System.out.println("initServer");
         cmdVertx = VertxFactory.newVertx();
         try {
             cmdVertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {

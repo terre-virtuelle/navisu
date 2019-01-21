@@ -123,6 +123,8 @@ import bzh.terrevirtuelle.navisu.extensions.camera.CameraComponentServices;
 import bzh.terrevirtuelle.navisu.extensions.camera.impl.CameraComponentImpl;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.extensions.commands.impl.NavigationCmdComponentImpl;
+import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
+import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.server.ServerOptionsComponentServices;
 import bzh.terrevirtuelle.navisu.architecture.ArchitectureComponentServices;
 import bzh.terrevirtuelle.navisu.architecture.impl.ArchitectureComponentImpl;
@@ -142,8 +144,6 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.S57DBComponentServi
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.S57DBComponentImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.dem.db.impl.DemDBImpl;
-import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
-import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.gazetteer.impl.GazetteerComponentImpl;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
@@ -471,6 +471,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(leapMotionComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(navigationServerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(osmComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(osmbComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(paysBrest3DComponentServices.getDriver());
@@ -621,7 +622,7 @@ public class AppMain extends Application {
          System.out.println(exif1);
          */
         // Test Navigation  Communication with external client 
-        // navigationServerServices.init(9090);
+        navigationServerServices.init(9090);
         // Start Leap Motion 
         // leapMotionComponentServices.on();
         // Test Gazeteer services
@@ -671,6 +672,8 @@ public class AppMain extends Application {
          */
         //Test new viewer services of STL
         // stlComponentServices.viewSTL("../privateData/stl/out.stl");
+        
+        
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");

@@ -12,8 +12,8 @@ import org.capcaval.c3.component.ComponentService;
 public interface OsmbComponentServices
         extends ComponentService {
 
-    InstrumentDriver getDriver();
+   InstrumentDriver getDriver();
 
-    List<Renderable> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax);
+   List<Renderable> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax);
 
 }

@@ -6,7 +6,6 @@
 package bzh.terrevirtuelle.navisu.extensions.commands.impl;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;

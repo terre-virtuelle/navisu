@@ -400,9 +400,9 @@ public class DockManagerImpl<TrackTool>
     private void createToolsRadialWidget() {
         toolsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("toolsradialmenu150.png")
-                .createNode(0, "devices.png", 1, "server.png", 2, "options.png", (e) -> open("ServerOptions"))
-                .createNode(0, "devices.png", 2, "leapMotion.png", 2, "leapMotionOn.png", (e) -> open("LeapMotion"))
-                .createNode(0, "devices.png", 2, "leapMotion.png", 3, "leapMotionOff.png", (e) -> close("LeapMotion"))
+                .createNode(0, "extension.png", 1, "server.png", 2, "serverOn.png", (e) -> open("NavigationServer"))
+               // .createNode(0, "extension.png", 1, "server.png", 2, "serverOff.png", (e) -> open())
+                .createNode(0, "extension.png", 1, "server.png", 3, "dbsConnect.png", (e) -> open())
                 .createNode(1, "config.png", 1, "app.png", 1, "options.png", (e) -> open("Configuration"))//"ServerOptions"
                 .createNode(2, "earth.png", 0, "models.png", 0, "noElevation.png", (e) -> open("noElevation"))
                 .createNode(2, "earth.png", 0, "models.png", 1, "elevation.png", (e) -> open("Elevation"))

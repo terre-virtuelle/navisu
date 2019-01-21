@@ -8,7 +8,9 @@ package bzh.terrevirtuelle.navisu.buildings.osmb.impl.controller;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.buildings.osmb.impl.OsmbComponentImpl;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
+import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Renderable;
 import java.io.File;
@@ -49,6 +51,7 @@ public class OsmbComponentController
     protected static final String LAYER = "OSMBuildings";
     protected GuiAgentServices guiAgentServices;
     protected LayersManagerServices layersManagerServices;
+    protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected RenderableLayer osmbLayer;
     private OsmbComponentImpl component;
 

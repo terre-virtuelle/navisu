@@ -10,6 +10,7 @@ import gov.nasa.worldwind.ogc.kml.impl.KMLSurfacePolygonImpl;
  */
 public interface InstrumentDriver {
 
+    
     default boolean canOpen(String category) {
         return false;
     }

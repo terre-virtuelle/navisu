@@ -19,7 +19,6 @@ import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
-import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
@@ -139,7 +138,7 @@ public class BathymetryDBController {
             String dataFileName) {
         this.dataFileName = dataFileName;
         this.connection = databaseServices.connect(dbName, hostName, protocol, port, driverName, userName, passwd);
-        System.out.println(dbName + " " + hostName + " " + protocol + " " + port + " " + driverName + " " + userName + " " + passwd);
+        System.out.println("Connect : "+ dbName + " " + hostName + " " + protocol + " " + port + " " + driverName + " " + userName + " " + passwd);
         String sql = "INSERT INTO " + table + " (coord, elevation) "
                 + "VALUES ( ST_SetSRID(ST_MakePoint(?, ?), 4326), ?);";
         try {
@@ -266,25 +265,26 @@ public class BathymetryDBController {
     }
 
     public List<Point3D> retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax) {
+      //  System.out.println("connection : " + connection);
         List<Point3D> tmp1 = new ArrayList<>();
         PGgeometry geom;
         double depth;
         ResultSet r;
-
+      //  System.out.println("retrieveIn : " +table);
         if (connection != null) {
             try {
                 r = connection.createStatement().executeQuery(
                         "SELECT *"
-                        + "FROM " + table + "  "
+                        + " FROM " + table + "  "
                         + "WHERE coord @ ST_MakeEnvelope ("
                         + latMin + ", " + lonMin + ", "
                         + latMax + ", " + lonMax
-                        + ", 4326) ");
-
+                        + ", 4326); ");
+               // System.out.println("r : " + r);
                 while (r.next()) {
                     geom = (PGgeometry) r.getObject(2);
                     depth = r.getFloat(3);
-                    
+                  //  System.out.println("depth : " + depth);
                     if (depth >= MIN_DEPTH) {
                       Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
                                 geom.getGeometry().getFirstPoint().getY(),
@@ -306,7 +306,6 @@ public class BathymetryDBController {
     }
 
     public List<Point3D> retrieveIn(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax) {
-
         Connection tmp0 = this.connection;
         this.connection = connection;
         List<Point3D> tmp1 = retrieveIn(table, latMin, lonMin, latMax, lonMax);

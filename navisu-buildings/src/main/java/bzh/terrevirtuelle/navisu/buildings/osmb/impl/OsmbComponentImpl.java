@@ -10,8 +10,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.buildings.osmb.OsmbComponent;
 import bzh.terrevirtuelle.navisu.buildings.osmb.OsmbComponentServices;
 import bzh.terrevirtuelle.navisu.buildings.osmb.impl.controller.OsmbComponentController;
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import gov.nasa.worldwind.WorldWindow;
 import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -30,7 +28,7 @@ public class OsmbComponentImpl
     private static final String COMPONENT_KEY_NAME_0 = "OSM_BUILDINGS";
 
     protected OsmbComponentController controller;
-    protected WorldWindow wwd;
+    
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
@@ -73,7 +71,6 @@ public class OsmbComponentImpl
 
     @Override
     public void componentInitiated() {
-        wwd = GeoWorldWindViewImpl.getWW();
     }
 
     @Override
