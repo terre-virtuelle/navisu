@@ -55,6 +55,7 @@ public class Ship
 
     private double latitude;
     private double longitude;
+    private double elevation;
     /**
      * True heading Degrees (0-359) (511 indicates not available = default)
      */
@@ -234,6 +235,14 @@ public class Ship
         localDateTime = LocalDateTime.of(date, time);
     }
 
+    public Ship(String name, double lat, double lon, double elevation, double heading) {
+        this.name = name;
+        this.latitude = lat;
+        this.longitude = lon;
+        this.elevation = elevation;
+        this.heading = heading;
+    }
+
     public int getMmsi() {
         return mmsi;
     }
@@ -303,6 +312,14 @@ public class Ship
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public double getElevation() {
+        return elevation;
+    }
+
+    public void setElevation(double elevation) {
+        this.elevation = elevation;
     }
 
     public double getHeading() {

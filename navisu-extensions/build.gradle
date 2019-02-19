@@ -1,5 +1,6 @@
 dependencies {
     compile project(':navisu-domain')
+    compile project(':navisu-agents')
     compile project(':navisu-gpx')
     compile project(':navisu-core')
     compile project(':navisu-app')

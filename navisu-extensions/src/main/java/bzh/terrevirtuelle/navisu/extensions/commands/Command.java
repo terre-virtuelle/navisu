@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.extensions.commands;
 
+import bzh.terrevirtuelle.navisu.agents.ship.ShipAgent;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Depth;
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;

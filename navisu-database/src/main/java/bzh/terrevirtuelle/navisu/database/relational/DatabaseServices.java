@@ -20,9 +20,9 @@ public interface DatabaseServices
         extends ComponentService {
 
     /**
-     * Connection connection = databaseServices.connect(s57NP5DB,
-       "localhost", "jdbc:postgresql://","5432","org.postgresql.Driver","admin","admin");
-     * 
+     * Connection connection = databaseServices.connect(s57NP5DB, "localhost",
+     * "jdbc:postgresql://","5432","org.postgresql.Driver","admin","admin");
+     *
      * @param dbName
      * @param hostName
      * @param protocol
@@ -107,6 +107,8 @@ public interface DatabaseServices
      */
     void drop(String tableName);
 
+    void dropAll(String schema);
+
     /**
      *
      */
@@ -129,8 +131,8 @@ public interface DatabaseServices
      * @param cmd
      */
     void sqlToSpatialDB(String databaseName, String user, String passwd, String dir, String cmd);
-    
-    String spatialDBToShapefile(String table, String attributes, 
+
+    String spatialDBToShapefile(String table, String attributes,
             String databaseName,
             String user, String passwd,
             double latMin, double lonMin, double latMax, double lonMax, boolean clip);

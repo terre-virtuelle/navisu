@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer.BathymetryEventProducerServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.impl.BathymetryDBImpl;
 import bzh.terrevirtuelle.navisu.bathymetry.view.impl.controller.DisplayBathymetryController;
+import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
@@ -21,7 +22,6 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.PointPlacemark;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -99,26 +99,25 @@ public class BathymetryDBController {
         this.LIMIT = limit;
         this.layer = layer;
         wwd = GeoWorldWindViewImpl.getWW();
-        
+
         wwd.addPositionListener((PositionEvent event) -> {
             Position pos = event.getPosition();
 
             try {
                 if (pos != null && connection != null && !connection.isClosed() && pos.getAltitude() < 20.0) {
                     //ystem.out.println("pos : "+pos.getLatitude().getDegrees()+" "+pos.getLongitude().getDegrees());
-                   points = retrieveIn("bathy",
-                           pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees(),
-                           pos.getLatitude().getDegrees()+0.001, pos.getLongitude().getDegrees()+0.001);
-                   
-                //   System.out.println("points : "+pos.getLatitude().getDegrees()+" "+pos.getLongitude().getDegrees());
-                // points = retrieveAround(pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees(),10);
+                    points = retrieveIn("bathy",
+                            pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees(),
+                            pos.getLatitude().getDegrees() + 0.001, pos.getLongitude().getDegrees() + 0.001);
+
+                    //   System.out.println("points : "+pos.getLatitude().getDegrees()+" "+pos.getLongitude().getDegrees());
+                    // points = retrieveAround(pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees(),10);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(BathymetryDBController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         });
-         
-        
+
     }
 
     public static BathymetryDBController getInstance(BathymetryDBImpl component,
@@ -138,7 +137,7 @@ public class BathymetryDBController {
             String dataFileName) {
         this.dataFileName = dataFileName;
         this.connection = databaseServices.connect(dbName, hostName, protocol, port, driverName, userName, passwd);
-        System.out.println("Connect : "+ dbName + " " + hostName + " " + protocol + " " + port + " " + driverName + " " + userName + " " + passwd);
+        System.out.println("Connect : " + dbName + " " + hostName + " " + protocol + " " + port + " " + driverName + " " + userName + " " + passwd);
         String sql = "INSERT INTO " + table + " (coord, elevation) "
                 + "VALUES ( ST_SetSRID(ST_MakePoint(?, ?), 4326), ?);";
         try {
@@ -158,7 +157,7 @@ public class BathymetryDBController {
         return connection;
     }
 
-    public void create(String filename, String table) {
+    public void insert(String filename, String table) {
         String sql = "INSERT INTO " + table + " (coord, elevation) "
                 + "VALUES ( ST_SetSRID(ST_MakePoint(?, ?), 4326), ?);";
         try {
@@ -166,8 +165,17 @@ public class BathymetryDBController {
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-        guiAgentServices.getJobsManager().newJob("create", (progressHandle) -> {
-            //
+        guiAgentServices.getJobsManager().newJob("Insert", (progressHandle) -> {
+            points3df = readFromFile(filename);
+            insertData(points3df);
+            createIndex(table);
+        });
+    }
+
+    public void create(String filename, String table) {
+
+        guiAgentServices.getJobsManager().newJob("Create", (progressHandle) -> {
+
             String query = "DROP TABLE IF EXISTS  " + table + "; "
                     + "CREATE TABLE " + table + "("
                     + "gid SERIAL PRIMARY KEY,"
@@ -179,9 +187,9 @@ public class BathymetryDBController {
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
-            //
+
             points3df = readFromFile(filename);
-            insert(points3df);
+            insertData(points3df);
             createIndex(table);
         });
     }
@@ -202,7 +210,7 @@ public class BathymetryDBController {
         return tmp;
     }
 
-    public final void insert(List<Point3Df> points) {
+    public final void insertData(List<Point3Df> points) {
         points.stream().forEach((p) -> {
             try {
                 preparedStatement.setDouble(1, p.getLon());
@@ -215,7 +223,8 @@ public class BathymetryDBController {
         });
     }
 
-    public final void insert(String table, String filename) {
+    public final void insertData(String table, String filename) {
+
         String sql = "INSERT INTO " + table + " (coord, elevation) "
                 + "VALUES ( ST_SetSRID(ST_MakePoint(?, ?), 4326), ?);";
         try {
@@ -225,7 +234,7 @@ public class BathymetryDBController {
         }
         guiAgentServices.getJobsManager().newJob("insert", (progressHandle) -> {
             List<Point3Df> points = readFromFile(filename);
-            insert(points);
+            insertData(points);
             createIndex(table);
         });
     }
@@ -265,12 +274,12 @@ public class BathymetryDBController {
     }
 
     public List<Point3D> retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax) {
-      //  System.out.println("connection : " + connection);
+        //  System.out.println("connection : " + connection);
         List<Point3D> tmp1 = new ArrayList<>();
         PGgeometry geom;
         double depth;
         ResultSet r;
-      //  System.out.println("retrieveIn : " +table);
+        //  System.out.println("retrieveIn : " +table);
         if (connection != null) {
             try {
                 r = connection.createStatement().executeQuery(
@@ -280,19 +289,19 @@ public class BathymetryDBController {
                         + latMin + ", " + lonMin + ", "
                         + latMax + ", " + lonMax
                         + ", 4326); ");
-               // System.out.println("r : " + r);
+                // System.out.println("r : " + r);
                 while (r.next()) {
                     geom = (PGgeometry) r.getObject(2);
                     depth = r.getFloat(3);
-                  //  System.out.println("depth : " + depth);
+                    //  System.out.println("depth : " + depth);
                     if (depth >= MIN_DEPTH) {
-                      Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
+                        Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
                                 geom.getGeometry().getFirstPoint().getY(),
-                               depth);
+                                depth);
                         tmp1.add(pt);
-                      //  PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(geom.getGeometry().getFirstPoint().getX(), geom.getGeometry().getFirstPoint().getY(), 0));
-                      //  layer.addRenderable(placemark);
-                      //  wwd.redrawNow();
+                        //  PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(geom.getGeometry().getFirstPoint().getX(), geom.getGeometry().getFirstPoint().getY(), 0));
+                        //  layer.addRenderable(placemark);
+                        //  wwd.redrawNow();
                     }
                 }
 
@@ -331,7 +340,7 @@ public class BathymetryDBController {
                 longitude = geom.getGeometry().getFirstPoint().getX();
                 latitude = geom.getGeometry().getFirstPoint().getY();
                 //System.out.println("geom " + geom.getGeometry());
-                System.out.println("r0 "+r0.getFloat(2));
+                System.out.println("r0 " + r0.getFloat(2));
                 /*
                 r1 = connection.createStatement().executeQuery(
                         "SELECT ST_DISTANCE("
@@ -477,6 +486,32 @@ public class BathymetryDBController {
                 Files.write(pathname, lines, charset, StandardOpenOption.CREATE);
             } catch (IOException ex) {
                 Logger.getLogger(DisplayBathymetryController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+    }
+
+    public void translateTif2XYZ(String inDir, String outDir) {
+
+        File file = new File(inDir);
+        if (file.isDirectory()) {
+            String[] fileInThisDir = file.list();
+            for (String name : fileInThisDir) {
+                if (name.endsWith(".tif")) {
+                    String out = name.replace("tif", "glz");
+                    out = outDir + "/" + out;
+                    name = inDir + "/" + name;
+                    String command = "gdal_translate";
+                    command += " -of AAIGrid "
+                            + name +" "
+                            + out;
+                    try {
+                        Proc.BUILDER.create()
+                                .setCmd(command)
+                                .execSh();
+                    } catch (IOException | InterruptedException ex) {
+                        LOGGER.log(Level.SEVERE, ex.toString(), ex);
+                    }
+                }
             }
         }
     }

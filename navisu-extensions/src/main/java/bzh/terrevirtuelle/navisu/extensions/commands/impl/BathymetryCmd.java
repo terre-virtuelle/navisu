@@ -69,11 +69,8 @@ public class BathymetryCmd
 
     @Override
     public NavigationDataSet doIt(String arg) {
-//
-       // System.out.println("arg : " + arg);
         bathyConnection = bathymetryDBServices.connect(arg, HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-      //  System.out.println("bathyConnection : " + bathyConnection);
         navigationDataSet = new NavigationDataSet();
-        return null;
+        return navigationDataSet;
     }
 }

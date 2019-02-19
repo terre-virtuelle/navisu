@@ -19,6 +19,8 @@ public interface NavigationCmdComponentServices
     public void init();
 
     public NavigationDataSet doIt(String cmd, NavigationData navigationData);
+    
+    public NavigationDataSet doIt(String cmd, NavigationData navigationData, String arg);
 
     public NavigationDataSet doIt(String cmd, String arg);
 

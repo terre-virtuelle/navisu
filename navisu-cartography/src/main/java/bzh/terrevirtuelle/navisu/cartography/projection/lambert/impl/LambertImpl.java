@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import org.capcaval.c3.component.ComponentState;
 
 /**
@@ -333,17 +335,27 @@ http:/
     }
 
     @Override
-    public void readLambertDirWriteWGS84File(String orgDir, String target) {
-        work(orgDir, target);
+    public void readLambertDirWriteWGS84Dir(String inDir, String outDir) {
+        work(inDir, outDir);
     }
 
-    public void work(String dir, String filename) {
-        File directory = new File(dir);
-        String[] fileInThisDir = directory.list();
-        for (String name : fileInThisDir) {
-            if (name.endsWith(".asc")) {
-                readAndCompute(dir + "/" + name);
-                writeFile(filename);
+    public void work(String inDir, String outDir) {
+
+        File file = new File(inDir);
+        if (file.isDirectory()) {
+            String[] fileInThisDir = file.list();
+            for (String name : fileInThisDir) {
+                if (name.endsWith(".asc")) {
+                    readAndCompute(inDir + "/" + name);
+                    writeFile(outDir + "/" + name);
+                } else {
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText("All files must have .asc extension");
+                        alert.show();
+                    });
+                }
             }
         }
     }
@@ -351,6 +363,7 @@ http:/
     public void init0(String s) {
         String[] tab = s.trim().split("\\s+");
         parameters.add(Double.valueOf(tab[1]));
+
     }
 
     public final void readAndCompute(String filename) {
@@ -366,19 +379,17 @@ http:/
     }
 
     public void init() {
-        double tmp = parameters.get(0);
-        ncols = (int) tmp;
-        tmp = parameters.get(1);
-        nrows = (int) tmp;
+        ncols = parameters.get(0).intValue();
+        nrows = parameters.get(1).intValue();
         xllcorners = parameters.get(2);
-        yllcorners = parameters.get(3) + 75000;
+        yllcorners = parameters.get(3);// + 75000;
         cellsize = parameters.get(4);
         nodataValue = parameters.get(5);
+        System.out.println("parametres : "+ xllcorners +" "+yllcorners+" "+parameters.get(3));
     }
 
     public void compute(String s) {
         String[] tab = s.trim().split("\\s+");
-
         for (int i = 0; i < ncols; i++) {
             Pt3D pt = convertToWGS84Deg(xllcorners + i * cellsize, yllcorners, Lambert93);
             pt.setZ(Double.valueOf(tab[i]));

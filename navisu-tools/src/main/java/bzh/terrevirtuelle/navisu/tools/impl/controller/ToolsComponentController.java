@@ -11,6 +11,7 @@ import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -47,6 +48,7 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import java.nio.file.Files;
 import javafx.scene.control.CheckBox;
 
 /**
@@ -60,7 +62,7 @@ public class ToolsComponentController
         implements Initializable {
 
     private final ToolsComponentImpl component;
-
+    protected static final Logger LOGGER = Logger.getLogger(ToolsComponentController.class.getName());
     protected GuiAgentServices guiAgentServices;
     protected S57ChartComponentServices s57ChartComponentServices;
     protected DatabaseServices databaseServices;
@@ -94,7 +96,7 @@ public class ToolsComponentController
     @FXML
     public Button helpButton;
 
-    /* enc controls */
+    /* ENC controls */
     @FXML
     public Tab s57Tab;
     @FXML
@@ -124,7 +126,9 @@ public class ToolsComponentController
     @FXML
     public ChoiceBox<String> countryCB;
     @FXML
-    public Button createButton;
+    public Button createS57Button;
+    @FXML
+    public Button insertS57Button;
 
     protected String s57Path;
     protected String psqlPath;
@@ -147,9 +151,9 @@ public class ToolsComponentController
     @FXML
     public TextField bathyDatabaseNameTF;
     @FXML
-    public Button createButton1;
+    public Button createBathyButton;
     @FXML
-    public Button updateButton1;
+    public Button insertBathyButton;
 
     // protected String bathyDataBaseName;
     protected String bathyData;
@@ -162,7 +166,7 @@ public class ToolsComponentController
     @FXML
     public Button psqlButton11;
     @FXML
-    public TextField ignDataTF;
+    public TextField elevationDataTF;
     @FXML
     public Button ignDataButton;
     @FXML
@@ -171,8 +175,6 @@ public class ToolsComponentController
     public Button createElevationButton;
     @FXML
     public Button insertElevationButton;
-    @FXML
-    public Button dropElevationButton;
     @FXML
     public ChoiceBox<String> elevationDbCB;
     @FXML
@@ -196,6 +198,7 @@ public class ToolsComponentController
     private final String ELEVATION_DB_NAME_0 = "AltiV2_2-0_75mIgnDB";
     private final String ELEVATION_DB_NAME_1 = "SRTM30mDB";
     private final String ELEVATION_DB_ORG_FILE = "privateData/elevation/output.glz";
+    private final String ELEVATION_DB_ORG_DIR = "privateData/elevation";
     private String componentKeyName;
 
     /**
@@ -303,7 +306,7 @@ public class ToolsComponentController
         } catch (IOException ex) {
             Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-
+        /* ENC controls */
         catalogCB.setItems(catalogCbData);
         catalogCB.getSelectionModel().select("5");
         catalogTF.setText("ENC_NP5.kml");
@@ -319,7 +322,6 @@ public class ToolsComponentController
                 });
         elevationDbCB.setItems(dbCbData);
         elevationDbCB.getSelectionModel().select("Choice DB");
-        //  elevationDatabaseNameTF.setText(ELEVATION_DB_NAME_0);
         elevationDbCB.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((ObservableValue<? extends String> observable,
@@ -355,7 +357,8 @@ public class ToolsComponentController
             component.off();
         });
 
-        createButton.setOnMouseClicked((MouseEvent event) -> {
+        /* ENC controls */
+        createS57Button.setOnMouseClicked((MouseEvent event) -> {
             if (s57Tab.isSelected()) {
                 s57Path = s57TF.getText();
                 psqlPath = psqlTF.getText();
@@ -376,7 +379,8 @@ public class ToolsComponentController
             });
         });
 
-        createButton1.setOnMouseClicked((MouseEvent event) -> {
+        /* Bathy controls */
+        createBathyButton.setOnMouseClicked((MouseEvent event) -> {
 
             if (bathyTab.isSelected()) {
                 psqlPath = psqlTF1.getText();
@@ -390,20 +394,30 @@ public class ToolsComponentController
                 bathymetryDBServices.create(bathyData, "bathy");
             });
         });
+        /* Elevations controls */
         createElevationButton.setOnMouseClicked((MouseEvent event) -> {
-            guiAgentServices.getJobsManager().newJob("Load DB : " + ELEVATION_DB_NAME_0, (progressHandle) -> {
-                if (ignDataTF != null) {
+            String elevationDBName = elevationDatabaseNameTF.getText();
+            guiAgentServices.getJobsManager().newJob("Load DB : " + elevationDBName, (progressHandle) -> {
+                if (elevationDataTF != null) {
                     if (elevationsTab.isSelected()) {
                         psqlPath = psqlTF11.getText();
                         saveConfiguration();
                     }
                     elevationData = ELEVATION_DB_ORG_FILE;
-                    lambertServices.readLambertDirWriteWGS84File(ignDataTF.getText(), elevationData);
-                    bathymetryDBServices.connect(ELEVATION_DB_NAME_0, "localhost", "jdbc:postgresql://",
+                    if (lambert2Wgs84CB.isSelected() && !tiff2AscCB.isSelected()) {
+                        //Input  : elevationDataTF.getText(), in asc format
+                        //Output : elevationData,  in xyz format, glz extension
+                        lambertServices.readLambertDirWriteWGS84Dir(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);
+                    }
+                    if (tiff2AscCB.isSelected() && !lambert2Wgs84CB.isSelected()) {
+                        // transform en xyz
+                        bathymetryDBServices.translateTif2XYZ(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);
+                    }
+
+                    bathymetryDBServices.connect(elevationDBName, "localhost", "jdbc:postgresql://",
                             "5432", "org.postgresql.Driver", "admin", "admin");
+                    //size
                     bathymetryDBServices.create(elevationData, "elevation");
-                } else {
-                    //Alert
                 }
             });
         });
@@ -448,7 +462,7 @@ public class ToolsComponentController
             openFile(bathyDataTF);
         });
         ignDataButton.setOnMouseClicked((MouseEvent event) -> {
-            openDir(ignDataTF);
+            openDir(elevationDataTF);
         });
     }
 

@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.main;
 
+import bzh.terrevirtuelle.navisu.agents.ship.impl.ShipAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.impl.DirectoryDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManagerServices;
@@ -305,6 +306,7 @@ public class AppMain extends Application {
                         SedimentologyImpl.class,
                         ServerOptionsComponentImpl.class,
                         ShapefileObjectImpl.class,
+                        ShipAgentImpl.class,
                         SonarImpl.class,
                         SoundImpl.class,
                         SpeakerImpl.class,

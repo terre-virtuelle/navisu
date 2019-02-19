@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.extensions.commands.impl;
 
+import bzh.terrevirtuelle.navisu.agents.ship.ShipAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
@@ -43,6 +44,8 @@ public class NavigationCmdComponentImpl
     GeodesyServices geodesyServices;
     @UsedService
     LayersManagerServices layersManagerServices;
+    @UsedService
+    ShipAgentServices shipAgentServices;
     
     private CameraCmd cameraCmd;
 
@@ -72,10 +75,11 @@ public class NavigationCmdComponentImpl
         cameraCmd.setCameraComponentServices(cameraComponentServices);
         navigationCmdMap.put("CameraCmd", cameraCmd);
         navigationCmdMap.put("BathymetryCmd", BathymetryCmd.getInstance(bathymetryDBServices));
-        navigationCmdMap.put("TargetCmd", TargetCmd.getInstance(s57ChartComponentServices, 
+        navigationCmdMap.put("TargetCmd", TargetCmd.getInstance(s57ChartComponentServices,
                 geodesyServices, layersManagerServices));
         navigationCmdMap.put("NaVigationDataSetCmd", NaVigationDataSetCmd.getInstance());
         navigationCmdMap.put("OwnerShipCmd", OwnerShipCmd.getInstance(gpsPlotterServices));
+        navigationCmdMap.put("ShipAgentCmd", ShipAgentCmd.getInstance(shipAgentServices,layersManagerServices));
     }
 
     @Override
@@ -92,6 +96,14 @@ public class NavigationCmdComponentImpl
         NavigationCmd tmp = navigationCmdMap.get(cmd.trim());
         if (tmp != null) {
             return tmp.doIt(arg);
+        }
+        return new NavigationDataSet();
+    }
+    @Override
+    public NavigationDataSet doIt(String cmd, NavigationData navigationData, String arg) {
+        NavigationCmd tmp = navigationCmdMap.get(cmd.trim());
+        if (tmp != null) {
+            return tmp.doIt(navigationData, arg);
         }
         return new NavigationDataSet();
     }

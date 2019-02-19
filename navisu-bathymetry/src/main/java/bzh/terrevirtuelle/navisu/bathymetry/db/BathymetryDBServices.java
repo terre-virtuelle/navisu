@@ -33,6 +33,8 @@ public interface BathymetryDBServices
 
     void create(String filename, String table);
 
+    void insert(String filename, String table);
+
     List<Point3Df> readFromFile(String filename);
 
     void createIndex(String table);
@@ -56,4 +58,6 @@ public interface BathymetryDBServices
     Point3D[][] mergeData(Point3D[][] orgData, List<Triangle_dt> triangles, double depth);
 
     DatabaseDriver getDriver();
+
+    void translateTif2XYZ(String in, String out);
 }

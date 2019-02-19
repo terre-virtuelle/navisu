@@ -11,6 +11,8 @@ import bzh.terrevirtuelle.navisu.collada.impl.controller.ColladaComponentControl
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+
 import bzh.terrevirtuelle.navisu.kml.impl.controller.KmlComponentController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
@@ -283,5 +285,12 @@ public class KmlComponentImpl
             }
         }
         return Placemarks;
+    }
+
+    @Override
+    public void moveTo(Point3D point) {
+        colladaRoot.setPosition(new Position(Angle.fromDegrees(point.getLatitude()),
+                Angle.fromDegrees(point.getLongitude()),
+               point.getElevation()));
     }
 }

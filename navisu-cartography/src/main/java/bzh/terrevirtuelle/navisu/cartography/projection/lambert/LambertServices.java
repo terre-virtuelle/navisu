@@ -62,5 +62,5 @@ public interface LambertServices
 
     public Pt3D convertToWGS84Deg(double x, double y, LambertZone zone);
     
-    public void readLambertDirWriteWGS84File(String directory, String outputFile);
+    public void readLambertDirWriteWGS84Dir(String directory, String outputFile);
 }

@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.core.util.BalloonController;
 import bzh.terrevirtuelle.navisu.core.util.HotSpotController;
 import bzh.terrevirtuelle.navisu.kml.impl.controller.wwj.KMLApplicationController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.Point3D;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.Layer;
@@ -110,4 +111,6 @@ public class KmlComponentController {
 
         return "KML Layer";
     }
+
+    
 }

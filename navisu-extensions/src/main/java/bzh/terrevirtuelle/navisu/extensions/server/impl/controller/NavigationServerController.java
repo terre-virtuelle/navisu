@@ -122,8 +122,19 @@ public class NavigationServerController {
                      //  System.out.println("data.toString() : " + data.toString());
                         command = command(data.toString());
                         if (command != null) {
-                            if (command.getNavigationData() != null) {
+                            if (command.getNavigationData() != null && command.getArg() == null) {
                                 navigationDataSet = navigationCmdComponentServices.doIt(command.getCmd(), command.getNavigationData());
+                                if (navigationDataSet != null) {
+                                    if (navigationDataSet.size() > 0) {
+                                        String r = response(navigationDataSet);
+                                        ws.writeTextFrame(r);
+                                    } else {
+                                        ws.writeTextFrame("");
+                                    }
+                                }
+                            }
+                            if (command.getNavigationData() != null && command.getArg() != null) {
+                                navigationDataSet = navigationCmdComponentServices.doIt(command.getCmd(), command.getNavigationData(), command.getArg());
                                 if (navigationDataSet != null) {
                                     if (navigationDataSet.size() > 0) {
                                         String r = response(navigationDataSet);

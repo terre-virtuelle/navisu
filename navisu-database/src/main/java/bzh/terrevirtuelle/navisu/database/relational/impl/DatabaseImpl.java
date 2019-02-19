@@ -193,6 +193,19 @@ public class DatabaseImpl
     }
 
     @Override
+    public void dropAll(String schema) {
+        
+        try {
+            statement.execute("DROP SCHEMA " + schema + " CASCADE;");
+            statement.execute("CREATE SCHEMA " + schema + ";");
+            statement.execute("GRANT ALL ON  SCHEMA " + schema + " TO postgres;");
+            statement.execute("GRANT ALL ON SCHEMA " + schema + " TO public;");
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+    }
+
+    @Override
     public void close() {
         try {
             if (statement != null) {
@@ -410,8 +423,8 @@ public class DatabaseImpl
             userDirPath = System.getProperty("user.dir");
             String path = properties.getProperty("gdalPath");
             String cmd = startCmd("ogr2ogr");
-           // String cmd = sep + "ogr2ogr";
-          //  cmd = path + cmd;
+            // String cmd = sep + "ogr2ogr";
+            //  cmd = path + cmd;
             if (path == null) {
                 //alarm
             }
@@ -457,6 +470,7 @@ public class DatabaseImpl
         }
         return command;
     }
+
     private String startCmd(String command) {
         String cmd = null;
         if (OS.isWindows()) {

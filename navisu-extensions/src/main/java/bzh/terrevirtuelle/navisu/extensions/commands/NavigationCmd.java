@@ -21,4 +21,8 @@ public interface NavigationCmd {
     default NavigationDataSet doIt(String arg) {
         return null;
     }
+
+    default NavigationDataSet doIt(NavigationData arg0, String arg1) {
+        return null;
+    }
 }

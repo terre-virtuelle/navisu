@@ -1,6 +1,8 @@
 package bzh.terrevirtuelle.navisu.kml;
 
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
@@ -37,6 +39,8 @@ public interface KmlComponentServices
     void setPosition(double latitude, double longitude);
 
     void setScale(double x, double y, double z);
+
+    void moveTo(Point3D point);
 
     List<Placemark> getPlacemarkFromKmlCatalog(String catalog);
 }

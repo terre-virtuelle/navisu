@@ -40,7 +40,6 @@ import org.capcaval.c3.component.annotation.UsedService;
 public class BathymetryDBImpl
         implements BathymetryDB, BathymetryDBServices, DatabaseDriver, ComponentState {
 
-    
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
@@ -53,7 +52,7 @@ public class BathymetryDBImpl
     DatabaseServices databaseServices;
     @UsedService
     BathymetryEventProducerServices bathymetryEventProducerServices;
-    
+
     protected static final Logger LOGGER = Logger.getLogger(BathymetryDBImpl.class.getName());
     protected final String DB_NAME = "BathyShomDB";
     protected final String LAYER_NAME = "BathyShom";
@@ -116,13 +115,18 @@ public class BathymetryDBImpl
     }
 
     @Override
+    public void insert(String filename, String table) {
+        controller.insertData(filename, table);
+    }
+
+    @Override
     public List<Point3Df> readFromFile(String filename) {
         return controller.readFromFile(filename);
     }
 
     @Override
     public void insert(List<Point3Df> points) {
-        controller.insert(points);
+        controller.insertData(points);
     }
 
     @Override
@@ -187,6 +191,11 @@ public class BathymetryDBImpl
     @Override
     public void writePointList(List<Point3D> points, Path pathname, boolean latLon) {
         controller.writePointList(points, pathname, latLon);
+    }
+
+    @Override
+    public void translateTif2XYZ(String in, String out) {
+        controller.translateTif2XYZ(in,out);
     }
 
 }
