@@ -238,7 +238,7 @@ public class DockManagerImpl<TrackTool>
 
     private void createShomWidget() {
         shomRadialMenu = RadialMenuBuilder.create()
-                .centralImage("shom_2.png")
+                .centralImage("shomradialmenu150.png")
                 .createNode(0, "bathy.png", 0, "read.png", 0, "dalles.png", (e) -> open())
                 .createNode(0, "bathy.png", 0, "read.png", 1, "mnt.png", (e) -> open())
                 .createNode(1, "sediment.png", 0, "read.png", 0, "vide.png", (e) -> open())
