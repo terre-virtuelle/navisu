@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 
+
 /**
  * NaVisu project
  *
