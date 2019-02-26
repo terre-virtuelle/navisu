@@ -9,7 +9,8 @@ import org.capcaval.c3.component.ComponentService;
  * @author Serge
  * @date 29/09/2014 12:49
  */
-public interface GeoTiffChartServices extends ComponentService {
+public interface GeoTiffChartServices 
+        extends ComponentService {
 
     Driver getDriver();
 

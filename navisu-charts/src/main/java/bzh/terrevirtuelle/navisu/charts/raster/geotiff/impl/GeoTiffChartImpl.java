@@ -73,7 +73,7 @@ public class GeoTiffChartImpl implements GeoTiffChart, GeoTiffChartServices, Dri
             try {
                 layer.addImage(file);
             } catch (IOException ex) {
-                Logger.getLogger(GeoTiffChartImpl.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GeoTiffChartImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));

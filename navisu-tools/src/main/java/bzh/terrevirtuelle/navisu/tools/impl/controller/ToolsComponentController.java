@@ -10,8 +10,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
+import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -48,7 +48,6 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
-import java.nio.file.Files;
 import javafx.scene.control.CheckBox;
 
 /**
@@ -65,6 +64,7 @@ public class ToolsComponentController
     protected static final Logger LOGGER = Logger.getLogger(ToolsComponentController.class.getName());
     protected GuiAgentServices guiAgentServices;
     protected S57ChartComponentServices s57ChartComponentServices;
+    protected GeoTiffChartServices geoTiffChartServices;
     protected DatabaseServices databaseServices;
     protected BathymetryDBServices bathymetryDBServices;
     protected DemDBServices demDBComponentServices;
@@ -181,6 +181,8 @@ public class ToolsComponentController
     public CheckBox tiff2AscCB;
     @FXML
     public CheckBox lambert2Wgs84CB;
+    @FXML
+    public CheckBox geotifPreviewCB;
 
     protected String elevationData;
 
@@ -209,6 +211,7 @@ public class ToolsComponentController
      * @param keyCombination
      * @param guiAgentServices
      * @param s57ChartComponentServices
+     * @param geoTiffChartServices
      * @param databaseServices
      * @param bathymetryDBServices
      * @param demDBComponentServices
@@ -220,6 +223,7 @@ public class ToolsComponentController
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
             S57ChartComponentServices s57ChartComponentServices,
+            GeoTiffChartServices geoTiffChartServices,
             DatabaseServices databaseServices,
             BathymetryDBServices bathymetryDBServices,
             DemDBServices demDBComponentServices,
@@ -240,6 +244,7 @@ public class ToolsComponentController
         this.component = component;
         this.guiAgentServices = guiAgentServices;
         this.s57ChartComponentServices = s57ChartComponentServices;
+        this.geoTiffChartServices = geoTiffChartServices;
         this.databaseServices = databaseServices;
         this.bathymetryDBServices = bathymetryDBServices;
         this.demDBComponentServices = demDBComponentServices;
@@ -412,12 +417,15 @@ public class ToolsComponentController
                     if (tiff2AscCB.isSelected() && !lambert2Wgs84CB.isSelected()) {
                         // transform en xyz
                         bathymetryDBServices.translateTif2XYZ(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);
+                        if (geotifPreviewCB.isSelected()) {
+
+                        }
                     }
 
                     bathymetryDBServices.connect(elevationDBName, "localhost", "jdbc:postgresql://",
                             "5432", "org.postgresql.Driver", "admin", "admin");
                     //size
-                    bathymetryDBServices.create(elevationData, "elevation");
+                    bathymetryDBServices.create(ELEVATION_DB_ORG_DIR, "elevation");
                 }
             });
         });

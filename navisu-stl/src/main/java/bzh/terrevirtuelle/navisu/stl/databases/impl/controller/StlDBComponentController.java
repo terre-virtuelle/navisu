@@ -845,14 +845,15 @@ public class StlDBComponentController
                 gridX = Double.parseDouble(gridSideXTF.getText());
                 gridY = Double.parseDouble(gridSideYTF.getText());
                 LOGGER.info("Début traitement : ");
-                //Define TopMak for all buoyages, default is 0 : no topmark
-                TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
-                topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+                if (!selectedObjects.isEmpty()) {
+                    //Define TopMak for all buoyages, default is 0 : no topmark
+                    TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
+                    topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
-                //Define IALA system for all buoyages, default is 1
-                MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
-                marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-
+                    //Define IALA system for all buoyages, default is 1
+                    MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
+                    marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+                }
                 // DEBUG
                 // autoBoundCB.setSelected(true);
                 stlPreviewCB.setSelected(false);
@@ -1218,11 +1219,11 @@ public class StlDBComponentController
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
                 lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
-       // System.out.println("dem : "+dem.getGrid().size());
+        // System.out.println("dem : "+dem.getGrid().size());
         maxDepth = dem.getMaxElevation();
         // Offset from maxDepth
         System.out.println("maxDepth : " + maxDepth);
-        
+
         List<Triangle_dt> tri = delaunayServices.createDelaunay(dem.getGrid());
         List<Triangle_dt> tri2 = delaunayServices.filterLargeEdges(tri, 0.001);
         displayServices.displayDelaunay(tri2, maxDepth, 10, Material.WHITE, s57Layer);

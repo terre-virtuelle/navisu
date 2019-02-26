@@ -19,8 +19,6 @@ import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Point_dt;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.event.PositionEvent;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.io.File;
 import java.io.IOException;
@@ -54,9 +52,11 @@ public class BathymetryDBController {
     private static BathymetryDBController INSTANCE = null;
     BathymetryDBImpl component;
     protected static final Logger LOGGER = Logger.getLogger(BathymetryDBController.class.getName());
+   
     DatabaseServices databaseServices;
     GuiAgentServices guiAgentServices;
     BathymetryEventProducerServices bathymetryEventProducerServices;
+ 
     protected WorldWindow wwd;
     final double LIMIT;
     boolean first = true;
@@ -99,7 +99,7 @@ public class BathymetryDBController {
         this.LIMIT = limit;
         this.layer = layer;
         wwd = GeoWorldWindViewImpl.getWW();
-
+/*
         wwd.addPositionListener((PositionEvent event) -> {
             Position pos = event.getPosition();
 
@@ -117,7 +117,7 @@ public class BathymetryDBController {
                 Logger.getLogger(BathymetryDBController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         });
-
+*/
     }
 
     public static BathymetryDBController getInstance(BathymetryDBImpl component,
@@ -173,9 +173,7 @@ public class BathymetryDBController {
     }
 
     public void create(String filename, String table) {
-
         guiAgentServices.getJobsManager().newJob("Create", (progressHandle) -> {
-
             String query = "DROP TABLE IF EXISTS  " + table + "; "
                     + "CREATE TABLE " + table + "("
                     + "gid SERIAL PRIMARY KEY,"
@@ -187,11 +185,44 @@ public class BathymetryDBController {
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
-
-            points3df = readFromFile(filename);
-            insertData(points3df);
-            createIndex(table);
+            File file = new File(filename);
+            if (file.isDirectory()) {
+                String[] fileInThisDir = file.list();
+                for (String name : fileInThisDir) {
+                    work(filename + "/" + name, table);
+                }
+            } else {
+                work(filename, table);
+            }
         });
+    }
+
+    public void work(String filename, String table) {
+        if (filename.endsWith(".glz")) {
+            insertData(table, filename);
+            createIndex(table);
+        } else {
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("All files must have .glz extension");
+                alert.show();
+            });
+        }
+    }
+
+    public final void insertData(String table, String filename) {
+        String sql = "INSERT INTO " + table + " (coord, elevation) "
+                + "VALUES ( ST_SetSRID(ST_MakePoint(?, ?), 4326), ?);";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+        }
+        List<Point3Df> pts = readFromFile(filename);
+        System.out.println("pts : " + pts.size());
+        insertData(pts);
+        createIndex(table);
     }
 
     public List<Point3Df> readFromFile(String filename) {
@@ -211,6 +242,7 @@ public class BathymetryDBController {
     }
 
     public final void insertData(List<Point3Df> points) {
+
         points.stream().forEach((p) -> {
             try {
                 preparedStatement.setDouble(1, p.getLon());
@@ -223,35 +255,16 @@ public class BathymetryDBController {
         });
     }
 
-    public final void insertData(String table, String filename) {
-
-        String sql = "INSERT INTO " + table + " (coord, elevation) "
-                + "VALUES ( ST_SetSRID(ST_MakePoint(?, ?), 4326), ?);";
+    public final void createIndex(String table) {
         try {
-            preparedStatement = connection.prepareStatement(sql);
+            connection.createStatement().executeUpdate("CREATE INDEX " + table + "index ON " + table + " USING GIST (coord)");
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-        guiAgentServices.getJobsManager().newJob("insert", (progressHandle) -> {
-            List<Point3Df> points = readFromFile(filename);
-            insertData(points);
-            createIndex(table);
-        });
-    }
-
-    public final void createIndex(String table) {
-        guiAgentServices.getJobsManager().newJob("createIndex", (progressHandle) -> {
-            try {
-                connection.createStatement().executeUpdate("CREATE INDEX " + table + "index ON " + table + " USING GIST (coord)");
-            } catch (SQLException ex) {
-                LOGGER.log(Level.SEVERE, ex.toString(), ex);
-            }
-        });
     }
 
     public List<Point3D> retrieveAll() {
         List<Point3D> tmp1 = new ArrayList<>();
-        //  guiAgentServices.getJobsManager().newJob("retrieveAll", (progressHandle) -> {
         PGgeometry geom;
         double depth;
         try {
@@ -269,7 +282,6 @@ public class BathymetryDBController {
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-        // });
         return tmp1;
     }
 
@@ -340,7 +352,7 @@ public class BathymetryDBController {
                 longitude = geom.getGeometry().getFirstPoint().getX();
                 latitude = geom.getGeometry().getFirstPoint().getY();
                 //System.out.println("geom " + geom.getGeometry());
-                System.out.println("r0 " + r0.getFloat(2));
+                //  System.out.println("r0 " + r0.getFloat(2));
                 /*
                 r1 = connection.createStatement().executeQuery(
                         "SELECT ST_DISTANCE("
@@ -501,8 +513,8 @@ public class BathymetryDBController {
                     out = outDir + "/" + out;
                     name = inDir + "/" + name;
                     String command = "gdal_translate";
-                    command += " -of AAIGrid "
-                            + name +" "
+                    command += " -of XYZ "
+                            + name + " "
                             + out;
                     try {
                         Proc.BUILDER.create()

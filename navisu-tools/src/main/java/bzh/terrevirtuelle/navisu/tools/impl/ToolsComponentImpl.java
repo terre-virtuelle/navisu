@@ -5,6 +5,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverMa
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
+import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.tools.ToolsComponent;
@@ -28,6 +29,8 @@ public class ToolsComponentImpl
     GuiAgentServices guiAgentServices;
     @UsedService
     S57ChartComponentServices s57ChartComponentServices;
+    @UsedService
+    GeoTiffChartServices geoTiffChartServices;
     @UsedService
     DatabaseServices databaseServices;
     @UsedService
@@ -60,7 +63,7 @@ public class ToolsComponentImpl
             // System.out.println("componentKeyName : " + componentKeyName);
             if (cmd[0].equals(COMPONENT_KEY_NAME_0) || cmd[0].equals(COMPONENT_KEY_NAME_1) || cmd[0].equals(COMPONENT_KEY_NAME_2)) {
                 controller = new ToolsComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
-                        guiAgentServices, s57ChartComponentServices,
+                        guiAgentServices, s57ChartComponentServices,geoTiffChartServices,
                         databaseServices, bathymetryDBServices, demDBComponentServices,
                         instrumentDriverManagerServices,
                         lambertServices);

@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="570.0" styleClass="background-pane">
             <children>
@@ -195,7 +195,7 @@
                                                         <Label text="Elevation data directory" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                         <TextField fx:id="elevationDataTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                         <Button fx:id="ignDataButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                                        <CheckBox fx:id="tiff2AscCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="148.0" text="Tiff 2 ASC" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                        <CheckBox fx:id="tiff2AscCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="148.0" text="Tif 2 XYZ" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                         <GridPane GridPane.columnIndex="2" GridPane.rowIndex="11">
                                                             <columnConstraints>
                                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -210,6 +210,7 @@
                                                         </GridPane>
                                                         <ChoiceBox fx:id="elevationDbCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                                         <Button fx:id="createElevationButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="Create" GridPane.columnIndex="3" GridPane.rowIndex="11" />
+                                          <CheckBox fx:id="geotifPreviewCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="146.0" text="GeoTif Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                     </children>
                                                 </GridPane>
                                             </children>
