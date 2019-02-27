@@ -62,23 +62,23 @@ public class SHOM_IGN_LITTO3D_CLUT {
             */
             put(0, new Color(Integer.decode("#000238")));
             put(1, new Color(Integer.decode("#000045")));
-            put(2, new Color(Integer.decode("#e15d22")));
-            put(3, new Color(Integer.decode("#e37226")));
-            put(4, new Color(Integer.decode("#e6882a")));
-            put(5, new Color(Integer.decode("#eeb534")));
-            put(6, new Color(Integer.decode("#f3cd3a")));
-            put(7, new Color(Integer.decode("#e7fd4f")));
-            put(8, new Color(Integer.decode("#d8fc4b")));
-            put(9, new Color(Integer.decode("#bafc46")));
-            put(10, new Color(Integer.decode("#98f741")));
-            put(11, new Color(Integer.decode("#7cdf42")));
-            put(12, new Color(Integer.decode("#8befca")));
-            put(13, new Color(Integer.decode("#7cd9fc")));
-            put(14, new Color(Integer.decode("#3561f9")));
-            put(15, new Color(Integer.decode("#1930ff")));
-            put(16, new Color(Integer.decode("#2132cc")));
-            put(17, new Color(Integer.decode("#1d2cb2")));
-            put(18, new Color(Integer.decode("#1a2799")));
+            put(2, new Color(Integer.decode("#040482")));
+            put(3, new Color(Integer.decode("#0c13ad")));
+            put(4, new Color(Integer.decode("#1118f6")));
+            put(5, new Color(Integer.decode("#167cff")));
+            put(6, new Color(Integer.decode("#04ffff")));
+            put(7, new Color(Integer.decode("#3f3f3f")));
+            put(8, new Color(Integer.decode("#bfbfbf")));
+            put(9, new Color(Integer.decode("#ffff06")));
+            put(10, new Color(Integer.decode("#ae9a1b")));
+            put(11, new Color(Integer.decode("#16ff01")));
+            put(12, new Color(Integer.decode("#20d514")));
+            put(13, new Color(Integer.decode("#11be0f")));
+            put(14, new Color(Integer.decode("#Oc7f19")));
+            put(15, new Color(Integer.decode("#035b04")));
+            put(16, new Color(Integer.decode("#004200")));
+            put(17, new Color(Integer.decode("#004600")));
+            put(18, new Color(Integer.decode("#004600")));
         }
     });
 

@@ -198,7 +198,7 @@ public class BathymetryDBController {
     }
 
     public void work(String filename, String table) {
-        if (filename.endsWith(".glz")) {
+        if (filename.endsWith(".glz")||filename.endsWith(".xyz")) {
             insertData(table, filename);
             createIndex(table);
         } else {
@@ -220,7 +220,6 @@ public class BathymetryDBController {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         List<Point3Df> pts = readFromFile(filename);
-        System.out.println("pts : " + pts.size());
         insertData(pts);
         createIndex(table);
     }
