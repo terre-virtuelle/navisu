@@ -116,7 +116,7 @@ public class BathymetryDBImpl
 
     @Override
     public void insert(String filename, String table) {
-        controller.insertData(filename, table);
+        controller.insertData(table, filename);
     }
 
     @Override

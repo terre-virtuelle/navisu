@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
@@ -52,11 +53,11 @@ public class BathymetryDBController {
     private static BathymetryDBController INSTANCE = null;
     BathymetryDBImpl component;
     protected static final Logger LOGGER = Logger.getLogger(BathymetryDBController.class.getName());
-   
+
     DatabaseServices databaseServices;
     GuiAgentServices guiAgentServices;
     BathymetryEventProducerServices bathymetryEventProducerServices;
- 
+
     protected WorldWindow wwd;
     final double LIMIT;
     boolean first = true;
@@ -99,7 +100,7 @@ public class BathymetryDBController {
         this.LIMIT = limit;
         this.layer = layer;
         wwd = GeoWorldWindViewImpl.getWW();
-/*
+        /*
         wwd.addPositionListener((PositionEvent event) -> {
             Position pos = event.getPosition();
 
@@ -117,7 +118,7 @@ public class BathymetryDBController {
                 Logger.getLogger(BathymetryDBController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         });
-*/
+         */
     }
 
     public static BathymetryDBController getInstance(BathymetryDBImpl component,
@@ -173,6 +174,7 @@ public class BathymetryDBController {
     }
 
     public void create(String filename, String table) {
+        System.out.println("create");
         guiAgentServices.getJobsManager().newJob("Create", (progressHandle) -> {
             String query = "DROP TABLE IF EXISTS  " + table + "; "
                     + "CREATE TABLE " + table + "("
@@ -185,20 +187,13 @@ public class BathymetryDBController {
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
-            File file = new File(filename);
-            if (file.isDirectory()) {
-                String[] fileInThisDir = file.list();
-                for (String name : fileInThisDir) {
-                    work(filename + "/" + name, table);
-                }
-            } else {
-                work(filename, table);
-            }
+            work(filename, table);
         });
     }
 
     public void work(String filename, String table) {
-        if (filename.endsWith(".glz")||filename.endsWith(".xyz")) {
+        System.out.println("work "+ filename +" " + table);
+        if (filename.endsWith(".glz") || filename.endsWith(".xyz")) {
             insertData(table, filename);
             createIndex(table);
         } else {
@@ -221,19 +216,20 @@ public class BathymetryDBController {
         }
         List<Point3Df> pts = readFromFile(filename);
         insertData(pts);
-        createIndex(table);
     }
 
     public List<Point3Df> readFromFile(String filename) {
         List<Point3Df> tmp = new ArrayList<>();
         try {
-            tmp = Files.lines(new File(filename).toPath())
+            tmp = Files.lines(new File(filename).toPath(), Charset.defaultCharset())
                     .map(line -> line.trim())
                     .map(line -> line.split("\\s+"))
+                    .filter(tab -> !tab[0].equals(""))
                     .map(tab -> new Point3Df(Float.parseFloat(tab[0]),
                     Float.parseFloat(tab[1]),
                     Float.parseFloat(tab[2])))
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toList()
+                    );
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }

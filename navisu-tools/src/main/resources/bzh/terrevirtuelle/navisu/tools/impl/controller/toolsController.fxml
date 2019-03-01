@@ -108,8 +108,8 @@
                                                 <GridPane layoutX="1.0" prefHeight="436.0" prefWidth="531.0" styleClass="tab-conteneur">
                                                     <columnConstraints>
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />
-                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="1.0" prefWidth="260.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="140.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="1.0" prefWidth="214.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="80.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                     </columnConstraints>
@@ -135,7 +135,7 @@
                                                         <Label text="Bathy database name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                         <TextField fx:id="bathyDataTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                         <TextField fx:id="bathyDatabaseNameTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                                        <Button fx:id="bathyDataButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                                        <Button fx:id="bathyDataButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                                         <Label prefHeight="15.0" prefWidth="156.0" text="psql Path" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                         <TextField fx:id="psqlTF1" prefWidth="80.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                                         <Button fx:id="psqlButton1" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="6" />
@@ -145,6 +145,7 @@
                                                         <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                                                         <Button fx:id="createBathyButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Create" GridPane.columnIndex="3" GridPane.rowIndex="10" />
                                                         <Button fx:id="insertBathyButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Insert" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                                          <ChoiceBox fx:id="bathyDbCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                                     </children>
                                                 </GridPane>
                                             </children>
@@ -155,7 +156,7 @@
                                     <content>
                                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
                                             <children>
-                                                <GridPane layoutX="1.0" prefHeight="447.0" prefWidth="531.0" styleClass="tab-conteneur">
+                                                <GridPane layoutX="-13.0" layoutY="14.0" prefHeight="447.0" prefWidth="531.0" styleClass="tab-conteneur">
                                                     <columnConstraints>
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />
@@ -194,7 +195,7 @@
                                                         <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="9" />
                                                         <Label text="Elevation data directory" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                         <TextField fx:id="elevationDataTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                                        <Button fx:id="ignDataButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                                        <Button fx:id="elevationDataButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                                         <CheckBox fx:id="tiff2AscCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="148.0" text="Tif 2 XYZ" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                         <GridPane GridPane.columnIndex="2" GridPane.rowIndex="11">
                                                             <columnConstraints>
