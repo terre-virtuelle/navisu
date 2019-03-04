@@ -194,8 +194,21 @@ public class BathymetryDBImpl
     }
 
     @Override
-    public void translateTif2XYZ(String in, String out) {
-        controller.translateTif2XYZ(in,out);
+    public String translateTif2XYZ(String in, String out) {
+        return controller.translateTif2XYZ(in,out);
+    }
+    @Override
+    public String translateAsc2XYZ(String in, String out) {
+       return controller.translateAsc2XYZ(in,out);
+    }
+    @Override
+    public String translateAscLambert93ToTif(String in, String out){
+        return controller.translateAscLambert93ToTif( in,  out);
     }
 
+    @Override
+    public String warpTifLambert93ToTifWGS84(String in, String out){
+        return controller.warpTifLambert93ToTifWGS84( in,  out);
+    }
+   
 }

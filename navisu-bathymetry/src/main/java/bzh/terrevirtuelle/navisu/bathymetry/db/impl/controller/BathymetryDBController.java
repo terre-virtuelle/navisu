@@ -174,7 +174,6 @@ public class BathymetryDBController {
     }
 
     public void create(String filename, String table) {
-        System.out.println("create");
         guiAgentServices.getJobsManager().newJob("Create", (progressHandle) -> {
             String query = "DROP TABLE IF EXISTS  " + table + "; "
                     + "CREATE TABLE " + table + "("
@@ -192,7 +191,7 @@ public class BathymetryDBController {
     }
 
     public void work(String filename, String table) {
-        System.out.println("work "+ filename +" " + table);
+        System.out.println("work " + filename + " " + table);
         if (filename.endsWith(".glz") || filename.endsWith(".xyz")) {
             insertData(table, filename);
             createIndex(table);
@@ -497,30 +496,89 @@ public class BathymetryDBController {
         }
     }
 
-    public void translateTif2XYZ(String inDir, String outDir) {
-
-        File file = new File(inDir);
-        if (file.isDirectory()) {
-            String[] fileInThisDir = file.list();
-            for (String name : fileInThisDir) {
-                if (name.endsWith(".tif")) {
-                    String out = name.replace("tif", "glz");
-                    out = outDir + "/" + out;
-                    name = inDir + "/" + name;
-                    String command = "gdal_translate";
-                    command += " -of XYZ "
-                            + name + " "
-                            + out;
-                    try {
-                        Proc.BUILDER.create()
-                                .setCmd(command)
-                                .execSh();
-                    } catch (IOException | InterruptedException ex) {
-                        LOGGER.log(Level.SEVERE, ex.toString(), ex);
-                    }
-                }
+    public String translateTif2XYZ(String in, String outDir) {
+        File file = new File(in);
+        String out = file.getName();
+        if (in.endsWith(".tif")) {
+            out = out.replace("tif", "glz");
+            out = outDir + "/" + out;
+            String command = "gdal_translate";
+            command += " -of XYZ "
+                    + in + " "
+                    + out;
+            try {
+                Proc.BUILDER.create()
+                        .setCmd(command)
+                        .execSh();
+            } catch (IOException | InterruptedException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
         }
+        return out;
+    }
+
+    public String translateAsc2XYZ(String in, String outDir) {
+        File file = new File(in);
+        String out = file.getName();
+        if (in.endsWith(".asc")) {
+            out = out.replace("asc", "glz");
+            out = outDir + "/" + out;
+            String command = "gdal_translate";
+            command += " -of XYZ "
+                    + in + " "
+                    + out;
+            try {
+                Proc.BUILDER.create()
+                        .setCmd(command)
+                        .execSh();
+            } catch (IOException | InterruptedException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+        return out;
+    }
+
+    public String translateAscLambert93ToTif(String in, String outDir) {
+        File file = new File(in);
+        String out = file.getName();
+        if (in.endsWith(".asc")) {
+            out = out.replace("asc", "tif");
+            out = outDir + "/" + out;
+            String command = "gdal_translate";
+            command += " -of GTiff -a_srs EPSG:2154 "
+                    + in + " "
+                    + out;
+            try {
+                Proc.BUILDER.create()
+                        .setCmd(command)
+                        .execSh();
+            } catch (IOException | InterruptedException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+        return out;
+    }
+
+    public String warpTifLambert93ToTifWGS84(String in, String outDir) {
+        File file = new File(in);
+        String out = file.getName();
+        if (in.endsWith(".tif")) {
+            out = out.replace(".tif", "");
+            out = out + "_wgs84.tif";
+            out = outDir + "/" + out;
+            String command = "gdalwarp ";
+            command += " -s_srs EPSG:2154 -t_srs EPSG:4326  "
+                    + in + " "
+                    + out;
+            try {
+                Proc.BUILDER.create()
+                        .setCmd(command)
+                        .execSh();
+            } catch (IOException | InterruptedException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+        return out;
     }
 
     private void alert() {
@@ -536,5 +594,20 @@ public class BathymetryDBController {
                 alert.show();
             });
         }
+    }
+
+    private void alert(String title, String header, String text) {
+        // if (first == true) {
+        Platform.runLater(() -> {
+            first = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle(title);
+            alert.setHeaderText(header);
+            Text s = new Text(text);
+            s.setWrappingWidth(650);
+            alert.getDialogPane().setContent(s);
+            alert.show();
+        });
+        //   }
     }
 }

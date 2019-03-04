@@ -21,7 +21,7 @@
     <children>
         <Pane fx:id="viewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="570.0" styleClass="background-pane">
             <children>
-                <GridPane prefHeight="652.0" prefWidth="560.0">
+                <GridPane layoutX="-7.0" layoutY="1.0" prefHeight="652.0" prefWidth="560.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="22.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="542.0" minWidth="10.0" prefWidth="537.0" />
@@ -154,9 +154,9 @@
                                 </Tab>
                                 <Tab fx:id="elevationsTab" text="Elevation Databases       ">
                                     <content>
-                                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
+                                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="530.0">
                                             <children>
-                                                <GridPane layoutX="-13.0" layoutY="14.0" prefHeight="447.0" prefWidth="531.0" styleClass="tab-conteneur">
+                                                <GridPane layoutX="10.0" layoutY="10.0" prefHeight="447.0" prefWidth="522.0" styleClass="tab-conteneur">
                                                     <columnConstraints>
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />

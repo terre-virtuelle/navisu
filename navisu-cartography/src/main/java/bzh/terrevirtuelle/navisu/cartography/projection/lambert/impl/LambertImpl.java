@@ -339,14 +339,14 @@ http:/
         work(inDir, outDir);
     }
 
-    public void work(String inDir, String outDir) {
-
-        File file = new File(inDir);
+    public void work(String in, String outDir) {
+       
+        File file = new File(in);
         if (file.isDirectory()) {
             String[] fileInThisDir = file.list();
             for (String name : fileInThisDir) {
                 if (name.endsWith(".asc")) {
-                    readAndCompute(inDir + "/" + name);
+                    readAndCompute(in + "/" + name);
                     writeFile(outDir + "/" + name);
                 } else {
                     Platform.runLater(() -> {
@@ -357,7 +357,21 @@ http:/
                     });
                 }
             }
+        } else {
+            // System.out.println("in : " + in +" outDir : "+outDir+"  out   "+outDir + "/" + file.getName());//OK
+            if (in.endsWith(".asc")) {
+                readAndCompute(in);
+                writeFile(outDir + "/" + file.getName());
+            } else {
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("All files must have .asc extension");
+                    alert.show();
+                });
+            }
         }
+
     }
 
     public void init0(String s) {
@@ -385,7 +399,7 @@ http:/
         yllcorners = parameters.get(3);// + 75000;
         cellsize = parameters.get(4);
         nodataValue = parameters.get(5);
-        System.out.println("parametres : "+ xllcorners +" "+yllcorners+" "+parameters.get(3));
+     //   System.out.println("parametres : " + xllcorners + " " + yllcorners + " " + parameters.get(3));
     }
 
     public void compute(String s) {
@@ -398,7 +412,7 @@ http:/
         yllcorners -= cellsize;
     }
 
-    public void writeFile(String filename) {
+    public String writeFile(String filename) {
         FileWriter writer;
         try {
             writer = new FileWriter(filename, true);
@@ -407,7 +421,8 @@ http:/
             }
             writer.close();
         } catch (IOException ex) {
-            Logger.getLogger(LambertImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LambertImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+        return filename;
     }
 }
