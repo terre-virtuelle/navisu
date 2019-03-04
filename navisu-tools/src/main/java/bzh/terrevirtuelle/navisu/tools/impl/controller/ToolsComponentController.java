@@ -12,7 +12,6 @@ import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -20,7 +19,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Properties;
@@ -181,7 +179,7 @@ public class ToolsComponentController
     @FXML
     public ChoiceBox<String> elevationDbCB;
     @FXML
-    public CheckBox tiff2AscCB;
+    public CheckBox tiff2XyzCB;
     @FXML
     public CheckBox lambert2Wgs84CB;
     @FXML
@@ -430,13 +428,11 @@ public class ToolsComponentController
                         "5432", "org.postgresql.Driver", "admin", "admin");
                 guiAgentServices.getJobsManager().newJob("Load DB : " + elevationDBName, (progressHandle) -> {
                     if (elevationDataTF != null) {
-                        if (lambert2Wgs84CB.isSelected() || tiff2AscCB.isSelected()) {
+                        if (lambert2Wgs84CB.isSelected() || tiff2XyzCB.isSelected()) {
                             String fileName = prepareCreateOrInsertFile();
-                            //   bathymetryDBServices.create(ELEVATION_DB_ORG_DIR + "/" + fileName, "elevation");
+                            bathymetryDBServices.create(ELEVATION_DB_ORG_DIR + "/" + fileName, "elevation");
                         } else {
-                            guiAgentServices.getJobsManager().newJob("Load DB : " + elevationDBName, (progressHandle1) -> {
-                                bathymetryDBServices.create(elevationDataTF.getText(), "elevation");
-                            });
+                            bathymetryDBServices.create(elevationDataTF.getText(), "elevation");
                         }
                     }
                 });
@@ -445,32 +441,18 @@ public class ToolsComponentController
 
         insertElevationButton.setOnMouseClicked((MouseEvent event) -> {
             String elevationDBName = elevationDatabaseNameTF.getText();
-            if (lambert2Wgs84CB.isSelected() || tiff2AscCB.isSelected()) {
-                /*
-                elevationData = ELEVATION_DB_ORG_FILE;
-                if (lambert2Wgs84CB.isSelected() && !tiff2AscCB.isSelected()) {
-                    //Input  : elevationDataTF.getText(), in asc format
-                    //Output : elevationData,  in xyz format, glz extension
-                    lambertServices.readLambertDirWriteWGS84Dir(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);
-                }
-                if (tiff2AscCB.isSelected() && !lambert2Wgs84CB.isSelected()) {
-                    // transform en xyz
-                    bathymetryDBServices.translateTif2XYZ(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);
-                    if (geotifPreviewCB.isSelected()) {
-                        geoTiffChartServices.openChart(elevationDataTF.getText());
-                    }
-                }
+            if (elevationDBName != null) {
                 bathymetryDBServices.connect(elevationDBName, "localhost", "jdbc:postgresql://",
                         "5432", "org.postgresql.Driver", "admin", "admin");
-                 */
-                String fileName = prepareCreateOrInsertFile();
-                bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + "/" + fileName, "elevation");
-            } else {
-                elevationData = elevationDataTF.getText();
                 guiAgentServices.getJobsManager().newJob("Load DB : " + elevationDBName, (progressHandle) -> {
-                    bathymetryDBServices.connect(elevationDBName, "localhost", "jdbc:postgresql://",
-                            "5432", "org.postgresql.Driver", "admin", "admin");
-                    bathymetryDBServices.insert(elevationData, "elevation");
+                    if (elevationDataTF != null) {
+                        if (lambert2Wgs84CB.isSelected() || tiff2XyzCB.isSelected()) {
+                            String fileName = prepareCreateOrInsertFile();
+                            bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + "/" + fileName, "elevation");
+                        } else {
+                            bathymetryDBServices.insert(elevationDataTF.getText(), "elevation");
+                        }
+                    }
                 });
             }
         });
@@ -521,23 +503,23 @@ public class ToolsComponentController
 
     private String prepareCreateOrInsertFile() {
         String in = new File(elevationDataTF.getText()).getName();
-        String tiffFile = null;
-        if (lambert2Wgs84CB.isSelected() && !tiff2AscCB.isSelected()) {
-            tiffFile = bathymetryDBServices.translateAscLambert93ToTif(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);
-            bathymetryDBServices.translateAsc2XYZ(tiffFile, ELEVATION_DB_ORG_DIR);
-        }
-        if (tiff2AscCB.isSelected() && !lambert2Wgs84CB.isSelected()) {
-            bathymetryDBServices.translateTif2XYZ(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);
-        }
-        if (geotifPreviewCB.isSelected()) {
-            if (in.contains("tif")) {
-                geoTiffChartServices.openChart(in);
-            } else {
-               tiffFile= bathymetryDBServices.warpTifLambert93ToTifWGS84(tiffFile, ELEVATION_DB_ORG_DIR);
-                geoTiffChartServices.openChart(tiffFile);
+        String result = in;
+        String tiffFile;
+        if (lambert2Wgs84CB.isSelected() && !tiff2XyzCB.isSelected()) {
+            tiffFile = bathymetryDBServices.translateAscLambert93ToTif(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);//EPSG d'origine 2154
+            tiffFile = bathymetryDBServices.warpTifLambert93ToTifWGS84(ELEVATION_DB_ORG_DIR + "/" + tiffFile, ELEVATION_DB_ORG_DIR);//EPSG 4326
+            if (geotifPreviewCB.isSelected()) {
+                geoTiffChartServices.openChart(ELEVATION_DB_ORG_DIR + "/" + tiffFile);
             }
+            result = bathymetryDBServices.translateTif2XYZ(ELEVATION_DB_ORG_DIR + "/" + tiffFile, ELEVATION_DB_ORG_DIR);
         }
-        return in;
+        if (!lambert2Wgs84CB.isSelected() && tiff2XyzCB.isSelected()) {
+            if (geotifPreviewCB.isSelected()) {
+                geoTiffChartServices.openChart(elevationDataTF.getText());
+            }
+            result = bathymetryDBServices.translateTif2XYZ(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);
+        }
+        return result;
     }
 
     public void openFile(TextField tf) {

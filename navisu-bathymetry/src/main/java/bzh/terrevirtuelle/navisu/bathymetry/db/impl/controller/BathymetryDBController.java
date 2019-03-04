@@ -191,7 +191,7 @@ public class BathymetryDBController {
     }
 
     public void work(String filename, String table) {
-        System.out.println("work " + filename + " " + table);
+       // System.out.println("work " + filename + " " + table);
         if (filename.endsWith(".glz") || filename.endsWith(".xyz")) {
             insertData(table, filename);
             createIndex(table);
@@ -497,15 +497,15 @@ public class BathymetryDBController {
     }
 
     public String translateTif2XYZ(String in, String outDir) {
+        System.out.println("in : " + in +" outDir : " + outDir);
         File file = new File(in);
         String out = file.getName();
         if (in.endsWith(".tif")) {
             out = out.replace("tif", "glz");
-            out = outDir + "/" + out;
             String command = "gdal_translate";
             command += " -of XYZ "
                     + in + " "
-                    + out;
+                    + outDir + "/" + out;
             try {
                 Proc.BUILDER.create()
                         .setCmd(command)
@@ -522,11 +522,10 @@ public class BathymetryDBController {
         String out = file.getName();
         if (in.endsWith(".asc")) {
             out = out.replace("asc", "glz");
-            out = outDir + "/" + out;
             String command = "gdal_translate";
             command += " -of XYZ "
                     + in + " "
-                    + out;
+                    + outDir + "/" + out;
             try {
                 Proc.BUILDER.create()
                         .setCmd(command)
@@ -543,11 +542,10 @@ public class BathymetryDBController {
         String out = file.getName();
         if (in.endsWith(".asc")) {
             out = out.replace("asc", "tif");
-            out = outDir + "/" + out;
             String command = "gdal_translate";
             command += " -of GTiff -a_srs EPSG:2154 "
                     + in + " "
-                    + out;
+                    + outDir + "/" + out;
             try {
                 Proc.BUILDER.create()
                         .setCmd(command)
@@ -565,11 +563,10 @@ public class BathymetryDBController {
         if (in.endsWith(".tif")) {
             out = out.replace(".tif", "");
             out = out + "_wgs84.tif";
-            out = outDir + "/" + out;
             String command = "gdalwarp ";
             command += " -s_srs EPSG:2154 -t_srs EPSG:4326  "
                     + in + " "
-                    + out;
+                    + outDir + "/" + out;
             try {
                 Proc.BUILDER.create()
                         .setCmd(command)
