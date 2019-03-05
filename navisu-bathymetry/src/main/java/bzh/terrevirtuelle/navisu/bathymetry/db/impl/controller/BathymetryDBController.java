@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
@@ -53,6 +52,7 @@ public class BathymetryDBController {
     private static BathymetryDBController INSTANCE = null;
     BathymetryDBImpl component;
     protected static final Logger LOGGER = Logger.getLogger(BathymetryDBController.class.getName());
+    protected final String SEP = File.separator;
 
     DatabaseServices databaseServices;
     GuiAgentServices guiAgentServices;
@@ -191,7 +191,7 @@ public class BathymetryDBController {
     }
 
     public void work(String filename, String table) {
-       // System.out.println("work " + filename + " " + table);
+        // System.out.println("work " + filename + " " + table);
         if (filename.endsWith(".glz") || filename.endsWith(".xyz")) {
             insertData(table, filename);
             createIndex(table);
@@ -497,7 +497,7 @@ public class BathymetryDBController {
     }
 
     public String translateTif2XYZ(String in, String outDir) {
-        System.out.println("in : " + in +" outDir : " + outDir);
+        System.out.println("in : " + in + " outDir : " + outDir);
         File file = new File(in);
         String out = file.getName();
         if (in.endsWith(".tif")) {
@@ -505,7 +505,7 @@ public class BathymetryDBController {
             String command = "gdal_translate";
             command += " -of XYZ "
                     + in + " "
-                    + outDir + "/" + out;
+                    + outDir + SEP + out;
             try {
                 Proc.BUILDER.create()
                         .setCmd(command)
@@ -525,7 +525,7 @@ public class BathymetryDBController {
             String command = "gdal_translate";
             command += " -of XYZ "
                     + in + " "
-                    + outDir + "/" + out;
+                    + outDir + SEP+ out;
             try {
                 Proc.BUILDER.create()
                         .setCmd(command)
@@ -545,7 +545,7 @@ public class BathymetryDBController {
             String command = "gdal_translate";
             command += " -of GTiff -a_srs EPSG:2154 "
                     + in + " "
-                    + outDir + "/" + out;
+                    + outDir + SEP+ out;
             try {
                 Proc.BUILDER.create()
                         .setCmd(command)
@@ -566,7 +566,7 @@ public class BathymetryDBController {
             String command = "gdalwarp ";
             command += " -s_srs EPSG:2154 -t_srs EPSG:4326  "
                     + in + " "
-                    + outDir + "/" + out;
+                    + outDir + SEP + out;
             try {
                 Proc.BUILDER.create()
                         .setCmd(command)

@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="locatorPanel" stylesheets="@locatorpanel.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="locatorPanel" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Group>
             <children>
@@ -44,7 +44,7 @@
                               <Label text="      Latitude" />
                               <Label text="      Longitude" GridPane.rowIndex="1" />
                               <Label text="      Heading" GridPane.rowIndex="2" />
-                              <TextField fx:id="latitudeTF" prefHeight="26.0" prefWidth="132.0" GridPane.columnIndex="2" />
+                              <TextField fx:id="latitudeTF" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="2" />
                               <TextField fx:id="longitudeTF" prefHeight="26.0" prefWidth="131.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <TextField fx:id="headingTF" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                               <Label text="      Scale" GridPane.rowIndex="4" />

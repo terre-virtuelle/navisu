@@ -19,7 +19,7 @@ import java.util.List;
 public class BathyLoader {
 
     private final Connection connection;
-    private BathymetryDBServices bathymetryDBServices;
+    private final BathymetryDBServices bathymetryDBServices;
     private List<Point3D> points;
     private double maxDepth = 0.0;
 

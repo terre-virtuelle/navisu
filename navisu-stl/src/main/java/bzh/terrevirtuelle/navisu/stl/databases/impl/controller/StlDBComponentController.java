@@ -139,6 +139,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.FileHandler;
+import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -171,16 +172,15 @@ public class StlDBComponentController
 
     protected static final Logger LOGGER = Logger.getLogger(StlDBComponentController.class.getName());
     private final String NAVISU_HOME = System.getProperty("user.home") + "/.navisu";
-
     private final String FXML = "stlDBController.fxml";
-    protected final String SEP = File.separator;
+    protected static final String SEP = File.separator;
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     protected String CACHE_FILE_NAME = System.getProperty("user.home") + "/.navisu/caches/caches.properties";
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
-    protected static final String DEFAULT_KML_PATH = "privateData/kml/";
-    protected static final String DEFAULT_STL_PATH = "privateData/stl/";
-    protected static final String DEFAULT_ASC_PATH = "privateData/asc/";
+    protected static final String DEFAULT_KML_PATH = "privateData"+SEP+"kml"+SEP;
+    protected static final String DEFAULT_STL_PATH = "privateData"+SEP+"stl"+SEP;
+    protected static final String DEFAULT_ASC_PATH = "privateData"+SEP+"asc"+SEP;
     private final String HOST = "localhost";
     private final String PROTOCOL = "jdbc:postgresql://";
     private final String PORT = "5432";
@@ -267,7 +267,6 @@ public class StlDBComponentController
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
     protected String marsys;
     protected List<String> selectedObjects = new ArrayList<>();
-    protected String isoValuesUlhysses = "";
     protected String sep = File.separator;
     protected List<Polygon> tiles;
     protected List<Point3D[][]> grids = null;
@@ -339,15 +338,11 @@ public class StlDBComponentController
     @FXML
     public TextField encPortDBTF;
     @FXML
-    public TextField ulhyssesTF;
-    @FXML
     public RadioButton bathyRB;
     @FXML
     public RadioButton noBathyRB;
     @FXML
     public RadioButton depareRB;
-    @FXML
-    public RadioButton depareUlhyssesRB;
     @FXML
     public CheckBox simplifyCB;
     @FXML
@@ -358,8 +353,6 @@ public class StlDBComponentController
     public TextField elevationDatabaseTF;
     @FXML
     public ChoiceBox<String> elevationDatabasesCB;
-    @FXML
-    public RadioButton srtmRB;
     @FXML
     public RadioButton elevationRB;
     @FXML
@@ -437,7 +430,7 @@ public class StlDBComponentController
     protected ObservableList<String> s57DbCbData
             = FXCollections.observableArrayList(S57_DEFAULT_DATABASE_1, S57_DEFAULT_DATABASE_2, S57_DEFAULT_DATABASE_3, S57_DEFAULT_DATABASE_4, S57_DEFAULT_DATABASE_5, S57_DEFAULT_DATABASE_6);
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
-    protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("AltiV2_2-0_75mIgnDB");
+    protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("AltiV2_2-0_75mIgnDB","SRTM30mDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
     protected Map<String, CheckBox> s57SelectionMap;
 
@@ -446,8 +439,6 @@ public class StlDBComponentController
     protected ObjExportToSTL objExportToSTL;
     protected MeshExportToSTL meshExportToSTL;
 
-    // protected boolean isDaeObject = false;
-    // protected boolean isObjObject = false;
     protected List<Point3D> boundList;
 
     protected long startTime;
@@ -703,12 +694,12 @@ public class StlDBComponentController
 
         //  noBathyRB.setToggleGroup(bathyGroup);
         depareRB.setToggleGroup(bathyGroup);
-        depareUlhyssesRB.setToggleGroup(bathyGroup);
+       
 
         noAltiRB.setToggleGroup(terrainGroup);
         terrainRB.setToggleGroup(terrainGroup);
 
-        srtmRB.setToggleGroup(altiGroup);
+     
         elevationRB.setToggleGroup(altiGroup);
 
         solidRB.setToggleGroup(wsGroup);
@@ -720,12 +711,7 @@ public class StlDBComponentController
         solidRB.setOnAction((ActionEvent event) -> {
             solid = true;
         });
-        isoValuesUlhysses = ulhyssesTF.getText();
-        ulhyssesTF.setOnAction((ActionEvent event) -> {
-            isoValuesUlhysses = ulhyssesTF.getText();
-            //check
-        });
-
+      
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
         });
@@ -874,12 +860,6 @@ public class StlDBComponentController
                         grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
 
                     }
-                    if (srtmRB.isSelected() && noBathyRB.isSelected()) {
-                        grids = createSrtmElevationTab(lat0, lon0, lat1, lon1, gridX);//~1m
-                    }
-                    if (srtmRB.isSelected() && depareRB.isSelected()) {
-                        //createElevationAndDepare(latMin, lonMin, latMax, lonMax);
-                    }
                 } else {
                     Point3D[][] grid = null;
                     if (autoBoundCB.isSelected()) {
@@ -965,9 +945,7 @@ public class StlDBComponentController
                     if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
                         createElevationAndDepare(latMin, lonMin, latMax, lonMax);
                     }
-                    if (selectedObjects.contains("ALL") || depareUlhyssesRB.isSelected()) {
-                        createElevationAndUlhyssesDepare(latMin, lonMin, latMax, lonMax);
-                    }
+                    
                     k = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
                         Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
@@ -984,7 +962,7 @@ public class StlDBComponentController
                             new BuoyageView(s57Layer).display(buoyages, 1.0);
                             if (generateKmlCB.isSelected()) {
                                 File src = new File(System.getProperty("user.dir") + SEP + "data" + SEP + "collada" + SEP + "buoys");
-                                File dest = new File(System.getProperty("user.dir") + SEP + "privateData" + SEP + "kml" + SEP + "buoys");
+                                File dest = new File(System.getProperty("user.dir") + SEP + DEFAULT_KML_PATH + "buoys");
                                 try {
                                     FileUtils.copyDirectory(src, dest);
                                 } catch (IOException ex) {
@@ -1167,7 +1145,7 @@ public class StlDBComponentController
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
                             String filename = outFileTF.getText() + "_" + i + "," + j + ".stl";
-                            filename = System.getProperty("user.dir") + File.separator + "privateData" + File.separator + "stl" + File.separator + filename;
+                            filename = System.getProperty("user.dir") + SEP+ DEFAULT_STL_PATH + filename;
                             try {
                                 Thread.sleep(1000);
                                 stlComponentServices.viewSTL(filename);
@@ -1539,54 +1517,5 @@ public class StlDBComponentController
 
     }
 
-    private void createElevationAndUlhyssesDepare(double latMin, double lonMin, double latMax, double lonMax) {
-        //  bathymetry = createBathymetryTab(latMin, lonMin, latMax, lonMax);
-        Point3D[][] pts = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
-        displayServices.displayGrid(pts, s57Layer, Material.GREEN, verticalExaggeration);
-
-        List<Point3D> points = bathymetry.getGrid();
-        bathymetryDBServices.writePointList(points, Paths.get(System.getProperty("user.dir") + "/privateData/ulhysses", "bathy.csv"), false);
-
-        String ulhyssesPath = "" + sep + "opt" + sep + "ULHYSSES" + sep + "app";
-        String command
-                = "cd " + ulhyssesPath + " \n"
-                + System.getProperty("java.home") + sep + "bin" + sep + "java "
-                + "-Dlog4j.configuration=file:" + ulhyssesPath + "" + sep + "conf-tools" + sep + "toolsLog4j.properties "
-                + "-Xmx14g -Xms1024m -jar " + ulhyssesPath + "" + sep + "" + "ULHYSSES.jar "
-                + "--outputDirectory=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses "
-                + "--inputFile=" + System.getProperty("user.dir") + "" + sep + "privateData" + sep + "ulhysses" + sep + "bathy.csv "
-                + "--compilationScale=1000 --fileType=0 --isoValues='" + isoValuesUlhysses + "' "
-                + "--codeAgency=4G --baseName=0001";
-        try {
-            Proc.BUILDER.create()
-                    .setCmd(command)
-                    .execSh();
-        } catch (IOException | InterruptedException ex) {
-            LOGGER.log(Level.SEVERE, ex.toString(), ex);
-        }
-
-        new File("data" + sep + "shp").mkdir();
-        new File("data" + sep + "shp" + sep + "shp_0").mkdir();
-        String cmd0 = startCmd("ogr2ogr");
-        String cmd;
-        String sep = File.separator;
-        try {
-            java.nio.file.Path tmp = Paths.get(new File(System.getProperty("user.dir") + sep + "privateData" + sep + "ulhysses" + sep + "bathy" + sep + "ENC" + sep + "4G600010.000").toString());
-            cmd = cmd0 + " -skipfailures -overwrite " + "data" + sep + "shp" + sep + "shp_0" + " " + tmp.toString();
-            Proc.BUILDER.create()
-                    .setCmd(cmd)
-                    .execSh();
-        } catch (IOException | InterruptedException e) {
-            LOGGER.log(Level.SEVERE, e.toString(), e);
-        }
-
-        Shapefile shp = new Shapefile(new File("data" + sep + "shp" + sep + "shp_0" + sep + "DEPARE.shp"));
-
-        new DepareView(s57Layer, s57Layer, s57Layer,
-                simplifyFactor,
-                Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
-                true, true)
-                .display(shp);
-    }
-
+    
 }

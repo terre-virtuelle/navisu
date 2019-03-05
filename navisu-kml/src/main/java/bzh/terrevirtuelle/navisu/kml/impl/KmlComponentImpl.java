@@ -119,7 +119,7 @@ public class KmlComponentImpl
                 ColladaController colladaController = new ColladaController(colladaRoot);
                 layer.addRenderable(colladaController);
             } catch (IOException | XMLStreamException ex) {
-                Logger.getLogger(KmlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+               Logger.getLogger(KmlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
         return colladaRoot;
@@ -142,7 +142,6 @@ public class KmlComponentImpl
             case "DAE":
                 ColladaComponentController colladaComponentController
                         = new ColladaComponentController(layersManagerServices, this, fileName, guiAgentServices.getRoot());
-
                 break;
         }
     }

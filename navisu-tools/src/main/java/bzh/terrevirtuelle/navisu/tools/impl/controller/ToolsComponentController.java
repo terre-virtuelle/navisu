@@ -74,6 +74,7 @@ public class ToolsComponentController
 
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
+    protected static final String SEP = File.separator;
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     private final String USER = "admin";
     private final String PASSWD = "admin";
@@ -203,8 +204,8 @@ public class ToolsComponentController
     private final String ELEVATION_DB_NAME_0 = "AltiV2_2-0_75mIgnDB";
     private final String ELEVATION_DB_NAME_1 = "SRTM30mDB";
     private final String ELEVATION_DB_NAME_2 = "TestAltiDB";
-    private final String ELEVATION_DB_ORG_FILE = "privateData/elevation/output.glz";
-    private final String ELEVATION_DB_ORG_DIR = "privateData/elevation";
+    //   private final String ELEVATION_DB_ORG_FILE = "privateData/elevation/output.glz";
+    private final String ELEVATION_DB_ORG_DIR = "privateData" + SEP + "elevation";
     private String componentKeyName;
 
     /**

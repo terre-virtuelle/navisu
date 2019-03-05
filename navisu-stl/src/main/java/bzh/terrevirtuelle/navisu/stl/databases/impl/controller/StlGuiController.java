@@ -6,7 +6,6 @@
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWind;
@@ -234,7 +233,6 @@ public class StlGuiController {
                         }
                     }
                 }
-                // System.out.println("selectedObjects : " + selectedObjects);
             }
 
         });
