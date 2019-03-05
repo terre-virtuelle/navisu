@@ -842,7 +842,7 @@ public class StlDBComponentController
                 }
                 // DEBUG
                 // autoBoundCB.setSelected(true);
-                stlPreviewCB.setSelected(false);
+               // stlPreviewCB.setSelected(false);
                 if (autoBoundCB.isSelected()) {
                     stlGuiController.displayGuiGridBM(s57Layer);
                 }
@@ -910,15 +910,15 @@ public class StlDBComponentController
                         LOGGER.info("In export GridBox3D en STL");
                         String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + 1 + "," + 1 + ".stl";
                         GridBox3D gb = gridBoxes.get(0);
-                        // System.out.println("gb : " + gb);
+                        System.out.println("gb : " + gb);
                         //DEBUG for mesh import
-                        // new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
+                        new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                         LOGGER.info("In export exportBaseSTL en STL");
                         if (baseCB.isSelected()) {
                             // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
                             // stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
                             // stlComponentServices.exportRotateBaseSTL("data/stl/base/baseNewRotated.stl", "data/stl/base/baseNew.stl", 5.42);
-                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNewRotated.stl");
+                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
                             LOGGER.info("Out export exportBaseSTL en STL");
                         }
                         LOGGER.info("Out export GridBox3D en STL");
@@ -1007,11 +1007,11 @@ public class StlDBComponentController
                     k = 0;
                     if (boundList != null && !boundList.isEmpty()) {
 
-                        System.out.println("boundList : " + boundList);
-                        System.out.println(geodesyServices.getAzimuth(boundList.get(0).getLatitude(), boundList.get(0).getLongitude(), boundList.get(1).getLatitude(), boundList.get(1).getLongitude()));
-                        System.out.println(geodesyServices.getAzimuth(boundList.get(1).getLatitude(), boundList.get(1).getLongitude(), boundList.get(2).getLatitude(), boundList.get(2).getLongitude()));
-                        System.out.println(geodesyServices.getAzimuth(boundList.get(2).getLatitude(), boundList.get(2).getLongitude(), boundList.get(3).getLatitude(), boundList.get(3).getLongitude()));
-                        System.out.println(geodesyServices.getAzimuth(boundList.get(3).getLatitude(), boundList.get(3).getLongitude(), boundList.get(4).getLatitude(), boundList.get(4).getLongitude()));
+                     //   System.out.println("boundList : " + boundList);
+                     //   System.out.println(geodesyServices.getAzimuth(boundList.get(0).getLatitude(), boundList.get(0).getLongitude(), boundList.get(1).getLatitude(), boundList.get(1).getLongitude()));
+                     //   System.out.println(geodesyServices.getAzimuth(boundList.get(1).getLatitude(), boundList.get(1).getLongitude(), boundList.get(2).getLatitude(), boundList.get(2).getLongitude()));
+                     //   System.out.println(geodesyServices.getAzimuth(boundList.get(2).getLatitude(), boundList.get(2).getLongitude(), boundList.get(3).getLatitude(), boundList.get(3).getLongitude()));
+                     //   System.out.println(geodesyServices.getAzimuth(boundList.get(3).getLatitude(), boundList.get(3).getLongitude(), boundList.get(4).getLatitude(), boundList.get(4).getLongitude()));
                         // System.out.println("grids : "+ grids);
                         for (Point3D[][] g : grids) {
                             System.out.println("g : " + g);
@@ -1177,18 +1177,7 @@ public class StlDBComponentController
         return createGrids(dem, latMin, lonMin, latMax, lonMax);
     }
 
-    private List<Point3D[][]> createSrtmElevationTab(double latMin, double lonMin,
-            double latMax, double lonMax, double range) {
-        LOGGER.info("In createSrtmElevationTab in STL");
-        Point3D[][] points = new DemSrtmElevationLoader(geodesyServices).getElevations(latMin, lonMin, latMax, lonMax, range);
-        maxDepth = 0.0;
-        LOGGER.info("Out createSrtmElevationTab in STL");
-
-        List<Point3D[][]> gds = createGrids(points, tileCount);
-
-        return gds;
-    }
-
+    
     /*
     Create a list of points on a regular grid.
     These grids are translate vertically with the max of depth
