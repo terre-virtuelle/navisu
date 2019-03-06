@@ -121,7 +121,6 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
-import bzh.terrevirtuelle.navisu.stl.charts.impl.loader.dem.DemSrtmElevationLoader;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.BuoyageExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportToSTL;
@@ -139,7 +138,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.FileHandler;
-import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -159,11 +157,11 @@ public class StlDBComponentController
     protected DisplayServices displayServices;
     protected GeodesyServices geodesyServices;
     protected GuiAgentServices guiAgentServices;
+    protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected JTSServices jtsServices;
     protected LambertServices lambertServices;
     protected LayersManagerServices layersManagerServices;
     protected KmlComponentServices kmlComponentServices;
-    protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected ObjComponentServices objComponentServices;
     protected Pro4JServices pro4JServices;
     protected ShapefileObjectServices shapefileObjectServices;
@@ -178,9 +176,9 @@ public class StlDBComponentController
     protected String CACHE_FILE_NAME = System.getProperty("user.home") + "/.navisu/caches/caches.properties";
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
-    protected static final String DEFAULT_KML_PATH = "privateData"+SEP+"kml"+SEP;
-    protected static final String DEFAULT_STL_PATH = "privateData"+SEP+"stl"+SEP;
-    protected static final String DEFAULT_ASC_PATH = "privateData"+SEP+"asc"+SEP;
+    protected static final String DEFAULT_KML_PATH = "privateData" + SEP + "kml" + SEP;
+    protected static final String DEFAULT_STL_PATH = "privateData" + SEP + "stl" + SEP;
+    protected static final String DEFAULT_ASC_PATH = "privateData" + SEP + "asc" + SEP;
     private final String HOST = "localhost";
     private final String PROTOCOL = "jdbc:postgresql://";
     private final String PORT = "5432";
@@ -430,7 +428,7 @@ public class StlDBComponentController
     protected ObservableList<String> s57DbCbData
             = FXCollections.observableArrayList(S57_DEFAULT_DATABASE_1, S57_DEFAULT_DATABASE_2, S57_DEFAULT_DATABASE_3, S57_DEFAULT_DATABASE_4, S57_DEFAULT_DATABASE_5, S57_DEFAULT_DATABASE_6);
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
-    protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("AltiV2_2-0_75mIgnDB","SRTM30mDB");
+    protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("SRTM30mDB", "AltiV2_2-0_75mIgnDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
     protected Map<String, CheckBox> s57SelectionMap;
 
@@ -515,7 +513,7 @@ public class StlDBComponentController
         bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
         lightsLayer = layersManagerServices.getLayer(GROUP_0, LIGHTS_LAYER);
         selectLayer = layersManagerServices.getLayer(GROUP_0, SELECTED_LAYER);
-        
+
         try {
             configProperties.load(new FileInputStream(CONFIG_FILE_NAME));
         } catch (IOException ex) {
@@ -585,8 +583,8 @@ public class StlDBComponentController
                 );
 
         elevationDatabasesCB.setItems(elevationDbCbData);
-        elevationDatabasesCB.getSelectionModel().select("AltiV2_2-0_75mIgnDB");
-        elevationDatabaseTF.setText("AltiV2_2-0_75mIgnDB");
+        elevationDatabasesCB.getSelectionModel().select("SRTM30mDB");
+        elevationDatabaseTF.setText("SRTM30mDB");
         elevationDatabasesCB.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue)
@@ -695,12 +693,10 @@ public class StlDBComponentController
 
         //  noBathyRB.setToggleGroup(bathyGroup);
         depareRB.setToggleGroup(bathyGroup);
-       
 
         noAltiRB.setToggleGroup(terrainGroup);
         terrainRB.setToggleGroup(terrainGroup);
 
-     
         elevationRB.setToggleGroup(altiGroup);
 
         solidRB.setToggleGroup(wsGroup);
@@ -712,7 +708,7 @@ public class StlDBComponentController
         solidRB.setOnAction((ActionEvent event) -> {
             solid = true;
         });
-      
+
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
         });
@@ -843,7 +839,7 @@ public class StlDBComponentController
                 }
                 // DEBUG
                 // autoBoundCB.setSelected(true);
-               // stlPreviewCB.setSelected(false);
+                // stlPreviewCB.setSelected(false);
                 if (autoBoundCB.isSelected()) {
                     stlGuiController.displayGuiGridBM(s57Layer);
                 }
@@ -946,7 +942,7 @@ public class StlDBComponentController
                     if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
                         createElevationAndDepare(latMin, lonMin, latMax, lonMax);
                     }
-                    
+
                     k = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
                         Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
@@ -1008,11 +1004,11 @@ public class StlDBComponentController
                     k = 0;
                     if (boundList != null && !boundList.isEmpty()) {
 
-                     //   System.out.println("boundList : " + boundList);
-                     //   System.out.println(geodesyServices.getAzimuth(boundList.get(0).getLatitude(), boundList.get(0).getLongitude(), boundList.get(1).getLatitude(), boundList.get(1).getLongitude()));
-                     //   System.out.println(geodesyServices.getAzimuth(boundList.get(1).getLatitude(), boundList.get(1).getLongitude(), boundList.get(2).getLatitude(), boundList.get(2).getLongitude()));
-                     //   System.out.println(geodesyServices.getAzimuth(boundList.get(2).getLatitude(), boundList.get(2).getLongitude(), boundList.get(3).getLatitude(), boundList.get(3).getLongitude()));
-                     //   System.out.println(geodesyServices.getAzimuth(boundList.get(3).getLatitude(), boundList.get(3).getLongitude(), boundList.get(4).getLatitude(), boundList.get(4).getLongitude()));
+                        //   System.out.println("boundList : " + boundList);
+                        //   System.out.println(geodesyServices.getAzimuth(boundList.get(0).getLatitude(), boundList.get(0).getLongitude(), boundList.get(1).getLatitude(), boundList.get(1).getLongitude()));
+                        //   System.out.println(geodesyServices.getAzimuth(boundList.get(1).getLatitude(), boundList.get(1).getLongitude(), boundList.get(2).getLatitude(), boundList.get(2).getLongitude()));
+                        //   System.out.println(geodesyServices.getAzimuth(boundList.get(2).getLatitude(), boundList.get(2).getLongitude(), boundList.get(3).getLatitude(), boundList.get(3).getLongitude()));
+                        //   System.out.println(geodesyServices.getAzimuth(boundList.get(3).getLatitude(), boundList.get(3).getLongitude(), boundList.get(4).getLatitude(), boundList.get(4).getLongitude()));
                         // System.out.println("grids : "+ grids);
                         for (Point3D[][] g : grids) {
                             System.out.println("g : " + g);
@@ -1146,7 +1142,7 @@ public class StlDBComponentController
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
                             String filename = outFileTF.getText() + "_" + i + "," + j + ".stl";
-                            filename = System.getProperty("user.dir") + SEP+ DEFAULT_STL_PATH + filename;
+                            filename = System.getProperty("user.dir") + SEP + DEFAULT_STL_PATH + filename;
                             try {
                                 Thread.sleep(1000);
                                 stlComponentServices.viewSTL(filename);
@@ -1175,10 +1171,67 @@ public class StlDBComponentController
         DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
                 lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
         maxDepth = 0.0;
+        System.out.println("dem : " + dem.getGrid().size());
+        System.out.println("sqrt : " + Math.sqrt(dem.getGrid().size()));
+        System.out.println(latMin + " " + lonMin + " " + latMax + " " + lonMax);
+        double x = geodesyServices.getDistanceM(latMin, lonMin, latMin, lonMax);
+        double y = geodesyServices.getDistanceM(latMin, lonMin, latMax, lonMin);
+        System.out.println(x + " " + y);
+        int s = (int) Math.sqrt(dem.getGrid().size());
+        System.out.println(x / s + " " + y / s);
+        /*
+        System.out.println(dem.getGrid().get((int) Math.sqrt(dem.getGrid().size())));
+        for (int i = 0; i < dem.getGrid().size() - 1; i++) {
+            double difLat = dem.getGrid().get(i).getLatitude()-dem.getGrid().get(i+1).getLatitude();
+            double difLon=dem.getGrid().get(i).getLongitude()-dem.getGrid().get(i + 1).getLongitude();
+            System.out.print(difLat +" " +difLon +"..............");
+            System.out.println(geodesyServices.getDistanceM(dem.getGrid().get(i).getLatitude(), dem.getGrid().get(i).getLongitude(),
+                    dem.getGrid().get(i).getLatitude(), dem.getGrid().get(i + 1).getLongitude()));
+        }
+         */
+        for (int i = 0; i < dem.getGrid().size(); i++) {
+            System.out.println(dem.getGrid().get(i));
+        }
         return createGrids(dem, latMin, lonMin, latMax, lonMax);
     }
 
-    
+    private List<Point3D[][]> createGrids(DEM dem, double latMin, double lonMin, double latMax, double lonMax) {
+        Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
+        grid = jtsServices.mergePointsToGrid(dem.getGrid(), grid);
+        List<Point3D[][]> grids = createGrids(grid, tileCount);
+        return grids;
+    }
+
+    private List<Point3D[][]> createGrids(Point3D[][] grid, int tileCount) {
+        LOGGER.info("In createGrids in STL");
+        List<Point3D[][]> grids = new ArrayList<>();
+        if (tileCount == 1) {
+            grids.add(grid);
+        } else {
+            int bound = grid[0].length / tileCount;
+            if (grid[0].length <= tileCount * bound) {
+                Point3D[][] tmpTab = Point3D.suppress(grid, grid[0].length - 1);
+                grid = Point3D.copy(tmpTab);
+                bound = grid[0].length / tileCount;
+            }
+            for (int l = 0; l < tileCount; l++) {
+                for (int c = 0; c < tileCount; c++) {
+                    Point3D[][] realGrid = new Point3D[bound + 1][bound + 1];
+                    for (int i = 0; i < bound + 1; i++) {
+                        for (int j = 0; j < bound + 1; j++) {
+                            realGrid[i][j] = new Point3D(grid[i + l * bound][j + c * bound].getLatitude(),
+                                    grid[i + l * bound][j + c * bound].getLongitude(),
+                                    grid[i + l * bound][j + c * bound].getElevation());
+                        }
+                    }
+                    grids.add(realGrid);
+                }
+            }
+        }
+        LOGGER.info("Out createGrids in STL");
+        return grids;
+    }
+
     /*
     Create a list of points on a regular grid.
     These grids are translate vertically with the max of depth
@@ -1228,60 +1281,6 @@ public class StlDBComponentController
         grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
 
         List<Point3D[][]> grids = createGrids(grid, tileCount);
-        return grids;
-    }
-
-    private List<Point3D[][]> createGrids(DEM dem, double latMin, double lonMin, double latMax, double lonMax) {
-        /*
-        // Si export vers ASC
-        Position orig = new Position(Angle.fromDegrees(latMin), Angle.fromDegrees(lonMin), 0);
-        Position p0 = geodesyServices.getPosition(orig, 90, gridX);
-        Position p1 = geodesyServices.getPosition(orig, 0, gridY);
-
-        Double y = Math.abs(Math.abs(orig.getLatitude().getDegrees()) - Math.abs(p1.getLatitude().getDegrees()));
-        double x = Math.abs(Math.abs(orig.getLongitude().getDegrees()) - Math.abs(p0.getLongitude().getDegrees()));
-        double yy = orig.getLatitude().getDegrees() + y;
-        double xx = orig.getLongitude().getDegrees() - y;
-
-        gridY = geodesyServices.getDistanceM(orig.getLatitude().getDegrees(), orig.getLongitude().getDegrees(),
-                yy, orig.getLongitude().getDegrees());
-        gridX = geodesyServices.getDistanceM(orig.getLatitude().getDegrees(), orig.getLongitude().getDegrees(),
-                orig.getLatitude().getDegrees(), xx);
-         */
-
-        Point3D[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
-        grid = jtsServices.mergePointsToGrid(dem.getGrid(), grid);
-        List<Point3D[][]> grids = createGrids(grid, tileCount);
-        return grids;
-    }
-
-    private List<Point3D[][]> createGrids(Point3D[][] grid, int tileCount) {
-        LOGGER.info("In createGrids in STL");
-        List<Point3D[][]> grids = new ArrayList<>();
-        if (tileCount == 1) {
-            grids.add(grid);
-        } else {
-            int bound = grid[0].length / tileCount;
-            if (grid[0].length <= tileCount * bound) {
-                Point3D[][] tmpTab = Point3D.suppress(grid, grid[0].length - 1);
-                grid = Point3D.copy(tmpTab);
-                bound = grid[0].length / tileCount;
-            }
-            for (int l = 0; l < tileCount; l++) {
-                for (int c = 0; c < tileCount; c++) {
-                    Point3D[][] realGrid = new Point3D[bound + 1][bound + 1];
-                    for (int i = 0; i < bound + 1; i++) {
-                        for (int j = 0; j < bound + 1; j++) {
-                            realGrid[i][j] = new Point3D(grid[i + l * bound][j + c * bound].getLatitude(),
-                                    grid[i + l * bound][j + c * bound].getLongitude(),
-                                    grid[i + l * bound][j + c * bound].getElevation());
-                        }
-                    }
-                    grids.add(realGrid);
-                }
-            }
-        }
-        LOGGER.info("Out createGrids in STL");
         return grids;
     }
 
@@ -1507,5 +1506,4 @@ public class StlDBComponentController
 
     }
 
-    
 }

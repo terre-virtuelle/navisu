@@ -54,7 +54,6 @@ public class DatabaseDriverManagerImpl
     public void registerNewDriver(DatabaseDriver driver) {
 
         Checker.notNull(driver, "Driver must not be null.");
-        System.out.println("registerNewDriver " + driver);
         // Hold the driver
         this.availableDriverList.add(driver);
     }

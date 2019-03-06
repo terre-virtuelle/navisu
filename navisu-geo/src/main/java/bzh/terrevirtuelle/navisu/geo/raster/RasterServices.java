@@ -15,8 +15,6 @@ import org.capcaval.c3.component.ComponentService;
 public interface RasterServices
         extends ComponentService {
 
-   
-
     String translateTif2XYZ(String in, String outDir);
 
     String translateAsc2XYZ(String in, String outDir);

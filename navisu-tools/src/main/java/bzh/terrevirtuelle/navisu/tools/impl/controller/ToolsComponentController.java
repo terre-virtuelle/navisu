@@ -60,6 +60,7 @@ public class ToolsComponentController
         extends Widget2DController
         implements Initializable {
 
+    protected static final String SEP = File.separator;
     private final ToolsComponentImpl component;
     protected static final Logger LOGGER = Logger.getLogger(ToolsComponentController.class.getName());
     protected GuiAgentServices guiAgentServices;
@@ -75,14 +76,14 @@ public class ToolsComponentController
     private final String FXML = "toolsController.fxml";
 
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
-    protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
-    protected static final String SEP = File.separator;
+    protected static final String ALARM_SOUND = SEP + "data" + SEP + "sounds" + SEP + "pling.wav";
+
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     private final String USER = "admin";
     private final String PASSWD = "admin";
     protected Properties properties;
 
-    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + SEP + "css" + SEP).toUri().toString();
     protected String viewgroupstyle = "configuration.css";
 
     /* Common controls */
@@ -206,7 +207,6 @@ public class ToolsComponentController
     private final String ELEVATION_DB_NAME_0 = "AltiV2_2-0_75mIgnDB";
     private final String ELEVATION_DB_NAME_1 = "SRTM30mDB";
     private final String ELEVATION_DB_NAME_2 = "TestAltiDB";
-    //   private final String ELEVATION_DB_ORG_FILE = "privateData/elevation/output.glz";
     private final String ELEVATION_DB_ORG_DIR = "privateData" + SEP + "elevation";
     private String componentKeyName;
 
@@ -435,7 +435,7 @@ public class ToolsComponentController
                     if (elevationDataTF != null) {
                         if (lambert2Wgs84CB.isSelected() || tiff2XyzCB.isSelected()) {
                             String fileName = prepareCreateOrInsertFile();
-                            bathymetryDBServices.create(ELEVATION_DB_ORG_DIR + "/" + fileName, "elevation");
+                            bathymetryDBServices.create(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
                         } else {
                             bathymetryDBServices.create(elevationDataTF.getText(), "elevation");
                         }
@@ -453,7 +453,7 @@ public class ToolsComponentController
                     if (elevationDataTF != null) {
                         if (lambert2Wgs84CB.isSelected() || tiff2XyzCB.isSelected()) {
                             String fileName = prepareCreateOrInsertFile();
-                            bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + "/" + fileName, "elevation");
+                            bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
                         } else {
                             bathymetryDBServices.insert(elevationDataTF.getText(), "elevation");
                         }
@@ -512,11 +512,11 @@ public class ToolsComponentController
         String tiffFile;
         if (lambert2Wgs84CB.isSelected() && !tiff2XyzCB.isSelected()) {
             tiffFile = rasterServices.translateAscLambert93ToTif(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);//EPSG d'origine 2154
-            tiffFile = rasterServices.warpTifLambert93ToTifWGS84(ELEVATION_DB_ORG_DIR + "/" + tiffFile, ELEVATION_DB_ORG_DIR);//EPSG 4326
+            tiffFile = rasterServices.warpTifLambert93ToTifWGS84(ELEVATION_DB_ORG_DIR + SEP + tiffFile, ELEVATION_DB_ORG_DIR);//EPSG 4326
             if (geotifPreviewCB.isSelected()) {
-                geoTiffChartServices.openChart(ELEVATION_DB_ORG_DIR + "/" + tiffFile);
+                geoTiffChartServices.openChart(ELEVATION_DB_ORG_DIR + SEP + tiffFile);
             }
-            result = rasterServices.translateTif2XYZ(ELEVATION_DB_ORG_DIR + "/" + tiffFile, ELEVATION_DB_ORG_DIR);
+            result = rasterServices.translateTif2XYZ(ELEVATION_DB_ORG_DIR + SEP + tiffFile, ELEVATION_DB_ORG_DIR);
         }
         if (!lambert2Wgs84CB.isSelected() && tiff2XyzCB.isSelected()) {
             if (geotifPreviewCB.isSelected()) {
