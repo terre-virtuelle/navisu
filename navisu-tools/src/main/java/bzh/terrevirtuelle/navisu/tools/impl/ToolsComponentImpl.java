@@ -17,6 +17,7 @@ import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
 
 /**
  * @author Serge Morvan
@@ -41,6 +42,8 @@ public class ToolsComponentImpl
     InstrumentDriverManagerServices instrumentDriverManagerServices;
     @UsedService
     LambertServices lambertServices;
+    @UsedService
+    RasterServices rasterServices;
 
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
     private final String COMPONENT_KEY_NAME_1 = "DbBathy";
@@ -60,13 +63,13 @@ public class ToolsComponentImpl
         String[] cmd = files;
         if (cmd != null) {
             componentKeyName = cmd[0];
-            // System.out.println("componentKeyName : " + componentKeyName);
             if (cmd[0].equals(COMPONENT_KEY_NAME_0) || cmd[0].equals(COMPONENT_KEY_NAME_1) || cmd[0].equals(COMPONENT_KEY_NAME_2)) {
                 controller = new ToolsComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
                         guiAgentServices, s57ChartComponentServices,geoTiffChartServices,
                         databaseServices, bathymetryDBServices, demDBComponentServices,
                         instrumentDriverManagerServices,
-                        lambertServices);
+                        lambertServices,
+                rasterServices);
                 controller.setVisible(true);
             }
         }

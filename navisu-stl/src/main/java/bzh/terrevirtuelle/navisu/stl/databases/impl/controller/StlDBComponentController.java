@@ -515,6 +515,7 @@ public class StlDBComponentController
         bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
         lightsLayer = layersManagerServices.getLayer(GROUP_0, LIGHTS_LAYER);
         selectLayer = layersManagerServices.getLayer(GROUP_0, SELECTED_LAYER);
+        
         try {
             configProperties.load(new FileInputStream(CONFIG_FILE_NAME));
         } catch (IOException ex) {

@@ -59,11 +59,4 @@ public interface BathymetryDBServices
 
     DatabaseDriver getDriver();
 
-    String translateTif2XYZ(String in, String out);
-
-    String translateAsc2XYZ(String in, String out);
-
-    String translateAscLambert93ToTif(String in, String out);
-
-    String warpTifLambert93ToTifWGS84(String in, String out);
 }

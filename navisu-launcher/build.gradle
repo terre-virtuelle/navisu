@@ -20,6 +20,7 @@ dependencies {
     compile project(':navisu-extensions')
     compile project(':navisu-gazeteer')
     compile project(':navisu-geometry')
+    compile project(':navisu-geo')
     compile project(':navisu-gpx')
     compile project(':navisu-netcdf')
     compile project(':navisu-instruments')

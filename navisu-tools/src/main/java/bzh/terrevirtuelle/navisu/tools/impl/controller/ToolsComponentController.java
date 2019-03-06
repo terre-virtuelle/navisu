@@ -47,6 +47,7 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
 import javafx.scene.control.CheckBox;
 
 /**
@@ -69,6 +70,7 @@ public class ToolsComponentController
     protected DemDBServices demDBComponentServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected LambertServices lambertServices;
+    protected RasterServices rasterServices;
 
     private final String FXML = "toolsController.fxml";
 
@@ -233,7 +235,8 @@ public class ToolsComponentController
             BathymetryDBServices bathymetryDBServices,
             DemDBServices demDBComponentServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
-            LambertServices lambertServices) {
+            LambertServices lambertServices,
+            RasterServices rasterServices) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -255,6 +258,7 @@ public class ToolsComponentController
         this.demDBComponentServices = demDBComponentServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.lambertServices = lambertServices;
+        this.rasterServices = rasterServices;
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
@@ -507,18 +511,18 @@ public class ToolsComponentController
         String result = in;
         String tiffFile;
         if (lambert2Wgs84CB.isSelected() && !tiff2XyzCB.isSelected()) {
-            tiffFile = bathymetryDBServices.translateAscLambert93ToTif(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);//EPSG d'origine 2154
-            tiffFile = bathymetryDBServices.warpTifLambert93ToTifWGS84(ELEVATION_DB_ORG_DIR + "/" + tiffFile, ELEVATION_DB_ORG_DIR);//EPSG 4326
+            tiffFile = rasterServices.translateAscLambert93ToTif(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);//EPSG d'origine 2154
+            tiffFile = rasterServices.warpTifLambert93ToTifWGS84(ELEVATION_DB_ORG_DIR + "/" + tiffFile, ELEVATION_DB_ORG_DIR);//EPSG 4326
             if (geotifPreviewCB.isSelected()) {
                 geoTiffChartServices.openChart(ELEVATION_DB_ORG_DIR + "/" + tiffFile);
             }
-            result = bathymetryDBServices.translateTif2XYZ(ELEVATION_DB_ORG_DIR + "/" + tiffFile, ELEVATION_DB_ORG_DIR);
+            result = rasterServices.translateTif2XYZ(ELEVATION_DB_ORG_DIR + "/" + tiffFile, ELEVATION_DB_ORG_DIR);
         }
         if (!lambert2Wgs84CB.isSelected() && tiff2XyzCB.isSelected()) {
             if (geotifPreviewCB.isSelected()) {
                 geoTiffChartServices.openChart(elevationDataTF.getText());
             }
-            result = bathymetryDBServices.translateTif2XYZ(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);
+            result = rasterServices.translateTif2XYZ(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);
         }
         return result;
     }

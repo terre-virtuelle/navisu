@@ -182,6 +182,8 @@ import bzh.terrevirtuelle.navisu.stl.charts.StlChartComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.StlDBComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
+import bzh.terrevirtuelle.navisu.geo.raster.impl.RasterImpl;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.impl.ObjComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
@@ -299,6 +301,7 @@ public class AppMain extends Application {
                         PaysBrest3DComponentImpl.class,
                         ProjectionsComponentImpl.class,
                         Pro4JImpl.class,
+                        RasterImpl.class,
                         RouteDataEditorImpl.class,
                         RouteEditorImpl.class,
                         RoutePhotoEditorImpl.class,
@@ -401,6 +404,7 @@ public class AppMain extends Application {
         ProjectionsComponentServices projectionsComponentServices = componentManager.getComponentService(ProjectionsComponentServices.class);
         Pro4JServices pro4JServices = componentManager.getComponentService(Pro4JServices.class);
 
+        RasterServices rasterServices = componentManager.getComponentService(RasterServices.class);
         RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
         RouteDataEditorServices routeDataEditorServices = componentManager.getComponentService(RouteDataEditorServices.class);
         RoutePhotoEditorServices routePhotoEditorServices = componentManager.getComponentService(RoutePhotoEditorServices.class);
