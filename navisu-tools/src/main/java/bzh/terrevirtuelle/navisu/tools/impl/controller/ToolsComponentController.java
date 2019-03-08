@@ -79,6 +79,8 @@ public class ToolsComponentController
     protected static final String ALARM_SOUND = SEP + "data" + SEP + "sounds" + SEP + "pling.wav";
 
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
+    protected static final String USER_DIR = System.getProperty("user.dir");
+
     private final String USER = "admin";
     private final String PASSWD = "admin";
     protected Properties properties;
@@ -511,8 +513,8 @@ public class ToolsComponentController
         String result = in;
         String tiffFile;
         if (lambert2Wgs84CB.isSelected() && !tiff2XyzCB.isSelected()) {
-            tiffFile = rasterServices.translateAscLambert93ToTif(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);//EPSG d'origine 2154
-            tiffFile = rasterServices.warpTifLambert93ToTifWGS84(ELEVATION_DB_ORG_DIR + SEP + tiffFile, ELEVATION_DB_ORG_DIR);//EPSG 4326
+            tiffFile = rasterServices.translateAscLambert93ToTif(elevationDataTF.getText(), USER_DIR + SEP + ELEVATION_DB_ORG_DIR);//EPSG d'origine 2154
+            tiffFile = rasterServices.warpTifLambert93ToTifWGS84(USER_DIR + SEP + ELEVATION_DB_ORG_DIR + SEP + tiffFile, ELEVATION_DB_ORG_DIR);//EPSG 4326
             if (geotifPreviewCB.isSelected()) {
                 geoTiffChartServices.openChart(ELEVATION_DB_ORG_DIR + SEP + tiffFile);
             }

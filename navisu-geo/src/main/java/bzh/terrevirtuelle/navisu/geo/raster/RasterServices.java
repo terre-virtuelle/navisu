@@ -9,7 +9,7 @@ package bzh.terrevirtuelle.navisu.geo.raster;
 import org.capcaval.c3.component.ComponentService;
 
 /**
- * @date 13 mars 2015
+ * @date 3 mars 2019
  * @author Serge Morvan
  */
 public interface RasterServices

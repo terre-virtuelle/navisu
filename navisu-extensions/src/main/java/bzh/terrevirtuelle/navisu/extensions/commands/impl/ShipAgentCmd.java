@@ -7,8 +7,6 @@ package bzh.terrevirtuelle.navisu.extensions.commands.impl;
 
 import bzh.terrevirtuelle.navisu.agents.ship.ShipAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Depth;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
@@ -30,7 +28,6 @@ public class ShipAgentCmd
         implements NavigationCmd {
 
     private final ShipAgentServices shipAgentServices;
-    private final LayersManagerServices layersManagerServices;
     protected static final String GROUP_0 = "S57 charts";
     protected static final String S57_LAYER = "S57Stl";
     protected RenderableLayer s57Layer;
@@ -47,7 +44,6 @@ public class ShipAgentCmd
 
     private ShipAgentCmd(ShipAgentServices shipAgentServices, LayersManagerServices layersManagerServices) {
         this.shipAgentServices = shipAgentServices;
-        this.layersManagerServices = layersManagerServices;
         s57Layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
     }
 
