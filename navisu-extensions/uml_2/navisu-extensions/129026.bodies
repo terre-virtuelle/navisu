@@ -1,0 +1,10 @@
+class CameraCmd
+!!!130050.java!!!	getInstance() : CameraCmd
+        if (INSTANCE == null) {
+            INSTANCE = new CameraCmd();
+        }
+        return INSTANCE;
+!!!130306.java!!!	setCameraComponentServices(inout cameraComponentServices : CameraComponentServices) : void
+        this.cameraComponentServices = cameraComponentServices;
+!!!130434.java!!!	doIt(inout arg : NavigationData) : NavigationDataSet
+       return cameraComponentServices.updateTarget((Camera)arg);

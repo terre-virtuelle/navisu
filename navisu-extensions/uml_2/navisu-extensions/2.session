@@ -1,0 +1,18 @@
+window_sizes 1830 1371 579 1245 1198 120
+cleanlooks_style
+diagrams
+  active  classdiagram_ref 128002 // extensions
+    996 958 100 A4 0 0
+end
+show_stereotypes
+selected class_ref 137730 // SoundingCmd
+open
+  classview_ref 128002 // camera
+  deploymentview_ref 128002 // camera
+  classview_ref 128386 // controller
+  classview_ref 128514 // commands
+  classview_ref 128898 // impl
+  classview_ref 129410 // extensions
+  classview_ref 135938 // navisu-extensions
+end
+end

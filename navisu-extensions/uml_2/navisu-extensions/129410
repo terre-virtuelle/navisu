@@ -1,0 +1,1261 @@
+format 221
+"impl" // bzh::terrevirtuelle::navisu::extensions::commands::impl
+  revision 1
+  modified_by 2 "serge"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  java_dir "/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-extensions/src/main/java/bzh/terrevirtuelle/navisu/extensions/commands/impl/"
+  java_package "bzh.terrevirtuelle.navisu.extensions.commands.impl"
+  classview 128898 "impl"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    class 130050 "BathymetryCmd"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      java_annotation "@XmlRootElement(name = \"BathymetryCmd\")
+@XmlAccessorType(XmlAccessType.FIELD)
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author serge
+@date Dec 7, 2017
+"
+      classrelation 129922 // <realization>
+	relation 129922 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129922 // <realization>
+	  b parent class_ref 129154 // NavigationCmd
+      end
+
+      attribute 130178 "HOST"
+	const_attribute private explicit_type "String"
+	init_value " \"localhost\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130306 "PROTOCOL"
+	const_attribute private explicit_type "String"
+	init_value " \"jdbc:postgresql://\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130434 "PORT"
+	const_attribute private explicit_type "String"
+	init_value " \"5432\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130562 "DRIVER"
+	const_attribute private explicit_type "String"
+	init_value " \"org.postgresql.Driver\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130690 "USER"
+	const_attribute private explicit_type "String"
+	init_value " \"admin\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130818 "PASSWD"
+	const_attribute private explicit_type "String"
+	init_value " \"admin\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130946 "bathyConnection"
+	protected explicit_type "Connection"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 130050 // INSTANCE (<unidirectional association>)
+	relation 130050 --->
+	  a role_name "INSTANCE" class_relation private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 130050 // INSTANCE (<unidirectional association>)
+	  b parent class_ref 130050 // BathymetryCmd
+      end
+
+      attribute 131074 "navigationDataSet"
+	private explicit_type "NavigationDataSet"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 131202 "bathymetryDBServices"
+	const_attribute private explicit_type "BathymetryDBServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 135042 "getInstance"
+	class_operation public return_type class_ref 130050 // BathymetryCmd
+	nparams 1
+	  param inout name "bathymetryDBServices" explicit_type "BathymetryDBServices"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 135170 "BathymetryCmd"
+	private explicit_return_type ""
+	nparams 1
+	  param inout name "bathymetryDBServices" explicit_type "BathymetryDBServices"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 135298 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 1
+	  param inout name "arg" explicit_type "NavigationData"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 135426 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 1
+	  param in name "arg" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 130178 "NavigationCmdComponentImpl"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "NaVisu
+
+@date 7 mai 2015
+@author Serge Morvan
+"
+      classrelation 130178 // <realization>
+	relation 130178 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130178 // <realization>
+	  b parent class_ref 129666 // NavigationCmdComponent
+      end
+
+      classrelation 130306 // <realization>
+	relation 130306 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130306 // <realization>
+	  b parent class_ref 129794 // NavigationCmdComponentServices
+      end
+
+      classrelation 130434 // <realization>
+	relation 130434 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130434 // <realization>
+	  b parent class_ref 128770 // ComponentState
+      end
+
+      classrelation 130562 // cameraComponentServices (<unidirectional association>)
+	relation 130562 --->
+	  a role_name "cameraComponentServices" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    java_annotation "@UsedService
+"
+	    classrelation_ref 130562 // cameraComponentServices (<unidirectional association>)
+	  b parent class_ref 128258 // CameraComponentServices
+      end
+
+      attribute 131330 "s57ChartComponentServices"
+	package explicit_type "S57ChartComponentServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@UsedService
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 131458 "gpsPlotterServices"
+	package explicit_type "GpsPlotterServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@UsedService
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 131586 "bathymetryDBServices"
+	package explicit_type "BathymetryDBServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@UsedService
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 131714 "geodesyServices"
+	package explicit_type "GeodesyServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@UsedService
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 131842 "layersManagerServices"
+	package explicit_type "LayersManagerServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@UsedService
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 131970 "shipAgentServices"
+	package explicit_type "ShipAgentServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@UsedService
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 130690 // cameraCmd (<unidirectional association>)
+	relation 130690 --->
+	  a role_name "cameraCmd" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 130690 // cameraCmd (<unidirectional association>)
+	  b parent class_ref 129026 // CameraCmd
+      end
+
+      classrelation 130818 // navigationCmdMap (<unidirectional association>)
+	relation 130818 --->
+	  stereotype "Map"
+	  a role_name "navigationCmdMap" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<String, ${type}> ${name}${value};
+"
+	    classrelation_ref 130818 // navigationCmdMap (<unidirectional association>)
+	  b parent class_ref 129154 // NavigationCmd
+      end
+
+      operation 135554 "NavigationCmdComponentImpl"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 135682 "componentInitiated"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 135810 "componentStarted"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 135938 "componentStopped"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 136066 "init"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 136194 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 2
+	  param in name "cmd" explicit_type "String"
+	  param inout name "navigationData" explicit_type "NavigationData"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 136322 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 2
+	  param in name "cmd" explicit_type "String"
+	  param in name "arg" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 136450 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 3
+	  param in name "cmd" explicit_type "String"
+	  param inout name "navigationData" explicit_type "NavigationData"
+	  param in name "arg" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 130306 "NaVigationDataSetCmd"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author serge
+@date Mar 11, 2016
+
+"
+      classrelation 130946 // <realization>
+	relation 130946 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130946 // <realization>
+	  b parent class_ref 129154 // NavigationCmd
+      end
+
+      classrelation 131074 // INSTANCE (<unidirectional association>)
+	relation 131074 --->
+	  a role_name "INSTANCE" class_relation private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 131074 // INSTANCE (<unidirectional association>)
+	  b parent class_ref 130306 // NaVigationDataSetCmd
+      end
+
+      attribute 132098 "REP"
+	const_attribute private explicit_type "String"
+	init_value " \"privateData/nds/\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 132226 "navigationDataSet"
+	private explicit_type "NavigationDataSet"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 136578 "getInstance"
+	class_operation public return_type class_ref 130306 // NaVigationDataSetCmd
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136706 "NaVigationDataSetCmd"
+	private explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136834 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 1
+	  param in name "arg" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 130434 "OwnerShipCmd"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author serge
+@date Mar 15, 2016
+
+"
+      classrelation 131202 // <realization>
+	relation 131202 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131202 // <realization>
+	  b parent class_ref 129154 // NavigationCmd
+      end
+
+      classrelation 131330 // INSTANCE (<unidirectional association>)
+	relation 131330 --->
+	  a role_name "INSTANCE" class_relation private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 131330 // INSTANCE (<unidirectional association>)
+	  b parent class_ref 130434 // OwnerShipCmd
+      end
+
+      attribute 132354 "navigationDataSet"
+	private explicit_type "NavigationDataSet"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 132482 "gpsPlotterServices"
+	const_attribute private explicit_type "GpsPlotterServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 136962 "getInstance"
+	class_operation public return_type class_ref 130434 // OwnerShipCmd
+	nparams 1
+	  param inout name "gpsPlotterServices" explicit_type "GpsPlotterServices"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137090 "OwnerShipCmd"
+	private explicit_return_type ""
+	nparams 1
+	  param inout name "gpsPlotterServices" explicit_type "GpsPlotterServices"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137218 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 1
+	  param in name "arg" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 130562 "ShipAgentCmd"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      java_annotation "@XmlRootElement(name = \"ShipAgentCmd\")
+@XmlAccessorType(XmlAccessType.FIELD)
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "NaVisu project
+
+@date Jan 22, 2019 10:09:20 AM
+@author Serge Morvan
+"
+      classrelation 131458 // <realization>
+	relation 131458 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131458 // <realization>
+	  b parent class_ref 129154 // NavigationCmd
+      end
+
+      attribute 132610 "shipAgentServices"
+	const_attribute private explicit_type "ShipAgentServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 132738 "GROUP_0"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"S57 charts\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 132866 "S57_LAYER"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"S57Stl\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 132994 "s57Layer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 133122 "navigationDataSet"
+	private explicit_type "NavigationDataSet"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 131586 // INSTANCE (<unidirectional association>)
+	relation 131586 --->
+	  a role_name "INSTANCE" class_relation private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 131586 // INSTANCE (<unidirectional association>)
+	  b parent class_ref 130562 // ShipAgentCmd
+      end
+
+      operation 137346 "getInstance"
+	class_operation public return_type class_ref 130562 // ShipAgentCmd
+	nparams 2
+	  param inout name "shipAgentServices" explicit_type "ShipAgentServices"
+	  param inout name "layersManagerServices" explicit_type "LayersManagerServices"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137474 "ShipAgentCmd"
+	private explicit_return_type ""
+	nparams 2
+	  param inout name "shipAgentServices" explicit_type "ShipAgentServices"
+	  param inout name "layersManagerServices" explicit_type "LayersManagerServices"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137602 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 1
+	  param inout name "arg" explicit_type "NavigationData"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 137730 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 2
+	  param inout name "arg0" explicit_type "NavigationData"
+	  param in name "arg1" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 130690 "TargetCmd"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      java_annotation "@XmlRootElement(name = \"TargetCmd\")
+@XmlAccessorType(XmlAccessType.FIELD)
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author serge
+@date Dec 8, 2017
+"
+      classrelation 131714 // <realization>
+	relation 131714 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131714 // <realization>
+	  b parent class_ref 129154 // NavigationCmd
+      end
+
+      classrelation 131842 // INSTANCE (<unidirectional association>)
+	relation 131842 --->
+	  a role_name "INSTANCE" class_relation private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 131842 // INSTANCE (<unidirectional association>)
+	  b parent class_ref 130690 // TargetCmd
+      end
+
+      attribute 133250 "navigationDataSet"
+	private explicit_type "NavigationDataSet"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 133378 "geodesyServices"
+	const_attribute private explicit_type "GeodesyServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 133506 "s57ChartComponentServices"
+	const_attribute private explicit_type "S57ChartComponentServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 133634 "s57Controllers"
+	private explicit_type "S57Controller"
+	stereotype "Set"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 133762 "NAME"
+	class_attribute const_attribute private explicit_type "String"
+	init_value " \"TargetCmd\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 133890 "GROUP"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"S57 charts\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 134018 "layer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 137858 "getInstance"
+	class_operation public return_type class_ref 130690 // TargetCmd
+	nparams 3
+	  param inout name "s57ChartComponentServices" explicit_type "S57ChartComponentServices"
+	  param inout name "geodesyServices" explicit_type "GeodesyServices"
+	  param inout name "layersManagerServices" explicit_type "LayersManagerServices"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137986 "TargetCmd"
+	private explicit_return_type ""
+	nparams 3
+	  param inout name "s57ChartComponentServices" explicit_type "S57ChartComponentServices"
+	  param inout name "geodesyServices" explicit_type "GeodesyServices"
+	  param inout name "layersManagerServices" explicit_type "LayersManagerServices"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138114 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 1
+	  param inout name "arg" explicit_type "NavigationData"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+      end
+
+      operation 138242 "getSuperClasses"
+	public explicit_return_type "List<Class>"
+	nparams 1
+	  param inout name "o" explicit_type "Object"
+	
+	preserve_java_body_indent final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138370 "viewTargets"
+	private explicit_return_type "void"
+	nparams 3
+	  param inout name "targets" explicit_type "List<Target>"
+	  param in name "lat" explicit_type "double"
+	  param in name "lon" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+  end
+
+  deploymentview 128770 "impl"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 129410 "BathymetryCmd"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Depth;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmd;
+import java.sql.Connection;
+import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+${definition}"
+      associated_elems
+	class_ref 130050 // BathymetryCmd
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 129538 "NavigationCmdComponentImpl"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.agents.ship.ShipAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
+import bzh.terrevirtuelle.navisu.extensions.camera.CameraComponentServices;
+import org.capcaval.c3.component.ComponentState;
+import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponent;
+import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
+import bzh.terrevirtuelle.navisu.extensions.camera.impl.controller.CameraCmd;
+import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmd;
+import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import java.util.HashMap;
+import java.util.Map;
+import org.capcaval.c3.component.annotation.UsedService;
+${definition}"
+      associated_elems
+	class_ref 130178 // NavigationCmdComponentImpl
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 129666 "NaVigationDataSetCmd"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmd;
+import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBException;
+${definition}"
+      associated_elems
+	class_ref 130306 // NaVigationDataSetCmd
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 129794 "OwnerShipCmd"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
+import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmd;
+${definition}"
+      associated_elems
+	class_ref 130434 // OwnerShipCmd
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 129922 "ShipAgentCmd"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.agents.ship.ShipAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmd;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+${definition}"
+      associated_elems
+	class_ref 130562 // ShipAgentCmd
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 130050 "TargetCmd"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.Target;
+import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmd;
+import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwindx.examples.util.DirectedPath;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+${definition}"
+      associated_elems
+	class_ref 130690 // TargetCmd
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+  end
+end

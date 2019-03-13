@@ -1,0 +1,15 @@
+class CameraComponentImpl
+!!!128642.java!!!	componentInitiated() : void
+        controller = CameraComponentController.getInstance();
+        controller.setS57ChartComponentServices(s57ChartComponentServices);
+        
+!!!129026.java!!!	canOpen(in category : String) : boolean
+        return category.equals(KEY_NAME);
+!!!129154.java!!!	getDriver() : InstrumentDriver
+        return this;
+!!!129282.java!!!	on(inout  : String...files) : void
+        controller.subscribe();
+!!!129410.java!!!	off() : void
+        controller.unsubscribe();
+!!!129538.java!!!	updateTarget(inout camera : Camera) : NavigationDataSet
+        return controller.updateTarget(camera);

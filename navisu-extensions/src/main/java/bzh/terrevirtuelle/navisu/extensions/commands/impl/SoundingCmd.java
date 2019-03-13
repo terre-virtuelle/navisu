@@ -6,11 +6,13 @@
 package bzh.terrevirtuelle.navisu.extensions.commands.impl;
 
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.SoundgDBLoader;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Depth;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Sounding;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmd;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,9 +24,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author serge
  * @date Dec 7, 2017
  */
-@XmlRootElement(name = "BathymetryCmd")
+@XmlRootElement(name = "SoundingCmd")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class BathymetryCmd
+public class SoundingCmd
         implements NavigationCmd {
 
     private final String HOST = "localhost";
@@ -33,44 +35,49 @@ public class BathymetryCmd
     private final String DRIVER = "org.postgresql.Driver";
     private final String USER = "admin";
     private final String PASSWD = "admin";
-    protected Connection bathyConnection;
-    private static BathymetryCmd INSTANCE;
-    private NavigationDataSet navigationDataSet;
-    private final BathymetryDBServices bathymetryDBServices;
+    protected Connection connection;
 
-    public static BathymetryCmd getInstance(BathymetryDBServices bathymetryDBServices) {
+    private static SoundingCmd INSTANCE;
+
+    private NavigationDataSet navigationDataSet;
+
+    private final BathymetryDBServices bathymetryDBServices;
+    protected TopologyServices topologyServices;
+
+    SoundgDBLoader soundgDBLoader;
+
+    public static SoundingCmd getInstance(BathymetryDBServices bathymetryDBServices, TopologyServices topologyServices) {
         if (INSTANCE == null) {
-            INSTANCE = new BathymetryCmd(bathymetryDBServices);
+            INSTANCE = new SoundingCmd(bathymetryDBServices, topologyServices);
         }
         return INSTANCE;
     }
 
-    private BathymetryCmd(BathymetryDBServices bathymetryDBServices) {
+    private SoundingCmd(BathymetryDBServices bathymetryDBServices, TopologyServices topologyServices) {
         this.bathymetryDBServices = bathymetryDBServices;
+        this.topologyServices = topologyServices;
     }
 
     @Override
     public NavigationDataSet doIt(NavigationData arg) {
-
         Depth depth = (Depth) arg;
         double lat = depth.getLatitude();
         double lon = depth.getLongitude();
-        System.out.println("depth : " + depth);
         navigationDataSet = new NavigationDataSet();
-        
-        List<Point3D> points = bathymetryDBServices.retrieveIn(bathyConnection, "bathy", lat, lon, lat + 0.0015, lon + 0.0015);
-       // System.out.println("points : " + points);
+
+        List<Sounding> points = soundgDBLoader.retrieveObjectsIn(lat, lon, lat + 0.005, lon + 0.005);
         points.forEach((p) -> {
-            navigationDataSet.add(p);
+            navigationDataSet.add(new Depth(p.getLatitude(), p.getLongitude(), p.getDepth()));
         });
-         
         return navigationDataSet;
     }
 
     @Override
     public NavigationDataSet doIt(String arg) {
-        bathyConnection = bathymetryDBServices.connect(arg, HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        navigationDataSet = new NavigationDataSet();
-        return navigationDataSet;
+        connection = bathymetryDBServices.connect(arg, HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
+        if (connection != null) {
+            soundgDBLoader = new SoundgDBLoader(topologyServices, connection);
+        }
+        return new NavigationDataSet();
     }
 }

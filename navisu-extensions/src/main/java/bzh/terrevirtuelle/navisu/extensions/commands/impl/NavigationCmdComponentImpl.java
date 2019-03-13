@@ -19,6 +19,7 @@ import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServi
 import bzh.terrevirtuelle.navisu.extensions.camera.impl.controller.CameraCmd;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmd;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.util.HashMap;
 import java.util.Map;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -46,7 +47,9 @@ public class NavigationCmdComponentImpl
     LayersManagerServices layersManagerServices;
     @UsedService
     ShipAgentServices shipAgentServices;
-    
+    @UsedService
+    TopologyServices topologyServices;
+
     private CameraCmd cameraCmd;
 
     private Map<String, NavigationCmd> navigationCmdMap;
@@ -75,11 +78,11 @@ public class NavigationCmdComponentImpl
         cameraCmd.setCameraComponentServices(cameraComponentServices);
         navigationCmdMap.put("CameraCmd", cameraCmd);
         navigationCmdMap.put("BathymetryCmd", BathymetryCmd.getInstance(bathymetryDBServices));
-        navigationCmdMap.put("TargetCmd", TargetCmd.getInstance(s57ChartComponentServices,
-                geodesyServices, layersManagerServices));
+        navigationCmdMap.put("TargetCmd", TargetCmd.getInstance(s57ChartComponentServices, geodesyServices, layersManagerServices));
         navigationCmdMap.put("NaVigationDataSetCmd", NaVigationDataSetCmd.getInstance());
         navigationCmdMap.put("OwnerShipCmd", OwnerShipCmd.getInstance(gpsPlotterServices));
-        navigationCmdMap.put("ShipAgentCmd", ShipAgentCmd.getInstance(shipAgentServices,layersManagerServices));
+        navigationCmdMap.put("ShipAgentCmd", ShipAgentCmd.getInstance(shipAgentServices, layersManagerServices));
+        navigationCmdMap.put("SoundingCmd", SoundingCmd.getInstance(bathymetryDBServices, topologyServices));
     }
 
     @Override
@@ -99,6 +102,7 @@ public class NavigationCmdComponentImpl
         }
         return new NavigationDataSet();
     }
+
     @Override
     public NavigationDataSet doIt(String cmd, NavigationData navigationData, String arg) {
         NavigationCmd tmp = navigationCmdMap.get(cmd.trim());

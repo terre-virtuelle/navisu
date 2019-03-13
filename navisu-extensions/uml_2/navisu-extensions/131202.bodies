@@ -1,89 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package bzh.terrevirtuelle.navisu.extensions.server.impl.controller;
-
-import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.extensions.commands.Command;
-import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
-import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.bind.JAXBException;
-import org.vertx.java.core.Vertx;
-import org.vertx.java.core.VertxFactory;
-import org.vertx.java.core.buffer.Buffer;
-import org.vertx.java.core.http.HttpServerRequest;
-import org.vertx.java.core.http.ServerWebSocket;
-
-/**
- *
- * @author serge
- * @date Jan 14, 2016
- *
- */
-public class NavigationServerController {
-
-    protected static final Logger LOGGER = Logger.getLogger(NavigationServerController.class.getName());
-    private static NavigationServerController INSTANCE;
-    private NavigationCmdComponentServices navigationCmdComponentServices;
-    private NavigationDataSet navigationDataSet;
-
-    private Properties properties;
-    private final String PROPERTIES_NAME = "properties/navigation.properties";
-    private final String START_CMD = "/navigation";
-    private final String HTML_RESPONSE = "data/html/response.html";
-    private final String HTML_RESPONSE_CMD = "/";
-
-    private Vertx cmdVertx;
-    private int port;
-    private Command command;
-
-    private NavigationServerController(NavigationCmdComponentServices navigationCmdComponentServices) {
+class NavigationServerController
+!!!140162.java!!!	NavigationServerController(inout navigationCmdComponentServices : NavigationCmdComponentServices)
         this.navigationCmdComponentServices = navigationCmdComponentServices;
         initProperties();
-    }
-
-    public static NavigationServerController getInstance(
-            NavigationCmdComponentServices navigationCmdComponentServices) {
+!!!140290.java!!!	getInstance(inout navigationCmdComponentServices : NavigationCmdComponentServices) : NavigationServerController
         if (INSTANCE == null) {
             INSTANCE = new NavigationServerController(navigationCmdComponentServices);
         }
         return INSTANCE;
-    }
-
-    public void init() {
+!!!140418.java!!!	init() : void
         this.port = new Integer(properties.getProperty("port").trim());
         initServer();
-    }
-
-    public void init(int port) {
+!!!140546.java!!!	init(in port : int) : void
         this.port = port;
         initServer();
-    }
-
-    private void initProperties() {
+!!!140674.java!!!	initProperties() : void
         properties = new Properties();
         try {
             properties.load(new FileInputStream(PROPERTIES_NAME));
         } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            LOGGER.log(Level.SEVERE, null, ex);
         }
-    }
-
-    private void initServer() {
+!!!140802.java!!!	initServer() : void
         cmdVertx = VertxFactory.newVertx();
         try {
             cmdVertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
@@ -123,9 +60,7 @@ public class NavigationServerController {
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-    }
-
-    private Command command(String data) {
+!!!140930.java!!!	command(in data : String) : Command
         Command navCmd = null;
         try {
             navCmd = new Command();
@@ -134,22 +69,16 @@ public class NavigationServerController {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         return navCmd;
-    }
-
-    private String response(NavigationDataSet response) {
+!!!141058.java!!!	response(inout response : NavigationDataSet) : String
         StringWriter xmlString = new StringWriter();
         try {
             ImportExportXML.exports(response, xmlString);
         } catch (JAXBException ex) {
+            System.out.println("ex " + ex);
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
 
         //TODO
         return xmlString.toString();
-    }
-
-    public void setNavigationCmdComponentServices(NavigationCmdComponentServices navigationCmdComponentServices) {
+!!!141186.java!!!	setNavigationCmdComponentServices(inout navigationCmdComponentServices : NavigationCmdComponentServices) : void
         this.navigationCmdComponentServices = navigationCmdComponentServices;
-    }
-
-}

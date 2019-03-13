@@ -1,0 +1,193 @@
+format 221
+"server" // bzh::terrevirtuelle::navisu::extensions::server
+  revision 1
+  modified_by 2 "serge"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  java_dir "/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-extensions/src/main/java/bzh/terrevirtuelle/navisu/extensions/server/"
+  java_package "bzh.terrevirtuelle.navisu.extensions.server"
+  classview 129026 "server"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    class 130818 "NavigationServer"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author Serge
+"
+      classrelation 131970 // <generalisation>
+	relation 131970 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131970 // <generalisation>
+	  b parent class_ref 128130 // Component
+      end
+    end
+
+    class 130946 "NavigationServerServices"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author Serge
+"
+      classrelation 132098 // <generalisation>
+	relation 132098 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 132098 // <generalisation>
+	  b parent class_ref 128386 // ComponentService
+      end
+
+      operation 138498 "canOpen"
+	public explicit_return_type "boolean"
+	nparams 1
+	  param in name "category" explicit_type "String"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138626 "getDriver"
+	public explicit_return_type "InstrumentDriver"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138754 "init"
+	public explicit_return_type "void"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138882 "init"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "port" explicit_type "int"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+  end
+
+  deploymentview 128898 "server"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 130178 "NavigationServer"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import org.capcaval.c3.component.Component;
+${definition}"
+      associated_elems
+	class_ref 130818 // NavigationServer
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 130306 "NavigationServerServices"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import org.capcaval.c3.component.ComponentService;
+${definition}"
+      associated_elems
+	class_ref 130946 // NavigationServerServices
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+  end
+
+  package_ref 129666 // impl
+end

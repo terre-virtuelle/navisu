@@ -1,0 +1,62 @@
+format 221
+"bzh" // bzh
+  revision 2
+  modified_by 2 "serge"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  java_dir "/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-extensions/src/main/java/bzh/"
+  java_package "bzh"
+  package_ref 128130 // terrevirtuelle
+
+  classview 129410 "extensions"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 128002 "extensions"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+  end
+end

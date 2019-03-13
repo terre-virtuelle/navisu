@@ -1,0 +1,25 @@
+class NavigationServerImpl
+!!!139010.java!!!	componentInitiated() : void
+
+!!!139138.java!!!	init() : void
+        controller = NavigationServerController.getInstance(navigationCmdComponentServices);
+        controller.init();
+!!!139266.java!!!	init(in port : int) : void
+        controller = NavigationServerController.getInstance(navigationCmdComponentServices);
+        controller.init(port);
+!!!139522.java!!!	componentStopped() : void
+
+!!!139650.java!!!	on(inout  : String...files) : void
+        String[] cmd = files;
+        if (cmd != null) {
+            if (cmd[0].equals(KEY_NAME)) {
+                init(PORT);
+            }
+        }
+!!!139778.java!!!	off() : void
+//TODO
+        
+!!!139906.java!!!	canOpen(in category : String) : boolean
+        return category.equals(KEY_NAME);
+!!!140034.java!!!	getDriver() : InstrumentDriver
+        return this;

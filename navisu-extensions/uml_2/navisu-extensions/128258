@@ -1,0 +1,36 @@
+format 221
+"navisu" // bzh::terrevirtuelle::navisu
+  revision 1
+  modified_by 2 "serge"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  java_dir "/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-extensions/src/main/java/bzh/terrevirtuelle/navisu/"
+  java_package "bzh.terrevirtuelle.navisu"
+  package_ref 128386 // extensions
+end

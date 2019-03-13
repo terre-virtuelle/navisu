@@ -16,7 +16,6 @@ import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.controller.NavigationServerController;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import java.util.logging.Logger;
-import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -41,6 +40,8 @@ public class NavigationServerImpl
     DatabaseDriverManagerServices databaseDriverManagerServices;
 
     private final String KEY_NAME = "NavigationServer";
+    private static final int PORT = 9090;
+    
     private NavigationServerController controller;
     protected static final Logger LOGGER = Logger.getLogger(NavigationServerImpl.class.getName());
 
@@ -51,23 +52,13 @@ public class NavigationServerImpl
 
     @Override
     public void init() {
-        controller = NavigationServerController.getInstance(guiAgentServices,
-                driverManagerServices,
-                webDriverManagerServices,
-                instrumentDriverManagerServices,
-                databaseDriverManagerServices,
-                navigationCmdComponentServices);
+        controller = NavigationServerController.getInstance(navigationCmdComponentServices);
         controller.init();
     }
 
     @Override
     public void init(int port) {
-        controller = NavigationServerController.getInstance(guiAgentServices,
-                driverManagerServices,
-                webDriverManagerServices,
-                instrumentDriverManagerServices,
-                databaseDriverManagerServices,
-                navigationCmdComponentServices);
+        controller = NavigationServerController.getInstance(navigationCmdComponentServices);
         controller.init(port);
     }
 
@@ -85,7 +76,7 @@ public class NavigationServerImpl
         String[] cmd = files;
         if (cmd != null) {
             if (cmd[0].equals(KEY_NAME)) {
-                init(9090);
+                init(PORT);
             }
         }
     }

@@ -1,0 +1,32 @@
+class NavigationCmdComponentImpl
+!!!135682.java!!!	componentInitiated() : void
+
+!!!136066.java!!!	init() : void
+        navigationCmdMap = new HashMap<>();
+
+        cameraCmd = CameraCmd.getInstance();
+        cameraCmd.setCameraComponentServices(cameraComponentServices);
+        navigationCmdMap.put("CameraCmd", cameraCmd);
+        navigationCmdMap.put("BathymetryCmd", BathymetryCmd.getInstance(bathymetryDBServices));
+        navigationCmdMap.put("TargetCmd", TargetCmd.getInstance(s57ChartComponentServices, geodesyServices, layersManagerServices));
+        navigationCmdMap.put("NaVigationDataSetCmd", NaVigationDataSetCmd.getInstance());
+        navigationCmdMap.put("OwnerShipCmd", OwnerShipCmd.getInstance(gpsPlotterServices));
+        navigationCmdMap.put("ShipAgentCmd", ShipAgentCmd.getInstance(shipAgentServices, layersManagerServices));
+!!!136194.java!!!	doIt(in cmd : String, inout navigationData : NavigationData) : NavigationDataSet
+        NavigationCmd tmp = navigationCmdMap.get(cmd.trim());
+        if (tmp != null) {
+            return tmp.doIt(navigationData);
+        }
+        return new NavigationDataSet();
+!!!136322.java!!!	doIt(in cmd : String, in arg : String) : NavigationDataSet
+        NavigationCmd tmp = navigationCmdMap.get(cmd.trim());
+        if (tmp != null) {
+            return tmp.doIt(arg);
+        }
+        return new NavigationDataSet();
+!!!136450.java!!!	doIt(in cmd : String, inout navigationData : NavigationData, in arg : String) : NavigationDataSet
+        NavigationCmd tmp = navigationCmdMap.get(cmd.trim());
+        if (tmp != null) {
+            return tmp.doIt(navigationData, arg);
+        }
+        return new NavigationDataSet();

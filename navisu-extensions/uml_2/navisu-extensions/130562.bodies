@@ -1,0 +1,19 @@
+class ShipAgentCmd
+!!!137346.java!!!	getInstance(inout shipAgentServices : ShipAgentServices, inout layersManagerServices : LayersManagerServices) : ShipAgentCmd
+        if (INSTANCE == null) {
+            INSTANCE = new ShipAgentCmd(shipAgentServices, layersManagerServices);
+        }
+        return INSTANCE;
+!!!137474.java!!!	ShipAgentCmd(inout shipAgentServices : ShipAgentServices, inout layersManagerServices : LayersManagerServices)
+        this.shipAgentServices = shipAgentServices;
+        s57Layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
+!!!137602.java!!!	doIt(inout arg : NavigationData) : NavigationDataSet
+        Ship ship = (Ship) arg;
+        navigationDataSet = new NavigationDataSet();
+        shipAgentServices.setPosition(ship.getLatitude(),ship.getLongitude());
+        shipAgentServices.setHeading(ship.getHeading());
+        navigationDataSet.add(ship);
+        return navigationDataSet;
+!!!137730.java!!!	doIt(inout arg0 : NavigationData, in arg1 : String) : NavigationDataSet
+        shipAgentServices.init((Ship)arg0, s57Layer, arg1);
+        return new NavigationDataSet();

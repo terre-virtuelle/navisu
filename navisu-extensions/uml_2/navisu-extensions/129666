@@ -1,0 +1,396 @@
+format 221
+"impl" // bzh::terrevirtuelle::navisu::extensions::server::impl
+  revision 1
+  modified_by 2 "serge"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  java_dir "/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-extensions/src/main/java/bzh/terrevirtuelle/navisu/extensions/server/impl/"
+  java_package "bzh.terrevirtuelle.navisu.extensions.server.impl"
+  classview 129154 "impl"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    class 131074 "NavigationServerImpl"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author Serge
+"
+      classrelation 132226 // <realization>
+	relation 132226 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 132226 // <realization>
+	  b parent class_ref 130818 // NavigationServer
+      end
+
+      classrelation 132354 // <realization>
+	relation 132354 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 132354 // <realization>
+	  b parent class_ref 130946 // NavigationServerServices
+      end
+
+      classrelation 132482 // <realization>
+	relation 132482 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 132482 // <realization>
+	  b parent class_ref 128642 // InstrumentDriver
+      end
+
+      classrelation 132610 // <realization>
+	relation 132610 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 132610 // <realization>
+	  b parent class_ref 128770 // ComponentState
+      end
+
+      classrelation 132738 // navigationCmdComponentServices (<unidirectional association>)
+	relation 132738 --->
+	  a role_name "navigationCmdComponentServices" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    java_annotation "@UsedService
+"
+	    classrelation_ref 132738 // navigationCmdComponentServices (<unidirectional association>)
+	  b parent class_ref 129794 // NavigationCmdComponentServices
+      end
+
+      attribute 134146 "guiAgentServices"
+	package explicit_type "GuiAgentServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@UsedService
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 134274 "driverManagerServices"
+	package explicit_type "DriverManagerServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@UsedService
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 134402 "webDriverManagerServices"
+	package explicit_type "WebDriverManagerServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@UsedService
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 134530 "instrumentDriverManagerServices"
+	package explicit_type "InstrumentDriverManagerServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@UsedService
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 134658 "databaseDriverManagerServices"
+	package explicit_type "DatabaseDriverManagerServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@UsedService
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 134786 "KEY_NAME"
+	const_attribute private explicit_type "String"
+	init_value " \"NavigationServer\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 134914 "PORT"
+	class_attribute const_attribute private explicit_type "int"
+	init_value " 9090"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 132866 // controller (<unidirectional association>)
+	relation 132866 --->
+	  a role_name "controller" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 132866 // controller (<unidirectional association>)
+	  b parent class_ref 131202 // NavigationServerController
+      end
+
+      attribute 135042 "LOGGER"
+	class_attribute const_attribute protected explicit_type "Logger"
+	init_value " Logger.getLogger(NavigationServerImpl.class.getName())"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 139010 "componentInitiated"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 139138 "init"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 139266 "init"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "port" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 139394 "componentStarted"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 139522 "componentStopped"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 139650 "on"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "" explicit_type "String...files"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 139778 "off"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 139906 "canOpen"
+	public explicit_return_type "boolean"
+	nparams 1
+	  param in name "category" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 140034 "getDriver"
+	public explicit_return_type "InstrumentDriver"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+  end
+
+  package_ref 129794 // controller
+
+  deploymentview 129026 "impl"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 130434 "NavigationServerImpl"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.extensions.server.NavigationServer;
+import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
+import bzh.terrevirtuelle.navisu.extensions.server.impl.controller.NavigationServerController;
+import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
+import java.util.logging.Logger;
+import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.UsedService;
+${definition}"
+      associated_elems
+	class_ref 131074 // NavigationServerImpl
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+  end
+end

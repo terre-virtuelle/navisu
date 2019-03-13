@@ -1,0 +1,529 @@
+format 221
+"commands" // bzh::terrevirtuelle::navisu::extensions::commands
+  revision 1
+  modified_by 2 "serge"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  java_dir "/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-extensions/src/main/java/bzh/terrevirtuelle/navisu/extensions/commands/"
+  java_package "bzh.terrevirtuelle.navisu.extensions.commands"
+  classview 128514 "commands"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    class 129154 "NavigationCmd"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author serge
+"
+      operation 129666 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 1
+	  param inout name "arg" explicit_type "NavigationData"
+	
+	preserve_java_body_indent default java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129794 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 1
+	  param in name "arg" explicit_type "String"
+	
+	preserve_java_body_indent default java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129922 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 2
+	  param inout name "arg0" explicit_type "NavigationData"
+	  param in name "arg1" explicit_type "String"
+	
+	preserve_java_body_indent default java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129538 "Command"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      java_annotation "@XmlType(name = \"command\", propOrder = {
+    \"cmd\",
+    \"navigationData\",
+    \"arg\"
+})
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author serge
+"
+      attribute 129794 "cmd"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129922 "navigationData"
+	private explicit_type "NavigationData"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@XmlElements({
+        @XmlElement(name = \"bcncar\", type = BeaconCardinal.class),
+        @XmlElement(name = \"bcnisd\", type = BeaconIsolatedDanger.class),
+        @XmlElement(name = \"bcnlat\", type = BeaconLateral.class),
+        @XmlElement(name = \"bcnsaw\", type = BeaconSafeWater.class),
+        @XmlElement(name = \"bcnspp\", type = BeaconSpecialPurpose.class),
+        @XmlElement(name = \"buoycar\", type = BuoyCardinal.class),
+        @XmlElement(name = \"buoyinb\", type = BuoyInstallation.class),
+        @XmlElement(name = \"buoyisd\", type = BuoyIsolatedDanger.class),
+        @XmlElement(name = \"buoylat\", type = BuoyLateral.class),
+        @XmlElement(name = \"buoysaw\", type = BuoySafeWater.class),
+        @XmlElement(name = \"buoyssp\", type = BuoySpecialPurpose.class),
+        @XmlElement(name = \"morfac\", type = MooringWarpingFacility.class),
+        @XmlElement(name = \"lndmrk\", type = Landmark.class),
+        @XmlElement(name = \"ship\", type = Ship.class),
+        @XmlElement(name = \"sailingDirections\", type = SailingDirections.class),
+        @XmlElement(name = \"s57Chart\", type = S57Chart.class),
+        @XmlElement(name = \"gpx\", type = Gpx.class),
+        @XmlElement(name = \"camera\", type = Camera.class),
+        @XmlElement(name = \"depth\", type = Depth.class),
+        @XmlElement(name = \"target\", type = Target.class)
+    })
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130050 "arg"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 132994 "Command"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133122 "Command"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "cmd" explicit_type "String"
+	  param inout name "navigationData" explicit_type "NavigationData"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133250 "Command"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "cmd" explicit_type "String"
+	  param in name "arg" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133378 "getCmd"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133506 "setCmd"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "cmd" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133634 "getNavigationData"
+	public explicit_return_type "NavigationData"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133762 "setNavigationData"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "navigationData" explicit_type "NavigationData"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133890 "getArg"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 134018 "setArg"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "arg" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 134146 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 129666 "NavigationCmdComponent"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author Serge
+"
+      classrelation 129666 // <generalisation>
+	relation 129666 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129666 // <generalisation>
+	  b parent class_ref 128130 // Component
+      end
+    end
+
+    class 129794 "NavigationCmdComponentServices"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author Serge
+"
+      classrelation 129794 // <generalisation>
+	relation 129794 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129794 // <generalisation>
+	  b parent class_ref 128386 // ComponentService
+      end
+
+      operation 134274 "init"
+	public explicit_return_type "void"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 134402 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 2
+	  param in name "cmd" explicit_type "String"
+	  param inout name "navigationData" explicit_type "NavigationData"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 134530 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 3
+	  param in name "cmd" explicit_type "String"
+	  param inout name "navigationData" explicit_type "NavigationData"
+	  param in name "arg" explicit_type "String"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 134658 "doIt"
+	public explicit_return_type "NavigationDataSet"
+	nparams 2
+	  param in name "cmd" explicit_type "String"
+	  param in name "arg" explicit_type "String"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+  end
+
+  deploymentview 128258 "commands"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 128386 "NavigationCmd"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+${definition}"
+      associated_elems
+	class_ref 129154 // NavigationCmd
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 128898 "Command"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Depth;
+import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconSafeWater;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconSpecialPurpose;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyCardinal;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyInstallation;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyIsolatedDanger;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyLateral;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySafeWater;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialPurpose;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
+import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.Target;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+${definition}"
+      associated_elems
+	class_ref 129538 // Command
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 129026 "NavigationCmdComponent"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import org.capcaval.c3.component.Component;
+${definition}"
+      associated_elems
+	class_ref 129666 // NavigationCmdComponent
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 129154 "NavigationCmdComponentServices"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import org.capcaval.c3.component.ComponentService;
+${definition}"
+      associated_elems
+	class_ref 129794 // NavigationCmdComponentServices
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+  end
+
+  package_ref 129282 // app
+
+  package_ref 129410 // impl
+end

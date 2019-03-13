@@ -1,0 +1,27 @@
+class SoundingCmd
+!!!147714.java!!!	getInstance(inout bathymetryDBServices : BathymetryDBServices, inout topologyServices : TopologyServices) : SoundingCmd
+        if (INSTANCE == null) {
+            INSTANCE = new SoundingCmd(bathymetryDBServices, topologyServices);
+        }
+        return INSTANCE;
+!!!147842.java!!!	SoundingCmd(inout bathymetryDBServices : BathymetryDBServices, inout topologyServices : TopologyServices)
+        this.bathymetryDBServices = bathymetryDBServices;
+        this.topologyServices = topologyServices;
+!!!147970.java!!!	doIt(inout arg : NavigationData) : NavigationDataSet
+        Depth depth = (Depth) arg;
+        double lat = depth.getLatitude();
+        double lon = depth.getLongitude();
+        navigationDataSet = new NavigationDataSet();
+
+        List<Sounding> points = soundgDBLoader.retrieveObjectsIn(lat, lon, lat + 0.005, lon + 0.005);
+        points.forEach((p) -> {
+            System.out.println("p : " + p.getDepth());
+            navigationDataSet.add(new Depth(p.getLatitude(), p.getLongitude(), p.getDepth()));
+        });
+        return navigationDataSet;
+!!!148098.java!!!	doIt(in arg : String) : NavigationDataSet
+        connection = bathymetryDBServices.connect(arg, HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
+        if (connection != null) {
+            soundgDBLoader = new SoundgDBLoader(topologyServices, connection);
+        }
+        return new NavigationDataSet();

@@ -1,0 +1,7 @@
+class NavigationCmd
+!!!129666.java!!!	doIt(inout arg : NavigationData) : NavigationDataSet
+        return null;
+!!!129794.java!!!	doIt(in arg : String) : NavigationDataSet
+        return null;
+!!!129922.java!!!	doIt(inout arg0 : NavigationData, in arg1 : String) : NavigationDataSet
+        return null;

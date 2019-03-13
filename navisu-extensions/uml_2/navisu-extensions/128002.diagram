@@ -1,0 +1,124 @@
+format 221
+
+classcanvas 128130 class_ref 130050 // BathymetryCmd
+  classdiagramsettings member_max_width 0 end
+  xyz 38 44 3005
+end
+classcanvas 129154 class_ref 129154 // NavigationCmd
+  classdiagramsettings hide_operations no show_members_full_definition yes show_members_stereotype yes show_members_initialization yes member_max_width 0 show_parameter_name yes end
+  visible_operations
+    operation_ref 129666 // doIt
+    operation_ref 129794 // doIt
+    operation_ref 129922 // doIt
+  xyz 223 65 3011
+end
+classcanvas 129538 class_ref 130562 // ShipAgentCmd
+  classdiagramsettings member_max_width 0 end
+  xyz 698 15 3017
+end
+classcanvas 130178 class_ref 130690 // TargetCmd
+  classdiagramsettings member_max_width 0 end
+  xyz 253 526 3022
+end
+classcanvas 130818 class_ref 130434 // OwnerShipCmd
+  classdiagramsettings member_max_width 0 end
+  xyz 675 290 3027
+end
+classcanvas 131458 class_ref 129026 // CameraCmd
+  classdiagramsettings member_max_width 0 end
+  xyz 598 504 3034
+end
+classcanvas 132098 class_ref 130306 // NaVigationDataSetCmd
+  classdiagramsettings member_max_width 0 end
+  xyz 526 721 3027
+end
+classcanvas 132738 class_ref 137730 // SoundingCmd
+  classdiagramsettings member_max_width 0 end
+  xyz 36 425 3017
+end
+relationcanvas 128258 relation_ref 130050 // <unidirectional association>
+  from ref 128130 z 3006 to point 28 72
+  line 133378 z 3006 to point 8 44
+  line 128386 z 3006 to point 8 74
+  line 128514 z 3006 to ref 128130
+  role_a_pos 39 83 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 129922 // <realization>
+  from ref 128130 z 3012 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 131458 // <realization>
+  from ref 129538 z 3018 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 131586 // <unidirectional association>
+  from ref 129538 z 3018 to point 668 15
+  line 129922 z 3018 to point 668 45
+  line 130050 z 3018 to ref 129538
+  role_a_pos 614 53 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 131714 // <realization>
+  from ref 130178 z 3023 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 131842 // <unidirectional association>
+  from ref 130178 z 3023 to point 223 526
+  line 130562 z 3023 to point 223 556
+  line 130690 z 3023 to ref 130178
+  role_a_pos 169 566 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130946 relation_ref 131202 // <realization>
+  from ref 130818 z 3028 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131074 relation_ref 131330 // <unidirectional association>
+  from ref 130818 z 3028 to point 645 290
+  line 131202 z 3028 to point 645 320
+  line 131330 z 3028 to ref 130818
+  role_a_pos 591 309 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131586 relation_ref 128898 // <realization>
+  from ref 131458 z 3035 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131714 relation_ref 129154 // <unidirectional association>
+  from ref 131458 z 3035 to point 568 504
+  line 131842 z 3035 to point 568 534
+  line 131970 z 3035 to ref 131458
+  role_a_pos 514 515 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132226 relation_ref 130946 // <realization>
+  from ref 132098 z 3028 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132354 relation_ref 131074 // <unidirectional association>
+  from ref 132098 z 3028 to point 496 721
+  line 132482 z 3028 to point 496 751
+  line 132610 z 3028 to ref 132098
+  role_a_pos 442 737 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132866 relation_ref 139778 // <realization>
+  from ref 132738 z 3018 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132994 relation_ref 139906 // <unidirectional association>
+  from ref 132738 z 3018 to point 6 425
+  line 133122 z 3018 to point 6 455
+  line 133250 z 3018 to ref 132738
+  role_a_pos 38 470 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end
