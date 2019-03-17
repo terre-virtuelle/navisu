@@ -9,7 +9,7 @@ import bzh.terrevirtuelle.navisu.api.progress.Job;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.stl.charts.impl.loader.dem.DemSrtmElevationLoader;
@@ -66,12 +66,12 @@ public class DaeExportToSTL {
 
     public void loadKmzAndSaveStlWgs84() {
         File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl", "Georeferenced STL files (*.stl)", "*.STL", "*.stl");
-        Point3D point = parseDocKmlFile(file);
+        Point3DGeo point = parseDocKmlFile(file);
         // daeLocationObjectMap.put(new Point3D(point.getLatitude(), point.getLongitude(), point.getElevation()), file.getAbsolutePath());
         toGeographicWGS84CoordAndSave(file, point);
     }
 
-    public void toGeographicWGS84CoordAndSave(File file, Point3D point) {
+    public void toGeographicWGS84CoordAndSave(File file, Point3DGeo point) {
         guiAgentServices.getJobsManager().newJob("Load KMZ objects", new Job() {
 
             @Override
@@ -140,8 +140,8 @@ public class DaeExportToSTL {
     }
 
     
-    private Point3D parseDocKmlFile(File file) {
-        Point3D point = null;
+    private Point3DGeo parseDocKmlFile(File file) {
+        Point3DGeo point = null;
         try {
             String latString = "";
             String lonString = "";

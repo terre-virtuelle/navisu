@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE_INV;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class BuoyageExportToSTL {
     protected double latScale;
     protected double lonScale;
 
-    public BuoyageExportToSTL(GeodesyServices geodesyServices, Point3D[][] gb,
+    public BuoyageExportToSTL(GeodesyServices geodesyServices, Point3DGeo[][] gb,
             String stlFilename,
             double latScale, double lonScale) {
         this.stlFilename = stlFilename;

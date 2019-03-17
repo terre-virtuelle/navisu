@@ -9,7 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.dem.db.impl.DemDBImpl;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Point_dt;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
@@ -54,13 +54,13 @@ public class DemDBComponentController {
     GuiAgentServices guiAgentServices;
     protected WorldWindow wwd;
     boolean first = true;
-    List<Point3D> points;
+    List<Point3DGeo> points;
     private Connection connection;
     private String dataFileName;
     private PreparedStatement preparedStatement;
     private Statement statement;
     private List<Point3Df> points3df;
-    private List<Point3D> points3d;
+    private List<Point3DGeo> points3d;
     protected RenderableLayer layer;
     protected static final String GROUP = "Bathymetry data";
     double longitude;
@@ -206,8 +206,8 @@ public class DemDBComponentController {
         });
     }
 
-    public List<Point3D> retrieveAll() {
-        List<Point3D> tmp1 = new ArrayList<>();
+    public List<Point3DGeo> retrieveAll() {
+        List<Point3DGeo> tmp1 = new ArrayList<>();
         //  guiAgentServices.getJobsManager().newJob("retrieveAll", (progressHandle) -> {
         PGgeometry geom;
         double depth;
@@ -217,7 +217,7 @@ public class DemDBComponentController {
                 geom = (PGgeometry) r.getObject(2);
                 depth = r.getFloat(3);
                 if (depth >= MIN_DEPTH) {
-                    Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
+                    Point3DGeo pt = new Point3DGeo(geom.getGeometry().getFirstPoint().getX(),
                             geom.getGeometry().getFirstPoint().getY(),
                             depth);
                     tmp1.add(pt);
@@ -230,8 +230,8 @@ public class DemDBComponentController {
         return tmp1;
     }
 
-    public List<Point3D> retrieveAll(Connection connect) {
-        List<Point3D> tmp1 = new ArrayList<>();
+    public List<Point3DGeo> retrieveAll(Connection connect) {
+        List<Point3DGeo> tmp1 = new ArrayList<>();
         //  guiAgentServices.getJobsManager().newJob("retrieveAll", (progressHandle) -> {
         PGgeometry geom;
         double depth;
@@ -241,7 +241,7 @@ public class DemDBComponentController {
                 geom = (PGgeometry) r.getObject(2);
                 depth = r.getFloat(3);
                 if (depth >= MIN_DEPTH) {
-                    Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
+                    Point3DGeo pt = new Point3DGeo(geom.getGeometry().getFirstPoint().getX(),
                             geom.getGeometry().getFirstPoint().getY(),
                             depth);
                     tmp1.add(pt);
@@ -254,8 +254,8 @@ public class DemDBComponentController {
         return tmp1;
     }
 
-    public List<Point3D> retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax) {
-        List<Point3D> tmp1 = new ArrayList<>();
+    public List<Point3DGeo> retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax) {
+        List<Point3DGeo> tmp1 = new ArrayList<>();
         PGgeometry geom;
         double depth;
         ResultSet r;
@@ -275,7 +275,7 @@ public class DemDBComponentController {
                     depth = r.getFloat(3);
                     //  System.out.println("depth : " + depth);
                     if (depth >= MIN_DEPTH) {
-                        Point3D pt = new Point3D(geom.getGeometry().getFirstPoint().getX(),
+                        Point3DGeo pt = new Point3DGeo(geom.getGeometry().getFirstPoint().getX(),
                                 geom.getGeometry().getFirstPoint().getY(),
                                 depth);
                         tmp1.add(pt);
@@ -291,16 +291,16 @@ public class DemDBComponentController {
         return tmp1;
     }
 
-    public List<Point3D> retrieveIn(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax) {
+    public List<Point3DGeo> retrieveIn(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax) {
 
         Connection tmp0 = this.connection;
         this.connection = connection;
-        List<Point3D> tmp1 = retrieveIn(table, latMin, lonMin, latMax, lonMax);
+        List<Point3DGeo> tmp1 = retrieveIn(table, latMin, lonMin, latMax, lonMax);
         this.connection = tmp0;
         return tmp1;
     }
 
-    public final List<Point3D> retrieveAround(double lat, double lon, double limit) {
+    public final List<Point3DGeo> retrieveAround(double lat, double lon, double limit) {
         PGgeometry geom;
         ResultSet r0;
         ResultSet r1;
@@ -340,7 +340,7 @@ public class DemDBComponentController {
      * @return the initial grid whith elevation value
      *
      */
-    public Point3D[][] mergeData(Point3D[][] orgData, List<Triangle_dt> triangles) {
+    public Point3DGeo[][] mergeData(Point3DGeo[][] orgData, List<Triangle_dt> triangles) {
         /*
         matrice.length     //  2
         matrice[0].length  //  4
@@ -348,14 +348,14 @@ public class DemDBComponentController {
          */
         int nbLat = orgData[0].length;
         int nbLon = orgData[1].length;
-        Point3D[][] tmp = new Point3D[nbLat][nbLon];
+        Point3DGeo[][] tmp = new Point3DGeo[nbLat][nbLon];
         for (int k = 0; k < nbLat; k++) {
             System.arraycopy(orgData[k], 0, tmp[k], 0, nbLon);
         }
         for (int k = 0; k < nbLat - 1; k++) {
             for (int l = 0; l < nbLon - 1; l++) {
                 //Select one point
-                Point3D p = tmp[k][l];
+                Point3DGeo p = tmp[k][l];
                 Point_dt pp = new Point_dt(p.getLatitude(), p.getLongitude(), p.getElevation());
                 for (Triangle_dt tt : triangles) {
                     // Research  the nearest point of this triangle
@@ -389,17 +389,17 @@ public class DemDBComponentController {
      * @return the initial grid whith elevation value
      *
      */
-    public Point3D[][] mergeData(Point3D[][] orgData, List<Triangle_dt> triangles, double depth) {
+    public Point3DGeo[][] mergeData(Point3DGeo[][] orgData, List<Triangle_dt> triangles, double depth) {
         int nbLat = orgData[0].length;
         int nbLon = orgData[1].length;
-        Point3D[][] tmp = new Point3D[nbLat][nbLon];
+        Point3DGeo[][] tmp = new Point3DGeo[nbLat][nbLon];
         for (int k = 0; k < nbLat; k++) {
             System.arraycopy(orgData[k], 0, tmp[k], 0, nbLon);
         }
         for (int k = 0; k < nbLat - 1; k++) {
             for (int l = 0; l < nbLon - 1; l++) {
                 //Select one point
-                Point3D p = tmp[k][l];
+                Point3DGeo p = tmp[k][l];
                 Point_dt pp = new Point_dt(p.getLatitude(), p.getLongitude(), p.getElevation());
                 for (Triangle_dt tt : triangles) {
                     // Research  the nearest point of this triangle
@@ -429,7 +429,7 @@ public class DemDBComponentController {
         return connection;
     }
 
-    public void writePointList(List<Point3D> points, Path pathname, boolean latLon) {
+    public void writePointList(List<Point3DGeo> points, Path pathname, boolean latLon) {
 
         List<String> lines = new ArrayList<>();
         if (points != null) {

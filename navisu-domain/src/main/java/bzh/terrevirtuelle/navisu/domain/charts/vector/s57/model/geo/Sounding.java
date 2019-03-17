@@ -1,6 +1,6 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -43,8 +43,8 @@ public class Sounding extends Location
         this.depth = depth;
     }
 
-    public Point3D getPoint3D() {
-        return new Point3D(latitude, longitude, depth);
+    public Point3DGeo getPoint3D() {
+        return new Point3DGeo(latitude, longitude, depth);
     }
 
     /**

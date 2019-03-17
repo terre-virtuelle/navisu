@@ -35,7 +35,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Sounding;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
@@ -709,7 +709,7 @@ public class S57DBComponentController
 
                 new SoundingView(bathymetryLayer).display(soundings);
                 
-                List<Point3D> points = new ArrayList<>();
+                List<Point3DGeo> points = new ArrayList<>();
                 for (Sounding s : soundings) {
                     points.add(s.getPoint3D());
                 }

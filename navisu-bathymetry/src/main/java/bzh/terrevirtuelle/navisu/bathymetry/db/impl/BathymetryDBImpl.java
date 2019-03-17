@@ -16,7 +16,7 @@ import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.impl.controller.BathymetryDBController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import gov.nasa.worldwind.WorldWindow;
@@ -61,7 +61,7 @@ public class BathymetryDBImpl
     protected Connection connection;
     protected PreparedStatement preparedStatement;
     protected Statement statement;
-    protected List<Point3D> points3d;
+    protected List<Point3DGeo> points3d;
     protected WorldWindow wwd;
     protected RenderableLayer layer;
     protected static final String GROUP = "Bathymetry data";
@@ -135,37 +135,37 @@ public class BathymetryDBImpl
     }
 
     @Override
-    public List<Point3D> retrieveAll() {
+    public List<Point3DGeo> retrieveAll() {
         return controller.retrieveAll();
     }
 
     @Override
-    public List<Point3D> retrieveAround(double lat, double lon) {
+    public List<Point3DGeo> retrieveAround(double lat, double lon) {
         return controller.retrieveAround(lat, lon, LIMIT);
     }
 
     @Override
-    public List<Point3D> retrieveAround(double lat, double lon, double limit) {
+    public List<Point3DGeo> retrieveAround(double lat, double lon, double limit) {
         return controller.retrieveAround(lat, lon, limit);
     }
 
     @Override
-    public List<Point3D> retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax) {
+    public List<Point3DGeo> retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax) {
         return controller.retrieveIn(table, latMin, lonMin, latMax, lonMax);
     }
 
     @Override
-    public List<Point3D> retrieveIn(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax) {
+    public List<Point3DGeo> retrieveIn(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax) {
         return controller.retrieveIn(connection, table, latMin, lonMin, latMax, lonMax);
     }
 
     @Override
-    public Point3D[][] mergeData(Point3D[][] orgData, List<Triangle_dt> triangles) {
+    public Point3DGeo[][] mergeData(Point3DGeo[][] orgData, List<Triangle_dt> triangles) {
         return controller.mergeData(orgData, triangles);
     }
 
     @Override
-    public Point3D[][] mergeData(Point3D[][] orgData, List<Triangle_dt> triangles, double depth) {
+    public Point3DGeo[][] mergeData(Point3DGeo[][] orgData, List<Triangle_dt> triangles, double depth) {
         return controller.mergeData(orgData, triangles, depth);
     }
 
@@ -189,7 +189,7 @@ public class BathymetryDBImpl
     }
 
     @Override
-    public void writePointList(List<Point3D> points, Path pathname, boolean latLon) {
+    public void writePointList(List<Point3DGeo> points, Path pathname, boolean latLon) {
         controller.writePointList(points, pathname, latLon);
     }
 

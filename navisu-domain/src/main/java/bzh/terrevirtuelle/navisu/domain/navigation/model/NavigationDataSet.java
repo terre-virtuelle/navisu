@@ -24,7 +24,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Daymark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
@@ -80,7 +80,7 @@ public class NavigationDataSet {
         @XmlElement(name = "s57Chart", type = S57Chart.class),
         @XmlElement(name = "ouvrage", type = Book.class),
         @XmlElement(name = "texte", type = Text.class),
-        @XmlElement(name = "point3d", type = Point3D.class),
+        @XmlElement(name = "point3d", type = Point3DGeo.class),
         @XmlElement(name = "depth", type = Depth.class),
         @XmlElement(name = "target", type = Target.class)
     }

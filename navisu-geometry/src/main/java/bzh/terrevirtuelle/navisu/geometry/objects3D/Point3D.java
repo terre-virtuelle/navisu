@@ -5,6 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.geometry.objects3D;
 
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
+
 /**
  *
  * @author serge
@@ -91,6 +93,12 @@ public class Point3D {
         return hash;
     }
 
+    
+    @Override
+    public String toString() {
+        return "v " + x + " " + y + " " + z + "";
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -102,19 +110,18 @@ public class Point3D {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Point3D other = (Point3D) obj;
-        if (Double.doubleToLongBits(this.x) != Double.doubleToLongBits(other.x)) {
-            return false;
+        if (obj instanceof Point3D) {
+            Point3D p = (Point3D) obj;
+            double d = 0.0001;
+
+            if ((Math.abs(x - p.getX()) <= d) && (Math.abs(y - p.getY()) <= d)) {
+                return Math.abs(z - p.getZ()) <= d;
+            }
         }
-        if (Double.doubleToLongBits(this.y) != Double.doubleToLongBits(other.y)) {
-            return false;
-        }
-        return Double.doubleToLongBits(this.z) == Double.doubleToLongBits(other.z);
+        return false;
     }
 
-    @Override
-    public String toString() {
-        return "v " + x + " " + y + " " + z + "";
+    Point3DGeo convert(Point3D p) {
+        return new Point3DGeo(p.getY(), p.getX(), p.getZ());
     }
-
 }

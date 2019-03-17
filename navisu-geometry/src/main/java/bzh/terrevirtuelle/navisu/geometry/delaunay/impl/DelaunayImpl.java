@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.geometry.delaunay.impl;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.Delaunay;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
@@ -38,7 +38,7 @@ public class DelaunayImpl
      * @return
      */
     @Override
-    public List<Triangle_dt> createDelaunay(List<Point3D> points, double elevation) {
+    public List<Triangle_dt> createDelaunay(List<Point3DGeo> points, double elevation) {
 
         Delaunay_Triangulation dt = new Delaunay_Triangulation();
         points.stream().forEach((pt) -> {
@@ -48,7 +48,7 @@ public class DelaunayImpl
     }
 
     @Override
-    public List<Triangle_dt> createDelaunay(List<Point3D> points) {
+    public List<Triangle_dt> createDelaunay(List<Point3DGeo> points) {
         Delaunay_Triangulation dt = new Delaunay_Triangulation();
         points.stream().forEach((pt) -> {
             dt.insertPoint(new Point_dt(pt.getLatitude(), pt.getLongitude(), pt.getElevation()));
@@ -57,15 +57,15 @@ public class DelaunayImpl
     }
 
     @Override
-    public List<Triangle_dt> createDelaunay(Point3D[][] points, int nbLat, int nbLon, double elevation) {
+    public List<Triangle_dt> createDelaunay(Point3DGeo[][] points, int nbLat, int nbLon, double elevation) {
         List<Triangle_dt> triangles = new ArrayList<>();
         for (int k = 0; k < nbLat - 1; k++) {
             for (int l = 0; l < nbLon - 1; l++) {
                 //  System.out.println("k : "+k+" l : "+l);
-                Point3D pt0 = points[k][l];
-                Point3D pt1 = points[k + 1][l];
-                Point3D pt2 = points[k][l + 1];
-                Point3D pt3 = points[k + 1][l + 1];
+                Point3DGeo pt0 = points[k][l];
+                Point3DGeo pt1 = points[k + 1][l];
+                Point3DGeo pt2 = points[k][l + 1];
+                Point3DGeo pt3 = points[k + 1][l + 1];
                 triangles.add(new Triangle_dt(
                         new Point_dt(pt0.getLatitude(), pt0.getLongitude(), pt0.getElevation()),
                         new Point_dt(pt1.getLatitude(), pt1.getLongitude(), pt1.getElevation()),
@@ -80,7 +80,7 @@ public class DelaunayImpl
     }
 
     @Override
-    public Delaunay_Triangulation getTriangulation(List<Point3D> points) {
+    public Delaunay_Triangulation getTriangulation(List<Point3DGeo> points) {
         Delaunay_Triangulation dt = new Delaunay_Triangulation();
 
         points.stream().forEach((pt) -> {
@@ -90,7 +90,7 @@ public class DelaunayImpl
     }
 
     @Override
-    public List<Point3D> toGrid(double latMin, double lonMin,
+    public List<Point3DGeo> toGrid(double latMin, double lonMin,
             double latMax, double lonMax,
             double y, double x,
             double elevation) {
@@ -108,16 +108,16 @@ public class DelaunayImpl
                 tmp.add(geodesyServices.getPosition(p, 90.0, j * 100));
             }
         }
-        List<Point3D> l = new ArrayList<>();
+        List<Point3DGeo> l = new ArrayList<>();
         tmp.stream().forEach((p) -> {
-            l.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), elevation));
+            l.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), elevation));
         });
 
         return l;
     }
 
     @Override
-    public Point3D[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax,
+    public Point3DGeo[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax,
             double y, double x,
             double elevation) {
         Position p = geodesyServices.getPosition(Position.fromDegrees(latMin, lonMin), 0.0, y);
@@ -130,24 +130,24 @@ public class DelaunayImpl
         lonInc = Math.abs(lonInc);
         double lon = lonMin;
 
-        List<List<Point3D>> ptsList = new ArrayList<>();
+        List<List<Point3DGeo>> ptsList = new ArrayList<>();
         while (lat <= latMax) {
-            List<Point3D> l = new ArrayList<>();
+            List<Point3DGeo> l = new ArrayList<>();
             ptsList.add(l);
             while (lon <= lonMax) {
-                l.add(new Point3D(lat, lon, elevation));
+                l.add(new Point3DGeo(lat, lon, elevation));
                 lon += lonInc;
             }
-            l.add(new Point3D(lat, lonMax, elevation));//last column
+            l.add(new Point3DGeo(lat, lonMax, elevation));//last column
             lon = lonMin;
             lat += latInc;
         }
 
-        List<Point3D> l = new ArrayList<>();
+        List<Point3DGeo> l = new ArrayList<>();
         ptsList.add(l);
         lat = latMax;
         for (int i = 0; i < ptsList.get(0).size(); i++) {
-            l.add(new Point3D(lat, ptsList.get(0).get(i).getLongitude(), elevation));//last line
+            l.add(new Point3DGeo(lat, ptsList.get(0).get(i).getLongitude(), elevation));//last line
         }
 
         int latCount = ptsList.size();
@@ -159,7 +159,7 @@ public class DelaunayImpl
             latLonCount = latCount;
         }
 
-        Point3D[][] ptsTab = new Point3D[latLonCount][latLonCount];
+        Point3DGeo[][] ptsTab = new Point3DGeo[latLonCount][latLonCount];
         for (int i = 0; i < latLonCount; i++) {
             for (int j = 0; j < latLonCount; j++) {
                 ptsTab[i][j] = ptsList.get(i).get(j);
@@ -170,7 +170,7 @@ public class DelaunayImpl
     }
 
     @Override
-    public Point3D[][] toGridTab(List<Point3D> bounds, double y, double x, double elevation) {
+    public Point3DGeo[][] toGridTab(List<Point3DGeo> bounds, double y, double x, double elevation) {
         return null;
     }
 
@@ -196,14 +196,14 @@ public class DelaunayImpl
     }
 
     @Override
-    public Point3D[][] mergePointsToGrid(List<Point3D> points, Point3D[][] grid) {
+    public Point3DGeo[][] mergePointsToGrid(List<Point3DGeo> points, Point3DGeo[][] grid) {
         int line = grid[0].length;
         int col = grid[1].length;
-        Point3D[][] result = new Point3D[line][col];
+        Point3DGeo[][] result = new Point3DGeo[line][col];
         Point_dt[][] pointsDt = new Point_dt[line][col];
         for (int i = 0; i < line; i++) {
             for (int j = 0; j < col; j++) {
-                result[i][j] = new Point3D(grid[i][j].getLatitude(), grid[i][j].getLongitude(), grid[i][j].getElevation());
+                result[i][j] = new Point3DGeo(grid[i][j].getLatitude(), grid[i][j].getLongitude(), grid[i][j].getElevation());
                 pointsDt[i][j] = new Point_dt(grid[i][j].getLatitude(), grid[i][j].getLongitude(), grid[i][j].getElevation());
             }
         }

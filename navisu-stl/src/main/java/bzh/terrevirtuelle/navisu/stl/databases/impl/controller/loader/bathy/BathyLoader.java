@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.bathy;
 
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import java.sql.Connection;
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class BathyLoader {
 
     private final Connection connection;
     private final BathymetryDBServices bathymetryDBServices;
-    private List<Point3D> points;
+    private List<Point3DGeo> points;
     private double maxDepth = 0.0;
 
     public BathyLoader(Connection connection, BathymetryDBServices bathymetryDBServices) {
@@ -30,7 +30,7 @@ public class BathyLoader {
 
     public DEM retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
         points = bathymetryDBServices.retrieveIn(connection, "bathy", latMin, lonMin, latMax, lonMax);
-        for(Point3D p : points){
+        for(Point3DGeo p : points){
             
         }
         points.stream().filter((p) -> (p.getElevation() > maxDepth)).forEachOrdered((p) -> {

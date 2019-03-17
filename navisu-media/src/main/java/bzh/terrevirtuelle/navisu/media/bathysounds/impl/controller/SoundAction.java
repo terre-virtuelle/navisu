@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.media.bathysounds.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import java.util.Map;
 
 /**
@@ -17,16 +17,16 @@ import java.util.Map;
 public class SoundAction
         implements LocatableAction {
 
-    protected Map<Point3D, String> soundMap;
+    protected Map<Point3DGeo, String> soundMap;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
 
     public SoundAction(InstrumentDriverManagerServices instrumentDriverManagerServices, 
-            Map<Point3D, String> soundMap) {
+            Map<Point3DGeo, String> soundMap) {
         this.soundMap = soundMap;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
     }
 
-    public void doIt(Point3D point) {
+    public void doIt(Point3DGeo point) {
         String sound = soundMap.get(point);
         instrumentDriverManagerServices.open(sound, "true", "1");
     }

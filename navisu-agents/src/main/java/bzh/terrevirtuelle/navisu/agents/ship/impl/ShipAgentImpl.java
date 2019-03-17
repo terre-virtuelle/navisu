@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.agents.ship.impl;
 import bzh.terrevirtuelle.navisu.agents.ship.ShipAgent;
 import bzh.terrevirtuelle.navisu.agents.ship.ShipAgentServices;
 import bzh.terrevirtuelle.navisu.agents.ship.impl.controller.ShipAgentController;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -31,7 +31,7 @@ public class ShipAgentImpl
     RenderableLayer layer;
 
     @Override
-    public void moveTo(Point3D point) {
+    public void moveTo(Point3DGeo point) {
         kmlComponentServices.moveTo(point);
     }
 

@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.stl.charts.impl.loader.dem.DemSrtmElevationLoader;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
@@ -41,7 +41,7 @@ public class LandmarkExportToSTL {
     protected double lonScale;
     protected double elvScale;
 
-    public LandmarkExportToSTL(GeodesyServices geodesyServices, Point3D[][] gb,
+    public LandmarkExportToSTL(GeodesyServices geodesyServices, Point3DGeo[][] gb,
             String stlFilename, double latScale, double lonScale) {
         this.stlFilename = stlFilename;
         this.geodesyServices = geodesyServices;

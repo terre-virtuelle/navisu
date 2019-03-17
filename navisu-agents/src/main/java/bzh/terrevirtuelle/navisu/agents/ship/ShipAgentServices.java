@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.agents.ship;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import org.capcaval.c3.component.ComponentService;
@@ -21,7 +21,7 @@ public interface ShipAgentServices
 
     void init(Ship ship,RenderableLayer layer, String filename);
 
-    void moveTo(Point3D point);
+    void moveTo(Point3DGeo point);
 
     //void loadShip3D(RenderableLayer layer, String filename);
 

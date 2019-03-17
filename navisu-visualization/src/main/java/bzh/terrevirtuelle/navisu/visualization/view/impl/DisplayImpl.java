@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.visualization.view.impl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_HOMONIM_BATHYMETRY_CLUT;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.lut.Clut;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
@@ -81,13 +81,13 @@ public class DisplayImpl
     }
 
     @Override
-    public void displayPoints3D(List<Point3D> points, RenderableLayer layer) {
+    public void displayPoints3D(List<Point3DGeo> points, RenderableLayer layer) {
         List<PointPlacemark> pointPlacemarks = new ArrayList<>();
         PointPlacemark pointPlacemark;
         PointPlacemarkAttributes attrs = new PointPlacemarkAttributes();
         // attrs.setImageAddress("images/point.png");
         // attrs.setScale(1.0);
-        for (Point3D p : points) {
+        for (Point3DGeo p : points) {
             pointPlacemark = new PointPlacemark(Position.fromDegrees(p.getLatitude(), p.getLongitude(), p.getElevation()));
             String label = String.format("%4f°, %4f° \n %2d m", p.getLatitude(), p.getLongitude(), (int) p.getElevation());
             pointPlacemark.setValue(AVKey.DISPLAY_NAME, label);
@@ -99,9 +99,9 @@ public class DisplayImpl
     }
 
     @Override
-    public void displayPoints3DAsPath(List<Point3D> points, RenderableLayer layer) {
+    public void displayPoints3DAsPath(List<Point3DGeo> points, RenderableLayer layer) {
         ArrayList<Position> pathPositions = new ArrayList<>();
-        for (Point3D p : points) {
+        for (Point3DGeo p : points) {
             pathPositions.add(Position.fromDegrees(p.getLatitude(), p.getLongitude(), 100));
         }
         Path path = createPath(pathPositions, Material.YELLOW);
@@ -110,9 +110,9 @@ public class DisplayImpl
     }
 
     @Override
-    public void displayPoints3DAsPath(List<Point3D> points, double height, RenderableLayer layer, Material material) {
+    public void displayPoints3DAsPath(List<Point3DGeo> points, double height, RenderableLayer layer, Material material) {
         ArrayList<Position> pathPositions = new ArrayList<>();
-        for (Point3D p : points) {
+        for (Point3DGeo p : points) {
             pathPositions.add(Position.fromDegrees(p.getLatitude(), p.getLongitude(), height));
         }
         Path path = createPath(pathPositions, material);
@@ -121,12 +121,12 @@ public class DisplayImpl
     }
 
     @Override
-    public void displayGrid(List<List<Point3D>> latLons, RenderableLayer layer, Material material) {
+    public void displayGrid(List<List<Point3DGeo>> latLons, RenderableLayer layer, Material material) {
 
     }
 
     @Override
-    public void displayPoints3DAsTriangles(List<Point3D> points, RenderableLayer layer, Material material) {
+    public void displayPoints3DAsTriangles(List<Point3DGeo> points, RenderableLayer layer, Material material) {
 
     }
 
@@ -136,13 +136,13 @@ public class DisplayImpl
     }
 
     @Override
-    public void displayGrid(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration) {
+    public void displayGrid(Point3DGeo[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration) {
         ArrayList<Position> pathIsoLatPositions;
         List<Path> latPaths = new ArrayList<>();
         Path path0 = null;
-        for (Point3D[] p : latLons) {
+        for (Point3DGeo[] p : latLons) {
             pathIsoLatPositions = new ArrayList<>();
-            for (Point3D pp : p) {
+            for (Point3DGeo pp : p) {
                 pathIsoLatPositions.add(Position.fromDegrees(pp.getLatitude(),
                         pp.getLongitude(),
                         pp.getElevation() * verticalExaggeration));
@@ -159,9 +159,9 @@ public class DisplayImpl
         ArrayList<Position> pathIsoLonPositions;
         Path path1 = null;
         int i = 0;
-        for (Point3D k : latLons[0]) {
+        for (Point3DGeo k : latLons[0]) {
             pathIsoLonPositions = new ArrayList<>();
-            for (Point3D[] row : latLons) {
+            for (Point3DGeo[] row : latLons) {
                 pathIsoLonPositions.add(Position.fromDegrees(row[i].getLatitude(),
                         row[i].getLongitude(),
                         row[i].getElevation() * verticalExaggeration));
@@ -177,7 +177,7 @@ public class DisplayImpl
     }
 
     @Override
-    public List<Path> createPaths(Point3D[][] latLons, double verticalExaggeration) {
+    public List<Path> createPaths(Point3DGeo[][] latLons, double verticalExaggeration) {
         List<Position> positions;
         List<Path> result = new ArrayList<>();
 
@@ -268,9 +268,9 @@ public class DisplayImpl
     }
 
     @Override
-    public List<List<Path>> createPaths(List<Point3D[][]> latLons, double verticalExaggeration) {
+    public List<List<Path>> createPaths(List<Point3DGeo[][]> latLons, double verticalExaggeration) {
         List<List<Path>> result = new ArrayList<>();
-        for (Point3D[][] pts : latLons) {
+        for (Point3DGeo[][] pts : latLons) {
             result.add(createPaths(pts, verticalExaggeration));
         }
         return result;
@@ -278,7 +278,7 @@ public class DisplayImpl
 
     @Override
     public List<List<Path>> createPaths(GridBox3D box3D, double verticalExaggeration) {
-        List<Point3D[][]> latLons = new ArrayList<>();
+        List<Point3DGeo[][]> latLons = new ArrayList<>();
         latLons.add(box3D.getGrid());
         List<List<Path>> result = createPaths(latLons, verticalExaggeration);
         result.add(box3D.getSidePaths());
@@ -286,7 +286,7 @@ public class DisplayImpl
     }
 
     @Override
-    public List<Path> displayGridAsTriangles(Point3D[][] latLons,
+    public List<Path> displayGridAsTriangles(Point3DGeo[][] latLons,
             RenderableLayer layer, Material material,
             double verticalExaggeration) {
 
@@ -325,7 +325,7 @@ public class DisplayImpl
     }
 
     @Override
-    public void displayGridAsPolygon(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration) {
+    public void displayGridAsPolygon(Point3DGeo[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration) {
         ArrayList<Polygon> polygons = null;
 
         int latLength = latLons[0].length;
@@ -715,7 +715,7 @@ public class DisplayImpl
     }
 
     @Override
-    public void exportASC(String outputFilename, Point3D[][] pts) {
+    public void exportASC(String outputFilename, Point3DGeo[][] pts) {
 
         int nrows = pts[0].length - 1;
         int ncols = pts[1].length - 1;
@@ -746,7 +746,7 @@ public class DisplayImpl
     }
 
     @Override
-    public Point3D[][] importASC(String inputFilename) {
+    public Point3DGeo[][] importASC(String inputFilename) {
         /*
           ncols        1000
           nrows        1000
@@ -778,7 +778,7 @@ public class DisplayImpl
         cellsize = Double.parseDouble(dataTab[4].split("\\s+")[1]);
         NODATA_value = Double.parseDouble(dataTab[5].split("\\s+")[1]);
         //  System.out.println("ncols : " + ncols + " nrows : " + nrows);
-        Point3D[][] result = new Point3D[nrows + 1][ncols + 1];
+        Point3DGeo[][] result = new Point3DGeo[nrows + 1][ncols + 1];
 
         int u = 0;
         int v = 0;
@@ -787,7 +787,7 @@ public class DisplayImpl
         for (int i = dataTab.length - 1; i >= 6; i--) {
             String[] rowTab = dataTab[i].split("\\s+");
             for (int j = 0; j < rowTab.length; j++) {
-                result[u][v] = new Point3D(yllcorner + u * cellsize, xllcorner + v * cellsize, Double.valueOf(rowTab[j]));
+                result[u][v] = new Point3DGeo(yllcorner + u * cellsize, xllcorner + v * cellsize, Double.valueOf(rowTab[j]));
                 v++;
             }
             u++;
@@ -806,12 +806,12 @@ public class DisplayImpl
     }
 
     @Override
-    public List<List<Path>> displayGridAsTriangles(List<Point3D[][]> grids, RenderableLayer layer, double verticalExaggeration) {
+    public List<List<Path>> displayGridAsTriangles(List<Point3DGeo[][]> grids, RenderableLayer layer, double verticalExaggeration) {
         Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
             Material.GRAY, Material.MAGENTA, Material.ORANGE, Material.RED};
         List<List<Path>> result = new ArrayList<>();
         int i = 0;
-        for (Point3D[][] g : grids) {
+        for (Point3DGeo[][] g : grids) {
             result.add(displayGridAsTriangles(g, layer, materials[i++ % 8], 2));
         }
         return result;

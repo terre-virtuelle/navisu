@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import com.vividsolutions.jts.operation.buffer.BufferParameters;
@@ -44,7 +44,7 @@ public class SlConsView {
         for (Geo geo : objects) {
             String geometry = geo.getGeom();
             if (geometry.contains("MULTILINESTRING") || geometry.contains("LINESTRING")) {
-                List<Point3D> points = jtsServices.getBuffer(geometry, 0.00012, BufferParameters.CAP_FLAT);
+                List<Point3DGeo> points = jtsServices.getBuffer(geometry, 0.00012, BufferParameters.CAP_FLAT);
                 double area = jtsServices.getPolygon(points).getArea();
                 if (area < 2E-5) {
                     List<Position> positions = new ArrayList<>();

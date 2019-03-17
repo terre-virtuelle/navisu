@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.stl.charts.impl.loader.dem;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
@@ -61,7 +61,7 @@ public class DemSrtmElevationLoader {
         return elevations;
     }
 
-    public Point3D[][] getElevations(double latMin, double lonMin, double latMax, double lonMax, double range) {
+    public Point3DGeo[][] getElevations(double latMin, double lonMin, double latMax, double lonMax, double range) {
 
 // Range in meters
         double gridX = geodesyServices.getDistanceM(latMin, lonMin, latMin, lonMax);
@@ -81,12 +81,12 @@ public class DemSrtmElevationLoader {
 
         //Crete the grid
         LOGGER.info("In Create the grid");
-        Point3D[][] points = new Point3D[ptsCountX + 1][ptsCountY + 1];
+        Point3DGeo[][] points = new Point3DGeo[ptsCountX + 1][ptsCountY + 1];
         double latitude = latMin;
         double longitude = lonMin;
         for (int i = 0; i <= ptsCountY; i++) {
             for (int j = 0; j <= ptsCountX; j++) {
-                points[i][j] = new Point3D(Math.round(latitude * 100000.0) / 100000.0,
+                points[i][j] = new Point3DGeo(Math.round(latitude * 100000.0) / 100000.0,
                         Math.round(longitude * 100000.0) / 100000.0, 0.0);
                 longitude += lonInc;
             }
@@ -124,7 +124,7 @@ public class DemSrtmElevationLoader {
         int k = 0;
         for (int i = 0; i <= ptsCountY; i++) {
             for (int j = 0; j <= ptsCountX; j++) {
-                points[i][j] = new Point3D(realPositions.get(k).getLatitude().getDegrees(),
+                points[i][j] = new Point3DGeo(realPositions.get(k).getLatitude().getDegrees(),
                         realPositions.get(k).getLongitude().getDegrees(),
                         realPositions.get(k).getElevation());
                 k++;
@@ -135,7 +135,7 @@ public class DemSrtmElevationLoader {
         return points;
     }
 
-    public Point3D getElevation(double lat, double lon) {
+    public Point3DGeo getElevation(double lat, double lon) {
         //Creation d'un secteur à partir du point a mesurer
         Sector sector = new Sector(Angle.fromDegreesLatitude(lat), Angle.fromDegreesLatitude(lat + 0.001),
                 Angle.fromDegreesLongitude(lon), Angle.fromDegreesLongitude(lon + 0.001));
@@ -146,7 +146,7 @@ public class DemSrtmElevationLoader {
         if (elevation == null) {
             elevation = 0.0;
         }
-        return new Point3D(lat, lon, elevation);
+        return new Point3DGeo(lat, lon, elevation);
     }
 
     protected void in(String comment) {

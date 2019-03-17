@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.bathymetry.catalog.local.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
@@ -37,7 +37,7 @@ public class BathymetryLocalCatalogLoader {
     private final List<String> lines;
     private final List<Sector> sectors;
     private final List<Layer> layers;
-    private List<Point3D> points3d;
+    private List<Point3DGeo> points3d;
     private final RenderableLayer layer;
     private ShapeAttributes normalAttributes;
     private ShapeAttributes highlightAttributes;
@@ -103,7 +103,7 @@ public class BathymetryLocalCatalogLoader {
 
         //  attributes.setUsePointAsDefaultImage(true);
         PointPlacemark placemark;
-        for (Point3D p : points3d) {
+        for (Point3DGeo p : points3d) {
             placemark = new PointPlacemark(Position.fromDegrees(p.getLatitude(), p.getLongitude(), 100));
             placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
             placemark.setEnableBatchPicking(true);
@@ -124,7 +124,7 @@ public class BathymetryLocalCatalogLoader {
             points3d = Files.lines(new File(source).toPath())
                     .map(line -> line.trim())
                     .map(line -> line.split(" "))
-                    .map(tab -> new Point3D(Integer.parseInt(tab[0]),
+                    .map(tab -> new Point3DGeo(Integer.parseInt(tab[0]),
                                     Double.parseDouble(tab[1]),
                                     Double.parseDouble(tab[2])))
                     .collect(Collectors.toList());

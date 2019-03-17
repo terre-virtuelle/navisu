@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.bathymetry.view;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
@@ -22,8 +22,8 @@ public interface DisplayBathymetryServices
 
     void displaySounding(double lat, double lon, double depth, RenderableLayer l);
 
-    void displaySounding(List<Point3D> points, RenderableLayer l);
+    void displaySounding(List<Point3DGeo> points, RenderableLayer l);
 
-    void displayDelaunaySounding(List<Point3D> points, RenderableLayer l, double maxElevation);
+    void displayDelaunaySounding(List<Point3DGeo> points, RenderableLayer l, double maxElevation);
 
 }

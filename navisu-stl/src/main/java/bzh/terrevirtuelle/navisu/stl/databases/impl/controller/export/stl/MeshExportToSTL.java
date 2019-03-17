@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.util.io.IO;
@@ -47,7 +47,7 @@ public class MeshExportToSTL {
     protected Properties cacheProperties = new Properties();
     private double latMin;
     private double lonMin;
-    private final Map<Point3D, List<String>> meshObjectsLocationMap;
+    private final Map<Point3DGeo, List<String>> meshObjectsLocationMap;
 
     public MeshExportToSTL(GeodesyServices geodesyServices, GuiAgentServices guiAgentServices, JTSServices jtsServices) {
         this.guiAgentServices = guiAgentServices;
@@ -70,11 +70,11 @@ public class MeshExportToSTL {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Point3D> loadMesh() {
+    public List<Point3DGeo> loadMesh() {
         double latitude;
         double longitude;
         double elevation;
-        List<Point3D> boundList = new ArrayList<>();
+        List<Point3DGeo> boundList = new ArrayList<>();
         List<File> files = IO.multipleFileChooser(guiAgentServices.getStage(), OBJECT_DIR, "Georeferenced STL files (*.stl)", "*.STL", "*.stl");
         if (files != null) {
             OBJECT_DIR = files.get(0).getParent();
@@ -111,7 +111,7 @@ public class MeshExportToSTL {
                                     latitude = Double.parseDouble(tmp[4]);
                                     longitude = Double.parseDouble(tmp[5]);
                                     elevation = Double.parseDouble(tmp[6]);
-                                    Point3D key = new Point3D(latitude, longitude, elevation);
+                                    Point3DGeo key = new Point3DGeo(latitude, longitude, elevation);
                                     if (!meshObjectsLocationMap.containsKey(key)) {
                                         meshObjectsLocationMap.put(key, new ArrayList<>());
                                     }
@@ -143,7 +143,7 @@ public class MeshExportToSTL {
                                     longitude = Double.parseDouble(tmp2[1]);
                                     elevation = Double.parseDouble(tmp2[2]);
                                     
-                                    Point3D key = new Point3D(latitude, longitude, elevation);
+                                    Point3DGeo key = new Point3DGeo(latitude, longitude, elevation);
                                     if (!meshObjectsLocationMap.containsKey(key)) {
                                         meshObjectsLocationMap.put(key, new ArrayList<>());
                                     }
@@ -151,7 +151,7 @@ public class MeshExportToSTL {
                                   
                                     for (int i = 0; i < 5; i++) {
                                         String[] tmp3 = tmp1[i].trim().split("\\s+");
-                                        boundList.add(new Point3D(Double.parseDouble(tmp3[0]),Double.parseDouble(tmp3[1]),Double.parseDouble(tmp3[2])));
+                                        boundList.add(new Point3DGeo(Double.parseDouble(tmp3[0]),Double.parseDouble(tmp3[1]),Double.parseDouble(tmp3[2])));
                                     }
 
                                 } catch (NumberFormatException e) {
@@ -179,29 +179,29 @@ public class MeshExportToSTL {
     }
 
     @SuppressWarnings("unchecked")
-    public void export(Point3D[][] g, String filename, double latScale, double lonScale, double tileSideZ, double maxdepth) {
+    public void export(Point3DGeo[][] g, String filename, double latScale, double lonScale, double tileSideZ, double maxdepth) {
         double elvScale = (latScale + lonScale) / 2;
         latMin = g[0][0].getLatitude();
         lonMin = g[0][0].getLongitude();
-        List<Point3D> bounds = new ArrayList<>();
+        List<Point3DGeo> bounds = new ArrayList<>();
         bounds.add(g[0][0]);
         bounds.add(g[0][g[1].length - 1]);
         bounds.add(g[g[0].length - 1][g[1].length - 1]);
         bounds.add(g[g[0].length - 1][0]);
         bounds.add(g[0][0]);
-        List<Point3D> locInBound = new ArrayList<>();
-        Set<Point3D> locations = meshObjectsLocationMap.keySet();
+        List<Point3DGeo> locInBound = new ArrayList<>();
+        Set<Point3DGeo> locations = meshObjectsLocationMap.keySet();
         //DEBUG for mesh import
        // locations.stream().filter((loc) -> (jtsServices.contains(jtsServices.getPolygon(bounds), loc))).forEachOrdered((loc) -> {
       //      locInBound.add(loc);
        // });
 
-       for(Point3D loc : locations){
+       for(Point3DGeo loc : locations){
            locInBound.add(loc);
        }
        
        
-        for (Point3D p : locInBound) {
+        for (Point3DGeo p : locInBound) {
             List<String> contents = meshObjectsLocationMap.get(p);
             System.out.println("p : "+p);
             String content = null;

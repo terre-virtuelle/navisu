@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.agents.ship.impl.controller;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 

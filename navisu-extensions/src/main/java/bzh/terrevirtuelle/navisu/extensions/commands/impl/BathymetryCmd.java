@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.extensions.commands.impl;
 
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Depth;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmd;
@@ -58,7 +58,7 @@ public class BathymetryCmd
         System.out.println("depth : " + depth);
         navigationDataSet = new NavigationDataSet();
         
-        List<Point3D> points = bathymetryDBServices.retrieveIn(bathyConnection, "bathy", lat, lon, lat + 0.0015, lon + 0.0015);
+        List<Point3DGeo> points = bathymetryDBServices.retrieveIn(bathyConnection, "bathy", lat, lon, lat + 0.0015, lon + 0.0015);
        // System.out.println("points : " + points);
         points.forEach((p) -> {
             navigationDataSet.add(p);

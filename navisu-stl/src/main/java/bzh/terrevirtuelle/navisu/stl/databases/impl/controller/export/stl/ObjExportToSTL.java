@@ -11,7 +11,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverMa
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.Vec3d;
@@ -73,10 +73,10 @@ public class ObjExportToSTL {
         this.displayServices = displayServices;
     }
 
-    public List<Point3D> loadObj(RenderableLayer layer, double objXOffset, double objYOffset, boolean isTerrain) {
+    public List<Point3DGeo> loadObj(RenderableLayer layer, double objXOffset, double objYOffset, boolean isTerrain) {
         this.layer = layer;
         File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl/obj", "Georeferenced STL files (*.obj)", "*.OBJ", "*.obj");
-        List< Point3D> bounds = null;
+        List< Point3DGeo> bounds = null;
 
         if (file != null) {
             Path path = filter(file);
@@ -108,21 +108,21 @@ public class ObjExportToSTL {
         return bounds;
     }
 
-    private List<Point3D> getBounds(List<VertexGeometric> verticesG, double objXOffset, double objYOffset, boolean isTerrain) {
+    private List<Point3DGeo> getBounds(List<VertexGeometric> verticesG, double objXOffset, double objYOffset, boolean isTerrain) {
         double lonMax93 = Double.NEGATIVE_INFINITY;
         double latMax93 = Double.NEGATIVE_INFINITY;
         double latMin93 = Double.MAX_VALUE;
         double lonMin93 = Double.MAX_VALUE;
-        List<Point3D> result = new ArrayList<>();
-        List<Point3D> tmp = new ArrayList<>();
+        List<Point3DGeo> result = new ArrayList<>();
+        List<Point3DGeo> tmp = new ArrayList<>();
         //   if (isTerrain == true) {
-        List<Point3D> points = new ArrayList<>();
+        List<Point3DGeo> points = new ArrayList<>();
 
         for (VertexGeometric v : verticesG) {
             points.add(pro4JServices.convertLambert93ToWGS84(v.y + objYOffset, v.x + objXOffset));
         }
 
-        for (Point3D p : points) {
+        for (Point3DGeo p : points) {
             double x = p.getLongitude();
             double y = p.getLatitude();
             if (x > lonMax93) {
@@ -138,7 +138,7 @@ public class ObjExportToSTL {
                 latMin93 = y;
             }
         }
-        for (Point3D p : points) {
+        for (Point3DGeo p : points) {
             if (p.getLatitude() == latMin93) {
                 //  ptSW = p;
                 tmp.add(p);
@@ -189,12 +189,12 @@ public class ObjExportToSTL {
         String facet = "";
         Vec3d[] mainFace = new Vec3d[3];
         int i = 0;
-        List<Point3D> view = new ArrayList<>();
+        List<Point3DGeo> view = new ArrayList<>();
         // Main face
         for (FaceVertex fv : fvs) {
             double x = (fv.getV().x + objXOffset + 3.8);//3.5
             double y = (fv.getV().y + objYOffset + .5);//1
-            Point3D pt = pro4JServices.convertLambert93ToWGS84(y, x);
+            Point3DGeo pt = pro4JServices.convertLambert93ToWGS84(y, x);
             view.add(pt);
             // displayServices.displayPoints3DAsPath(view, 150.0, layer, Material.GREEN);
             mainFace[i++] = new Vec3d(pt.getLongitude(), pt.getLatitude(), fv.getV().z); //z * 2
@@ -242,9 +242,9 @@ public class ObjExportToSTL {
         double z0 = face[0].z;
         double z1 = face[1].z;
         double z2 = face[2].z;
-        List<Point3D> points = new ArrayList<>();
+        List<Point3DGeo> points = new ArrayList<>();
         for (Vec3d v : face) {
-            Point3D p = new Point3D(v.y, v.x, v.z);
+            Point3DGeo p = new Point3DGeo(v.y, v.x, v.z);
             points.add(p);
             // System.out.println(p);
         }
@@ -297,9 +297,9 @@ public class ObjExportToSTL {
         Vec3d edge2 = faceRot[2].sub(faceRot[0]);
         normal = Vec3d.cross(edge1, edge2).normalize();
         // System.out.println(xx1+" "+yy1);
-        List<Point3D> points = new ArrayList<>();
+        List<Point3DGeo> points = new ArrayList<>();
         for (Vec3d v : faceRot) {
-            Point3D p = new Point3D(v.y, v.x, v.z);
+            Point3DGeo p = new Point3DGeo(v.y, v.x, v.z);
             points.add(p);
             // System.out.println(p);
         }

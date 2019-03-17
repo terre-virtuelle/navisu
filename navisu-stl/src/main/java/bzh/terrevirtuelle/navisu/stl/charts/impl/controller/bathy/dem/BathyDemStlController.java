@@ -9,7 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.bathymetry.view.DisplayBathymetryServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
@@ -58,7 +58,7 @@ public class BathyDemStlController {
         double lonMin = listLatLon.get(0).getLongitude().getDegrees();
         double latMax = listLatLon.get(2).getLatitude().getDegrees();
         double lonMax = listLatLon.get(2).getLongitude().getDegrees();
-        List<Point3D> points = bathymetryDBServices.retrieveIn("bathy", latMin, lonMin, latMax, lonMax);
+        List<Point3DGeo> points = bathymetryDBServices.retrieveIn("bathy", latMin, lonMin, latMax, lonMax);
 
         points.stream().filter((p) -> (maxElevation < p.getElevation())).forEachOrdered((p) -> {
             maxElevation = p.getElevation();
@@ -72,7 +72,7 @@ public class BathyDemStlController {
         double latMax = positions.get(2).getLatitude().getDegrees();
         double lonMax = positions.get(2).getLongitude().getDegrees();
 
-        List<Point3D> points = bathymetryDBServices.retrieveIn("bathy", latMin, lonMin, latMax, lonMax);
+        List<Point3DGeo> points = bathymetryDBServices.retrieveIn("bathy", latMin, lonMin, latMax, lonMax);
 
     }
 

@@ -9,7 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.bathymetry.view.impl.DisplayBathymetryImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Point_dt;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
@@ -59,7 +59,7 @@ public class DisplayBathymetryController {
     double distMin;
     Point_dt pMin;
 
-    protected List<Point3D> points3d;
+    protected List<Point3DGeo> points3d;
     NumberFormat nf4 = new DecimalFormat("0.0000");
     NumberFormat nf1 = new DecimalFormat("0.0");
     int i = 0;
@@ -104,7 +104,7 @@ public class DisplayBathymetryController {
             points3d = bathymetryDBServices.retrieveIn("bathy", minLat, minLon, maxLat, maxLon);
             double latM = 90.0;
             double lonM = 0.0;
-            for (Point3D p : points3d) {
+            for (Point3DGeo p : points3d) {
                 if (latM >= p.getLatitude()) {
                     latM = p.getLatitude();
                 }
@@ -163,7 +163,7 @@ public class DisplayBathymetryController {
         l.addRenderable(surface);
     }
 
-    public void displaySounding(List<Point3D> points, RenderableLayer l) {
+    public void displaySounding(List<Point3DGeo> points, RenderableLayer l) {
 
         points.stream().forEach((pt) -> {
             displaySounding(pt.getLatitude(),
@@ -173,7 +173,7 @@ public class DisplayBathymetryController {
 
     }
 
-    public void displayDelaunaySounding(List<Point3D> points, RenderableLayer layer, double maxElevation) {
+    public void displayDelaunaySounding(List<Point3DGeo> points, RenderableLayer layer, double maxElevation) {
         guiAgentServices.getJobsManager().newJob("displayAllSounding", (progressHandle) -> {
             //Create Delaunay triangulation with bathymetry data
             List<Triangle_dt> triangles = delaunayServices.createDelaunay(points, maxElevation);

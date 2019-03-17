@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader.LOGGER;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Sounding;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -50,7 +50,7 @@ public class SoundgDBLoader
         } catch (SQLException ex) {
             Logger.getLogger(SoundgDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        List<Point3D> points3D = topologyServices.clipPointsZM(geoms, latMin, lonMin, latMax, lonMax);
+        List<Point3DGeo> points3D = topologyServices.clipPointsZM(geoms, latMin, lonMin, latMax, lonMax);
         points3D.stream().map((pt) -> new Sounding(pt.getLatitude(), pt.getLongitude(), pt.getElevation())).forEachOrdered((sounding) -> {
             soundings.add(sounding);
         });

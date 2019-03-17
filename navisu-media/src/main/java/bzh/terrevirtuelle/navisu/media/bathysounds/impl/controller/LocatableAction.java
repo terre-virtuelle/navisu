@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.media.bathysounds.impl.controller;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 
 /**
  *
@@ -14,5 +14,5 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
  */
 public interface LocatableAction {
 
-    void doIt(Point3D point);
+    void doIt(Point3DGeo point);
 }

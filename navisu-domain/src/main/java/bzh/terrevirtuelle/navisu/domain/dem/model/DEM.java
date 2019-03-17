@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.domain.dem.model;
 
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.*;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class DEM {
 
-    private List<Point3D> grid;
+    private List<Point3DGeo> grid;
 
     private double maxElevation;
 
@@ -26,7 +26,7 @@ public class DEM {
         grid = new ArrayList<>();
     }
 
-    public DEM(List<Point3D> grid) {
+    public DEM(List<Point3DGeo> grid) {
         this.grid = grid;
     }
 
@@ -53,7 +53,7 @@ public class DEM {
      *
      * @return the value of grid
      */
-    public List<Point3D> getGrid() {
+    public List<Point3DGeo> getGrid() {
         return grid;
     }
 
@@ -62,11 +62,11 @@ public class DEM {
      *
      * @param grid new value of grid
      */
-    public void setGrid(List<Point3D> grid) {
+    public void setGrid(List<Point3DGeo> grid) {
         this.grid = grid;
     }
 
-    public void add(Point3D point) {
+    public void add(Point3DGeo point) {
         grid.add(point);
     }
 

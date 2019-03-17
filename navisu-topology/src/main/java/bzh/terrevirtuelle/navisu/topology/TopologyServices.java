@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.topology;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import com.vividsolutions.jts.geom.Geometry;
@@ -100,9 +100,9 @@ public interface TopologyServices
 
     LatLon wktMultiPointToWwjLatLon(String geometry);
 
-    List<Point3D> wktMultiPointZMToPoint3DList(String geometry);
+    List<Point3DGeo> wktMultiPointZMToPoint3DList(String geometry);
 
-    Point3D wktPointZMToPoint3D(String geometry);
+    Point3DGeo wktPointZMToPoint3D(String geometry);
 
     /**
      *
@@ -200,6 +200,6 @@ public interface TopologyServices
 
     List<? extends Geo> clip(List<? extends Geo> geos, double latMin, double lonMin, double latMax, double lonMax);
     
-    List<Point3D> clipPointsZM(List<String> geoms, double latMin, double lonMin, double latMax, double lonMax);
+    List<Point3DGeo> clipPointsZM(List<String> geoms, double latMin, double lonMin, double latMax, double lonMax);
 
 }

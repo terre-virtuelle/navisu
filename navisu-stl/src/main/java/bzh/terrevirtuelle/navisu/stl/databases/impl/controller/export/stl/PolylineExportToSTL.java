@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
@@ -46,10 +46,10 @@ public class PolylineExportToSTL
     }
 
     @Override
-    public List<Point3D> export(String geometry, Map<String, String> labels) {
+    public List<Point3DGeo> export(String geometry, Map<String, String> labels) {
         path = topologyServices.wktMultiLineToWwjPath(geometry, verticalOffset);
 
-        List<Point3D> pts = jtsServices.getBuffer(geometry, 10.0, BufferParameters.CAP_FLAT);
+        List<Point3DGeo> pts = jtsServices.getBuffer(geometry, 10.0, BufferParameters.CAP_FLAT);
         return pts;
     }
 

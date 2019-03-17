@@ -462,7 +462,13 @@ public class Ship
 
     @Override
     public String toString() {
-        return "Ship{" + "mmsi=" + mmsi + ", imo=" + imo + ", name=" + name + ", country=" + country + ", latitude=" + latitude + ", longitude=" + longitude + ", heading=" + heading + ", cog=" + cog + ", sog=" + sog + ", rot=" + rot + ", width=" + width + ", length=" + length + ", draught=" + draught + ", shipType=" + shipType + ", navigationalStatus=" + navigationalStatus + ", electronicPositionDevice=" + electronicPositionDevice + ", callSign=" + callSign + ", ETA=" + ETA + ", destination=" + destination + ", localDateTime=" + localDateTime + '}';
+        return "Ship{" + "mmsi=" + mmsi + ", imo=" + imo + ", name=" + name + ", country=" + country 
+                + ", latitude=" + latitude + ", longitude=" + longitude +", elevation="+elevation + ", heading=" + heading + ", cog=" + cog + ", sog=" + sog + ", rot=" + rot 
+                + ", width=" + width + ", length=" + length + ", draught=" + draught 
+                + ", shipType=" + shipType + ", navigationalStatus=" + navigationalStatus 
+                + ", electronicPositionDevice=" + electronicPositionDevice + ", callSign=" + callSign 
+                + ", ETA=" + ETA + ", destination=" + destination 
+                + ", localDateTime=" + localDateTime + '}';
     }
 
     //228114000;"F/V AZKARRA";48.21091842651367;-4.760861873626709;18/05/2015;14:14:53;

@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.visualization.view;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import com.vividsolutions.jts.geom.Geometry;
@@ -25,13 +25,13 @@ import org.capcaval.c3.component.ComponentService;
 public interface DisplayServices
         extends ComponentService {
 
-    void displayPoints3D(List<Point3D> points, RenderableLayer layer);
+    void displayPoints3D(List<Point3DGeo> points, RenderableLayer layer);
 
-    void displayPoints3DAsPath(List<Point3D> points, RenderableLayer layer);
+    void displayPoints3DAsPath(List<Point3DGeo> points, RenderableLayer layer);
 
-    void displayPoints3DAsPath(List<Point3D> points, double height, RenderableLayer layer, Material material);
+    void displayPoints3DAsPath(List<Point3DGeo> points, double height, RenderableLayer layer, Material material);
 
-    void displayPoints3DAsTriangles(List<Point3D> points, RenderableLayer layer, Material material);
+    void displayPoints3DAsTriangles(List<Point3DGeo> points, RenderableLayer layer, Material material);
 
     void displayPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration);
 
@@ -45,17 +45,17 @@ public interface DisplayServices
 
     void displayPolygons(List<Polygon> points, RenderableLayer layer, Material material, double verticalExaggeration, double verticalOffset);
 
-    void displayGrid(List<List<Point3D>> latLons, RenderableLayer layer, Material material);
+    void displayGrid(List<List<Point3DGeo>> latLons, RenderableLayer layer, Material material);
 
-    void displayGrid(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration);
+    void displayGrid(Point3DGeo[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration);
 
-    List<Path> displayGridAsTriangles(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration);
+    List<Path> displayGridAsTriangles(Point3DGeo[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration);
 
-    List<List<Path>> displayGridAsTriangles(List<Point3D[][]> latLons, RenderableLayer layer, double verticalExaggeration);
+    List<List<Path>> displayGridAsTriangles(List<Point3DGeo[][]> latLons, RenderableLayer layer, double verticalExaggeration);
 
     void displayGrid(GridBox3D gridBox3D, RenderableLayer layer, Material material, double verticalExaggeration);
 
-    void displayGridAsPolygon(Point3D[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration);
+    void displayGridAsPolygon(Point3DGeo[][] latLons, RenderableLayer layer, Material material, double verticalExaggeration);
 
     void displayPlane(double minLat, double minLon, double maxLat, double maxLon, double height,
             Material material, RenderableLayer l);
@@ -75,9 +75,9 @@ public interface DisplayServices
 
     Path createPath(List<Position> pathPositions, Material material);
 
-    List<Path> createPaths(Point3D[][] latLons, double verticalExaggeration);
+    List<Path> createPaths(Point3DGeo[][] latLons, double verticalExaggeration);
 
-    List<List<Path>> createPaths(List<Point3D[][]> latLons, double verticalExaggeration);
+    List<List<Path>> createPaths(List<Point3DGeo[][]> latLons, double verticalExaggeration);
 
     List<List<Path>> createPaths(GridBox3D box3D, double verticalExaggeration);
 
@@ -99,7 +99,7 @@ public interface DisplayServices
 
     String mergeKML(String inputFilename, String outputFilename);
 
-    void exportASC(String outputFilename, Point3D[][] pts);
+    void exportASC(String outputFilename, Point3DGeo[][] pts);
 
-    Point3D[][] importASC(String outputFilename);
+    Point3DGeo[][] importASC(String outputFilename);
 }

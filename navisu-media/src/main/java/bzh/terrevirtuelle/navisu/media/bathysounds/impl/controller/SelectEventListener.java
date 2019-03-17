@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.media.bathysounds.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import gov.nasa.worldwind.Locatable;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.event.SelectListener;
@@ -37,7 +37,7 @@ public class SelectEventListener implements SelectListener {
         if (event.getEventAction().equals(selectEventId)) {
             if (event.getTopObject().getClass().equals(pickedObjClass)) {
                 Position targetPos = ((Locatable) event.getTopObject()).getPosition();
-                action.doIt(new Point3D(targetPos.getLatitude().getDegrees(),
+                action.doIt(new Point3DGeo(targetPos.getLatitude().getDegrees(),
                         targetPos.getLongitude().getDegrees()));
             }
         }

@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.media.bathysounds.impl.controller;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
@@ -39,8 +39,8 @@ public class BathySoundsComponentController {
     protected LayersManagerServices layersManagerServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected RenderableLayer layer;
-    protected Map<Point3D, String> soundMap;
-    protected Map<Point3D, String> imageMap;
+    protected Map<Point3DGeo, String> soundMap;
+    protected Map<Point3DGeo, String> imageMap;
     SelectEventListener clickAndSoundSelectListener;
 
     protected static final String SOUND_DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
@@ -69,7 +69,7 @@ public class BathySoundsComponentController {
                 String image = IMAGE_DATA_PATH + "/data/sounds/bathy/images/" + values[2];
                 String text = values[3];
                 String sound = "/data/sounds/bathy/sounds/" + values[4];
-                soundMap.put(new Point3D(lat, lon), SOUND_DATA_PATH + sound.trim());
+                soundMap.put(new Point3DGeo(lat, lon), SOUND_DATA_PATH + sound.trim());
 
                 PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(lat, lon, 0));
                 PointPlacemarkAttributes attrs = new PointPlacemarkAttributes();

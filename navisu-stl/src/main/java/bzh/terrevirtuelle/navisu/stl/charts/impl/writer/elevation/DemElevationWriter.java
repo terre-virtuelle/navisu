@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.stl.charts.impl.writer.elevation;
 
 //import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Polygon;
@@ -39,8 +39,8 @@ public abstract class DemElevationWriter {
     protected String BOTTOM_STR;
     protected double bottom;
     protected double magnification;
-    protected List<Point3D> bottomPositions;
-    protected List<Point3D> topPositions;
+    protected List<Point3DGeo> bottomPositions;
+    protected List<Point3DGeo> topPositions;
     protected int index;
     protected String TEXTURE = "common/metal.jpg";
     int i = 0;
@@ -132,8 +132,8 @@ public abstract class DemElevationWriter {
         for (int u = 0; u < ptsCountX; u++) {
             double el = elevations[u][0];
             el *= magnification;
-            topPositions.add(new Point3D(pos, el, 0.0));
-            bottomPositions.add(new Point3D(pos, bottom, 0.0));
+            topPositions.add(new Point3DGeo(pos, el, 0.0));
+            bottomPositions.add(new Point3DGeo(pos, bottom, 0.0));
             pos += tileSpaceX;
         }
         result += createBoundaryFace("", bottomPositions, topPositions, TEXTURE, "North face");
@@ -144,8 +144,8 @@ public abstract class DemElevationWriter {
         for (int u = 0; u < ptsCountX; u++) {
             double el = elevations[u][ptsCountY - 1];
             el *= magnification;
-            topPositions.add(new Point3D(pos, el, -tileSideX));
-            bottomPositions.add(new Point3D(pos, bottom, -tileSideX));
+            topPositions.add(new Point3DGeo(pos, el, -tileSideX));
+            bottomPositions.add(new Point3DGeo(pos, bottom, -tileSideX));
             pos += tileSpaceX;
         }
         result += createBoundaryFace("", bottomPositions, topPositions, TEXTURE, "South face");
@@ -157,8 +157,8 @@ public abstract class DemElevationWriter {
         for (int v = 0; v < ptsCountY; v++) {
             double el = elevations[0][v];
             el *= magnification;
-            topPositions.add(new Point3D(0.0, el, pos));
-            bottomPositions.add(new Point3D(0.0, bottom, pos));
+            topPositions.add(new Point3DGeo(0.0, el, pos));
+            bottomPositions.add(new Point3DGeo(0.0, bottom, pos));
             pos += tileSpaceY;
         }
         result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'>",
@@ -170,8 +170,8 @@ public abstract class DemElevationWriter {
         for (int v = 0; v < ptsCountY; v++) {
             double el = elevations[ptsCountY - 1][v];
             el *= magnification;
-            topPositions.add(new Point3D(-tileSideX, el, pos));
-            bottomPositions.add(new Point3D(-tileSideX, bottom, pos));
+            topPositions.add(new Point3DGeo(-tileSideX, el, pos));
+            bottomPositions.add(new Point3DGeo(-tileSideX, bottom, pos));
             pos += tileSpaceY;
         }
         result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'>",
@@ -203,8 +203,8 @@ public abstract class DemElevationWriter {
         return txt;
     }
 
-    public String createBoundaryFace(String transform, List<Point3D> bottom,
-            List<Point3D> height, String texture, String comment) {
+    public String createBoundaryFace(String transform, List<Point3DGeo> bottom,
+            List<Point3DGeo> height, String texture, String comment) {
         String txt = " <!--" + comment + "-->\n"
                 + transform
                 + "<Shape>\n"

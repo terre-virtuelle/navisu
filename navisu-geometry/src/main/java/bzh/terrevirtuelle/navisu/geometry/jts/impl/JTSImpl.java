@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.geometry.jts.impl;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTS;
@@ -50,7 +50,7 @@ public class JTSImpl
     boolean[][] isInit;
 
     @Override
-    public List<Coordinate> toListCoordinates(List<Point3D> pts) {
+    public List<Coordinate> toListCoordinates(List<Point3DGeo> pts) {
         List<Coordinate> coordJTSs = new ArrayList<>();
         pts.stream().forEach((p) -> {
             coordJTSs.add(new Coordinate(p.getLongitude(), p.getLatitude(), p.getElevation()));
@@ -59,17 +59,17 @@ public class JTSImpl
     }
 
     @Override
-    public Coordinate[] toTabCoordinates(List<Point3D> pts) {
+    public Coordinate[] toTabCoordinates(List<Point3DGeo> pts) {
         Coordinate[] tmp = new Coordinate[pts.size()];
         for (int i = 0; i < tmp.length; i++) {
-            Point3D pt = pts.get(i);
+            Point3DGeo pt = pts.get(i);
             tmp[i] = new Coordinate(pt.getLongitude(), pt.getLatitude(), pt.getElevation());
         }
         return tmp;
     }
 
     @Override
-    public Geometry getConcaveHull(List<Point3D> points, double threshold) {
+    public Geometry getConcaveHull(List<Point3DGeo> points, double threshold) {
         List<Coordinate> coordinatesJTS = toListCoordinates(points);
         Coordinate[] coord = new Coordinate[coordinatesJTS.size()];
         for (int c = 0; c < coord.length; c++) {
@@ -83,16 +83,16 @@ public class JTSImpl
     }
 
     @Override
-    public List<Point3D> toListPoint3D(Coordinate[] coord) {
-        List<Point3D> result = new ArrayList<>();
+    public List<Point3DGeo> toListPoint3D(Coordinate[] coord) {
+        List<Point3DGeo> result = new ArrayList<>();
         for (Coordinate c : coord) {
-            result.add(new Point3D(c.y, c.x, c.z));
+            result.add(new Point3DGeo(c.y, c.x, c.z));
         }
         return result;
     }
 
     @Override
-    public Geometry getLineString(List<Point3D> points) {
+    public Geometry getLineString(List<Point3DGeo> points) {
         List<Coordinate> coordinatesJTS = toListCoordinates(points);
         Coordinate[] coord = new Coordinate[coordinatesJTS.size()];
         for (int c = 0; c < coord.length; c++) {
@@ -104,7 +104,7 @@ public class JTSImpl
     }
 
     @Override
-    public Geometry getPolygon(List<Point3D> points) {
+    public Geometry getPolygon(List<Point3DGeo> points) {
         List<Coordinate> coordinatesJTS = toListCoordinates(points);
         Coordinate[] coord = new Coordinate[coordinatesJTS.size()];
         for (int c = 0; c < coord.length; c++) {
@@ -115,7 +115,7 @@ public class JTSImpl
     }
 
     @Override
-    public boolean contains(Geometry geom, Point3D pt3D) {
+    public boolean contains(Geometry geom, Point3DGeo pt3D) {
         boolean result;
         Coordinate coord = new Coordinate(pt3D.getLongitude(), pt3D.getLatitude(), 0);
         GeometryFactory geometryFactory = new GeometryFactory();
@@ -125,8 +125,8 @@ public class JTSImpl
     }
 
     @Override
-    public List<Point3D> merge(List<Point3D> pts0, List<Point3D> pts1) {
-        List<Point3D> tmp = new ArrayList<>();
+    public List<Point3DGeo> merge(List<Point3DGeo> pts0, List<Point3DGeo> pts1) {
+        List<Point3DGeo> tmp = new ArrayList<>();
         Coordinate[] tab0 = toTabCoordinates(pts0);
         Coordinate[] tab1 = toTabCoordinates(pts1);
         GeometryFactory geomFactory = new GeometryFactory();
@@ -136,9 +136,9 @@ public class JTSImpl
         multiPoint1.setSRID(4326);
         Geometry geom = multiPoint0.union(multiPoint1);
         Coordinate[] tab3 = geom.getCoordinates();
-        Set<Point3D> set = new HashSet<>();
+        Set<Point3DGeo> set = new HashSet<>();
         for (Coordinate c : tab3) {
-            set.add(new Point3D(c.y, c.x, c.z));
+            set.add(new Point3DGeo(c.y, c.x, c.z));
         }
         tmp.addAll(set);
         return tmp;
@@ -150,7 +150,7 @@ public class JTSImpl
     }
 
     @Override
-    public Point3D[][] mergePointsToGrid(List<Point3D> points, Point3D[][] grid) {
+    public Point3DGeo[][] mergePointsToGrid(List<Point3DGeo> points, Point3DGeo[][] grid) {
         int line = grid[0].length;
         int col = grid[1].length;
         GeometryFactory geometryFactory = new GeometryFactory();
@@ -159,11 +159,11 @@ public class JTSImpl
         New grid
         gridCoord with JTS Point
          */
-        Point3D[][] result = new Point3D[line][col];
+        Point3DGeo[][] result = new Point3DGeo[line][col];
         Point[][] gridCoord = new Point[line][col];
         for (int i = 0; i < line; i++) {
             for (int j = 0; j < col; j++) {
-                result[i][j] = new Point3D(grid[i][j].getLatitude(), grid[i][j].getLongitude(), grid[i][j].getElevation());
+                result[i][j] = new Point3DGeo(grid[i][j].getLatitude(), grid[i][j].getLongitude(), grid[i][j].getElevation());
                 gridCoord[i][j] = geometryFactory.createPoint(new Coordinate(grid[i][j].getLongitude(), grid[i][j].getLatitude(), grid[i][j].getElevation()));
             }
         }
@@ -214,7 +214,7 @@ public class JTSImpl
     }
 
     @Override
-    public List<Path> createDelaunayToPath(List<Point3D> pts) {
+    public List<Path> createDelaunayToPath(List<Point3DGeo> pts) {
         Coordinate[] coordinateTab = toTabCoordinates(pts);
         MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
         ArrayList<Geometry> triangles = new ArrayList<>();
@@ -229,7 +229,7 @@ public class JTSImpl
     }
 
     @Override
-    public List<Geometry> createDelaunay(List<Point3D> pts) {
+    public List<Geometry> createDelaunay(List<Point3DGeo> pts) {
         Coordinate[] coordinateTab = toTabCoordinates(pts);
         MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
         ArrayList<Geometry> triangles = new ArrayList<>();
@@ -243,8 +243,8 @@ public class JTSImpl
     }
 
     @Override
-    public List<Path> createDelaunayToPath(Point3D[][] pts) {
-        List<Point3D> data = new ArrayList<>();
+    public List<Path> createDelaunayToPath(Point3DGeo[][] pts) {
+        List<Point3DGeo> data = new ArrayList<>();
         for (int i = 0; i < pts[0].length; i++) {
             for (int j = 0; j < pts[1].length; j++) {
                 data.add(pts[i][j]);
@@ -254,14 +254,14 @@ public class JTSImpl
     }
 
     @Override
-    public List<Path> createDelaunayToPath(List<Point3D> pts, double maxElevation) {
-        List<Point3D> data = new ArrayList<>();
+    public List<Path> createDelaunayToPath(List<Point3DGeo> pts, double maxElevation) {
+        List<Point3DGeo> data = new ArrayList<>();
         double height;
-        for (Point3D p : pts) {
+        for (Point3DGeo p : pts) {
             if (maxElevation != 0) {
-                data.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
+                data.add(new Point3DGeo(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
             } else {
-                data.add(new Point3D(p.getLatitude(), p.getLongitude(), p.getElevation()));
+                data.add(new Point3DGeo(p.getLatitude(), p.getLongitude(), p.getElevation()));
             }
         }
         Coordinate[] coordinateTab = toTabCoordinates(data);
@@ -278,8 +278,8 @@ public class JTSImpl
     }
 
     @Override
-    public List<Path> createDelaunayToPath(Point3D[][] pts, double maxElevation) {
-        List<Point3D> data = new ArrayList<>();
+    public List<Path> createDelaunayToPath(Point3DGeo[][] pts, double maxElevation) {
+        List<Point3DGeo> data = new ArrayList<>();
         for (int i = 0; i < pts[0].length; i++) {
             for (int j = 0; j < pts[1].length; j++) {
                 data.add(pts[i][j]);
@@ -289,7 +289,7 @@ public class JTSImpl
     }
 
     @Override
-    public List<Path> createDelaunayWithFilterOnAreaToPath(List<Point3D> pts, double filter) {
+    public List<Path> createDelaunayWithFilterOnAreaToPath(List<Point3DGeo> pts, double filter) {
         Coordinate[] coordinateTab = toTabCoordinates(pts);
         MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
         ArrayList<Geometry> triangles = new ArrayList<>();
@@ -304,7 +304,7 @@ public class JTSImpl
     }
 
     @Override
-    public List<Geometry> createDelaunayWithFilterOnArea(List<Point3D> pts, double filter) {
+    public List<Geometry> createDelaunayWithFilterOnArea(List<Point3DGeo> pts, double filter) {
         Coordinate[] coordinateTab = toTabCoordinates(pts);
         MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
         ArrayList<Geometry> triangles = new ArrayList<>();
@@ -323,8 +323,8 @@ public class JTSImpl
         return result;
     }
 
-    public List<Geometry> createDelaunay(Point3D[][] pts) {
-        List<Point3D> data = new ArrayList<>();
+    public List<Geometry> createDelaunay(Point3DGeo[][] pts) {
+        List<Point3DGeo> data = new ArrayList<>();
         for (int i = 0; i < pts[0].length; i++) {
             for (int j = 0; j < pts[1].length; j++) {
                 data.add(pts[i][j]);
@@ -347,7 +347,7 @@ public class JTSImpl
     }
 
     @Override
-    public List<Path> createDelaunayWithFilterOnLengthToPath(List<Point3D> pts, double filter) {
+    public List<Path> createDelaunayWithFilterOnLengthToPath(List<Point3DGeo> pts, double filter) {
         Coordinate[] coordinateTab = toTabCoordinates(pts);
         MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
         ArrayList<Geometry> triangles = new ArrayList<>();
@@ -362,10 +362,10 @@ public class JTSImpl
     }
 
     @Override
-    public List<Path> createDelaunayWithFilterToPath(List<Point3D> pts, double filter, double maxElevation) {
-        List<Point3D> bathy = new ArrayList<>();
+    public List<Path> createDelaunayWithFilterToPath(List<Point3DGeo> pts, double filter, double maxElevation) {
+        List<Point3DGeo> bathy = new ArrayList<>();
         pts.forEach((p) -> {
-            bathy.add(new Point3D(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
+            bathy.add(new Point3DGeo(p.getLatitude(), p.getLongitude(), maxElevation - p.getElevation()));
         });
         Coordinate[] coordinateTab = toTabCoordinates(bathy);
         MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
@@ -381,8 +381,8 @@ public class JTSImpl
     }
 
     @Override
-    public List<Point3D> getBuffer(Geometry geom, double bufferDistance, int capSize) {
-        List<Point3D> result = new ArrayList<>();
+    public List<Point3DGeo> getBuffer(Geometry geom, double bufferDistance, int capSize) {
+        List<Point3DGeo> result = new ArrayList<>();
         BufferOp bufferOp = new BufferOp(geom);
         bufferOp.setEndCapStyle(capSize);//CAP_ROUND);
         Geometry offsetBuffer = bufferOp.getResultGeometry(bufferDistance);
@@ -392,14 +392,14 @@ public class JTSImpl
         }
         Polygon poly = new Polygon(offsetPathPositions);
         poly.outerBoundary().forEach((p) -> {
-            result.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
+            result.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
         });
         return result;
     }
 
     @Override
-    public List<Point3D> getBuffer(String wkt, double bufferDistance, int capSize) {
-        List<Point3D> result = new ArrayList<>();
+    public List<Point3DGeo> getBuffer(String wkt, double bufferDistance, int capSize) {
+        List<Point3DGeo> result = new ArrayList<>();
         WKTReader wktReader = new WKTReader();
         Geometry geometry = null;
         Pair<Double, Double> location = null;
@@ -419,7 +419,7 @@ public class JTSImpl
         }
         Polygon poly = new Polygon(offsetPathPositions);
         poly.outerBoundary().forEach((p) -> {
-            result.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
+            result.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
         });
         return result;
     }

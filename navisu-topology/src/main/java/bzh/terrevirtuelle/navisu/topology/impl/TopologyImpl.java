@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.topology.impl;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.topology.Topology;
@@ -291,8 +291,8 @@ public class TopologyImpl
     }
 
     @Override
-    public List<Point3D> wktMultiPointZMToPoint3DList(String geometry) {
-        List<Point3D> result = new ArrayList<>();
+    public List<Point3DGeo> wktMultiPointZMToPoint3DList(String geometry) {
+        List<Point3DGeo> result = new ArrayList<>();
         if (geometry.contains("MULTIPOINT ZM")) {
             String tmp = geometry.replace("MULTIPOINT ZM (", "");
             tmp = tmp.replace(")", "");
@@ -302,7 +302,7 @@ public class TopologyImpl
                     for (int i = 0; i < posTab.length; i++) {
                         try {
                             String[] posTab0 = posTab[i].split("\\s+");
-                            result.add(new Point3D(Double.valueOf(posTab0[1].trim()), Double.valueOf(posTab0[0].trim()), Double.valueOf(posTab0[2].trim())));
+                            result.add(new Point3DGeo(Double.valueOf(posTab0[1].trim()), Double.valueOf(posTab0[0].trim()), Double.valueOf(posTab0[2].trim())));
                         } catch (NumberFormatException e) {
 
                         }
@@ -314,8 +314,8 @@ public class TopologyImpl
     }
 
     @Override
-    public Point3D wktPointZMToPoint3D(String geometry) {
-        Point3D result = null;
+    public Point3DGeo wktPointZMToPoint3D(String geometry) {
+        Point3DGeo result = null;
         if (geometry.contains("POINT ZM")) {
             String tmp = geometry.replace("POINT ZM (", "");
             tmp = tmp.replace(")", "");
@@ -323,7 +323,7 @@ public class TopologyImpl
                 String[] posTab = tmp.split("\\s+");
                 if (posTab.length != 0) {
                     try {
-                        result = new Point3D(Double.valueOf(posTab[1].trim()), Double.valueOf(posTab[0].trim()), Double.valueOf(posTab[2].trim()));
+                        result = new Point3DGeo(Double.valueOf(posTab[1].trim()), Double.valueOf(posTab[0].trim()), Double.valueOf(posTab[2].trim()));
                     } catch (NumberFormatException e) {
 
                     }
@@ -675,8 +675,8 @@ public class TopologyImpl
     }
 
     @Override
-    public List<Point3D> clipPointsZM(List<String> geoms, double latMin, double lonMin, double latMax, double lonMax) {
-        List<Point3D> result = new ArrayList<>();
+    public List<Point3DGeo> clipPointsZM(List<String> geoms, double latMin, double lonMin, double latMax, double lonMax) {
+        List<Point3DGeo> result = new ArrayList<>();
         GeometryFactory geometryFactory = new GeometryFactory();
         Coordinate[] coord = new Coordinate[5];
         coord[0] = new Coordinate(lonMin, latMin, 0);
@@ -691,7 +691,7 @@ public class TopologyImpl
             String[] tab = g.trim().split("\\s+");
             Point point = geometryFactory.createPoint(new Coordinate(Double.parseDouble(tab[0]), Double.parseDouble(tab[1])));
             if (clipper.contains(point)) {
-                result.add(new Point3D(point.getY(), point.getX(), Double.parseDouble(tab[2])));
+                result.add(new Point3DGeo(point.getY(), point.getX(), Double.parseDouble(tab[2])));
             }
         }
         return result;

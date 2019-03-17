@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.instruments.sonar.impl.controller;
 
 import bzh.terrevirtuelle.navisu.bathymetry.controller.events.BathymetryEvent;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.instruments.sonar.impl.SonarImpl;
 import bzh.terrevirtuelle.navisu.widgets.sonar.sonar3D.Points3D;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class SonarController {
             @Override
             public void notifyBathymetryMessageChanged(DEM data) {
                 if (data.size() != 0) {
-                    List<Point3D> points = data.getGrid();
+                    List<Point3DGeo> points = data.getGrid();
                     minLat = 90.0;
                     maxLat = 0.0;
                     minLon = 0.0;
@@ -84,7 +84,7 @@ public class SonarController {
                     });
                    // System.out.println(minLat + " " + maxLat + " " + minLon + " " + maxLon + " " + minElevation + " " + maxElevation);
                     List<javafx.geometry.Point3D> list = new ArrayList<>();
-                    for (Point3D p : points) {
+                    for (Point3DGeo p : points) {
                         list.add(new javafx.geometry.Point3D(p.getLatitude(), p.getLongitude(), p.getElevation()));
                     }
                     Platform.runLater(() -> {

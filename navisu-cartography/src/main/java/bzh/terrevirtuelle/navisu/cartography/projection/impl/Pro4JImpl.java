@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.cartography.projection.impl;
 
 import bzh.terrevirtuelle.navisu.cartography.projection.Pro4J;
 import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class Pro4JImpl
     ObjComponentServices objComponentServices;
 
     @Override
-    public Point3D convertLambert93ToWGS84(double lat, double lon) {
+    public Point3DGeo convertLambert93ToWGS84(double lat, double lon) {
         CRSFactory factory = new CRSFactory();
         CoordinateReferenceSystem dstCrs = factory.createFromName("EPSG:4326");//4326
         CoordinateReferenceSystem srcCrs = factory.createFromName("EPSG:2154");//Lambert93
@@ -40,26 +40,26 @@ public class Pro4JImpl
         ProjCoordinate dstCoord = new ProjCoordinate();
 
         transform.transform(srcCoord, dstCoord);
-        return new Point3D(dstCoord.y, dstCoord.x, 0.0);
+        return new Point3DGeo(dstCoord.y, dstCoord.x, 0.0);
     }
 
     @Override
-    public Point3D convertLambert93ToWGS84(Point3D pt) {
+    public Point3DGeo convertLambert93ToWGS84(Point3DGeo pt) {
         return convertLambert93ToWGS84(pt.getLatitude(), pt.getLongitude());
 
     }
 
     @Override
-    public List<Point3D> convertLambert93ToWGS84(List<Point3D> pts) {
-        List<Point3D> result = new ArrayList<>();
-        for (Point3D p : pts) {
+    public List<Point3DGeo> convertLambert93ToWGS84(List<Point3DGeo> pts) {
+        List<Point3DGeo> result = new ArrayList<>();
+        for (Point3DGeo p : pts) {
             result.add(convertLambert93ToWGS84(p));
         }
         return result;
     }
 
     @Override
-    public Point3D convertCoordinates(String epsgSrc, String epsgdest, Point3D pt) {
+    public Point3DGeo convertCoordinates(String epsgSrc, String epsgdest, Point3DGeo pt) {
         CRSFactory factory = new CRSFactory();
         CoordinateReferenceSystem srcCrs = factory.createFromName(epsgSrc);
         CoordinateReferenceSystem dstCrs = factory.createFromName(epsgdest);
@@ -71,7 +71,7 @@ public class Pro4JImpl
         ProjCoordinate dstCoord = new ProjCoordinate();
 
         transform.transform(srcCoord, dstCoord);
-        return new Point3D(dstCoord.y, dstCoord.x, 0.0);
+        return new Point3DGeo(dstCoord.y, dstCoord.x, 0.0);
     }
 
     @Override

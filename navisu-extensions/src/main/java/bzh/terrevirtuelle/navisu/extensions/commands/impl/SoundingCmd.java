@@ -65,7 +65,7 @@ public class SoundingCmd
         double lon = depth.getLongitude();
         navigationDataSet = new NavigationDataSet();
 
-        List<Sounding> points = soundgDBLoader.retrieveObjectsIn(lat, lon, lat + 0.005, lon + 0.005);
+        List<Sounding> points = soundgDBLoader.retrieveObjectsIn(lat, lon, lat + 0.05, lon + 0.05);
         points.forEach((p) -> {
             navigationDataSet.add(new Depth(p.getLatitude(), p.getLongitude(), p.getDepth()));
         });

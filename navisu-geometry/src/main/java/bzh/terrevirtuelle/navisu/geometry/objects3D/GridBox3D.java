@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.geometry.objects3D;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
 
@@ -20,7 +20,7 @@ public class GridBox3D {
 
     private final double baseAltitude = 0.0;
     private double verticalExaggeration;
-    Point3D[][] grid;
+    Point3DGeo[][] grid;
     ArrayList<Position> topIsoLatPositions0 = new ArrayList<>();
     ArrayList<Position> baseIsoLatPositions0 = new ArrayList<>();
     ArrayList<Position> topIsoLatPositions1 = new ArrayList<>();
@@ -37,11 +37,11 @@ public class GridBox3D {
     int line;
     int col;
 
-    public GridBox3D(Point3D[][] grid) {
+    public GridBox3D(Point3DGeo[][] grid) {
         this(grid, 1.0);
     }
 
-    public GridBox3D(Point3D[][] grid, double verticalExaggeration) {
+    public GridBox3D(Point3DGeo[][] grid, double verticalExaggeration) {
         this.grid = grid;
         this.verticalExaggeration = verticalExaggeration;
 
@@ -94,7 +94,7 @@ public class GridBox3D {
         gridPaths = createPaths(grid);
     }
 
-    public Point3D[][] getGrid() {
+    public Point3DGeo[][] getGrid() {
         return this.grid;
     }
 
@@ -105,7 +105,7 @@ public class GridBox3D {
         return result;
     }
 
-    private List<Path> createPaths(Point3D[][] latLons) {
+    private List<Path> createPaths(Point3DGeo[][] latLons) {
         List<Position> positions0;
         List<Position> positions1;
         List<Path> result = new ArrayList<>();
@@ -311,7 +311,7 @@ public class GridBox3D {
         System.out.println(line +" "+col+" "+l0+" "+c0+" "+l1+" "+c1);
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - 1; j++) {
-                Point3D[][] gTab = new Point3D[l0][c0];
+                Point3DGeo[][] gTab = new Point3DGeo[l0][c0];
                 for (int u = 0; u < l0; u++) {
                     for (int v = 0; v < c0; v++) {
                         gTab[u][v] = grid[u + i][v + j];
@@ -320,7 +320,7 @@ public class GridBox3D {
                 result[k++] = new GridBox3D(gTab, verticalExaggeration);
             }
         }
-        Point3D[][] gTab = new Point3D[l1][c1];
+        Point3DGeo[][] gTab = new Point3DGeo[l1][c1];
         for (int u = 0; u < l1; u++) {
             for (int v = 0; v < c1; v++) {
                 gTab[u][v] = grid[u + n - 1][v + n - 1];

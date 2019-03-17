@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.geometry.objects3D.obj.impl;
 
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import org.capcaval.c3.component.ComponentState;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponent;
@@ -67,15 +67,15 @@ public class ObjComponentImpl
     }
 
     @Override
-    public Point3D toPoint3D(VertexGeometric vertexGeometric) {
-        return new Point3D(vertexGeometric.x, vertexGeometric.y, vertexGeometric.z);
+    public Point3DGeo toPoint3D(VertexGeometric vertexGeometric) {
+        return new Point3DGeo(vertexGeometric.x, vertexGeometric.y, vertexGeometric.z);
     }
 
     @Override
-    public List<Point3D> toPoint3Ds(List<VertexGeometric> vertexGeometrics) {
-        List<Point3D> result = new ArrayList<>();
+    public List<Point3DGeo> toPoint3Ds(List<VertexGeometric> vertexGeometrics) {
+        List<Point3DGeo> result = new ArrayList<>();
         vertexGeometrics.forEach((v) -> {
-            result.add(new Point3D(v.x, v.y, v.z));
+            result.add(new Point3DGeo(v.x, v.y, v.z));
         });
         return result;
     }

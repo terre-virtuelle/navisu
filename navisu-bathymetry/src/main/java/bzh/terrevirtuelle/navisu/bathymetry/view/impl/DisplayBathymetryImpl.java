@@ -16,7 +16,7 @@ import bzh.terrevirtuelle.navisu.bathymetry.view.DisplayBathymetryServices;
 import bzh.terrevirtuelle.navisu.bathymetry.view.impl.controller.DisplayBathymetryController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
@@ -108,12 +108,12 @@ public class DisplayBathymetryImpl
     }
 
     @Override
-    public void displaySounding(List<Point3D> points, RenderableLayer l) {
+    public void displaySounding(List<Point3DGeo> points, RenderableLayer l) {
         controller.displaySounding(points, l);
     }
 
     @Override
-    public void displayDelaunaySounding(List<Point3D> points, RenderableLayer layer, double maxElevation) {
+    public void displayDelaunaySounding(List<Point3DGeo> points, RenderableLayer layer, double maxElevation) {
          controller.displayDelaunaySounding(points, layer, maxElevation);
     }
 }

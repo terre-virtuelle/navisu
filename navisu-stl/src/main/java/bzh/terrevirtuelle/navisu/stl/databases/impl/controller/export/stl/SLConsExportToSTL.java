@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
@@ -68,7 +68,7 @@ public class SLConsExportToSTL {
             for (Geo geo : objects) {
                 String geometry = geo.getGeom();
                 if (geometry.contains("MULTILINESTRING") || geometry.contains("LINESTRING")) {
-                    List<Point3D> points = jtsServices.getBuffer(geometry, 0.00012, BufferParameters.CAP_FLAT);//0.0001
+                    List<Point3DGeo> points = jtsServices.getBuffer(geometry, 0.00012, BufferParameters.CAP_FLAT);//0.0001
 
                     Geometry geom = jtsServices.getPolygon(points);
                     if (geom.getArea() < 2.0E-5) {

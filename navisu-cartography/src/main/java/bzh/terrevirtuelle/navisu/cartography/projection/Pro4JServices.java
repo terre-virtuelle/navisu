@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.cartography.projection;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
@@ -15,13 +15,13 @@ import org.capcaval.c3.component.ComponentService;
 public interface Pro4JServices
         extends ComponentService {
 
-    Point3D convertLambert93ToWGS84(double lat, double lon);
+    Point3DGeo convertLambert93ToWGS84(double lat, double lon);
 
-    Point3D convertLambert93ToWGS84(Point3D pt);
+    Point3DGeo convertLambert93ToWGS84(Point3DGeo pt);
 
-    List<Point3D> convertLambert93ToWGS84(List<Point3D> pt);
+    List<Point3DGeo> convertLambert93ToWGS84(List<Point3DGeo> pt);
     
-    Point3D convertCoordinates(String epsgSrc, String epsgdest, Point3D pt);
+    Point3DGeo convertCoordinates(String epsgSrc, String epsgdest, Point3DGeo pt);
 
     String convertObjLambert93ToObjWGS84(String filename);
      

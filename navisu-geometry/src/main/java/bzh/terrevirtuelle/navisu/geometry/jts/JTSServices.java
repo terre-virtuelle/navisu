@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.geometry.jts;
 
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.render.Path;
@@ -19,45 +19,45 @@ import org.capcaval.c3.component.ComponentService;
 public interface JTSServices
         extends ComponentService {
 
-    List<Coordinate> toListCoordinates(List<Point3D> pts);
+    List<Coordinate> toListCoordinates(List<Point3DGeo> pts);
 
-    List<Point3D> toListPoint3D(Coordinate[] coord);
+    List<Point3DGeo> toListPoint3D(Coordinate[] coord);
 
-    Coordinate[] toTabCoordinates(List<Point3D> pts);
+    Coordinate[] toTabCoordinates(List<Point3DGeo> pts);
 
-    Geometry getConcaveHull(List<Point3D> points, double threshold);
+    Geometry getConcaveHull(List<Point3DGeo> points, double threshold);
 
-    Geometry getLineString(List<Point3D> points);
+    Geometry getLineString(List<Point3DGeo> points);
 
-    Geometry getPolygon(List<Point3D> points);
+    Geometry getPolygon(List<Point3DGeo> points);
 
-    boolean contains(Geometry geom, Point3D pt3D);
+    boolean contains(Geometry geom, Point3DGeo pt3D);
 
-    List<Point3D> merge(List<Point3D> pts0, List<Point3D> pts1);
+    List<Point3DGeo> merge(List<Point3DGeo> pts0, List<Point3DGeo> pts1);
 
-    List<Path> createDelaunayToPath(List<Point3D> pts);
+    List<Path> createDelaunayToPath(List<Point3DGeo> pts);
 
-    List<Geometry> createDelaunay(List<Point3D> pts);
+    List<Geometry> createDelaunay(List<Point3DGeo> pts);
 
-    List<Path> createDelaunayToPath(Point3D[][] pts);
+    List<Path> createDelaunayToPath(Point3DGeo[][] pts);
 
-    List<Path> createDelaunayToPath(Point3D[][] pts, double maxElevation);
+    List<Path> createDelaunayToPath(Point3DGeo[][] pts, double maxElevation);
 
-    List<Path> createDelaunayToPath(List<Point3D> pts, double maxElevation);
+    List<Path> createDelaunayToPath(List<Point3DGeo> pts, double maxElevation);
 
-    List<Path> createDelaunayWithFilterOnAreaToPath(List<Point3D> pts, double filter);
+    List<Path> createDelaunayWithFilterOnAreaToPath(List<Point3DGeo> pts, double filter);
 
-    List<Path> createDelaunayWithFilterOnLengthToPath(List<Point3D> pts, double filter);
+    List<Path> createDelaunayWithFilterOnLengthToPath(List<Point3DGeo> pts, double filter);
 
-    List<Geometry> createDelaunayWithFilterOnArea(List<Point3D> pts, double filter);
+    List<Geometry> createDelaunayWithFilterOnArea(List<Point3DGeo> pts, double filter);
 
-    List<Path> createDelaunayWithFilterToPath(List<Point3D> pts, double filter, double maxElevation);
+    List<Path> createDelaunayWithFilterToPath(List<Point3DGeo> pts, double filter, double maxElevation);
 
-    Point3D[][] mergePointsToGrid(List<Point3D> points, Point3D[][] grid);
+    Point3DGeo[][] mergePointsToGrid(List<Point3DGeo> points, Point3DGeo[][] grid);
 
     boolean[][] getPoint3DInit();
 
-    List<Point3D> getBuffer(Geometry geom, double bufferDistance, int capSize);
+    List<Point3DGeo> getBuffer(Geometry geom, double bufferDistance, int capSize);
 
-    List<Point3D> getBuffer(String geom, double bufferDistance, int capSize);
+    List<Point3DGeo> getBuffer(String geom, double bufferDistance, int capSize);
 }

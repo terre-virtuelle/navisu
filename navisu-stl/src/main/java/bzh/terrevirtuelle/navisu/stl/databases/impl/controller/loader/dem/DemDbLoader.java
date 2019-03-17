@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem;
 
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import java.sql.Connection;
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class DemDbLoader {
 
     private final Connection connection;
     private final DemDBServices demDBServices;
-    private List<Point3D> points;
+    private List<Point3DGeo> points;
     private double maxDepth = 0.0;
 
     public DemDbLoader(Connection connection, DemDBServices demDBServices) {

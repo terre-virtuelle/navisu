@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.kml;
 
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -40,7 +40,7 @@ public interface KmlComponentServices
 
     void setScale(double x, double y, double z);
 
-    void moveTo(Point3D point);
+    void moveTo(Point3DGeo point);
 
     List<Placemark> getPlacemarkFromKmlCatalog(String catalog);
 }

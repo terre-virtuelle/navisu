@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
     "id"
 })
 @XmlRootElement
-public class Point3D
+public class Point3DGeo
         implements NavigationData {
 
     private long id = 0;
@@ -35,27 +35,27 @@ public class Point3D
 
     public double elevation = 0.0;
 
-    public Point3D() {
+    public Point3DGeo() {
     }
 
-    public Point3D(double lat, double lon) {
+    public Point3DGeo(double lat, double lon) {
         this.longitude = lon;
         this.latitude = lat;
     }
 
-    public Point3D(double lat, double lon, double elevation) {
+    public Point3DGeo(double lat, double lon, double elevation) {
         this.longitude = lon;
         this.latitude = lat;
         this.elevation = elevation;
     }
 
-    public Point3D(int id, double lat, double lon) {
+    public Point3DGeo(int id, double lat, double lon) {
         this.id = id;
         this.longitude = lon;
         this.latitude = lat;
     }
 
-    public Point3D(int id, double lat, double lon, double elevation) {
+    public Point3DGeo(int id, double lat, double lon, double elevation) {
         this.id = id;
         this.longitude = lon;
         this.latitude = lat;
@@ -107,40 +107,40 @@ public class Point3D
         this.elevation = elevation;
     }
 
-    public static Point3D[][] copy(Point3D[][] tableau) {
+    public static Point3DGeo[][] copy(Point3DGeo[][] tableau) {
         int nRows = tableau[0].length;
         int nColumns = tableau[0].length;
-        Point3D[][] newTab = new Point3D[nRows][nColumns];
+        Point3DGeo[][] newTab = new Point3DGeo[nRows][nColumns];
         for (int i = 0; i < nRows; i++) {
             for (int j = 0; j < nColumns; j++) {
-                newTab[i][j] = new Point3D(tableau[i][j].getLatitude(),
+                newTab[i][j] = new Point3DGeo(tableau[i][j].getLatitude(),
                         tableau[i][j].getLongitude(), tableau[i][j].getElevation());
             }
         }
         return newTab;
     }
 
-    public static Point3D[][] toGrid(List<Point3D> pts, int rows, int cols) {
-        Point3D[][] result = new Point3D[rows][cols];
+    public static Point3DGeo[][] toGrid(List<Point3DGeo> pts, int rows, int cols) {
+        Point3DGeo[][] result = new Point3DGeo[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                result[i][j] = new Point3D(pts.get(i + j).getLatitude(),
+                result[i][j] = new Point3DGeo(pts.get(i + j).getLatitude(),
                         pts.get(i + j).getLongitude(), pts.get(i + j).getElevation());
             }
         }
         return result;
     }
 
-    public static Point3D[][] suppress(Point3D[][] tableau, int index) {
+    public static Point3DGeo[][] suppress(Point3DGeo[][] tableau, int index) {
         int nRows = tableau[0].length;
         int nColumns = tableau[1].length;
 
         if (index >= nRows || index >= nColumns) {
             // Return exception ?
-            return new Point3D[0][0];
+            return new Point3DGeo[0][0];
         }
 
-        Point3D[][] newTab = new Point3D[nRows - 1][nColumns - 1];
+        Point3DGeo[][] newTab = new Point3DGeo[nRows - 1][nColumns - 1];
         int newTabRow = 0;
         int newTabCol = 0;
 
@@ -148,7 +148,7 @@ public class Point3D
             if (i != index) {
                 for (int j = 0; j < nColumns; ++j) {
                     if (j != index) {
-                        newTab[newTabRow][newTabCol] = new Point3D(tableau[i][j].getLatitude(),
+                        newTab[newTabRow][newTabCol] = new Point3DGeo(tableau[i][j].getLatitude(),
                                 tableau[i][j].getLongitude(), tableau[i][j].getElevation());
                         ++newTabCol;
                     }
@@ -183,7 +183,7 @@ public class Point3D
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Point3D other = (Point3D) obj;
+        final Point3DGeo other = (Point3DGeo) obj;
         if (Double.doubleToLongBits(this.longitude) != Double.doubleToLongBits(other.longitude)) {
             return false;
         }
