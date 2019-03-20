@@ -74,7 +74,7 @@
                                        </opaqueInsets>
                                        <children>
                                           <Label text="Elevation magnification" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                          <TextField fx:id="depthMagnificationTF" alignment="CENTER" text="10" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <TextField fx:id="elevationMagnificationTF" alignment="CENTER" text="1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                           <Label text="Tiles count" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                           <GridPane GridPane.columnIndex="3" GridPane.rowIndex="2">
                                              <columnConstraints>
@@ -142,6 +142,7 @@
                                                 <TextField fx:id="gridSideXTF" text="75" />
                                              </children>
                                           </GridPane>
+                                          <CheckBox fx:id="supportCB" mnemonicParsing="false" prefHeight="18.0" prefWidth="149.0" selected="true" text="Support with magnets" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                                        </children>
                                     </GridPane></children>
 						                                </AnchorPane>
@@ -382,7 +383,6 @@
                                           <CheckBox fx:id="generateKmlCB" mnemonicParsing="false" selected="true" text="Generate KML" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                           <CheckBox mnemonicParsing="false" text="GeoTIFF" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                           <CheckBox mnemonicParsing="false" text="ASCII" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                          <CheckBox fx:id="baseCB" mnemonicParsing="false" selected="true" text="Include base" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                        </children>
                                     </GridPane></children>
 						                                </AnchorPane>

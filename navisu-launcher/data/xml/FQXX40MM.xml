@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<root id="FQXX40" nombre="Boletín meteorológico y marino para las zonas costeras de la Comunidad Autónoma de Galicia" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="prediccion_mar.xsd">
+  <origen>
+    <productor>Agencia Estatal de Meteorología - AEMET - Gobierno de España</productor>
+    <web> http://www.aemet.es</web>
+    <language>es</language>
+    <copyright>© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</copyright>
+    <nota_legal>http://www.aemet.es/es/nota_legal</nota_legal>
+    <elaborado>2019-03-17T20:00:00</elaborado>
+    <inicio>2019-03-17T20:00:00</inicio>
+    <fin>2019-03-18T20:00:00</fin>
+  </origen>
+  <aviso id="A802" nombre="Avisos para Galicia ">
+    <inicio>2019-03-17T20:00:00</inicio>
+    <fin>2019-03-18T20:00:00</fin>
+    <texto>No hay avisos.</texto>
+  </aviso>
+  <situacion id="S802" nombre="Situación General Galicia">
+    <analisis>2019-03-17T12:00:00</analisis>
+    <inicio>2019-03-17T20:00:00</inicio>
+    <fin>2019-03-18T20:00:00</fin>
+    <texto>Baja al noroeste de las Islas Baleares 1014, rellenándose. Alta entre el NE de Altair y NW de Charcot 1032, reforzándose a 1034 sobre Charcot.</texto>
+  </situacion>
+  <prediccion>
+    <inicio>2019-03-17T20:00:00</inicio>
+    <fin>2019-03-18T20:00:00</fin>
+    <zona id="8112710" nombre="Aguas costeras de Lugo">
+      <subzona id="8112710" nombre="Aguas costeras de Lugo">
+        <texto>NW 4 rolando y amainando a N o NE 2 o 3 por la mañana. Marejada disminuyendo a marejadilla. Mar de fondo del NW de 2 a 3 m. Lluvia ocasional al principio. Localmente regular.</texto>
+      </subzona>
+    </zona>
+    <zona id="8111510" nombre="Aguas costeras de A Coruña">
+      <subzona id="8111510" nombre="Aguas costeras de A Coruña">
+        <texto> Norte de Fisterra: NW o N 3 o 4 rolando a NE 3 o 4, localmente 5 cerca de Fisterra, al principio de la madrugada. Marejada. Mar de fondo del NW de 2 a 3 m. Lluvia ocasional. Localmente regular. &#13;
+ Sur de Fisterra: N 4 o 5 rolando a NE 4 o 5 pronto. Marejada, con áreas de fuerte marejada mar adentro. Mar de fondo del NW de 2 m. Brumas matinales. Temporalmente regular.</texto>
+      </subzona>
+    </zona>
+    <zona id="8113610" nombre="Aguas costeras de Pontevedra">
+      <subzona id="8113610" nombre="Aguas costeras de Pontevedra">
+        <texto>N 4 o 5 rolando a NE 4 o 5 pronto, y arreciando a localmente a NE 6 al final. Marejada, con áreas de fuerte marejada mar adentro. Mar de fondo del NW de 2 m.</texto>
+      </subzona>
+    </zona>
+  </prediccion>
+  <tendencia>
+    <inicio>2019-03-18T20:00:00</inicio>
+    <fin>2019-03-19T20:00:00</fin>
+    <texto>No se esperan condiciones de aviso en ninguna zona</texto>
+  </tendencia>
+</root>

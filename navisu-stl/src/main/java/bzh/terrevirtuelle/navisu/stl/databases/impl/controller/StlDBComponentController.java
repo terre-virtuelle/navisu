@@ -298,7 +298,7 @@ public class StlDBComponentController
     @FXML
     public TextField scaleDaeTF;
     @FXML
-    public TextField depthMagnificationTF;
+    public TextField elevationMagnificationTF;
     @FXML
     public TextField simplifyTF;
     @FXML
@@ -329,6 +329,8 @@ public class StlDBComponentController
     public TextField tileSideYTF;
     @FXML
     public TextField tileSideZTF;
+    @FXML
+    public CheckBox supportCB;
     @FXML
     public TextField gridSideXTF;
     @FXML
@@ -398,8 +400,6 @@ public class StlDBComponentController
     public RadioButton terrainRB;
     @FXML
     public CheckBox resareCB;
-    @FXML
-    public CheckBox baseCB;
     @FXML
     public Button meshStlObjectButton;
     @FXML
@@ -677,13 +677,13 @@ public class StlDBComponentController
                 simplifyTF.setText(Double.toString(simplifyFactor * 100000));
             }
         });
-        depthMagnificationTF.setText(Double.toString(DEFAULT_EXAGGERATION));
-        depthMagnificationTF.setOnAction((ActionEvent event) -> {
+        elevationMagnificationTF.setText(Double.toString(DEFAULT_EXAGGERATION));
+        elevationMagnificationTF.setOnAction((ActionEvent event) -> {
             try {
-                verticalExaggeration = Double.valueOf(depthMagnificationTF.getText());
+                verticalExaggeration = Double.valueOf(elevationMagnificationTF.getText());
             } catch (NumberFormatException e) {
                 verticalExaggeration = DEFAULT_EXAGGERATION;
-                depthMagnificationTF.setText(Double.toString(verticalExaggeration));
+                elevationMagnificationTF.setText(Double.toString(verticalExaggeration));
             }
         });
 
@@ -907,15 +907,18 @@ public class StlDBComponentController
                         LOGGER.info("In export GridBox3D en STL");
                         String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + 1 + "," + 1 + ".stl";
                         GridBox3D gb = gridBoxes.get(0);
-                        System.out.println("gb : " + gb);
+                       // System.out.println("gb : " + gb);
                         //DEBUG for mesh import
                         new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                         LOGGER.info("In export exportBaseSTL en STL");
-                        if (baseCB.isSelected()) {
+                        if (supportCB.isSelected()) {
                             // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
                             // stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
                             // stlComponentServices.exportRotateBaseSTL("data/stl/base/baseNewRotated.stl", "data/stl/base/baseNew.stl", 5.42);
                             stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
+                            LOGGER.info("Out export exportBaseSTL en STL");
+                        }else{
+                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseSimple.stl");
                             LOGGER.info("Out export exportBaseSTL en STL");
                         }
                         LOGGER.info("Out export GridBox3D en STL");
@@ -928,9 +931,12 @@ public class StlDBComponentController
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             new GridBox3DExportToSTL(geodesyServices, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                             LOGGER.info("In export exportBaseSTL en STL");
-                            if (baseCB.isSelected()) {
+                            if (supportCB.isSelected()) {
                                 // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
                                 stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
+                                LOGGER.info("Out export exportBaseSTL en STL");
+                            }else{
+                                stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseSimple.stl");
                                 LOGGER.info("Out export exportBaseSTL en STL");
                             }
                             k++;
@@ -1011,7 +1017,7 @@ public class StlDBComponentController
                         //   System.out.println(geodesyServices.getAzimuth(boundList.get(3).getLatitude(), boundList.get(3).getLongitude(), boundList.get(4).getLatitude(), boundList.get(4).getLongitude()));
                         // System.out.println("grids : "+ grids);
                         for (Point3DGeo[][] g : grids) {
-                            System.out.println("g : " + g);
+                           // System.out.println("g : " + g);
                             objects.clear();
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
@@ -1171,14 +1177,14 @@ public class StlDBComponentController
         DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
                 lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
         maxDepth = 0.0;
-        System.out.println("dem : " + dem.getGrid().size());
-        System.out.println("sqrt : " + Math.sqrt(dem.getGrid().size()));
-        System.out.println(latMin + " " + lonMin + " " + latMax + " " + lonMax);
-        double x = geodesyServices.getDistanceM(latMin, lonMin, latMin, lonMax);
-        double y = geodesyServices.getDistanceM(latMin, lonMin, latMax, lonMin);
-        System.out.println(x + " " + y);
-        int s = (int) Math.sqrt(dem.getGrid().size());
-        System.out.println(x / s + " " + y / s);
+      //  System.out.println("dem : " + dem.getGrid().size());
+      //  System.out.println("sqrt : " + Math.sqrt(dem.getGrid().size()));
+      //  System.out.println(latMin + " " + lonMin + " " + latMax + " " + lonMax);
+      //  double x = geodesyServices.getDistanceM(latMin, lonMin, latMin, lonMax);
+      //  double y = geodesyServices.getDistanceM(latMin, lonMin, latMax, lonMin);
+      //  System.out.println(x + " " + y);
+      //  int s = (int) Math.sqrt(dem.getGrid().size());
+      //  System.out.println(x / s + " " + y / s);
         /*
         System.out.println(dem.getGrid().get((int) Math.sqrt(dem.getGrid().size())));
         for (int i = 0; i < dem.getGrid().size() - 1; i++) {
@@ -1189,24 +1195,25 @@ public class StlDBComponentController
                     dem.getGrid().get(i).getLatitude(), dem.getGrid().get(i + 1).getLongitude()));
         }
          */
+        /*
         for (int i = 0; i < dem.getGrid().size(); i++) {
             System.out.println(dem.getGrid().get(i));
         }
+        */
         return createGrids(dem, latMin, lonMin, latMax, lonMax);
     }
 
     private List<Point3DGeo[][]> createGrids(DEM dem, double latMin, double lonMin, double latMax, double lonMax) {
         Point3DGeo[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, maxDepth);
         grid = jtsServices.mergePointsToGrid(dem.getGrid(), grid);
-        List<Point3DGeo[][]> grids = createGrids(grid, tileCount);
-        return grids;
+        return createGrids(grid, tileCount);
     }
 
     private List<Point3DGeo[][]> createGrids(Point3DGeo[][] grid, int tileCount) {
         LOGGER.info("In createGrids in STL");
-        List<Point3DGeo[][]> grids = new ArrayList<>();
+        List<Point3DGeo[][]> gridList = new ArrayList<>();
         if (tileCount == 1) {
-            grids.add(grid);
+            gridList.add(grid);
         } else {
             int bound = grid[0].length / tileCount;
             if (grid[0].length <= tileCount * bound) {
@@ -1224,12 +1231,12 @@ public class StlDBComponentController
                                     grid[i + l * bound][j + c * bound].getElevation());
                         }
                     }
-                    grids.add(realGrid);
+                    gridList.add(realGrid);
                 }
             }
         }
         LOGGER.info("Out createGrids in STL");
-        return grids;
+        return gridList;
     }
 
     /*

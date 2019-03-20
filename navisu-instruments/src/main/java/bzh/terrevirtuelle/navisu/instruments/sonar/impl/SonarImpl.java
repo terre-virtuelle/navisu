@@ -13,7 +13,6 @@ import bzh.terrevirtuelle.navisu.instruments.sonar.impl.controller.Chart3dDemo;
 import bzh.terrevirtuelle.navisu.instruments.sonar.impl.controller.SonarController;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -47,9 +46,10 @@ public class SonarImpl
             @Override
             public void run() {
                  stage = new Stage();
+                 
                // stage.setOpacity(0.1);
-                 stage.setHeight(800);
-                 stage.setWidth(1200);
+                 stage.setHeight(450);
+                 stage.setWidth(650);
                  stage.setX(600);
                  stage.setY(200);
                //  stage.initStyle(StageStyle.UNDECORATED);

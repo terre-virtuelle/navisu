@@ -1,9 +1,13 @@
 package bzh.terrevirtuelle.navisu.instruments.sonar.impl.controller;
 
+import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_HOMONIM_BATHYMETRY_NORM_CLUT;
+import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.Application;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Point3D;
 import javafx.scene.Camera;
 import javafx.scene.DepthTest;
@@ -16,6 +20,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -30,10 +37,10 @@ import javafx.scene.shape.TriangleMesh;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
-public class Chart3dDemo {//extends Group {
+public class Chart3dDemo extends Application {
 
     // size of graph
-    int size = 400;
+    int size = 200;
 
     // variables for mouse interaction
     private double mousePosX, mousePosY;
@@ -56,6 +63,8 @@ public class Chart3dDemo {//extends Group {
         // add objects to scene
         StackPane root = new StackPane();
         root.getChildren().add(cube);
+        root.setBackground(new Background(new BackgroundFill(Color.rgb(9, 39, 50), CornerRadii.EMPTY, Insets.EMPTY)));
+        cube.setTranslateZ(-250);
 
         // perlin noise
         float[][] noiseArray = createNoise(size);
@@ -64,7 +73,7 @@ public class Chart3dDemo {//extends Group {
         TriangleMesh mesh = new TriangleMesh();
 
         // create points for x/z
-        float amplification = 100; // amplification of noise
+        float amplification = 50; // amplification of noise
 
         for (int x = 0; x < size; x++) {
             for (int z = 0; z < size; z++) {
@@ -141,7 +150,7 @@ public class Chart3dDemo {//extends Group {
         // scene
         Scene scene = new Scene(root, 2000, 1000, true, SceneAntialiasing.BALANCED);
         Camera camera = new PerspectiveCamera();
-     
+
         scene.setCamera(camera);
 
         scene.setOnMousePressed(me -> {
@@ -159,7 +168,7 @@ public class Chart3dDemo {//extends Group {
         });
 
         makeZoomable(root);
-        primaryStage.isAlwaysOnTop();
+        primaryStage.setAlwaysOnTop(true);
         primaryStage.setResizable(true);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -182,24 +191,17 @@ public class Chart3dDemo {//extends Group {
         PixelWriter pw = wr.getPixelWriter();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-
                 float value = noise[x][y];
-
                 double gray = normalizeValue(value, -.5, .5, 0., 1.);
-
                 gray = clamp(gray, 0, 1);
-
-                Color color = Color.RED.interpolate(Color.GREEN, gray);
-
+                Pair<Color, Color> colors = SHOM_HOMONIM_BATHYMETRY_NORM_CLUT.getColors(gray);
+                Color color = colors.getX().interpolate(colors.getY(), gray);
                 pw.setColor(x, y, color);
-
             }
         }
-
         return wr;
-
     }
-
+  
     /**
      * Axis wall
      */
@@ -214,7 +216,6 @@ public class Chart3dDemo {//extends Group {
             // works
             wall = new Rectangle(size, size);
             getChildren().add(wall);
-
             // grid
             double zTranslate = 0;
             double lineWidth = 1.0;
@@ -485,6 +486,13 @@ public class Chart3dDemo {//extends Group {
                 p[256 + i] = p[i] = permutation[i];
             }
         }
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
     }
 
 }

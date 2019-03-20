@@ -193,7 +193,7 @@
                                                         <Label prefHeight="15.0" prefWidth="135.0" text="Password" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                                                         <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                                                         <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                                                        <Label text="Elevation data directory" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                        <Label text="Elevation data file" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                         <TextField fx:id="elevationDataTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                         <Button fx:id="elevationDataButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                                         <CheckBox fx:id="tiff2XyzCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="148.0" text="Tif 2 XYZ" GridPane.columnIndex="1" GridPane.rowIndex="2" />

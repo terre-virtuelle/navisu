@@ -327,6 +327,7 @@ public class ToolsComponentController
         catalogCB.getSelectionModel().select("5");
         catalogTF.setText("ENC_NP5.kml");
         s57DatabaseTF.setText("s57NP5DB");
+        s57DatabaseTF.setEditable(false);
 
         catalogCB.getSelectionModel()
                 .selectedItemProperty()
