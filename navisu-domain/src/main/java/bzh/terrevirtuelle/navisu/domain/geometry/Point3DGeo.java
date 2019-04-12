@@ -131,6 +131,10 @@ public class Point3DGeo
         return result;
     }
 
+    public static Point3DGeo swapXY(Point3DGeo pt) {
+        return new Point3DGeo(pt.getLongitude(), pt.getLatitude(), pt.getElevation());
+    }
+
     public static Point3DGeo[][] suppress(Point3DGeo[][] tableau, int index) {
         int nRows = tableau[0].length;
         int nColumns = tableau[1].length;

@@ -20,6 +20,7 @@ public class DEM {
     private List<Point3DGeo> grid;
 
     private double maxElevation;
+    private double minElevation;
 
     public DEM() {
         grid = new ArrayList<>();
@@ -27,6 +28,14 @@ public class DEM {
 
     public DEM(List<Point3DGeo> grid) {
         this.grid = grid;
+    }
+
+    public double getMinElevation() {
+        return minElevation;
+    }
+
+    public void setMinElevation(double minElevation) {
+        this.minElevation = minElevation;
     }
 
     /**

@@ -52,6 +52,7 @@ public class GridBox3DExportToSTL {
         try {
             result = "solid " + head[head.length - 1] + "\n";
             List<Path> gridPaths = gridBox.getPaths();
+            System.out.println("GridBox3DExportToSTL : " + gridPaths.size());
             gridPaths.forEach((p) -> {
                 result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
             });
@@ -165,6 +166,7 @@ public class GridBox3DExportToSTL {
         facet += "endloop \n";
         facet += "endfacet \n";
         if (facet.contains("NaN")){
+            System.out.println("facet.contains(\"NaN\")");
             facet="";
         }
         return facet;

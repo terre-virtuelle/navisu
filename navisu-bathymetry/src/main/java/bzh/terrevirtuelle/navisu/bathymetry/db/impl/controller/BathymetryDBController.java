@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer.BathymetryEventProducerServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.impl.BathymetryDBImpl;
 import bzh.terrevirtuelle.navisu.bathymetry.view.impl.controller.DisplayBathymetryController;
-import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;

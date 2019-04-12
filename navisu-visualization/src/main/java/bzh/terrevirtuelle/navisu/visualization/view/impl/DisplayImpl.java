@@ -102,7 +102,7 @@ public class DisplayImpl
     public void displayPoints3DAsPath(List<Point3DGeo> points, RenderableLayer layer) {
         ArrayList<Position> pathPositions = new ArrayList<>();
         for (Point3DGeo p : points) {
-            pathPositions.add(Position.fromDegrees(p.getLatitude(), p.getLongitude(), 100));
+            pathPositions.add(Position.fromDegrees(p.getLatitude(), p.getLongitude(), p.getElevation() + 100));
         }
         Path path = createPath(pathPositions, Material.YELLOW);
         layer.addRenderable(path);
@@ -131,8 +131,13 @@ public class DisplayImpl
     }
 
     @Override
-    public void displayPaths(GridBox3D gridBox3D, RenderableLayer layer, Material material) {
-        displayPaths(gridBox3D.getPaths(), layer, material, 1);
+    public void displayPaths(GridBox3D gridBox3D, RenderableLayer layer, Material material, double verticalExaggeration) {
+        displayGrid(gridBox3D.getGrid(), layer, material, verticalExaggeration);
+    }
+
+    @Override
+    public void displayGridBox3D(GridBox3D gridBox3D, RenderableLayer layer, Material material, double verticalExaggeration) {
+
     }
 
     @Override
@@ -147,14 +152,10 @@ public class DisplayImpl
                         pp.getLongitude(),
                         pp.getElevation() * verticalExaggeration));
                 path0 = createPath(pathIsoLatPositions, material);
-                path0.setValue(AVKey.DISPLAY_NAME, pp.getElevation());
             }
-
             latPaths.add(path0);
         }
-
         layer.addRenderables(latPaths);
-
         List<Path> lonPaths = new ArrayList<>();
         ArrayList<Position> pathIsoLonPositions;
         Path path1 = null;
@@ -166,14 +167,24 @@ public class DisplayImpl
                         row[i].getLongitude(),
                         row[i].getElevation() * verticalExaggeration));
                 path1 = createPath(pathIsoLonPositions, material);
-                path1.setValue(AVKey.DISPLAY_NAME, row[i].getElevation());
             }
             i++;
             lonPaths.add(path1);
-
         }
         layer.addRenderables(lonPaths);
         wwd.redrawNow();
+    }
+
+    @Override
+    public Path createPath(List<Position> pathPositions, Material material) {
+        Path p = new Path(pathPositions);
+        ShapeAttributes attrs1 = new BasicShapeAttributes();
+        attrs1.setOutlineOpacity(1.0);
+        attrs1.setOutlineWidth(1d);
+        attrs1.setOutlineMaterial(material);
+        p.setAltitudeMode(WorldWind.ABSOLUTE);
+        p.setAttributes(attrs1);
+        return p;
     }
 
     @Override
@@ -256,18 +267,6 @@ public class DisplayImpl
     }
 
     @Override
-    public Path createPath(List<Position> pathPositions, Material material) {
-        Path p = new Path(pathPositions);
-        ShapeAttributes attrs0 = new BasicShapeAttributes();
-        attrs0.setOutlineOpacity(1.0);
-        attrs0.setOutlineWidth(1d);
-        attrs0.setOutlineMaterial(material);
-        p.setAltitudeMode(WorldWind.ABSOLUTE);
-        p.setAttributes(attrs0);
-        return p;
-    }
-
-    @Override
     public List<List<Path>> createPaths(List<Point3DGeo[][]> latLons, double verticalExaggeration) {
         List<List<Path>> result = new ArrayList<>();
         for (Point3DGeo[][] pts : latLons) {
@@ -294,9 +293,9 @@ public class DisplayImpl
         List<Path> result = new ArrayList<>();
 
         Path path;
-        int latLength = latLons[0].length;
-        int lonLength = latLons[1].length;
-
+        int latLength = latLons.length;
+        int lonLength = latLons[0].length;
+        System.out.println("displayGridAsTriangles : " + latLength + " " + lonLength);
         for (int i = 0; i < latLength - 1; i++) {
             for (int j = 0; j < lonLength - 1; j++) {
                 positions = new ArrayList<>();
@@ -490,19 +489,18 @@ public class DisplayImpl
 
     @Override
     public void displayPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration) {
-        ShapeAttributes attrs0 = createAttributes(material);
+        ShapeAttributes attrs1 = createAttributes(material);
         List<Path> result = new ArrayList<>();
-        paths.forEach((p) -> {
+        for (Path p : paths) {
             Iterable<? extends Position> positions = p.getPositions();
             List<Position> tmpPos = new ArrayList<>();
             for (Position pp : positions) {
                 tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), pp.getElevation() * verticalExaggeration));
             }
-            result.add(new Path(tmpPos));
-        });
+        }
         result.forEach((p) -> {
             p.setAltitudeMode(WorldWind.ABSOLUTE);
-            p.setAttributes(attrs0);
+            p.setAttributes(attrs1);
         });
 
         layer.addRenderables(result);

@@ -129,7 +129,9 @@ public class StlDBComponentImpl
                         stlComponentServices,
                         kmlComponentServices,
                         objComponentServices,
-                        pro4JServices);
+                        pro4JServices,
+                        geoViewServices,
+                        layerTreeServices);
                 controller.setVisible(true);
             }
         }
@@ -153,7 +155,6 @@ public class StlDBComponentImpl
         }
         return canOpen;
     }
-
 
     @Override
     public InstrumentDriver getDriver() {

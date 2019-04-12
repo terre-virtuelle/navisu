@@ -278,16 +278,52 @@ public class JTSImpl
     }
 
     @Override
+    public List<Path> createDelaunayToPath(List<Point3DGeo> pts, double maxElevation, boolean depth) {
+        List<Point3DGeo> data = new ArrayList<>();
+        int height=1;
+        if(depth==false){
+            height=-1;
+        }
+        for (Point3DGeo p : pts) {
+            if (maxElevation != 0) {
+                data.add(new Point3DGeo(p.getLatitude(), p.getLongitude(), maxElevation - (height *p.getElevation())));
+            } else {
+                data.add(new Point3DGeo(p.getLatitude(), p.getLongitude(), height* p.getElevation()));
+            }
+        }
+        Coordinate[] coordinateTab = toTabCoordinates(data);
+        MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
+        ArrayList<Geometry> triangles = new ArrayList<>();
+        DelaunayTriangulationBuilder triator = new DelaunayTriangulationBuilder();
+        triator.setSites(points);
+        Geometry tris = triator.getTriangles(new GeometryFactory());
+        for (int i = 0; i < tris.getNumGeometries(); i++) {
+            triangles.add(tris.getGeometryN(i));
+        }
+        List<Path> paths = topologyServices.wktPolygonsToWwjPaths(triangles);
+        return paths;
+    }
+
+    @Override
     public List<Path> createDelaunayToPath(Point3DGeo[][] pts, double maxElevation) {
         List<Point3DGeo> data = new ArrayList<>();
-        for (int i = 0; i < pts[0].length; i++) {
-            for (int j = 0; j < pts[1].length; j++) {
+        for (int i = 0; i < pts.length; i++) {
+            for (int j = 0; j < pts[0].length; j++) {
                 data.add(pts[i][j]);
             }
         }
         return createDelaunayToPath(data, maxElevation);
     }
-
+@Override
+    public List<Path> createDelaunayToPath(Point3DGeo[][] pts, double maxElevation, boolean depth) {
+        List<Point3DGeo> data = new ArrayList<>();
+        for (int i = 0; i < pts.length; i++) {
+            for (int j = 0; j < pts[0].length; j++) {
+                data.add(pts[i][j]);
+            }
+        }
+        return createDelaunayToPath(data, maxElevation,depth);
+    }
     @Override
     public List<Path> createDelaunayWithFilterOnAreaToPath(List<Point3DGeo> pts, double filter) {
         Coordinate[] coordinateTab = toTabCoordinates(pts);

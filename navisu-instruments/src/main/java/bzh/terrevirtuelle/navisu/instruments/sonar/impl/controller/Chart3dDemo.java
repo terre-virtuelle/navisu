@@ -40,7 +40,7 @@ import javafx.stage.Stage;
 public class Chart3dDemo extends Application {
 
     // size of graph
-    int size = 200;
+    int size = 400;
 
     // variables for mouse interaction
     private double mousePosX, mousePosY;
@@ -73,7 +73,7 @@ public class Chart3dDemo extends Application {
         TriangleMesh mesh = new TriangleMesh();
 
         // create points for x/z
-        float amplification = 50; // amplification of noise
+        float amplification = 100; // amplification of noise
 
         for (int x = 0; x < size; x++) {
             for (int z = 0; z < size; z++) {

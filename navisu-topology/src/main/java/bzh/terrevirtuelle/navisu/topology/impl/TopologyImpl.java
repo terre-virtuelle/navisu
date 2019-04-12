@@ -600,7 +600,7 @@ public class TopologyImpl
             positions = new ArrayList<>();
             for (int i = 0; i < coordinateTab.length; i++) {
                 positions.add(new Position(Angle.fromDegrees(coordinateTab[i].y),
-                        Angle.fromDegrees(coordinateTab[i].x), coordinateTab[i].z * 5));
+                        Angle.fromDegrees(coordinateTab[i].x), coordinateTab[i].z));//z*5
             }
             result.add(new Path(positions));
         }

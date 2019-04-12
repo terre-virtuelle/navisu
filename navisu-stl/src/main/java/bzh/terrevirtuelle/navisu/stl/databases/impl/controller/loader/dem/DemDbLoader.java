@@ -21,7 +21,8 @@ public class DemDbLoader {
     private final Connection connection;
     private final DemDBServices demDBServices;
     private List<Point3DGeo> points;
-    private double maxDepth = 0.0;
+    private double maxElevation = 0.0;
+    private double minElevation = Double.MAX_VALUE;
 
     public DemDbLoader(Connection connection, DemDBServices demDBServices) {
         this.connection = connection;
@@ -30,11 +31,15 @@ public class DemDbLoader {
 
     public DEM retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
         points = demDBServices.retrieveIn(connection, "elevation", latMin, lonMin, latMax, lonMax);
-        points.stream().filter((p) -> (p.getElevation() > maxDepth)).forEachOrdered((p) -> {
-            maxDepth = p.getElevation();
+        points.stream().filter((p) -> (p.getElevation() > maxElevation)).forEachOrdered((p) -> {
+            maxElevation = p.getElevation();
+        });
+        points.stream().filter((p) -> (p.getElevation() < minElevation)).forEachOrdered((p) -> {
+            minElevation = p.getElevation();
         });
         DEM tmp = new DEM(points);
-        tmp.setMaxElevation(maxDepth);
+        tmp.setMaxElevation(maxElevation);
+        tmp.setMinElevation(minElevation);
         return tmp;
     }
 

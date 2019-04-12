@@ -101,6 +101,13 @@ public class Configuration {
                 Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
+        if (!Files.exists(Paths.get(navisuDir + "/privateData/tif"), LinkOption.NOFOLLOW_LINKS)) {
+            try {
+                Files.createDirectory(Paths.get(navisuDir + "/privateData/tif"));
+            } catch (IOException ex) {
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
         String navisuCache = navisuHome + "/caches/caches.properties";
         if (!Files.exists(Paths.get(navisuCache), LinkOption.NOFOLLOW_LINKS)) {
             try {

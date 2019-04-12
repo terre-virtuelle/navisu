@@ -42,27 +42,27 @@ public class SHOM_HOMONIM_BATHYMETRY_NORM_CLUT {
     }
     private static final Map<Integer, Color> ATT = Collections.unmodifiableMap(new HashMap<Integer, Color>() {
         {
-            put(0, Color.web("#d0321b"));
-            put(1, Color.web("#dc4d1f"));
-            put(2, Color.web("#e15d22"));
-            put(3, Color.web("#e37226"));
-            put(4, Color.web("#e6882a"));
-            put(5, Color.web("#eeb534"));
-            put(6, Color.web("#f3cd3a"));
-            put(7, Color.web("#e7fd4f"));
-            put(8, Color.web("#d8fc4b"));
-            put(9, Color.web("#bafc46"));
-            put(10, Color.web("#98f741"));
-            put(11, Color.web("#7cdf42"));
-            put(12, Color.web("#8befca"));
-            put(13, Color.web("#7cd9fc"));
-            put(14, Color.web("#3561f9"));
-            put(15, Color.web("#1930ff"));
-            put(16, Color.web("#2132cc"));
-            put(17, Color.web("#1d2cb2"));
-            put(18, Color.web("#1a2799"));
-            put(19, Color.web("#162080"));
-            put(20, Color.web("#162081"));
+            put(0, Color.web("#d0321bff"));
+            put(1, Color.web("#dc4d1fff"));
+            put(2, Color.web("#e15d22ff"));
+            put(3, Color.web("#e37226ff"));
+            put(4, Color.web("#e6882aff"));
+            put(5, Color.web("#eeb534ff"));
+            put(6, Color.web("#f3cd3aff"));
+            put(7, Color.web("#e7fd4fff"));
+            put(8, Color.web("#d8fc4bff"));
+            put(9, Color.web("#bafc46ff"));
+            put(10, Color.web("#98f741ff"));
+            put(11, Color.web("#7cdf42ff"));
+            put(12, Color.web("#8befcaff"));
+            put(13, Color.web("#7cd9fcff"));
+            put(14, Color.web("#3561f9ff"));
+            put(15, Color.web("#1930ffff"));
+            put(16, Color.web("#2132ccff"));
+            put(17, Color.web("#1d2cb2ff"));
+            put(18, Color.web("#1a2799ff"));
+            put(19, Color.web("#162080ff"));
+            put(20, Color.web("#162081ff"));
         }
     });
 
@@ -85,7 +85,6 @@ public class SHOM_HOMONIM_BATHYMETRY_NORM_CLUT {
                 result = new Pair(RANGES.get(i).lowerEndpoint(), RANGES.get(i).upperEndpoint());
             }
         }
-        System.out.println("result : " + result);
         return result;
     }
 
@@ -96,7 +95,6 @@ public class SHOM_HOMONIM_BATHYMETRY_NORM_CLUT {
         if (bounds != null) {
             result = new Pair(getColor(bounds.getX()), getColor(bounds.getY()));
         }
-        System.out.println("result : "+result);
         return result;
     }
 

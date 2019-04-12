@@ -1,5 +1,4 @@
-http://services.data.shom.fr/INSPIRE/wms/r
-http://services.data.shom.fr/INSPIRE/wms/v
+https://services.data.shom.fr/INSPIRE/wms/r?request=GetCapabilities&service=WMS
 http://portail.indigeo.fr/geoserver/LETG-BREST/ows?SERVICE=WMS
 http://geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?service=WMS
 http://ows.emodnet-bathymetry.eu/wms

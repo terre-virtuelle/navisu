@@ -228,6 +228,7 @@ public class AppMain extends Application {
         clearTmpDirs(USER_DIR + "/privateData/stl", "*", false);
         clearTmpDirs(USER_DIR + "/privateData/kml", "*", false);
         clearTmpDirs(USER_DIR + "/privateData/asc", "*", false);
+        clearTmpDirs(USER_DIR + "/privateData/tif", "*", false);
 
         wwd = GeoWorldWindViewImpl.getWW();
 
@@ -507,7 +508,8 @@ public class AppMain extends Application {
                 DATA_S57_CATALOG_5,
                 DATA_S57_CATALOG_6);
 
-        wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 120000));
+        wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 120000));//BREST
+        //wwd.getView().setEyePosition(Position.fromDegrees(46.2993011411917,5.950320647729987, 120000));//GENEVE
         /*
         // Get the current elevation model.
             ElevationModel currentElevationModel = wwd.getModel().getGlobe().getElevationModel();

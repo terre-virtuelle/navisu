@@ -48,6 +48,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
+import java.util.List;
 import javafx.scene.control.CheckBox;
 
 /**
@@ -211,6 +212,7 @@ public class ToolsComponentController
     private final String ELEVATION_DB_NAME_2 = "TestAltiDB";
     private final String ELEVATION_DB_ORG_DIR = "privateData" + SEP + "elevation";
     private String componentKeyName;
+    private List<File> selectedFiles;
 
     /**
      *
@@ -226,6 +228,7 @@ public class ToolsComponentController
      * @param demDBComponentServices
      * @param instrumentDriverManagerServices
      * @param lambertServices
+     * @param rasterServices
      */
     @SuppressWarnings("unchecked")
     public ToolsComponentController(ToolsComponentImpl component, String componentKeyName,
@@ -505,6 +508,7 @@ public class ToolsComponentController
             openFile(bathyDataTF);
         });
         elevationDataButton.setOnMouseClicked((MouseEvent event) -> {
+            //selectedFiles = openFile(elevationDataTF);//TODO
             openFile(elevationDataTF);
         });
     }
@@ -541,6 +545,27 @@ public class ToolsComponentController
         } else {
             tf.setText(selectedFile.getAbsolutePath());
         }
+        
+        
+        //TODO multi choice, first file create or insert
+        //another insert
+        /*
+        this.fileChooser = new FileChooser();
+
+        this.fileChooser.setTitle(tr("popup.fileChooser.open"));
+        String userInitialDirectory = System.getProperty("user.home");
+        this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
+        File selectedFile = this.fileChooser.showOpenDialog(null);
+        selectedFiles = fileChooser.showOpenMultipleDialog(null);
+        if (selectedFiles == null) {
+            tf.setText("No file selected");
+        } else {
+            tf.setText(selectedFiles.toString());
+        }
+        return selectedFiles;
+*/
+
+
     }
 
     public void openDir(TextField tf) {

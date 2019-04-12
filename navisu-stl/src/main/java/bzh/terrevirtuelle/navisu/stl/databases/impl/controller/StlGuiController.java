@@ -13,6 +13,7 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -20,19 +21,30 @@ import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.awt.Color;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 
 /**
  *
@@ -48,27 +60,62 @@ public class StlGuiController {
     protected double lonScale;
     protected double globalScale;
 
+    protected String LAT_MIN;
+    protected String LON_MIN;
+    protected String LAT_MAX;
+    protected String LON_MAX;
+    protected double lat0 = 520;
+    protected double lon0;
+    protected double lat1;
+    protected double lon1;
+    protected Label latMinLabel;
+    protected Label lonMinLabel;
+    protected Label latMaxLabel;
+    protected Label lonMaxLabel;
+    protected String CACHE_FILE_NAME;
+    RenderableLayer layer;
     protected double tileSideX;
     protected double tileSideY;
     protected double tileSideZ;
     protected int tileCount;
+
     protected GeodesyServices geodesyServices;
 
     protected TextField objectsTF;
     protected Map<String, CheckBox> s57SelectionMap;
     protected List<String> selectedObjects;
+    protected List<Polygon> selectedPolygons;
     protected CheckBox allCB;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
     public StlGuiController(GeodesyServices geodesyServices,
             Map<String, CheckBox> s57SelectionMap, CheckBox allCB,
             List<String> selectedObjects,
-            TextField objectsTF) {
+            TextField objectsTF,
+            String latMin, String lonMin, String latMax, String lonMax,
+            double lat0, double lon0, double lat1, double lon1,
+            Label latMinLabel, Label lonMinLabel, Label latMaxLabel, Label lonMaxLabel,
+            String caheFileName, RenderableLayer layer, List<Polygon> selectedPolygons) {
         this.geodesyServices = geodesyServices;
         this.s57SelectionMap = s57SelectionMap;
         this.allCB = allCB;
         this.selectedObjects = selectedObjects;
         this.objectsTF = objectsTF;
+        this.LAT_MIN = latMin;
+        this.LON_MIN = lonMin;
+        this.LAT_MAX = latMax;
+        this.LON_MAX = lonMax;
+        this.lat0 = lat0;
+        this.lon0 = lon0;
+        this.lat1 = lat1;
+        this.lon1 = lon1;
+        this.latMinLabel = latMinLabel;
+        this.lonMinLabel = lonMinLabel;
+        this.latMaxLabel = latMaxLabel;
+        this.lonMaxLabel = lonMaxLabel;
+        this.CACHE_FILE_NAME = caheFileName;
+        this.layer = layer;
+        this.selectedPolygons = this.selectedPolygons;
     }
 
     public void setTileSideX(double tileSideX) {
@@ -92,6 +139,118 @@ public class StlGuiController {
         this.tileSideY = tileSideY;
         this.tileSideZ = tileSideZ;
         this.tileCount = tileCount;
+    }
+
+    public void initSelectedZone() {
+        Dialog dialog = new Dialog<>();
+        dialog.setTitle("Create Area");
+        dialog.setHeaderText("Please enter selected area coordinates.");
+        dialog.setResizable(false);
+
+        Label lat0Label = new Label("Southwest point latitude : ");
+        Label lon0Label = new Label("Southwest point longitude : ");
+        Label lat1Label = new Label("Northeast point latitude : ");
+        Label lon1Label = new Label("Northeast point longitude : ");
+
+        TextField lat0TF = new TextField();
+        TextField lat1TF = new TextField();
+        TextField lon0TF = new TextField();
+        TextField lon1TF = new TextField();
+
+        //Default values
+        lat0TF.setText(LAT_MIN);
+        lat1TF.setText(LAT_MAX);
+        lon0TF.setText(LON_MIN);
+        lon1TF.setText(LON_MAX);
+
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 35, 20, 35));
+        grid.add(lat0Label, 0, 0);
+        grid.add(lat0TF, 1, 0);
+        grid.add(lon0Label, 0, 1);
+        grid.add(lon0TF, 1, 1);
+
+        grid.add(lat1Label, 0, 2);
+        grid.add(lat1TF, 1, 2);
+        grid.add(lon1Label, 0, 3);
+        grid.add(lon1TF, 1, 3);
+
+        dialog.getDialogPane().setContent(grid);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+        okButton.addEventFilter(ActionEvent.ACTION, event -> {
+            try {
+                lat0 = Double.valueOf(lat0TF.getText().trim());
+                lon0 = Double.valueOf(lon0TF.getText().trim());
+                lat1 = Double.valueOf(lat1TF.getText().trim());
+                lon1 = Double.valueOf(lon1TF.getText().trim());
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Range latitude : -90° <= Latitude <= 90° \n"
+                        + "Range longitude : -180° <= Longitude <= 180°");
+                alert.show();
+            }
+            if (lat0 < -90.0 || lat0 > 90.0 || lat1 < -90.0 || lat1 > 90.0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Range latitude : -90° <= Latitude <= 90°");
+                alert.show();
+            }
+            if (lon0 < -180.0 || lon0 > 180.0 || lon1 < -180.0 || lon1 > 180.0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Range longitude : -180° <= Longitude <= 180°");
+                alert.show();
+            }
+            if (lon1 < lon0 || lat1 < lat0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Right inputs are LatMin, LonMin & LatMax, LonMax");
+                alert.show();
+            }
+
+            double latRan = geodesyServices.getDistanceM(lat0, lon0, lat1, lon0);
+            double lonRan = geodesyServices.getDistanceM(lat0, lon0, lat0, lon1);
+            if (latRan > lonRan) {
+                Position position = geodesyServices.getPosition(lat1, lon0, 90.0, latRan);
+                lon1 = position.getLongitude().getDegrees();
+            } else {
+                Position position = geodesyServices.getPosition(lat0, lon1, 0.0, lonRan);
+                lat1 = position.getLatitude().getDegrees();
+            }
+            event.consume();
+            dialog.close();
+            latMinLabel.setText(Double.toString(lat0));
+            lonMinLabel.setText(Double.toString(lon0));
+            latMaxLabel.setText(Double.toString(lat1));
+            lonMaxLabel.setText(Double.toString(lon1));
+            LAT_MIN = Double.toString(lat0);
+            LON_MIN = Double.toString(lon0);
+            LAT_MAX = Double.toString(lat1);
+            LON_MAX = Double.toString(lon1);
+            OutputStream output = null;
+            Properties properties = new Properties();
+            try {
+                output = new FileOutputStream(CACHE_FILE_NAME);
+                properties.setProperty("LAT_MIN", LAT_MIN);
+                properties.setProperty("LON_MIN", LON_MIN);
+                properties.setProperty("LAT_MAX", LAT_MAX);
+                properties.setProperty("LON_MAX", LON_MAX);
+                properties.store(output, null);
+                output.close();
+            } catch (IOException ex) {
+                Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+            selectedPolygons.addAll(createAndDisplayTiles(layer, Material.RED, 100, lat0, lon0, lat1, lon1, tileCount, tileCount));
+
+        });
+
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        dialog.showAndWait();
     }
 
     public String initScale(double latMin, double lonMin,
@@ -308,7 +467,7 @@ public class StlGuiController {
     }
 
     public void displayGuiGridBM(RenderableLayer layer) {
-     
+
         //Position origPos = new Position(Angle.fromDegrees(48.33713333), Angle.fromDegrees(-4.63665), 100.0);//21/12/18
         Position origPos = new Position(Angle.fromDegrees(48.33748333), Angle.fromDegrees(-4.63665), 100.0);
         double x = 820;

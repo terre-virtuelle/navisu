@@ -43,7 +43,11 @@ public interface JTSServices
 
     List<Path> createDelaunayToPath(Point3DGeo[][] pts, double maxElevation);
 
+    List<Path> createDelaunayToPath(Point3DGeo[][] pts, double maxElevation, boolean depth);
+
     List<Path> createDelaunayToPath(List<Point3DGeo> pts, double maxElevation);
+
+    List<Path> createDelaunayToPath(List<Point3DGeo> pts, double maxElevation, boolean depth);
 
     List<Path> createDelaunayWithFilterOnAreaToPath(List<Point3DGeo> pts, double filter);
 

@@ -49,8 +49,8 @@ public class GridBox3D {
         sidePathsBySide = new ArrayList<>();
         basePaths = new ArrayList<>();
 
-        line = grid[0].length;
-        col = grid[1].length;
+        line = grid.length;
+        col = grid[0].length;
 
         // Sides
         // South
@@ -113,13 +113,11 @@ public class GridBox3D {
         Path path0;
         Path path1;
 
-        int latLength = latLons[0].length;
-        int lonLength = latLons[1].length;
+        int latLength = latLons.length;
+        int lonLength = latLons[0].length;
 
-        for (int i = 0; i < latLength - 1; i++) {
+        for (int i = 0; i < latLength -1; i++) {
             for (int j = 0; j < lonLength - 1; j++) {
-                //   System.out.println(latLons[i][j].getElevation() * verticalExaggeration+" "+
-                //           latLons[i][j + 1].getElevation() * verticalExaggeration+" "+latLons[i + 1][j + 1].getElevation() * verticalExaggeration);
                 positions0 = new ArrayList<>();
                 positions0.add(Position.fromDegrees(latLons[i][j].getLatitude(),
                         latLons[i][j].getLongitude(),
@@ -153,11 +151,13 @@ public class GridBox3D {
                 result.add(path1);
             }
         }
+        System.out.println("GridBox3D createPaths " + result.size());
         return result;
     }
 
     public List<List<Path>> getSidePathsBySide() {
         getSidePaths();
+       
         return sidePathsBySide;
     }
 
@@ -292,7 +292,7 @@ public class GridBox3D {
         Path p5 = (new Path(t));
         sidePaths.add(p5);
         basePaths.add(p5);
-
+        System.out.println("sidePaths : "+sidePaths.size());
         return sidePaths;
     }
 

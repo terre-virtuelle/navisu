@@ -16,6 +16,7 @@ import bzh.terrevirtuelle.navisu.geodesy.Location;
 import gov.nasa.worldwind.BasicModel;
 import gov.nasa.worldwind.Configuration;
 import gov.nasa.worldwind.Model;
+import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.awt.WorldWindowGLCanvas;
@@ -46,7 +47,7 @@ public class GeoWorldWindViewImpl
 
     protected final WorldWindLayerManager layerManager;
     protected final static WorldWindow wwd = new WorldWindowGLJPanel();
-  // protected final static WorldWindow wwd = new WorldWindowGLCanvas();
+    // protected final static WorldWindow wwd = new WorldWindowGLCanvas();
 
     protected EarthFlat globe;
 
@@ -62,7 +63,7 @@ public class GeoWorldWindViewImpl
         // this.wwd = new WorldWindowGLJPanel();
         // Create the Globe
         this.globe = new EarthFlat();
-    //    this.globe.setProjection(this.projectionToWorldWindProjection(this.currentProjection));
+        //    this.globe.setProjection(this.projectionToWorldWindProjection(this.currentProjection));
         // Create a new empty Model
         final Model model = new BasicModel(this.globe, null);
 
@@ -73,11 +74,14 @@ public class GeoWorldWindViewImpl
 
         // Create the JavaFX display node
         this.swingNode = this.createSwingDisplayNode(this.wwd);
-
+        
+        // Create mode offLine 6/5/2019
+        WorldWind.getNetworkStatus().setOfflineMode(true);
+        
         // Register a select listener to print the class names of the items under the cursor. 
         wwd.getSceneController().setDeepPickEnabled(true);
         wwd.getSceneController().setClutterFilter(new PlacemarkClutterFilter());
-        
+
         // Add controllers to manage highlighting and tool tips.
         HotSpotController hotSpotController = new HotSpotController(wwd);
         HighlightController highlightController = new HighlightController(this.wwd, SelectEvent.ROLLOVER);
@@ -160,8 +164,7 @@ public class GeoWorldWindViewImpl
 
         String wwProjection = this.projectionToWorldWindProjection(this.currentProjection);
 
-      //  this.globe.setProjection(wwProjection);
-
+        //  this.globe.setProjection(wwProjection);
     }
 
     protected String projectionToWorldWindProjection(Projection projection) {

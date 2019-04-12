@@ -6,7 +6,9 @@
  */
 package bzh.terrevirtuelle.navisu.geometry.delaunay;
 
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
+import bzh.terrevirtuelle.navisu.domain.raster.RasterInfo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Delaunay_Triangulation;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import java.util.List;
@@ -23,6 +25,8 @@ public interface DelaunayServices
 
     List<Triangle_dt> createDelaunay(Point3DGeo[][] points, int nbLat, int nbLon, double elevation);
 
+    List<Triangle_dt> createDelaunay(Point3DGeo[][] points, double elevation);
+
     Delaunay_Triangulation getTriangulation(List<Point3DGeo> points);
 
     List<Point3DGeo> toGrid(double latMin, double lonMin, double latMax, double lonMax,
@@ -31,14 +35,18 @@ public interface DelaunayServices
     Point3DGeo[][] toGridTab(double latMin, double lonMin, double latMax, double lonMax,
             double y, double x, double elevation);
 
-    Point3DGeo[][] toGridTab(List<Point3DGeo> bounds, double y, double x, double elevation);
+    Point3DGeo[][] toGridTab(List<Point3DGeo> bounds, int lines, int cols);
 
-    /*
-    Point3D[][] toGrid(double orgLat, double orgLon, 
-            double latMax, double lonMax,
-            double dy, double dx,
-            int nbLat, int nbLon, double elevation);
-     */
+    Point3DGeo[][] toGridTab(DEM dem);
+
+    Point3DGeo[][] rasterToGridTab(RasterInfo rasterInfo);
+
+    RasterInfo rasterToDemTiff(RasterInfo rasterInfo);
+
+    RasterInfo toGridTiff(DEM dem);
+
+    RasterInfo toGridTiff(Point3DGeo[][] dem, int index);
+
     List<Triangle_dt> filterLargeEdges(List<Triangle_dt> triangles, double threshold);
 
     Point3DGeo[][] mergePointsToGrid(List<Point3DGeo> points, Point3DGeo[][] grid);

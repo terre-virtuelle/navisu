@@ -35,7 +35,9 @@ public interface DisplayServices
 
     void displayPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration);
 
-    void displayPaths(GridBox3D gridBox3D, RenderableLayer layer, Material material);
+    void displayPaths(GridBox3D gridBox3D, RenderableLayer layer, Material material, double verticalExaggeration);
+
+    void displayGridBox3D(GridBox3D gridBox3D, RenderableLayer layer, Material material, double verticalExaggeration);
 
     void displayPaths(List<Path> points, RenderableLayer layer, Material material, double verticalExaggeration, double verticalOffset);
 
@@ -66,8 +68,6 @@ public interface DisplayServices
     void displayDelaunay(List<Triangle_dt> triangles,
             double height, double verticalExaggeration,
             Material material, RenderableLayer l);
-    
-    
 
     void displayConcaveHull(Geometry concaveHull,
             double height, double verticalExaggeration,
