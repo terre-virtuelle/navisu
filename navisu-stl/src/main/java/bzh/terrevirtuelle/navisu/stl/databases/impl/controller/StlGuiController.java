@@ -13,7 +13,6 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -115,7 +114,7 @@ public class StlGuiController {
         this.lonMaxLabel = lonMaxLabel;
         this.CACHE_FILE_NAME = caheFileName;
         this.layer = layer;
-        this.selectedPolygons = this.selectedPolygons;
+        this.selectedPolygons = selectedPolygons;
     }
 
     public void setTileSideX(double tileSideX) {

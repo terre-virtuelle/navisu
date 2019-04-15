@@ -9,8 +9,12 @@ import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.Vec3d;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
+import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.PointPlacemark;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -26,14 +30,21 @@ import java.util.logging.Logger;
 public class GridBox3DExportToSTL {
 
     protected static final Logger LOGGER = Logger.getLogger(GridBox3DExportToSTL.class.getName());
-    GeodesyServices geodesyServices;
+    protected GeodesyServices geodesyServices;
+    protected DisplayServices displayServices; //DEBUG
+    protected RenderableLayer layer;           //DEBUG
+
     private GridBox3D gridBox;
     String filename;
     String result = "";
     String tmp;
 
-    public GridBox3DExportToSTL(GeodesyServices geodesyServices, GridBox3D gridBox) {
+    public GridBox3DExportToSTL(GeodesyServices geodesyServices,
+            DisplayServices displayServices, RenderableLayer layer,
+            GridBox3D gridBox) {
         this.geodesyServices = geodesyServices;
+        this.displayServices = displayServices;
+        this.layer = layer;
         this.gridBox = gridBox;
     }
 
@@ -48,11 +59,14 @@ public class GridBox3DExportToSTL {
         this.filename = filename;
         double latMin = gridBox.getGrid()[0][0].getLatitude();
         double lonMin = gridBox.getGrid()[0][0].getLongitude();
+        // PointPlacemark pointPlacemark=new PointPlacemark(Position.fromDegrees(latMin,lonMin,gridBox.getGrid()[0][0].getElevation()+verticalOffset));
+        // layer.addRenderable(pointPlacemark);
         String[] head = filename.split("/");
         try {
             result = "solid " + head[head.length - 1] + "\n";
             List<Path> gridPaths = gridBox.getPaths();
-            System.out.println("GridBox3DExportToSTL : " + gridPaths.size());
+            //Path OK
+            // displayServices.displayPaths(gridPaths, layer, Material.MAGENTA, verticalOffset);
             gridPaths.forEach((p) -> {
                 result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
             });
@@ -102,7 +116,8 @@ public class GridBox3DExportToSTL {
         return result;
     }
 
-    public String exportSTL(List<Path> paths, String filename,
+    public String exportSTL(List<Path> paths,
+            String filename,
             double latMin, double lonMin,
             double latScale, double lonScale,
             double verticalOffset) {
@@ -138,9 +153,9 @@ public class GridBox3DExportToSTL {
     private String toFacet(Path path,
             double latMin, double lonMin, double latScale, double lonScale,
             double verticalOffset) {
-        String facet = "";
+        String facet;
         Vec3d[] vec3d = new Vec3d[3];
-        Vec3d normal;
+        Vec3d normal = null;
         int i = 0;
         Iterable<? extends Position> positions = path.getPositions();
         for (Position pp : positions) {
@@ -151,8 +166,9 @@ public class GridBox3DExportToSTL {
         }
         Vec3d edge1 = vec3d[1].sub(vec3d[2]);
         Vec3d edge2 = vec3d[2].sub(vec3d[0]);
-        normal = Vec3d.cross(edge1, edge2).normalize();
-
+       // System.out.println("edge : " + edge1 + " " + edge2);
+        normal = Vec3d.cross(edge1, edge2);
+       
         double z0 = vec3d[0].z + verticalOffset;
         double z1 = vec3d[1].z + verticalOffset;
         double z2 = vec3d[2].z + verticalOffset;
@@ -165,9 +181,9 @@ public class GridBox3DExportToSTL {
         facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + z2 + " \n";
         facet += "endloop \n";
         facet += "endfacet \n";
-        if (facet.contains("NaN")){
-            System.out.println("facet.contains(\"NaN\")");
-            facet="";
+        if (facet.contains("NaN")) {
+            System.out.println("facet.contains(\"NaN\")" + edge1 + " " + edge2);
+            facet = "";
         }
         return facet;
     }

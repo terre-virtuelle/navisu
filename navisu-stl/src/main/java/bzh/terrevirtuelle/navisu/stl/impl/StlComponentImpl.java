@@ -54,7 +54,7 @@ public class StlComponentImpl
     public void exportBaseSTL(String stlFilename, String stlBaseFilename) {
         try {
             String result = new String(Files.readAllBytes(Paths.get(stlBaseFilename)));
-            Files.write(Paths.get(stlFilename), result.getBytes(), StandardOpenOption.CREATE);
+            Files.write(Paths.get(stlFilename), result.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException ex) {
             Logger.getLogger(StlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }

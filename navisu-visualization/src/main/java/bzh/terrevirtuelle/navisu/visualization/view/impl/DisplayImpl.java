@@ -497,6 +497,7 @@ public class DisplayImpl
             for (Position pp : positions) {
                 tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), pp.getElevation() * verticalExaggeration));
             }
+            result.add(new Path(tmpPos));
         }
         result.forEach((p) -> {
             p.setAltitudeMode(WorldWind.ABSOLUTE);
