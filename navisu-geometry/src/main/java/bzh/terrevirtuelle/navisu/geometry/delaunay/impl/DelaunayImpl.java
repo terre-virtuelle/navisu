@@ -49,7 +49,7 @@ public class DelaunayImpl
     protected final String VRT_DIR = USER_DIR + SEP + "data" + SEP + "gdal";
     @UsedService
     GeodesyServices geodesyServices;
-
+   
     /**
      *
      * @param points
@@ -268,6 +268,7 @@ public class DelaunayImpl
         lonSize--;
         latSize = size / lonSize;
 
+        // System.out.println("lonSize : " + lonSize + "   latSize : " + latSize);
         tmpTab = new Point3DGeo[latSize][lonSize];
 
         int k = 0;
@@ -277,6 +278,7 @@ public class DelaunayImpl
                 k++;
             }
         }
+
         StringWriter content = new StringWriter();
         for (Point3DGeo p : points) {
             content.append(p.getLongitude() + "," + p.getLatitude() + "," + p.getElevation() + "\n");
@@ -318,7 +320,7 @@ public class DelaunayImpl
             Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
 
-        RasterInfo rasterInfo = new RasterInfo(ROOT_IMAGE  + ".tif", lonSize, latSize, lonMin, lonMax, latMin, latMax, IMAGE_DIR, "EPSG:4326");
+        RasterInfo rasterInfo = new RasterInfo(ROOT_IMAGE + ".tif", lonSize, latSize, lonMin, lonMax, latMin, latMax, IMAGE_DIR, "EPSG:4326");
         rasterToDemTiff(rasterInfo);
 
         return rasterInfo;

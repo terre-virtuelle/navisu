@@ -244,4 +244,9 @@ public class RasterInfo {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "RasterInfo{" + "name=" + name + ", lonSize=" + lonSize + ", latSize=" + latSize + ", latMin=" + latMin + ", lonMin=" + lonMin + ", latMax=" + latMax + ", lonMax=" + lonMax + ", imageDir=" + imageDir + ", crs=" + crs + ", demColorRelief=" + demColorRelief + '}';
+    }
+
 }

@@ -5,12 +5,17 @@
  */
 package bzh.terrevirtuelle.navisu.visualization.view.impl;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_HOMONIM_BATHYMETRY_CLUT;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.lut.Clut;
+import bzh.terrevirtuelle.navisu.domain.raster.RasterInfo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
+import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.visualization.view.Display;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
@@ -22,6 +27,7 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
@@ -54,6 +60,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.UsedService;
 
 /**
  * @date 13 mars 2015
@@ -62,6 +69,12 @@ import org.capcaval.c3.component.ComponentState;
 public class DisplayImpl
         implements Display, DisplayServices, ComponentState {
 
+    @UsedService
+    GeodesyServices geodesyServices;
+    @UsedService
+    LayerTreeServices layerTreeServices;
+
+    protected static final String SEP = File.separator;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected RenderableLayer layer;
     protected DisplayController displayController;
@@ -173,6 +186,24 @@ public class DisplayImpl
         }
         layer.addRenderables(lonPaths);
         wwd.redrawNow();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void displayRasterInfo(RasterInfo rasterInfo, GeoViewServices geoViewServices, String GROUP) {
+
+        SurfaceImageLayer layerTif = new SurfaceImageLayer();
+        layerTif.setOpacity(1);
+        layerTif.setPickEnabled(false);
+        try {
+            layerTif.addImage(rasterInfo.getImageDir() + SEP + rasterInfo.getDemColorRelief());
+        } catch (IOException ex) {
+            Logger.getLogger(DisplayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layerTif));
+        layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layerTif));
+
+        GeoWorldWindViewImpl.getWW().redrawNow();
     }
 
     @Override

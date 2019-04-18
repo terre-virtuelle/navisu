@@ -151,8 +151,8 @@ public class JTSImpl
 
     @Override
     public Point3DGeo[][] mergePointsToGrid(List<Point3DGeo> points, Point3DGeo[][] grid) {
-        int line = grid[0].length;
-        int col = grid[1].length;
+        int line = grid.length;
+        int col = grid[0].length;
         GeometryFactory geometryFactory = new GeometryFactory();
         isInit = new boolean[line][col];
         /*

@@ -5,12 +5,15 @@
  */
 package bzh.terrevirtuelle.navisu.visualization.view;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
+import bzh.terrevirtuelle.navisu.domain.raster.RasterInfo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
@@ -68,6 +71,8 @@ public interface DisplayServices
     void displayDelaunay(List<Triangle_dt> triangles,
             double height, double verticalExaggeration,
             Material material, RenderableLayer l);
+
+    void displayRasterInfo(RasterInfo rasterInfo, GeoViewServices geoViewServices,String GROUP);
 
     void displayConcaveHull(Geometry concaveHull,
             double height, double verticalExaggeration,

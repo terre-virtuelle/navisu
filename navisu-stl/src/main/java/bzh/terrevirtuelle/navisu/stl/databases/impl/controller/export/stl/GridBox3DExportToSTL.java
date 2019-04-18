@@ -12,7 +12,6 @@ import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.PointPlacemark;
 import java.io.IOException;
@@ -59,8 +58,8 @@ public class GridBox3DExportToSTL {
         this.filename = filename;
         double latMin = gridBox.getGrid()[0][0].getLatitude();
         double lonMin = gridBox.getGrid()[0][0].getLongitude();
-        // PointPlacemark pointPlacemark=new PointPlacemark(Position.fromDegrees(latMin,lonMin,gridBox.getGrid()[0][0].getElevation()+verticalOffset));
-        // layer.addRenderable(pointPlacemark);
+        // PointPlacemark pointPlacemark=new PointPlacemark(Position.fromDegrees(latMin,lonMin,gridBox.getGrid()[0][0].getElevation()+verticalOffset)); 
+       // layer.addRenderable(pointPlacemark);
         String[] head = filename.split("/");
         try {
             result = "solid " + head[head.length - 1] + "\n";
@@ -68,6 +67,7 @@ public class GridBox3DExportToSTL {
             //Path OK
             // displayServices.displayPaths(gridPaths, layer, Material.MAGENTA, verticalOffset);
             gridPaths.forEach((p) -> {
+              
                 result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
             });
             result += "endsolid " + head[head.length - 1] + "\n";
@@ -168,7 +168,7 @@ public class GridBox3DExportToSTL {
         Vec3d edge2 = vec3d[2].sub(vec3d[0]);
        // System.out.println("edge : " + edge1 + " " + edge2);
         normal = Vec3d.cross(edge1, edge2);
-       
+
         double z0 = vec3d[0].z + verticalOffset;
         double z1 = vec3d[1].z + verticalOffset;
         double z2 = vec3d[2].z + verticalOffset;
