@@ -208,7 +208,14 @@ public class JTSImpl
                 }
             }
         }
-
+        for (int i = 0; i < line; i++) {
+            result[i][0] = result[i][1];
+            result[i][col-1] = result[i][col-2];
+        }
+        for (int i = 0; i < col; i++) {
+            result[0][i] = result[1][i];
+            result[line-1][i] = result[line-2][i];
+        }
         return result;
     }
 

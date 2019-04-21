@@ -863,7 +863,7 @@ public class StlDBComponentController
                 // autoBoundCB.setSelected(true);
                 // stlPreviewCB.setSelected(false);
                 if (autoBoundCB.isSelected()) {
-                    stlGuiController.displayGuiGridBM(s57Layer);
+                 //   stlGuiController.displayGuiGridBM(s57Layer);
                 }
                 //ELEVATION AND TILES
                 if (elevationRB.isSelected() && noBathyRB.isSelected()) {
@@ -1205,9 +1205,7 @@ public class StlDBComponentController
             int gridTmpCols = pts1[0].length;
             Point3DGeo[][] grid = new Point3DGeo[gridTmpLines][gridTmpCols];
             for (int ii = 0; ii < gridTmpLines; ii++) {
-                for (int jj = 0; jj < gridTmpCols; jj++) {
-                    grid[ii][jj] = pts1[gridTmpLines - ii - 1][jj];
-                }
+                System.arraycopy(pts1[gridTmpLines - ii - 1], 0, grid[ii], 0, gridTmpCols);
             }
 
             RasterInfo rasterInfo = delaunayServices.toGridTiff(grid, 1);
@@ -1220,9 +1218,7 @@ public class StlDBComponentController
             gridTmpCols = gridTmp[0].length;
             Point3DGeo[][] grid1 = new Point3DGeo[gridTmpLines][gridTmpCols];
             for (int ii = 0; ii < gridTmpLines; ii++) {
-                for (int jj = 0; jj < gridTmpCols; jj++) {
-                    grid1[ii][jj] = gridTmp[gridTmpLines - ii - 1][jj];
-                }
+                System.arraycopy(gridTmp[gridTmpLines - ii - 1], 0, grid1[ii], 0, gridTmpCols);
             }
             //Mise a modulo
             int lines = tileCount * (grid1.length / tileCount);
@@ -1230,9 +1226,7 @@ public class StlDBComponentController
 
             Point3DGeo[][] realGrid = new Point3DGeo[lines][cols];
             for (int ii = 0; ii < lines; ii++) {
-                for (int jj = 0; jj < cols; jj++) {
-                    realGrid[ii][jj] = grid1[ii][jj];
-                }
+                System.arraycopy(grid1[ii], 0, realGrid[ii], 0, cols);
             }
             //Update Org
             lat0 = realGrid[0][0].getLatitude();
