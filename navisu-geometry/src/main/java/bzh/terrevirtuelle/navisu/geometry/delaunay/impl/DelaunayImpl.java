@@ -389,7 +389,7 @@ public class DelaunayImpl
         output = output.replace(".tif", "_col.tif");
         String command = "gdaldem color-relief  "
                 + rasterInfo.getImageDir() + SEP + rasterInfo.getName()
-                + " " + LUT_DIR + SEP + "lutLitto3D.txt "
+                + " " + LUT_DIR + SEP + "litto3D.lut "
                 + rasterInfo.getImageDir() + SEP + output;
         try {
             Proc.BUILDER.create()
