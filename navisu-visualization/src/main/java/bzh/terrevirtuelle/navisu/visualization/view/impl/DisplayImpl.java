@@ -438,10 +438,16 @@ public class DisplayImpl
         triangles.stream()
                 .filter((t) -> (t.A != null && t.B != null && t.C != null)).map((t) -> {
             ArrayList<Position> pathPositions = new ArrayList<>();
+           /* 
             pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (height - t.A.z) * verticalExaggeration));
             pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, (height - t.B.z) * verticalExaggeration));
             pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, (height - t.C.z) * verticalExaggeration));
             pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (height - t.A.z) * verticalExaggeration));
+                        */
+           pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, t.A.z * verticalExaggeration));
+            pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, t.B.z * verticalExaggeration));
+            pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, t.C.z * verticalExaggeration));
+            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, t.A.z * verticalExaggeration));
             Path p = new Path(pathPositions);
             ShapeAttributes attrs = new BasicShapeAttributes();
             attrs.setOutlineOpacity(1.0);

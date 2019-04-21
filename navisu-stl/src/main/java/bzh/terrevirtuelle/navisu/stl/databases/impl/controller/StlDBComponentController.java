@@ -882,7 +882,7 @@ public class StlDBComponentController
                     }
                     grids = createGrids(grid, tileCount);
                 }
-                */
+                 */
                 if (grids != null) {
                     List<GridBox3D> gridBoxes = new ArrayList<>();
                     grids.stream().map((g) -> {
@@ -891,15 +891,7 @@ public class StlDBComponentController
                     }).map((g) -> new GridBox3D(g, verticalExaggeration)).forEachOrdered((gb) -> {
                         gridBoxes.add(gb);
                     });
-                    if (wwjPreviewCB.isSelected()) {
-                        k = 0;
-                        Material[] materials = {Material.MAGENTA, Material.GREEN, Material.RED, Material.YELLOW};
-                        gridBoxes.forEach((gb) -> {
-                            LOGGER.info("In display gridBoxes WWJ");
-                            displayServices.displayPaths(gb, s57Layer, materials[k % 4], verticalExaggeration);
-                            k++;
-                        });
-                    }
+                    
                     if (generateKmlCB.isSelected()) {
                         k = 0;
                         gridBoxes.forEach((gb) -> {
@@ -970,8 +962,8 @@ public class StlDBComponentController
                                 buoyages.addAll(new BuoyageDBLoader(topologyServices, s57Connection, b, topMarkMap, marsys)
                                         .retrieveObjectsIn(g[0][0].getLatitude(),
                                                 g[0][0].getLongitude(),
-                                                g[g[0].length - 1][g[0].length - 1].getLatitude(),
-                                                g[g[0].length - 1][g[0].length - 1].getLongitude()));
+                                                g[g.length - 1][g[0].length - 1].getLatitude(),
+                                                g[g.length - 1][g[0].length - 1].getLongitude()));
                             }
                             new BuoyageView(s57Layer).display(buoyages, 1.0);
                             if (generateKmlCB.isSelected()) {
@@ -1003,8 +995,8 @@ public class StlDBComponentController
                             landmarks.addAll(new LandmarkDBLoader(topologyServices, s57Connection, marsys)
                                     .retrieveObjectsIn(g[0][0].getLatitude(),
                                             g[0][0].getLongitude(),
-                                            g[g[0].length - 1][g[0].length - 1].getLatitude(),
-                                            g[g[0].length - 1][g[0].length - 1].getLongitude()));
+                                            g[g.length - 1][g[0].length - 1].getLatitude(),
+                                            g[g.length - 1][g[0].length - 1].getLongitude()));
 
                             new LandmarkView(s57Layer).display(landmarks);
                             i = k / tileCount + 1;
@@ -1042,8 +1034,8 @@ public class StlDBComponentController
 
                             double latitudeMin = g[0][0].getLatitude();
                             double longitudeMin = g[0][0].getLongitude();
-                            double latitudeMax = g[g[0].length - 1][g[0].length - 1].getLatitude();
-                            double longitudeMax = g[g[0].length - 1][g[0].length - 1].getLongitude();
+                            double latitudeMax = g[g.length - 1][g[0].length - 1].getLatitude();
+                            double longitudeMax = g[g.length - 1][g[0].length - 1].getLongitude();
 
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
@@ -1062,7 +1054,7 @@ public class StlDBComponentController
                             slConsExportToSTL.export(clippedObjects);
 
                             //TODO export KML
-                            filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
+                            //filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
                             //    new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
                             k++;
                         }
@@ -1190,8 +1182,7 @@ public class StlDBComponentController
             Point3DGeo[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, 0.0);
             Point3DGeo[][] pts1 = jtsServices.mergePointsToGrid(dem.getGrid(), pts);
 
-          //  displayServices.displayGrid(pts1, s57Layer, Material.YELLOW, 10);
-            
+            //  displayServices.displayGrid(pts1, s57Layer, Material.YELLOW, 10);
             //Transformation en tableau lat decroissantes pour GeoTiff
             int gridTmpLines = pts1.length;
             int gridTmpCols = pts1[0].length;
@@ -1206,7 +1197,7 @@ public class StlDBComponentController
             displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
 
             Point3DGeo[][] gridTmp = delaunayServices.rasterToGridTab(rasterInfo);
-            
+
             //Transformation en tableau lat croissantes
             gridTmpLines = gridTmp.length;
             gridTmpCols = gridTmp[0].length;
@@ -1233,18 +1224,17 @@ public class StlDBComponentController
             lon1 = realGrid[0][cols - 1].getLongitude();
             System.out.println("lat0 : " + lat0 + " lon0 : " + lon0 + " lat1 : " + lat1 + " lon1 : " + lon1);
             
-            //   List<Triangle_dt> triangles = delaunayServices.createDelaunay(realGrid, Math.round(highestElevation));
-            // triangles = delaunayServices.createDelaunay(realGrid, Math.round(highestElevation));
-            //  displayServices.displayDelaunay(triangles, 100, 10, Material.YELLOW, s57Layer);
             //Elevation on the support 
             for (int ii = 0; ii < lines; ii++) {
                 for (int jj = 0; jj < cols; jj++) {
                     realGrid[ii][jj].setElevation(highestElevation - realGrid[ii][jj].getElevation());
                 }
             }
+            if (wwjPreviewCB.isSelected()) {
+                List<Triangle_dt> triangles = delaunayServices.createDelaunay(realGrid, Math.round(highestElevation));
+                displayServices.displayDelaunay(triangles, highestElevation, 10, Material.YELLOW, s57Layer);
+            }
             return createGrids(realGrid, tileCount);
-             
-            
 
         } else {
             Platform.runLater(() -> {
@@ -1302,16 +1292,12 @@ public class StlDBComponentController
                     realGrid[ii][jj].setElevation(realGrid[ii][jj].getElevation() - lowestElevation);
                 }
             }
-            /*  
-            for (int ii = 0; ii < lines; ii++) {
-                for (int jj = 0; jj < cols; jj++) {
-                    System.out.print(realGrid[ii][jj]+" " );
-                }
-                System.out.println("");
-                System.out.println("");
+            
+            if (wwjPreviewCB.isSelected()) {
+                List<Triangle_dt> triangles = delaunayServices.createDelaunay(realGrid, Math.round(highestElevation));
+                displayServices.displayDelaunay(triangles, 100, 10, Material.YELLOW, s57Layer);
             }
-             */
-
+            
             return createGrids(realGrid, tileCount);
         } else {
             Platform.runLater(() -> {

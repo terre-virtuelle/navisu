@@ -100,8 +100,8 @@ public class DelaunayImpl
 
     @Override
     public List<Triangle_dt> createDelaunay(Point3DGeo[][] points, double elevation) {
-        int latCount = points[0].length;
-        int lonCount = points[1].length;
+        int latCount = points.length;
+        int lonCount = points[0].length;
         return createDelaunay(points, latCount, lonCount, elevation);
     }
 

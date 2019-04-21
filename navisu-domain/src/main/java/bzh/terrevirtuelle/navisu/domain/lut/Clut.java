@@ -21,6 +21,9 @@ public class Clut {
   String content;  
   String source; 
 
+    public Clut() {
+    }
+
     public Clut(String source) {
         this.source = source;
       try {

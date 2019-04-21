@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.domain.bathymetry.view;
 
+import bzh.terrevirtuelle.navisu.domain.lut.Clut;
 import com.google.common.collect.Range;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class SHOM_HOMONIM_BATHYMETRY_CLUT {
+public class SHOM_HOMONIM_BATHYMETRY_CLUT extends Clut{
 
     static final private List<Range> RANGES;
     static final public double MAX = 10000.0;
@@ -64,6 +65,13 @@ public class SHOM_HOMONIM_BATHYMETRY_CLUT {
             put(20, new Color(Integer.decode("#111a66")));
         }
     });
+
+    public SHOM_HOMONIM_BATHYMETRY_CLUT() {
+    }
+
+    public SHOM_HOMONIM_BATHYMETRY_CLUT(String source) {
+        super(source);
+    }
 
     @SuppressWarnings("unchecked")
     public static Color getColor(double data) {

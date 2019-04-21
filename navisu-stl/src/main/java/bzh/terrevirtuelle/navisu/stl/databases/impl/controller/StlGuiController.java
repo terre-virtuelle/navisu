@@ -323,6 +323,8 @@ public class StlGuiController {
                 highlightAttributes.setInteriorMaterial(material);
                 highlightAttributes.setInteriorOpacity(0.2);
 
+                polygon.setValue(LAT_MIN, tiles);
+                
                 polygon.setAltitudeMode(WorldWind.ABSOLUTE);
                 polygon.setAttributes(normalAttributes);
                 polygon.setHighlightAttributes(highlightAttributes);
