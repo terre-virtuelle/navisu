@@ -15,7 +15,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
-import bzh.terrevirtuelle.navisu.charts.raster.geotiff.impl.GeoTiffChartImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.BuoyageDBLoader;
@@ -39,7 +38,6 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.LightDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.NavigationLineDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.RestrictedAreaDBLoader;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
@@ -364,8 +362,6 @@ public class StlDBComponentController
     public RadioButton elevationRB;
     @FXML
     public RadioButton noAltiRB;
-    @FXML
-    public CheckBox wwjPreviewCB;
     @FXML
     public CheckBox stlPreviewCB;
     @FXML
@@ -720,7 +716,6 @@ public class StlDBComponentController
         elevationRB.setToggleGroup(altiGroup);
         elevationRB.setSelected(true);
 
-        wwjPreviewCB.setSelected(true);
 
         solidRB.setToggleGroup(wsGroup);
         wireframeRB.setToggleGroup(wsGroup);
@@ -1230,10 +1225,7 @@ public class StlDBComponentController
                     realGrid[ii][jj].setElevation(highestElevation - realGrid[ii][jj].getElevation());
                 }
             }
-            if (wwjPreviewCB.isSelected()) {
-                List<Triangle_dt> triangles = delaunayServices.createDelaunay(realGrid, Math.round(highestElevation));
-                displayServices.displayDelaunay(triangles, highestElevation, 10, Material.YELLOW, s57Layer);
-            }
+           
             return createGrids(realGrid, tileCount);
 
         } else {
@@ -1292,12 +1284,6 @@ public class StlDBComponentController
                     realGrid[ii][jj].setElevation(realGrid[ii][jj].getElevation() - lowestElevation);
                 }
             }
-            
-            if (wwjPreviewCB.isSelected()) {
-                List<Triangle_dt> triangles = delaunayServices.createDelaunay(realGrid, Math.round(highestElevation));
-                displayServices.displayDelaunay(triangles, 100, 10, Material.YELLOW, s57Layer);
-            }
-            
             return createGrids(realGrid, tileCount);
         } else {
             Platform.runLater(() -> {

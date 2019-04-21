@@ -350,7 +350,6 @@
                                             </rowConstraints>
                                              <children>
                                                 <CheckBox fx:id="stlPreviewCB" mnemonicParsing="false" selected="true" text="STL Preview" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                                <CheckBox fx:id="wwjPreviewCB" mnemonicParsing="false" text="WWJ preview" />
                                              </children>
                                           </GridPane>
                                        </children>

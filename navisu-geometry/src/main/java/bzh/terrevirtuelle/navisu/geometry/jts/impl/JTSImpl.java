@@ -12,7 +12,6 @@ import bzh.terrevirtuelle.navisu.geometry.jts.JTS;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.topology.impl.TopologyImpl;
-import com.vividsolutions.jts.algorithm.Centroid;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -280,15 +279,15 @@ public class JTSImpl
     @Override
     public List<Path> createDelaunayToPath(List<Point3DGeo> pts, double maxElevation, boolean depth) {
         List<Point3DGeo> data = new ArrayList<>();
-        int height=1;
-        if(depth==false){
-            height=-1;
+        int height = 1;
+        if (depth == false) {
+            height = -1;
         }
         for (Point3DGeo p : pts) {
             if (maxElevation != 0) {
-                data.add(new Point3DGeo(p.getLatitude(), p.getLongitude(), maxElevation - (height *p.getElevation())));
+                data.add(new Point3DGeo(p.getLatitude(), p.getLongitude(), maxElevation - (height * p.getElevation())));
             } else {
-                data.add(new Point3DGeo(p.getLatitude(), p.getLongitude(), height* p.getElevation()));
+                data.add(new Point3DGeo(p.getLatitude(), p.getLongitude(), height * p.getElevation()));
             }
         }
         Coordinate[] coordinateTab = toTabCoordinates(data);
@@ -314,7 +313,8 @@ public class JTSImpl
         }
         return createDelaunayToPath(data, maxElevation);
     }
-@Override
+
+    @Override
     public List<Path> createDelaunayToPath(Point3DGeo[][] pts, double maxElevation, boolean depth) {
         List<Point3DGeo> data = new ArrayList<>();
         for (int i = 0; i < pts.length; i++) {
@@ -322,8 +322,9 @@ public class JTSImpl
                 data.add(pts[i][j]);
             }
         }
-        return createDelaunayToPath(data, maxElevation,depth);
+        return createDelaunayToPath(data, maxElevation, depth);
     }
+
     @Override
     public List<Path> createDelaunayWithFilterOnAreaToPath(List<Point3DGeo> pts, double filter) {
         Coordinate[] coordinateTab = toTabCoordinates(pts);

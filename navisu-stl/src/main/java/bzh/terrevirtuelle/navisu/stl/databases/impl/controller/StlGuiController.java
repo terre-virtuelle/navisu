@@ -296,6 +296,8 @@ public class StlGuiController {
         double orgLat = latMin;
         double orgLon = lonMin;
 
+        int indexLabel0 = 0;
+        int indexLabel1 = 0;
         List<Polygon> tiles = new ArrayList<>();
         for (int i = 0; i < line; i++) {
             for (int j = 0; j < col; j++) {
@@ -314,16 +316,21 @@ public class StlGuiController {
                 normalAttributes.setOutlineMaterial(material);
                 normalAttributes.setOutlineWidth(2);
                 normalAttributes.setDrawOutline(true);
-                normalAttributes.setDrawInterior(false);
+                normalAttributes.setDrawInterior(true);
+                normalAttributes.setInteriorOpacity(0.02);
                 normalAttributes.setEnableLighting(true);
 
                 BasicShapeAttributes highlightAttributes = new BasicShapeAttributes(normalAttributes);
                 highlightAttributes.setOutlineMaterial(material);
                 highlightAttributes.setOutlineOpacity(1);
                 highlightAttributes.setInteriorMaterial(material);
+                highlightAttributes.setDrawInterior(true);
                 highlightAttributes.setInteriorOpacity(0.2);
 
-                polygon.setValue(LAT_MIN, tiles);
+                indexLabel0=i+1;
+                indexLabel1=j+1;
+
+                polygon.setValue(AVKey.DISPLAY_NAME, "tile : " + indexLabel0 + "," + indexLabel1);
                 
                 polygon.setAltitudeMode(WorldWind.ABSOLUTE);
                 polygon.setAttributes(normalAttributes);

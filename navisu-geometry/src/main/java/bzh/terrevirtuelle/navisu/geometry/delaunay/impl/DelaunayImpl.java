@@ -49,7 +49,7 @@ public class DelaunayImpl
     protected final String VRT_DIR = USER_DIR + SEP + "data" + SEP + "gdal";
     @UsedService
     GeodesyServices geodesyServices;
-   
+
     /**
      *
      * @param points
@@ -290,12 +290,13 @@ public class DelaunayImpl
             Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         String vrt = "<OGRVRTDataSource>\n"
-                + "    <OGRVRTLayer name=" + ROOT_IMAGE + ">\n"
+                + "    <OGRVRTLayer name=" + "\'"+ROOT_IMAGE + "'>\n"
                 + "        <SrcDataSource>" + IMAGE_DIR + SEP + ROOT_IMAGE + ".csv" + "</SrcDataSource>\n"
                 + "<GeometryType>wkbPoint</GeometryType>\n"
                 + "<GeometryField encoding=\"PointFromColumns\" x=\"field_1\" y=\"field_2\" z=\"field_3\"/>\n"
                 + "    </OGRVRTLayer>\n"
                 + "</OGRVRTDataSource>";
+        System.out.println("vrt : "+vrt);
         String vrtPath = IMAGE_DIR + SEP + "dem.vrt";
         try {
             Files.write(Paths.get(vrtPath), vrt.getBytes(), StandardOpenOption.CREATE);
@@ -347,12 +348,13 @@ public class DelaunayImpl
             Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         String vrt = "<OGRVRTDataSource>\n"
-                + "    <OGRVRTLayer name=" + ROOT_IMAGE + ">\n"
+                + "    <OGRVRTLayer name=" + "\"" + ROOT_IMAGE + "\">\n"
                 + "        <SrcDataSource>" + IMAGE_DIR + SEP + ROOT_IMAGE + ".csv" + "</SrcDataSource>\n"
                 + "<GeometryType>wkbPoint</GeometryType>\n"
                 + "<GeometryField encoding=\"PointFromColumns\" x=\"field_1\" y=\"field_2\" z=\"field_3\"/>\n"
                 + "    </OGRVRTLayer>\n"
                 + "</OGRVRTDataSource>";
+        System.out.println("vrt : " + vrt);
         String vrtPath = IMAGE_DIR + SEP + "dem.vrt";
         try {
             Files.write(Paths.get(vrtPath), vrt.getBytes(), StandardOpenOption.CREATE);
