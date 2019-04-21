@@ -335,7 +335,9 @@ public class StlDBComponentController
     @FXML
     public TextField tileSideZTF;
     @FXML
-    public CheckBox supportCB;
+    public ChoiceBox<String> supportCB;
+    @FXML
+    public TextField supportTF;
     @FXML
     public TextField gridSideXTF;
     @FXML
@@ -433,6 +435,8 @@ public class StlDBComponentController
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
     protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("SRTM30mDB", "AltiV2_2-0_75mIgnDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
+    protected ObservableList<String> supportCbData = FXCollections.observableArrayList("With magnet", "Simple", "No support");
+
     protected Map<String, CheckBox> s57SelectionMap;
 
     protected StlGuiController stlGuiController;
@@ -616,6 +620,14 @@ public class StlDBComponentController
                     tilesCountTF.setText(Integer.toString(tileCount * tileCount));
                     selectedPolygons.addAll(stlGuiController.createAndDisplayTiles(s57Layer, Material.RED, 100, lat0, lon0, lat1, lon1, tileCount, tileCount));
                 });
+        supportCB.setItems(supportCbData);
+        supportCB.getSelectionModel().select("With magnet");
+        supportTF.setText("With magnet");
+        supportCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue)
+                        -> supportTF.setText(supportCB.getValue())
+                );
         gridSideXTF.setText(Double.toString(DEFAULT_GRID));
         gridSideXTF.setOnAction((ActionEvent event) -> {
             try {
@@ -715,7 +727,6 @@ public class StlDBComponentController
         noAltiRB.setToggleGroup(altiGroup);
         elevationRB.setToggleGroup(altiGroup);
         elevationRB.setSelected(true);
-
 
         solidRB.setToggleGroup(wsGroup);
         wireframeRB.setToggleGroup(wsGroup);
@@ -886,7 +897,7 @@ public class StlDBComponentController
                     }).map((g) -> new GridBox3D(g, verticalExaggeration)).forEachOrdered((gb) -> {
                         gridBoxes.add(gb);
                     });
-                    
+
                     if (generateKmlCB.isSelected()) {
                         k = 0;
                         gridBoxes.forEach((gb) -> {
@@ -906,20 +917,25 @@ public class StlDBComponentController
                         String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + 1 + "," + 1 + ".stl";
                         GridBox3D gb = gridBoxes.get(0);
                         new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
+                        LOGGER.info("Out export GridBox3D en STL");
 
-                        LOGGER.info("Out export GridBox3D en STL");
                         LOGGER.info("In export exportBaseSTL en STL");
-                        if (supportCB.isSelected()) {
-                            // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
-                            // stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
-                            // stlComponentServices.exportRotateBaseSTL("data/stl/base/baseNewRotated.stl", "data/stl/base/baseNew.stl", 5.42);
+                        String supportType = supportTF.getText();
+                        if (supportType.equals("With magnet")) {
+                            LOGGER.info("Out export exportBaseSTL in STL");
                             stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
-                            LOGGER.info("Out export exportBaseSTL en STL");
-                        } else {
-                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseSimple.stl");
-                            LOGGER.info("Out export exportBaseSTL en STL");
+                            LOGGER.info("Out export exportBaseSTL in STL");
                         }
-                        LOGGER.info("Out export GridBox3D en STL");
+                        if (supportType.equals("Simple")) {
+                            LOGGER.info("Out export exportBaseSTL in STL");
+                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseSimple.stl");
+                            LOGGER.info("Out export exportBaseSTL in STL");
+                        }
+                        if (supportType.equals("No support")) {
+
+                        }
+                        // stlComponentServices.exportRotateBaseSTL("data/stl/base/baseNewRotated.stl", "data/stl/base/baseNew.stl", 5.42);
+
                     } else {
                         k = 0;
                         gridBoxes.forEach((gb) -> {
@@ -929,16 +945,22 @@ public class StlDBComponentController
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                             LOGGER.info("In export exportBaseSTL en STL");
-                            if (supportCB.isSelected()) {
-                                // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
+                            String supportType = supportTF.getText();
+                            if (supportType.equals("With magnet")) {
+                                LOGGER.info("Out export exportBaseSTL in STL");
                                 stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
-                                LOGGER.info("Out export exportBaseSTL en STL");
-                            } else {
+                                // Standbye
+                                // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
+                                LOGGER.info("Out export exportBaseSTL in STL");
+                            }
+                            if (supportType.equals("Simple")) {
+                                LOGGER.info("Out export exportBaseSTL in STL");
                                 stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseSimple.stl");
-                                LOGGER.info("Out export exportBaseSTL en STL");
+                                LOGGER.info("Out export exportBaseSTL in STL");
+                            }
+                            if (supportType.equals("No support")) {
                             }
                             k++;
-                            LOGGER.info("Out export GridBox3D en STL");
                         });
                     }
 
@@ -1218,14 +1240,14 @@ public class StlDBComponentController
             lat1 = realGrid[lines - 1][0].getLatitude();
             lon1 = realGrid[0][cols - 1].getLongitude();
             System.out.println("lat0 : " + lat0 + " lon0 : " + lon0 + " lat1 : " + lat1 + " lon1 : " + lon1);
-            
+
             //Elevation on the support 
             for (int ii = 0; ii < lines; ii++) {
                 for (int jj = 0; jj < cols; jj++) {
                     realGrid[ii][jj].setElevation(highestElevation - realGrid[ii][jj].getElevation());
                 }
             }
-           
+
             return createGrids(realGrid, tileCount);
 
         } else {

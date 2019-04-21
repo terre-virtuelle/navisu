@@ -296,8 +296,8 @@ public class StlGuiController {
         double orgLat = latMin;
         double orgLon = lonMin;
 
-        int indexLabel0 = 0;
-        int indexLabel1 = 0;
+        int indexLabel0;
+        int indexLabel1;
         List<Polygon> tiles = new ArrayList<>();
         for (int i = 0; i < line; i++) {
             for (int j = 0; j < col; j++) {
@@ -327,11 +327,11 @@ public class StlGuiController {
                 highlightAttributes.setDrawInterior(true);
                 highlightAttributes.setInteriorOpacity(0.2);
 
-                indexLabel0=i+1;
-                indexLabel1=j+1;
+                indexLabel0 = i + 1;
+                indexLabel1 = j + 1;
 
                 polygon.setValue(AVKey.DISPLAY_NAME, "tile : " + indexLabel0 + "," + indexLabel1);
-                
+
                 polygon.setAltitudeMode(WorldWind.ABSOLUTE);
                 polygon.setAttributes(normalAttributes);
                 polygon.setHighlightAttributes(highlightAttributes);
