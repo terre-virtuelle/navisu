@@ -1314,6 +1314,12 @@ public class StlDBComponentController
     These grids are translate vertically with the max of depth
      */
     private List<Point3DGeo[][]> createBathymetryAndElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
+       Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Information");
+                alert.setHeaderText("Work in progress");
+                alert.show();
+            });
         Point3DGeo[][] grid = null;
         RasterInfo rasterInfoAlti = null;
         RasterInfo rasterInfoBathy = null;
