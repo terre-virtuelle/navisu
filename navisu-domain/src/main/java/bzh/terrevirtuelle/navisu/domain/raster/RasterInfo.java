@@ -5,6 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.domain.raster;
 
+import bzh.terrevirtuelle.navisu.domain.util.Pair;
+
 /**
  *
  * @author serge
@@ -13,24 +15,103 @@ package bzh.terrevirtuelle.navisu.domain.raster;
 public class RasterInfo {
 
     private String name;
-
-    private int lonSize;
-
-    private int latSize;
-
+    private double pixelLonSize;
+    private double pixelLatSize;
+    private int line;
+    private int col;
     private double latMin;
-
     private double lonMin;
-
     private double latMax;
-
     private double lonMax;
-
     private String imageDir;
-
     private String crs;
-
     private String demColorRelief;
+
+    public RasterInfo() {
+    }
+
+    public RasterInfo(String name,
+            double pixelLatSize, double pixelLonSize,
+            double latMin, double lonMin,
+            double latMax, double lonMax,
+            String imageDir, String crs) {
+        this.name = name;
+        this.pixelLonSize = pixelLonSize;
+        this.pixelLatSize = pixelLatSize;
+        this.latMin = latMin;
+        this.lonMin = lonMin;
+        this.latMax = latMax;
+        this.lonMax = lonMax;
+        this.imageDir = imageDir;
+        this.crs = crs;
+    }
+
+    public RasterInfo(String name,
+             double latMin, double lonMin,
+            double latMax, double lonMax,
+            String imageDir, String crs) {
+        this.name = name;
+        this.latMin = latMin;
+        this.lonMin = lonMin;
+        this.latMax = latMax;
+        this.lonMax = lonMax;
+        this.imageDir = imageDir;
+        this.crs = crs;
+    }
+
+    public RasterInfo(String name, 
+            int line, int col, 
+            double latMin, double lonMin, 
+            double latMax, double lonMax, 
+            String imageDir, String crs) {
+        this.name = name;
+        this.line = line;
+        this.col = col;
+        this.latMin = latMin;
+        this.lonMin = lonMin;
+        this.latMax = latMax;
+        this.lonMax = lonMax;
+        this.imageDir = imageDir;
+        this.crs = crs;
+    }
+
+    public RasterInfo(String name, 
+            double pixelLonSize, double pixelLatSize, 
+            int line, int col, double latMin,
+            double lonMin, double latMax, double lonMax, 
+            String imageDir,
+            String crs, 
+            String demColorRelief) {
+        this.name = name;
+        this.pixelLonSize = pixelLonSize;
+        this.pixelLatSize = pixelLatSize;
+        this.line = line;
+        this.col = col;
+        this.latMin = latMin;
+        this.lonMin = lonMin;
+        this.latMax = latMax;
+        this.lonMax = lonMax;
+        this.imageDir = imageDir;
+        this.crs = crs;
+        this.demColorRelief = demColorRelief;
+    }
+
+    public double getPixelLonSize() {
+        return pixelLonSize;
+    }
+
+    public void setPixelLonSize(double pixelLonSize) {
+        this.pixelLonSize = pixelLonSize;
+    }
+
+    public double getPixelLatSize() {
+        return pixelLatSize;
+    }
+
+    public void setPixelLatSize(double pixelLatSize) {
+        this.pixelLatSize = pixelLatSize;
+    }
+
 
     /**
      * Get the value of demColorRelief
@@ -50,36 +131,40 @@ public class RasterInfo {
         this.demColorRelief = demColorRelief;
     }
 
-    public RasterInfo() {
+    /**
+     * Get the value of col
+     *
+     * @return the value of col
+     */
+    public int getCol() {
+        return col;
     }
 
-    public RasterInfo(String name, int lonSize, int latSize,
-            double lonMin, double lonMax,
-            double latMin, double latMax,
-            String imageDir, String crs) {
-        this.name = name;
-        this.lonSize = lonSize;
-        this.latSize = latSize;
-        this.latMin = latMin;
-        this.lonMin = lonMin;
-        this.latMax = latMax;
-        this.lonMax = lonMax;
-        this.imageDir = imageDir;
-        this.crs = crs;
+    /**
+     * Set the value of col
+     *
+     * @param col new value of col
+     */
+    public void setCol(int col) {
+        this.col = col;
     }
 
-    public RasterInfo(String name, int lonSize, int latSize, 
-            double latMin, double lonMin, double lonMax, 
-            String imageDir, String crs, String demColorRelief) {
-        this.name = name;
-        this.lonSize = lonSize;
-        this.latSize = latSize;
-        this.latMin = latMin;
-        this.lonMin = lonMin;
-        this.lonMax = lonMax;
-        this.imageDir = imageDir;
-        this.crs = crs;
-        this.demColorRelief = demColorRelief;
+    /**
+     * Get the value of line
+     *
+     * @return the value of line
+     */
+    public int getLine() {
+        return line;
+    }
+
+    /**
+     * Set the value of line
+     *
+     * @param line new value of line
+     */
+    public void setLine(int line) {
+        this.line = line;
     }
 
     /**
@@ -190,41 +275,7 @@ public class RasterInfo {
         this.latMin = latMin;
     }
 
-    /**
-     * Get the value of latSize
-     *
-     * @return the value of latSize
-     */
-    public int getLatSize() {
-        return latSize;
-    }
-
-    /**
-     * Set the value of latSize
-     *
-     * @param latSize new value of latSize
-     */
-    public void setLatSize(int latSize) {
-        this.latSize = latSize;
-    }
-
-    /**
-     * Get the value of lonSize
-     *
-     * @return the value of lonSize
-     */
-    public int getLonSize() {
-        return lonSize;
-    }
-
-    /**
-     * Set the value of lonSize
-     *
-     * @param lonSize new value of lonSize
-     */
-    public void setLonSize(int lonSize) {
-        this.lonSize = lonSize;
-    }
+    
 
     /**
      * Get the value of name
@@ -246,7 +297,9 @@ public class RasterInfo {
 
     @Override
     public String toString() {
-        return "RasterInfo{" + "name=" + name + ", lonSize=" + lonSize + ", latSize=" + latSize + ", latMin=" + latMin + ", lonMin=" + lonMin + ", latMax=" + latMax + ", lonMax=" + lonMax + ", imageDir=" + imageDir + ", crs=" + crs + ", demColorRelief=" + demColorRelief + '}';
+        return "RasterInfo{" + "name=" + name + ", pixelLonSize=" + pixelLonSize + ", pixelLatSize=" + pixelLatSize + ", line=" + line + ", col=" + col + ", latMin=" + latMin + ", lonMin=" + lonMin + ", latMax=" + latMax + ", lonMax=" + lonMax + ", imageDir=" + imageDir + ", crs=" + crs + ", demColorRelief=" + demColorRelief + '}';
     }
+
+    
 
 }

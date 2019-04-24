@@ -36,6 +36,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.gdal.GdalServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
@@ -57,6 +58,8 @@ public class StlDBComponentImpl
     DemDBServices demComponentServices;
     @UsedService
     DisplayServices displayServices;
+    @UsedService
+    GdalServices gdalServices;
     @UsedService
     GeodesyServices geodesyServices;
     @UsedService
@@ -131,7 +134,8 @@ public class StlDBComponentImpl
                         objComponentServices,
                         pro4JServices,
                         geoViewServices,
-                        layerTreeServices);
+                        layerTreeServices,
+                        gdalServices);
                 controller.setVisible(true);
             }
         }

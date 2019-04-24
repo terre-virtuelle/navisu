@@ -90,7 +90,7 @@ public class Proc {
         args.stream().forEach((arg) -> {
             sb.append(arg).append(SPACE);
         });
-       // System.out.println("cmd : " + sb);
+        // System.out.println("cmd : " + sb);
         String[] envp = new String[environment.size()];
         int count = 0;
         for (Map.Entry<String, String> entry : environment.entrySet()) {
@@ -117,6 +117,16 @@ public class Proc {
                 Logger.getAnonymousLogger().log(Level.WARNING, null, ex);
             }
         });
+    }
+
+    public static void process(String command) {
+        try {
+            Proc.BUILDER.create()
+                    .setCmd(command)
+                    .execSh();
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(Proc.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
     }
 
     public static String getProperty(String property) {

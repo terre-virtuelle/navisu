@@ -182,6 +182,8 @@ import bzh.terrevirtuelle.navisu.stl.charts.StlChartComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.StlDBComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.gdal.GdalServices;
+import bzh.terrevirtuelle.navisu.gdal.impl.GdalImpl;
 import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
 import bzh.terrevirtuelle.navisu.geo.raster.impl.RasterImpl;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
@@ -275,6 +277,7 @@ public class AppMain extends Application {
                         ExifComponentImpl.class,
                         FilesImpl.class,
                         GazetteerComponentImpl.class,
+                        GdalImpl.class,
                         GeodesyImpl.class,
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
@@ -363,6 +366,7 @@ public class AppMain extends Application {
         FilesServices filesServices = componentManager.getComponentService(FilesServices.class);
 
         GazetteerComponentServices gazetteerComponentServices = componentManager.getComponentService(GazetteerComponentServices.class);
+        GdalServices gdalServices = componentManager.getComponentService(GdalServices.class);
         GeodesyServices geodesyServices = componentManager.getComponentService(GeodesyServices.class);
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);

@@ -43,6 +43,9 @@ public interface DelaunayServices
 
     RasterInfo rasterToDemTiff(RasterInfo rasterInfo);
 
+
+    String gdalInfo(RasterInfo rasterInfo);
+
     RasterInfo toGridTiff(DEM dem);
 
     RasterInfo toGridTiff(Point3DGeo[][] dem, int index);

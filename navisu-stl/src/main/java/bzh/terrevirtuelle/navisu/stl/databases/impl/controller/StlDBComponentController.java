@@ -113,6 +113,7 @@ import javafx.scene.text.Text;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemDbLoader;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.domain.raster.RasterInfo;
+import bzh.terrevirtuelle.navisu.gdal.GdalServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
@@ -151,6 +152,7 @@ public class StlDBComponentController
     protected DelaunayServices delaunayServices;
     protected DemDBServices demDBServices;
     protected DisplayServices displayServices;
+    protected GdalServices gdalServices;
     protected GeodesyServices geodesyServices;
     protected GuiAgentServices guiAgentServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
@@ -262,8 +264,8 @@ public class StlDBComponentController
     protected Connection elevationConnection;
     protected DEM bathymetry;
     protected DEM elevation;
-    protected double lowestElevation;
-    protected double highestElevation;
+    protected double lowestElevationAlti = 0.0;
+    protected double highestElevationBathy = 0.0;
     protected double maxDepth;
     protected Map<Pair<Double, Double>, String> topMarkMap = new HashMap<>();
     protected String marsys;
@@ -468,7 +470,8 @@ public class StlDBComponentController
             ObjComponentServices objComponentServices,
             Pro4JServices pro4JServices,
             GeoViewServices geoViewServices,
-            LayerTreeServices layerTreeServices) {
+            LayerTreeServices layerTreeServices,
+            GdalServices gdalServices) {
         super(keyCode, keyCombination);
 
         this.component = component;
@@ -490,6 +493,7 @@ public class StlDBComponentController
         this.pro4JServices = pro4JServices;
         this.geoViewServices = geoViewServices;
         this.layerTreeServices = layerTreeServices;
+        this.gdalServices = gdalServices;
 
         this.daeExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices);
         this.objExportToSTL = new ObjExportToSTL(geodesyServices, guiAgentServices, jtsServices,
@@ -863,23 +867,27 @@ public class StlDBComponentController
                 // autoBoundCB.setSelected(true);
                 // stlPreviewCB.setSelected(false);
                 if (autoBoundCB.isSelected()) {
-                 //   stlGuiController.displayGuiGridBM(s57Layer);
+                    //   stlGuiController.displayGuiGridBM(s57Layer);
                 }
                 //ELEVATION AND TILES
                 if (elevationRB.isSelected() && noBathyRB.isSelected()) {
                     grids = createElevationTab(lat0, lon0, lat1, lon1);
                 }
                 //BATHY AND TILES
-                if (bathyRB.isSelected() && !elevationRB.isSelected()) {
+                if (bathyRB.isSelected() && noAltiRB.isSelected()) {
                     grids = createBathymetryTab(lat0, lon0, lat1, lon1);
                 }
-                /*
-                if (!noAltiRB.isSelected()) {
-                    if (elevationRB.isSelected() && bathyRB.isSelected()) {
-                        grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
+                if (elevationRB.isSelected() && bathyRB.isSelected()) {
+                    grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
 
-                    }
-                } else {
+                }
+                //DEPARE
+                if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
+                    System.out.println("depareRB.isSelected()");
+                    createElevationAndDepare(latMin, lonMin, latMax, lonMax);
+                }
+                
+                /*else {
                     Point3DGeo[][] grid = null;
                     if (autoBoundCB.isSelected()) {
                         // stlGuiController.displayGuiGridBM(s57Layer);
@@ -964,11 +972,6 @@ public class StlDBComponentController
                         });
                     }
 
-                    //DEPARE
-                    if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
-                        createElevationAndDepare(latMin, lonMin, latMax, lonMax);
-                    }
-
                     k = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
                         Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
@@ -991,14 +994,14 @@ public class StlDBComponentController
                                 } catch (IOException ex) {
                                     Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                                 }
-                                new BuoyageExportKML(kmlFileNames.get(k)).export(buoyages, lowestElevation + tileSideZ);
+                                new BuoyageExportKML(kmlFileNames.get(k)).export(buoyages, lowestElevationAlti + tileSideZ);
                             }
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
                             BuoyageExportToSTL buoyageExportSTL = new BuoyageExportToSTL(geodesyServices, g, filename, latScale, lonScale);
-                            buoyageExportSTL.export(buoyages, lowestElevation + tileSideZ);
+                            buoyageExportSTL.export(buoyages, lowestElevationAlti + tileSideZ);
                             k++;
                         }
 
@@ -1021,7 +1024,7 @@ public class StlDBComponentController
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
                             new LandmarkExportToSTL(geodesyServices, g, filename, latScale, lonScale)
-                                    .export(landmarks, lowestElevation, tileSideZ);
+                                    .export(landmarks, lowestElevationAlti, tileSideZ);
                             k++;
                         }
 
@@ -1036,7 +1039,7 @@ public class StlDBComponentController
                             j = k % tileCount + 1;
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
-                            meshExportToSTL.export(g, filename, latScale, lonScale, tileSideZ, lowestElevation);
+                            meshExportToSTL.export(g, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
                             k++;
                         }
                     }
@@ -1067,7 +1070,7 @@ public class StlDBComponentController
                                     filename,
                                     latitudeMin, longitudeMin,
                                     latScale, lonScale,
-                                    lowestElevation + tileSideZ);
+                                    lowestElevationAlti + tileSideZ);
                             slConsExportToSTL.export(clippedObjects);
 
                             //TODO export KML
@@ -1193,13 +1196,11 @@ public class StlDBComponentController
         DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
                 lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
         if (!dem.getGrid().isEmpty()) {
-            lowestElevation = dem.getMinElevation();
-            highestElevation = dem.getMaxElevation();
+            highestElevationBathy = dem.getMaxElevation();
 
             Point3DGeo[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, 0.0);
             Point3DGeo[][] pts1 = jtsServices.mergePointsToGrid(dem.getGrid(), pts);
 
-            //  displayServices.displayGrid(pts1, s57Layer, Material.YELLOW, 10);
             //Transformation en tableau lat decroissantes pour GeoTiff
             int gridTmpLines = pts1.length;
             int gridTmpCols = pts1[0].length;
@@ -1209,7 +1210,9 @@ public class StlDBComponentController
             }
 
             RasterInfo rasterInfo = delaunayServices.toGridTiff(grid, 1);
-            displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
+            // displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
+            //    gdalServices.gdalInfo(rasterInfo);
+            // gdalServices.resample(rasterInfo);
 
             Point3DGeo[][] gridTmp = delaunayServices.rasterToGridTab(rasterInfo);
 
@@ -1238,7 +1241,7 @@ public class StlDBComponentController
             //Elevation on the support 
             for (int ii = 0; ii < lines; ii++) {
                 for (int jj = 0; jj < cols; jj++) {
-                    realGrid[ii][jj].setElevation(highestElevation - realGrid[ii][jj].getElevation());
+                    realGrid[ii][jj].setElevation(highestElevationBathy - realGrid[ii][jj].getElevation());
                 }
             }
 
@@ -1261,11 +1264,10 @@ public class StlDBComponentController
         DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
                 lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
         if (!dem.getGrid().isEmpty()) {
-            lowestElevation = dem.getMinElevation();
-            highestElevation = dem.getMaxElevation();
+            lowestElevationAlti = dem.getMinElevation();
 
             RasterInfo rasterInfo = delaunayServices.toGridTiff(dem);
-            displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
+          //  displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
             Point3DGeo[][] gridTmp = delaunayServices.rasterToGridTab(rasterInfo);
 
             //Transformation en tableau lat croissantes
@@ -1273,19 +1275,14 @@ public class StlDBComponentController
             int gridTmpCols = gridTmp[0].length;
             Point3DGeo[][] grid = new Point3DGeo[gridTmpLines][gridTmpCols];
             for (int ii = 0; ii < gridTmpLines; ii++) {
-                for (int jj = 0; jj < gridTmpCols; jj++) {
-                    grid[ii][jj] = gridTmp[gridTmpLines - ii - 1][jj];
-                }
+                System.arraycopy(gridTmp[gridTmpLines - ii - 1], 0, grid[ii], 0, gridTmpCols);
             }
             //Update for modulo
             int lines = tileCount * (grid.length / tileCount);
             int cols = tileCount * (grid[0].length / tileCount);
             Point3DGeo[][] realGrid = new Point3DGeo[lines][cols];
             for (int ii = 0; ii < lines; ii++) {
-                for (int jj = 0; jj < cols; jj++) {
-                    realGrid[ii][jj] = grid[ii][jj];
-                }
-                // System.out.println(realGrid[ii][0]);
+                System.arraycopy(grid[ii], 0, realGrid[ii], 0, cols); // System.out.println(realGrid[ii][0]);
             }
 
             //Update Org
@@ -1297,7 +1294,7 @@ public class StlDBComponentController
             //Elevation on the support 
             for (int ii = 0; ii < lines; ii++) {
                 for (int jj = 0; jj < cols; jj++) {
-                    realGrid[ii][jj].setElevation(realGrid[ii][jj].getElevation() - lowestElevation);
+                    realGrid[ii][jj].setElevation(realGrid[ii][jj].getElevation() - lowestElevationAlti + highestElevationBathy);
                 }
             }
             return createGrids(realGrid, tileCount);
@@ -1310,6 +1307,66 @@ public class StlDBComponentController
             });
             return null;
         }
+    }
+
+    /*
+    Create a list of points on a regular grid.
+    These grids are translate vertically with the max of depth
+     */
+    private List<Point3DGeo[][]> createBathymetryAndElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
+        Point3DGeo[][] grid = null;
+        RasterInfo rasterInfoAlti = null;
+        RasterInfo rasterInfoBathy = null;
+
+        elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
+        DEM demAlti = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
+                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
+        if (!demAlti.getGrid().isEmpty()) {
+            lowestElevationAlti = demAlti.getMinElevation();
+            rasterInfoAlti = delaunayServices.toGridTiff(demAlti);
+            
+            
+            
+            
+            System.out.println("rasterInfoAlti  1 : "+rasterInfoAlti);
+            rasterInfoAlti = gdalServices.gdalInfo(rasterInfoAlti);
+            
+            
+         //  displayServices.displayRasterInfo(rasterInfoAlti, geoViewServices, GROUP);
+            System.out.println("rasterInfoAlti  2 : "+rasterInfoAlti);
+            Point3DGeo[][] gridTmpAlti = delaunayServices.rasterToGridTab(rasterInfoAlti);
+            System.out.println("gridTmpAlti : " + gridTmpAlti.length + " " + gridTmpAlti[0].length);
+            //Transformation en tableau lat croissantes
+            Point3DGeo[][] gridAlti = new Point3DGeo[gridTmpAlti.length][gridTmpAlti[0].length];
+            for (int ii = 0; ii < gridTmpAlti.length; ii++) {
+                System.arraycopy(gridTmpAlti[gridTmpAlti.length - ii - 1], 0, gridAlti[ii], 0, gridTmpAlti[0].length);
+            }
+
+        }
+        bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
+        DEM demBathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
+                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
+        if (!demBathy.getGrid().isEmpty()) {
+            highestElevationBathy = demBathy.getMaxElevation();
+            Point3DGeo[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, 0.0);
+            Point3DGeo[][] pts1 = jtsServices.mergePointsToGrid(demBathy.getGrid(), pts);
+            //Transformation en tableau lat decroissantes pour GeoTiff
+           
+            Point3DGeo[][] gridBathy = new Point3DGeo[pts1.length][pts1[0].length];
+            for (int ii = 0; ii < pts1.length; ii++) {
+                System.arraycopy(pts1[pts1.length - ii - 1], 0, gridBathy[ii], 0, pts1[0].length);
+            }
+            
+            rasterInfoBathy = delaunayServices.toGridTiff(gridBathy, 1);
+            rasterInfoBathy = gdalServices.resample(rasterInfoAlti,rasterInfoBathy );
+            System.out.println("rasterInfoBathy : "+ rasterInfoBathy);
+         //   displayServices.displayRasterInfo(rasterInfoBathy, geoViewServices, GROUP);
+
+            Point3DGeo[][] gridTmpBathy = delaunayServices.rasterToGridTab(rasterInfoBathy);
+            System.out.println("gridTmpAlti : " + gridTmpBathy.length + " " + gridTmpBathy[0].length);
+        }
+
+        return createGrids(grid, tileCount);
     }
 
     private List<Point3DGeo[][]> createGrids(Point3DGeo[][] grid, int tileCount) {
@@ -1365,37 +1422,6 @@ public class StlDBComponentController
         return pts;
     }
 
-    /*
-    Create a list of points on a regular grid.
-    These grids are translate vertically with the max of depth
-     */
-    private List<Point3DGeo[][]> createBathymetryAndElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
-
-        bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM bathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
-                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
-        lowestElevation = bathy.getMaxElevation();
-        // Offset from maxDepth
-        List<Point3DGeo> bathyElevations = new ArrayList<>();
-        bathy.getGrid().forEach((p) -> {
-            bathyElevations.add(new Point3DGeo(p.getLatitude(), p.getLongitude(), lowestElevation - p.getElevation()));
-        });
-
-        elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM alti = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(latMin - 0.1, lonMin - 0.1, latMax + 0.1, lonMax + 0.1);
-        // Offset from maxDepth
-        alti.getGrid().forEach((p) -> {
-            bathyElevations.add(new Point3DGeo(p.getLatitude(), p.getLongitude(), lowestElevation + p.getElevation()));
-        });
-
-        // Merge all alti and bathy points
-        Point3DGeo[][] grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, lowestElevation);
-
-        grid = jtsServices.mergePointsToGrid(bathyElevations, grid);
-
-        return createGrids(grid, tileCount);
-    }
-
     private void scaleCompute(Point3DGeo[][] grid) {
 
         double realLatMin = grid[0][0].getLatitude();
@@ -1438,18 +1464,24 @@ public class StlDBComponentController
     }
 
     private void createElevationAndDepare(double latMin, double lonMin, double latMax, double lonMax) {
-        // bathymetry = createBathymetry(latMin, lonMin, latMax, lonMax);
-        Point3DGeo[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
-        displayServices.displayGrid(ptsTab, s57Layer, Material.GREEN, verticalExaggeration);
+        bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
+        DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
+                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
+        if (!dem.getGrid().isEmpty()) {
+            lowestElevationAlti = dem.getMinElevation();
+            highestElevationBathy = dem.getMaxElevation();
+            // Point3DGeo[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
+            // displayServices.displayGrid(ptsTab, s57Layer, Material.GREEN, verticalExaggeration);
 
-        Shapefile shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                .retrieveIn(latMin, lonMin, latMax, lonMax);
-
-        new DepareView(s57Layer, s57Layer, s57Layer,
-                simplifyFactor,
-                Math.round(bathymetry.getMaxElevation()), verticalExaggeration,
-                true, true)
-                .display(shapefile);
+            Shapefile shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                    .retrieveIn(latMin, lonMin, latMax, lonMax);
+            System.out.println(shapefile);
+            new DepareView(s57Layer, s57Layer, s57Layer,
+                    simplifyFactor,
+                    Math.round(highestElevationBathy), verticalExaggeration,
+                    true, true)
+                    .display(shapefile);
+        }
     }
 
 }

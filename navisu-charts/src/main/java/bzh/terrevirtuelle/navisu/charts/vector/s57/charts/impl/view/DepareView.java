@@ -38,12 +38,12 @@ public class DepareView
 
     public DepareView(RenderableLayer layer, RenderableLayer simpleDeparelayer, RenderableLayer depare3DLayer,
             double simplify,
-            double maxHeight,  double magnify,
+            double maxHeight, double magnify,
             boolean isSimplify, boolean isCreateElevation) {
         this.layer = layer;
         this.simpleDeparelayer = simpleDeparelayer;
         this.depare3DLayer = depare3DLayer;
-        this.maxHeight=maxHeight;
+        this.maxHeight = maxHeight;
         this.simplify = simplify;
         this.isSimplify = isSimplify;
         this.magnify = magnify;

@@ -255,25 +255,25 @@ public class DelaunayImpl
         Point3DGeo[][] tmpTab;
         List<Point3DGeo> points = dem.getGrid();
         int size = points.size();
-        int latSize = 1;
-        int lonSize = 1;
+        int col = 1;
+        int line = 1;
         double lat = points.get(0).getLatitude();
 
         //Count of line and columns
         int u = 0;
         while (points.get(u).getLatitude() == lat) {
             u++;
-            lonSize++;
+            line++;
         }
-        lonSize--;
-        latSize = size / lonSize;
+        line--;
+        col = size / line;
 
         // System.out.println("lonSize : " + lonSize + "   latSize : " + latSize);
-        tmpTab = new Point3DGeo[latSize][lonSize];
+        tmpTab = new Point3DGeo[col][line];
 
         int k = 0;
-        for (int i = 0; i < latSize; i++) {
-            for (int j = 0; j < lonSize; j++) {
+        for (int i = 0; i < col; i++) {
+            for (int j = 0; j < line; j++) {
                 tmpTab[i][j] = points.get(k);
                 k++;
             }
@@ -290,13 +290,13 @@ public class DelaunayImpl
             Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         String vrt = "<OGRVRTDataSource>\n"
-                + "    <OGRVRTLayer name=" + "\'"+ROOT_IMAGE + "'>\n"
+                + "    <OGRVRTLayer name=" + "\'" + ROOT_IMAGE + "'>\n"
                 + "        <SrcDataSource>" + IMAGE_DIR + SEP + ROOT_IMAGE + ".csv" + "</SrcDataSource>\n"
                 + "<GeometryType>wkbPoint</GeometryType>\n"
                 + "<GeometryField encoding=\"PointFromColumns\" x=\"field_1\" y=\"field_2\" z=\"field_3\"/>\n"
                 + "    </OGRVRTLayer>\n"
                 + "</OGRVRTDataSource>";
-        System.out.println("vrt : "+vrt);
+        System.out.println("vrt : " + vrt);
         String vrtPath = IMAGE_DIR + SEP + "dem.vrt";
         try {
             Files.write(Paths.get(vrtPath), vrt.getBytes(), StandardOpenOption.CREATE);
@@ -305,13 +305,13 @@ public class DelaunayImpl
         }
 
         double latMin = tmpTab[0][0].getLatitude();
-        double latMax = tmpTab[latSize - 1][0].getLatitude();
+        double latMax = tmpTab[col - 1][0].getLatitude();
         double lonMin = tmpTab[0][0].getLongitude();
-        double lonMax = tmpTab[0][lonSize - 1].getLongitude();
+        double lonMax = tmpTab[0][line - 1].getLongitude();
         String command = "gdal_grid -a nearest "
                 + " -a_srs EPSG:4326"
                 + " -txe " + lonMin + " " + lonMax + " -tye  " + latMin + " " + latMax
-                + " -outsize " + lonSize + " " + latSize + " -ot INT16 -l "
+                + " -outsize " + line + " " + col + " -ot INT16 -l "
                 + ROOT_IMAGE + " " + IMAGE_DIR + SEP + ROOT_IMAGE + ".vrt " + IMAGE_DIR + SEP + ROOT_IMAGE + ".tif";
         try {
             Proc.BUILDER.create()
@@ -321,7 +321,8 @@ public class DelaunayImpl
             Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
 
-        RasterInfo rasterInfo = new RasterInfo(ROOT_IMAGE + ".tif", lonSize, latSize, lonMin, lonMax, latMin, latMax, IMAGE_DIR, "EPSG:4326");
+        RasterInfo rasterInfo = new RasterInfo(ROOT_IMAGE + ".tif", col, line, 
+                latMin, lonMin, latMax, lonMax, IMAGE_DIR, "EPSG:4326");
         rasterToDemTiff(rasterInfo);
 
         return rasterInfo;
@@ -331,13 +332,13 @@ public class DelaunayImpl
     public RasterInfo toGridTiff(Point3DGeo[][] dem, int index) {
         final String ROOT_IMAGE = "dem";
 
-        int latSize = dem.length;
-        int lonSize = dem[0].length;
+        int col = dem.length;
+        int line = dem[0].length;
 
         StringWriter content = new StringWriter();
 
-        for (int i = 0; i < latSize; i++) {
-            for (int j = 0; j < lonSize; j++) {
+        for (int i = 0; i < col; i++) {
+            for (int j = 0; j < line; j++) {
                 content.append(dem[i][j].getLongitude() + "," + dem[i][j].getLatitude() + "," + dem[i][j].getElevation() + "\n");
             }
         }
@@ -354,22 +355,22 @@ public class DelaunayImpl
                 + "<GeometryField encoding=\"PointFromColumns\" x=\"field_1\" y=\"field_2\" z=\"field_3\"/>\n"
                 + "    </OGRVRTLayer>\n"
                 + "</OGRVRTDataSource>";
-        System.out.println("vrt : " + vrt);
         String vrtPath = IMAGE_DIR + SEP + "dem.vrt";
         try {
             Files.write(Paths.get(vrtPath), vrt.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
             Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+//--config GDAL_NUM_THREADS ALL_CPUS
 
         double latMin = dem[0][0].getLatitude();
-        double latMax = dem[latSize - 1][0].getLatitude();
+        double latMax = dem[col - 1][0].getLatitude();
         double lonMin = dem[0][0].getLongitude();
-        double lonMax = dem[0][lonSize - 1].getLongitude();
+        double lonMax = dem[0][line - 1].getLongitude();
         String command = "gdal_grid -a nearest "
                 + " -a_srs EPSG:4326"
                 + " -txe " + lonMin + " " + lonMax + " -tye  " + latMin + " " + latMax
-                + " -outsize " + lonSize + " " + latSize + " -ot INT16 -l "
+                + " -outsize " + col + " " + line + " -ot INT16 -l "
                 + ROOT_IMAGE + " " + IMAGE_DIR + SEP + ROOT_IMAGE + ".vrt " + IMAGE_DIR + SEP + ROOT_IMAGE + "_" + index + ".tif";
         try {
             Proc.BUILDER.create()
@@ -379,10 +380,27 @@ public class DelaunayImpl
             Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
 
-        RasterInfo rasterInfo = new RasterInfo(ROOT_IMAGE + "_" + index + ".tif", lonSize, latSize, lonMin, lonMax, latMin, latMax, IMAGE_DIR, "EPSG:4326");
+        RasterInfo rasterInfo = new RasterInfo(ROOT_IMAGE + "_" + index + ".tif", 
+                col, line, 
+                latMin, lonMin, latMax, lonMax,
+                IMAGE_DIR, "EPSG:4326");
         rasterToDemTiff(rasterInfo);
 
         return rasterInfo;
+    }
+
+    @Override
+    public String gdalInfo(RasterInfo rasterInfo) {
+
+        String command = "gdalinfo " + rasterInfo.getImageDir() + SEP + rasterInfo.getName();
+        try {
+            Proc.BUILDER.create()
+                    .setCmd(command)
+                    .execSh();
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        return null;
     }
 
     @Override
@@ -431,7 +449,7 @@ public class DelaunayImpl
                 point3DGeos.add(new Point3DGeo(Double.parseDouble(t[1]), Double.parseDouble(t[0]), Double.parseDouble(t[2])));
             }
         }
-        return toGridTab(point3DGeos, rasterInfo.getLatSize(), rasterInfo.getLonSize());
+        return toGridTab(point3DGeos, rasterInfo.getLine(), rasterInfo.getCol());
     }
 
     @Override
