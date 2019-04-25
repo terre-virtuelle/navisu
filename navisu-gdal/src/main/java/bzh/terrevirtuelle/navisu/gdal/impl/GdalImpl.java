@@ -68,11 +68,11 @@ public class GdalImpl
 
         String out = rootImage.replace(".tif", "_sample.tif");
         String command = "gdalwarp "
-             //   + " -tr -" + src.getPixelLonSize() + " " + src.getPixelLatSize()
+                //   + " -tr -" + src.getPixelLonSize() + " " + src.getPixelLatSize()
                 + " -t_srs EPSG:4326 "
                 + " -r bilinear "
                 + " -te " + src.getLonMin() + " " + src.getLatMin() + " " + src.getLonMax() + " " + src.getLatMax() + " "
-                + " -ts "  +src.getCol()+" "+src.getLine()+" "
+                + " -ts " + src.getCol() + " " + src.getLine() + " "
                 + srcImageDir + SEP + rootImage + "   " + DEST_IMAGE_DIR + SEP + out;
         try {
             Proc.BUILDER.create()
@@ -83,8 +83,10 @@ public class GdalImpl
         }
 
         result = new RasterInfo(out,
+                src.getLine(), src.getCol(),
                 target.getLonMin(), target.getLatMin(),
-                target.getLonMax(), target.getLatMax(), srcImageDir, "EPSG:4326");
+                target.getLonMax(), target.getLatMax(),
+                srcImageDir, "EPSG:4326");
         return result;
     }
 
@@ -132,10 +134,8 @@ public class GdalImpl
                 }
             }
         }
-
         double latMin = 0.0;
         double lonMin = 0.0;
-        //Upper Left  (  -4.5387695,  48.3658665) (  4d32'19.57"W, 48d21'57.12"N)
         for (String s : content) {
             if (s.contains("Lower Left")) {
                 String[] latLonTab = s.split("\\(");
@@ -150,7 +150,6 @@ public class GdalImpl
         }
         double latMax = 0.0;
         double lonMax = 0.0;
-        //Upper Right (  -4.5036966,  48.3658665) (  4d30'13.31"W, 48d21'57.12"N)
         for (String s : content) {
             if (s.contains("Upper Right")) {
                 String[] latLonTab = s.split("\\(");
@@ -165,7 +164,6 @@ public class GdalImpl
         }
         int line = 0;
         int col = 0;
-//Size is 342, 227
         for (String s : content) {
             if (s.contains("Size is")) {
                 s = s.replace("Size is", "");
@@ -174,25 +172,14 @@ public class GdalImpl
                     line = Integer.parseInt(lc[1].trim());
                     col = Integer.parseInt(lc[0].trim());
                 }
-                System.out.println("line : "+line);
             }
         }
-        /*
-public RasterInfo(String name, 
-            double pixelLonSize, double pixelLatSize, 
-            int line, int col, double latMin,
-            double lonMin, double latMax, double lonMax, 
-            String imageDir,
-            String crs, 
-            String demColorRelief) {
-         */
         RasterInfo result = new RasterInfo(rootImage,
                 pixelLatSize, pixelLonSize,
                 line, col,
                 latMin, lonMin,
                 latMax, lonMax,
                 srcImageDir, "EPSG:4326", rasterInfo.getDemColorRelief());
-        
         return result;
     }
 

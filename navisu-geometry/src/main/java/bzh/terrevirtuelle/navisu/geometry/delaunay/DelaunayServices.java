@@ -46,9 +46,9 @@ public interface DelaunayServices
 
     String gdalInfo(RasterInfo rasterInfo);
 
-    RasterInfo toGridTiff(DEM dem);
+    RasterInfo toGridTiff(DEM dem, String name);
 
-    RasterInfo toGridTiff(Point3DGeo[][] dem, int index);
+    RasterInfo toGridTiff(Point3DGeo[][] dem, String name);
 
     List<Triangle_dt> filterLargeEdges(List<Triangle_dt> triangles, double threshold);
 

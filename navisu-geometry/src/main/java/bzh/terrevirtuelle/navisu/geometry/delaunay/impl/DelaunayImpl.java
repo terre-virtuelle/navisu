@@ -80,7 +80,6 @@ public class DelaunayImpl
         List<Triangle_dt> triangles = new ArrayList<>();
         for (int k = 0; k < nbLat - 1; k++) {
             for (int l = 0; l < nbLon - 1; l++) {
-                //  System.out.println("k : "+k+" l : "+l);
                 Point3DGeo pt0 = points[k][l];
                 Point3DGeo pt1 = points[k + 1][l];
                 Point3DGeo pt2 = points[k][l + 1];
@@ -191,7 +190,6 @@ public class DelaunayImpl
                 ptsTab[i][j] = ptsList.get(i).get(j);
             }
         }
-        System.out.println("ptsTab " + ptsTab[0].length + " " + ptsTab[1].length);
         return ptsTab;
     }
 
@@ -235,23 +233,12 @@ public class DelaunayImpl
             }
         }
 
-        for (Point3DGeo p : points) {
-            System.out.println(p.getLongitude() + "," + p.getLatitude() + "," + p.getElevation());
-        }
-
-        double latMin = result[0][0].getLatitude();
-        double latMax = result[latSize - 1][0].getLatitude();
-        double lonMin = result[0][0].getLongitude();
-        double lonMax = result[0][lonSize - 1].getLongitude();
-        System.out.println(latSize + " " + lonSize);
-        System.out.println(lonMin + " " + lonMax + " " + latMin + " " + latMax);
-
         return result;
     }
 
     @Override
-    public RasterInfo toGridTiff(DEM dem) {
-        final String ROOT_IMAGE = "dem";
+    public RasterInfo toGridTiff(DEM dem, String name) {
+
         Point3DGeo[][] tmpTab;
         List<Point3DGeo> points = dem.getGrid();
         int size = points.size();
@@ -268,7 +255,6 @@ public class DelaunayImpl
         line--;
         col = size / line;
 
-        // System.out.println("lonSize : " + lonSize + "   latSize : " + latSize);
         tmpTab = new Point3DGeo[col][line];
 
         int k = 0;
@@ -283,21 +269,20 @@ public class DelaunayImpl
         for (Point3DGeo p : points) {
             content.append(p.getLongitude() + "," + p.getLatitude() + "," + p.getElevation() + "\n");
         }
-        String csvPath = IMAGE_DIR + SEP + ROOT_IMAGE + ".csv";
+        String csvPath = IMAGE_DIR + SEP + name + ".csv";
         try {
             Files.write(Paths.get(csvPath), content.toString().getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
             Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         String vrt = "<OGRVRTDataSource>\n"
-                + "    <OGRVRTLayer name=" + "\'" + ROOT_IMAGE + "'>\n"
-                + "        <SrcDataSource>" + IMAGE_DIR + SEP + ROOT_IMAGE + ".csv" + "</SrcDataSource>\n"
+                + "    <OGRVRTLayer name=" + "\'" + name + "'>\n"
+                + "        <SrcDataSource>" + IMAGE_DIR + SEP + name + ".csv" + "</SrcDataSource>\n"
                 + "<GeometryType>wkbPoint</GeometryType>\n"
                 + "<GeometryField encoding=\"PointFromColumns\" x=\"field_1\" y=\"field_2\" z=\"field_3\"/>\n"
                 + "    </OGRVRTLayer>\n"
                 + "</OGRVRTDataSource>";
-        System.out.println("vrt : " + vrt);
-        String vrtPath = IMAGE_DIR + SEP + "dem.vrt";
+        String vrtPath = IMAGE_DIR + SEP + name + ".vrt";
         try {
             Files.write(Paths.get(vrtPath), vrt.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
@@ -312,7 +297,7 @@ public class DelaunayImpl
                 + " -a_srs EPSG:4326"
                 + " -txe " + lonMin + " " + lonMax + " -tye  " + latMin + " " + latMax
                 + " -outsize " + line + " " + col + " -ot INT16 -l "
-                + ROOT_IMAGE + " " + IMAGE_DIR + SEP + ROOT_IMAGE + ".vrt " + IMAGE_DIR + SEP + ROOT_IMAGE + ".tif";
+                + name + " " + IMAGE_DIR + SEP + name + ".vrt " + IMAGE_DIR + SEP + name + ".tif";
         try {
             Proc.BUILDER.create()
                     .setCmd(command)
@@ -321,7 +306,7 @@ public class DelaunayImpl
             Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
 
-        RasterInfo rasterInfo = new RasterInfo(ROOT_IMAGE + ".tif", col, line, 
+        RasterInfo rasterInfo = new RasterInfo(name + ".tif", col, line,
                 latMin, lonMin, latMax, lonMax, IMAGE_DIR, "EPSG:4326");
         rasterToDemTiff(rasterInfo);
 
@@ -329,8 +314,7 @@ public class DelaunayImpl
     }
 
     @Override
-    public RasterInfo toGridTiff(Point3DGeo[][] dem, int index) {
-        final String ROOT_IMAGE = "dem";
+    public RasterInfo toGridTiff(Point3DGeo[][] dem, String name) {
 
         int col = dem.length;
         int line = dem[0].length;
@@ -342,20 +326,20 @@ public class DelaunayImpl
                 content.append(dem[i][j].getLongitude() + "," + dem[i][j].getLatitude() + "," + dem[i][j].getElevation() + "\n");
             }
         }
-        String csvPath = IMAGE_DIR + SEP + ROOT_IMAGE + ".csv";
+        String csvPath = IMAGE_DIR + SEP + name + ".csv";
         try {
             Files.write(Paths.get(csvPath), content.toString().getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
             Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         String vrt = "<OGRVRTDataSource>\n"
-                + "    <OGRVRTLayer name=" + "\"" + ROOT_IMAGE + "\">\n"
-                + "        <SrcDataSource>" + IMAGE_DIR + SEP + ROOT_IMAGE + ".csv" + "</SrcDataSource>\n"
+                + "    <OGRVRTLayer name=" + "\"" + name + "\">\n"
+                + "        <SrcDataSource>" + IMAGE_DIR + SEP + name + ".csv" + "</SrcDataSource>\n"
                 + "<GeometryType>wkbPoint</GeometryType>\n"
                 + "<GeometryField encoding=\"PointFromColumns\" x=\"field_1\" y=\"field_2\" z=\"field_3\"/>\n"
                 + "    </OGRVRTLayer>\n"
                 + "</OGRVRTDataSource>";
-        String vrtPath = IMAGE_DIR + SEP + "dem.vrt";
+        String vrtPath = IMAGE_DIR + SEP + name + ".vrt";
         try {
             Files.write(Paths.get(vrtPath), vrt.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
@@ -371,7 +355,7 @@ public class DelaunayImpl
                 + " -a_srs EPSG:4326"
                 + " -txe " + lonMin + " " + lonMax + " -tye  " + latMin + " " + latMax
                 + " -outsize " + col + " " + line + " -ot INT16 -l "
-                + ROOT_IMAGE + " " + IMAGE_DIR + SEP + ROOT_IMAGE + ".vrt " + IMAGE_DIR + SEP + ROOT_IMAGE + "_" + index + ".tif";
+                + name + " " + IMAGE_DIR + SEP + name + ".vrt " + IMAGE_DIR + SEP + name + ".tif";
         try {
             Proc.BUILDER.create()
                     .setCmd(command)
@@ -380,8 +364,8 @@ public class DelaunayImpl
             Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
 
-        RasterInfo rasterInfo = new RasterInfo(ROOT_IMAGE + "_" + index + ".tif", 
-                col, line, 
+        RasterInfo rasterInfo = new RasterInfo(name + ".tif",
+                line, col,
                 latMin, lonMin, latMax, lonMax,
                 IMAGE_DIR, "EPSG:4326");
         rasterToDemTiff(rasterInfo);
@@ -419,15 +403,15 @@ public class DelaunayImpl
             Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         rasterInfo.setDemColorRelief(output);
-        System.out.println("output : " + output);
         return rasterInfo;
     }
 
     @Override
     public Point3DGeo[][] rasterToGridTab(RasterInfo rasterInfo) {
+        String result = rasterInfo.getName().replace("tif", "glz");
         String command = "gdal_translate -of XYZ "
                 + rasterInfo.getImageDir() + SEP + rasterInfo.getName()
-                + " " + rasterInfo.getImageDir() + SEP + "out.glz";
+                + " " + rasterInfo.getImageDir() + SEP + result;
         try {
             Proc.BUILDER.create()
                     .setCmd(command)
@@ -437,7 +421,7 @@ public class DelaunayImpl
         }
 
         List<String> content = null;
-        try (Stream<String> lines = Files.lines(Paths.get(rasterInfo.getImageDir() + SEP + "out.glz"))) {
+        try (Stream<String> lines = Files.lines(Paths.get(rasterInfo.getImageDir() + SEP + result))) {
             content = lines.collect(Collectors.toList());
         } catch (IOException ex) {
             Logger.getLogger(DelaunayImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
@@ -487,13 +471,13 @@ public class DelaunayImpl
         }
 
         List<Triangle_dt> triangles = createDelaunay(points);
-        System.out.println("triangles : " + triangles.size());
+
         double dA;
         double dB;
         double dC;
         double min;
         for (Triangle_dt t : triangles) {
-            System.out.println("t : " + t);
+
             for (int i = 0; i < line; i++) {
                 for (int j = 0; j < col; j++) {
                     if (t.contains(pointsDt[i][j])) {

@@ -72,7 +72,7 @@ public class Proc {
         args.stream().forEach((arg) -> {
             sb.append(arg).append(SPACE);
         });
-        System.out.println("exec : " + sb);
+     //   System.out.println("exec : " + sb);
         process = Runtime.getRuntime().exec(sb.toString());
 
         redirectSreamAsync(process.getInputStream(), out);
@@ -140,7 +140,7 @@ public class Proc {
         } else if (OS.isLinux()) {
             cmdFile = "cmd/cmd.sh";
         }
-        System.out.println("cmd : " + cmd);
+     //   System.out.println("cmd : " + cmd);
         try {
             Files.write(Paths.get(cmdFile), cmd.getBytes());
         } catch (IOException ex) {

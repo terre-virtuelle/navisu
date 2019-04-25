@@ -512,7 +512,7 @@ public class AppMain extends Application {
                 DATA_S57_CATALOG_5,
                 DATA_S57_CATALOG_6);
 
-        wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 120000));//BREST
+        wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 50000));//BREST altitude : 50km
         //wwd.getView().setEyePosition(Position.fromDegrees(46.2993011411917,5.950320647729987, 120000));//GENEVE
         /*
         // Get the current elevation model.

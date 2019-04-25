@@ -326,7 +326,7 @@ public class DisplayImpl
         Path path;
         int latLength = latLons.length;
         int lonLength = latLons[0].length;
-        System.out.println("displayGridAsTriangles : " + latLength + " " + lonLength);
+
         for (int i = 0; i < latLength - 1; i++) {
             for (int j = 0; j < lonLength - 1; j++) {
                 positions = new ArrayList<>();
@@ -513,7 +513,6 @@ public class DisplayImpl
     @Override
     public Map<Double, Material> createCLUT(String fileName) {
         Clut clut = new Clut(fileName);
-        System.out.println(clut.getContent());
         return null;
     }
 
@@ -773,7 +772,6 @@ public class DisplayImpl
             }
             result += "\n";
         }
-        //     System.out.println(result);
         try {
             Files.write(Paths.get(outputFilename), result.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
@@ -813,13 +811,11 @@ public class DisplayImpl
         yllcorner = Double.parseDouble(dataTab[3].split("\\s+")[1]);
         cellsize = Double.parseDouble(dataTab[4].split("\\s+")[1]);
         NODATA_value = Double.parseDouble(dataTab[5].split("\\s+")[1]);
-        //  System.out.println("ncols : " + ncols + " nrows : " + nrows);
         Point3DGeo[][] result = new Point3DGeo[nrows + 1][ncols + 1];
 
         int u = 0;
         int v = 0;
-        // int l = dataTab.length - 7;
-        //  System.out.println("l : " + l);
+
         for (int i = dataTab.length - 1; i >= 6; i--) {
             String[] rowTab = dataTab[i].split("\\s+");
             for (int j = 0; j < rowTab.length; j++) {
@@ -829,15 +825,7 @@ public class DisplayImpl
             u++;
             v = 0;
         }
-        /*
-        System.out.println("import Asc");
-        for (int i = 0; i < 78; i++) {
-            for (int j = 0; j < 78; j++) {
-                 System.out.print(result[i][j].getLongitude()+" ");
-            }
-             System.out.println("");
-        }
-         */
+        
         return result;
     }
 

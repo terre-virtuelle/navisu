@@ -883,10 +883,9 @@ public class StlDBComponentController
                 }
                 //DEPARE
                 if (selectedObjects.contains("ALL") || depareRB.isSelected()) {
-                    System.out.println("depareRB.isSelected()");
                     createElevationAndDepare(latMin, lonMin, latMax, lonMax);
                 }
-                
+
                 /*else {
                     Point3DGeo[][] grid = null;
                     if (autoBoundCB.isSelected()) {
@@ -1033,7 +1032,6 @@ public class StlDBComponentController
                     k = 0;
                     if (boundList != null && !boundList.isEmpty()) {
                         for (Point3DGeo[][] g : grids) {
-                            // System.out.println("g : " + g);
                             objects.clear();
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
@@ -1209,10 +1207,8 @@ public class StlDBComponentController
                 System.arraycopy(pts1[gridTmpLines - ii - 1], 0, grid[ii], 0, gridTmpCols);
             }
 
-            RasterInfo rasterInfo = delaunayServices.toGridTiff(grid, 1);
-            // displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
-            //    gdalServices.gdalInfo(rasterInfo);
-            // gdalServices.resample(rasterInfo);
+            RasterInfo rasterInfo = delaunayServices.toGridTiff(grid, "demBathy");
+            displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
 
             Point3DGeo[][] gridTmp = delaunayServices.rasterToGridTab(rasterInfo);
 
@@ -1236,7 +1232,6 @@ public class StlDBComponentController
             lon0 = realGrid[0][0].getLongitude();
             lat1 = realGrid[lines - 1][0].getLatitude();
             lon1 = realGrid[0][cols - 1].getLongitude();
-            System.out.println("lat0 : " + lat0 + " lon0 : " + lon0 + " lat1 : " + lat1 + " lon1 : " + lon1);
 
             //Elevation on the support 
             for (int ii = 0; ii < lines; ii++) {
@@ -1266,8 +1261,8 @@ public class StlDBComponentController
         if (!dem.getGrid().isEmpty()) {
             lowestElevationAlti = dem.getMinElevation();
 
-            RasterInfo rasterInfo = delaunayServices.toGridTiff(dem);
-          //  displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
+            RasterInfo rasterInfo = delaunayServices.toGridTiff(dem, "demAlti");
+            displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
             Point3DGeo[][] gridTmp = delaunayServices.rasterToGridTab(rasterInfo);
 
             //Transformation en tableau lat croissantes
@@ -1282,7 +1277,7 @@ public class StlDBComponentController
             int cols = tileCount * (grid[0].length / tileCount);
             Point3DGeo[][] realGrid = new Point3DGeo[lines][cols];
             for (int ii = 0; ii < lines; ii++) {
-                System.arraycopy(grid[ii], 0, realGrid[ii], 0, cols); // System.out.println(realGrid[ii][0]);
+                System.arraycopy(grid[ii], 0, realGrid[ii], 0, cols);
             }
 
             //Update Org
@@ -1314,64 +1309,119 @@ public class StlDBComponentController
     These grids are translate vertically with the max of depth
      */
     private List<Point3DGeo[][]> createBathymetryAndElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
-       Platform.runLater(() -> {
+        /*
+        Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Information");
                 alert.setHeaderText("Work in progress");
                 alert.show();
             });
+         */
         Point3DGeo[][] grid = null;
         RasterInfo rasterInfoAlti = null;
         RasterInfo rasterInfoBathy = null;
-
+        Point3DGeo[][] gridAlti = null;
+        Point3DGeo[][] gridBathy = null;
+        Point3DGeo[][] gridBathy1 = null;
+        Point3DGeo[][] gridTmpAlti = null;
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM demAlti = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
                 lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
         if (!demAlti.getGrid().isEmpty()) {
             lowestElevationAlti = demAlti.getMinElevation();
-            rasterInfoAlti = delaunayServices.toGridTiff(demAlti);
-            
-            
-            
-            
-            System.out.println("rasterInfoAlti  1 : "+rasterInfoAlti);
+            rasterInfoAlti = delaunayServices.toGridTiff(demAlti, "demAlti");
             rasterInfoAlti = gdalServices.gdalInfo(rasterInfoAlti);
-            
-            
-         //  displayServices.displayRasterInfo(rasterInfoAlti, geoViewServices, GROUP);
-            System.out.println("rasterInfoAlti  2 : "+rasterInfoAlti);
-            Point3DGeo[][] gridTmpAlti = delaunayServices.rasterToGridTab(rasterInfoAlti);
-            System.out.println("gridTmpAlti : " + gridTmpAlti.length + " " + gridTmpAlti[0].length);
+
+            displayServices.displayRasterInfo(rasterInfoAlti, geoViewServices, GROUP);
+            gridTmpAlti = delaunayServices.rasterToGridTab(rasterInfoAlti);
+/*
+            for (int i = 0; i < gridTmpAlti.length; i++) {
+                for (int j = 0; j < gridTmpAlti[0].length; j++) {
+                    System.out.print(gridTmpAlti[i][j].getElevation() + " ");
+                }
+                System.out.println("");
+            }
+*/
+            /* 
             //Transformation en tableau lat croissantes
-            Point3DGeo[][] gridAlti = new Point3DGeo[gridTmpAlti.length][gridTmpAlti[0].length];
+            gridAlti = new Point3DGeo[gridTmpAlti.length][gridTmpAlti[0].length];
             for (int ii = 0; ii < gridTmpAlti.length; ii++) {
                 System.arraycopy(gridTmpAlti[gridTmpAlti.length - ii - 1], 0, gridAlti[ii], 0, gridTmpAlti[0].length);
             }
-
+             */
         }
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM demBathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
-                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
+        DEM demBathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - 100*RETRIEVE_OFFSET,
+                lonMin - 100*RETRIEVE_OFFSET, latMax + 100*RETRIEVE_OFFSET, lonMax + 100*RETRIEVE_OFFSET);
         if (!demBathy.getGrid().isEmpty()) {
             highestElevationBathy = demBathy.getMaxElevation();
+            System.out.println("highestElevationBathy : "+highestElevationBathy);
             Point3DGeo[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, 0.0);
             Point3DGeo[][] pts1 = jtsServices.mergePointsToGrid(demBathy.getGrid(), pts);
             //Transformation en tableau lat decroissantes pour GeoTiff
-           
-            Point3DGeo[][] gridBathy = new Point3DGeo[pts1.length][pts1[0].length];
+            Point3DGeo[][] gridBathy0 = new Point3DGeo[pts1.length][pts1[0].length];
             for (int ii = 0; ii < pts1.length; ii++) {
-                System.arraycopy(pts1[pts1.length - ii - 1], 0, gridBathy[ii], 0, pts1[0].length);
+                System.arraycopy(pts1[pts1.length - ii - 1], 0, gridBathy0[ii], 0, pts1[0].length);
             }
-            
-            rasterInfoBathy = delaunayServices.toGridTiff(gridBathy, 1);
-            rasterInfoBathy = gdalServices.resample(rasterInfoAlti,rasterInfoBathy );
-            System.out.println("rasterInfoBathy : "+ rasterInfoBathy);
-         //   displayServices.displayRasterInfo(rasterInfoBathy, geoViewServices, GROUP);
-
-            Point3DGeo[][] gridTmpBathy = delaunayServices.rasterToGridTab(rasterInfoBathy);
-            System.out.println("gridTmpAlti : " + gridTmpBathy.length + " " + gridTmpBathy[0].length);
+            rasterInfoBathy = delaunayServices.toGridTiff(gridBathy0, "demBathy");
+            rasterInfoBathy = gdalServices.resample(rasterInfoAlti, rasterInfoBathy);
+            delaunayServices.rasterToDemTiff(rasterInfoBathy);
+            displayServices.displayRasterInfo(rasterInfoBathy, geoViewServices, GROUP);
+            gridBathy1 = delaunayServices.rasterToGridTab(rasterInfoBathy);
+            /* 
+//Transformation en tableau lat croissantes
+            gridBathy = new Point3DGeo[gridBathy1.length][gridBathy1[0].length];
+            for (int ii = 0; ii < gridBathy1.length; ii++) {
+                System.arraycopy(gridBathy1[gridBathy1.length - ii - 1], 0, gridBathy[ii], 0, gridBathy1[0].length);
+            }
+             */
         }
 
+        // if (gridAlti != null && gridBathy != null) {
+        int lines = gridTmpAlti.length;
+        int cols = gridTmpAlti[0].length;
+        System.out.println("Bathy");
+        for (int i = 0; i < lines; i++) {
+            for (int j = 0; j < cols; j++) {
+                gridTmpAlti[i][j].setElevation(highestElevationBathy + gridTmpAlti[i][j].getElevation());
+            }
+        }
+        for (int i = 0; i < lines; i++) {
+            for (int j = 0; j < cols; j++) {
+                gridBathy1[i][j].setElevation(highestElevationBathy - gridBathy1[i][j].getElevation());
+            }
+        }
+        
+/*
+        for (int i = 0; i < lines; i++) {
+            for (int j = 0; j < cols; j++) {
+                System.out.print(gridBathy1[i][j].getElevation() + " ");
+            }
+            System.out.println("");
+        }
+        */
+        grid = new Point3DGeo[lines][cols];
+        
+        for (int i = 0; i < lines; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (gridBathy1[i][j].getElevation() < highestElevationBathy) {
+                     gridTmpAlti[i][j] = gridBathy1[i][j];
+                  //  System.out.println("true : " +gridTmpAlti[i][j].getLatitude()+" "+gridBathy1[i][j].getLatitude());
+                } else {
+                   //gridTmpAlti[i][j] = gridBathy1[i][j];
+                  //  System.out.println("false : " +gridTmpAlti[i][j].getLatitude()+" "+gridBathy1[i][j].getLatitude());
+                }
+            }
+        }
+       
+        for (int ii = 0; ii < lines; ii++) {
+            System.arraycopy(gridTmpAlti[lines - ii - 1], 0, grid[ii], 0, cols);
+        }
+         
+        RasterInfo rasterInfo = delaunayServices.toGridTiff(gridTmpAlti, "dem");
+        displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
+
+        // }
         return createGrids(grid, tileCount);
     }
 
@@ -1436,16 +1486,12 @@ public class StlDBComponentController
         double realLatMax = grid[grid.length - 1][0].getLatitude();
         double realLonMax = grid[0][grid[0].length - 1].getLongitude();
 
-        System.out.println("scaleCompute : " + realLatMin + " " + realLonMin + "    " + realLatMax + " " + realLonMax);
-
         latRangeMetric = geodesyServices.getDistanceM(realLatMin, realLonMin, realLatMax, realLonMin);
         lonRangeMetric = geodesyServices.getDistanceM(realLatMin, realLonMin, realLatMin, realLonMax);
 
-        System.out.println("dist : " + latRangeMetric + " " + lonRangeMetric);
         latScale = tileSideY / latRangeMetric;
         lonScale = tileSideX / lonRangeMetric;
 
-        System.out.println("Scale : " + latScale + "  " + lonScale);
         Platform.runLater(() -> {
             rangeLatTF.setText(Integer.toString((int) latRangeMetric));
             rangeLonTF.setText(Integer.toString((int) lonRangeMetric));
@@ -1481,7 +1527,7 @@ public class StlDBComponentController
 
             Shapefile shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
                     .retrieveIn(latMin, lonMin, latMax, lonMax);
-            System.out.println(shapefile);
+
             new DepareView(s57Layer, s57Layer, s57Layer,
                     simplifyFactor,
                     Math.round(highestElevationBathy), verticalExaggeration,
