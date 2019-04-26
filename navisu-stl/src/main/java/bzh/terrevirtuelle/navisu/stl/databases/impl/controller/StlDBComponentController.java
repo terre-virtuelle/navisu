@@ -500,6 +500,11 @@ public class StlDBComponentController
                 objComponentServices, pro4JServices, displayServices, instrumentDriverManagerServices);
         this.meshExportToSTL = new MeshExportToSTL(geodesyServices, guiAgentServices, jtsServices);
 
+        s57Layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
+        bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
+        lightsLayer = layersManagerServices.getLayer(GROUP_0, LIGHTS_LAYER);
+        selectLayer = layersManagerServices.getLayer(GROUP_0, SELECTED_LAYER);
+        
         LOGGER.setLevel(Level.INFO);
         FileHandler fh = null;
         try {
@@ -523,11 +528,6 @@ public class StlDBComponentController
 
         String uri = CSS_STYLE_PATH + viewgroupstyle;
         view.getStylesheets().add(uri);
-
-        s57Layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
-        bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
-        lightsLayer = layersManagerServices.getLayer(GROUP_0, LIGHTS_LAYER);
-        selectLayer = layersManagerServices.getLayer(GROUP_0, SELECTED_LAYER);
 
         try {
             configProperties.load(new FileInputStream(CONFIG_FILE_NAME));
@@ -553,8 +553,7 @@ public class StlDBComponentController
 
     @Override
     @SuppressWarnings("unchecked")
-    public void initialize(URL location, ResourceBundle resources
-    ) {
+    public void initialize(URL location, ResourceBundle resources) {
         makeAttributes();
 
         // Init s57 selection Panel
@@ -572,7 +571,8 @@ public class StlDBComponentController
                 .put("PONTON", pontonCB)
                 .put("RESARE", resareCB)
                 .build();
-        stlGuiController = new StlGuiController(geodesyServices, s57SelectionMap, allCB,
+        stlGuiController = new StlGuiController(this,
+                geodesyServices, s57SelectionMap, allCB,
                 selectedObjects,
                 objectsTF,
                 LAT_MIN, LAT_MAX, LON_MIN, LON_MAX,
@@ -622,6 +622,7 @@ public class StlDBComponentController
                         -> {
                     tileCount = Integer.parseInt(tilesCountCB.getValue().split("x")[0]);
                     tilesCountTF.setText(Integer.toString(tileCount * tileCount));
+                            System.out.println("s57Layer  0"+ s57Layer);
                     selectedPolygons.addAll(stlGuiController.createAndDisplayTiles(s57Layer, Material.RED, 100, lat0, lon0, lat1, lon1, tileCount, tileCount));
                 });
         supportCB.setItems(supportCbData);
@@ -832,6 +833,7 @@ public class StlDBComponentController
                 scaleTF.setText(stlGuiController.initScale(lat0, lon0, lat1, lon1));
                 retrieveIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
             } else {
+                System.out.println(lat0+" "+lon0+" "+lat1+" "+lon1);
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Lat and Lon fields must be filled \n"
@@ -841,6 +843,22 @@ public class StlDBComponentController
             }
         });
 
+    }
+
+    public void setLat0(double lat0) {
+        this.lat0 = lat0;
+    }
+
+    public void setLon0(double lon0) {
+        this.lon0 = lon0;
+    }
+
+    public void setLat1(double lat1) {
+        this.lat1 = lat1;
+    }
+
+    public void setLon1(double lon1) {
+        this.lon1 = lon1;
     }
 
     @SuppressWarnings("unchecked")
@@ -897,6 +915,7 @@ public class StlDBComponentController
                 }
                  */
                 if (grids != null) {
+                    verticalExaggeration = Double.valueOf(elevationMagnificationTF.getText());
                     List<GridBox3D> gridBoxes = new ArrayList<>();
                     grids.stream().map((g) -> {
                         scaleCompute(g);
