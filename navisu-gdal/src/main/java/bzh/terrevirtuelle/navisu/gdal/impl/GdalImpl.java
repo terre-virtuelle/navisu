@@ -70,7 +70,7 @@ public class GdalImpl
         String command = "gdalwarp "
                 //   + " -tr -" + src.getPixelLonSize() + " " + src.getPixelLatSize()
                 + " -t_srs EPSG:4326 "
-                + " -r bilinear "
+                + " -r cubic"
                 + " -te " + src.getLonMin() + " " + src.getLatMin() + " " + src.getLonMax() + " " + src.getLatMax() + " "
                 + " -ts " + src.getCol() + " " + src.getLine() + " "
                 + srcImageDir + SEP + rootImage + "   " + DEST_IMAGE_DIR + SEP + out;

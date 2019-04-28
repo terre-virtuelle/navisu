@@ -140,7 +140,7 @@ public class Proc {
         } else if (OS.isLinux()) {
             cmdFile = "cmd/cmd.sh";
         }
-     //   System.out.println("cmd : " + cmd);
+       // System.out.println("cmd : " + cmd);
         try {
             Files.write(Paths.get(cmdFile), cmd.getBytes());
         } catch (IOException ex) {
