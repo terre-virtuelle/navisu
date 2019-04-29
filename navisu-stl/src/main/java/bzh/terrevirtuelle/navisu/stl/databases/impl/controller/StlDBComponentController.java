@@ -131,8 +131,20 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57Obj
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsExportToSTL;
 
 import com.google.common.collect.ImmutableMap;
+import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.LayerList;
+import gov.nasa.worldwind.layers.MarkerLayer;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
+import gov.nasa.worldwind.layers.placename.PlaceNameLayer;
+import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.markers.BasicMarker;
+import gov.nasa.worldwind.render.markers.BasicMarkerAttributes;
+import gov.nasa.worldwind.render.markers.BasicMarkerShape;
+import gov.nasa.worldwind.render.markers.Marker;
+import gov.nasa.worldwind.render.markers.MarkerAttributes;
 import java.io.InputStream;
 import java.util.logging.FileHandler;
 import org.apache.commons.io.FileUtils;
@@ -1328,7 +1340,7 @@ public class StlDBComponentController
     These grids are translate vertically with the max of depth
      */
     private List<Point3DGeo[][]> createBathymetryAndElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
-        
+
         Point3DGeo[][] grid = null;
         RasterInfo rasterInfoAlti = null;
         RasterInfo rasterInfoBathy = null;
@@ -1349,14 +1361,22 @@ public class StlDBComponentController
 
         }
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM demBathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - 100 * RETRIEVE_OFFSET,
-                lonMin - 100 * RETRIEVE_OFFSET, latMax + 100 * RETRIEVE_OFFSET, lonMax + 100 * RETRIEVE_OFFSET);
+        DEM demBathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - 10 * RETRIEVE_OFFSET,
+                lonMin - 10 * RETRIEVE_OFFSET, latMax + 10 * RETRIEVE_OFFSET, lonMax + 10 * RETRIEVE_OFFSET);
+
         if (!demBathy.getGrid().isEmpty()) {
             highestElevationBathy = demBathy.getMaxElevation();
-            Point3DGeo[][] pts = delaunayServices.toGridTab(latMin- 100 * RETRIEVE_OFFSET, lonMin- 100 * RETRIEVE_OFFSET, 
-                    latMax+ 100 * RETRIEVE_OFFSET, lonMax+ 100 * RETRIEVE_OFFSET, 100, 100, 0.0);
+            Point3DGeo[][] pts = delaunayServices.toGridTab(latMin - 10 * RETRIEVE_OFFSET, lonMin - 10 * RETRIEVE_OFFSET,
+                    latMax + 10 * RETRIEVE_OFFSET, lonMax + 10 * RETRIEVE_OFFSET, 100, 100, 0.0);
             Point3DGeo[][] pts1 = jtsServices.mergePointsToGrid(demBathy.getGrid(), pts);
-            
+          
+             //DEBUG_0
+            //createGridFromDelaunayBathymetry(demBathy);
+            //DEBUG_0
+            //DEBUG_1
+           // displayServices.displayPoints3D(demBathy.getGrid(), s57Layer);
+            //DEBUG_1
+
             //Transformation en tableau lat decroissantes pour GeoTiff
             Point3DGeo[][] gridBathy0 = new Point3DGeo[pts1.length][pts1[0].length];
             for (int ii = 0; ii < pts1.length; ii++) {
@@ -1371,11 +1391,7 @@ public class StlDBComponentController
 
         int lines = gridTmpAlti.length;
         int cols = gridTmpAlti[0].length;
-        
-        
-        
-        
-        
+
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < cols; j++) {
                 gridTmpAlti[i][j].setElevation(highestElevationBathy + gridTmpAlti[i][j].getElevation());
@@ -1404,27 +1420,19 @@ public class StlDBComponentController
         RasterInfo rasterInfo = delaunayServices.toGridTiff(gridTmpAlti, "dem");
         displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
 
-       
-        
-         //Update for modulo
-             lines = tileCount * (grid.length / tileCount);
-             cols = tileCount * (grid[0].length / tileCount);
-            Point3DGeo[][] realGrid = new Point3DGeo[lines][cols];
-            for (int ii = 0; ii < lines; ii++) {
-                System.arraycopy(grid[ii], 0, realGrid[ii], 0, cols);
-            }
+        //Update for modulo
+        lines = tileCount * (grid.length / tileCount);
+        cols = tileCount * (grid[0].length / tileCount);
+        Point3DGeo[][] realGrid = new Point3DGeo[lines][cols];
+        for (int ii = 0; ii < lines; ii++) {
+            System.arraycopy(grid[ii], 0, realGrid[ii], 0, cols);
+        }
 
-            //Update Org
-            lat0 = realGrid[0][0].getLatitude();
-            lon0 = realGrid[0][0].getLongitude();
-            lat1 = realGrid[lines - 1][0].getLatitude();
-            lon1 = realGrid[0][cols - 1].getLongitude();
-
-        
-        
-        
-        
-      
+        //Update Org
+        lat0 = realGrid[0][0].getLatitude();
+        lon0 = realGrid[0][0].getLongitude();
+        lat1 = realGrid[lines - 1][0].getLatitude();
+        lon1 = realGrid[0][cols - 1].getLongitude();
 
         // }
         return createGrids(realGrid, tileCount);
@@ -1474,13 +1482,12 @@ public class StlDBComponentController
     Create a list of points on a regular grid.
     These grids are translate vertically with the max of depth
      */
-    private Point3DGeo[][] createGridFromDelaunayBathymetry(DEM bathymetry,
-            double latMin, double lonMin, double latMax, double lonMax, double elevation) {
+    private Point3DGeo[][] createGridFromDelaunayBathymetry(DEM bathymetry) {
         List<Triangle_dt> triangles = delaunayServices.createDelaunay(bathymetry.getGrid(), Math.round(bathymetry.getMaxElevation()));
-        Point3DGeo[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, Math.round(bathymetry.getMaxElevation()));
-
-        //  displayServices.displayDelaunay(triangles, initX, verticalExaggeration, Material.YELLOW, s57Layer);
-        return pts;
+        
+      //  Point3DGeo[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, Math.round(bathymetry.getMaxElevation()));
+        displayServices.displayDelaunay(triangles, initX, verticalExaggeration, Material.YELLOW, s57Layer);
+        return null;
     }
 
     private void scaleCompute(Point3DGeo[][] grid) {
