@@ -131,20 +131,8 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57Obj
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsExportToSTL;
 
 import com.google.common.collect.ImmutableMap;
-import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.layers.Layer;
-import gov.nasa.worldwind.layers.LayerList;
-import gov.nasa.worldwind.layers.MarkerLayer;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
-import gov.nasa.worldwind.layers.placename.PlaceNameLayer;
-import gov.nasa.worldwind.render.PointPlacemark;
-import gov.nasa.worldwind.render.markers.BasicMarker;
-import gov.nasa.worldwind.render.markers.BasicMarkerAttributes;
-import gov.nasa.worldwind.render.markers.BasicMarkerShape;
-import gov.nasa.worldwind.render.markers.Marker;
-import gov.nasa.worldwind.render.markers.MarkerAttributes;
 import java.io.InputStream;
 import java.util.logging.FileHandler;
 import org.apache.commons.io.FileUtils;
@@ -1374,7 +1362,7 @@ public class StlDBComponentController
             //createGridFromDelaunayBathymetry(demBathy);
             //DEBUG_0
             //DEBUG_1
-           // displayServices.displayPoints3D(demBathy.getGrid(), s57Layer);
+            displayServices.displayPoints3D(demBathy.getGrid(), s57Layer);
             //DEBUG_1
 
             //Transformation en tableau lat decroissantes pour GeoTiff
