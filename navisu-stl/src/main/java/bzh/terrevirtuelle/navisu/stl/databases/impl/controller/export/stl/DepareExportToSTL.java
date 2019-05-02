@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view;
+package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.ShapefilePolygonView;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT;
+import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
@@ -20,17 +22,21 @@ import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
 import gov.nasa.worldwind.util.VecBuffer;
 import gov.nasa.worldwind.util.WWMath;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
 
 /**
  *
  * @author serge
+ * @date May 2, 2019
  */
-public abstract class ShapefilePolygonView
-        extends ShapefileView {
+public class DepareExportToSTL
+        extends ShapefilePolygonView {
 
+    protected static final Logger LOGGER = Logger.getLogger(DepareExportToSTL.class.getName());
+    protected GeodesyServices geodesyServices;
     protected SurfacePolygons shape;
     protected double height;
     protected ShapeAttributes capAttrs = new BasicShapeAttributes();
@@ -38,16 +44,17 @@ public abstract class ShapefilePolygonView
     double val2;
     double val1;
 
-    public ShapefilePolygonView() {
-
+    public DepareExportToSTL() {
     }
-/*
-*/
-    
+
+    public DepareExportToSTL(GeodesyServices geodesyServices) {
+        this.geodesyServices = geodesyServices;
+    }
+
     protected void createPolygon(RenderableLayer layer, ShapefileRecord record,
             boolean isHeight, double magnify, double maxHeight) {
         this.record = record;
-      //  System.out.println("isHeight : " + isHeight);
+        //  System.out.println("isHeight : " + isHeight);
         if (isHeight == true) {
             if (record.getAttributes() != null) {
                 entries = record.getAttributes().getEntries();
@@ -65,7 +72,7 @@ public abstract class ShapefilePolygonView
                     if (e.getKey().equalsIgnoreCase("drval1")) {
                         val1 = (Double) e.getValue();
                     }
-                   
+
                     color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val1);
                     if (e.getKey().equalsIgnoreCase("drval2")) {
                         val2 = (Double) e.getValue();
@@ -78,7 +85,7 @@ public abstract class ShapefilePolygonView
             shape.setValue(AVKey.DISPLAY_NAME,
                     "[" + Double.toString(val1) + ", " + Double.toString(val2) + "]");
             setPolygonAttributes(color);
-            
+
         }
     }
 
@@ -86,19 +93,44 @@ public abstract class ShapefilePolygonView
         if (height != 0) {  // create extruded polygons
             ExtrudedPolygon ep = new ExtrudedPolygon(height);
             setExtrudedPolygonAttributes(ep, color);
-            layer.addRenderable(ep);
+            //   layer.addRenderable(ep);
             for (int i = 0; i < record.getNumberOfParts(); i++) {
                 VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
+
                 if (WWMath.computeWindingOrderOfLocations(buffer.getLocations()).equals(AVKey.CLOCKWISE)) {
                     if (!ep.getOuterBoundary().iterator().hasNext()) {
                         ep.setOuterBoundary(buffer.getLocations());
-                        System.out.println("0 : " + ep.getOuterBoundary());
+
+                        Iterable<? extends Position> pos = buffer.getPositions();
+                        List<Position> posList = new ArrayList<>();
+                        for (Position p : pos) {
+                            posList.add(new Position(p.getLatitude(), p.getLongitude(), p.getElevation() + 100));
+                        }
+                        Path path = new Path(posList);
+                        ShapeAttributes attrs = new BasicShapeAttributes();
+                        attrs.setOutlineMaterial(Material.GREEN);
+                        attrs.setOutlineWidth(2d);
+                        path.setAttributes(attrs);
+                        layer.addRenderable(path);
+
+                        //  layer.addRenderable(ep);
                     } else {
                         ep = new ExtrudedPolygon();
                         ep.setOuterBoundary(record.getCompoundPointBuffer().getLocations());
                         ep.setValue(AVKey.DISPLAY_NAME, "[" + Double.toString(height) + "]");
-                        System.out.println("1 : " + ep.getOuterBoundary());
-                        layer.addRenderable(ep);
+
+                        // layer.addRenderable(ep);
+                        Iterable<? extends Position> pos = buffer.getPositions();
+                        List<Position> posList = new ArrayList<>();
+                        for (Position p : pos) {
+                            posList.add(new Position(p.getLatitude(), p.getLongitude(), p.getElevation() + 100));
+                        }
+                        Path path = new Path(posList);
+                        ShapeAttributes attrs = new BasicShapeAttributes();
+                        attrs.setOutlineMaterial(Material.RED);
+                        attrs.setOutlineWidth(2d);
+                        path.setAttributes(attrs);
+                        layer.addRenderable(path);
                     }
                 } else {
                     ep.addInnerBoundary(buffer.getLocations());
@@ -110,7 +142,6 @@ public abstract class ShapefilePolygonView
                     record.getCompoundPointBuffer());
             shape.setWindingRule(AVKey.CLOCKWISE);
             shape.setPolygonRingGroups(new int[]{0});
-            System.out.println("else : "+shape.getBuffer().getPositions());
         }
     }
 
@@ -120,37 +151,7 @@ public abstract class ShapefilePolygonView
                 record.getCompoundPointBuffer());
         shape.setWindingRule(AVKey.CLOCKWISE);
         shape.setPolygonRingGroups(new int[]{0});
-       // System.out.println("+++  "+shape.getLocations());
+        // System.out.println("+++  "+shape.getLocations());
         layer.addRenderable(shape);
-    }
-
-    
-    protected void setPolygonAttributes(Color col) {
-        ShapeAttributes normAttributes = new BasicShapeAttributes();
-        normAttributes.setDrawInterior(true);
-        normAttributes.setInteriorMaterial(new Material(col));
-        normAttributes.setDrawOutline(true);
-        normAttributes.setOutlineMaterial(new Material(Color.BLACK));
-        //   normAttributes.setEnableLighting(true);
-        shape.setAttributes(normAttributes);
-
-        //  shape.setHighlightAttributes(highlightAttributes);
-    }
-
-    protected void setExtrudedPolygonAttributes(ExtrudedPolygon ep, Color color) {
-        capAttrs.setDrawOutline(true);
-        capAttrs.setDrawInterior(true);
-        capAttrs.setOutlineMaterial(Material.BLUE);
-        capAttrs.setInteriorMaterial(new Material(color));
-        //  capAttrs.setEnableLighting(true);
-        ep.setCapAttributes(capAttrs);
-
-        sideAttrs.setOutlineWidth(3);
-        sideAttrs.setDrawOutline(true);
-        sideAttrs.setDrawInterior(true);
-        sideAttrs.setOutlineMaterial(Material.BLUE);
-        sideAttrs.setInteriorMaterial(new Material(color));
-        //  sideAttrs.setEnableLighting(true);
-        ep.setSideAttributes(sideAttrs);
     }
 }

@@ -13,7 +13,6 @@ import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Path;
-import gov.nasa.worldwind.render.PointPlacemark;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -188,36 +187,6 @@ public class GridBox3DExportToSTL {
         return facet;
     }
 
-    private String toFacet(Path path, String normal,
-            double latMin, double lonMin, double latScale, double lonScale,
-            double verticalOffset) {
-        String facet;
-        Vec3d[] vec3d = new Vec3d[3];
-
-        int i = 0;
-        Iterable<? extends Position> positions = path.getPositions();
-        for (Position pp : positions) {
-            if (i < 3) {
-                vec3d[i] = toVec3d(pp, latMin, lonMin, latScale, lonScale);
-            }
-            i++;
-        }
-
-        double z0 = vec3d[0].z + verticalOffset;
-        double z1 = vec3d[1].z + verticalOffset;
-        double z2 = vec3d[2].z + verticalOffset;
-
-        facet = "facet normal ";
-        facet += normal + " \n";
-        facet += "outer loop \n";
-        facet += "vertex " + vec3d[0].x + " " + vec3d[0].y + " " + z0 + " \n";
-        facet += "vertex " + vec3d[1].x + " " + vec3d[1].y + " " + z1 + " \n";
-        facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + z2 + " \n";
-        facet += "endloop \n";
-        facet += "endfacet \n";
-
-        return facet;
-    }
 
     private Vec3d toVec3d(Position position, double latMin, double lonMin, double latScale, double lonScale) {
 
