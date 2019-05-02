@@ -9,16 +9,20 @@ import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.ExtrudedPolygon;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
 import gov.nasa.worldwind.util.VecBuffer;
 import gov.nasa.worldwind.util.WWMath;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -80,17 +84,45 @@ public abstract class ShapefilePolygonView
         if (height != 0) {  // create extruded polygons
             ExtrudedPolygon ep = new ExtrudedPolygon(height);
             setExtrudedPolygonAttributes(ep, color);
-            layer.addRenderable(ep);
+         //   layer.addRenderable(ep);
             for (int i = 0; i < record.getNumberOfParts(); i++) {
                 VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
+               
                 if (WWMath.computeWindingOrderOfLocations(buffer.getLocations()).equals(AVKey.CLOCKWISE)) {
                     if (!ep.getOuterBoundary().iterator().hasNext()) {
                         ep.setOuterBoundary(buffer.getLocations());
+                    
+                        Iterable<? extends Position> pos = buffer.getPositions();
+                        List<Position> posList=new ArrayList<>();
+                        for(Position p :pos){
+                            posList.add(new Position(p.getLatitude(),p.getLongitude(),p.getElevation()+100));
+                        }
+                        Path path = new Path(posList);
+                        ShapeAttributes attrs = new BasicShapeAttributes();
+                        attrs.setOutlineMaterial(Material.GREEN);
+                        attrs.setOutlineWidth(2d);
+                        path.setAttributes(attrs);
+                        layer.addRenderable(path);
+                        
+
+                     //  layer.addRenderable(ep);
                     } else {
                         ep = new ExtrudedPolygon();
                         ep.setOuterBoundary(record.getCompoundPointBuffer().getLocations());
                         ep.setValue(AVKey.DISPLAY_NAME, "[" + Double.toString(height) + "]");
-                        layer.addRenderable(ep);
+                       
+                       // layer.addRenderable(ep);
+                       Iterable<? extends Position> pos = buffer.getPositions();
+                       List<Position> posList=new ArrayList<>();
+                        for(Position p :pos){
+                            posList.add(new Position(p.getLatitude(),p.getLongitude(),p.getElevation()+100));
+                        }
+                        Path path = new Path(posList);
+                        ShapeAttributes attrs = new BasicShapeAttributes();
+                        attrs.setOutlineMaterial(Material.RED);
+                        attrs.setOutlineWidth(2d);
+                        path.setAttributes(attrs);
+                        layer.addRenderable(path);
                     }
                 } else {
                     ep.addInnerBoundary(buffer.getLocations());
@@ -111,9 +143,92 @@ public abstract class ShapefilePolygonView
                 record.getCompoundPointBuffer());
         shape.setWindingRule(AVKey.CLOCKWISE);
         shape.setPolygonRingGroups(new int[]{0});
+       // System.out.println("+++  "+shape.getLocations());
+        layer.addRenderable(shape);
+    }
+/*
+    
+    protected void createPolygon(RenderableLayer layer, ShapefileRecord record,
+            boolean isHeight, double magnify, double maxHeight) {
+        this.record = record;
+      //  System.out.println("isHeight : " + isHeight);
+        if (isHeight == true) {
+            if (record.getAttributes() != null) {
+                entries = record.getAttributes().getEntries();
+                entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
+                    if (e.getKey().equalsIgnoreCase("drval1")) {
+                        height = magnify * (maxHeight - (Double) e.getValue());
+                        extrudePolygon(layer, record, height);
+                    }
+                });
+            }
+        } else {
+            if (record.getAttributes() != null) {
+                entries = record.getAttributes().getEntries();
+                entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
+                    if (e.getKey().equalsIgnoreCase("drval1")) {
+                        val1 = (Double) e.getValue();
+                    }
+                   
+                    color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val1);
+                    if (e.getKey().equalsIgnoreCase("drval2")) {
+                        val2 = (Double) e.getValue();
+                    }
+                });
+            }
+            surface(layer, record);
+            shape.setValue("drval1", val1);
+            shape.setValue("drval2", val2);
+            shape.setValue(AVKey.DISPLAY_NAME,
+                    "[" + Double.toString(val1) + ", " + Double.toString(val2) + "]");
+            setPolygonAttributes(color);
+            
+        }
+    }
+
+    private void extrudePolygon(RenderableLayer layer, ShapefileRecord record, double height) {
+        if (height != 0) {  // create extruded polygons
+            ExtrudedPolygon ep = new ExtrudedPolygon(height);
+            setExtrudedPolygonAttributes(ep, color);
+            layer.addRenderable(ep);
+            for (int i = 0; i < record.getNumberOfParts(); i++) {
+                VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
+                if (WWMath.computeWindingOrderOfLocations(buffer.getLocations()).equals(AVKey.CLOCKWISE)) {
+                    if (!ep.getOuterBoundary().iterator().hasNext()) {
+                        ep.setOuterBoundary(buffer.getLocations());
+                        System.out.println("0 : " + ep.getOuterBoundary());
+                    } else {
+                        ep = new ExtrudedPolygon();
+                        ep.setOuterBoundary(record.getCompoundPointBuffer().getLocations());
+                        ep.setValue(AVKey.DISPLAY_NAME, "[" + Double.toString(height) + "]");
+                        System.out.println("1 : " + ep.getOuterBoundary());
+                        layer.addRenderable(ep);
+                    }
+                } else {
+                    ep.addInnerBoundary(buffer.getLocations());
+                }
+            }
+        } else {
+            shape = new SurfacePolygons(
+                    Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
+                    record.getCompoundPointBuffer());
+            shape.setWindingRule(AVKey.CLOCKWISE);
+            shape.setPolygonRingGroups(new int[]{0});
+            System.out.println("else : "+shape.getBuffer().getPositions());
+        }
+    }
+
+    private void surface(RenderableLayer layer, ShapefileRecord record) {
+        shape = new SurfacePolygons(
+                Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
+                record.getCompoundPointBuffer());
+        shape.setWindingRule(AVKey.CLOCKWISE);
+        shape.setPolygonRingGroups(new int[]{0});
+       // System.out.println("+++  "+shape.getLocations());
         layer.addRenderable(shape);
     }
 
+    */
     protected void setPolygonAttributes(Color col) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();
         normAttributes.setDrawInterior(true);

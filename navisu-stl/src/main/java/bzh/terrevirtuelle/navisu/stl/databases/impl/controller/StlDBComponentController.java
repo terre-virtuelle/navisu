@@ -974,14 +974,14 @@ public class StlDBComponentController
                             String supportType = supportTF.getText();
                             if (supportType.equals("With magnet")) {
                                 LOGGER.info("Out export exportBaseSTL in STL");
-                                stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
+                                stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_"+i+","+j+".stl");
                                 // Standbye
                                 // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
                                 LOGGER.info("Out export exportBaseSTL in STL");
                             }
                             if (supportType.equals("Simple")) {
                                 LOGGER.info("Out export exportBaseSTL in STL");
-                                stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseSimple.stl");
+                                stlComponentServices.exportBaseSTL(filename, "data/stl/base/support1mm.stl");
                                 LOGGER.info("Out export exportBaseSTL in STL");
                             }
                             if (supportType.equals("No support")) {
@@ -1332,8 +1332,6 @@ public class StlDBComponentController
         Point3DGeo[][] grid = null;
         RasterInfo rasterInfoAlti = null;
         RasterInfo rasterInfoBathy = null;
-        Point3DGeo[][] gridAlti = null;
-        Point3DGeo[][] gridBathy = null;
         Point3DGeo[][] gridBathy1 = null;
         Point3DGeo[][] gridTmpAlti = null;
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
@@ -1357,14 +1355,13 @@ public class StlDBComponentController
             Point3DGeo[][] pts = delaunayServices.toGridTab(latMin - 10 * RETRIEVE_OFFSET, lonMin - 10 * RETRIEVE_OFFSET,
                     latMax + 10 * RETRIEVE_OFFSET, lonMax + 10 * RETRIEVE_OFFSET, 100, 100, 0.0);
             Point3DGeo[][] pts1 = jtsServices.mergePointsToGrid(demBathy.getGrid(), pts);
-          
+
             //TEST_0
             // createGridFromDelaunayBathymetry(demBathy);
             //TEST_0
             //TEST_1
             // displayServices.displayPoints3D(demBathy.getGrid(), s57Layer);
             //TEST_1
-
             //Transformation en tableau lat decroissantes pour GeoTiff
             Point3DGeo[][] gridBathy0 = new Point3DGeo[pts1.length][pts1[0].length];
             for (int ii = 0; ii < pts1.length; ii++) {
@@ -1426,6 +1423,38 @@ public class StlDBComponentController
         return createGrids(realGrid, tileCount);
     }
 
+    private void createElevationAndDepare(double latMin, double lonMin, double latMax, double lonMax) {
+        RasterInfo rasterInfoAlti = null;
+        Point3DGeo[][] gridTmpAlti = null;
+        elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
+        DEM demAlti = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
+                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
+        if (!demAlti.getGrid().isEmpty()) {
+            lowestElevationAlti = demAlti.getMinElevation();
+            rasterInfoAlti = delaunayServices.toGridTiff(demAlti, "demAlti");
+            rasterInfoAlti = gdalServices.gdalInfo(rasterInfoAlti);
+
+            displayServices.displayRasterInfo(rasterInfoAlti, geoViewServices, GROUP);
+            gridTmpAlti = delaunayServices.rasterToGridTab(rasterInfoAlti);
+
+        }
+        bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
+        DEM demBathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
+                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
+        if (!demBathy.getGrid().isEmpty()) {
+            highestElevationBathy = demBathy.getMaxElevation();
+
+            Shapefile shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                    .retrieveIn(latMin, lonMin, latMax, lonMax);
+
+            new DepareView(s57Layer, s57Layer, s57Layer,
+                    simplifyFactor,
+                    Math.round(highestElevationBathy), verticalExaggeration,
+                    true, true)
+                    .display(shapefile);
+        }
+    }
+
     private List<Point3DGeo[][]> createGrids(Point3DGeo[][] grid, int tileCount) {
         LOGGER.log(Level.INFO, "In createGrids : {0} {1}", new Object[]{grid[0][0].getLongitude(), grid[0][grid[0].length - 1].getLongitude()});
         List<Point3DGeo[][]> gridList = new ArrayList<>();
@@ -1472,8 +1501,8 @@ public class StlDBComponentController
      */
     private Point3DGeo[][] createGridFromDelaunayBathymetry(DEM bathymetry) {
         List<Triangle_dt> triangles = delaunayServices.createDelaunay(bathymetry.getGrid(), Math.round(bathymetry.getMaxElevation()));
-        
-      //  Point3DGeo[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, Math.round(bathymetry.getMaxElevation()));
+
+        //  Point3DGeo[][] pts = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, 100, 100, Math.round(bathymetry.getMaxElevation()));
         displayServices.displayDelaunay(triangles, initX, verticalExaggeration, Material.YELLOW, s57Layer);
         return null;
     }
@@ -1513,27 +1542,6 @@ public class StlDBComponentController
 
     public Connection getConnection() {
         return s57Connection;
-    }
-
-    private void createElevationAndDepare(double latMin, double lonMin, double latMax, double lonMax) {
-        bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
-                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
-        if (!dem.getGrid().isEmpty()) {
-            lowestElevationAlti = dem.getMinElevation();
-            highestElevationBathy = dem.getMaxElevation();
-            // Point3DGeo[][] ptsTab = createGridFromDelaunayBathymetry(bathymetry, latMin, lonMin, latMax, lonMax, 0.0);
-            // displayServices.displayGrid(ptsTab, s57Layer, Material.GREEN, verticalExaggeration);
-
-            Shapefile shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                    .retrieveIn(latMin, lonMin, latMax, lonMax);
-
-            new DepareView(s57Layer, s57Layer, s57Layer,
-                    simplifyFactor,
-                    Math.round(highestElevationBathy), verticalExaggeration,
-                    true, true)
-                    .display(shapefile);
-        }
     }
 
 }

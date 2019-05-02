@@ -20,8 +20,10 @@ import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.awt.Color;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -74,6 +76,7 @@ public class StlGuiController {
     protected Label latMaxLabel;
     protected Label lonMaxLabel;
     protected String CACHE_FILE_NAME;
+    protected Properties cacheProperties = new Properties();
     protected RenderableLayer layer;
     protected double tileSideX;
     protected double tileSideY;
@@ -145,6 +148,19 @@ public class StlGuiController {
     }
     
     public void initSelectedZone() {
+        InputStream input;
+        try {
+            input = new FileInputStream(CACHE_FILE_NAME);
+            cacheProperties.load(input);
+            input.close();
+        } catch (IOException ex) {
+            Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        LAT_MIN = cacheProperties.getProperty("LAT_MIN");
+        LON_MIN = cacheProperties.getProperty("LON_MIN");
+        LAT_MAX = cacheProperties.getProperty("LAT_MAX");
+        LON_MAX = cacheProperties.getProperty("LON_MAX");
+        
         Dialog dialog = new Dialog<>();
         dialog.setTitle("Create Area");
         dialog.setHeaderText("Please enter selected area coordinates.");
@@ -235,7 +251,7 @@ public class StlGuiController {
             LON_MIN = Double.toString(lon0);
             LAT_MAX = Double.toString(lat1);
             LON_MAX = Double.toString(lon1);
-            OutputStream output = null;
+            OutputStream output;
             Properties properties = new Properties();
             try {
                 output = new FileOutputStream(CACHE_FILE_NAME);
@@ -257,6 +273,8 @@ public class StlGuiController {
         
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
         dialog.showAndWait();
+        selectedPolygons.addAll(createAndDisplayTiles(layer, Material.RED, 100, lat0, lon0, lat1, lon1, tileCount, tileCount));
+      
     }
     
     public String initScale(double latMin, double lonMin,

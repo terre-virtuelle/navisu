@@ -23,8 +23,6 @@ import java.util.logging.Logger;
 public class DepareView
         extends ShapefilePolygonView {
 
-    protected double val1;
-    protected double val2;
     protected RenderableLayer layer;
     protected RenderableLayer simpleDeparelayer;
     protected RenderableLayer depare3DLayer;
