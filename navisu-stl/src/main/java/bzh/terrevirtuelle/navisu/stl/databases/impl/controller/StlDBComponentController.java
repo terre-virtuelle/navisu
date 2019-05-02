@@ -949,12 +949,12 @@ public class StlDBComponentController
                         String supportType = supportTF.getText();
                         if (supportType.equals("With magnet")) {
                             LOGGER.info("Out export exportBaseSTL in STL");
-                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseNew.stl");
+                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_1,1.stl");
                             LOGGER.info("Out export exportBaseSTL in STL");
                         }
                         if (supportType.equals("Simple")) {
                             LOGGER.info("Out export exportBaseSTL in STL");
-                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/baseSimple.stl");
+                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_1mm.stl");
                             LOGGER.info("Out export exportBaseSTL in STL");
                         }
                         if (supportType.equals("No support")) {
@@ -981,7 +981,7 @@ public class StlDBComponentController
                             }
                             if (supportType.equals("Simple")) {
                                 LOGGER.info("Out export exportBaseSTL in STL");
-                                stlComponentServices.exportBaseSTL(filename, "data/stl/base/support1mm.stl");
+                                stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_1mm.stl");
                                 LOGGER.info("Out export exportBaseSTL in STL");
                             }
                             if (supportType.equals("No support")) {
