@@ -20,6 +20,7 @@ public class GridBox3D {
 
     private final double baseAltitude = 0.0;
     private double verticalExaggeration;
+    protected double highestElevationBathy;
     Point3DGeo[][] grid;
     ArrayList<Position> topIsoLatPositions0 = new ArrayList<>();
     ArrayList<Position> baseIsoLatPositions0 = new ArrayList<>();
@@ -39,6 +40,11 @@ public class GridBox3D {
 
     public GridBox3D(Point3DGeo[][] grid) {
         this(grid, 1.0);
+    }
+
+    public GridBox3D(Point3DGeo[][] grid, double verticalExaggeration, double highestElevationBathy) {
+        this(grid, verticalExaggeration);
+        this.highestElevationBathy = highestElevationBathy;  
     }
 
     public GridBox3D(Point3DGeo[][] grid, double verticalExaggeration) {
@@ -93,9 +99,7 @@ public class GridBox3D {
         gridPaths = createPaths(grid);
     }
 
-    public Point3DGeo[][] getGrid() {
-        return this.grid;
-    }
+   
 
     public List<Path> getPaths() {
         List<Path> result = new ArrayList<>();
@@ -131,16 +135,11 @@ public class GridBox3D {
                 path0 = new Path(positions0);
                 for (int ii = 0; ii < positions0.size(); ii++) {
                     if ((positions0.get(0).getLatitude().getDegrees() == positions0.get(1).getLatitude().getDegrees()
-                            &&
-                            positions0.get(0).getLongitude().getDegrees() == positions0.get(1).getLongitude().getDegrees())
-                            || 
-                            (positions0.get(0).getLatitude().getDegrees() == positions0.get(2).getLatitude().getDegrees()
-                            &&
-                            positions0.get(0).getLongitude().getDegrees() == positions0.get(2).getLongitude().getDegrees())
-                            ||
-                            (positions0.get(1).getLatitude().getDegrees() == positions0.get(2).getLatitude().getDegrees()
-                            &&
-                            positions0.get(1).getLongitude().getDegrees() == positions0.get(2).getLongitude().getDegrees())) {
+                            && positions0.get(0).getLongitude().getDegrees() == positions0.get(1).getLongitude().getDegrees())
+                            || (positions0.get(0).getLatitude().getDegrees() == positions0.get(2).getLatitude().getDegrees()
+                            && positions0.get(0).getLongitude().getDegrees() == positions0.get(2).getLongitude().getDegrees())
+                            || (positions0.get(1).getLatitude().getDegrees() == positions0.get(2).getLatitude().getDegrees()
+                            && positions0.get(1).getLongitude().getDegrees() == positions0.get(2).getLongitude().getDegrees())) {
                         System.out.println(i + " " + j + " " + positions0);
                     }
                 }
@@ -162,16 +161,11 @@ public class GridBox3D {
                 path1 = new Path(positions1);
                 for (int ii = 0; ii < positions1.size(); ii++) {
                     if ((positions1.get(0).getLatitude().getDegrees() == positions1.get(1).getLatitude().getDegrees()
-                            &&
-                            positions1.get(0).getLongitude().getDegrees() == positions1.get(1).getLongitude().getDegrees())
-                            || 
-                            (positions1.get(0).getLatitude().getDegrees() == positions1.get(2).getLatitude().getDegrees()
-                            &&
-                            positions1.get(0).getLongitude().getDegrees() == positions1.get(2).getLongitude().getDegrees())
-                            || 
-                            (positions1.get(1).getLatitude().getDegrees() == positions1.get(2).getLatitude().getDegrees()
-                            &&
-                            positions1.get(1).getLongitude().getDegrees() == positions1.get(2).getLongitude().getDegrees())) {
+                            && positions1.get(0).getLongitude().getDegrees() == positions1.get(1).getLongitude().getDegrees())
+                            || (positions1.get(0).getLatitude().getDegrees() == positions1.get(2).getLatitude().getDegrees()
+                            && positions1.get(0).getLongitude().getDegrees() == positions1.get(2).getLongitude().getDegrees())
+                            || (positions1.get(1).getLatitude().getDegrees() == positions1.get(2).getLatitude().getDegrees()
+                            && positions1.get(1).getLongitude().getDegrees() == positions1.get(2).getLongitude().getDegrees())) {
                     }
                 }
                 result.add(path1);
@@ -353,4 +347,29 @@ public class GridBox3D {
 
         return result;
     }
+     public Point3DGeo[][] getGrid() {
+        return this.grid;
+    }
+
+    public double getLatMin() {
+        return this.grid[0][0].getLatitude();
+    }
+
+    public double getLonMin() {
+        return this.grid[0][0].getLongitude();
+    }
+
+    public double getLatMax() {
+        return this.grid[line - 1][col - 1].getLatitude();
+    }
+
+    public double getLonMax() {
+        return this.grid[line - 1][col - 1].getLongitude();
+    }
+
+    public double getHighestElevationBathy() {
+        return highestElevationBathy;
+    }
+   
+    
 }
