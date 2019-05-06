@@ -27,7 +27,7 @@ import com.sun.j3d.utils.geometry.Stripifier;
 
 public class PModel extends BranchGroup {
 	
-	private static Logger logger = Logger.getLogger(PModel.class.getName());
+	private static final Logger logger = Logger.getLogger(PModel.class.getName());
 	
 	private boolean bnormstrip = true;
 

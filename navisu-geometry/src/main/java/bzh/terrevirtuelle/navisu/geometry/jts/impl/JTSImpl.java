@@ -114,12 +114,36 @@ public class JTSImpl
     }
 
     @Override
+    public Geometry getPolygonFromPath(Path path) {
+        List<Point3DGeo> points = new ArrayList<>();
+        Iterable< ? extends Position> pos = path.getPositions();
+        for (Position po : pos) {
+            points.add(new Point3DGeo(po.getLatitude().getDegrees(), po.getLongitude().getDegrees(), po.getAltitude()));
+        }
+        return getPolygon(points);
+    }
+
+    @Override
     public boolean contains(Geometry geom, Point3DGeo pt3D) {
         boolean result;
         Coordinate coord = new Coordinate(pt3D.getLongitude(), pt3D.getLatitude(), 0);
         GeometryFactory geometryFactory = new GeometryFactory();
         Point pt = geometryFactory.createPoint(coord);
         result = geom.contains(pt);
+        return result;
+    }
+
+    @Override
+    public List<Path> pathsInGeometry(Geometry geometry, List<Path> faces) {
+        List<Path> result = new ArrayList<>();
+        Geometry geom;
+        for (Path p : faces) {
+            geom = getPolygonFromPath(p);
+            if (geometry.contains(geom)) {
+                result.add(p);
+            }
+        }
+
         return result;
     }
 
@@ -210,11 +234,11 @@ public class JTSImpl
         }
         for (int i = 0; i < line; i++) {
             result[i][0] = result[i][1];
-            result[i][col-1] = result[i][col-2];
+            result[i][col - 1] = result[i][col - 2];
         }
         for (int i = 0; i < col; i++) {
             result[0][i] = result[1][i];
-            result[line-1][i] = result[line-2][i];
+            result[line - 1][i] = result[line - 2][i];
         }
         return result;
     }

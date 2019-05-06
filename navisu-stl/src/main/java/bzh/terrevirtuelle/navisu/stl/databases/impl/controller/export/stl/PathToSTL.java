@@ -34,6 +34,7 @@ public class PathToSTL {
 
     public String exportSTL(List<Path> paths,
             String filename,
+            String solidname,
             double latMin, double lonMin,
             double latScale, double lonScale,
             double verticalOffset) {
@@ -41,12 +42,12 @@ public class PathToSTL {
         this.filename = filename;
         String[] head = filename.split("/");
         try {
-            result = "solid " + head[head.length - 1] + "\n";
+            result = "solid " + solidname + "\n";
             List<Path> gridPaths = paths;
             gridPaths.forEach((p) -> {
                 result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
             });
-            result += "endsolid " + filename + "\n";
+            result += "endsolid " + solidname + "\n";
             java.nio.file.Path path = Paths.get(filename);
             Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException ex) {
@@ -71,7 +72,6 @@ public class PathToSTL {
         }
         Vec3d edge1 = vec3d[1].sub(vec3d[2]);
         Vec3d edge2 = vec3d[2].sub(vec3d[0]);
-        // System.out.println("edge : " + edge1 + " " + edge2);
         normal = Vec3d.cross(edge1, edge2);
 
         double z0 = vec3d[0].z + verticalOffset;
@@ -119,5 +119,5 @@ public class PathToSTL {
 
         return new Vec3d(lonM, latM, elv);//retour en xyz
     }
-    
+
 }

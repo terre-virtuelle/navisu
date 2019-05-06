@@ -940,18 +940,17 @@ public class StlDBComponentController
                     // stlComponentServices.exportRotateBaseSTL("data/stl/base/baseNewRotated.stl", "data/stl/base/baseNew.stl", 5.42);
                     k = 0;
                     gridBoxes.forEach((gb) -> {
-                        LOGGER.info("In export GridBox3D en STL");
+                        
                         i = k / tileCount + 1;
                         j = k % tileCount + 1;
                         String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                        LOGGER.info("In export GridBox3D in STL");
                         new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                         LOGGER.info("In export exportBaseSTL en STL");
                         String supportType = supportTF.getText();
                         if (supportType.equals("With magnet")) {
                             LOGGER.info("Out export exportBaseSTL in STL");
                             stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_" + i + "," + j + ".stl");
-                            // Standbye
-                            // stlComponentServices.exportBaseSTL(filename, "data/stl/base/base" + i + "-" + j + ".stl");
                             LOGGER.info("Out export exportBaseSTL in STL");
                         }
                         if (supportType.equals("Simple")) {
@@ -967,28 +966,28 @@ public class StlDBComponentController
                     //DEPARE
                     k = 0;
                     if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {
-                        LOGGER.info("In export DEPARE en STL");
-                        i = k / tileCount + 1;
-                        j = k % tileCount + 1;
-                        String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                        
                         gridBoxes.forEach((gb) -> {
+                            i = k / tileCount + 1;
+                            j = k % tileCount + 1;
+                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                            LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
                             shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                                    .retrieveIn(gb.getLatMin() + RETRIEVE_OFFSET, gb.getLonMin() + RETRIEVE_OFFSET,
-                                            gb.getLatMax() + RETRIEVE_OFFSET, gb.getLonMax() + RETRIEVE_OFFSET);
+                                    .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
                             if (shapefile != null) {
                                 new DepareView(s57Layer, s57Layer, s57Layer, simplifyFactor,
                                         Math.round(highestElevationBathy), verticalExaggeration, true, true)
                                         .display(shapefile);
                                 // Reinit Shapefile
                                 shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                                        .retrieveIn(gb.getLatMin() + RETRIEVE_OFFSET, gb.getLonMin() + RETRIEVE_OFFSET,
-                                                gb.getLatMax() + RETRIEVE_OFFSET, gb.getLonMax() + RETRIEVE_OFFSET);
-                                new DepareExportToSTL(geodesyServices, shapefile, gb).
-                                        export(filename, verticalExaggeration, latScale, lonScale);
+                                        .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
+                                new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shapefile, gb, s57Layer)
+                                        .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
                             }
+                            LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
                             k++;
                         });
-                        LOGGER.info("Out export DEPARE en STL");
+                        
                     }
                     k = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
@@ -1020,9 +1019,9 @@ public class StlDBComponentController
                             scaleCompute(g);
                             BuoyageExportToSTL buoyageExportSTL = new BuoyageExportToSTL(geodesyServices, g, filename, latScale, lonScale);
                             buoyageExportSTL.export(buoyages, lowestElevationAlti + tileSideZ);
+                            LOGGER.info("Out export BUOYAGE en STL");
                             k++;
                         }
-
                     }
                     k = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("LNDMRK")) {
@@ -1035,7 +1034,6 @@ public class StlDBComponentController
                                             g[0][0].getLongitude(),
                                             g[g.length - 1][g[0].length - 1].getLatitude(),
                                             g[g.length - 1][g[0].length - 1].getLongitude()));
-
                             new LandmarkView(s57Layer).display(landmarks);
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
@@ -1044,6 +1042,7 @@ public class StlDBComponentController
                             new LandmarkExportToSTL(geodesyServices, g, filename, latScale, lonScale)
                                     .export(landmarks, lowestElevationAlti, tileSideZ);
                             k++;
+                            LOGGER.info("Out export LNDMRK en STL");
                         }
                     }
                     // DAE

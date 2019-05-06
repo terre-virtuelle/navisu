@@ -31,6 +31,10 @@ public interface JTSServices
 
     Geometry getPolygon(List<Point3DGeo> points);
 
+    Geometry getPolygonFromPath(Path path);
+
+    List<Path> pathsInGeometry(Geometry geom, List<Path> faces);
+
     boolean contains(Geometry geom, Point3DGeo pt3D);
 
     List<Point3DGeo> merge(List<Point3DGeo> pts0, List<Point3DGeo> pts1);

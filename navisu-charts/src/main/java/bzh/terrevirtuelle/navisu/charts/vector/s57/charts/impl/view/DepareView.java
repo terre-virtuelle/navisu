@@ -53,7 +53,6 @@ public class DepareView
         while (shp.hasNext()) {
             try {
                 //Create classical chart
-               // System.out.println("display");
                 record = shp.nextRecord();
                 createSurfacePolygons(record, layer, isCreateElevation, false);
             } catch (Exception ex) {

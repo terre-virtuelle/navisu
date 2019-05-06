@@ -13,7 +13,6 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
