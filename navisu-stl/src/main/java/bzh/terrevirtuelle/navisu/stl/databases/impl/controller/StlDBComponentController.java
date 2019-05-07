@@ -940,7 +940,7 @@ public class StlDBComponentController
                     // stlComponentServices.exportRotateBaseSTL("data/stl/base/baseNewRotated.stl", "data/stl/base/baseNew.stl", 5.42);
                     k = 0;
                     gridBoxes.forEach((gb) -> {
-                        
+
                         i = k / tileCount + 1;
                         j = k % tileCount + 1;
                         String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
@@ -966,7 +966,7 @@ public class StlDBComponentController
                     //DEPARE
                     k = 0;
                     if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {
-                        
+
                         gridBoxes.forEach((gb) -> {
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
@@ -987,7 +987,7 @@ public class StlDBComponentController
                             LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
                             k++;
                         });
-                        
+
                     }
                     k = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
@@ -1367,7 +1367,7 @@ public class StlDBComponentController
             displayServices.displayRasterInfo(rasterInfoBathy, geoViewServices, GROUP);
             gridBathy1 = delaunayServices.rasterToGridTab(rasterInfoBathy);
         }
-        Point3DGeo[][] realGrid = null;
+        Point3DGeo[][] realGrid;
         if (gridTmpAlti != null && !demBathy.getGrid().isEmpty()) {
             int lines = gridTmpAlti.length;
             int cols = gridTmpAlti[0].length;
@@ -1375,22 +1375,22 @@ public class StlDBComponentController
             for (int u = 0; u < lines; u++) {
                 for (int v = 0; v < cols; v++) {
                     gridTmpAlti[u][v].setElevation(highestElevationBathy + gridTmpAlti[u][v].getElevation());
-                    gridBathy1[i][j].setElevation(highestElevationBathy - gridBathy1[i][j].getElevation());
+                    gridBathy1[u][v].setElevation(highestElevationBathy - gridBathy1[u][v].getElevation());
                 }
             }
 
             grid = new Point3DGeo[lines][cols];
 
-            for (int i = 0; i < lines; i++) {
-                for (int j = 0; j < cols; j++) {
-                    if (gridBathy1[i][j].getElevation() < highestElevationBathy) {
-                        gridTmpAlti[i][j] = gridBathy1[i][j];
+            for (int u = 0; u < lines; u++) {
+                for (int v = 0; v < cols; v++) {
+                    if (gridBathy1[u][v].getElevation() < highestElevationBathy) {
+                        gridTmpAlti[u][v] = gridBathy1[u][v];
                     }
                 }
             }
 
-            for (int ii = 0; ii < lines; ii++) {
-                System.arraycopy(gridTmpAlti[lines - ii - 1], 0, grid[ii], 0, cols);
+            for (int u = 0; u < lines; u++) {
+                System.arraycopy(gridTmpAlti[lines - u- 1], 0, grid[u], 0, cols);
             }
 
             RasterInfo rasterInfo = delaunayServices.toGridTiff(gridTmpAlti, "dem");

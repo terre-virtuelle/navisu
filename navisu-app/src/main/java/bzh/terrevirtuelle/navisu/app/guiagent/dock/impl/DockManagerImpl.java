@@ -412,7 +412,7 @@ public class DockManagerImpl<TrackTool>
                 .createNode(3, "db.png", 0, "spatiales.png", 0, "s57.png", (e) -> open("DbS57"))
                 .createNode(3, "db.png", 0, "spatiales.png", 1, "bathy.png", (e) -> open("DbBathy"))
                 .createNode(3, "db.png", 0, "spatiales.png", 2, "elevations.png", (e) -> open("DbElevation"))
-                .createNode(3, "db.png", 0, "spatiales.png", 3, "aires.png", (e) -> open())
+                .createNode(3, "db.png", 0, "spatiales.png", 3, "balises.png", (e) -> open("DbBalises"))
                 .build();
         toolsRadialMenu.setLayoutX((width / 2));
         toolsRadialMenu.setLayoutY(height / 2);

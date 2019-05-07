@@ -36,7 +36,7 @@
                     <children>
                         <TabPane fx:id="databaseTabPane" prefHeight="247.0" prefWidth="533.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <tabs>
-                                <Tab fx:id="s57Tab" text="S57 Databases      ">
+                                <Tab fx:id="s57Tab" text="S57 Databases  ">
                                     <content>
                                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
                                             <children>
@@ -101,7 +101,7 @@
                                         </AnchorPane>
                                     </content>
                                 </Tab>
-                                <Tab fx:id="bathyTab" text="Bathymetry Databases       ">
+                                <Tab fx:id="bathyTab" text="Bathymetry Databases ">
                                     <content>
                                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
                                             <children>
@@ -152,7 +152,7 @@
                                         </AnchorPane>
                                     </content>
                                 </Tab>
-                                <Tab fx:id="elevationsTab" text="Elevation Databases       ">
+                                <Tab fx:id="elevationsTab" text="Elevation Databases  ">
                                     <content>
                                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="530.0">
                                             <children>
@@ -218,6 +218,57 @@
                                         </AnchorPane>
                                     </content>
                                 </Tab>
+                        <Tab fx:id="bathyTab1" text="Balises Shom Databases">
+                           <content>
+                              <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
+                                 <children>
+                                    <GridPane layoutX="1.0" prefHeight="436.0" prefWidth="531.0" styleClass="tab-conteneur">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="140.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="1.0" prefWidth="214.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="80.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <children>
+                                          <Label prefHeight="15.0" prefWidth="160.0" text="Configuration" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <Label prefHeight="15.0" prefWidth="153.0" text="Beacon data file" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label text="Bathy database name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="bathyDataTF1" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <TextField fx:id="bathyDatabaseNameTF1" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <Button fx:id="bathyDataButton1" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <Label prefHeight="15.0" prefWidth="156.0" text="psql Path" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <TextField fx:id="psqlTF12" prefWidth="80.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                          <Button fx:id="psqlButton12" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                          <Label prefHeight="15.0" prefWidth="97.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                          <Label prefHeight="15.0" prefWidth="135.0" text="Password" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                          <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                                          <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                                          <Button fx:id="createBathyButton1" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Create" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+                                          <Button fx:id="insertBathyButton1" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Insert" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                                          <ChoiceBox fx:id="bathyDbCB1" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
                             </tabs>
                         </TabPane>
                         <GridPane maxHeight="50.0" maxWidth="600.0" prefHeight="27.0" prefWidth="533.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2">
