@@ -218,7 +218,7 @@
                                         </AnchorPane>
                                     </content>
                                 </Tab>
-                        <Tab fx:id="bathyTab1" text="Balises Shom Databases">
+                        <Tab fx:id="beaconsTab" text="Shom's Beacons Databases">
                            <content>
                               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
                                  <children>
@@ -248,11 +248,11 @@
                                        </opaqueInsets>
                                        <children>
                                           <Label prefHeight="15.0" prefWidth="160.0" text="Configuration" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <Label prefHeight="15.0" prefWidth="153.0" text="Beacon data file" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Label text="Bathy database name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <TextField fx:id="bathyDataTF1" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <TextField fx:id="bathyDatabaseNameTF1" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <Button fx:id="bathyDataButton1" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <Label prefHeight="15.0" prefWidth="153.0" text="Beacons data file" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label text="Beacons database name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="beaconsDataTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <TextField fx:id="beaconsDatabaseNameTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <Button fx:id="beaconsDataButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                           <Label prefHeight="15.0" prefWidth="156.0" text="psql Path" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                           <TextField fx:id="psqlTF12" prefWidth="80.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                           <Button fx:id="psqlButton12" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="6" />
@@ -260,9 +260,9 @@
                                           <Label prefHeight="15.0" prefWidth="135.0" text="Password" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                                           <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                                           <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                                          <Button fx:id="createBathyButton1" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Create" GridPane.columnIndex="3" GridPane.rowIndex="10" />
-                                          <Button fx:id="insertBathyButton1" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Insert" GridPane.columnIndex="2" GridPane.rowIndex="10" />
-                                          <ChoiceBox fx:id="bathyDbCB1" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <Button fx:id="createBeaconsButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Create" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+                                          <Button fx:id="insertBeaconsButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Insert" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                                          <ChoiceBox fx:id="beaconsDbCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                        </children>
                                     </GridPane>
                                  </children>

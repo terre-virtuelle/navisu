@@ -48,6 +48,7 @@ public class ToolsComponentImpl
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
     private final String COMPONENT_KEY_NAME_1 = "DbBathy";
     private final String COMPONENT_KEY_NAME_2 = "DbElevation";
+    private final String COMPONENT_KEY_NAME_3 = "DbBeacons";
     private String componentKeyName;
     ToolsComponentController controller;
 
@@ -63,13 +64,16 @@ public class ToolsComponentImpl
         String[] cmd = files;
         if (cmd != null) {
             componentKeyName = cmd[0];
-            if (cmd[0].equals(COMPONENT_KEY_NAME_0) || cmd[0].equals(COMPONENT_KEY_NAME_1) || cmd[0].equals(COMPONENT_KEY_NAME_2)) {
+            if (cmd[0].equals(COMPONENT_KEY_NAME_0)
+                    || cmd[0].equals(COMPONENT_KEY_NAME_1)
+                    || cmd[0].equals(COMPONENT_KEY_NAME_2)
+                    || cmd[0].equals(COMPONENT_KEY_NAME_3)) {
                 controller = new ToolsComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
-                        guiAgentServices, s57ChartComponentServices,geoTiffChartServices,
+                        guiAgentServices, s57ChartComponentServices, geoTiffChartServices,
                         databaseServices, bathymetryDBServices, demDBComponentServices,
                         instrumentDriverManagerServices,
                         lambertServices,
-                rasterServices);
+                        rasterServices);
                 controller.setVisible(true);
             }
         }
@@ -90,7 +94,8 @@ public class ToolsComponentImpl
 
         if (category.equals(COMPONENT_KEY_NAME_0)
                 || category.equals(COMPONENT_KEY_NAME_1)
-                || category.equals(COMPONENT_KEY_NAME_2)) {
+                || category.equals(COMPONENT_KEY_NAME_2)
+                || category.equals(COMPONENT_KEY_NAME_3)) {
             canOpen = true;
         }
         return canOpen;

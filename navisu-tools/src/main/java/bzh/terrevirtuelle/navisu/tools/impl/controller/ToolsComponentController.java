@@ -192,6 +192,26 @@ public class ToolsComponentController
     @FXML
     public CheckBox geotifPreviewCB;
 
+    /* Beacons controls */
+    @FXML
+    public Tab beaconsTab;
+    @FXML
+    public TextField psqlTF12;
+    @FXML
+    public Button psqlButton12;
+    @FXML
+    public ChoiceBox<String> beaconsDbCB;
+    @FXML
+    public TextField beaconsDataTF;
+    @FXML
+    public Button beaconsDataButton;
+    @FXML
+    public TextField beaconsDatabaseNameTF;
+    @FXML
+    public Button createBeaconsButton;
+    @FXML
+    public Button insertBeaconsButton;
+
     protected String elevationData;
 
     private ObservableList<String> catalogCbData = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
@@ -199,11 +219,14 @@ public class ToolsComponentController
             "PH", "PT", "RU", "TR", "US", "ZA");
     private ObservableList<String> dbCbElevationData = FXCollections.observableArrayList("Choice DB", "IGN75m", "SRTM30m", "TestAltiDB");
     private ObservableList<String> dbCbBathyData = FXCollections.observableArrayList("Choice DB", "BathyShomDB", "TestDB");
+    private ObservableList<String> dbCbBeaconsData = FXCollections.observableArrayList("Choice DB", "BalisageMaritimeDB");
+
     protected FileChooser fileChooser;
 
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
     private final String COMPONENT_KEY_NAME_1 = "DbBathy";
     private final String COMPONENT_KEY_NAME_2 = "DbElevation";
+    private final String COMPONENT_KEY_NAME_3 = "DbBeacons";
     private final String ENC_CATALOG_HOME = "data/charts/vector/s57/catalog/";
     private final String BATHY_DB_NAME_0 = "BathyShomDB";
     private final String BATHY_DB_NAME_1 = "TestDB";
@@ -211,6 +234,7 @@ public class ToolsComponentController
     private final String ELEVATION_DB_NAME_1 = "SRTM30mDB";
     private final String ELEVATION_DB_NAME_2 = "TestAltiDB";
     private final String ELEVATION_DB_ORG_DIR = "privateData" + SEP + "elevation";
+    private final String BEACONS_DB_NAME_0 = "BalisageMaritimeDB";
     private String componentKeyName;
     private List<File> selectedFiles;
 
@@ -287,6 +311,9 @@ public class ToolsComponentController
                 break;
             case COMPONENT_KEY_NAME_2:
                 databaseTabPane.getSelectionModel().select(elevationsTab);
+                break;
+            case COMPONENT_KEY_NAME_3:
+                databaseTabPane.getSelectionModel().select(beaconsTab);
                 break;
         }
 
@@ -545,8 +572,7 @@ public class ToolsComponentController
         } else {
             tf.setText(selectedFile.getAbsolutePath());
         }
-        
-        
+
         //TODO multi choice, first file create or insert
         //another insert
         /*
@@ -563,9 +589,7 @@ public class ToolsComponentController
             tf.setText(selectedFiles.toString());
         }
         return selectedFiles;
-*/
-
-
+         */
     }
 
     public void openDir(TextField tf) {
