@@ -16,27 +16,15 @@ import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
-import gov.nasa.worldwind.render.Polygon;
-import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwind.util.VecBuffer;
 import gov.nasa.worldwind.util.WWMath;
-import gov.nasa.worldwindx.examples.kml.KMLDocumentBuilder;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 /**
  *
@@ -99,9 +87,15 @@ public class DepareExportToSTL
             entries = record.getAttributes().getEntries();
             entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
                 if (e.getKey().equalsIgnoreCase("drval1")) {
-                    double height = verticalExaggeration * (highestElevationBathy - (Double) e.getValue());
+                   //Case e=-9.0 m ?
+                    double h = (Double) e.getValue();
+                    if (h < 0.0) {
+                        h = 0.0;
+                    }
+                    double height = verticalExaggeration * (highestElevationBathy - h);
                     paths = extrudePolygon(record, height);
                     exportSTL(paths, filename, "depare " + e.getValue(), latMin, lonMin, latScale, lonScale, verticalOffset);//verticalOffset
+
                 }
             });
         }
@@ -114,12 +108,18 @@ public class DepareExportToSTL
             VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
             if (WWMath.computeWindingOrderOfLocations(buffer.getLocations()).equals(AVKey.CLOCKWISE)) {
                 Iterable<? extends Position> pos = buffer.getPositions();
+                List<Position> cwTopList = new ArrayList<>();
+                for (Position p : pos) {
+                    cwTopList.add(new Position(p.getLatitude(), p.getLongitude(), height));
+                }
+                //Create counter clockwise list
                 List<Position> topList = new ArrayList<>();
                 List<Position> bottomList = new ArrayList<>();
-                for (Position p : pos) {
-                    topList.add(new Position(p.getLatitude(), p.getLongitude(), height));
-                    bottomList.add(new Position(p.getLatitude(), p.getLongitude(), 0.0));
+                for (int j = cwTopList.size() - 1; j >= 0; j--) {
+                    topList.add(cwTopList.get(j));
+                    bottomList.add(new Position(cwTopList.get(j).getLatitude(), cwTopList.get(j).getLongitude(), 0.0));
                 }
+
                 for (int j = 0; j < topList.size() - 1; j++) {
                     List<Position> tmp0 = new ArrayList<>();
                     List<Position> tmp1 = new ArrayList<>();
@@ -140,13 +140,13 @@ public class DepareExportToSTL
                 }
                 // Top face
                 List<Point3DGeo> pts = new ArrayList<>();
-                for (Position p : topList) {
+                topList.forEach((p) -> {
                     pts.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
-                }
+                });
                 Geometry geometry = jtsServices.getPolygon(pts);
                 List<Path> paths = jtsServices.createDelaunayToPath(pts);
                 List<Path> innerPaths = jtsServices.pathsInGeometry(geometry, paths);
-                
+
                 pathList.addAll(innerPaths);
             }
         }
