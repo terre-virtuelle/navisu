@@ -1323,9 +1323,9 @@ public class StlDBComponentController
      */
     private List<Point3DGeo[][]> createBathymetryAndElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
 
-        Point3DGeo[][] grid = null;
+        Point3DGeo[][] grid;
         RasterInfo rasterInfoAlti = null;
-        RasterInfo rasterInfoBathy = null;
+        RasterInfo rasterInfoBathy;
         Point3DGeo[][] gridBathy1 = null;
         Point3DGeo[][] gridTmpAlti = null;
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
@@ -1390,7 +1390,7 @@ public class StlDBComponentController
             }
 
             for (int u = 0; u < lines; u++) {
-                System.arraycopy(gridTmpAlti[lines - u- 1], 0, grid[u], 0, cols);
+                System.arraycopy(gridTmpAlti[lines - u - 1], 0, grid[u], 0, cols);
             }
 
             RasterInfo rasterInfo = delaunayServices.toGridTiff(gridTmpAlti, "dem");
@@ -1458,16 +1458,16 @@ public class StlDBComponentController
 
             //Hole for DEPARE volume
             grid = new Point3DGeo[lines][cols];
-            for (int i = 0; i < lines; i++) {
-                for (int j = 0; j < cols; j++) {
-                    if (gridTmpAlti[i][j].getElevation() == highestElevationBathy) {
-                        gridTmpAlti[i][j].setElevation(0.0);
+            for (int u = 0; u < lines; u++) {
+                for (int v = 0; v < cols; v++) {
+                    if (gridTmpAlti[u][v].getElevation() == highestElevationBathy) {
+                        gridTmpAlti[u][v].setElevation(0.0);
                     }
                 }
             }
 
-            for (int ii = 0; ii < lines; ii++) {
-                System.arraycopy(gridTmpAlti[lines - ii - 1], 0, grid[ii], 0, cols);
+            for (int u = 0; u < lines; u++) {
+                System.arraycopy(gridTmpAlti[lines - u - 1], 0, grid[u], 0, cols);
             }
             RasterInfo rasterInfo = delaunayServices.toGridTiff(gridTmpAlti, "dem");
             displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
