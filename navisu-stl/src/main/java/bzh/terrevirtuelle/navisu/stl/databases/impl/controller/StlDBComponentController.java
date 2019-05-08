@@ -136,6 +136,7 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import java.io.InputStream;
 import java.util.logging.FileHandler;
+import javafx.beans.value.ChangeListener;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -196,6 +197,7 @@ public class StlDBComponentController
     private final String S57_DEFAULT_DATABASE_4 = "s57NP4DB";
     private final String S57_DEFAULT_DATABASE_5 = "s57NP5DB";
     private final String S57_DEFAULT_DATABASE_6 = "s57NP6DB";
+    private final String S57_DEFAULT_DATABASE_7 = "BalisageMaritimeDB";
 
     protected Properties configProperties = new Properties();
     protected Properties cacheProperties = new Properties();
@@ -434,7 +436,10 @@ public class StlDBComponentController
     final ToggleGroup terrainGroup = new ToggleGroup();
 
     protected ObservableList<String> s57DbCbData
-            = FXCollections.observableArrayList(S57_DEFAULT_DATABASE_1, S57_DEFAULT_DATABASE_2, S57_DEFAULT_DATABASE_3, S57_DEFAULT_DATABASE_4, S57_DEFAULT_DATABASE_5, S57_DEFAULT_DATABASE_6);
+            = FXCollections.observableArrayList(S57_DEFAULT_DATABASE_1, S57_DEFAULT_DATABASE_2,
+                    S57_DEFAULT_DATABASE_3, S57_DEFAULT_DATABASE_4,
+                    S57_DEFAULT_DATABASE_5, S57_DEFAULT_DATABASE_6,
+                    S57_DEFAULT_DATABASE_7);
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
     protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("SRTM30mDB", "AltiV2_2-0_75mIgnDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
@@ -594,9 +599,33 @@ public class StlDBComponentController
         s57DatabaseTF.setText(S57_DEFAULT_DATABASE_5);
         s57DatabasesCB.getSelectionModel()
                 .selectedItemProperty()
-                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue)
-                        -> s57DatabaseTF.setText(s57DatabasesCB.getValue())
-                );
+                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    s57DatabaseTF.setText(s57DatabasesCB.getValue());
+                    if (s57DatabasesCB.getValue().equalsIgnoreCase(S57_DEFAULT_DATABASE_7)) {
+                        achareCB.setDisable(true);
+                        coalneCB.setDisable(true);
+                        depcntCB.setDisable(true);
+                        docareCB.setDisable(true);
+                        drgareCB.setDisable(true);
+                        navlneCB.setDisable(true);
+                        slconsCB.setDisable(true);
+                        pontonCB.setDisable(true);
+                        resareCB.setDisable(true);
+                        allCB.setDisable(true);
+                    }else{
+                        achareCB.setDisable(false);
+                        coalneCB.setDisable(false);
+                        depcntCB.setDisable(false);
+                        docareCB.setDisable(false);
+                        drgareCB.setDisable(false);
+                        navlneCB.setDisable(false);
+                        slconsCB.setDisable(false);
+                        pontonCB.setDisable(false);
+                        resareCB.setDisable(false);
+                        allCB.setDisable(false);
+                    }
+        });
+        
         bathyDatabasesCB.setItems(bathyDbCbData);
         bathyDatabasesCB.getSelectionModel().select("BathyShomDB");
         bathyDatabaseTF.setText("BathyShomDB");
