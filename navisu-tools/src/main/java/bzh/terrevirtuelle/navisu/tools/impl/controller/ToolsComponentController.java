@@ -142,6 +142,7 @@ public class ToolsComponentController
     protected String ulhyssesPath;
     protected String countryPath;
     protected String s7DataBaseName;
+    protected String beaconsDatabaseName;
 
     /* Bathy controls */
     @FXML
@@ -203,6 +204,7 @@ public class ToolsComponentController
     public ChoiceBox<String> beaconsDbCB;
     @FXML
     public TextField beaconsDataTF;
+    ;
     @FXML
     public Button beaconsDataButton;
     @FXML
@@ -374,8 +376,32 @@ public class ToolsComponentController
         countryCB.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((ObservableValue<? extends String> observable,
-                        String oldValue, String newValue)
-                        -> countryTF.setText(newValue));
+                        String oldValue, String newValue) -> {
+                    countryTF.setText(newValue);
+                });
+
+        beaconsDbCB.setItems(dbCbBeaconsData);
+        beaconsDbCB.getSelectionModel().select("Choice DB");
+        beaconsDbCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) -> {
+                    beaconsDatabaseName = newValue;
+                    beaconsDatabaseNameTF.setText(beaconsDatabaseName);
+                });
+        createBeaconsButton.setOnMouseClicked((MouseEvent event) -> {
+            if (beaconsTab.isSelected()) {
+                psqlPath = psqlTF.getText();
+                gdalPath = gdalTF.getText();
+            }
+            guiAgentServices.getJobsManager().newJob("Load DB : " + beaconsDatabaseName, (progressHandle) -> {
+                String shpDir = beaconsDataTF.getText();
+                System.out.println("shpDir : "+shpDir);
+                String sqlDir = databaseServices.shapeFileToSql(psqlPath, shpDir, "4326");
+                databaseServices.sqlToSpatialDB(beaconsDatabaseName, USER, PASSWD, sqlDir, psqlTF.getText() + "/psql");
+                instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
+            });
+        });
 
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
@@ -388,8 +414,8 @@ public class ToolsComponentController
                 gdalPath = gdalTF.getText();
                 ulhyssesPath = ulhyssesTF.getText();
             }
-
             s7DataBaseName = s57DatabaseTF.getText();
+
             guiAgentServices.getJobsManager().newJob("Load DB : " + s7DataBaseName, (progressHandle) -> {
                 String shpDir = s57ChartComponentServices.s57FromCatalogToShapeFile(s57TF.getText(),
                         ENC_CATALOG_HOME + catalogTF.getText(),
@@ -399,6 +425,7 @@ public class ToolsComponentController
                 databaseServices.sqlToSpatialDB(s7DataBaseName, USER, PASSWD, sqlDir, psqlTF.getText() + "/psql");
                 instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             });
+
         });
 
         /* Bathy controls */
@@ -515,6 +542,9 @@ public class ToolsComponentController
         });
         s57Button.setOnMouseClicked((MouseEvent event) -> {
             openDir(s57TF);
+        });
+        beaconsDataButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(beaconsDataTF);
         });
         psqlButton.setOnMouseClicked((MouseEvent event) -> {
             openDir(psqlTF);

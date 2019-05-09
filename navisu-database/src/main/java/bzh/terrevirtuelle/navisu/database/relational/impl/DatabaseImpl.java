@@ -68,7 +68,7 @@ public class DatabaseImpl
     private Set<String> tableSet;
     FileOutputStream loadFileLog = null;
     FileOutputStream errorFileLog = null;
-    String sep = File.separator;
+    final String SEP = File.separator;
 
     @Override
     public void componentInitiated() {
@@ -134,7 +134,7 @@ public class DatabaseImpl
     public Connection connect(String hostName, String protocol, String port, String driverName, String userName, String passwd) {
         try {
             Class.forName(driverName);
-            String url = protocol + hostName + ":" + port + sep;
+            String url = protocol + hostName + ":" + port + SEP;
             System.out.println("url " + url);
             connection = DriverManager.getConnection(url, userName, passwd);
             System.out.println("connection " + connection);
@@ -268,21 +268,22 @@ public class DatabaseImpl
 
     @Override
     public String shapeFileToSql(String path, String shpDir, String epsg) {
+      //  System.out.println("shapeFileToSql : " + shpDir);
         userDirPath = System.getProperty("user.dir");
         try {
-            Files.createDirectory(Paths.get(userDirPath + sep + "data" + sep + "sql" + sep));
+            Files.createDirectory(Paths.get(userDirPath + SEP + "data" + SEP + "sql" + SEP));
         } catch (IOException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         Map<String, String> environment = new HashMap<>(System.getenv());
-        String options = System.getProperty("user.dir") + sep + "gdal" + sep + "data";
+        String options = System.getProperty("user.dir") + SEP + "gdal" + SEP + "data";
         environment.put("GDAL_DATA", options);
-        String cmd = path + sep + "shp2pgsql";
+        String cmd = path + SEP + "shp2pgsql";
 
         //Search all different tables
         tableSet = new HashSet<>();
         List<Path> refPathList = new ArrayList<>();
-        try (Stream<Path> filePathStream = Files.walk(Paths.get("data" + sep + "shp"))) {
+        try (Stream<Path> filePathStream = Files.walk(Paths.get(shpDir))) {
             filePathStream.forEach(filePath -> {
                 if (Files.isRegularFile(filePath)) {
                     String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
@@ -310,7 +311,7 @@ public class DatabaseImpl
                                 .addArg("-p -I -s " + epsg)
                                 .addArg(userDirPath + "/" + filePath)
                                 .addArg(nameTab[0])
-                                .setOut(new FileOutputStream(userDirPath + sep + "data" + sep + "sql" + sep + nameTab[0] + ".sql", true))
+                                .setOut(new FileOutputStream(userDirPath + SEP + "data" + SEP + "sql" + SEP + nameTab[0] + ".sql", true))
                                 .setErr(System.err)
                                 .exec(environment);
                     } catch (IOException | InterruptedException ex) {
@@ -322,7 +323,7 @@ public class DatabaseImpl
 
         //Alter varchar(80) to varchar in each tables
         try {
-            filePathStream = Files.walk(Paths.get("data" + sep + "sql"));
+            filePathStream = Files.walk(Paths.get("data" + SEP + "sql"));
             filePathStream.forEach(filePath -> {
                 if (Files.isRegularFile(filePath)) {
                     String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
@@ -336,6 +337,7 @@ public class DatabaseImpl
                             }
                             try (Stream<String> lines = Files.lines(filePath)) {
                                 String content = new String(Files.readAllBytes(filePath));
+                                content = content.replaceAll("POINT", "geometry");
                                 content = content.replaceAll("MULTIPOINT", "geometry");
                                 content = content.replaceAll("MULTILINESTRING", "geometry");
                                 content = content.replaceAll("MULTIPOLYGON", "geometry");
@@ -353,7 +355,7 @@ public class DatabaseImpl
 
         //Option -a : appends shape file into current table
         try {
-            filePathStream = Files.walk(Paths.get("data" + sep + "shp"));
+            filePathStream = Files.walk(Paths.get(shpDir));
             filePathStream.forEach(filePath -> {
                 if (Files.isRegularFile(filePath)) {
                     String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
@@ -362,9 +364,9 @@ public class DatabaseImpl
                             Proc.BUILDER.create()
                                     .setCmd(cmd)
                                     .addArg("-a -I -s " + epsg)
-                                    .addArg(userDirPath + sep + filePath)
+                                    .addArg(userDirPath + SEP + filePath)
                                     .addArg(nameTab[0])
-                                    .setOut(new FileOutputStream(userDirPath + sep + "data" + sep + "sql" + sep + nameTab[0] + ".sql", true))
+                                    .setOut(new FileOutputStream(userDirPath + SEP + "data" + SEP + "sql" + SEP + nameTab[0] + ".sql", true))
                                     .setErr(System.err)
                                     .exec(environment);
                         } catch (IOException | InterruptedException ex) {
@@ -376,7 +378,7 @@ public class DatabaseImpl
         } catch (IOException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        return userDirPath + sep + "data" + sep + "sql";
+        return userDirPath + SEP + "data" + SEP + "sql";
     }
 
     @Override
@@ -390,7 +392,7 @@ public class DatabaseImpl
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        try (Stream<Path> filePathStream = Files.walk(Paths.get("data" + sep + "sql"))) {
+        try (Stream<Path> filePathStream = Files.walk(Paths.get("data" + SEP + "sql"))) {
             filePathStream.forEach(filePath -> {
                 if (Files.isRegularFile(filePath)) {
                     String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
@@ -399,7 +401,7 @@ public class DatabaseImpl
                             Proc.BUILDER.create()
                                     .setCmd(cmd)
                                     .addArg("-U admin -h localhost -d " + databaseName + " ").addArg("-f ")
-                                    .addArg(userDirPath + sep + filePath)
+                                    .addArg(userDirPath + SEP + filePath)
                                     .setOut(loadFileLog)
                                     .exec(environment);
                         } catch (IOException | InterruptedException ex) {
@@ -438,7 +440,7 @@ public class DatabaseImpl
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        return userDirPath + sep + "cmd" + sep + table + ".shp";
+        return userDirPath + SEP + "cmd" + SEP + table + ".shp";
     }
 
     private String createCmdSpatialDBToShapefile(String table, String attributes,
@@ -463,10 +465,10 @@ public class DatabaseImpl
                     + " -clipdst "
                     + Double.toString(lonMin) + " " + Double.toString(latMin) + " "
                     + Double.toString(lonMax) + " " + Double.toString(latMax) + " "
-                    + "cmd" + sep + table + ".shp cmd" + sep + "tmp.shp";
+                    + "cmd" + SEP + table + ".shp cmd" + SEP + "tmp.shp";
         } else {
             command += cmd
-                    + " cmd" + sep + table + ".shp cmd" + sep + "tmp.shp";
+                    + " cmd" + SEP + table + ".shp cmd" + SEP + "tmp.shp";
         }
         return command;
     }

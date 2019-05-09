@@ -136,7 +136,6 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import java.io.InputStream;
 import java.util.logging.FileHandler;
-import javafx.beans.value.ChangeListener;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -995,7 +994,6 @@ public class StlDBComponentController
                     //DEPARE
                     k = 0;
                     if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {
-
                         gridBoxes.forEach((gb) -> {
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
@@ -1016,7 +1014,6 @@ public class StlDBComponentController
                             LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
                             k++;
                         });
-
                     }
                     k = 0;
                     if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {

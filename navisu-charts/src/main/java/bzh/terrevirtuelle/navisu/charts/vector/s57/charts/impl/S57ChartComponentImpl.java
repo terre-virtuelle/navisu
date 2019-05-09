@@ -90,6 +90,7 @@ public class S57ChartComponentImpl
     private static final String EXTENSION_2 = ".002";
     private static final String EXTENSION_3 = ".003";
     protected static final String GROUP = "S57 charts";
+      protected static final String SEP = File.separator;
     static private int i = 0;
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     protected Properties properties;
@@ -511,7 +512,7 @@ public class S57ChartComponentImpl
             }
             j++;
         }
-        return dir;
+        return System.getProperty("user.dir")+SEP+"data"+SEP+"shp";
     }
 
     private String startCmd(String command) {
