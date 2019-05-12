@@ -373,6 +373,8 @@ public class StlDBComponentController
     @FXML
     public CheckBox generateStlCB;
     @FXML
+    public CheckBox generateSvgCB;
+    @FXML
     public CheckBox generateKmlCB;
     @FXML
     public RadioButton solidRB;
@@ -611,7 +613,7 @@ public class StlDBComponentController
                         pontonCB.setDisable(true);
                         resareCB.setDisable(true);
                         allCB.setDisable(true);
-                    }else{
+                    } else {
                         achareCB.setDisable(false);
                         coalneCB.setDisable(false);
                         depcntCB.setDisable(false);
@@ -623,8 +625,8 @@ public class StlDBComponentController
                         resareCB.setDisable(false);
                         allCB.setDisable(false);
                     }
-        });
-        
+                });
+
         bathyDatabasesCB.setItems(bathyDbCbData);
         bathyDatabasesCB.getSelectionModel().select("BathyShomDB");
         bathyDatabaseTF.setText("BathyShomDB");
@@ -966,259 +968,270 @@ public class StlDBComponentController
                         });
                     }
                     // stlComponentServices.exportRotateBaseSTL("data/stl/base/baseNewRotated.stl", "data/stl/base/baseNew.stl", 5.42);
-                    k = 0;
-                    gridBoxes.forEach((gb) -> {
-
-                        i = k / tileCount + 1;
-                        j = k % tileCount + 1;
-                        String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
-                        LOGGER.info("In export GridBox3D in STL");
-                        new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
-                        LOGGER.info("In export exportBaseSTL en STL");
-                        String supportType = supportTF.getText();
-                        if (supportType.equals("With magnet")) {
-                            LOGGER.info("Out export exportBaseSTL in STL");
-                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_" + i + "," + j + ".stl");
-                            LOGGER.info("Out export exportBaseSTL in STL");
-                        }
-                        if (supportType.equals("Simple")) {
-                            LOGGER.info("Out export exportBaseSTL in STL");
-                            stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_1mm.stl");
-                            LOGGER.info("Out export exportBaseSTL in STL");
-                        }
-                        if (supportType.equals("No support")) {
-                        }
-                        k++;
-                    });
-
-                    //DEPARE
-                    k = 0;
-                    if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {
+                    if (generateStlCB.isSelected()) {
+                        k = 0;
                         gridBoxes.forEach((gb) -> {
+
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
-                            LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
-                            shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                                    .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
-                            if (shapefile != null) {
-                                new DepareView(s57Layer, s57Layer, s57Layer, simplifyFactor,
-                                        Math.round(highestElevationBathy), verticalExaggeration, true, true)
-                                        .display(shapefile);
-                                // Reinit Shapefile
-                                shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                                        .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
-                                new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shapefile, gb, s57Layer)
-                                        .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
+                            LOGGER.info("In export GridBox3D in STL");
+                            new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
+                            LOGGER.info("In export exportBaseSTL en STL");
+                            String supportType = supportTF.getText();
+                            if (supportType.equals("With magnet")) {
+                                LOGGER.info("Out export exportBaseSTL in STL");
+                                stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_" + i + "," + j + ".stl");
+                                LOGGER.info("Out export exportBaseSTL in STL");
                             }
-                            LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
+                            if (supportType.equals("Simple")) {
+                                LOGGER.info("Out export exportBaseSTL in STL");
+                                stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_1mm.stl");
+                                LOGGER.info("Out export exportBaseSTL in STL");
+                            }
+                            if (supportType.equals("No support")) {
+                            }
                             k++;
                         });
-                    }
-                    k = 0;
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
-                        Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
-                        for (Point3DGeo[][] g : grids) {
-                            LOGGER.info("In export BUOYAGE en STL");
-                            buoyages.clear();
-                            for (String b : buoyageKeySet) {
-                                buoyages.addAll(new BuoyageDBLoader(topologyServices, s57Connection, b, topMarkMap, marsys)
+
+                        //DEPARE
+                        k = 0;
+                        if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {
+                            gridBoxes.forEach((gb) -> {
+                                i = k / tileCount + 1;
+                                j = k % tileCount + 1;
+                                String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                                LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
+                                shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                                        .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
+                                if (shapefile != null) {
+                                    new DepareView(s57Layer, s57Layer, s57Layer, simplifyFactor,
+                                            Math.round(highestElevationBathy), verticalExaggeration, true, true)
+                                            .display(shapefile);
+                                    // Reinit Shapefile
+                                    shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                                            .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
+                                    new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shapefile, gb, s57Layer)
+                                            .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
+                                }
+                                LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
+                                k++;
+                            });
+                        }
+                        k = 0;
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
+                            Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
+                            for (Point3DGeo[][] g : grids) {
+                                LOGGER.info("In export BUOYAGE en STL");
+                                buoyages.clear();
+                                for (String b : buoyageKeySet) {
+                                    buoyages.addAll(new BuoyageDBLoader(topologyServices, s57Connection, b, topMarkMap, marsys)
+                                            .retrieveObjectsIn(g[0][0].getLatitude(),
+                                                    g[0][0].getLongitude(),
+                                                    g[g.length - 1][g[0].length - 1].getLatitude(),
+                                                    g[g.length - 1][g[0].length - 1].getLongitude()));
+                                }
+                                new BuoyageView(s57Layer).display(buoyages, 1.0);
+                                if (generateKmlCB.isSelected()) {
+                                    File src = new File(System.getProperty("user.dir") + SEP + "data" + SEP + "collada" + SEP + "buoys");
+                                    File dest = new File(System.getProperty("user.dir") + SEP + DEFAULT_KML_PATH + "buoys");
+                                    try {
+                                        FileUtils.copyDirectory(src, dest);
+                                    } catch (IOException ex) {
+                                        Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                                    }
+                                    new BuoyageExportKML(kmlFileNames.get(k)).export(buoyages, lowestElevationAlti + tileSideZ);
+                                }
+                                i = k / tileCount + 1;
+                                j = k % tileCount + 1;
+                                String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                                scaleCompute(g);
+                                BuoyageExportToSTL buoyageExportSTL = new BuoyageExportToSTL(geodesyServices, g, filename, latScale, lonScale);
+                                buoyageExportSTL.export(buoyages, highestElevationBathy, tileSideZ);
+                                LOGGER.info("Out export BUOYAGE en STL");
+                                k++;
+                            }
+                        }
+                        k = 0;
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("LNDMRK")) {
+                            landmarks.clear();
+                            for (Point3DGeo[][] g : grids) {
+                                LOGGER.info("In export LNDMRK en STL");
+                                landmarks.clear();
+                                landmarks.addAll(new LandmarkDBLoader(topologyServices, s57Connection, marsys)
                                         .retrieveObjectsIn(g[0][0].getLatitude(),
                                                 g[0][0].getLongitude(),
                                                 g[g.length - 1][g[0].length - 1].getLatitude(),
                                                 g[g.length - 1][g[0].length - 1].getLongitude()));
+                                for (Landmark l : landmarks) {
+                                    DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(l.getLatitude() - RETRIEVE_OFFSET,
+                                            l.getLongitude() - RETRIEVE_OFFSET, l.getLatitude() + RETRIEVE_OFFSET, l.getLongitude() + RETRIEVE_OFFSET);
+                                    l.setElevation(Double.toString(dem.getMaxElevation()));
+                                }
+                                new LandmarkView(s57Layer).display(landmarks);
+                                i = k / tileCount + 1;
+                                j = k % tileCount + 1;
+                                String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                                scaleCompute(g);
+                                new LandmarkExportToSTL(geodesyServices, g, filename, latScale, lonScale)
+                                        .export(landmarks, highestElevationBathy, tileSideZ);
+                                k++;
+                                LOGGER.info("Out export LNDMRK en STL");
                             }
-                            new BuoyageView(s57Layer).display(buoyages, 1.0);
-                            if (generateKmlCB.isSelected()) {
-                                File src = new File(System.getProperty("user.dir") + SEP + "data" + SEP + "collada" + SEP + "buoys");
-                                File dest = new File(System.getProperty("user.dir") + SEP + DEFAULT_KML_PATH + "buoys");
+                        }
+                        // DAE
+                        k = 0;
+                        if (boundList != null && !boundList.isEmpty()) {
+                            for (Point3DGeo[][] g : grids) {
+                                objects.clear();
+                                i = k / tileCount + 1;
+                                j = k % tileCount + 1;
+                                String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                                scaleCompute(g);
+                                meshExportToSTL.export(g, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
+                                k++;
+                            }
+                        }
+                        k = 0;
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("SLCONS")) {
+                            for (Point3DGeo[][] g : grids) {
+                                LOGGER.info("In export SLCONS en STL");
+                                objects.clear();
+                                i = k / tileCount + 1;
+                                j = k % tileCount + 1;
+                                Pair pair = new Pair(i, j);
+
+                                double latitudeMin = g[0][0].getLatitude();
+                                double longitudeMin = g[0][0].getLongitude();
+                                double latitudeMax = g[g.length - 1][g[0].length - 1].getLatitude();
+                                double longitudeMax = g[g.length - 1][g[0].length - 1].getLongitude();
+
+                                String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                                scaleCompute(g);
+                                objects = new ShorelineConstructionDBLoader(s57Connection)
+                                        .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
+                                List<? extends Geo> clippedObjects = topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
+
+                                SlConsView slConsView = new SlConsView(jtsServices, geodesyServices, s57Layer);
+                                slConsView.display(clippedObjects);
+
+                                SLConsExportToSTL slConsExportToSTL = new SLConsExportToSTL(jtsServices, geodesyServices,
+                                        filename,
+                                        latitudeMin, longitudeMin,
+                                        latScale, lonScale,
+                                        lowestElevationAlti + tileSideZ);
+                                slConsExportToSTL.export(clippedObjects);
+
+                                //TODO export KML
+                                //filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
+                                //    new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
+                                k++;
+                            }
+                        }
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("PONTON")) {
+                            objects = new PontoonDBLoader(s57Connection)
+                                    .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                            new S57ObjectView("PONTON", topologyServices, s57Layer).display(objects);
+                            objects.forEach((g) -> {
+                                s57ObjectsExport = new S57ObjectsExportToSTL(topologyServices, stlComponentServices, jtsServices,
+                                        lat0, lon0, latScale, lonScale, tileSideZ);
+                                s57ObjectsExport.export(g);
+                            });
+                        }
+
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("ACHARE")) {
+                            objects = new AnchorageAreaDBLoader(topologyServices, s57Connection)
+                                    .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                            s57Viewer = new S57ObjectView("ACHARE", topologyServices, s57Layer);
+                            objects.forEach((g) -> {
+                                s57Viewer.display(g);
+                            });
+
+                        }
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("COALNE")) {
+                            objects = new CoastlineDBLoader(s57Connection)
+                                    .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                            s57Viewer = new S57ObjectView("COALNE", topologyServices, s57Layer);
+                            objects.forEach((g) -> {
+                                s57Viewer.display(g);
+                            });
+                        }
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("DEPCNT")) {
+                            objects = new DepthContourDBLoader(s57Connection)
+                                    .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                            s57Viewer = new S57ObjectView("DEPCNT", topologyServices, bathymetryLayer);
+                            objects.forEach((g) -> {
+                                s57Viewer.display(g);
+
+                            });
+                        }
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("DOCARE")) {
+                            objects = new DockAreaDBLoader(s57Connection)
+                                    .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                            s57Viewer = new S57ObjectView("DOCARE", topologyServices, bathymetryLayer);
+                            objects.forEach((g) -> {
+                                s57Viewer.display(g);
+                            });
+                        }
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("DRGARE")) {
+                            objects = new DredgedAreaDBLoader(s57Connection)
+                                    .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                            s57Viewer = new S57ObjectView("DRGARE", topologyServices, bathymetryLayer);
+                            objects.forEach((g) -> {
+                                s57Viewer.display(g);
+                            });
+                        }
+
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("LIGHTS")) {
+
+                            List<Light> lights = new LightDBLoader(topologyServices, s57Connection, marsys)
+                                    .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                            new LightView(lightsLayer).display(lights);
+                        }
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("NAVLNE")) {
+                            objects = new NavigationLineDBLoader(s57Connection)
+                                    .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                            s57Viewer = new S57ObjectView("NAVLNE", topologyServices, s57Layer);
+                            objects.forEach((g) -> {
+                                s57Viewer.display(g);
+                            });
+                        }
+
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("RESARE")) {
+                            objects = new RestrictedAreaDBLoader(s57Connection)
+                                    .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
+                            s57Viewer = new S57ObjectView("RESARE", topologyServices, s57Layer);
+                            objects.forEach((g) -> {
+                                normalAttributes.setOutlineMaterial(new Material(new Color(197, 69, 195)));
+                                s57Viewer.display(g, normalAttributes, highlightAttributes);
+                            });
+                        }
+                        k = 0;
+                        if (stlPreviewCB.isSelected()) {
+                            for (Point3DGeo[][] g : grids) {
+                                i = k / tileCount + 1;
+                                j = k % tileCount + 1;
+                                String filename = outFileTF.getText() + "_" + i + "," + j + ".stl";
+                                filename = System.getProperty("user.dir") + SEP + DEFAULT_STL_PATH + filename;
                                 try {
-                                    FileUtils.copyDirectory(src, dest);
-                                } catch (IOException ex) {
+                                    Thread.sleep(1000);
+                                    stlComponentServices.viewSTL(filename);
+                                } catch (InterruptedException ex) {
                                     Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                                 }
-                                new BuoyageExportKML(kmlFileNames.get(k)).export(buoyages, lowestElevationAlti + tileSideZ);
+                                k++;
                             }
-                            i = k / tileCount + 1;
-                            j = k % tileCount + 1;
-                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
-                            scaleCompute(g);
-                            BuoyageExportToSTL buoyageExportSTL = new BuoyageExportToSTL(geodesyServices, g, filename, latScale, lonScale);
-                            buoyageExportSTL.export(buoyages, lowestElevationAlti + tileSideZ);
-                            LOGGER.info("Out export BUOYAGE en STL");
-                            k++;
                         }
+                        instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
+                        selectLayer.removeAllRenderables();
+                        wwd.redrawNow();
                     }
-                    k = 0;
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("LNDMRK")) {
-                        landmarks.clear();
-                        for (Point3DGeo[][] g : grids) {
-                            LOGGER.info("In export LNDMRK en STL");
-                            landmarks.clear();
-                            landmarks.addAll(new LandmarkDBLoader(topologyServices, s57Connection, marsys)
-                                    .retrieveObjectsIn(g[0][0].getLatitude(),
-                                            g[0][0].getLongitude(),
-                                            g[g.length - 1][g[0].length - 1].getLatitude(),
-                                            g[g.length - 1][g[0].length - 1].getLongitude()));
-                            new LandmarkView(s57Layer).display(landmarks);
-                            i = k / tileCount + 1;
-                            j = k % tileCount + 1;
-                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
-                            scaleCompute(g);
-                            new LandmarkExportToSTL(geodesyServices, g, filename, latScale, lonScale)
-                                    .export(landmarks, lowestElevationAlti, tileSideZ);
-                            k++;
-                            LOGGER.info("Out export LNDMRK en STL");
-                        }
+                    LOGGER.info("Out export in STL");
+                    if (generateStlCB.isSelected()) {
+                        //DEPARE for Laser
                     }
-                    // DAE
-                    k = 0;
-                    if (boundList != null && !boundList.isEmpty()) {
-                        for (Point3DGeo[][] g : grids) {
-                            objects.clear();
-                            i = k / tileCount + 1;
-                            j = k % tileCount + 1;
-                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
-                            scaleCompute(g);
-                            meshExportToSTL.export(g, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
-                            k++;
-                        }
-                    }
-                    k = 0;
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("SLCONS")) {
-                        for (Point3DGeo[][] g : grids) {
-                            LOGGER.info("In export SLCONS en STL");
-                            objects.clear();
-                            i = k / tileCount + 1;
-                            j = k % tileCount + 1;
-                            Pair pair = new Pair(i, j);
-
-                            double latitudeMin = g[0][0].getLatitude();
-                            double longitudeMin = g[0][0].getLongitude();
-                            double latitudeMax = g[g.length - 1][g[0].length - 1].getLatitude();
-                            double longitudeMax = g[g.length - 1][g[0].length - 1].getLongitude();
-
-                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
-                            scaleCompute(g);
-                            objects = new ShorelineConstructionDBLoader(s57Connection)
-                                    .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
-                            List<? extends Geo> clippedObjects = topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
-
-                            SlConsView slConsView = new SlConsView(jtsServices, geodesyServices, s57Layer);
-                            slConsView.display(clippedObjects);
-
-                            SLConsExportToSTL slConsExportToSTL = new SLConsExportToSTL(jtsServices, geodesyServices,
-                                    filename,
-                                    latitudeMin, longitudeMin,
-                                    latScale, lonScale,
-                                    lowestElevationAlti + tileSideZ);
-                            slConsExportToSTL.export(clippedObjects);
-
-                            //TODO export KML
-                            //filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
-                            //    new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
-                            k++;
-                        }
-                    }
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("PONTON")) {
-                        objects = new PontoonDBLoader(s57Connection)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                        new S57ObjectView("PONTON", topologyServices, s57Layer).display(objects);
-                        objects.forEach((g) -> {
-                            s57ObjectsExport = new S57ObjectsExportToSTL(topologyServices, stlComponentServices, jtsServices,
-                                    lat0, lon0, latScale, lonScale, tileSideZ);
-                            s57ObjectsExport.export(g);
-                        });
-                    }
-
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("ACHARE")) {
-                        objects = new AnchorageAreaDBLoader(topologyServices, s57Connection)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                        s57Viewer = new S57ObjectView("ACHARE", topologyServices, s57Layer);
-                        objects.forEach((g) -> {
-                            s57Viewer.display(g);
-                        });
-
-                    }
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("COALNE")) {
-                        objects = new CoastlineDBLoader(s57Connection)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                        s57Viewer = new S57ObjectView("COALNE", topologyServices, s57Layer);
-                        objects.forEach((g) -> {
-                            s57Viewer.display(g);
-                        });
-                    }
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("DEPCNT")) {
-                        objects = new DepthContourDBLoader(s57Connection)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                        s57Viewer = new S57ObjectView("DEPCNT", topologyServices, bathymetryLayer);
-                        objects.forEach((g) -> {
-                            s57Viewer.display(g);
-
-                        });
-                    }
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("DOCARE")) {
-                        objects = new DockAreaDBLoader(s57Connection)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                        s57Viewer = new S57ObjectView("DOCARE", topologyServices, bathymetryLayer);
-                        objects.forEach((g) -> {
-                            s57Viewer.display(g);
-                        });
-                    }
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("DRGARE")) {
-                        objects = new DredgedAreaDBLoader(s57Connection)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                        s57Viewer = new S57ObjectView("DRGARE", topologyServices, bathymetryLayer);
-                        objects.forEach((g) -> {
-                            s57Viewer.display(g);
-                        });
-                    }
-
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("LIGHTS")) {
-
-                        List<Light> lights = new LightDBLoader(topologyServices, s57Connection, marsys)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                        new LightView(lightsLayer).display(lights);
-                    }
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("NAVLNE")) {
-                        objects = new NavigationLineDBLoader(s57Connection)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                        s57Viewer = new S57ObjectView("NAVLNE", topologyServices, s57Layer);
-                        objects.forEach((g) -> {
-                            s57Viewer.display(g);
-                        });
-                    }
-
-                    if (selectedObjects.contains("ALL") || selectedObjects.contains("RESARE")) {
-                        objects = new RestrictedAreaDBLoader(s57Connection)
-                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                        s57Viewer = new S57ObjectView("RESARE", topologyServices, s57Layer);
-                        objects.forEach((g) -> {
-                            normalAttributes.setOutlineMaterial(new Material(new Color(197, 69, 195)));
-                            s57Viewer.display(g, normalAttributes, highlightAttributes);
-                        });
-                    }
-                    k = 0;
-                    if (stlPreviewCB.isSelected()) {
-                        for (Point3DGeo[][] g : grids) {
-                            i = k / tileCount + 1;
-                            j = k % tileCount + 1;
-                            String filename = outFileTF.getText() + "_" + i + "," + j + ".stl";
-                            filename = System.getProperty("user.dir") + SEP + DEFAULT_STL_PATH + filename;
-                            try {
-                                Thread.sleep(1000);
-                                stlComponentServices.viewSTL(filename);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-                            }
-                            k++;
-                        }
-                    }
-                    instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
-                    selectLayer.removeAllRenderables();
-                    wwd.redrawNow();
                 }
-                LOGGER.info("Out export in STL");
+
             }
         }
         );

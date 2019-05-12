@@ -61,7 +61,7 @@ public class LandmarkExportToSTL {
             for (Landmark l : landmarks) {
                 lat = l.getLatitude();
                 lon = l.getLongitude();
-                elevation = new DemSrtmElevationLoader(geodesyServices).getElevation(lat, lon).getElevation();
+                elevation = Double.parseDouble(l.getElevation());
                 double latM = geodesyServices.getDistanceM(latMin, lonMin, lat, lonMin);
                 double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
                 latM *= latScale;

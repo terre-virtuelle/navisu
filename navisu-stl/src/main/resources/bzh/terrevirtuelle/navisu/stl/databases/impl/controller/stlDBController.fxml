@@ -384,6 +384,7 @@
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="5.0" prefWidth="5.0" />
                                        </columnConstraints>
                                        <rowConstraints>
@@ -393,9 +394,10 @@
                                        </rowConstraints>
                                        <children>
                                           <CheckBox fx:id="generateStlCB" mnemonicParsing="false" selected="true" text="Generate STL" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                          <CheckBox fx:id="generateKmlCB" mnemonicParsing="false" text="Generate KML" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                          <CheckBox mnemonicParsing="false" text="GeoTIFF" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                          <CheckBox mnemonicParsing="false" text="ASCII" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                          <CheckBox fx:id="generateKmlCB" mnemonicParsing="false" text="Generate KML" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                          <CheckBox mnemonicParsing="false" selected="true" text="GeoTIFF" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                          <CheckBox mnemonicParsing="false" text="ASCII" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                          <CheckBox fx:id="generateSvgCB" mnemonicParsing="false" prefHeight="18.0" prefWidth="106.0" text="Generate SVG" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane></children>
 						                                </AnchorPane>

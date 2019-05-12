@@ -49,7 +49,7 @@ public class BuoyageExportToSTL {
         this.lonScale = lonScale;
     }
 
-    public void export(List<Buoyage> buoyages, double elevation) {
+    public void export(List<Buoyage> buoyages, double elevation, double verticalOffet) {
         String result = "";
         try {
             for (Buoyage buoyage : buoyages) {
@@ -60,6 +60,9 @@ public class BuoyageExportToSTL {
                 double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
                 latM *= latScale;
                 lonM *= lonScale;
+                double elevationScale=(latScale+lonScale)/2.0;
+                elevation*=elevationScale;
+                elevation+=verticalOffet;
                 if (acronym.equals("BCNCAR") || acronym.equals("BOYCAR")) {
                     result = result.concat(insertedFile(latM, lonM, elevation, "BCNCAR_" + buoyage.getCategoryOfMark() + ".stl"));
                 } else if (acronym.equals("BCNLAT") || acronym.equals("BOYLAT")) {
