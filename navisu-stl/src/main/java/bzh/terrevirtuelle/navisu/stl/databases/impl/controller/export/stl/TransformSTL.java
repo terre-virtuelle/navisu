@@ -13,20 +13,24 @@ public class TransformSTL {
 
     public String transform(String root, double lat, double lon, double elv) {
         String result = "";
-
+        System.out.println("elv : " + elv);
         String[] facetTab = root.split("\n");
         for (String s : facetTab) {
-            if (s.contains("facet")||s.contains("outer")||s.contains("solid")||s.contains("endloop")||s.contains("endfacet")) {
+            if (s.contains("facet") || s.contains("outer") || s.contains("solid") || s.contains("endloop") || s.contains("endfacet")) {
                 result += s + "\n";
             }
             if (s.contains("vertex")) {
                 String[] vTab = s.trim().split("\\s+");
                 result += "vertex "
                         + Double.toString(Double.valueOf(vTab[1]) + lon) + " "
-                        + Double.toString(Double.valueOf(vTab[2]) + lat) + " "
-                        + Double.toString(Double.valueOf(vTab[3]) + elv) + "\n";
+                        + Double.toString(Double.valueOf(vTab[2]) + lat) + " ";
+                if (Double.valueOf(vTab[3]) > 0.0) {
+                    result += Double.toString(Double.valueOf(vTab[3]) + elv) + "\n";
+                }else{
+                    result += Double.toString(Double.valueOf(vTab[3])) + "\n";
+                }
             }
-            
+
         }
         return result;
     }
@@ -53,8 +57,8 @@ public class TransformSTL {
                 z = Double.valueOf(vTab[3]);
                 z /= scale;
                 result += "vertex "
-                        + Double.toString(x + lon ) + " "
-                        + Double.toString(y + lat ) + " "
+                        + Double.toString(x + lon) + " "
+                        + Double.toString(y + lat) + " "
                         + Double.toString(z + elv) + "\n";
             }
             if (s.contains("endloop")) {
