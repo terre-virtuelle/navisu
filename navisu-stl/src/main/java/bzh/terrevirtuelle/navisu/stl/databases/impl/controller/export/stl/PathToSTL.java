@@ -61,7 +61,7 @@ public class PathToSTL {
             double verticalOffset) {
         String facet;
         Vec3d[] vec3d = new Vec3d[3];
-        Vec3d normal = null;
+        Vec3d normal;
         int i = 0;
         Iterable<? extends Position> positions = path.getPositions();
         for (Position pp : positions) {

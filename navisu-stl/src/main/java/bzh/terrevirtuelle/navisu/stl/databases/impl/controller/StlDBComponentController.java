@@ -130,6 +130,7 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.MeshEx
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.ObjExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.util.impl.controller.SlConsEditorController;
 
 import com.google.common.collect.ImmutableMap;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -423,6 +424,8 @@ public class StlDBComponentController
     public TextField objXOffsetTF;
     @FXML
     public TextField objYOffsetTF;
+    @FXML
+    public Button slConsEditorButton;
 
     int k = 0;
     int i = 0;
@@ -856,6 +859,13 @@ public class StlDBComponentController
                 displayServices.displayPoints3DAsPath(boundList, 150, s57Layer, Material.YELLOW);
             }
         });
+        slConsEditorButton.setOnMouseClicked((MouseEvent event) -> {
+            SlConsEditorController stConsEditorController = new SlConsEditorController(guiAgentServices, layersManagerServices,
+                    KeyCode.M, KeyCombination.CONTROL_DOWN);
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, stConsEditorController);
+            guiAgentServices.getRoot().getChildren().add(stConsEditorController);
+            stConsEditorController.setVisible(true);
+        });
         requestButton.setOnMouseClicked((MouseEvent event) -> {
 
             s57Connection = databaseServices.connect(s57DatabaseTF.getText(),
@@ -1032,10 +1042,10 @@ public class StlDBComponentController
                                                     g[g.length - 1][g[0].length - 1].getLongitude()));
                                 }
                                 for (Buoyage b : buoyages) {
-                                    DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(b.getLatitude() - 2*RETRIEVE_OFFSET,
-                                            b.getLongitude() - 2*RETRIEVE_OFFSET, b.getLatitude() + 2*RETRIEVE_OFFSET, b.getLongitude() + 2*RETRIEVE_OFFSET);
-                                    b.setElevation(Double.toString(dem.getMaxElevation()*verticalExaggeration));
-                                    System.out.println("dem.getMaxElevation()*verticalExaggeration : " + dem.getMaxElevation()*verticalExaggeration);
+                                    DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(b.getLatitude() - 2 * RETRIEVE_OFFSET,
+                                            b.getLongitude() - 2 * RETRIEVE_OFFSET, b.getLatitude() + 2 * RETRIEVE_OFFSET, b.getLongitude() + 2 * RETRIEVE_OFFSET);
+                                    b.setElevation(Double.toString(dem.getMaxElevation() * verticalExaggeration));
+                                    //  System.out.println("dem.getMaxElevation()*verticalExaggeration : " + dem.getMaxElevation()*verticalExaggeration);
                                 }
                                 new BuoyageView(s57Layer).display(buoyages, 1.0);
                                 if (generateKmlCB.isSelected()) {
@@ -1053,7 +1063,7 @@ public class StlDBComponentController
                                 String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                 scaleCompute(g);
                                 BuoyageExportToSTL buoyageExportSTL = new BuoyageExportToSTL(geodesyServices, g, filename, latScale, lonScale);
-                                buoyageExportSTL.export(buoyages, highestElevationBathy*verticalExaggeration, tileSideZ);
+                                buoyageExportSTL.export(buoyages, highestElevationBathy * verticalExaggeration, tileSideZ);
                                 LOGGER.info("Out export BUOYAGE en STL");
                                 k++;
                             }
@@ -1070,9 +1080,9 @@ public class StlDBComponentController
                                                 g[g.length - 1][g[0].length - 1].getLatitude(),
                                                 g[g.length - 1][g[0].length - 1].getLongitude()));
                                 for (Landmark l : landmarks) {
-                                    DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(l.getLatitude() - 2*RETRIEVE_OFFSET,
-                                            l.getLongitude() - 2*RETRIEVE_OFFSET, l.getLatitude() + 2*RETRIEVE_OFFSET, l.getLongitude() + 2*RETRIEVE_OFFSET);
-                                    l.setElevation(Double.toString(dem.getMaxElevation()*verticalExaggeration));
+                                    DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(l.getLatitude() - 2 * RETRIEVE_OFFSET,
+                                            l.getLongitude() - 2 * RETRIEVE_OFFSET, l.getLatitude() + 2 * RETRIEVE_OFFSET, l.getLongitude() + 2 * RETRIEVE_OFFSET);
+                                    l.setElevation(Double.toString(dem.getMaxElevation() * verticalExaggeration));
                                 }
                                 new LandmarkView(s57Layer).display(landmarks);
                                 i = k / tileCount + 1;
@@ -1080,7 +1090,7 @@ public class StlDBComponentController
                                 String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                 scaleCompute(g);
                                 new LandmarkExportToSTL(geodesyServices, g, filename, latScale, lonScale)
-                                        .export(landmarks, verticalExaggeration*highestElevationBathy, tileSideZ);
+                                        .export(landmarks, verticalExaggeration * highestElevationBathy, tileSideZ);
                                 k++;
                                 LOGGER.info("Out export LNDMRK en STL");
                             }

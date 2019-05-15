@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane fx:id="viewpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="450.0" styleClass="background-pane" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="510.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="450.0" />
+          <Group layoutY="14.0">
+              <children>
+                  <GridPane layoutX="38.0" layoutY="45.0" prefHeight="62.0" prefWidth="368.0">
+                      <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                      <children>
+                  <Button fx:id="newButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="New">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="openButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Open" GridPane.columnIndex="1" />
+                  <Button fx:id="pauseButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Pause/Edit" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="endButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="End" GridPane.columnIndex="3">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="snapshotButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Snapshot" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="dataButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Data" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                      </children>
+                  </GridPane>
+            <Group layoutX="20.0" layoutY="260.0">
+               <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="96.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="195.0" />
+                        <GridPane layoutX="9.0" layoutY="17.0" prefHeight="54.0" prefWidth="181.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="91.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <TextField fx:id="wpDescText" alignment="CENTER" prefHeight="26.0" prefWidth="121.0" text="Waypoint" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label text="Desc" GridPane.rowIndex="1" />
+                                <TextField fx:id="wpNameText" alignment="CENTER" prefHeight="26.0" prefWidth="91.0" text="Waypoint" GridPane.columnIndex="1" />
+                                <Label text="Name" />
+                            </children>
+                        </GridPane>
+               </children>
+            </Group>
+            <Pane layoutX="6.0" layoutY="-12.0" prefHeight="45.0" prefWidth="45.0" styleClass="logo" />
+                  <Slider fx:id="opacitySlider" layoutX="430.0" layoutY="110.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                        </Slider>
+                  <Text fx:id="lengthLabel" layoutX="300.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorvalue" wrappingWidth="84.0" />
+                  <Text fx:id="headingLabel" layoutX="309.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorvalue" wrappingWidth="82.0" />
+            <Group layoutX="227.0" layoutY="115.0">
+               <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d0000" height="176.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="195.0" />
+                        <GridPane layoutX="5.0" layoutY="10.0" prefHeight="156.0" prefWidth="180.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="52.0" minHeight="6.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="52.0" minHeight="0.0" prefHeight="52.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="23.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Units :" textAlignment="RIGHT" wrappingWidth="95.0">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Text>
+                              
+                                            <ComboBox fx:id="unitsCombo" prefHeight="20.0" prefWidth="80.0" promptText="Nm" visibleRowCount="15" GridPane.columnIndex="1">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="M" />
+                                            <String fx:value="Km" />
+                                            <String fx:value="Feet" />
+                                            <String fx:value="Miles" />
+                                            <String fx:value="Nm" />
+                                            <String fx:value="Yards" />
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+                              
+                                            <ComboBox fx:id="anglesCombo" prefHeight="20.0" prefWidth="80.0" promptText="degrees" visibleRowCount="15" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="Decimal degrees" />
+                                            <String fx:value="Degrees, Minutes, Seconds" />   
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox> 
+                              
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Angle format :" textAlignment="RIGHT" wrappingWidth="95.0" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Text>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Length :" textAlignment="RIGHT" wrappingWidth="95.0" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Text>
+                                <TextField fx:id="lengthText" prefHeight="26.0" prefWidth="73.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Heading :" textAlignment="RIGHT" wrappingWidth="95.0" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Text>
+                                <TextField fx:id="headingText" prefHeight="26.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Total length :" textAlignment="RIGHT" wrappingWidth="95.0" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Text>
+                                <TextField fx:id="totalLengthText" prefHeight="26.0" prefWidth="84.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                            </children>
+                        </GridPane>
+               </children>
+            </Group>
+            <Group layoutX="20.0" layoutY="115.0">
+               <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="126.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="195.0" />
+                        <GridPane layoutX="6.0" layoutY="9.0" prefHeight="116.0" prefWidth="183.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <Label prefHeight="16.0" prefWidth="40.0" text="Name" />
+                                <TextField fx:id="routeNameText" alignment="CENTER" prefHeight="26.0" prefWidth="85.0" text="Route" GridPane.columnIndex="1" />
+                                <Label prefHeight="16.0" prefWidth="60.0" text="Version" GridPane.rowIndex="1" />
+                                <TextField fx:id="versionText" alignment="CENTER" prefHeight="26.0" prefWidth="85.0" text="Route" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label graphicTextGap="0.0" prefHeight="17.0" prefWidth="53.0" text="Author" textAlignment="RIGHT" GridPane.rowIndex="2" />
+                                <TextField fx:id="authorText" alignment="CENTER" prefHeight="26.0" prefWidth="91.0" text="Route" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            </children>
+                        </GridPane>
+               </children>
+            </Group>
+            <Group layoutX="227.0" layoutY="305.0">
+               <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="195.0" />
+                        <TextField fx:id="namesText" alignment="CENTER" layoutX="6.0" layoutY="13.0" prefHeight="26.0" prefWidth="185.0" text="    Lattitude Longitude">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                        </TextField>
+               </children>
+            </Group>
+            <Button fx:id="quit" layoutX="393.0" layoutY="-20.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.5" scaleY="0.5" styleClass="quitbutton" />
+                  <Text layoutX="155.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="SLCONS EDITOR" />
+            <Group layoutX="20.0" layoutY="375.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="96.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="195.0" />
+                  <GridPane layoutX="10.0" layoutY="15.0" prefHeight="72.0" prefWidth="181.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="91.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <TextField fx:id="name" alignment="CENTER" prefHeight="26.0" prefWidth="121.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label GridPane.rowIndex="1" />
+                        <TextField fx:id="speedText" alignment="CENTER" prefHeight="26.0" prefWidth="91.0" text="10.0" GridPane.columnIndex="1" />
+                        <Label text="Speed" />
+                        <TextField fx:id="descText12" alignment="CENTER" prefHeight="26.0" prefWidth="121.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label GridPane.rowIndex="1" />
+                        <Label GridPane.rowIndex="2" />
+                        <Label text="Dist. PO" GridPane.rowIndex="1" />
+                        <TextField fx:id="distPoText" alignment="CENTER" prefHeight="26.0" prefWidth="94.0" text="1.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Dist. Offset" GridPane.rowIndex="2" />
+                        <TextField fx:id="distOffsetText" alignment="CENTER" prefHeight="26.0" prefWidth="94.0" text="1.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+               </children>
+            </Group>
+              </children>
+          </Group>
+    </children>
+</fx:root>

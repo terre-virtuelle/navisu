@@ -81,6 +81,7 @@ public class ShapefileLoader {
         }
 
         Shapefile shp = null;
+     
         Layer layer = null;
         try {
             shp = new Shapefile(source);
@@ -299,12 +300,6 @@ public class ShapefileLoader {
     }
 
     protected void addRenderablesForPolylines(Shapefile shp, RenderableLayer layer) {
-        // Reads all records from the Shapefile, but ignores each records unique information. We do this to create one
-        // WWJ object representing the entire shapefile, which as of 8/10/2010 is required to display very large
-        // polyline Shapefiles. To create one WWJ object for each Shapefile record, replace this method's contents with
-        // the following:
-        //
-        //Sélection posible
         while (shp.hasNext()) {
             ShapefileRecord record = shp.nextRecord();
 
@@ -317,16 +312,6 @@ public class ShapefileLoader {
             //  System.out.println(layer.getRenderables());
         }
 
-        // Une seule Shapefile pas de sélection possible
-/*
-         while (shp.hasNext()) {
-         ShapefileRecord record = shp.nextRecord();
-         System.out.println("record " + record.getAttributes().getEntries());
-         }
-       
-         ShapeAttributes attrs = this.createPolylineAttributes(null);
-         layer.addRenderable(this.createPolyline(shp, attrs));
-         */
     }
 
     /**
@@ -418,13 +403,6 @@ public class ShapefileLoader {
             layer.addRenderable(ep);
 
             for (int i = 0; i < record.getNumberOfParts(); i++) {
-                // Although the shapefile spec says that inner and outer boundaries can be listed in any order, it's
-                // assumed here that inner boundaries are at least listed adjacent to their outer boundary, either
-                // before or after it. The below code accumulates inner boundaries into the extruded polygon until an
-                // outer boundary comes along. If the outer boundary comes before the inner boundaries, the inner
-                // boundaries are added to the polygon until another outer boundary comes along, at which point a new
-                // extruded polygon is started.
-
                 VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
                 if (WWMath.computeWindingOrderOfLocations(buffer.getLocations()).equals(AVKey.CLOCKWISE)) {
                     if (!ep.getOuterBoundary().iterator().hasNext()) // has no outer boundary yet
@@ -446,24 +424,6 @@ public class ShapefileLoader {
                     Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
                     record.getCompoundPointBuffer());
             shape.setAttributes(attrs);
-            // Configure the SurfacePolygons as a single large polygon.
-            // Configure the SurfacePolygons to correctly interpret the Shapefile polygon record. Shapefile polygons may
-            // have rings defining multiple inner and outer boundaries. Each ring's winding order defines whether it's an
-            // outer boundary or an inner boundary: outer boundaries have a clockwise winding order. However, the
-            // arrangement of each ring within the record is not significant; inner rings can precede outer rings and vice
-            // versa.
-            //
-            // By default, SurfacePolygons assumes that the sub-buffers are arranged such that each outer boundary precedes
-            // a set of corresponding inner boundaries. SurfacePolygons traverses the sub-buffers and tessellates a new
-            // polygon each  time it encounters an outer boundary. Outer boundaries are sub-buffers whose winding order
-            // matches the SurfacePolygons' windingRule property.
-            //
-            // This default behavior does not work with Shapefile polygon records, because the sub-buffers of a Shapefile
-            // polygon record can be arranged arbitrarily. By calling setPolygonRingGroups(new int[]{0}), the
-            // SurfacePolygons interprets all sub-buffers as boundaries of a single tessellated shape, and configures the
-            // GLU tessellator's winding rule to correctly interpret outer and inner boundaries (in any arrangement)
-            // according to their winding order. We set the SurfacePolygons' winding rule to clockwise so that sub-buffers
-            // with a clockwise winding ordering are interpreted as outer boundaries.
             shape.setWindingRule(AVKey.CLOCKWISE);
             shape.setPolygonRingGroups(new int[]{0});
             shape.setPolygonRingGroups(new int[]{0});
@@ -495,8 +455,9 @@ public class ShapefileLoader {
     @SuppressWarnings({"UnusedDeclaration"})
     protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {
         if (record != null) {
-            //  System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
+          //  System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
         }
+        
         return randomAttrs.nextPolylineAttributes();
     }
 

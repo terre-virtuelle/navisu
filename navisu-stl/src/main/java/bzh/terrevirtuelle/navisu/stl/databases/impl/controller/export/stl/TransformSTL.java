@@ -13,7 +13,7 @@ public class TransformSTL {
 
     public String transform(String root, double lat, double lon, double elv) {
         String result = "";
-        System.out.println("elv : " + elv);
+       
         String[] facetTab = root.split("\n");
         for (String s : facetTab) {
             if (s.contains("facet") || s.contains("outer") || s.contains("solid") || s.contains("endloop") || s.contains("endfacet")) {

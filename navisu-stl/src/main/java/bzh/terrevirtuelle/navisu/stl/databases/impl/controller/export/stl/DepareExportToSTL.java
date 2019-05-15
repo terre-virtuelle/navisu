@@ -144,8 +144,8 @@ public class DepareExportToSTL
                     pts.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
                 });
                 Geometry geometry = jtsServices.getPolygon(pts);
-                List<Path> paths = jtsServices.createDelaunayToPath(pts);
-                List<Path> innerPaths = jtsServices.pathsInGeometry(geometry, paths);
+                List<Path> paths_0 = jtsServices.createDelaunayToPath(pts);
+                List<Path> innerPaths = jtsServices.pathsInGeometry(geometry, paths_0);
 
                 pathList.addAll(innerPaths);
             }

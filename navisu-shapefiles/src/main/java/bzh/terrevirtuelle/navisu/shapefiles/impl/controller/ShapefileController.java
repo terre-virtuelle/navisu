@@ -5,10 +5,16 @@
  */
 package bzh.terrevirtuelle.navisu.shapefiles.impl.controller;
 
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.impl.controller.loader.SingleAREA_ShapefileLoader;
+import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.event.SelectEvent;
+import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.pick.PickedObject;
+import gov.nasa.worldwind.pick.PickedObjectList;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +31,7 @@ public class ShapefileController {
     protected String path;
     private List<Layer> layers;
     protected SingleAREA_ShapefileLoader shapefileLoader;
+    protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
     static {
         INSTANCE = new ShapefileController();
@@ -33,6 +40,19 @@ public class ShapefileController {
     private ShapefileController() {
         this.layers = new ArrayList<>();
         shapefileLoader = new SingleAREA_ShapefileLoader();
+        wwd.addSelectListener(new SelectListener() {
+            @Override
+            public void selected(SelectEvent event) {
+                if (event.getEventAction().equals(SelectEvent.LEFT_CLICK)) {
+                    PickedObjectList pol = event.getObjects();
+                    System.out.println(" Picked Objects Size " + pol.size());
+                    for (PickedObject po : pol) {
+                        System.out.println(" Class " + po.getObject().getClass().getName() + "  isTerrian=" + po.isTerrain());
+                    }
+                }
+            }
+        });
+      wwd.getSceneController().setDeepPickEnabled(true);
     }
 
     public static ShapefileController getInstance() {
@@ -43,7 +63,7 @@ public class ShapefileController {
         this.path = path;
         RenderableLayer layer = new RenderableLayer();
         layer.setName("SHP");
-        
+
         layers = shapefileLoader.createLayersFromSource(new File(path));
         return layers;
     }
