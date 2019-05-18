@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiPoint;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
@@ -104,6 +105,10 @@ public interface TopologyServices
 
     Point3DGeo wktPointZMToPoint3D(String geometry);
 
+    LineString wwjPositions2JtsGeometry(List<Position> pos);
+
+    List<Geometry> within(Geometry geom, List<Geometry> geoms);
+
     /**
      *
      * @param geometry
@@ -111,6 +116,8 @@ public interface TopologyServices
      * @return
      */
     Polygon jtsPolygonToWwjPolygon(Geometry geometry, double height);
+
+    List<Path> jtsLineString2Path(List<Geometry> geoms);
 
     /**
      *
@@ -199,7 +206,7 @@ public interface TopologyServices
             double latMax, double lonMax);
 
     List<? extends Geo> clip(List<? extends Geo> geos, double latMin, double lonMin, double latMax, double lonMax);
-    
+
     List<Point3DGeo> clipPointsZM(List<String> geoms, double latMin, double lonMin, double latMax, double lonMax);
 
 }

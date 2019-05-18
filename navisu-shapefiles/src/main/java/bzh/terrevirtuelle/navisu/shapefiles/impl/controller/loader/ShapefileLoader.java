@@ -44,13 +44,14 @@ import java.util.*;
 public class ShapefileLoader {
 
     protected static final RandomShapeAttributes randomAttrs = new RandomShapeAttributes();
-
+    protected Shapefile shp = null;
     /**
      * Indicates the maximum number of polygons to place in a layer before
      * creating an additional layer.
      */
     protected int numPolygonsPerLayer = 5000;
     protected Set<Map.Entry<String, Object>> entries;
+    protected List<ShapefileRecord> records;
 
     /**
      * Constructs a ShapefileLoader, but otherwise does nothing.
@@ -58,21 +59,6 @@ public class ShapefileLoader {
     public ShapefileLoader() {
     }
 
-    /**
-     * Creates a {@link gov.nasa.worldwind.layers.Layer} from a general
-     * Shapefile source. The source type may be one of the following: <ul>
-     * <li>{@link java.io.InputStream}</li> <li>{@link java.net.URL}</li> <li>{@link
-     * java.io.File}</li> <li>{@link String} containing a valid URL description
-     * or a file or resource name available on the classpath.</li> </ul>
-     *
-     * @param source the source of the Shapefile.
-     *
-     * @return a Layer that renders the Shapefile's contents on the surface of
-     * the Globe.
-     *
-     * @throws IllegalArgumentException if the source is null or an empty
-     * string, or if the Shapefile's primitive type is unrecognized.
-     */
     public Layer createLayerFromSource(Object source) {
         if (WWUtil.isEmpty(source)) {
             String message = Logging.getMessage("nullValue.SourceIsNull");
@@ -80,8 +66,6 @@ public class ShapefileLoader {
             throw new IllegalArgumentException(message);
         }
 
-        Shapefile shp = null;
-     
         Layer layer = null;
         try {
             shp = new Shapefile(source);
@@ -93,41 +77,12 @@ public class ShapefileLoader {
         return layer;
     }
 
-    /**
-     * Creates a list of {@link gov.nasa.worldwind.layers.Layer}s containing
-     * shapes from a Shapefile.
-     * <p/>
-     * For polygon shapes, the maximum number of polygons to add to a layer can
-     * be specified. By default it's 5000. If there are more polygons in the
-     * shapefile than the maximum, new layers are created as needed, with each
-     * holding no more than the maximum. All but the first layer is disabled to
-     * avoid bogging down the display trying to render an excessive number of
-     * shapes. The application can enable the layers selectively to maintain
-     * performance.
-     * <p/>
-     * The source type may be one of the following: <ul>
-     * <li>{@link java.io.InputStream}</li> <li>{@link
-     * java.net.URL}</li> <li>{@link java.io.File}</li> <li>{@link String}
-     * containing a valid URL description or a file or resource name available
-     * on the classpath.</li> </ul>
-     *
-     * @param source the source of the Shapefile.
-     *
-     * @return a Layer that renders the Shapefile's contents on the surface of
-     * the Globe.
-     *
-     * @throws IllegalArgumentException if the source is null or an empty
-     * string, or if the Shapefile's primitive type is unrecognized.
-     */
     public List<Layer> createLayersFromSource(Object source) {
         if (WWUtil.isEmpty(source)) {
             String message = Logging.getMessage("nullValue.SourceIsNull");
             Logging.logger().severe(message);
             throw new IllegalArgumentException(message);
         }
-
-        Shapefile shp = null;
-        //  System.out.println("source " + source);
         try {
             shp = new Shapefile(source);
             return this.createLayersFromShapefile(shp);
@@ -136,18 +91,6 @@ public class ShapefileLoader {
         }
     }
 
-    /**
-     * Creates a {@link gov.nasa.worldwind.layers.Layer} from a general
-     * Shapefile.
-     *
-     * @param shp the Shapefile to create a layer for.
-     *
-     * @return a Layer that renders the Shapefile's contents on the surface of
-     * the Globe.
-     *
-     * @throws IllegalArgumentException if the Shapefile is null, or if the
-     * Shapefile's primitive type is unrecognized.
-     */
     public Layer createLayerFromShapefile(Shapefile shp) {
         if (shp == null) {
             String message = Logging.getMessage("nullValue.ShapefileIsNull");
@@ -176,27 +119,6 @@ public class ShapefileLoader {
         return layer;
     }
 
-    /**
-     * Creates a list of {@link gov.nasa.worldwind.layers.Layer}s containing
-     * shapes from a Shapefile.
-     * <p/>
-     * For polygon shapes, the maximum number of polygons to add to a layer can
-     * be specified. By default it's 5000. If there are more polygons in the
-     * shapefile than the maximum, new layers are created as needed, with each
-     * holding no more than the maximum. All but the first layer is disabled to
-     * avoid bogging down the display trying to render an excessive number of
-     * shapes. The application can enable the layers selectively to maintain
-     * performance.
-     * <p/>
-     *
-     * @param shp the source of the Shapefile.
-     *
-     * @return a Layer that renders the Shapefile's contents on the surface of
-     * the Globe.
-     *
-     * @throws IllegalArgumentException if the shapefile is null or an empty
-     * string, or if the Shapefile's primitive type is unrecognized.
-     */
     public List<Layer> createLayersFromShapefile(Shapefile shp) {
         if (shp == null) {
             String message = Logging.getMessage("nullValue.ShapefileIsNull");
@@ -219,7 +141,6 @@ public class ShapefileLoader {
         } else if (Shapefile.isPolylineType(shp.getShapeType())) {
             Layer layer = new RenderableLayer();
             this.addRenderablesForPolylines(shp, (RenderableLayer) layer);
-            //  System.out.println("isPolylineType");
             layers.add(layer);
         } else if (Shapefile.isPolygonType(shp.getShapeType())) {
             //   System.out.println("isPolygonType");
@@ -299,19 +220,19 @@ public class ShapefileLoader {
         }
     }
 
-    protected void addRenderablesForPolylines(Shapefile shp, RenderableLayer layer) {
+    protected List<ShapefileRecord> addRenderablesForPolylines(Shapefile shp, RenderableLayer layer) {
+        records = new ArrayList<>();
         while (shp.hasNext()) {
             ShapefileRecord record = shp.nextRecord();
-
             if (!Shapefile.isPolylineType(record.getShapeType())) {
                 continue;
             }
-
+            records.add(record);
             ShapeAttributes attrs = this.createPolylineAttributes(record);
             layer.addRenderable(this.createPolyline(record, attrs));
-            //  System.out.println(layer.getRenderables());
-        }
 
+        }
+        return records;
     }
 
     /**
@@ -363,10 +284,9 @@ public class ShapefileLoader {
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setAttributes(attrs);
-       
+
         String txt = "";
         entries = record.getAttributes().getEntries();
-        
 
         for (Map.Entry<String, Object> m : entries) {
             txt += String.format("%1$-1s", m.getKey() + " : " + m.getValue() + "\n");
@@ -395,7 +315,7 @@ public class ShapefileLoader {
 
     protected void createPolygon(ShapefileRecord record, ShapeAttributes attrs, RenderableLayer layer) {
         Double height = this.getHeight(record);
-       
+
         if (height != null) // create extruded polygons
         {
             ExtrudedPolygon ep = new ExtrudedPolygon(height);
@@ -455,9 +375,9 @@ public class ShapefileLoader {
     @SuppressWarnings({"UnusedDeclaration"})
     protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {
         if (record != null) {
-          //  System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
+            //  System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
         }
-        
+
         return randomAttrs.nextPolylineAttributes();
     }
 
@@ -466,6 +386,10 @@ public class ShapefileLoader {
         //  System.out.println(record.getAttributes().getEntries());
         return randomAttrs.nextPolygonAttributes();
 
+    }
+
+    public List<ShapefileRecord> getRecords() {
+        return records;
     }
 
 }

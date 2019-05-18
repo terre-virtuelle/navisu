@@ -11,6 +11,7 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.pick.PickedObject;
@@ -45,14 +46,13 @@ public class ShapefileController {
             public void selected(SelectEvent event) {
                 if (event.getEventAction().equals(SelectEvent.LEFT_CLICK)) {
                     PickedObjectList pol = event.getObjects();
-                    System.out.println(" Picked Objects Size " + pol.size());
                     for (PickedObject po : pol) {
-                        System.out.println(" Class " + po.getObject().getClass().getName() + "  isTerrian=" + po.isTerrain());
+                     //   System.out.println(" Class " + po.getObject().getClass().getName() + "  isTerrian=" + po.isTerrain());
                     }
                 }
             }
         });
-      wwd.getSceneController().setDeepPickEnabled(true);
+        wwd.getSceneController().setDeepPickEnabled(true);
     }
 
     public static ShapefileController getInstance() {
@@ -63,7 +63,6 @@ public class ShapefileController {
         this.path = path;
         RenderableLayer layer = new RenderableLayer();
         layer.setName("SHP");
-
         layers = shapefileLoader.createLayersFromSource(new File(path));
         return layers;
     }
@@ -80,5 +79,9 @@ public class ShapefileController {
 
     public Shapefile getShapefile() {
         return shapefileLoader.getShapefile();
+    }
+
+    public List<ShapefileRecord> getRecords() {
+        return shapefileLoader.getRecords();
     }
 }

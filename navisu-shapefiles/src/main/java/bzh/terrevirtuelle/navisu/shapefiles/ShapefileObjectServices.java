@@ -7,6 +7,9 @@ package bzh.terrevirtuelle.navisu.shapefiles;
 
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.layers.Layer;
+import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -21,4 +24,8 @@ public interface ShapefileObjectServices
     void openFile(String file);
 
     Shapefile getShapefile();
+
+    List<ShapefileRecord> getRecords();
+
+    List<Layer> getLayers();
 }

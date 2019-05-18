@@ -27,23 +27,17 @@ public class DepareView
     protected RenderableLayer simpleDeparelayer;
     protected RenderableLayer depare3DLayer;
     protected List<Polygon> polygons = new ArrayList<>();
-    double simplify = 0.001;
-    boolean isSimplify = false;
     double magnify;
     double maxHeight;
     boolean isCreateElevation;
     protected String sep = File.separator;
 
     public DepareView(RenderableLayer layer, RenderableLayer simpleDeparelayer, RenderableLayer depare3DLayer,
-            double simplify,
-            double maxHeight, double magnify,
-            boolean isSimplify, boolean isCreateElevation) {
+            double maxHeight, double magnify, boolean isCreateElevation) {
         this.layer = layer;
         this.simpleDeparelayer = simpleDeparelayer;
         this.depare3DLayer = depare3DLayer;
         this.maxHeight = maxHeight;
-        this.simplify = simplify;
-        this.isSimplify = isSimplify;
         this.magnify = magnify;
         this.isCreateElevation = isCreateElevation;
         new File("cmd").mkdir();

@@ -84,33 +84,25 @@ public class DriverManagerImpl
     }
 
     @Override
-    public void open(String category, String[] ext) {
+    public File open(String category, String[] ext) {
+        File selectedFile=null;
         String userInitialDirectory = properties.getProperty(category);
         if (userInitialDirectory != null) {
             if (userInitialDirectory.equals("")) {
                 userInitialDirectory = System.getProperty("user.dir") + "/data/";
                 this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
-                // this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
             } else {
-                // userInitialDirectory = System.getProperty("user.dir") + "/data/";
                 this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
-                //  this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
             }
         } else {
             userInitialDirectory = System.getProperty("user.dir") + "/data/";
             this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
-            //   this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
         }
-
-        // this.fileChooserDock.getExtensionFilters().clear();
-        // this.fileChooserDock.getExtensionFilters().add(
-        //         new FileChooser.ExtensionFilter(category, Arrays.asList(ext)));
         this.fileChooser.getExtensionFilters().clear();
         this.fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter(category, Arrays.asList(ext)));
-        //  System.out.println("ext " + category +" "+Arrays.asList(ext));
         try {
-            File selectedFile = this.fileChooser.showOpenDialog(null);
+            selectedFile = this.fileChooser.showOpenDialog(null);
             if (selectedFile != null) {
                 this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFile);
                 System.out.println("Load : " + selectedFile.getAbsolutePath());
@@ -124,6 +116,7 @@ public class DriverManagerImpl
             });
             System.out.println("");
         }
+        return selectedFile;
     }
 
     protected void handleOpenFiles(String category, File file) {

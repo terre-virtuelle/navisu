@@ -20,6 +20,7 @@ import com.linuxense.javadbf.DBFReader;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.layers.Layer;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -79,7 +80,7 @@ public class ShapefileObjectImpl
     }
 
     @SuppressWarnings("unchecked")
-    protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
+    protected List<Layer> handleOpenFile(ProgressHandle pHandle, String fileName) {
         List<List<String>> dbList;
         DBFReader reader;
         Map<String, Integer> keys;
@@ -108,11 +109,11 @@ public class ShapefileObjectImpl
                 dbList.add(tmp);
             }
         } catch (DBFException | FileNotFoundException ex) {
-            Logger.getLogger(ShapefileObjectImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ShapefileObjectImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
 
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
-        
+
         if (!dbList.isEmpty()) {
             layers = shapefileController.init(fileName, keys, dbList);
         } else {
@@ -125,6 +126,7 @@ public class ShapefileObjectImpl
         }).forEach((l) -> {
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
         });
+        return layers;
     }
 
     @Override
@@ -132,8 +134,16 @@ public class ShapefileObjectImpl
         return shapefileController.getShapefile();
     }
 
-     
-    
+    @Override
+    public List<ShapefileRecord> getRecords() {
+        return shapefileController.getRecords();
+    }
+
+    @Override
+    public List<Layer> getLayers() {
+        return layers;
+    }
+
     @Override
     public String getName() {
         return NAME;
@@ -181,10 +191,12 @@ public class ShapefileObjectImpl
 
     @Override
     public void componentStarted() {
-        /* Nothing to do here */ 
-    shapefileController = ShapefileController.getInstance();}
+        /* Nothing to do here */
+        shapefileController = ShapefileController.getInstance();
+    }
 
     @Override
     public void componentStopped() {
         /* Nothing to do here */ }
+
 }

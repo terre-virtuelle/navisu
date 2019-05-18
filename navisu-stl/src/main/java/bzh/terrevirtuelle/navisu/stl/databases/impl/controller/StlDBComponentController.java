@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.stl.databases.impl.controller;
 
 import bzh.terrevirtuelle.navisu.api.progress.Job;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
@@ -153,6 +154,7 @@ public class StlDBComponentController
     protected DatabaseServices databaseServices;
     protected DelaunayServices delaunayServices;
     protected DemDBServices demDBServices;
+    protected DriverManagerServices driverManagerServices;
     protected DisplayServices displayServices;
     protected GdalServices gdalServices;
     protected GeodesyServices geodesyServices;
@@ -310,8 +312,6 @@ public class StlDBComponentController
     @FXML
     public TextField elevationMagnificationTF;
     @FXML
-    public TextField simplifyTF;
-    @FXML
     public Label latMinLabel;
     @FXML
     public Label lonMinLabel;
@@ -355,8 +355,6 @@ public class StlDBComponentController
     public RadioButton noBathyRB;
     @FXML
     public RadioButton depareRB;
-    @FXML
-    public CheckBox simplifyCB;
     @FXML
     public ChoiceBox<String> tilesCountCB;
     @FXML
@@ -416,6 +414,8 @@ public class StlDBComponentController
     public Button meshStlObjectButton;
     @FXML
     public Button daeButton;
+    @FXML
+    public Button wktObjectButton;
     @FXML
     public Button objButton;
 
@@ -482,7 +482,8 @@ public class StlDBComponentController
             Pro4JServices pro4JServices,
             GeoViewServices geoViewServices,
             LayerTreeServices layerTreeServices,
-            GdalServices gdalServices) {
+            GdalServices gdalServices,
+            DriverManagerServices driverManagerServices) {
         super(keyCode, keyCombination);
 
         this.component = component;
@@ -505,6 +506,7 @@ public class StlDBComponentController
         this.geoViewServices = geoViewServices;
         this.layerTreeServices = layerTreeServices;
         this.gdalServices = gdalServices;
+        this.driverManagerServices=driverManagerServices;
 
         this.daeExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices);
         this.objExportToSTL = new ObjExportToSTL(geodesyServices, guiAgentServices, jtsServices,
@@ -734,15 +736,6 @@ public class StlDBComponentController
             }
         });
         tileSideZ -= 0.1;
-        simplifyTF.setOnAction((ActionEvent event) -> {
-            try {
-                double tmp = Double.valueOf(simplifyTF.getText());
-                simplifyFactor = tmp / 100000;
-            } catch (NumberFormatException e) {
-                simplifyFactor = 0.0001;
-                simplifyTF.setText(Double.toString(simplifyFactor * 100000));
-            }
-        });
         elevationMagnificationTF.setText(Double.toString(DEFAULT_EXAGGERATION));
         elevationMagnificationTF.setOnAction((ActionEvent event) -> {
             try {
@@ -848,6 +841,9 @@ public class StlDBComponentController
             wwd.redrawNow();
             displayServices.displayPoints3DAsPath(boundList, 150, s57Layer, Material.YELLOW);
         });
+        wktObjectButton.setOnMouseClicked((MouseEvent event) -> {
+            System.out.println("work in progress");
+        });
         daeButton.setOnMouseClicked((MouseEvent event) -> {
             daeExportToSTL.loadKmzAndSaveStlWgs84();
         });
@@ -860,7 +856,10 @@ public class StlDBComponentController
             }
         });
         slConsEditorButton.setOnMouseClicked((MouseEvent event) -> {
-            SlConsEditorController stConsEditorController = new SlConsEditorController(guiAgentServices, layersManagerServices,
+            SlConsEditorController stConsEditorController = new SlConsEditorController(
+                    guiAgentServices, layersManagerServices, 
+                    shapefileObjectServices,driverManagerServices,topologyServices,
+                    selectLayer,
                     KeyCode.M, KeyCombination.CONTROL_DOWN);
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, stConsEditorController);
             guiAgentServices.getRoot().getChildren().add(stConsEditorController);
@@ -1015,8 +1014,8 @@ public class StlDBComponentController
                                 shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
                                         .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
                                 if (shapefile != null) {
-                                    new DepareView(s57Layer, s57Layer, s57Layer, simplifyFactor,
-                                            Math.round(highestElevationBathy), verticalExaggeration, true, true)
+                                    new DepareView(s57Layer, s57Layer, s57Layer,
+                                            Math.round(highestElevationBathy), verticalExaggeration, true)
                                             .display(shapefile);
                                     // Reinit Shapefile
                                     shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)

@@ -17,6 +17,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.CoordinateList;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
@@ -395,7 +396,28 @@ public class TopologyImpl
             coordinates[i] = new Coordinate(positionList.get(i).getLongitude().getDegrees(),
                     positionList.get(i).getLatitude().getDegrees());
         }
+        return new GeometryFactory().createPolygon(coordinates);
+    }
+
+    @Override
+    public LineString wwjPositions2JtsGeometry(List<Position> positionList) {
+        Coordinate[] coordinates = new Coordinate[positionList.size()];
+        for (int i = 0; i < positionList.size(); i++) {
+            coordinates[i] = new Coordinate(positionList.get(i).getLongitude().getDegrees(),
+                    positionList.get(i).getLatitude().getDegrees());
+        }
         return new GeometryFactory().createLineString(coordinates);
+    }
+
+    @Override
+    public List<Geometry> within(Geometry geom, List<Geometry> geoms) {
+        List<Geometry> result = new ArrayList<>();
+        for (Geometry g : geoms) {
+            if (g.within(geom)) {
+                result.add(g);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -443,6 +465,21 @@ public class TopologyImpl
         }
         Polygon polygon = new Polygon(positions);
         return polygon;
+    }
+
+    @Override
+    public List<Path> jtsLineString2Path(List<Geometry> geoms) {
+        List<Path> result = new ArrayList<>();
+        
+        for (Geometry g : geoms) {
+            List<Position> positions=new ArrayList<>();
+            Coordinate[] coords = g.getCoordinates();
+            for(Coordinate c : coords){
+                positions.add(new Position(Angle.fromDegrees(c.y),Angle.fromDegrees(c.x),100));
+            }
+            result.add(new Path(positions));
+        }
+        return result;
     }
 
     @Override

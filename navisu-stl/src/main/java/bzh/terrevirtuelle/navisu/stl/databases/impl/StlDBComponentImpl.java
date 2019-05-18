@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.stl.databases.impl;
 
+import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
@@ -58,6 +59,8 @@ public class StlDBComponentImpl
     DemDBServices demComponentServices;
     @UsedService
     DisplayServices displayServices;
+    @UsedService
+    DriverManagerServices driverManagerServices;
     @UsedService
     GdalServices gdalServices;
     @UsedService
@@ -135,7 +138,8 @@ public class StlDBComponentImpl
                         pro4JServices,
                         geoViewServices,
                         layerTreeServices,
-                        gdalServices);
+                        gdalServices,
+                        driverManagerServices);
                 controller.setVisible(true);
             }
         }

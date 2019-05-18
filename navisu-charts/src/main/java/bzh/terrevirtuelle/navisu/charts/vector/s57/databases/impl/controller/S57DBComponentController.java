@@ -635,9 +635,8 @@ public class S57DBComponentController
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DEPARE")) {
                 new DepareView(depareLayer, simpleDepareLayer, depare3DLayer,
                         10.0,
-                        0.00001,
                         1.0,
-                        false, false)
+                        false)
                         .display(new DepareDBLoader(databaseServices,
                                 databaseTF.getText(),
                                 USER,

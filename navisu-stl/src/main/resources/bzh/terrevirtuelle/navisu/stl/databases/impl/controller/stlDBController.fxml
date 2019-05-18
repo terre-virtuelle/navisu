@@ -180,7 +180,6 @@
                                                     <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
                                                     <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                                     <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                                     <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -195,10 +194,7 @@
                                                     <TextField fx:id="s57DatabaseTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                                     <TextField fx:id="objectsTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                                     <ChoiceBox fx:id="s57DatabasesCB" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                                                    <Label text="Distance tolerance (m)" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                                                    <TextField fx:id="simplifyTF" alignment="CENTER" text="10" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                                    <CheckBox fx:id="simplifyCB" mnemonicParsing="false" selected="true" text="Simplify DEPARE" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                                          <GridPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="500.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                          <GridPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="500.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -228,28 +224,31 @@
                                                 <CheckBox fx:id="allCB" layoutX="10.0" layoutY="23.0" mnemonicParsing="false" text="ALL" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                              </children>
                                           </GridPane>
-                                          <GridPane prefHeight="28.0" prefWidth="284.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                          <GridPane maxWidth="400.0" prefHeight="28.0" prefWidth="300.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
                                             <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="94.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="82.0" minWidth="10.0" prefWidth="75.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="87.0" minWidth="10.0" prefWidth="75.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                          </GridPane>
-                                          <GridPane GridPane.columnIndex="3" GridPane.rowIndex="6">
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="200.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="94.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Button fx:id="meshStlObjectButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="245.0" text="Import object in WGS84 STL File" />
+                                                <Label alignment="CENTER" prefHeight="15.0" prefWidth="253.0" styleClass="datevalue" text="Import WGS84 Objects" />
                                              </children>
                                           </GridPane>
-                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                          <GridPane GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="200.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="200.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Button fx:id="meshStlObjectButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="245.0" text="Import STL objects" />
+                                                <Button fx:id="wktObjectButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Import WKT objects" GridPane.columnIndex="1" />
+                                             </children>
+                                          </GridPane>
+                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

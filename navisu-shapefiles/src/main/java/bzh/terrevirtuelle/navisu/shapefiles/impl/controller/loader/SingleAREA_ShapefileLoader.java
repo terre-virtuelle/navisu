@@ -43,7 +43,7 @@ public class SingleAREA_ShapefileLoader
     private List<List<String>> dbList;
     private Map<String, Integer> keys;
     int i = 0;
-    private Shapefile shp;
+   // private Shapefile shp;
     Double height;
 
     public SingleAREA_ShapefileLoader(List<List<String>> dbList, Map<String, Integer> keys) {
@@ -63,6 +63,7 @@ public class SingleAREA_ShapefileLoader
         while (shp.hasNext()) {
             try {
                 record = shp.nextRecord();
+                System.out.println("record : " + record);
                 if (record != null) {
                     label = "";
                     if (record.getAttributes() != null) {
