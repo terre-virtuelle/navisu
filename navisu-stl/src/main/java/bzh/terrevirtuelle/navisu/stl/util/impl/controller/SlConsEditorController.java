@@ -55,6 +55,7 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.PointPlacemark;
 import java.io.File;
 import java.util.ArrayList;
 import javafx.scene.Group;
@@ -216,7 +217,6 @@ public class SlConsEditorController
             Shapefile shape = shapefileObjectServices.getShapefile();
             records = shapefileObjectServices.getRecords();
             measureTool.setArmed(!measureTool.isArmed());
-            //  fillMesureTool();
         });
         pauseButton.setOnMouseClicked((MouseEvent event) -> {
             measureTool.setArmed(!measureTool.isArmed());
@@ -246,19 +246,44 @@ public class SlConsEditorController
             Geometry geom = selectingArea();
             List<Geometry> selectdGeom = topologyServices.within(geom, geometries);
             List<Layer> layers = shapefileObjectServices.getLayers();
-            for (Layer l : layers) {
+            layers.forEach((l) -> {
                 l.dispose();
-            }
+            });
             wwd.redrawNow();
-          //  System.out.println(selectdGeom);
             List<Path> paths = topologyServices.jtsLineString2Path(selectdGeom);
+
+            List<ArrayList<Position>> list = new ArrayList<>();
+
             for (Path p : paths) {
-                p.setAttributes(normalAttributes);
+                Iterable<? extends Position> iter = p.getPositions();
+                ArrayList<Position> pos = new ArrayList<>();
+                for (Position pp : iter) {
+                    pos.add(pp);
+                }
+                list.add(pos);
             }
-            // selectLayer.removeRenderable(selectPolygon);
-            selectLayer.dispose();
+
+            paths.forEach((p) -> {
+                p.setAttributes(normalAttributes);
+            });
+
             selectLayer.addRenderables(paths);
             wwd.redrawNow();
+            // newAction();
+            if (measureTool != null) {
+                measureTool.clear();
+                //  measureTool.setArmed(false);
+                if (offset != null) {
+                    measureTool.getLayer().removeAllRenderables();
+                }
+            }
+            //Un nouveau bouton
+            // Pas de liste
+            selectLayer.removeAllRenderables();
+            initMeasureTool();
+            measureTool.setPositions(list.get(0));
+            measureTool.setArmed(true);
+            // selectLayer.dispose();
         });
 
         snapshotButton.setOnMouseClicked((MouseEvent event) -> {

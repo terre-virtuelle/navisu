@@ -16,13 +16,16 @@ import com.vividsolutions.jts.algorithm.Centroid;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.CoordinateList;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
+import com.vividsolutions.jts.geom.MultiLineString;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
+import com.vividsolutions.jts.operation.linemerge.LineSequencer;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
@@ -469,16 +472,47 @@ public class TopologyImpl
 
     @Override
     public List<Path> jtsLineString2Path(List<Geometry> geoms) {
-        List<Path> result = new ArrayList<>();
-        
-        for (Geometry g : geoms) {
-            List<Position> positions=new ArrayList<>();
-            Coordinate[] coords = g.getCoordinates();
-            for(Coordinate c : coords){
-                positions.add(new Position(Angle.fromDegrees(c.y),Angle.fromDegrees(c.x),100));
+        LineString line;
+
+        List<Geometry> filter = new ArrayList<>();
+        for (int i = 0; i < geoms.size(); i++) {
+            if (!((LineString) geoms.get(i)).isClosed() && geoms.get(i) != null) {
+                filter.add(geoms.get(i));
             }
-            result.add(new Path(positions));
         }
+        Geometry[] geomTab = new Geometry[filter.size()];
+        for (int i = 0; i < filter.size(); i++) {
+            geomTab[i] = filter.get(i);
+        }
+
+        GeometryFactory geometryFactory = new GeometryFactory();
+        GeometryCollection lineStringCollection = geometryFactory.createGeometryCollection(geomTab);
+        LineSequencer lineSequencer = new LineSequencer();
+        lineSequencer.add(lineStringCollection);
+        Geometry geom = lineSequencer.getSequencedLineStrings();
+
+        // System.out.println("collection : " + geom);
+        // LineString [] lineStringTab=geom.toArray();
+        List<Path> result = new ArrayList<>();
+
+        List<Position> positions = new ArrayList<>();
+        Coordinate[] coords = geom.getCoordinates();
+        for (Coordinate c : coords) {
+            positions.add(new Position(Angle.fromDegrees(c.y), Angle.fromDegrees(c.x), 100));
+        }
+
+        Path path = new Path(positions);
+        result.add(path);
+        /*
+        for (Geometry g : geoms) {
+            List<Position> positions = new ArrayList<>();
+            Coordinate[] coords = g.getCoordinates();
+            for (Coordinate c : coords) {
+                positions.add(new Position(Angle.fromDegrees(c.y), Angle.fromDegrees(c.x), 100));
+            }
+            result.add(new DirectedPath(positions));
+        }
+         */
         return result;
     }
 
