@@ -132,6 +132,10 @@ public class SlConsEditorController
     @FXML
     public Button openButton;
     @FXML
+    public Button createButton;
+    @FXML
+    public Button saveButton;
+    @FXML
     public Button snapshotButton;
     @FXML
     public Button dataButton;
@@ -226,6 +230,12 @@ public class SlConsEditorController
             });
             ((Component) wwd).setCursor(!measureTool.isArmed() ? Cursor.getDefaultCursor()
                     : Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+        });
+        createButton.setOnMouseClicked((MouseEvent event) -> {
+            System.out.println("createButton");
+        });
+        saveButton.setOnMouseClicked((MouseEvent event) -> {
+            System.out.println("saveButton");
         });
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
