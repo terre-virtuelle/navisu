@@ -466,7 +466,10 @@
                                           </GridPane>
                                           <GridPane GridPane.rowIndex="2">
                                             <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="5.0" minWidth="5.0" prefWidth="5.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="5.0" minWidth="5.0" prefWidth="5.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -474,7 +477,21 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Button fx:id="slConsEditorButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="284.0" text="SlCons Editor" GridPane.rowIndex="1" />
+                                                <Button fx:id="slConsEditorButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="284.0" text="SlCons Editor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Button fx:id="importShapefileButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Import Shapefile" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <GridPane GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="15.0" prefWidth="79.0" text="Height    " />
+                                                      <TextField fx:id="heightShapefileTF" GridPane.columnIndex="1" />
+                                                   </children>
+                                                </GridPane>
                                              </children>
                                           </GridPane>
                                        </children>

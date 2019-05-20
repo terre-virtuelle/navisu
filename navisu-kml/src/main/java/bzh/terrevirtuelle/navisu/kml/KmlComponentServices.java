@@ -6,6 +6,8 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
+import gov.nasa.worldwind.render.AbstractShape;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
@@ -43,4 +45,6 @@ public interface KmlComponentServices
     void moveTo(Point3DGeo point);
 
     List<Placemark> getPlacemarkFromKmlCatalog(String catalog);
+    
+   String write(String filename, AbstractShape[] array, StandardOpenOption option) ;
 }

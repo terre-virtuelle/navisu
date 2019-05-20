@@ -8,7 +8,9 @@ package bzh.terrevirtuelle.navisu.stl.util.impl.controller;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -25,8 +27,6 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -45,19 +45,23 @@ import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
 import org.gavaghan.geodesy.GlobalCoordinates;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
-import bzh.terrevirtuelle.navisu.shapefiles.impl.controller.loader.SingleAREA_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
-import gov.nasa.worldwind.render.PointPlacemark;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.Group;
 
 /**
@@ -70,8 +74,9 @@ public class SlConsEditorController
         extends Widget2DController {
 
     private final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    protected final String USER_DIR = System.getProperty("user.dir");
     protected final String SEP = File.separator;
-    String USER_DIR = System.getProperty("user.dir");
+
     private final String HISTOLITT = USER_DIR + SEP + "data" + SEP + "shapefile" + SEP + "histolitt" + SEP + "france.shp";
     private final String FXML = "slconseditor.fxml";
     protected String viewgroupstyle = "configuration.css";
@@ -80,13 +85,13 @@ public class SlConsEditorController
     private List<Position> positions;
 
     private int size;
-    private String routeName;
+    private String slconsName;
     private String author;
     private String version;
     private float elevation;
     private final double MIN_DISTANCE = 0.1; // minimal distance between 2 Wp
     List<ShapefileRecord> records;
-
+    protected boolean isCreated = false;
     private Polygon offset;
 
     private final GeodeticCalculator geoCalc;
@@ -100,9 +105,10 @@ public class SlConsEditorController
     protected RenderableLayer selectLayer;
     Polygon selectPolygon;
     BasicShapeAttributes normalAttributes;
+    List<ArrayList<Position>> list;
 
-    protected DriverManagerServices driverManagerServices;
     protected GuiAgentServices guiAgentServices;
+    protected KmlComponentServices kmlComponentServices;
     protected LayersManagerServices layersManagerServices;
     protected ShapefileObjectServices shapefileObjectServices;
     protected TopologyServices topologyServices;
@@ -164,8 +170,8 @@ public class SlConsEditorController
             GuiAgentServices guiAgentServices,
             LayersManagerServices layersManagerServices,
             ShapefileObjectServices shapefileObjectServices,
-            DriverManagerServices driverManagerServices,
             TopologyServices topologyServices,
+            KmlComponentServices kmlComponentServices,
             RenderableLayer selectLayer,
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
 
@@ -173,8 +179,8 @@ public class SlConsEditorController
         this.layersManagerServices = layersManagerServices;
         this.guiAgentServices = guiAgentServices;
         this.shapefileObjectServices = shapefileObjectServices;
-        this.driverManagerServices = driverManagerServices;
         this.topologyServices = topologyServices;
+        this.kmlComponentServices = kmlComponentServices;
         this.selectLayer = selectLayer;
         wwd = GeoWorldWindViewImpl.getWW();
         geoCalc = new GeodeticCalculator();
@@ -231,12 +237,7 @@ public class SlConsEditorController
             ((Component) wwd).setCursor(!measureTool.isArmed() ? Cursor.getDefaultCursor()
                     : Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
         });
-        createButton.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("createButton");
-        });
-        saveButton.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("saveButton");
-        });
+
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
             guiAgentServices.getRoot().getChildren().remove(this);
@@ -250,52 +251,72 @@ public class SlConsEditorController
             }
         });
         endButton.setOnMouseClicked((MouseEvent event) -> {
-            measureTool.setArmed(false);
-            selectingArea();
-            List<Geometry> geometries = recordsScan(records);
-            Geometry geom = selectingArea();
-            List<Geometry> selectdGeom = topologyServices.within(geom, geometries);
-            List<Layer> layers = shapefileObjectServices.getLayers();
-            layers.forEach((l) -> {
-                l.dispose();
-            });
-            wwd.redrawNow();
-            List<Path> paths = topologyServices.jtsLineString2Path(selectdGeom);
-
-            List<ArrayList<Position>> list = new ArrayList<>();
-
-            for (Path p : paths) {
-                Iterable<? extends Position> iter = p.getPositions();
-                ArrayList<Position> pos = new ArrayList<>();
-                for (Position pp : iter) {
-                    pos.add(pp);
+            if (isCreated == false) {
+                measureTool.setArmed(false);
+                //selectingArea();
+                List<Geometry> geometries = recordsScan(records);
+                Geometry geom = selectingArea();
+                List<Geometry> selectdGeom = topologyServices.within(geom, geometries);
+                List<Layer> layers = shapefileObjectServices.getLayers();
+                layers.forEach((l) -> {
+                    l.dispose();
+                });
+                wwd.redrawNow();
+                List<Path> paths = topologyServices.jtsLineString2Path(selectdGeom);
+                list = new ArrayList<>();
+                for (Path p : paths) {
+                    Iterable<? extends Position> iter = p.getPositions();
+                    ArrayList<Position> pos = new ArrayList<>();
+                    for (Position pp : iter) {
+                        pos.add(pp);
+                    }
+                    list.add(pos);
                 }
-                list.add(pos);
+                paths.forEach((p) -> {
+                    p.setAttributes(normalAttributes);
+                });
+                selectLayer.addRenderables(paths);
+                wwd.redrawNow();
+            } else {
+                selectingArea();
+                measureTool.setArmed(false);
             }
-
-            paths.forEach((p) -> {
-                p.setAttributes(normalAttributes);
-            });
-
-            selectLayer.addRenderables(paths);
-            wwd.redrawNow();
-            // newAction();
+        });
+        createButton.setOnMouseClicked((MouseEvent event) -> {
             if (measureTool != null) {
                 measureTool.clear();
-                //  measureTool.setArmed(false);
                 if (offset != null) {
                     measureTool.getLayer().removeAllRenderables();
                 }
             }
-            //Un nouveau bouton
-            // Pas de liste
             selectLayer.removeAllRenderables();
             initMeasureTool();
             measureTool.setPositions(list.get(0));
             measureTool.setArmed(true);
-            // selectLayer.dispose();
+            isCreated = true;
         });
-
+        saveButton.setOnMouseClicked((MouseEvent event) -> {
+            
+            Polygon[] polygonTab = {selectPolygon};
+            String result = kmlComponentServices.write(null, polygonTab, StandardOpenOption.WRITE);
+            String in = USER_DIR + SEP + "privateData" + SEP + "kml" + SEP + slconsName + ".kml";
+            System.out.println(result.getBytes().length);
+            java.nio.file.Path path = Paths.get(in);
+            try {
+                Files.write(path, result.getBytes(), StandardOpenOption.CREATE);
+            } catch (IOException ex) {
+                Logger.getLogger(SlConsEditorController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+            String out = USER_DIR + SEP + "privateData" + SEP + "shp" + SEP + slconsName + ".shp";
+            String command = "ogr2ogr -t_srs EPSG:4326 -f 'ESRI Shapefile' " + out + " " +in;
+            try {
+                Proc.BUILDER.create()
+                        .setCmd(command)
+                        .execSh();
+            } catch (IOException | InterruptedException ex) {
+                Logger.getLogger(StlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        });
         snapshotButton.setOnMouseClicked((MouseEvent event) -> {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override
@@ -309,7 +330,7 @@ public class SlConsEditorController
 
         routeNameText.textProperty().addListener((ov, oldvalue, newvalue) -> {
             if (!"".equals(newvalue)) {
-                routeName = routeNameText.getText();
+                slconsName = routeNameText.getText();
             }
         });
         versionText.textProperty().addListener((ov, oldvalue, newvalue) -> {
@@ -365,6 +386,21 @@ public class SlConsEditorController
         });
     }
 
+    public Geometry selectingArea() {
+        List<? extends Position> pos = measureTool.getPositions();
+        List<Position> selected = new ArrayList<>();
+        for (int i = 1; i < pos.size(); i++) {
+            selected.add(new Position(pos.get(i).getLatitude(), pos.get(i).getLongitude(), 50.0));
+        }
+        selectPolygon = new Polygon(selected);
+        normalAttributes = makeNormalAttributes(Material.RED);
+        selectPolygon.setAttributes(normalAttributes);
+        selectPolygon.setHighlightAttributes(makeHighlighAttributes(normalAttributes, Material.RED));
+        selectLayer.addRenderable(selectPolygon);
+        wwd.redrawNow();
+        return topologyServices.wwjPolygonToJtsGeometry(selectPolygon);
+    }
+
     private void initMeasureTool() {
         measureTool = new MeasureTool(wwd);
         measureTool.setController(new MeasureToolController());
@@ -413,17 +449,10 @@ public class SlConsEditorController
 
     @SuppressWarnings("unchecked")
     private void newAction() {
-        routeName = routeNameText.getText();
+        slconsName = routeNameText.getText();
         version = versionText.getText();
         author = authorText.getText();
         positions = new CopyOnWriteArrayList();
-        /*
-        gpx = GpxBuilder.create()
-                .creator(author)
-                .version(version)
-                .trk(tracks)
-                .build();
-         */
         measureTool.clear();
         measureTool.setArmed(true);
     }
@@ -455,27 +484,6 @@ public class SlConsEditorController
         return geoCalc.calculateGeodeticCurve(reference, waypointA, waypointB).getAzimuth();
     }
 
-    public void shapeScan(Shapefile shp) {
-        System.out.println("shp : " + shp.getNumberOfRecords());
-        ShapefileRecord record;
-        int i = 0;
-        while (shp.hasNext()) {
-            try {
-                record = shp.nextRecord();
-                if (record != null) {
-                    Iterable<? extends Position> pos = record.getCompoundPointBuffer().getPositions();
-                    for (Position p : pos) {
-                        System.out.print(p + " ");
-                    }
-                    System.out.println("");
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(SingleAREA_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
-            i++;
-        }
-    }
-
     public List<Geometry> recordsScan(List<ShapefileRecord> records) {
         List<Geometry> geometries = new ArrayList<>();
         List<List<Position>> positionList = new ArrayList<>();
@@ -495,24 +503,8 @@ public class SlConsEditorController
         return geometries;
     }
 
-    public Geometry selectingArea() {
-        List<? extends Position> pos = measureTool.getPositions();
-        List<Position> selected = new ArrayList<>();
-        for (int i = 1; i < pos.size(); i++) {
-            selected.add(new Position(pos.get(i).getLatitude(), pos.get(i).getLongitude(), 100.0));
-        }
-        selectPolygon = new Polygon(selected);
-        normalAttributes = makeNormalAttributes(Material.RED);
-        selectPolygon.setAttributes(normalAttributes);
-        selectPolygon.setHighlightAttributes(makeHighlighAttributes(normalAttributes, Material.RED));
-        selectLayer.addRenderable(selectPolygon);
-        wwd.redrawNow();
-        return topologyServices.wwjPolygonToJtsGeometry(selectPolygon);
-
-    }
-
     private BasicShapeAttributes makeNormalAttributes(Material material) {
-        BasicShapeAttributes normalAttributes = new BasicShapeAttributes();
+        normalAttributes = new BasicShapeAttributes();
         normalAttributes.setOutlineMaterial(material);
         normalAttributes.setInteriorMaterial(material);
         normalAttributes.setInteriorOpacity(0.1);

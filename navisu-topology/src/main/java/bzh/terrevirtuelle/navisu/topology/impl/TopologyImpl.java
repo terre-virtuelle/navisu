@@ -20,7 +20,6 @@ import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.MultiLineString;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.ParseException;
@@ -392,7 +391,7 @@ public class TopologyImpl
         Iterable<? extends LatLon> latLon = polygon.getOuterBoundary();
         List<Position> positionList = new ArrayList<>();
         for (LatLon l : latLon) {
-            positionList.add(new Position(l, 10.0));
+            positionList.add(new Position(l, 20.0));
         }
         Coordinate[] coordinates = new Coordinate[positionList.size()];
         for (int i = 0; i < positionList.size(); i++) {
@@ -491,28 +490,18 @@ public class TopologyImpl
         lineSequencer.add(lineStringCollection);
         Geometry geom = lineSequencer.getSequencedLineStrings();
 
-        // System.out.println("collection : " + geom);
-        // LineString [] lineStringTab=geom.toArray();
         List<Path> result = new ArrayList<>();
-
-        List<Position> positions = new ArrayList<>();
-        Coordinate[] coords = geom.getCoordinates();
-        for (Coordinate c : coords) {
-            positions.add(new Position(Angle.fromDegrees(c.y), Angle.fromDegrees(c.x), 100));
-        }
-
-        Path path = new Path(positions);
-        result.add(path);
-        /*
-        for (Geometry g : geoms) {
+        if (geom != null) {
             List<Position> positions = new ArrayList<>();
-            Coordinate[] coords = g.getCoordinates();
+            Coordinate[] coords = geom.getCoordinates();
             for (Coordinate c : coords) {
-                positions.add(new Position(Angle.fromDegrees(c.y), Angle.fromDegrees(c.x), 100));
+                positions.add(new Position(Angle.fromDegrees(c.y), Angle.fromDegrees(c.x), 0));
             }
-            result.add(new DirectedPath(positions));
+
+            Path path = new Path(positions);
+
+            result.add(path);
         }
-         */
         return result;
     }
 

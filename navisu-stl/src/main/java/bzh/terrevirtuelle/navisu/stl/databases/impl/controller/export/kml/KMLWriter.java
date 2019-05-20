@@ -45,8 +45,8 @@ public class KMLWriter {
 
     public String write(AbstractShape[] array, StandardOpenOption option) {
         String result = "";
-        Transformer transformer = null;
-        String xmlString = "";
+        Transformer transformer;
+        String xmlString;
         try {
             Writer stringWriter = new StringWriter();
             StringWriter stringWriter1 = new StringWriter();

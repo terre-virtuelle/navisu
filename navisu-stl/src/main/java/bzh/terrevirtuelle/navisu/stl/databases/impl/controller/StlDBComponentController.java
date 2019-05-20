@@ -426,6 +426,10 @@ public class StlDBComponentController
     public TextField objYOffsetTF;
     @FXML
     public Button slConsEditorButton;
+    @FXML
+    public Button importShapefileButton;
+    @FXML
+    public TextField heightShapefileTF;
 
     int k = 0;
     int i = 0;
@@ -506,7 +510,7 @@ public class StlDBComponentController
         this.geoViewServices = geoViewServices;
         this.layerTreeServices = layerTreeServices;
         this.gdalServices = gdalServices;
-        this.driverManagerServices=driverManagerServices;
+        this.driverManagerServices = driverManagerServices;
 
         this.daeExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices);
         this.objExportToSTL = new ObjExportToSTL(geodesyServices, guiAgentServices, jtsServices,
@@ -857,14 +861,30 @@ public class StlDBComponentController
         });
         slConsEditorButton.setOnMouseClicked((MouseEvent event) -> {
             SlConsEditorController stConsEditorController = new SlConsEditorController(
-                    guiAgentServices, layersManagerServices, 
-                    shapefileObjectServices,driverManagerServices,topologyServices,
+                    guiAgentServices, layersManagerServices,
+                    shapefileObjectServices,
+                    topologyServices, kmlComponentServices,
                     selectLayer,
                     KeyCode.M, KeyCombination.CONTROL_DOWN);
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, stConsEditorController);
             guiAgentServices.getRoot().getChildren().add(stConsEditorController);
             stConsEditorController.setVisible(true);
         });
+        importShapefileButton.setOnMouseClicked((MouseEvent event) -> {
+            String[] des = {"*.shp", "*.SHP"};
+            System.out.println(driverManagerServices.open("SHP", des));
+            //pour la lecture de la Shapefile
+
+            /*
+            Iterable<? extends LatLon> latLon = selectPolygon.getOuterBoundary();
+            List<Position> positionList = new ArrayList<>();
+            for (LatLon l : latLon) {
+                positionList.add(new Position(l, 20.0));
+            }
+             */
+            System.out.println("shape : " + heightShapefileTF.getText());
+        });
+
         requestButton.setOnMouseClicked((MouseEvent event) -> {
 
             s57Connection = databaseServices.connect(s57DatabaseTF.getText(),
@@ -1640,5 +1660,4 @@ public class StlDBComponentController
     public Connection getConnection() {
         return s57Connection;
     }
-
 }

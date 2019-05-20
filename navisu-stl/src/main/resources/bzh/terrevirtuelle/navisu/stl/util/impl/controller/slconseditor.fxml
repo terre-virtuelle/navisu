@@ -36,12 +36,12 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       </rowConstraints>
                       <children>
-                  <Button fx:id="newButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="New" GridPane.columnIndex="1">
+                  <Button fx:id="newButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Selector" GridPane.columnIndex="1">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="openButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Open" />
+                  <Button fx:id="openButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Open Histolitt" />
                   <Button fx:id="pauseButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Pause/Edit" GridPane.columnIndex="2">
                      <font>
                         <Font size="12.0" />
@@ -57,7 +57,7 @@
                         <Font size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="createButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Create" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="createButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Create Shapefile" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Save" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                       </children>
                   </GridPane>

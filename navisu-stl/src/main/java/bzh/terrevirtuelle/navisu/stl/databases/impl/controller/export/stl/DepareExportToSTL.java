@@ -81,13 +81,14 @@ public class DepareExportToSTL
 
     }
 
-    protected void createPolygon(ShapefileRecord record, double verticalExaggeration, double latScale, double lonScale, double verticalOffset) {
+    protected void createPolygon(ShapefileRecord record, double verticalExaggeration,
+            double latScale, double lonScale, double verticalOffset) {
 
         if (record.getAttributes() != null) {
             entries = record.getAttributes().getEntries();
             entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
                 if (e.getKey().equalsIgnoreCase("drval1")) {
-                   //Case e=-9.0 m ?
+                    //Case e=-9.0 m ?
                     double h = (Double) e.getValue();
                     if (h < 0.0) {
                         h = 0.0;
@@ -119,7 +120,9 @@ public class DepareExportToSTL
                     topList.add(cwTopList.get(j));
                     bottomList.add(new Position(cwTopList.get(j).getLatitude(), cwTopList.get(j).getLongitude(), 0.0));
                 }
+                pathList = createPaths(topList, bottomList);
 
+                /*
                 for (int j = 0; j < topList.size() - 1; j++) {
                     List<Position> tmp0 = new ArrayList<>();
                     List<Position> tmp1 = new ArrayList<>();
@@ -148,8 +151,43 @@ public class DepareExportToSTL
                 List<Path> innerPaths = jtsServices.pathsInGeometry(geometry, paths_0);
 
                 pathList.addAll(innerPaths);
+                 */
             }
         }
         return pathList;
+    }
+
+    public List<Path> createPaths(List<Position> topList, List<Position> bottomList) {
+        // Sides
+        List<Path> resultList = new ArrayList<>();
+        for (int j = 0; j < topList.size() - 1; j++) {
+            List<Position> tmp0 = new ArrayList<>();
+            List<Position> tmp1 = new ArrayList<>();
+            tmp0.add(bottomList.get(j));
+            tmp0.add(bottomList.get(j + 1));
+            tmp0.add(topList.get(j + 1));
+            tmp0.add(bottomList.get(j));
+            Path path0 = new Path(tmp0);
+
+            tmp1.add(bottomList.get(j));
+            tmp1.add(topList.get(j + 1));
+            tmp1.add(topList.get(j));
+            tmp1.add(bottomList.get(j));
+            Path path1 = new Path(tmp1);
+
+            resultList.add(path0);
+            resultList.add(path1);
+        }
+        // Top face
+        List<Point3DGeo> pts = new ArrayList<>();
+        topList.forEach((p) -> {
+            pts.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
+        });
+        Geometry geometry = jtsServices.getPolygon(pts);
+        List<Path> paths_0 = jtsServices.createDelaunayToPath(pts);
+        List<Path> innerPaths = jtsServices.pathsInGeometry(geometry, paths_0);
+
+        resultList.addAll(innerPaths);
+        return resultList;
     }
 }
