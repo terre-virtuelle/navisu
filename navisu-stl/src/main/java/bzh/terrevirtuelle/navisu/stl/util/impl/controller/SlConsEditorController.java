@@ -299,6 +299,13 @@ public class SlConsEditorController
             
             Polygon[] polygonTab = {selectPolygon};
             String result = kmlComponentServices.write(null, polygonTab, StandardOpenOption.WRITE);
+             
+          /* 
+            List<List<? extends Position>> boundaries = selectPolygon.getBoundaries();
+            Path p = new Path(boundaries.get(0));
+            Path[] pathTab = {p};
+            String result = kmlComponentServices.write(null, pathTab, StandardOpenOption.WRITE);
+*/
             String in = USER_DIR + SEP + "privateData" + SEP + "kml" + SEP + slconsName + ".kml";
             System.out.println(result.getBytes().length);
             java.nio.file.Path path = Paths.get(in);
@@ -308,7 +315,7 @@ public class SlConsEditorController
                 Logger.getLogger(SlConsEditorController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
             String out = USER_DIR + SEP + "privateData" + SEP + "shp" + SEP + slconsName + ".shp";
-            String command = "ogr2ogr -t_srs EPSG:4326 -f 'ESRI Shapefile' " + out + " " +in;
+            String command = "ogr2ogr -t_srs EPSG:4326 -f 'ESRI Shapefile' " + out + " " + in;
             try {
                 Proc.BUILDER.create()
                         .setCmd(command)

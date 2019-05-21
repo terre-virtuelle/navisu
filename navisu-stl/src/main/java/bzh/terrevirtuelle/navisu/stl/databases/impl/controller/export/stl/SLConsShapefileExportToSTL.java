@@ -31,10 +31,10 @@ import java.util.logging.Logger;
  * @author serge
  * @date May 2, 2019
  */
-public class DepareExportToSTL
+public class SLConsShapefileExportToSTL
         extends PathToSTL {
 
-    protected static final Logger LOGGER = Logger.getLogger(DepareExportToSTL.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(SLConsShapefileExportToSTL.class.getName());
 
     protected JTSServices jtsServices;
     protected DisplayServices displayServices;
@@ -49,7 +49,7 @@ public class DepareExportToSTL
 
     protected Set<Map.Entry<String, Object>> entries;
 
-    public DepareExportToSTL(GeodesyServices geodesyServices,
+    public SLConsShapefileExportToSTL(GeodesyServices geodesyServices,
             JTSServices jtsServices,
             DisplayServices displayServices,
             Shapefile shapefile, GridBox3D gridBox3D,
@@ -75,7 +75,7 @@ public class DepareExportToSTL
                 ShapefileRecord record = shapefile.nextRecord();
                 createPolygon(record, verticalExaggeration, latScale, lonScale, verticalOffset);
             } catch (Exception ex) {
-                Logger.getLogger(DepareExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                Logger.getLogger(SLConsShapefileExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
 

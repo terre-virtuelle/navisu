@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
@@ -138,6 +139,7 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import java.io.InputStream;
 import java.util.logging.FileHandler;
+import javafx.stage.FileChooser;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -460,6 +462,7 @@ public class StlDBComponentController
     protected ObjExportToSTL objExportToSTL;
     protected MeshExportToSTL meshExportToSTL;
     protected Shapefile shapefile;
+    protected List<Shapefile> slConsShapefiles;
 
     protected List<Point3DGeo> boundList;
 
@@ -565,7 +568,9 @@ public class StlDBComponentController
         LAT_MAX = cacheProperties.getProperty("LAT_MAX");
         LON_MAX = cacheProperties.getProperty("LON_MAX");
         //Mat values :  48.21N -4.61     48.42N -4.30
+        
         kmlFileNames = new ArrayList<>();
+        slConsShapefiles = new ArrayList<>();
     }
 
     @Override
@@ -871,8 +876,17 @@ public class StlDBComponentController
             stConsEditorController.setVisible(true);
         });
         importShapefileButton.setOnMouseClicked((MouseEvent event) -> {
-            String[] des = {"*.shp", "*.SHP"};
-            System.out.println(driverManagerServices.open("SHP", des));
+            // String[] des = {"*.shp", "*.SHP"};
+            // System.out.println(driverManagerServices.open("SHP", des));
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle(tr("popup.fileChooser.open"));
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            File selectedFile = fileChooser.showOpenDialog(null);
+            System.out.println("File : " + selectedFile);
+            slConsShapefiles.add(new Shapefile(selectedFile));
+            System.out.println("shapefile : " + shapefile);
+
             //pour la lecture de la Shapefile
 
             /*
@@ -1038,10 +1052,16 @@ public class StlDBComponentController
                                             Math.round(highestElevationBathy), verticalExaggeration, true)
                                             .display(shapefile);
                                     // Reinit Shapefile
+
                                     shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
                                             .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
                                     new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shapefile, gb, s57Layer)
                                             .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
+
+                                    /*  
+                                    new DepareExportToSTL(geodesyServices, jtsServices, displayServices, slConsShapefile, gb, s57Layer)
+                                            .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
+                                     */
                                 }
                                 LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
                                 k++;

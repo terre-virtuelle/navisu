@@ -489,7 +489,7 @@
                                                   </rowConstraints>
                                                    <children>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="15.0" prefWidth="79.0" text="Height    " />
-                                                      <TextField fx:id="heightShapefileTF" GridPane.columnIndex="1" />
+                                                      <TextField fx:id="heightShapefileTF" text="5.0" GridPane.columnIndex="1" />
                                                    </children>
                                                 </GridPane>
                                              </children>

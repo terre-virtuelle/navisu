@@ -44,6 +44,7 @@ public abstract class ShapefilePolygonView
     
     protected void createPolygon(RenderableLayer layer, ShapefileRecord record,
             boolean isHeight, double magnify, double maxHeight) {
+        System.out.println("createPolygon");
         this.record = record;
         if (isHeight == true) {
             if (record.getAttributes() != null) {
@@ -79,6 +80,7 @@ public abstract class ShapefilePolygonView
     }
 
     private void extrudePolygon(RenderableLayer layer, ShapefileRecord record, double height) {
+        System.out.println("extrudePolygon");
         if (height != 0) {  // create extruded polygons
             ExtrudedPolygon ep = new ExtrudedPolygon(height);
             setExtrudedPolygonAttributes(ep, color);

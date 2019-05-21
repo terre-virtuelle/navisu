@@ -62,7 +62,6 @@ public class DepareView
     protected void createSurfacePolygons(ShapefileRecord record,
             RenderableLayer layer,
             boolean isHeight, boolean simp) {
-
         if (record != null) {
             if (record.getAttributes() != null) {
                 //Calculate depth max
