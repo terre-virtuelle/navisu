@@ -425,8 +425,6 @@ public class DatabaseImpl
             userDirPath = System.getProperty("user.dir");
             String path = properties.getProperty("gdalPath");
             String cmd = startCmd("ogr2ogr");
-            // String cmd = sep + "ogr2ogr";
-            //  cmd = path + cmd;
             if (path == null) {
                 //alarm
             }

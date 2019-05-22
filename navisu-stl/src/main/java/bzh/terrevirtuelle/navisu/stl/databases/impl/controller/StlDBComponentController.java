@@ -40,6 +40,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.LightDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.NavigationLineDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.RestrictedAreaDBLoader;
+import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
@@ -132,6 +133,8 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.MeshEx
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.ObjExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsShapefileExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.util.impl.controller.SlConsEditorController;
 
 import com.google.common.collect.ImmutableMap;
@@ -462,7 +465,9 @@ public class StlDBComponentController
     protected ObjExportToSTL objExportToSTL;
     protected MeshExportToSTL meshExportToSTL;
     protected Shapefile shapefile;
-    protected List<Shapefile> slConsShapefiles;
+    protected List<Pair<File, Double>> slConsShapefiles;
+    protected double heightShapefile;
+    protected final double DEFAULT_HEIGHT_SHAPEFILE = 5.0;
 
     protected List<Point3DGeo> boundList;
 
@@ -568,7 +573,7 @@ public class StlDBComponentController
         LAT_MAX = cacheProperties.getProperty("LAT_MAX");
         LON_MAX = cacheProperties.getProperty("LON_MAX");
         //Mat values :  48.21N -4.61     48.42N -4.30
-        
+
         kmlFileNames = new ArrayList<>();
         slConsShapefiles = new ArrayList<>();
     }
@@ -876,27 +881,18 @@ public class StlDBComponentController
             stConsEditorController.setVisible(true);
         });
         importShapefileButton.setOnMouseClicked((MouseEvent event) -> {
-            // String[] des = {"*.shp", "*.SHP"};
-            // System.out.println(driverManagerServices.open("SHP", des));
-
+            try {
+                heightShapefile = Double.parseDouble(heightShapefileTF.getText());
+            } catch (NumberFormatException e) {
+                heightShapefile = DEFAULT_HEIGHT_SHAPEFILE;
+                heightShapefileTF.setText(Double.toString(heightShapefile));
+            }
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle(tr("popup.fileChooser.open"));
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
             File selectedFile = fileChooser.showOpenDialog(null);
-            System.out.println("File : " + selectedFile);
-            slConsShapefiles.add(new Shapefile(selectedFile));
-            System.out.println("shapefile : " + shapefile);
 
-            //pour la lecture de la Shapefile
-
-            /*
-            Iterable<? extends LatLon> latLon = selectPolygon.getOuterBoundary();
-            List<Position> positionList = new ArrayList<>();
-            for (LatLon l : latLon) {
-                positionList.add(new Position(l, 20.0));
-            }
-             */
-            System.out.println("shape : " + heightShapefileTF.getText());
+            slConsShapefiles.add(new Pair(selectedFile, heightShapefile));
         });
 
         requestButton.setOnMouseClicked((MouseEvent event) -> {
@@ -1036,7 +1032,50 @@ public class StlDBComponentController
                             }
                             k++;
                         });
+                        //SlConsShapefile
 
+                        if (!slConsShapefiles.isEmpty()) {
+                            k = 0;
+                            List<Pair<Shapefile, Double>> slConsShapefilesClipped = new ArrayList<>();
+                            gridBoxes.forEach((gb) -> {
+                                i = k / tileCount + 1;
+                                j = k % tileCount + 1;
+                                String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                                LOGGER.log(Level.INFO, "In export SlConsShapefile in STL on filename : {0}", filename);
+                                //Retrieve avec Clip
+                                //iter sur la list
+                                for (Pair<File, Double> p : slConsShapefiles) {
+                                    double h = p.getY();
+                                    String inShp = p.getX().getAbsolutePath();
+                                    String outShp = p.getX().getName();
+                                    outShp = outShp.replace(".shp", "_clipped.shp");
+                                    String out = USER_DIR + SEP + "privateData" + SEP + "shp" + SEP + outShp;
+                                    String command = "ogr2ogr -t_srs EPSG:4326 -clipdst "
+                                            + gb.getLonMin() + " " + gb.getLatMin() + " " + gb.getLonMax() + " " + gb.getLatMax() + " "
+                                            + out + " " + inShp;
+                                    try {
+                                        Proc.BUILDER.create()
+                                                .setCmd(command)
+                                                .execSh();
+                                    } catch (IOException | InterruptedException ex) {
+                                        Logger.getLogger(StlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                                    }
+                                    Shapefile shp = new Shapefile(out);
+                                    if (shp.getNumberOfRecords() != 0) {
+                                        slConsShapefilesClipped.add(new Pair(shp, h));
+                                    }
+                                }
+                                for (Pair<Shapefile, Double> p : slConsShapefilesClipped) {
+                                    new SLConsShapefileExportToSTL(geodesyServices, jtsServices, displayServices,
+                                            p.getX(), gb, p.getY(),
+                                            s57Layer)
+                                            .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
+                                }
+
+                                LOGGER.log(Level.INFO, "Out export SlConsShapefile in STL on filename : {0}", filename);
+                                k++;
+                            });
+                        }
                         //DEPARE
                         k = 0;
                         if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {

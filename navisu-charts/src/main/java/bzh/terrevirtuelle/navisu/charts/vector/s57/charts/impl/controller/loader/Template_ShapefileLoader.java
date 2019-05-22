@@ -403,7 +403,7 @@ public class Template_ShapefileLoader
     }
 
     protected void createPolygon(ShapefileRecord record, ShapeAttributes attrs, RenderableLayer layer) {
-        System.out.println("createPolygon");
+      //  System.out.println("createPolygon");
         Double height = this.getHeight(record);
         if (height != null) // create extruded polygons
         {

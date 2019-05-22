@@ -40,6 +40,7 @@ public class SLConsShapefileExportToSTL
     protected DisplayServices displayServices;
     protected RenderableLayer layer;
     protected Shapefile shapefile;
+    protected double heightSlCons;
     protected GridBox3D gridBox3D;
     protected List<Path> paths;
     protected String facets;
@@ -47,18 +48,17 @@ public class SLConsShapefileExportToSTL
     protected double lonMin;
     protected double highestElevationBathy;
 
-    protected Set<Map.Entry<String, Object>> entries;
-
     public SLConsShapefileExportToSTL(GeodesyServices geodesyServices,
             JTSServices jtsServices,
             DisplayServices displayServices,
-            Shapefile shapefile, GridBox3D gridBox3D,
+            Shapefile shapefile, GridBox3D gridBox3D, double heightSlCons,
             RenderableLayer layer) {
         super(geodesyServices);
         this.jtsServices = jtsServices;
         this.displayServices = displayServices;
         this.shapefile = shapefile;
         this.gridBox3D = gridBox3D;
+        this.heightSlCons = heightSlCons;
         this.layer = layer;
         this.latMin = gridBox3D.getGrid()[0][0].getLatitude();
         this.lonMin = gridBox3D.getGrid()[0][0].getLongitude();
@@ -70,6 +70,7 @@ public class SLConsShapefileExportToSTL
             double latScale, double lonScale, double verticalOffset) {
         result = "";
         this.filename = filename;
+
         while (shapefile.hasNext()) {
             try {
                 ShapefileRecord record = shapefile.nextRecord();
@@ -83,45 +84,26 @@ public class SLConsShapefileExportToSTL
 
     protected void createPolygon(ShapefileRecord record, double verticalExaggeration,
             double latScale, double lonScale, double verticalOffset) {
-
-        if (record.getAttributes() != null) {
-            entries = record.getAttributes().getEntries();
-            entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
-                if (e.getKey().equalsIgnoreCase("drval1")) {
-                    //Case e=-9.0 m ?
-                    double h = (Double) e.getValue();
-                    if (h < 0.0) {
-                        h = 0.0;
-                    }
-                    double height = verticalExaggeration * (highestElevationBathy - h);
-                    paths = extrudePolygon(record, height);
-                    exportSTL(paths, filename, "depare " + e.getValue(), latMin, lonMin, latScale, lonScale, verticalOffset);//verticalOffset
-
-                }
-            });
-        }
+        double height = verticalExaggeration * (highestElevationBathy + heightSlCons);
+        paths = extrudePolygon(record, height);
+        exportSTL(paths, filename, "slcons " + heightSlCons, latMin, lonMin, latScale, lonScale, verticalOffset);
     }
 
     private List<Path> extrudePolygon(ShapefileRecord record, double height) {
 
         List<Path> pathList = new ArrayList<>();
+        List<Position> topList = new ArrayList<>();
+        List<Position> bottomList = new ArrayList<>();
         for (int i = 0; i < record.getNumberOfParts(); i++) {
             VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
-            if (WWMath.computeWindingOrderOfLocations(buffer.getLocations()).equals(AVKey.CLOCKWISE)) {
-                Iterable<? extends Position> pos = buffer.getPositions();
-                List<Position> cwTopList = new ArrayList<>();
-                for (Position p : pos) {
-                    cwTopList.add(new Position(p.getLatitude(), p.getLongitude(), height));
-                }
-                //Create counter clockwise list
-                List<Position> topList = new ArrayList<>();
-                List<Position> bottomList = new ArrayList<>();
-                for (int j = cwTopList.size() - 1; j >= 0; j--) {
-                    topList.add(cwTopList.get(j));
-                    bottomList.add(new Position(cwTopList.get(j).getLatitude(), cwTopList.get(j).getLongitude(), 0.0));
-                }
-                pathList = createPaths(topList, bottomList);
+            Iterable<? extends Position> pos = buffer.getPositions();
+            for (Position p : pos) {
+                topList.add(new Position(p.getLatitude(), p.getLongitude(), height));
             }
+            for (int j = 0; j < topList.size(); j++) {
+                bottomList.add(new Position(topList.get(j).getLatitude(), topList.get(j).getLongitude(), 0.0));
+            }
+            pathList = createPaths(topList, bottomList);
         }
         return pathList;
     }
