@@ -21,6 +21,7 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.WKTReader;
 import com.vividsolutions.jts.operation.buffer.BufferOp;
 import com.vividsolutions.jts.triangulate.DelaunayTriangulationBuilder;
+import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
@@ -114,6 +115,16 @@ public class JTSImpl
     }
 
     @Override
+    public Path getPathFromPolygon(Geometry geometry) {
+        Coordinate[] coords = geometry.getCoordinates();
+        List<Position> positions = new ArrayList<>();
+        for (Coordinate c : coords) {
+            positions.add(new Position(Angle.fromDegrees(c.y), Angle.fromDegrees(c.x), 0.0));
+        }
+        return new Path(positions);
+    }
+
+    @Override
     public Geometry getPolygonFromPath(Path path) {
         List<Point3DGeo> points = new ArrayList<>();
         Iterable< ? extends Position> pos = path.getPositions();
@@ -141,9 +152,18 @@ public class JTSImpl
             geom = getPolygonFromPath(p);
             if (geometry.contains(geom)) {
                 result.add(p);
-            }
-        }
 
+            } 
+            /*else {
+                Geometry intersect = geometry.intersection(geom);
+                if (!intersect.isEmpty()) {
+                    //  result.add(getPathFromPolygon(intersect));
+                    System.out.println("intersect : " + intersect);
+                }
+            }
+            */
+
+        }
         return result;
     }
 

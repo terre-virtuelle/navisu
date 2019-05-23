@@ -472,18 +472,19 @@ public class TopologyImpl
     @Override
     public List<Path> jtsLineString2Path(List<Geometry> geoms) {
         LineString line;
-
         List<Geometry> filter = new ArrayList<>();
         for (int i = 0; i < geoms.size(); i++) {
             if (!((LineString) geoms.get(i)).isClosed() && geoms.get(i) != null) {
                 filter.add(geoms.get(i));
             }
+         //   if (!((LineString) geoms.get(i)).isClosed() && geoms.size() == 1) {
+         //       filter.add(geoms.get(i));
+         //   }
         }
         Geometry[] geomTab = new Geometry[filter.size()];
         for (int i = 0; i < filter.size(); i++) {
             geomTab[i] = filter.get(i);
         }
-
         GeometryFactory geometryFactory = new GeometryFactory();
         GeometryCollection lineStringCollection = geometryFactory.createGeometryCollection(geomTab);
         LineSequencer lineSequencer = new LineSequencer();
@@ -497,9 +498,7 @@ public class TopologyImpl
             for (Coordinate c : coords) {
                 positions.add(new Position(Angle.fromDegrees(c.y), Angle.fromDegrees(c.x), 0));
             }
-
             Path path = new Path(positions);
-
             result.add(path);
         }
         return result;

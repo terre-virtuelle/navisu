@@ -11,18 +11,15 @@ import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import com.vividsolutions.jts.geom.Geometry;
-import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.util.VecBuffer;
-import gov.nasa.worldwind.util.WWMath;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -96,6 +93,7 @@ public class SLConsShapefileExportToSTL
         List<Position> bottomList = new ArrayList<>();
         for (int i = 0; i < record.getNumberOfParts(); i++) {
             VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
+            
             Iterable<? extends Position> pos = buffer.getPositions();
             for (Position p : pos) {
                 topList.add(new Position(p.getLatitude(), p.getLongitude(), height));
@@ -136,9 +134,11 @@ public class SLConsShapefileExportToSTL
         });
         Geometry geometry = jtsServices.getPolygon(pts);
         List<Path> paths_0 = jtsServices.createDelaunayToPath(pts);
+        displayServices.displayPaths(paths_0, layer, Material.GREEN, 20);
         List<Path> innerPaths = jtsServices.pathsInGeometry(geometry, paths_0);
-
         resultList.addAll(innerPaths);
+        displayServices.displayPolygonsFromPaths(resultList, layer, Material.MAGENTA, 12);
+   
         return resultList;
     }
 }

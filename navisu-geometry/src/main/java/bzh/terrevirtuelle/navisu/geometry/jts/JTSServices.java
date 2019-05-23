@@ -33,6 +33,8 @@ public interface JTSServices
 
     Geometry getPolygonFromPath(Path path);
 
+    Path getPathFromPolygon(Geometry path);
+
     List<Path> pathsInGeometry(Geometry geom, List<Path> faces);
 
     boolean contains(Geometry geom, Point3DGeo pt3D);

@@ -64,6 +64,7 @@ public class PathToSTL {
         Vec3d normal;
         int i = 0;
         Iterable<? extends Position> positions = path.getPositions();
+
         for (Position pp : positions) {
             if (i < 3) {
                 vec3d[i] = toVec3d(pp, latMin, lonMin, latScale, lonScale);
@@ -77,25 +78,14 @@ public class PathToSTL {
         double z0 = vec3d[0].z + verticalOffset;
         double z1 = vec3d[1].z + verticalOffset;
         double z2 = vec3d[2].z + verticalOffset;
-        if (normal.z >= 0.0) {
-            facet = "facet normal ";
-            facet += normal.x + " " + normal.y + " " + normal.z + " \n";
-            facet += "outer loop \n";
-            facet += "vertex " + vec3d[0].x + " " + vec3d[0].y + " " + z0 + " \n";
-            facet += "vertex " + vec3d[1].x + " " + vec3d[1].y + " " + z1 + " \n";
-            facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + z2 + " \n";
-            facet += "endloop \n";
-            facet += "endfacet \n";
-        } else {
-            facet = "facet normal ";
-            facet += normal.x + " " + normal.y + " " + -normal.z + " \n";
-            facet += "outer loop \n"; 
-            facet += "vertex " + vec3d[0].x + " " + vec3d[0].y + " " + z0 + " \n";
-            facet += "vertex " + vec3d[1].x + " " + vec3d[1].y + " " + z1 + " \n";  
-            facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + z2 + " \n";
-            facet += "endloop \n";
-            facet += "endfacet \n";
-        }
+        facet = "facet normal ";
+        facet += normal.x + " " + normal.y + " " + normal.z + " \n";
+        facet += "outer loop \n";
+        facet += "vertex " + vec3d[0].x + " " + vec3d[0].y + " " + z0 + " \n";
+        facet += "vertex " + vec3d[1].x + " " + vec3d[1].y + " " + z1 + " \n";
+        facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + z2 + " \n";
+        facet += "endloop \n";
+        facet += "endfacet \n";
         if (facet.contains("NaN")) {
             System.out.println("facet.contains(\"NaN\")" + edge1 + " " + edge2);
             facet = "";

@@ -1010,30 +1010,37 @@ public class StlDBComponentController
                     if (generateStlCB.isSelected()) {
                         k = 0;
                         gridBoxes.forEach((gb) -> {
-
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
-                            LOGGER.info("In export GridBox3D in STL");
-                            new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
-                            LOGGER.info("In export exportBaseSTL en STL");
+
                             String supportType = supportTF.getText();
                             if (supportType.equals("With magnet")) {
+                                LOGGER.info("In export GridBox3D in STL");
+                                new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
+                                LOGGER.info("In export exportBaseSTL en STL");
                                 LOGGER.info("Out export exportBaseSTL in STL");
                                 stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_" + i + "," + j + ".stl");
                                 LOGGER.info("Out export exportBaseSTL in STL");
                             }
                             if (supportType.equals("Simple")) {
+                                tileSideZ = 1.0;
+                                LOGGER.info("In export GridBox3D in STL");
+                                new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, 1.0);
+                                LOGGER.info("In export exportBaseSTL en STL");
                                 LOGGER.info("Out export exportBaseSTL in STL");
                                 stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_1mm.stl");
                                 LOGGER.info("Out export exportBaseSTL in STL");
                             }
                             if (supportType.equals("No support")) {
+                                tileSideZ = 0.0;
+                                LOGGER.info("In export GridBox3D in STL");
+                                new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, 1.0);
+                                LOGGER.info("In export exportBaseSTL en STL");
                             }
                             k++;
                         });
                         //SlConsShapefile
-
                         if (!slConsShapefiles.isEmpty()) {
                             k = 0;
                             List<Pair<Shapefile, Double>> slConsShapefilesClipped = new ArrayList<>();
@@ -1051,8 +1058,7 @@ public class StlDBComponentController
                                     outShp = outShp.replace(".shp", "_clipped.shp");
                                     String out = USER_DIR + SEP + "privateData" + SEP + "shp" + SEP + outShp;
                                     String command = "ogr2ogr -t_srs EPSG:4326 -clipdst "
-                                            + gb.getLonMin() + " " + gb.getLatMin() + " " + gb.getLonMax() + " " + gb.getLatMax() + " "
-                                            + out + " " + inShp;
+                                            + gb.getLonMin() + " " + gb.getLatMin() + " " + gb.getLonMax() + " " + gb.getLatMax() + " " + out + " " + inShp;
                                     try {
                                         Proc.BUILDER.create()
                                                 .setCmd(command)
@@ -1067,11 +1073,9 @@ public class StlDBComponentController
                                 }
                                 for (Pair<Shapefile, Double> p : slConsShapefilesClipped) {
                                     new SLConsShapefileExportToSTL(geodesyServices, jtsServices, displayServices,
-                                            p.getX(), gb, p.getY(),
-                                            s57Layer)
+                                            p.getX(), gb, p.getY(), s57Layer)
                                             .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
                                 }
-
                                 LOGGER.log(Level.INFO, "Out export SlConsShapefile in STL on filename : {0}", filename);
                                 k++;
                             });

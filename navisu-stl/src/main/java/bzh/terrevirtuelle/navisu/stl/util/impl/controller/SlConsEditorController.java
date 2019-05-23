@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.stl.util.impl.controller;
 
-import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
@@ -50,7 +49,6 @@ import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
-import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -301,13 +299,6 @@ public class SlConsEditorController
 
             Polygon[] polygonTab = {selectPolygon};
             String result = kmlComponentServices.write(null, polygonTab, StandardOpenOption.WRITE);
-
-            /* 
-            List<List<? extends Position>> boundaries = selectPolygon.getBoundaries();
-            Path p = new Path(boundaries.get(0));
-            Path[] pathTab = {p};
-            String result = kmlComponentServices.write(null, pathTab, StandardOpenOption.WRITE);
-             */
             String in = USER_DIR + SEP + "privateData" + SEP + "kml" + SEP + slconsName + ".kml";
             java.nio.file.Path path = Paths.get(in);
             try {
