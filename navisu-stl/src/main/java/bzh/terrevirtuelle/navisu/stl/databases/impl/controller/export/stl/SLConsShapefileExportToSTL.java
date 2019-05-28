@@ -89,15 +89,21 @@ public class SLConsShapefileExportToSTL
     private List<Path> extrudePolygon(ShapefileRecord record, double height) {
 
         List<Path> pathList = new ArrayList<>();
+        List<Position> topListTmp = new ArrayList<>();
         List<Position> topList = new ArrayList<>();
         List<Position> bottomList = new ArrayList<>();
         for (int i = 0; i < record.getNumberOfParts(); i++) {
             VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
-            
+
             Iterable<? extends Position> pos = buffer.getPositions();
             for (Position p : pos) {
-                topList.add(new Position(p.getLatitude(), p.getLongitude(), height));
+                topListTmp.add(new Position(p.getLatitude(), p.getLongitude(), height));
             }
+            //Inversion du sens de lecture
+            for (int u = topListTmp.size() - 1; u >= 0; u--) {
+                topList.add(topListTmp.get(u));
+            }
+
             for (int j = 0; j < topList.size(); j++) {
                 bottomList.add(new Position(topList.get(j).getLatitude(), topList.get(j).getLongitude(), 0.0));
             }
@@ -132,13 +138,14 @@ public class SLConsShapefileExportToSTL
         topList.forEach((p) -> {
             pts.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
         });
+        // displayServices.displayPositionsAsPath(topList, layer,Material.RED);
         Geometry geometry = jtsServices.getPolygon(pts);
         List<Path> paths_0 = jtsServices.createDelaunayToPath(pts);
-        displayServices.displayPaths(paths_0, layer, Material.GREEN, 20);
+       // displayServices.displayPaths(paths_0, layer, Material.RED, 10);
         List<Path> innerPaths = jtsServices.pathsInGeometry(geometry, paths_0);
         resultList.addAll(innerPaths);
-        displayServices.displayPolygonsFromPaths(resultList, layer, Material.MAGENTA, 12);
-   
+           displayServices.displayPolygonsFromPaths(resultList, layer, Material.RED, 12);
+
         return resultList;
     }
 }

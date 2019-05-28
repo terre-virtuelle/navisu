@@ -134,6 +134,13 @@ public class DisplayImpl
     }
 
     @Override
+    public void displayPositionsAsPath(List<Position> points, RenderableLayer layer, Material material) {
+        Path path = createPath(points, material);
+        layer.addRenderable(path);
+        wwd.redrawNow();
+    }
+
+    @Override
     public void displayGrid(List<List<Point3DGeo>> latLons, RenderableLayer layer, Material material) {
 
     }
@@ -438,13 +445,13 @@ public class DisplayImpl
         triangles.stream()
                 .filter((t) -> (t.A != null && t.B != null && t.C != null)).map((t) -> {
             ArrayList<Position> pathPositions = new ArrayList<>();
-           /* 
+            /* 
             pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (height - t.A.z) * verticalExaggeration));
             pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, (height - t.B.z) * verticalExaggeration));
             pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, (height - t.C.z) * verticalExaggeration));
             pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, (height - t.A.z) * verticalExaggeration));
-                        */
-           pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, t.A.z * verticalExaggeration));
+             */
+            pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, t.A.z * verticalExaggeration));
             pathPositions.add(Position.fromDegrees(t.B.x, t.B.y, t.B.z * verticalExaggeration));
             pathPositions.add(Position.fromDegrees(t.C.x, t.C.y, t.C.z * verticalExaggeration));
             pathPositions.add(Position.fromDegrees(t.A.x, t.A.y, t.A.z * verticalExaggeration));
@@ -825,7 +832,7 @@ public class DisplayImpl
             u++;
             v = 0;
         }
-        
+
         return result;
     }
 

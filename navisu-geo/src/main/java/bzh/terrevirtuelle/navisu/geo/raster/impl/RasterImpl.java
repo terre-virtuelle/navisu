@@ -69,6 +69,8 @@ public class RasterImpl
 
     @Override
     public String translateAscLambert93ToTif(String in, String outDir) {
+        System.out.println("in : " + in);
+       
         File file = new File(in);
         String out = file.getName();
         if (in.endsWith(".asc")) {
@@ -85,6 +87,7 @@ public class RasterImpl
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
         }
+         System.out.println("out : " + out);
         return out;
     }
 

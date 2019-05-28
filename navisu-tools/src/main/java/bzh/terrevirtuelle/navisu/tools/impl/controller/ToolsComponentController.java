@@ -48,8 +48,15 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 
 /**
  *
@@ -177,7 +184,11 @@ public class ToolsComponentController
     @FXML
     public TextField elevationDataTF;
     @FXML
+    public TextField elevationDataDirTF;
+    @FXML
     public Button elevationDataButton;
+    @FXML
+    public Button elevationDataDirButton;
     @FXML
     public TextField elevationDatabaseNameTF;
     @FXML
@@ -192,6 +203,12 @@ public class ToolsComponentController
     public CheckBox lambert2Wgs84CB;
     @FXML
     public CheckBox geotifPreviewCB;
+    @FXML
+    public RadioButton dem30mRB;
+    @FXML
+    public RadioButton dem5mRB;
+    @FXML
+    public RadioButton dem1mRB;
 
     /* Beacons controls */
     @FXML
@@ -215,14 +232,16 @@ public class ToolsComponentController
     public Button insertBeaconsButton;
 
     protected String elevationData;
+    protected boolean isDataDir = false;
 
     private ObservableList<String> catalogCbData = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
     private ObservableList<String> countryCbData = FXCollections.observableArrayList("FR", "ALL", "CA", "DE", "KR", "NO", "PE",
             "PH", "PT", "RU", "TR", "US", "ZA");
-    private ObservableList<String> dbCbElevationData = FXCollections.observableArrayList("Choice DB", "IGN75m", "SRTM30m", "TestAltiDB");
+    private ObservableList<String> dbCbElevationData = FXCollections.observableArrayList("Choice DB", "IGN75m", "SRTM30m", "Litto3D5m", "Litto3D1m", "TestAltiDB");
     private ObservableList<String> dbCbBathyData = FXCollections.observableArrayList("Choice DB", "BathyShomDB", "TestDB");
     private ObservableList<String> dbCbBeaconsData = FXCollections.observableArrayList("Choice DB", "BalisageMaritimeDB");
 
+    final ToggleGroup mntGroup = new ToggleGroup();
     protected FileChooser fileChooser;
 
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
@@ -235,10 +254,14 @@ public class ToolsComponentController
     private final String ELEVATION_DB_NAME_0 = "AltiV2_2-0_75mIgnDB";
     private final String ELEVATION_DB_NAME_1 = "SRTM30mDB";
     private final String ELEVATION_DB_NAME_2 = "TestAltiDB";
+    private final String ELEVATION_DB_NAME_3 = "Litto3D5mDB";
+    private final String ELEVATION_DB_NAME_4 = "Litto3D1mDB";
     private final String ELEVATION_DB_ORG_DIR = "privateData" + SEP + "elevation";
     private final String BEACONS_DB_NAME_0 = "BalisageMaritimeDB";
     private String componentKeyName;
     private List<File> selectedFiles;
+    protected String mnt = "MNT5m";
+    protected boolean isCreate = false;
 
     /**
      *
@@ -396,7 +419,7 @@ public class ToolsComponentController
             }
             guiAgentServices.getJobsManager().newJob("Load DB : " + beaconsDatabaseName, (progressHandle) -> {
                 String shpDir = beaconsDataTF.getText();
-                System.out.println("shpDir : "+shpDir);
+                System.out.println("shpDir : " + shpDir);
                 String sqlDir = databaseServices.shapeFileToSql(psqlPath, shpDir, "4326");
                 databaseServices.sqlToSpatialDB(beaconsDatabaseName, USER, PASSWD, sqlDir, psqlTF.getText() + "/psql");
                 instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
@@ -467,6 +490,9 @@ public class ToolsComponentController
             });
         });
         /* Elevations controls */
+        dem30mRB.setToggleGroup(mntGroup);
+        dem5mRB.setToggleGroup(mntGroup);
+        dem1mRB.setToggleGroup(mntGroup);
         elevationDbCB.setItems(dbCbElevationData);
         elevationDbCB.getSelectionModel().select("Choice DB");
         elevationDbCB.getSelectionModel()
@@ -481,23 +507,92 @@ public class ToolsComponentController
                         elevationDatabaseNameTF.setText(ELEVATION_DB_NAME_1);
                         elevationDbCB.getSelectionModel().select("Choice DB");
                     }
+                    if (newValue.equals("Litto3D5m")) {
+                        elevationDatabaseNameTF.setText(ELEVATION_DB_NAME_3);
+                        if (dem1mRB.isSelected()) {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Warning");
+                            alert.setHeaderText("5m Checkbox is selected, are you sure the DB is OK ? ");
+                            alert.show();
+                        }
+                        elevationDbCB.getSelectionModel().select("Choice DB");
+                    }
+                    if (newValue.equals("Litto3D1m")) {
+                        elevationDatabaseNameTF.setText(ELEVATION_DB_NAME_4);
+                        if (dem5mRB.isSelected()) {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Warning");
+                            alert.setHeaderText("5m Checkbox is selected, are you sure the DB is OK ? ");
+                            alert.show();
+                        }
+                        elevationDbCB.getSelectionModel().select("Choice DB");
+                    }
                     if (newValue.equals("TestAltiDB")) {
                         elevationDatabaseNameTF.setText(ELEVATION_DB_NAME_2);
                         elevationDbCB.getSelectionModel().select("Choice DB");
                     }
                 });
+
         createElevationButton.setOnMouseClicked((MouseEvent event) -> {
+            if (dem5mRB.isSelected()) {
+                mnt = "MNT5m";
+            }
+            if (dem1mRB.isSelected()) {
+                mnt = "MNT1m";
+            }
             String elevationDBName = elevationDatabaseNameTF.getText();
             if (elevationDBName != null) {
                 bathymetryDBServices.connect(elevationDBName, "localhost", "jdbc:postgresql://",
                         "5432", "org.postgresql.Driver", "admin", "admin");
                 guiAgentServices.getJobsManager().newJob("Load DB : " + elevationDBName, (progressHandle) -> {
-                    if (elevationDataTF != null) {
+                    if (!elevationDataTF.getText().trim().equals("")) {
                         if (lambert2Wgs84CB.isSelected() || tiff2XyzCB.isSelected()) {
-                            String fileName = prepareCreateOrInsertFile();
+                            String fileName = prepareCreateOrInsertFile(elevationDataTF.getText());
                             bathymetryDBServices.create(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
                         } else {
                             bathymetryDBServices.create(elevationDataTF.getText(), "elevation");
+                        }
+                    } else {
+                        if (!elevationDataDirTF.getText().trim().equals("")) {
+                            if (lambert2Wgs84CB.isSelected()|| tiff2XyzCB.isSelected()) {
+                                try {
+                                    Path directory = Paths.get(elevationDataDirTF.getText());
+                                    Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+                                        @Override
+                                        public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
+                                            if ((path.toString().endsWith("asc") && path.toString().contains(mnt))
+                                                    ||(path.toString().endsWith("tif") && path.toString().contains("1arc")) ) {// || tiff2XyzCB.isSelected()
+                                                String fileName = prepareCreateOrInsertFile(path.toString());
+                                                if (isCreate == false) {
+                                                    isCreate = true;
+                                                   // bathymetryDBServices.create(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
+                                                } else {
+                                                  //  bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
+                                                }
+                                            }
+
+                                            return FileVisitResult.CONTINUE;
+                                        }
+                                    });
+                                } catch (IOException ex) {
+                                    //Nothing if dir don't exist
+                                }
+                            } else {
+                                try {
+                                    Path directory = Paths.get(elevationDataDirTF.getText());
+                                    Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+                                        @Override
+                                        public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
+                                            if (path.toString().endsWith("asc")) {
+                                                bathymetryDBServices.create(path.toString(), "elevation");
+                                            }
+                                            return FileVisitResult.CONTINUE;
+                                        }
+                                    });
+                                } catch (IOException ex) {
+                                    //Nothing if dir don't exist
+                                }
+                            }
                         }
                     }
                 });
@@ -510,12 +605,48 @@ public class ToolsComponentController
                 bathymetryDBServices.connect(elevationDBName, "localhost", "jdbc:postgresql://",
                         "5432", "org.postgresql.Driver", "admin", "admin");
                 guiAgentServices.getJobsManager().newJob("Load DB : " + elevationDBName, (progressHandle) -> {
-                    if (elevationDataTF != null) {
+                    if (!elevationDataTF.getText().trim().equals("")) {
                         if (lambert2Wgs84CB.isSelected() || tiff2XyzCB.isSelected()) {
-                            String fileName = prepareCreateOrInsertFile();
+                            String fileName = prepareCreateOrInsertFile(elevationDataTF.getText());
                             bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
                         } else {
                             bathymetryDBServices.insert(elevationDataTF.getText(), "elevation");
+                        }
+                    } else {
+                        if (!elevationDataDirTF.getText().trim().equals("")) {
+                            if (lambert2Wgs84CB.isSelected() || tiff2XyzCB.isSelected()) {
+                                try {
+                                    Path directory = Paths.get(elevationDataDirTF.getText());
+                                    Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+                                        @Override
+                                        public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
+                                            if (path.toString().endsWith("asc") && (path.toString().contains(mnt))) {
+                                                String fileName = prepareCreateOrInsertFile(path.toString());
+                                                bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
+                                            }
+
+                                            return FileVisitResult.CONTINUE;
+                                        }
+                                    });
+                                } catch (IOException ex) {
+                                    //Nothing if dir don't exist
+                                }
+                            } else {
+                                try {
+                                    Path directory = Paths.get(elevationDataDirTF.getText());
+                                    Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+                                        @Override
+                                        public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
+                                            if (path.toString().endsWith("asc")) {
+                                                bathymetryDBServices.insert(path.toString(), "elevation");
+                                            }
+                                            return FileVisitResult.CONTINUE;
+                                        }
+                                    });
+                                } catch (IOException ex) {
+                                    //Nothing if dir don't exist
+                                }
+                            }
                         }
                     }
                 });
@@ -565,17 +696,19 @@ public class ToolsComponentController
             openFile(bathyDataTF);
         });
         elevationDataButton.setOnMouseClicked((MouseEvent event) -> {
-            //selectedFiles = openFile(elevationDataTF);//TODO
             openFile(elevationDataTF);
+        });
+        elevationDataDirButton.setOnMouseClicked((MouseEvent event) -> {
+            isDataDir = true;
+            openDir(elevationDataDirTF);
         });
     }
 
-    private String prepareCreateOrInsertFile() {
-        String in = new File(elevationDataTF.getText()).getName();
+    private String prepareCreateOrInsertFile(String in) {
         String result = in;
         String tiffFile;
         if (lambert2Wgs84CB.isSelected() && !tiff2XyzCB.isSelected()) {
-            tiffFile = rasterServices.translateAscLambert93ToTif(elevationDataTF.getText(), USER_DIR + SEP + ELEVATION_DB_ORG_DIR);//EPSG d'origine 2154
+            tiffFile = rasterServices.translateAscLambert93ToTif(in, USER_DIR + SEP + ELEVATION_DB_ORG_DIR);//EPSG d'origine 2154
             tiffFile = rasterServices.warpTifLambert93ToTifWGS84(USER_DIR + SEP + ELEVATION_DB_ORG_DIR + SEP + tiffFile, ELEVATION_DB_ORG_DIR);//EPSG 4326
             if (geotifPreviewCB.isSelected()) {
                 geoTiffChartServices.openChart(ELEVATION_DB_ORG_DIR + SEP + tiffFile);
@@ -584,9 +717,9 @@ public class ToolsComponentController
         }
         if (!lambert2Wgs84CB.isSelected() && tiff2XyzCB.isSelected()) {
             if (geotifPreviewCB.isSelected()) {
-                geoTiffChartServices.openChart(elevationDataTF.getText());
+                geoTiffChartServices.openChart(in);
             }
-            result = rasterServices.translateTif2XYZ(elevationDataTF.getText(), ELEVATION_DB_ORG_DIR);
+            result = rasterServices.translateTif2XYZ(in, ELEVATION_DB_ORG_DIR);
         }
         return result;
     }
@@ -602,24 +735,6 @@ public class ToolsComponentController
         } else {
             tf.setText(selectedFile.getAbsolutePath());
         }
-
-        //TODO multi choice, first file create or insert
-        //another insert
-        /*
-        this.fileChooser = new FileChooser();
-
-        this.fileChooser.setTitle(tr("popup.fileChooser.open"));
-        String userInitialDirectory = System.getProperty("user.home");
-        this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
-        File selectedFile = this.fileChooser.showOpenDialog(null);
-        selectedFiles = fileChooser.showOpenMultipleDialog(null);
-        if (selectedFiles == null) {
-            tf.setText("No file selected");
-        } else {
-            tf.setText(selectedFiles.toString());
-        }
-        return selectedFiles;
-         */
     }
 
     public void openDir(TextField tf) {

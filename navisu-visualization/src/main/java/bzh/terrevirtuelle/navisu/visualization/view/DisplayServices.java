@@ -31,6 +31,8 @@ public interface DisplayServices
 
     void displayPoints3DAsPath(List<Point3DGeo> points, RenderableLayer layer);
 
+    void displayPositionsAsPath(List<Position> points, RenderableLayer layer, Material material);
+
     void displayPoints3DAsPath(List<Point3DGeo> points, double height, RenderableLayer layer, Material material);
 
     void displayPoints3DAsTriangles(List<Point3DGeo> points, RenderableLayer layer, Material material);
@@ -71,7 +73,7 @@ public interface DisplayServices
             double height, double verticalExaggeration,
             Material material, RenderableLayer l);
 
-    void displayRasterInfo(RasterInfo rasterInfo, GeoViewServices geoViewServices,String GROUP);
+    void displayRasterInfo(RasterInfo rasterInfo, GeoViewServices geoViewServices, String GROUP);
 
     void displayConcaveHull(Geometry concaveHull,
             double height, double verticalExaggeration,

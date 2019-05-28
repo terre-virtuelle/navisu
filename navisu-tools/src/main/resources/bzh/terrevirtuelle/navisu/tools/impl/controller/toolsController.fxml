@@ -6,6 +6,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -159,15 +160,15 @@
                                                 <GridPane layoutX="10.0" layoutY="10.0" prefHeight="447.0" prefWidth="522.0" styleClass="tab-conteneur">
                                                     <columnConstraints>
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />
-                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="1.0" prefWidth="214.0" />
-                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="122.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="153.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="1.0" prefWidth="207.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="141.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                     </columnConstraints>
                                                     <rowConstraints>
                                                         <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
@@ -182,10 +183,10 @@
                                                         <Insets />
                                                     </opaqueInsets>
                                                     <children>
-                                                        <CheckBox fx:id="lambert2Wgs84CB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="21.0" prefWidth="150.0" text="Lambert 2 WGS84" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                        <CheckBox fx:id="lambert2Wgs84CB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="21.0" prefWidth="150.0" text="Lambert 2 WGS84" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                                         <Label prefHeight="15.0" prefWidth="160.0" text="Configuration" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                        <Label text="Elevation database name" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                        <TextField fx:id="elevationDatabaseNameTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                                        <Label text="Elevation database name" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                        <TextField fx:id="elevationDatabaseNameTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                                         <Label prefHeight="15.0" prefWidth="156.0" text="psql Path" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                                         <TextField fx:id="psqlTF11" prefWidth="80.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                                                         <Button fx:id="psqlButton11" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="7" />
@@ -193,10 +194,10 @@
                                                         <Label prefHeight="15.0" prefWidth="135.0" text="Password" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                                                         <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                                                         <TextField editable="false" text="admin" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                                                        <Label text="Elevation data file" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                        <TextField fx:id="elevationDataTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                                        <Button fx:id="elevationDataButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                                        <CheckBox fx:id="tiff2XyzCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="148.0" text="Tif 2 XYZ" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                        <Label text="Elevation data file" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                        <TextField fx:id="elevationDataTF" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                        <Button fx:id="elevationDataButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                                        <CheckBox fx:id="tiff2XyzCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="148.0" text="Tif 2 XYZ" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                         <GridPane GridPane.columnIndex="2" GridPane.rowIndex="11">
                                                             <columnConstraints>
                                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -209,9 +210,45 @@
                                                                 <Button fx:id="insertElevationButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Insert" />
                                                             </children>
                                                         </GridPane>
-                                                        <ChoiceBox fx:id="elevationDbCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                                        <ChoiceBox fx:id="elevationDbCB" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                                         <Button fx:id="createElevationButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="Create" GridPane.columnIndex="3" GridPane.rowIndex="11" />
-                                          <CheckBox fx:id="geotifPreviewCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="146.0" text="GeoTif Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <CheckBox fx:id="geotifPreviewCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="146.0" selected="true" text="GeoTif Preview" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                          <Label prefHeight="15.0" prefWidth="165.0" text="Elevation data directory" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="elevationDataDirTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <Button fx:id="elevationDataDirButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <RadioButton fx:id="dem30mRB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefWidth="148.0" selected="true" text="DEM 30m" />
+                                             </children>
+                                          </GridPane>
+                                          <GridPane GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <RadioButton fx:id="dem5mRB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="148.0" text="DEM 5m" />
+                                             </children>
+                                          </GridPane>
+                                          <GridPane GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <RadioButton fx:id="dem1mRB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefWidth="148.0" text="DEM 1m" />
+                                             </children>
+                                          </GridPane>
                                                     </children>
                                                 </GridPane>
                                             </children>

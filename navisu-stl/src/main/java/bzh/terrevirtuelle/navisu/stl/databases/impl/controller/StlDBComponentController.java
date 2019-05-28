@@ -1487,12 +1487,6 @@ public class StlDBComponentController
                     latMax + 10 * RETRIEVE_OFFSET, lonMax + 10 * RETRIEVE_OFFSET, 100, 100, 0.0);
             Point3DGeo[][] pts1 = jtsServices.mergePointsToGrid(demBathy.getGrid(), pts);
 
-            //TEST_0
-            // createGridFromDelaunayBathymetry(demBathy);
-            //TEST_0
-            //TEST_1
-            // displayServices.displayPoints3D(demBathy.getGrid(), s57Layer);
-            //TEST_1
             //Transformation en tableau lat decroissantes pour GeoTiff
             Point3DGeo[][] gridBathy0 = new Point3DGeo[pts1.length][pts1[0].length];
             for (int ii = 0; ii < pts1.length; ii++) {
