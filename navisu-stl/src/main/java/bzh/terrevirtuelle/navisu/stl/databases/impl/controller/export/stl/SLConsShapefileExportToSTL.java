@@ -144,7 +144,7 @@ public class SLConsShapefileExportToSTL
        // displayServices.displayPaths(paths_0, layer, Material.RED, 10);
         List<Path> innerPaths = jtsServices.pathsInGeometry(geometry, paths_0);
         resultList.addAll(innerPaths);
-           displayServices.displayPolygonsFromPaths(resultList, layer, Material.RED, 12);
+        //   displayServices.displayPolygonsFromPaths(resultList, layer, Material.RED, 12);
 
         return resultList;
     }

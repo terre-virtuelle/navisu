@@ -136,6 +136,7 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLCons
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsShapefileExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.util.impl.controller.SlConsEditorController;
+import bzh.terrevirtuelle.navisu.util.interval.Interval;
 
 import com.google.common.collect.ImmutableMap;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -227,6 +228,8 @@ public class StlDBComponentController
     protected String LAT_MAX;
     protected String LON_MAX;
 
+    protected double INTERVAL_MAX = 0.000026998;
+
     protected static final double RETRIEVE_OFFSET = 0.00025;
 
     protected RenderableLayer bathymetryLayer;
@@ -272,6 +275,7 @@ public class StlDBComponentController
     protected Connection s57Connection;
     protected Connection bathyConnection;
     protected Connection elevationConnection;
+    protected Connection highlElevationConnection;
     protected DEM bathymetry;
     protected DEM elevation;
     protected double lowestElevationAlti = 0.0;
@@ -384,6 +388,8 @@ public class StlDBComponentController
     public RadioButton solidRB;
     @FXML
     public RadioButton wireframeRB;
+    @FXML
+    public RadioButton mergeLitto3dRB;
     /*--------------------------------------Checkboxes ----*/
     @FXML
     public CheckBox autoBoundCB;
@@ -448,15 +454,15 @@ public class StlDBComponentController
     final ToggleGroup altiGroup = new ToggleGroup();
     final ToggleGroup terrainGroup = new ToggleGroup();
 
-    protected ObservableList<String> s57DbCbData
-            = FXCollections.observableArrayList(S57_DEFAULT_DATABASE_1, S57_DEFAULT_DATABASE_2,
-                    S57_DEFAULT_DATABASE_3, S57_DEFAULT_DATABASE_4,
-                    S57_DEFAULT_DATABASE_5, S57_DEFAULT_DATABASE_6,
-                    S57_DEFAULT_DATABASE_7);
+    protected ObservableList<String> s57DbCbData = FXCollections.observableArrayList(S57_DEFAULT_DATABASE_1, S57_DEFAULT_DATABASE_2,
+            S57_DEFAULT_DATABASE_3, S57_DEFAULT_DATABASE_4,
+            S57_DEFAULT_DATABASE_5, S57_DEFAULT_DATABASE_6,
+            S57_DEFAULT_DATABASE_7);
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
     protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("SRTM30mDB", "AltiV2_2-0_75mIgnDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
     protected ObservableList<String> supportCbData = FXCollections.observableArrayList("With magnet", "Simple", "No support");
+    protected final String HIGH_ELEVATION_DB = "Litto3D5mDB";
 
     protected Map<String, CheckBox> s57SelectionMap;
 
@@ -1408,6 +1414,34 @@ public class StlDBComponentController
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
                 lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
+        if (mergeLitto3dRB.isSelected()) {//HIGH_ELEVATION_DB
+            highlElevationConnection = databaseServices.connect(HIGH_ELEVATION_DB, HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
+            DEM highDem = new DemDbLoader(highlElevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
+                    lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
+            List<Point3DGeo> pts = dem.getGrid();
+            List<Point3DGeo> ptsHD = highDem.getGrid();
+            System.out.println("dem.size " + dem.size());
+            System.out.println("highDem.size " + highDem.size());
+            Interval intervalLat;
+            Interval intervalLon;
+            for (Point3DGeo p : pts) {
+                intervalLat = new Interval((p.getLatitude() - INTERVAL_MAX), p.getLatitude() + INTERVAL_MAX);
+                intervalLon = new Interval((p.getLongitude() - INTERVAL_MAX), p.getLongitude() + INTERVAL_MAX);
+                for (Point3DGeo p1 : ptsHD) {
+                    if (intervalLat.contains(p1.getLatitude()) && intervalLon.contains(p1.getLongitude())) {
+                        if (p1.getElevation() != -99999) {
+                            if (p1.getElevation() >= 0.0) {
+                                p.setElevation(p1.getElevation());
+                            } else {
+                                p.setElevation(0.0);
+                            }
+                        }
+                        break;
+                    }
+
+                }
+            }
+        }
         if (!dem.getGrid().isEmpty()) {
             lowestElevationAlti = dem.getMinElevation();
 
