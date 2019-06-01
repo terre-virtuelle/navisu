@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.visualization.view.impl;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
@@ -20,6 +21,7 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.visualization.view.Display;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.controller.DisplayController;
+import bzh.terrevirtuelle.navisu.visualization.view.impl.controller.JfxViewer;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.WorldWind;
@@ -52,6 +54,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.input.KeyEvent;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -73,6 +76,8 @@ public class DisplayImpl
     GeodesyServices geodesyServices;
     @UsedService
     LayerTreeServices layerTreeServices;
+    @UsedService
+    GuiAgentServices guiAgentServices;
 
     protected static final String SEP = File.separator;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
@@ -848,4 +853,14 @@ public class DisplayImpl
         return result;
     }
 
+    @Override
+    public JfxViewer getJfxViewer() {
+        JfxViewer jfxViewer = new JfxViewer(guiAgentServices);
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, jfxViewer);
+        guiAgentServices.getRoot().getChildren().add(jfxViewer);
+        
+        jfxViewer.setVisible(true);
+        jfxViewer.setScene(guiAgentServices.getScene());
+        return jfxViewer;
+    }
 }

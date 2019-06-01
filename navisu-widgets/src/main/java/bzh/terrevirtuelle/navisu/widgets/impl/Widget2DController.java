@@ -37,6 +37,7 @@ public class Widget2DController
 
     public Widget2DController() {
         initEvt();
+        
     }
 
     public Widget2DController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {

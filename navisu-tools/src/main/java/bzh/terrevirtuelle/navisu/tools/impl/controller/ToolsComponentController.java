@@ -313,6 +313,8 @@ public class ToolsComponentController
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.lambertServices = lambertServices;
         this.rasterServices = rasterServices;
+        
+        
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);

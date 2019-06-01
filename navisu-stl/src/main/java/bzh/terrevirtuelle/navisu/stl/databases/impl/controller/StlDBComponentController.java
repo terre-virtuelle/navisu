@@ -137,12 +137,16 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLCons
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.util.impl.controller.SlConsEditorController;
 import bzh.terrevirtuelle.navisu.util.interval.Interval;
+import bzh.terrevirtuelle.navisu.visualization.view.impl.controller.JfxViewer;
 
 import com.google.common.collect.ImmutableMap;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import java.io.InputStream;
 import java.util.logging.FileHandler;
+import javafx.scene.shape.SVGPath;
+import javafx.scene.shape.Shape;
+import javafx.scene.shape.StrokeLineJoin;
 import javafx.stage.FileChooser;
 import org.apache.commons.io.FileUtils;
 
@@ -228,7 +232,7 @@ public class StlDBComponentController
     protected String LAT_MAX;
     protected String LON_MAX;
 
-    protected double INTERVAL_MAX = 0.000026998;
+    protected double INTERVAL_MAX = 0.000026998;//3m
 
     protected static final double RETRIEVE_OFFSET = 0.00025;
 
@@ -439,6 +443,8 @@ public class StlDBComponentController
     public Button slConsEditorButton;
     @FXML
     public Button importShapefileButton;
+    @FXML
+    public Button svgViewerButton;
     @FXML
     public TextField heightShapefileTF;
 
@@ -796,6 +802,7 @@ public class StlDBComponentController
         });
 
         helpButton.setOnMouseClicked((MouseEvent event) -> {
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Options");
             alert.setHeaderText("Display S57 objects");
@@ -811,6 +818,7 @@ public class StlDBComponentController
             s.setWrappingWidth(650);
             alert.getDialogPane().setContent(s);
             alert.show();
+
         });
 
         latLonButton.setOnMouseClicked((MouseEvent event) -> {
@@ -886,6 +894,13 @@ public class StlDBComponentController
             guiAgentServices.getRoot().getChildren().add(stConsEditorController);
             stConsEditorController.setVisible(true);
         });
+        svgViewerButton.setOnMouseClicked((MouseEvent event) -> {
+            // 900x600
+            JfxViewer jfxViewer = displayServices.getJfxViewer();
+            Shape  shape = createStar();
+            jfxViewer.display(shape);
+        });
+
         importShapefileButton.setOnMouseClicked((MouseEvent event) -> {
             try {
                 heightShapefile = Double.parseDouble(heightShapefileTF.getText());
@@ -1750,5 +1765,15 @@ public class StlDBComponentController
 
     public Connection getConnection() {
         return s57Connection;
+    }
+    private SVGPath createStar() {
+        SVGPath star = new SVGPath();
+        star.setContent("M100,10 L100,10 40,180 190,60 10,60 160,180 z");
+        star.setStrokeLineJoin(StrokeLineJoin.ROUND);
+        star.setStroke(javafx.scene.paint.Color.RED);
+       // star.setFill(javafx.scene.paint.Color.RED);
+        star.setStrokeWidth(4);
+        star.setOpacity(1.0);
+        return star;
     }
 }
