@@ -41,10 +41,10 @@ public abstract class ShapefilePolygonView
     public ShapefilePolygonView() {
 
     }
-    
+
     protected void createPolygon(RenderableLayer layer, ShapefileRecord record,
             boolean isHeight, double magnify, double maxHeight) {
-     //   System.out.println("createPolygon");
+        //   System.out.println("createPolygon");
         this.record = record;
         if (isHeight == true) {
             if (record.getAttributes() != null) {
@@ -75,27 +75,27 @@ public abstract class ShapefilePolygonView
             shape.setValue(AVKey.DISPLAY_NAME,
                     "[" + Double.toString(val1) + ", " + Double.toString(val2) + "]");
             setPolygonAttributes(color);
-            
+
         }
     }
 
     private void extrudePolygon(RenderableLayer layer, ShapefileRecord record, double height) {
-        System.out.println("extrudePolygon");
+        //System.out.println("extrudePolygon");
         if (height != 0) {  // create extruded polygons
             ExtrudedPolygon ep = new ExtrudedPolygon(height);
             setExtrudedPolygonAttributes(ep, color);
-         //   layer.addRenderable(ep);
+            //   layer.addRenderable(ep);
             for (int i = 0; i < record.getNumberOfParts(); i++) {
                 VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
-               
+
                 if (WWMath.computeWindingOrderOfLocations(buffer.getLocations()).equals(AVKey.CLOCKWISE)) {
                     if (!ep.getOuterBoundary().iterator().hasNext()) {
                         ep.setOuterBoundary(buffer.getLocations());
-                    
+
                         Iterable<? extends Position> pos = buffer.getPositions();
-                        List<Position> posList=new ArrayList<>();
-                        for(Position p :pos){
-                            posList.add(new Position(p.getLatitude(),p.getLongitude(),p.getElevation()+100));
+                        List<Position> posList = new ArrayList<>();
+                        for (Position p : pos) {
+                            posList.add(new Position(p.getLatitude(), p.getLongitude(), p.getElevation() + 100));
                         }
                         Path path = new Path(posList);
                         ShapeAttributes attrs = new BasicShapeAttributes();
@@ -103,19 +103,18 @@ public abstract class ShapefilePolygonView
                         attrs.setOutlineWidth(2d);
                         path.setAttributes(attrs);
                         layer.addRenderable(path);
-                        
 
-                     //  layer.addRenderable(ep);
+                        //  layer.addRenderable(ep);
                     } else {
                         ep = new ExtrudedPolygon();
                         ep.setOuterBoundary(record.getCompoundPointBuffer().getLocations());
                         ep.setValue(AVKey.DISPLAY_NAME, "[" + Double.toString(height) + "]");
-                       
-                       // layer.addRenderable(ep);
-                       Iterable<? extends Position> pos = buffer.getPositions();
-                       List<Position> posList=new ArrayList<>();
-                        for(Position p :pos){
-                            posList.add(new Position(p.getLatitude(),p.getLongitude(),p.getElevation()+100));
+
+                        // layer.addRenderable(ep);
+                        Iterable<? extends Position> pos = buffer.getPositions();
+                        List<Position> posList = new ArrayList<>();
+                        for (Position p : pos) {
+                            posList.add(new Position(p.getLatitude(), p.getLongitude(), p.getElevation() + 100));
                         }
                         Path path = new Path(posList);
                         ShapeAttributes attrs = new BasicShapeAttributes();
@@ -143,11 +142,10 @@ public abstract class ShapefilePolygonView
                 record.getCompoundPointBuffer());
         shape.setWindingRule(AVKey.CLOCKWISE);
         shape.setPolygonRingGroups(new int[]{0});
-        
+
         layer.addRenderable(shape);
     }
 
-    
     protected void setPolygonAttributes(Color col) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();
         normAttributes.setDrawInterior(true);

@@ -132,7 +132,7 @@ public class JfxViewer
         star.setContent("M100,10 L100,10 40,180 190,60 10,60 160,180 z");
         star.setStrokeLineJoin(StrokeLineJoin.ROUND);
         star.setStroke(Color.RED);
-        star.setFill(Color.RED);
+       // star.setFill(Color.RED);
         star.setStrokeWidth(4);
         star.setOpacity(1.0);
         return star;

@@ -144,6 +144,7 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import java.io.InputStream;
 import java.util.logging.FileHandler;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineJoin;
@@ -192,6 +193,7 @@ public class StlDBComponentController
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String DEFAULT_KML_PATH = "privateData" + SEP + "kml" + SEP;
     protected static final String DEFAULT_STL_PATH = "privateData" + SEP + "stl" + SEP;
+    protected static final String DEFAULT_SVG_PATH = "privateData" + SEP + "svg" + SEP;
     protected static final String DEFAULT_ASC_PATH = "privateData" + SEP + "asc" + SEP;
     protected static final String USER_DIR = System.getProperty("user.dir");
     protected static final String IMAGE_DIR = USER_DIR + SEP + "privateData" + SEP + "tif";
@@ -433,7 +435,6 @@ public class StlDBComponentController
     public Button wktObjectButton;
     @FXML
     public Button objButton;
-
     /*-----------------------------Tools------*/
     @FXML
     public TextField objXOffsetTF;
@@ -897,7 +898,7 @@ public class StlDBComponentController
         svgViewerButton.setOnMouseClicked((MouseEvent event) -> {
             // 900x600
             JfxViewer jfxViewer = displayServices.getJfxViewer();
-            Shape  shape = createStar();
+            Shape shape = createStar();
             jfxViewer.display(shape);
         });
 
@@ -964,38 +965,39 @@ public class StlDBComponentController
                 gridX = Double.parseDouble(gridSideXTF.getText());
                 gridY = Double.parseDouble(gridSideYTF.getText());
                 LOGGER.info("Début traitement : ");
-                if (!selectedObjects.isEmpty()) {
-                    //Define TopMak for all buoyages, default is 0 : no topmark
-                    TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
-                    topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+                if (generateStlCB.isSelected() && !generateSvgCB.isSelected()) {
+                    if (!selectedObjects.isEmpty()) {
+                        //Define TopMak for all buoyages, default is 0 : no topmark
+                        TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
+                        topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
-                    //Define IALA system for all buoyages, default is 1
-                    MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
-                    marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-                }
-                // DEBUG
-                // autoBoundCB.setSelected(true);
-                // stlPreviewCB.setSelected(false);
-                if (autoBoundCB.isSelected()) {
-                    //   stlGuiController.displayGuiGridBM(s57Layer);
-                }
-                //ELEVATION AND TILES
-                if ((elevationRB.isSelected() && noBathyRB.isSelected())
-                        || (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected()))) {
-                    grids = createElevationTab(lat0, lon0, lat1, lon1);
-                }
-                //BATHY AND TILES
-                if (bathyRB.isSelected() && noAltiRB.isSelected()) {
-                    grids = createBathymetryTab(lat0, lon0, lat1, lon1);
-                }
-                if (elevationRB.isSelected() && bathyRB.isSelected()) {
-                    grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
+                        //Define IALA system for all buoyages, default is 1
+                        MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
+                        marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+                    }
+                    // DEBUG
+                    // autoBoundCB.setSelected(true);
+                    // stlPreviewCB.setSelected(false);
+                    if (autoBoundCB.isSelected()) {
+                        //   stlGuiController.displayGuiGridBM(s57Layer);
+                    }
+                    //ELEVATION AND TILES
+                    if ((elevationRB.isSelected() && noBathyRB.isSelected())
+                            || (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected()))) {
+                        grids = createElevationTab(lat0, lon0, lat1, lon1);
+                    }
+                    //BATHY AND TILES
+                    if (bathyRB.isSelected() && noAltiRB.isSelected()) {
+                        grids = createBathymetryTab(lat0, lon0, lat1, lon1);
+                    }
+                    if (elevationRB.isSelected() && bathyRB.isSelected()) {
+                        grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
 
-                }
-                if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {
-                    grids = createElevationAndDepare(lat0, lon0, lat1, lon1);
-                }
-                /*else {
+                    }
+                    if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {
+                        grids = createElevationAndDepare(lat0, lon0, lat1, lon1);
+                    }
+                    /*else {
                     Point3DGeo[][] grid = null;
                     if (autoBoundCB.isSelected()) {
                         // stlGuiController.displayGuiGridBM(s57Layer);
@@ -1004,31 +1006,31 @@ public class StlDBComponentController
                     }
                     grids = createGrids(grid, tileCount);
                 }
-                 */
-                if (grids != null) {
-                    verticalExaggeration = Double.valueOf(elevationMagnificationTF.getText());
-                    List<GridBox3D> gridBoxes = new ArrayList<>();
-                    grids.stream().map((g) -> {
-                        scaleCompute(g);
-                        return g;
-                    }).map((g) -> new GridBox3D(g, verticalExaggeration, highestElevationBathy)).forEachOrdered((gb) -> {
-                        gridBoxes.add(gb);
-                    });
-                    if (generateKmlCB.isSelected()) {
-                        k = 0;
-                        gridBoxes.forEach((gb) -> {
-                            LOGGER.info("In export GridBox3D en KML");
-                            i = k / tileCount + 1;
-                            j = k % tileCount + 1;
-                            String filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
-                            kmlFileNames.add(filename);
-                            new GridBox3DExportKML(gb).exportWKML(filename, solid);
-                            LOGGER.info("Out export GridBox3D en KML");
-                            k++;
+                     */
+                    if (grids != null) {
+                        verticalExaggeration = Double.valueOf(elevationMagnificationTF.getText());
+                        List<GridBox3D> gridBoxes = new ArrayList<>();
+                        grids.stream().map((g) -> {
+                            scaleCompute(g);
+                            return g;
+                        }).map((g) -> new GridBox3D(g, verticalExaggeration, highestElevationBathy)).forEachOrdered((gb) -> {
+                            gridBoxes.add(gb);
                         });
-                    }
-                    // stlComponentServices.exportRotateBaseSTL("data/stl/base/baseNewRotated.stl", "data/stl/base/baseNew.stl", 5.42);
-                    if (generateStlCB.isSelected()) {
+                        if (generateKmlCB.isSelected()) {
+                            k = 0;
+                            gridBoxes.forEach((gb) -> {
+                                LOGGER.info("In export GridBox3D en KML");
+                                i = k / tileCount + 1;
+                                j = k % tileCount + 1;
+                                String filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
+                                kmlFileNames.add(filename);
+                                new GridBox3DExportKML(gb).exportWKML(filename, solid);
+                                LOGGER.info("Out export GridBox3D en KML");
+                                k++;
+                            });
+                        }
+                        // stlComponentServices.exportRotateBaseSTL("data/stl/base/baseNewRotated.stl", "data/stl/base/baseNew.stl", 5.42);
+                        //if (generateStlCB.isSelected()) {
                         k = 0;
                         gridBoxes.forEach((gb) -> {
                             i = k / tileCount + 1;
@@ -1109,24 +1111,30 @@ public class StlDBComponentController
                                 j = k % tileCount + 1;
                                 String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                 LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
-                                shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                                new DepareView(s57Layer, s57Layer, s57Layer,
+                                        10.0,
+                                        1.0,
+                                        false)
+                                        .display(new DepareDBLoader(databaseServices,
+                                                s57DatabaseTF.getText(),
+                                                USER,
+                                                PASSWD).retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax()));
+                                // Reinit Shapefile
+                                Shapefile shapefile_1 = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
                                         .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
-                                if (shapefile != null) {
-                                    new DepareView(s57Layer, s57Layer, s57Layer,
-                                            Math.round(highestElevationBathy), verticalExaggeration, true)
-                                            .display(shapefile);
-                                    // Reinit Shapefile
+                                new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shapefile_1, gb, s57Layer)
+                                        .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
+                                //TODO STL and SVG whith tiles
+                                /*
+                                    if (generateSvgCB.isSelected()) {
+                                        Platform.runLater(() -> {
+                                            JfxViewer jfxViewer = displayServices.getJfxViewer();
+                                            // Shape shape = createStar();
+                                            jfxViewer.display();
+                                        });
+                                    }
+                                 */
 
-                                    shapefile = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                                            .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
-                                    new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shapefile, gb, s57Layer)
-                                            .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
-
-                                    /*  
-                                    new DepareExportToSTL(geodesyServices, jtsServices, displayServices, slConsShapefile, gb, s57Layer)
-                                            .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
-                                     */
-                                }
                                 LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
                                 k++;
                             });
@@ -1344,14 +1352,41 @@ public class StlDBComponentController
                         instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
                         selectLayer.removeAllRenderables();
                         wwd.redrawNow();
+                        //}
+                        LOGGER.info("Out export in STL");
                     }
-                    LOGGER.info("Out export in STL");
-                    if (generateStlCB.isSelected()) {
-                        //DEPARE for Laser
-                    }
-                }
 
+                }
+                if (!generateStlCB.isSelected() && generateSvgCB.isSelected()) {
+                    //DEPARE for Laser
+                    String filename = DEFAULT_SVG_PATH + outFileTF.getText() + ".svg";
+                    LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
+                    new DepareView(s57Layer, s57Layer, s57Layer,
+                            10.0,
+                            1.0,
+                            false)
+                            .display(new DepareDBLoader(databaseServices,
+                                    s57DatabaseTF.getText(),
+                                    USER,
+                                    PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
+                    Shapefile shapefile_1 = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                                        .retrieveIn(latMin, lonMin, latMax, lonMax);
+                    //  new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shapefile_1, gb, s57Layer)
+                    //       .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
+
+                    if (generateSvgCB.isSelected()) {
+                        Platform.runLater(() -> {
+                            JfxViewer jfxViewer = displayServices.getJfxViewer();
+                            Shape shape = createStar();
+                            jfxViewer.display(shape);
+                        });
+                    }
+
+                    LOGGER.log(Level.INFO, "Out export DEPARE in SVG on filename : {0}", filename);
+
+                }
             }
+
         }
         );
     }
@@ -1766,14 +1801,16 @@ public class StlDBComponentController
     public Connection getConnection() {
         return s57Connection;
     }
+
     private SVGPath createStar() {
-        SVGPath star = new SVGPath();
-        star.setContent("M100,10 L100,10 40,180 190,60 10,60 160,180 z");
-        star.setStrokeLineJoin(StrokeLineJoin.ROUND);
-        star.setStroke(javafx.scene.paint.Color.RED);
-       // star.setFill(javafx.scene.paint.Color.RED);
-        star.setStrokeWidth(4);
-        star.setOpacity(1.0);
-        return star;
+        SVGPath test = new SVGPath();
+        test.setContent("M0,0 L800,0 800,450 0,450 0,0 z");
+        test.setStrokeLineJoin(StrokeLineJoin.ROUND);
+        test.setStrokeWidth(4);
+        test.setStroke(javafx.scene.paint.Color.RED);
+        //test.setFill(javafx.scene.paint.Color.GREEN);
+        test.setFill(null);
+        test.setOpacity(1.0);
+        return test;
     }
 }
