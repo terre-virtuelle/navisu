@@ -1124,6 +1124,7 @@ public class StlDBComponentController
                                         .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
                                 new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shapefile_1, gb, s57Layer)
                                         .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
+                                System.out.println(gb.getLatMin()+" " +gb.getLonMin()+" "+gb.getLatMax()+" "+gb.getLonMax());
                                 //TODO STL and SVG whith tiles
                                 /*
                                     if (generateSvgCB.isSelected()) {
