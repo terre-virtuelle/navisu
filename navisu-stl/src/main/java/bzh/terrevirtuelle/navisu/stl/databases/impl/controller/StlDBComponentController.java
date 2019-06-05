@@ -134,6 +134,7 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.ObjExp
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsShapefileExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.svg.DepareExportToSVG;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.util.impl.controller.SlConsEditorController;
 import bzh.terrevirtuelle.navisu.util.interval.Interval;
@@ -144,7 +145,6 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import java.io.InputStream;
 import java.util.logging.FileHandler;
-import javafx.scene.shape.Path;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineJoin;
@@ -481,7 +481,7 @@ public class StlDBComponentController
     protected List<Pair<File, Double>> slConsShapefiles;
     protected double heightShapefile;
     protected final double DEFAULT_HEIGHT_SHAPEFILE = 5.0;
-
+    Shape shapeSVG;
     protected List<Point3DGeo> boundList;
 
     protected long startTime;
@@ -1111,20 +1111,15 @@ public class StlDBComponentController
                                 j = k % tileCount + 1;
                                 String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                 LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
-                                new DepareView(s57Layer, s57Layer, s57Layer,
-                                        10.0,
-                                        1.0,
-                                        false)
-                                        .display(new DepareDBLoader(databaseServices,
-                                                s57DatabaseTF.getText(),
-                                                USER,
-                                                PASSWD).retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax()));
+                                new DepareView(s57Layer, s57Layer, s57Layer, 10.0, 1.0, false)
+                                        .display(new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                                                .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax()));
                                 // Reinit Shapefile
                                 Shapefile shapefile_1 = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
                                         .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
                                 new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shapefile_1, gb, s57Layer)
                                         .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
-                                System.out.println(gb.getLatMin()+" " +gb.getLonMin()+" "+gb.getLatMax()+" "+gb.getLonMax());
+
                                 //TODO STL and SVG whith tiles
                                 /*
                                     if (generateSvgCB.isSelected()) {
@@ -1135,7 +1130,6 @@ public class StlDBComponentController
                                         });
                                     }
                                  */
-
                                 LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
                                 k++;
                             });
@@ -1362,27 +1356,25 @@ public class StlDBComponentController
                     //DEPARE for Laser
                     String filename = DEFAULT_SVG_PATH + outFileTF.getText() + ".svg";
                     LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
-                    new DepareView(s57Layer, s57Layer, s57Layer,
-                            10.0,
-                            1.0,
-                            false)
+                    new DepareView(s57Layer, s57Layer, s57Layer, 10.0, 1.0, false)
                             .display(new DepareDBLoader(databaseServices,
                                     s57DatabaseTF.getText(),
                                     USER,
                                     PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
-                    Shapefile shapefile_1 = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                                        .retrieveIn(latMin, lonMin, latMax, lonMax);
-                    //  new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shapefile_1, gb, s57Layer)
-                    //       .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
-
+                    Shapefile shp = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax);
+                    double sideX = 800;
+                    double sideY = 450;
+                    Pair<Double, Double> scales = scaleCompute(latMin, lonMin, latMax, lonMax, sideX, sideY);
+                    shapeSVG = new DepareExportToSVG(shp)
+                            .export(filename, scales.getX(), scales.getY(), sideY);
                     if (generateSvgCB.isSelected()) {
                         Platform.runLater(() -> {
                             JfxViewer jfxViewer = displayServices.getJfxViewer();
-                            Shape shape = createStar();
-                            jfxViewer.display(shape);
+                            // shapeSVG = createStar();
+                            jfxViewer.display(shapeSVG);
                         });
                     }
-
                     LOGGER.log(Level.INFO, "Out export DEPARE in SVG on filename : {0}", filename);
 
                 }
@@ -1785,6 +1777,17 @@ public class StlDBComponentController
             rangeLonTF.setText(Integer.toString((int) lonRangeMetric));
         });
 
+    }
+
+    private Pair<Double, Double> scaleCompute(double latMin, double lonMin, double latMax, double lonMax, double sideX, double sideY) {
+
+        double latRangeMetri = geodesyServices.getDistanceM(latMin, lonMin, latMax, lonMin);
+        double lonRangeMetri = geodesyServices.getDistanceM(latMin, lonMin, latMin, lonMax);
+
+        double latScal = sideY / latRangeMetri;
+        double lonScal = sideX / lonRangeMetri;
+
+        return new Pair<>(latScal, lonScal);
     }
 
     private void makeAttributes() {
