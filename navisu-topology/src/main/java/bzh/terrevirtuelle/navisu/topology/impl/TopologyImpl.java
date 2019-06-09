@@ -477,9 +477,6 @@ public class TopologyImpl
             if (!((LineString) geoms.get(i)).isClosed() && geoms.get(i) != null) {
                 filter.add(geoms.get(i));
             }
-         //   if (!((LineString) geoms.get(i)).isClosed() && geoms.size() == 1) {
-         //       filter.add(geoms.get(i));
-         //   }
         }
         Geometry[] geomTab = new Geometry[filter.size()];
         for (int i = 0; i < filter.size(); i++) {

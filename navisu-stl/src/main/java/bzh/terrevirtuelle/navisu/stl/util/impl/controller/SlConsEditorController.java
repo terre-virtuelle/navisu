@@ -103,7 +103,7 @@ public class SlConsEditorController
     protected RenderableLayer selectLayer;
     Polygon selectPolygon;
     BasicShapeAttributes normalAttributes;
-    List<ArrayList<Position>> list;
+    List<ArrayList<Position>> list = new ArrayList<>();
 
     protected GuiAgentServices guiAgentServices;
     protected KmlComponentServices kmlComponentServices;
@@ -291,7 +291,9 @@ public class SlConsEditorController
             }
             selectLayer.removeAllRenderables();
             initMeasureTool();
-            measureTool.setPositions(list.get(0));
+            if (!list.isEmpty()) {
+                measureTool.setPositions(list.get(0));
+            }
             measureTool.setArmed(true);
             isCreated = true;
         });

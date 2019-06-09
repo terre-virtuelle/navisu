@@ -52,7 +52,7 @@ public class DepareExportToSTL
     public DepareExportToSTL(GeodesyServices geodesyServices,
             JTSServices jtsServices,
             DisplayServices displayServices,
-            Shapefile shapefile, GridBox3D gridBox3D,
+            Shapefile shapefile, GridBox3D gridBox3D, double highestElevationBathy,
             RenderableLayer layer) {
         super(geodesyServices);
         this.jtsServices = jtsServices;
@@ -62,7 +62,7 @@ public class DepareExportToSTL
         this.layer = layer;
         this.latMin = gridBox3D.getGrid()[0][0].getLatitude();
         this.lonMin = gridBox3D.getGrid()[0][0].getLongitude();
-        this.highestElevationBathy = gridBox3D.getHighestElevationBathy();
+        this.highestElevationBathy = highestElevationBathy;
     }
 
     public void export(String filename,
@@ -93,10 +93,9 @@ public class DepareExportToSTL
                     if (h < 0.0) {
                         h = 0.0;
                     }
-                    double height = verticalExaggeration * (highestElevationBathy - h);
+                    double height = highestElevationBathy - (verticalExaggeration * h);
                     paths = extrudePolygon(record, height);
                     exportSTL(paths, filename, "depare " + e.getValue(), latMin, lonMin, latScale, lonScale, verticalOffset);//verticalOffset
-
                 }
             });
         }
@@ -107,9 +106,9 @@ public class DepareExportToSTL
         List<Path> pathList = new ArrayList<>();
         for (int i = 0; i < record.getNumberOfParts(); i++) {
             VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
+            Iterable<? extends Position> pos = buffer.getPositions();
+            List<Position> cwTopList = new ArrayList<>();
             if (WWMath.computeWindingOrderOfLocations(buffer.getLocations()).equals(AVKey.CLOCKWISE)) {
-                Iterable<? extends Position> pos = buffer.getPositions();
-                List<Position> cwTopList = new ArrayList<>();
                 for (Position p : pos) {
                     cwTopList.add(new Position(p.getLatitude(), p.getLongitude(), height));
                 }
@@ -117,6 +116,17 @@ public class DepareExportToSTL
                 List<Position> topList = new ArrayList<>();
                 List<Position> bottomList = new ArrayList<>();
                 for (int j = cwTopList.size() - 1; j >= 0; j--) {
+                    topList.add(cwTopList.get(j));
+                    bottomList.add(new Position(cwTopList.get(j).getLatitude(), cwTopList.get(j).getLongitude(), 0.0));
+                }
+                pathList = createPaths(topList, bottomList);
+            } else {
+                for (Position p : pos) {
+                    cwTopList.add(new Position(p.getLatitude(), p.getLongitude(), height));
+                }
+                List<Position> topList = new ArrayList<>();
+                List<Position> bottomList = new ArrayList<>();
+                for (int j = 0; j < cwTopList.size(); j++) {
                     topList.add(cwTopList.get(j));
                     bottomList.add(new Position(cwTopList.get(j).getLatitude(), cwTopList.get(j).getLongitude(), 0.0));
                 }

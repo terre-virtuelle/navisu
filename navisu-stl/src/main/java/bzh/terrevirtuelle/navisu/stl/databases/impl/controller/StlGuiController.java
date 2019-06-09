@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.stl.databases.impl.controller;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -49,9 +50,9 @@ import javafx.scene.layout.GridPane;
  * @author serge
  */
 public class StlGuiController {
-    
+
     protected StlDBComponentController stlDBComponentController;
-    
+
     protected double latRange;
     protected double lonRange;
     protected double latRangeMetric;
@@ -59,7 +60,7 @@ public class StlGuiController {
     protected double latScale;
     protected double lonScale;
     protected double globalScale;
-    
+
     protected String LAT_MIN;
     protected String LON_MIN;
     protected String LAT_MAX;
@@ -79,16 +80,16 @@ public class StlGuiController {
     protected double tileSideY;
     protected double tileSideZ;
     protected int tileCount;
-    
+
     protected GeodesyServices geodesyServices;
-    
+
     protected TextField objectsTF;
     protected Map<String, CheckBox> s57SelectionMap;
     protected List<String> selectedObjects;
     protected List<Polygon> selectedPolygons;
     protected CheckBox allCB;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
-    
+
     public StlGuiController(StlDBComponentController stlDBComponentController,
             GeodesyServices geodesyServices,
             Map<String, CheckBox> s57SelectionMap, CheckBox allCB,
@@ -120,30 +121,30 @@ public class StlGuiController {
         this.layer = layer;
         this.selectedPolygons = selectedPolygons;
     }
-    
+
     public void setTileSideX(double tileSideX) {
         this.tileSideX = tileSideX;
     }
-    
+
     public void setTileSideY(double tileSideY) {
         this.tileSideY = tileSideY;
     }
-    
+
     public void setTileSideZ(double tileSideZ) {
         this.tileSideZ = tileSideZ;
     }
-    
+
     public void setTileCount(int tileCount) {
         this.tileCount = tileCount;
     }
-    
+
     public void initTile(double tileSideX, double tileSideY, double tileSideZ, int tileCount) {
         this.tileSideX = tileSideX;
         this.tileSideY = tileSideY;
         this.tileSideZ = tileSideZ;
         this.tileCount = tileCount;
     }
-    
+
     public void initSelectedZone() {
         InputStream input;
         try {
@@ -157,17 +158,17 @@ public class StlGuiController {
         LON_MIN = cacheProperties.getProperty("LON_MIN");
         LAT_MAX = cacheProperties.getProperty("LAT_MAX");
         LON_MAX = cacheProperties.getProperty("LON_MAX");
-        
+
         Dialog dialog = new Dialog<>();
         dialog.setTitle("Create Area");
         dialog.setHeaderText("Please enter selected area coordinates.");
         dialog.setResizable(false);
-        
+
         Label lat0Label = new Label("Southwest point latitude : ");
         Label lon0Label = new Label("Southwest point longitude : ");
         Label lat1Label = new Label("Northeast point latitude : ");
         Label lon1Label = new Label("Northeast point longitude : ");
-        
+
         TextField lat0TF = new TextField();
         TextField lat1TF = new TextField();
         TextField lon0TF = new TextField();
@@ -178,7 +179,7 @@ public class StlGuiController {
         lat1TF.setText(LAT_MAX);
         lon0TF.setText(LON_MIN);
         lon1TF.setText(LON_MAX);
-        
+
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -188,12 +189,12 @@ public class StlGuiController {
         grid.add(lat0TF, 1, 0);
         grid.add(lon0Label, 0, 1);
         grid.add(lon0TF, 1, 1);
-        
+
         grid.add(lat1Label, 0, 2);
         grid.add(lat1TF, 1, 2);
         grid.add(lon1Label, 0, 3);
         grid.add(lon1TF, 1, 3);
-        
+
         dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
@@ -228,7 +229,7 @@ public class StlGuiController {
                 alert.setHeaderText("Right inputs are LatMin, LonMin & LatMax, LonMax");
                 alert.show();
             }
-            
+
             double latRan = geodesyServices.getDistanceM(lat0, lon0, lat1, lon0);
             double lonRan = geodesyServices.getDistanceM(lat0, lon0, lat0, lon1);
             if (latRan > lonRan) {
@@ -267,20 +268,20 @@ public class StlGuiController {
             stlDBComponentController.setLat1(lat1);
             stlDBComponentController.setLon1(lon1);
         });
-        
+
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
         dialog.showAndWait();
         selectedPolygons.addAll(createAndDisplayTiles(layer, Material.RED, 100, lat0, lon0, lat1, lon1, tileCount, tileCount));
-      
+
     }
-    
+
     public String initScale(double latMin, double lonMin,
             double latMax, double lonMax) {
         latRangeMetric = geodesyServices.getDistanceM(latMin, lonMin, latMax, lonMin);
         lonRangeMetric = geodesyServices.getDistanceM(latMin, lonMin, latMin, lonMax);
         double scaleLat = latRangeMetric / (tileSideY / 1000.0);
         double scaleLon = lonRangeMetric / (tileSideX / 1000.0);
-        
+
         globalScale = (scaleLat + scaleLon) / 2;//Arrondi pour l'affichage
         globalScale /= tileCount;
         double sc = 1;
@@ -298,26 +299,26 @@ public class StlGuiController {
         globalScale /= sc;
         return "1/" + Integer.toString((int) (Math.round(globalScale) * sc));
     }
-    
+
     public List<Polygon> createAndDisplayTiles(RenderableLayer layer, Material material,
             double hight, double latMin, double lonMin, double latMax, double lonMax,
             int line, int col) {
         if (layer.getNumRenderables() >= 1) {
             layer.removeAllRenderables();
         }
-        
+
         latRange = latMax - latMin;
         lonRange = lonMax - lonMin;
-        
+
         latRange /= line;
         lonRange /= col;
-        
+
         latRange = Math.abs(latRange);
         lonRange = Math.abs(lonRange);
-        
+
         double orgLat = latMin;
         double orgLon = lonMin;
-        
+
         int indexLabel0;
         int indexLabel1;
         List<Polygon> tiles = new ArrayList<>();
@@ -330,7 +331,7 @@ public class StlGuiController {
                 positions.add(new Position(Angle.fromDegrees(orgLat + (i + 1) * latRange), Angle.fromDegrees(orgLon + j * lonRange), hight));
                 positions.add(new Position(Angle.fromDegrees(orgLat + i * latRange), Angle.fromDegrees(orgLon + j * lonRange), hight));
                 Polygon polygon = new Polygon(positions);
-                
+
                 BasicShapeAttributes normalAttributes = new BasicShapeAttributes();
                 normalAttributes.setInteriorMaterial(material);
                 normalAttributes.setOutlineOpacity(0.5);
@@ -341,19 +342,19 @@ public class StlGuiController {
                 normalAttributes.setDrawInterior(true);
                 normalAttributes.setInteriorOpacity(0.02);
                 normalAttributes.setEnableLighting(true);
-                
+
                 BasicShapeAttributes highlightAttributes = new BasicShapeAttributes(normalAttributes);
                 highlightAttributes.setOutlineMaterial(material);
                 highlightAttributes.setOutlineOpacity(1);
                 highlightAttributes.setInteriorMaterial(material);
                 highlightAttributes.setDrawInterior(true);
                 highlightAttributes.setInteriorOpacity(0.2);
-                
+
                 indexLabel0 = i + 1;
                 indexLabel1 = j + 1;
-                
+
                 polygon.setValue(AVKey.DISPLAY_NAME, "tile : " + indexLabel0 + "," + indexLabel1);
-                
+
                 polygon.setAltitudeMode(WorldWind.ABSOLUTE);
                 polygon.setAttributes(normalAttributes);
                 polygon.setHighlightAttributes(highlightAttributes);
@@ -363,8 +364,9 @@ public class StlGuiController {
             wwd.redrawNow();
         }
         return tiles;
+
     }
-    
+
     public void initS57Gui() {
         s57SelectionMap.keySet().forEach((cb) -> {
             s57SelectionMap.get(cb).setOnAction((ActionEvent event) -> {
@@ -372,9 +374,9 @@ public class StlGuiController {
             });
         });
     }
-    
+
     public void initS57Gui(String selected) {
-        
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -423,12 +425,11 @@ public class StlGuiController {
                     }
                 }
             }
-            
+
         });
-        
+
     }
-    
-   
+
     public void displayGuiGridBM(RenderableLayer layer) {
 
         //Position origPos = new Position(Angle.fromDegrees(48.33713333), Angle.fromDegrees(-4.63665), 100.0);//21/12/18
@@ -456,25 +457,15 @@ public class StlGuiController {
                 posTab[i][j] = geodesyServices.getPosition(position, bearing, x * j, 100.0);
             }
         }
-        /*
-        List<PointPlacemark> pointPlacemarks = new ArrayList<>();
-        for (int i = 0; i < yNbSouth + yNbNorth; i++) {
-            for (int j = 0; j < posTab[1].length; j++) {
-                PointPlacemark pp =new PointPlacemark(posTab[i][j]);
-                pp.setLabelText(i +", "+ j);
-                pointPlacemarks.add(pp);
-            }
-        }
-        layer.addRenderables(pointPlacemarks);
-         */
+
         Material material = new Material(Color.MAGENTA);
-        
+
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setInteriorMaterial(material);
         normalAttributes.setDrawInterior(true);
         normalAttributes.setInteriorOpacity(0.01);
         normalAttributes.setOutlineMaterial(material);
-        
+
         BasicShapeAttributes highlightAttributes = new BasicShapeAttributes(normalAttributes);
         highlightAttributes.setOutlineMaterial(material);
         highlightAttributes.setOutlineOpacity(1);
@@ -532,7 +523,7 @@ public class StlGuiController {
         layer.addRenderables(polygons);
         wwd.redrawNow();
     }
-    
+
     private void addListener() {
         Material material = new Material(Color.MAGENTA);
         ShapeAttributes pickedAttributes = new BasicShapeAttributes();
@@ -546,12 +537,77 @@ public class StlGuiController {
             if (event.isLeftClick() && o != null) {
                 if (o.getClass() == Polygon.class) {
                     Polygon polygon = ((Polygon) o);
-                    System.out.println((polygon).getBoundaries());
+                    //  System.out.println((polygon).getBoundaries());
                     polygon.setAttributes(pickedAttributes);
                     polygon.setHighlightAttributes(pickedAttributes);
                     wwd.redrawNow();
                 }
             }
         });
+    }
+
+    public List<Polygon> getSelectedPolygons(List<Polygon> tiles) {
+        List<Pair<Integer, Integer>> result = new ArrayList<>();
+        List<Polygon> selected = new ArrayList<>();
+
+        Material material = new Material(Color.MAGENTA);
+        ShapeAttributes pickedAttributes = new BasicShapeAttributes();
+        pickedAttributes.setInteriorMaterial(material);
+        pickedAttributes.setDrawInterior(true);
+        pickedAttributes.setInteriorOpacity(1.0);
+        pickedAttributes.setOutlineMaterial(material);
+
+        ShapeAttributes unPickedAttributes = new BasicShapeAttributes();
+        unPickedAttributes.setInteriorMaterial(material);
+        unPickedAttributes.setDrawInterior(true);
+        unPickedAttributes.setInteriorOpacity(0.1);
+        unPickedAttributes.setOutlineMaterial(material);
+
+        wwd.addSelectListener((SelectEvent event) -> {
+            Object o = event.getTopObject();
+            if (event.isLeftClick() && o != null) {
+                if (o.getClass() == Polygon.class) {
+                    Polygon polygon = ((Polygon) o);
+                    if (tiles.contains(polygon)) {
+                        if (selected.contains(polygon)) {
+                            selected.remove(polygon);
+                            polygon.setAttributes(unPickedAttributes);
+                            polygon.setHighlightAttributes(unPickedAttributes);
+                        } else {
+                            selected.add(polygon);
+                            polygon.setAttributes(pickedAttributes);
+                            polygon.setHighlightAttributes(pickedAttributes);
+                            //System.out.println(selected);
+                        }
+                        wwd.redrawNow();
+                    }
+                }
+            }
+        });
+        return selected;
+    }
+
+    public void showRealselected(List<Polygon> polygons, List<Polygon> selected) {
+        Material material = new Material(Color.GREEN);
+
+        ShapeAttributes pickedAttributes = new BasicShapeAttributes();
+        pickedAttributes.setInteriorMaterial(material);
+        pickedAttributes.setDrawInterior(true);
+        pickedAttributes.setInteriorOpacity(0.1);
+        pickedAttributes.setOutlineMaterial(material);
+
+        ShapeAttributes unPickedAttributes = new BasicShapeAttributes();
+        unPickedAttributes.setDrawInterior(false);
+        unPickedAttributes.setOutlineMaterial(material);
+
+        for (Polygon p : polygons) {
+            p.setAttributes(unPickedAttributes);
+            wwd.redrawNow();
+        }
+        for (Polygon p : selected) {
+            p.setAttributes(pickedAttributes);
+            wwd.redrawNow();
+        }
+
     }
 }

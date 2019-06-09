@@ -633,14 +633,9 @@ public class S57DBComponentController
                 });
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DEPARE")) {
-                new DepareView(depareLayer, simpleDepareLayer, depare3DLayer,
-                        10.0,
-                        1.0,
-                        false)
-                        .display(new DepareDBLoader(databaseServices,
-                                databaseTF.getText(),
-                                USER,
-                                PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
+                new DepareView(depareLayer, simpleDepareLayer, depare3DLayer, 10.0, 1.0, false)
+                        .display(new DepareDBLoader(databaseServices, databaseTF.getText(), USER, PASSWD)
+                                .retrieveIn(latMin, lonMin, latMax, lonMax));
             }
             if (selectedObjects.contains("ALL") || selectedObjects.contains("DOCARE")) {
                 objects = new DockAreaDBLoader(s57Connection)
@@ -707,7 +702,7 @@ public class S57DBComponentController
                 System.out.println("soundings : " + soundings.size());
 
                 new SoundingView(bathymetryLayer).display(soundings);
-                
+
                 List<Point3DGeo> points = new ArrayList<>();
                 for (Sounding s : soundings) {
                     points.add(s.getPoint3D());
