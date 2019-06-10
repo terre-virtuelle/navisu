@@ -268,7 +268,7 @@ public class StlDBComponentController
     protected List<String> kmlFileNames;
     protected List<Polygon> selectedPolygons = new ArrayList<>();
     protected List<Polygon> realSelectedPolygons;
-    protected List<Pair<Integer, Integer>> selectedPolygonIndexList;
+    protected List<Pair<Integer, Integer>> selectedPolygonIndexList = new ArrayList<>();
     protected int tileCount = 1;
     protected double DEFAULT_EXAGGERATION = 1.0;
     protected double verticalExaggeration = DEFAULT_EXAGGERATION;
@@ -331,6 +331,8 @@ public class StlDBComponentController
     public TextField scaleDaeTF;
     @FXML
     public TextField elevationMagnificationTF;
+    @FXML
+    public TextField landVerticalOffsetTF;
     @FXML
     public Label latMinLabel;
     @FXML
@@ -867,7 +869,8 @@ public class StlDBComponentController
                 List<Polygon> selected = stlGuiController.createAndDisplayTiles(s57Layer, Material.RED, 100, lat0, lon0, lat1, lon1, tileCount, tileCount);
                 selectedPolygons.addAll(selected);
             }
-
+            tilesSelectionStartButton.setDisable(false);
+            tilesSelectionStopButton.setDisable(false);
         });
         tilesSelectionStartButton.setOnMouseClicked((MouseEvent event) -> {
             realSelectedPolygons = stlGuiController.getSelectedPolygons(selectedPolygons);
@@ -1047,7 +1050,7 @@ public class StlDBComponentController
                         gridBoxes.forEach((gb) -> {
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
-                            if (selectedPolygonIndexList.contains(new Pair(i, j))) {
+                            if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                 String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
 
                                 String supportType = supportTF.getText();
@@ -1084,7 +1087,7 @@ public class StlDBComponentController
                             gridBoxes.forEach((gb) -> {
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                if (selectedPolygonIndexList.contains(new Pair(i, j))) {
+                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     LOGGER.log(Level.INFO, "In export SlConsShapefile in STL on filename : {0}", filename);
                                     //Retrieve avec Clip
@@ -1125,7 +1128,7 @@ public class StlDBComponentController
                             gridBoxes.forEach((gb) -> {
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                if (selectedPolygonIndexList.contains(new Pair(i, j))) {
+                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
                                     /*
@@ -1195,7 +1198,7 @@ public class StlDBComponentController
                                 }
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                if (selectedPolygonIndexList.contains(new Pair(i, j))) {
+                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     scaleCompute(g);
                                     BuoyageExportToSTL buoyageExportSTL = new BuoyageExportToSTL(geodesyServices, g, filename, latScale, lonScale);
@@ -1224,7 +1227,7 @@ public class StlDBComponentController
                                 new LandmarkView(s57Layer).display(landmarks);
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                if (selectedPolygonIndexList.contains(new Pair(i, j))) {
+                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     scaleCompute(g);
                                     new LandmarkExportToSTL(geodesyServices, g, filename, latScale, lonScale)
@@ -1241,7 +1244,7 @@ public class StlDBComponentController
                                 objects.clear();
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                if (selectedPolygonIndexList.contains(new Pair(i, j))) {
+                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     scaleCompute(g);
                                     meshExportToSTL.export(g, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
@@ -1256,8 +1259,7 @@ public class StlDBComponentController
                                 objects.clear();
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                if (selectedPolygonIndexList.contains(new Pair(i, j))) {
-
+                                if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     double latitudeMin = g[0][0].getLatitude();
                                     double longitudeMin = g[0][0].getLongitude();
                                     double latitudeMax = g[g.length - 1][g[0].length - 1].getLatitude();
@@ -1369,7 +1371,7 @@ public class StlDBComponentController
                             for (Point3DGeo[][] g : grids) {
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                if (selectedPolygonIndexList.contains(new Pair(i, j))) {
+                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     filename = System.getProperty("user.dir") + SEP + DEFAULT_STL_PATH + filename;
                                     try {
@@ -1403,13 +1405,13 @@ public class StlDBComponentController
                     double sideX = 800;
                     double sideY = 450;
                     Pair<Double, Double> scales = scaleCompute(latMin, lonMin, latMax, lonMax, sideX, sideY);
-                    shapeSVG = new DepareExportToSVG(shp)
+                    List< ? extends Shape> shapeSVG = new DepareExportToSVG(shp)
                             .export(filename, scales.getX(), scales.getY(), sideY);
                     if (generateSvgCB.isSelected()) {
                         Platform.runLater(() -> {
                             JfxViewer jfxViewer = displayServices.getJfxViewer();
-                            // shapeSVG = createStar();
-                            jfxViewer.display(shapeSVG);
+                            // // shapeSVG = createStar();
+                            // jfxViewer.display(shapeSVG);
                         });
                     }
                     LOGGER.log(Level.INFO, "Out export DEPARE in SVG on filename : {0}", filename);
@@ -1854,6 +1856,7 @@ public class StlDBComponentController
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     private List<Pair<Integer, Integer>> getSelectedPolygonIndexList(List<Polygon> selected) {
         List<Pair<Integer, Integer>> result = new ArrayList<>();
         for (Polygon p : selected) {
