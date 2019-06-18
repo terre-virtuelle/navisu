@@ -142,7 +142,6 @@ public abstract class ShapefilePolygonView
                 record.getCompoundPointBuffer());
         shape.setWindingRule(AVKey.CLOCKWISE);
         shape.setPolygonRingGroups(new int[]{0});
-
         layer.addRenderable(shape);
     }
 

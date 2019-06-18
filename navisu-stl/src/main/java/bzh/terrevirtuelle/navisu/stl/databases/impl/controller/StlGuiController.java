@@ -547,9 +547,7 @@ public class StlGuiController {
     }
 
     public List<Polygon> getSelectedPolygons(List<Polygon> tiles) {
-        List<Pair<Integer, Integer>> result = new ArrayList<>();
         List<Polygon> selected = new ArrayList<>();
-
         Material material = new Material(Color.MAGENTA);
         ShapeAttributes pickedAttributes = new BasicShapeAttributes();
         pickedAttributes.setInteriorMaterial(material);
@@ -604,10 +602,11 @@ public class StlGuiController {
             p.setAttributes(unPickedAttributes);
             wwd.redrawNow();
         }
-        for (Polygon p : selected) {
-            p.setAttributes(pickedAttributes);
-            wwd.redrawNow();
+        if (selected != null && !selected.isEmpty()) {
+            for (Polygon p : selected) {
+                p.setAttributes(pickedAttributes);
+                wwd.redrawNow();
+            }
         }
-
     }
 }

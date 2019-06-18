@@ -557,8 +557,50 @@ public class DisplayImpl
     }
 
     @Override
-    public void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration) {
+    public void displayPaths(List<Path> paths, double elevation, RenderableLayer layer, Material material) {
+        ShapeAttributes attrs1 = createAttributes(material);
+        List<Path> result = new ArrayList<>();
+        for (Path p : paths) {
+            Iterable<? extends Position> positions = p.getPositions();
+            List<Position> tmpPos = new ArrayList<>();
+            for (Position pp : positions) {
+                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), elevation));
+            }
+            result.add(new Path(tmpPos));
+        }
+        result.forEach((p) -> {
+            p.setAltitudeMode(WorldWind.ABSOLUTE);
+            p.setAttributes(attrs1);
+        });
+
+        layer.addRenderables(result);
+        wwd.redrawNow();
+    }
+//void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material);
+
+    @Override
+    public void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material) {
         List<Polygon> result = new ArrayList<>();
+        paths.forEach((p) -> {
+            Iterable<? extends Position> positions = p.getPositions();
+            List<Position> tmpPos = new ArrayList<>();
+            for (Position pp : positions) {
+                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), pp.getElevation()));
+            }
+            result.add(new Polygon(tmpPos));
+        });
+        result.forEach((p) -> {
+            attrs0 = createAttributes(new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+            p.setAltitudeMode(WorldWind.ABSOLUTE);
+            p.setAttributes(attrs0);
+        });
+        layer.addRenderables(result);
+        wwd.redrawNow();
+    }
+
+    @Override
+    public void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration) {
+    List<Polygon> result = new ArrayList<>();
         paths.forEach((p) -> {
             Iterable<? extends Position> positions = p.getPositions();
             List<Position> tmpPos = new ArrayList<>();
@@ -574,6 +616,7 @@ public class DisplayImpl
         });
         layer.addRenderables(result);
         wwd.redrawNow();
+    
     }
 
     @Override
@@ -858,7 +901,7 @@ public class DisplayImpl
         JfxViewer jfxViewer = new JfxViewer(guiAgentServices);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, jfxViewer);
         guiAgentServices.getRoot().getChildren().add(jfxViewer);
-        
+
         jfxViewer.setVisible(true);
         jfxViewer.setScene(guiAgentServices.getScene());
         return jfxViewer;

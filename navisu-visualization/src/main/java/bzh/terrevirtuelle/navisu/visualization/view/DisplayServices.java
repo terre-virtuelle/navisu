@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.visualization.view;
 
-import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.raster.RasterInfo;
@@ -20,9 +19,6 @@ import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import java.util.List;
 import java.util.Map;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -42,7 +38,11 @@ public interface DisplayServices
 
     void displayPoints3DAsTriangles(List<Point3DGeo> points, RenderableLayer layer, Material material);
 
+    void displayPaths(List<Path> paths, double elevation, RenderableLayer layer, Material material);
+
     void displayPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration);
+
+    void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material);
 
     void displayPaths(GridBox3D gridBox3D, RenderableLayer layer, Material material, double verticalExaggeration);
 
@@ -113,6 +113,6 @@ public interface DisplayServices
     void exportASC(String outputFilename, Point3DGeo[][] pts);
 
     Point3DGeo[][] importASC(String outputFilename);
-    
+
     JfxViewer getJfxViewer();
 }

@@ -16,6 +16,7 @@ import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,7 +47,6 @@ public class JfxViewer
         implements Initializable {
 
     // 900x600
-    
     @FXML
     public Group viewerGroup;
     @FXML
@@ -98,8 +98,6 @@ public class JfxViewer
         this.stage = stage;
     }
 
-   
-
     public final void display() {
         shape = createStar();
         display(shape);
@@ -107,6 +105,12 @@ public class JfxViewer
 
     public final void display(Shape shape) {
         this.displayGroup.getChildren().add(shape);
+    }
+
+    public final void display(List<SVGPath> shapes) {
+        for (Shape shape : shapes) {
+            this.displayGroup.getChildren().add(shape);
+        }
     }
 
     @Override
@@ -132,7 +136,7 @@ public class JfxViewer
         star.setContent("M100,10 L100,10 40,180 190,60 10,60 160,180 z");
         star.setStrokeLineJoin(StrokeLineJoin.ROUND);
         star.setStroke(Color.RED);
-       // star.setFill(Color.RED);
+        // star.setFill(Color.RED);
         star.setStrokeWidth(4);
         star.setOpacity(1.0);
         return star;

@@ -308,8 +308,6 @@ public class StlDBComponentController
     @FXML
     public Button tilesSelectionStartButton;
     @FXML
-    public Button tilesSelectionStopButton;
-    @FXML
     public Button helpButton;
     @FXML
     public ChoiceBox<String> s57DatabasesCB;
@@ -870,15 +868,11 @@ public class StlDBComponentController
                 selectedPolygons.addAll(selected);
             }
             tilesSelectionStartButton.setDisable(false);
-            tilesSelectionStopButton.setDisable(false);
         });
         tilesSelectionStartButton.setOnMouseClicked((MouseEvent event) -> {
             realSelectedPolygons = stlGuiController.getSelectedPolygons(selectedPolygons);
         });
-        tilesSelectionStopButton.setOnMouseClicked((MouseEvent event) -> {
-            stlGuiController.showRealselected(selectedPolygons, realSelectedPolygons);
-            selectedPolygonIndexList = getSelectedPolygonIndexList(realSelectedPolygons);
-        });
+
         meshStlObjectButton.setOnMouseClicked((MouseEvent event) -> {
             boundList = meshExportToSTL.loadMesh();
             wwd.redrawNow();
@@ -932,7 +926,8 @@ public class StlDBComponentController
         });
 
         requestButton.setOnMouseClicked((MouseEvent event) -> {
-
+            stlGuiController.showRealselected(selectedPolygons, realSelectedPolygons);
+            selectedPolygonIndexList = getSelectedPolygonIndexList(realSelectedPolygons);
             s57Connection = databaseServices.connect(s57DatabaseTF.getText(),
                     "localhost", "jdbc:postgresql://", "5432", "org.postgresql.Driver", USER, PASSWD);
             if (lat0 != 0 && lon0 != 0 && lat1 != 0 && lon1 != 0) {
@@ -1087,7 +1082,7 @@ public class StlDBComponentController
                             gridBoxes.forEach((gb) -> {
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
+                                if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     LOGGER.log(Level.INFO, "In export SlConsShapefile in STL on filename : {0}", filename);
                                     //Retrieve avec Clip
@@ -1128,24 +1123,15 @@ public class StlDBComponentController
                             gridBoxes.forEach((gb) -> {
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
+                                if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
-                                    /*
-                                new DepareView(s57Layer, s57Layer, s57Layer, 10.0, 1.0, false)
-                                        .display(new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                                                .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax()));
-                                // Reinit Shapefile
-                                Shapefile shapefile_1 = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                                        .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
-                                new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shapefile_1, gb, s57Layer)
-                                        .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
-                                     */
-
+                                    
                                     Shapefile shp_0 = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
                                             .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
                                     new DepareView(s57Layer, s57Layer, s57Layer, 10.0, 1.0, false)
                                             .display(shp_0);
+                                    
                                     Shapefile shp_1 = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
                                             .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
                                     new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shp_1, gb, highestElevationBathy, s57Layer)
@@ -1164,6 +1150,7 @@ public class StlDBComponentController
                                     LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
                                     k++;
                                 }
+
                             });
                         }
                         k = 0;
@@ -1198,7 +1185,7 @@ public class StlDBComponentController
                                 }
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
+                                if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     scaleCompute(g);
                                     BuoyageExportToSTL buoyageExportSTL = new BuoyageExportToSTL(geodesyServices, g, filename, latScale, lonScale);
@@ -1227,7 +1214,7 @@ public class StlDBComponentController
                                 new LandmarkView(s57Layer).display(landmarks);
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
+                                if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     scaleCompute(g);
                                     new LandmarkExportToSTL(geodesyServices, g, filename, latScale, lonScale)
@@ -1244,7 +1231,7 @@ public class StlDBComponentController
                                 objects.clear();
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
+                                if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     scaleCompute(g);
                                     meshExportToSTL.export(g, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
@@ -1371,7 +1358,7 @@ public class StlDBComponentController
                             for (Point3DGeo[][] g : grids) {
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
+                                if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     filename = System.getProperty("user.dir") + SEP + DEFAULT_STL_PATH + filename;
                                     try {
@@ -1391,30 +1378,42 @@ public class StlDBComponentController
                         LOGGER.info("Out export in STL");
                     }
                 }
+
                 if (!generateStlCB.isSelected() && generateSvgCB.isSelected()) {
                     //DEPARE for Laser
-                    String filename = DEFAULT_SVG_PATH + outFileTF.getText() + ".svg";
-                    LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
-                    new DepareView(s57Layer, s57Layer, s57Layer, 10.0, 1.0, false)
-                            .display(new DepareDBLoader(databaseServices,
-                                    s57DatabaseTF.getText(),
-                                    USER,
-                                    PASSWD).retrieveIn(latMin, lonMin, latMax, lonMax));
-                    Shapefile shp = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                    String filenameRoot = DEFAULT_SVG_PATH + outFileTF.getText();
+                    LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filenameRoot);
+                 /*
+                    Shapefile shp0 = new DepareDBLoader(databaseServices,
+                            s57DatabaseTF.getText(), USER, PASSWD)
                             .retrieveIn(latMin, lonMin, latMax, lonMax);
+                    new DepareView(s57Layer, s57Layer, s57Layer, 10.0, 1.0, false)
+                            .display(shp0);
+                    */
+                    // System.out.println("shp0 : "+shp0.getNumberOfRecords());
+                    Shapefile shp = new DepareDBLoader(databaseServices,
+                            s57DatabaseTF.getText(), USER, PASSWD)
+                            .retrieveIn(latMin, lonMin, latMax, lonMax);
+                    // System.out.println("shp : "+shp.getNumberOfRecords());
                     double sideX = 800;
                     double sideY = 450;
-                    Pair<Double, Double> scales = scaleCompute(latMin, lonMin, latMax, lonMax, sideX, sideY);
-                    List< ? extends Shape> shapeSVG = new DepareExportToSVG(shp)
-                            .export(filename, scales.getX(), scales.getY(), sideY);
+                    Pair<Double, Double> scales = scaleCompute(latMin, lonMin, latMax, lonMax, sideY, sideY);  //sideY
+                    List< SVGPath> shapeSVG = new DepareExportToSVG(geodesyServices,
+                            displayServices,
+                            shp,
+                            filenameRoot,
+                            latMin, lonMin,
+                            sideX, sideY,
+                            scales.getX(), scales.getY(),
+                            s57Layer)
+                            .export();
                     if (generateSvgCB.isSelected()) {
                         Platform.runLater(() -> {
                             JfxViewer jfxViewer = displayServices.getJfxViewer();
-                            // // shapeSVG = createStar();
-                            // jfxViewer.display(shapeSVG);
+                            jfxViewer.display(shapeSVG);
                         });
                     }
-                    LOGGER.log(Level.INFO, "Out export DEPARE in SVG on filename : {0}", filename);
+                    LOGGER.log(Level.INFO, "Out export DEPARE in SVG on filename : {0}", filenameRoot);
                 }
             }
         }
@@ -1846,24 +1845,26 @@ public class StlDBComponentController
     private List<Point3DGeo[][]> filterGrid(List<Point3DGeo[][]> grids, List<Polygon> selectedPolygons) {
         List<Point3DGeo[][]> result = new ArrayList<>();
         for (Point3DGeo[][] g : grids) {
-            System.out.println("g : " + g[0][0].getLatitude() + " " + g[0][0].getLongitude()
-                    + " " + g[g.length - 1][g[0].length - 1].getLatitude()
-                    + " " + g[g.length - 1][g[0].length - 1].getLongitude());
+            // System.out.println("g : " + g[0][0].getLatitude() + " " + g[0][0].getLongitude()
+            //         + " " + g[g.length - 1][g[0].length - 1].getLatitude()
+            //         + " " + g[g.length - 1][g[0].length - 1].getLongitude());
         }
-        for (Polygon p : selectedPolygons) {
-            System.out.println("p : " + p.getBoundaries());
-        }
+        // for (Polygon p : selectedPolygons) {
+        //     System.out.println("p : " + p.getBoundaries());
+        // }
         return result;
     }
 
     @SuppressWarnings("unchecked")
     private List<Pair<Integer, Integer>> getSelectedPolygonIndexList(List<Polygon> selected) {
         List<Pair<Integer, Integer>> result = new ArrayList<>();
-        for (Polygon p : selected) {
-            String value = (String) p.getValue(AVKey.DISPLAY_NAME);
-            value = value.replace("tile : ", "");
-            String[] id = value.split(",");
-            result.add(new Pair(Integer.parseInt(id[0].trim()), Integer.parseInt(id[1].trim())));
+        if (selected != null) {
+            for (Polygon p : selected) {
+                String value = (String) p.getValue(AVKey.DISPLAY_NAME);
+                value = value.replace("tile : ", "");
+                String[] id = value.split(",");
+                result.add(new Pair(Integer.parseInt(id[0].trim()), Integer.parseInt(id[1].trim())));
+            }
         }
         return result;
     }

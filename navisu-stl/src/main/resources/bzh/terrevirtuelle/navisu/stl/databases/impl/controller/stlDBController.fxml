@@ -646,7 +646,6 @@
                           </rowConstraints>
                            <children>
                               <Button fx:id="tilesSelectionStartButton" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Start" />
-                              <Button fx:id="tilesSelectionStopButton" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Stop" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </children>

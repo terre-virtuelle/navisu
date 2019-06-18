@@ -90,7 +90,7 @@ public class Pair<T,K>{
 
     @Override
     public String toString() {
-        return "Pair{" + "x=" + x + ", y=" + y + '}';
+        return "{" + "x=" + x + ", y=" + y + '}';
     }
 
    
