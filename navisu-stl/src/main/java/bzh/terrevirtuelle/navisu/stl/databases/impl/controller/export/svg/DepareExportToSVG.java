@@ -12,6 +12,7 @@ import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolyline;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
@@ -24,6 +25,7 @@ import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygon;
 import gov.nasa.worldwind.render.SurfacePolygons;
+import gov.nasa.worldwind.render.SurfacePolyline;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,70 +87,68 @@ public class DepareExportToSVG {
         makeAttributes();
     }
 
-    public List<SVGPath> export() {
+    public List<Polygon> export() {
         List<Path> pathWWJ = new ArrayList<>();
-        List<SVGPath> paths = new ArrayList<>();
+        List<Polygon> polyWWJ = new ArrayList<>();
+
         while (shapefile.hasNext()) {
             try {
                 ShapefileRecord record = shapefile.nextRecord();
-                List< List<Position>> depares = createDepare(record);
-
-                for (List<Position> l : depares) {
-                    List<List<Position>> posfiltered = filter(l);
-                    for (List<Position> pf : posfiltered) {
-                        Path path = new Path(pf);
-                        pathWWJ.add(path);
-                        List<Position> scaledPosition = scaling(pf, latMin, lonMin, sideY, scaleLat, scaleLon);
-                        String content = createContent(scaledPosition);
-                        paths.add(createPath(content));
+                List<Position> depare = createDepare(record);
+                List<List<Position>> posfiltered = filter(depare);
+                for (List<Position> pf : posfiltered) {
+                    List<Position> positions = new ArrayList<>();
+                    for (Position pos : pf) {
+                        Position pos2 = new Position(pos.getLatitude(), pos.getLongitude(), 100);
+                        positions.add(pos2);
                     }
+                    Polygon poly = new Polygon(positions);
+                    polyWWJ.add(poly);
                 }
-
             } catch (Exception ex) {
                 Logger.getLogger(DepareExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-        displayServices.displayPaths(pathWWJ, 100.0, layer, Material.RED);
-        return paths;
+        // displayServices.displayPaths(pathWWJ, 100.0, layer, Material.RED);
+        displayServices.displayPolygons(polyWWJ, layer, Material.MAGENTA, 1);
+        return polyWWJ;
 
     }
 
-    protected List<List<Position>> createDepare(ShapefileRecord record) {
+    public List<SVGPath> createSVG(List<Path> pathList) {
+        List<SVGPath> result = new ArrayList<>();
+        for (Path p : pathList) {
+            Iterable<? extends Position> iPostions = p.getPositions();
+            List<Position> posList = new ArrayList<>();
+            for (Position pp : iPostions) {
+                Position p1 = new Position(pp.getLatitude(), pp.getLongitude(), 100);
+                posList.add(p1);
+            }
+            List<Position> scaledPosition = scaling(posList, latMin, lonMin, sideY, scaleLat, scaleLon);
+            String content = createContent(scaledPosition);
+            result.add(createPath(content));
+        }
 
-        List<List<Position>> result = new ArrayList<>();
+        return result;
+    }
+
+    protected List<Position> createDepare(ShapefileRecord record) {
+
+        List<Position> result = new ArrayList<>();
         SurfacePolygons shape = new SurfacePolygons(
                 Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
                 record.getCompoundPointBuffer());
-        SurfacePolygon surface = new SurfacePolygon(shape.getBuffer().getPositions());
-
-        List<Iterable<? extends LatLon>> pos = surface.getBoundaries();
-
-        for (Iterable<? extends LatLon> i : pos) {
-            List<Position> list = new ArrayList<>();
-            for (LatLon l : i) {
-                list.add(new Position(l, 0.0));
-            }
-
-            Polygon polygon = new Polygon(list);
-            polygon.setAttributes(normalAttributes);
-            if (first == true) {
-                kmlWriter.write(polygon, StandardOpenOption.CREATE);
-                first = false;
-            } else {
-                kmlWriter.write(polygon, StandardOpenOption.APPEND);
-            }
-
-            // Affichage
-            result.add(list);
+        Iterable<? extends LatLon> pos = shape.getLocations();
+        for (LatLon l : pos) {
+            result.add(new Position(l, 0.0));
         }
-
         return result;
     }
 
     private void makeAttributes() {
         normalAttributes = new BasicShapeAttributes();
         normalAttributes.setOutlineMaterial(Material.RED);
-        normalAttributes.setOutlineOpacity(0.5);
+        normalAttributes.setOutlineOpacity(1.0);
         normalAttributes.setOutlineWidth(1);
         normalAttributes.setDrawOutline(true);
         normalAttributes.setDrawInterior(false);

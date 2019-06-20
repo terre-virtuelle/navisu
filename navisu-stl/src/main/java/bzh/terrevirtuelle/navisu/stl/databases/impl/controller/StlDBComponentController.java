@@ -143,6 +143,7 @@ import bzh.terrevirtuelle.navisu.visualization.view.impl.controller.JfxViewer;
 import com.google.common.collect.ImmutableMap;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
+import gov.nasa.worldwind.render.Path;
 import java.io.InputStream;
 import java.util.logging.FileHandler;
 import javafx.scene.shape.SVGPath;
@@ -617,7 +618,8 @@ public class StlDBComponentController
                 .put("RESARE", resareCB)
                 .build();
         stlGuiController = new StlGuiController(this,
-                geodesyServices, s57SelectionMap, allCB,
+                geodesyServices, displayServices,
+                s57SelectionMap, allCB,
                 selectedObjects,
                 objectsTF,
                 LAT_MIN, LAT_MAX, LON_MIN, LON_MAX,
@@ -1126,12 +1128,12 @@ public class StlDBComponentController
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
-                                    
+
                                     Shapefile shp_0 = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
                                             .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
                                     new DepareView(s57Layer, s57Layer, s57Layer, 10.0, 1.0, false)
                                             .display(shp_0);
-                                    
+
                                     Shapefile shp_1 = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
                                             .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
                                     new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shp_1, gb, highestElevationBathy, s57Layer)
@@ -1383,36 +1385,42 @@ public class StlDBComponentController
                     //DEPARE for Laser
                     String filenameRoot = DEFAULT_SVG_PATH + outFileTF.getText();
                     LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filenameRoot);
-                 /*
+                   /* 
                     Shapefile shp0 = new DepareDBLoader(databaseServices,
                             s57DatabaseTF.getText(), USER, PASSWD)
                             .retrieveIn(latMin, lonMin, latMax, lonMax);
                     new DepareView(s57Layer, s57Layer, s57Layer, 10.0, 1.0, false)
                             .display(shp0);
-                    */
-                    // System.out.println("shp0 : "+shp0.getNumberOfRecords());
+                    */ 
+                  
                     Shapefile shp = new DepareDBLoader(databaseServices,
                             s57DatabaseTF.getText(), USER, PASSWD)
                             .retrieveIn(latMin, lonMin, latMax, lonMax);
-                    // System.out.println("shp : "+shp.getNumberOfRecords());
+                   
                     double sideX = 800;
                     double sideY = 450;
                     Pair<Double, Double> scales = scaleCompute(latMin, lonMin, latMax, lonMax, sideY, sideY);  //sideY
-                    List< SVGPath> shapeSVG = new DepareExportToSVG(geodesyServices,
+                    DepareExportToSVG depareExportToSVG = new DepareExportToSVG(geodesyServices,
                             displayServices,
                             shp,
                             filenameRoot,
                             latMin, lonMin,
                             sideX, sideY,
                             scales.getX(), scales.getY(),
-                            s57Layer)
-                            .export();
+                            s57Layer);
+                    List<Polygon> polygonList = depareExportToSVG.export();
+                    stlGuiController.depareSelection(polygonList, s57Layer);
+                    //sur bouton
+                    //Avec Polygon et pas Path
+                  /*  List< SVGPath> shapeSVGList = depareExportToSVG.createSVG(polygonList);
+
                     if (generateSvgCB.isSelected()) {
                         Platform.runLater(() -> {
                             JfxViewer jfxViewer = displayServices.getJfxViewer();
-                            jfxViewer.display(shapeSVG);
+                            jfxViewer.display(shapeSVGList);
                         });
                     }
+                 */  
                     LOGGER.log(Level.INFO, "Out export DEPARE in SVG on filename : {0}", filenameRoot);
                 }
             }

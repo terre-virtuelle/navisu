@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.stl.databases.impl.controller;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
-import bzh.terrevirtuelle.navisu.util.Pair;
+import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -17,6 +17,7 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.awt.Color;
@@ -44,6 +45,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.SVGPath;
 
 /**
  *
@@ -82,16 +84,19 @@ public class StlGuiController {
     protected int tileCount;
 
     protected GeodesyServices geodesyServices;
+    protected DisplayServices displayServices;
 
     protected TextField objectsTF;
     protected Map<String, CheckBox> s57SelectionMap;
     protected List<String> selectedObjects;
     protected List<Polygon> selectedPolygons;
+    protected List< SVGPath> shapeSVGList;
     protected CheckBox allCB;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
     public StlGuiController(StlDBComponentController stlDBComponentController,
             GeodesyServices geodesyServices,
+            DisplayServices displayServices,
             Map<String, CheckBox> s57SelectionMap, CheckBox allCB,
             List<String> selectedObjects,
             TextField objectsTF,
@@ -100,6 +105,7 @@ public class StlGuiController {
             Label latMinLabel, Label lonMinLabel, Label latMaxLabel, Label lonMaxLabel,
             String caheFileName, RenderableLayer layer, List<Polygon> selectedPolygons) {
         this.stlDBComponentController = stlDBComponentController;
+        this.displayServices = displayServices;
         this.geodesyServices = geodesyServices;
         this.s57SelectionMap = s57SelectionMap;
         this.allCB = allCB;
@@ -540,6 +546,32 @@ public class StlGuiController {
                     //  System.out.println((polygon).getBoundaries());
                     polygon.setAttributes(pickedAttributes);
                     polygon.setHighlightAttributes(pickedAttributes);
+                    wwd.redrawNow();
+                }
+            }
+        });
+    }
+
+    public void depareSelection(List<Polygon> shapes, RenderableLayer l) {
+
+        List<Polygon> polygonList = new ArrayList<>();
+        polygonList.addAll(shapes);
+
+        Material material = new Material(Color.MAGENTA);
+        ShapeAttributes pickedAttributes = new BasicShapeAttributes();
+        pickedAttributes.setInteriorMaterial(material);
+        pickedAttributes.setDrawInterior(true);
+        pickedAttributes.setInteriorOpacity(1.0);
+        pickedAttributes.setOutlineMaterial(material);
+        wwd.addSelectListener((SelectEvent event) -> {
+            Object o = event.getTopObject();
+            if (event.isLeftClick() && o != null) {
+                if (o.getClass() == Polygon.class) {
+                    Polygon obj = ((Polygon) o);
+                    obj.setAttributes(pickedAttributes);
+                    obj.setHighlightAttributes(pickedAttributes);  
+                    polygonList.remove(obj);
+                    layer.removeRenderable(obj);
                     wwd.redrawNow();
                 }
             }

@@ -515,7 +515,7 @@ public class DisplayImpl
 
     protected ShapeAttributes createAttributes(Material material) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();
-        normAttributes.setDrawInterior(true);
+        normAttributes.setDrawInterior(false);
         normAttributes.setDrawOutline(true);
         normAttributes.setInteriorMaterial(material);
         normAttributes.setOutlineMaterial(material);
@@ -576,7 +576,6 @@ public class DisplayImpl
         layer.addRenderables(result);
         wwd.redrawNow();
     }
-//void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material);
 
     @Override
     public void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material) {

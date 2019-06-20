@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolyline;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -137,11 +138,19 @@ public abstract class ShapefilePolygonView
     }
 
     private void surface(RenderableLayer layer, ShapefileRecord record) {
+        
         shape = new SurfacePolygons(
                 Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
                 record.getCompoundPointBuffer());
         shape.setWindingRule(AVKey.CLOCKWISE);
         shape.setPolygonRingGroups(new int[]{0});
+        
+        
+        /*
+        shape=  new SurfacePolygons(
+                Sector.fromDegrees(((ShapefileRecordPolyline) record).getBoundingRectangle()),
+                record.getCompoundPointBuffer());
+       */
         layer.addRenderable(shape);
     }
 

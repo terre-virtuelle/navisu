@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.visualization.view;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.raster.RasterInfo;
+import bzh.terrevirtuelle.navisu.domain.svg.SVGPath3D;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.controller.JfxViewer;
@@ -115,4 +116,5 @@ public interface DisplayServices
     Point3DGeo[][] importASC(String outputFilename);
 
     JfxViewer getJfxViewer();
+
 }
