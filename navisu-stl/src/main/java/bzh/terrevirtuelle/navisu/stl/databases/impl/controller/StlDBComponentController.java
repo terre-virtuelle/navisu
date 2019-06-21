@@ -52,7 +52,6 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.DelaunayServices;
-import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
@@ -116,6 +115,7 @@ import javafx.scene.text.Text;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemDbLoader;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.domain.raster.RasterInfo;
+import bzh.terrevirtuelle.navisu.domain.svg.SVGPath3D;
 import bzh.terrevirtuelle.navisu.gdal.GdalServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
@@ -143,7 +143,6 @@ import bzh.terrevirtuelle.navisu.visualization.view.impl.controller.JfxViewer;
 import com.google.common.collect.ImmutableMap;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
-import gov.nasa.worldwind.render.Path;
 import java.io.InputStream;
 import java.util.logging.FileHandler;
 import javafx.scene.shape.SVGPath;
@@ -225,7 +224,8 @@ public class StlDBComponentController
     protected final Set<S57Controller> s57Controllers = new HashSet<>();
     protected boolean first = true;
     protected static final String GROUP_0 = "S57 charts";
-    protected static final String BATHYMETRY_LAYER = "S57StlBathy";
+    protected static final String GROUP_1 = "Bathymetry";
+    protected static final String BATHYMETRY_LAYER = "Bathymetry";
     protected static final String S57_LAYER = "S57Stl";
     protected static final String LIGHTS_LAYER = "LIGHTS";
     protected static final String SELECTED_LAYER = "TargetCmd";
@@ -394,6 +394,10 @@ public class StlDBComponentController
     public CheckBox generateStlCB;
     @FXML
     public CheckBox generateSvgCB;
+    @FXML
+    public Button validSVGButton;
+    @FXML
+    public CheckBox depareVisuCB;
     @FXML
     public CheckBox generateKmlCB;
     @FXML
@@ -1385,18 +1389,17 @@ public class StlDBComponentController
                     //DEPARE for Laser
                     String filenameRoot = DEFAULT_SVG_PATH + outFileTF.getText();
                     LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filenameRoot);
-                   /* 
-                    Shapefile shp0 = new DepareDBLoader(databaseServices,
-                            s57DatabaseTF.getText(), USER, PASSWD)
-                            .retrieveIn(latMin, lonMin, latMax, lonMax);
-                    new DepareView(s57Layer, s57Layer, s57Layer, 10.0, 1.0, false)
-                            .display(shp0);
-                    */ 
-                  
+                    if (depareVisuCB.isSelected()) {
+                        Shapefile shp0 = new DepareDBLoader(databaseServices,
+                                s57DatabaseTF.getText(), USER, PASSWD)
+                                .retrieveIn(latMin, lonMin, latMax, lonMax);
+                        new DepareView(bathymetryLayer, s57Layer, s57Layer, 10.0, 1.0, false)
+                                .display(shp0);
+                    }
                     Shapefile shp = new DepareDBLoader(databaseServices,
                             s57DatabaseTF.getText(), USER, PASSWD)
                             .retrieveIn(latMin, lonMin, latMax, lonMax);
-                   
+
                     double sideX = 800;
                     double sideY = 450;
                     Pair<Double, Double> scales = scaleCompute(latMin, lonMin, latMax, lonMax, sideY, sideY);  //sideY
@@ -1410,17 +1413,20 @@ public class StlDBComponentController
                             s57Layer);
                     List<Polygon> polygonList = depareExportToSVG.export();
                     stlGuiController.depareSelection(polygonList, s57Layer);
-                    //sur bouton
-                    //Avec Polygon et pas Path
-                  /*  List< SVGPath> shapeSVGList = depareExportToSVG.createSVG(polygonList);
 
-                    if (generateSvgCB.isSelected()) {
-                        Platform.runLater(() -> {
-                            JfxViewer jfxViewer = displayServices.getJfxViewer();
-                            jfxViewer.display(shapeSVGList);
-                        });
-                    }
-                 */  
+                    validSVGButton.setOnMouseClicked((MouseEvent event) -> {
+                        List<Polygon> selectedPolygonList = stlGuiController.getPolygonList();
+                        List<SVGPath3D> shapeSVGList = depareExportToSVG.createSVGPath(selectedPolygonList);
+                        if (!shapeSVGList.isEmpty()) {
+                            if (generateSvgCB.isSelected()) {
+                                Platform.runLater(() -> {
+                                    JfxViewer jfxViewer = displayServices.getJfxViewer();
+                                    jfxViewer.display(shapeSVGList);
+                                });
+                            }
+                        }
+                    });
+
                     LOGGER.log(Level.INFO, "Out export DEPARE in SVG on filename : {0}", filenameRoot);
                 }
             }

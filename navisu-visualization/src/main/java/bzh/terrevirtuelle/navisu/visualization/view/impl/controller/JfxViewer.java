@@ -11,6 +11,7 @@ package bzh.terrevirtuelle.navisu.visualization.view.impl.controller;
  * @date May 31, 2019
  */
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.domain.svg.SVGPath3D;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 
 import java.io.IOException;
@@ -106,13 +107,20 @@ public class JfxViewer
     public final void display(Shape shape) {
         this.displayGroup.getChildren().add(shape);
     }
-
+/**
     public final void display(List<SVGPath> shapes) {
         for (Shape shape : shapes) {
             this.displayGroup.getChildren().add(shape);
         }
     }
-
+*/
+     public final void display(List<SVGPath3D> shapes) {
+        for (Shape shape : shapes) {
+            this.displayGroup.getChildren().add(shape);
+        }
+    }   
+        
+        
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         quitButton.setOnMouseClicked((MouseEvent event) -> {

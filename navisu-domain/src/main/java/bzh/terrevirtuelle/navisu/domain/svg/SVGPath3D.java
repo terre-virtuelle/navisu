@@ -5,6 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.domain.svg;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.shape.SVGPath;
 
 /**
@@ -17,12 +19,34 @@ public class SVGPath3D
 
     private double height;
 
+    private Map<String, Double> values;
+
     public SVGPath3D() {
+        values = new HashMap<>();
         this.height = 0.0;
     }
 
     public SVGPath3D(double height) {
+        values = new HashMap<>();
         this.height = height;
+    }
+
+    /**
+     * Get the value of values
+     *
+     * @return the value of values
+     */
+    public Map<String, Double> getValues() {
+        return values;
+    }
+
+    /**
+     * Set the value of values
+     *
+     * @param values new value of values
+     */
+    public void setValues(Map<String, Double> values) {
+        this.values = values;
     }
 
     /**

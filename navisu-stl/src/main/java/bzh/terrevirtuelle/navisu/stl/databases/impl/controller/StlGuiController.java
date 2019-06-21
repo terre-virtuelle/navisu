@@ -17,8 +17,8 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.awt.Color;
 import java.io.FileInputStream;
@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -91,6 +92,7 @@ public class StlGuiController {
     protected List<String> selectedObjects;
     protected List<Polygon> selectedPolygons;
     protected List< SVGPath> shapeSVGList;
+    protected List<Polygon> polygonList;
     protected CheckBox allCB;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
@@ -126,29 +128,7 @@ public class StlGuiController {
         this.CACHE_FILE_NAME = caheFileName;
         this.layer = layer;
         this.selectedPolygons = selectedPolygons;
-    }
 
-    public void setTileSideX(double tileSideX) {
-        this.tileSideX = tileSideX;
-    }
-
-    public void setTileSideY(double tileSideY) {
-        this.tileSideY = tileSideY;
-    }
-
-    public void setTileSideZ(double tileSideZ) {
-        this.tileSideZ = tileSideZ;
-    }
-
-    public void setTileCount(int tileCount) {
-        this.tileCount = tileCount;
-    }
-
-    public void initTile(double tileSideX, double tileSideY, double tileSideZ, int tileCount) {
-        this.tileSideX = tileSideX;
-        this.tileSideY = tileSideY;
-        this.tileSideZ = tileSideZ;
-        this.tileCount = tileCount;
     }
 
     public void initSelectedZone() {
@@ -543,7 +523,6 @@ public class StlGuiController {
             if (event.isLeftClick() && o != null) {
                 if (o.getClass() == Polygon.class) {
                     Polygon polygon = ((Polygon) o);
-                    //  System.out.println((polygon).getBoundaries());
                     polygon.setAttributes(pickedAttributes);
                     polygon.setHighlightAttributes(pickedAttributes);
                     wwd.redrawNow();
@@ -554,7 +533,7 @@ public class StlGuiController {
 
     public void depareSelection(List<Polygon> shapes, RenderableLayer l) {
 
-        List<Polygon> polygonList = new ArrayList<>();
+        polygonList = new ArrayList<>();
         polygonList.addAll(shapes);
 
         Material material = new Material(Color.MAGENTA);
@@ -564,13 +543,14 @@ public class StlGuiController {
         pickedAttributes.setInteriorOpacity(1.0);
         pickedAttributes.setOutlineMaterial(material);
         wwd.addSelectListener((SelectEvent event) -> {
+            Stack<Polygon> unDo = new Stack<>();
             Object o = event.getTopObject();
             if (event.isLeftClick() && o != null) {
                 if (o.getClass() == Polygon.class) {
                     Polygon obj = ((Polygon) o);
                     obj.setAttributes(pickedAttributes);
-                    obj.setHighlightAttributes(pickedAttributes);  
-                    polygonList.remove(obj);
+                    obj.setHighlightAttributes(pickedAttributes);
+                    unDo.push(obj);
                     layer.removeRenderable(obj);
                     wwd.redrawNow();
                 }
@@ -641,4 +621,38 @@ public class StlGuiController {
             }
         }
     }
+
+    public void setTileSideX(double tileSideX) {
+        this.tileSideX = tileSideX;
+    }
+
+    public void setTileSideY(double tileSideY) {
+        this.tileSideY = tileSideY;
+    }
+
+    public void setTileSideZ(double tileSideZ) {
+        this.tileSideZ = tileSideZ;
+    }
+
+    public void setTileCount(int tileCount) {
+        this.tileCount = tileCount;
+    }
+
+    public void initTile(double tileSideX, double tileSideY, double tileSideZ, int tileCount) {
+        this.tileSideX = tileSideX;
+        this.tileSideY = tileSideY;
+        this.tileSideZ = tileSideZ;
+        this.tileCount = tileCount;
+    }
+
+    public List<Polygon> getPolygonList() {
+        List<Polygon> result = new ArrayList<>();
+        Iterable<Renderable> renderables = layer.getRenderables();
+        for (Renderable r : renderables) {
+            result.add((Polygon) r);
+        }
+
+        return result;
+    }
+
 }

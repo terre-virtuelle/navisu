@@ -419,6 +419,9 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
                                           <CheckBox fx:id="generateStlCB" mnemonicParsing="false" selected="true" text="Generate STL" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
@@ -426,6 +429,8 @@
                                           <CheckBox mnemonicParsing="false" selected="true" text="GeoTIFF" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                           <CheckBox mnemonicParsing="false" text="ASCII" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                           <CheckBox fx:id="generateSvgCB" mnemonicParsing="false" prefHeight="18.0" prefWidth="106.0" text="Generate SVG" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <Button fx:id="validSVGButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Valid" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <CheckBox fx:id="depareVisuCB" mnemonicParsing="false" prefHeight="18.0" prefWidth="108.0" text="Depare visu." GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                        </children>
                                     </GridPane></children>
 						                                </AnchorPane>
