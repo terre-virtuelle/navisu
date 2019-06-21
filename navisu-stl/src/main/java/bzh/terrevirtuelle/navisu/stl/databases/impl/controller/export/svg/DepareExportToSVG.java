@@ -65,29 +65,13 @@ public class DepareExportToSVG
         makeAttributes();
     }
 
-    /*
-    public List<SVGPath> createSVGPath(List<Polygon> pathList) {
-        List<SVGPath> result = new ArrayList<>();
-        pathList.stream().map((p) -> p.getOuterBoundary()).map((latLon) -> {
-            List<Position> posList = new ArrayList<>();
-            for (LatLon pp : latLon) {
-                Position p1 = new Position(pp.getLatitude(), pp.getLongitude(), 100);
-                posList.add(p1);
-            }
-            return posList;
-        }).map((posList) -> scaling(posList, latMin, lonMin, sideY, scaleLat, scaleLon)).map((scaledPosition) -> createContent(scaledPosition)).forEachOrdered((content) -> {
-            result.add(createPath(content));
-        });
-        return result;
-    }
-     */
     public List<SVGPath3D> createSVGPath(List<Polygon> pathList) {
         List<SVGPath3D> result = new ArrayList<>();
         for (Polygon p : pathList) {
             SVGPath3D svgPath3D = new SVGPath3D();
             svgPath3D.getValues().put("drval1", (Double) p.getValue("drval1"));
             svgPath3D.getValues().put("drval2", (Double) p.getValue("drval2"));
-
+            svgPath3D.setHeight((Double)(p.getValue("drval1")));
             svgPath3D.setStroke(Color.color(Math.random(), Math.random(), Math.random()));
             svgPath3D.setStrokeWidth(1);
             svgPath3D.setFill(null);
@@ -136,7 +120,5 @@ public class DepareExportToSVG
         result += "z";
         return result;
     }
-
-    
 
 }

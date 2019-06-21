@@ -519,7 +519,6 @@ public class StlGuiController {
         pickedAttributes.setOutlineMaterial(material);
         wwd.addSelectListener((SelectEvent event) -> {
             Object o = event.getTopObject();
-            // System.out.println("o : "+o);
             if (event.isLeftClick() && o != null) {
                 if (o.getClass() == Polygon.class) {
                     Polygon polygon = ((Polygon) o);
@@ -531,11 +530,7 @@ public class StlGuiController {
         });
     }
 
-    public void depareSelection(List<Polygon> shapes, RenderableLayer l) {
-
-        polygonList = new ArrayList<>();
-        polygonList.addAll(shapes);
-
+    public List<Polygon> depareSelection(List<Polygon> shapes, RenderableLayer l) {
         Material material = new Material(Color.MAGENTA);
         ShapeAttributes pickedAttributes = new BasicShapeAttributes();
         pickedAttributes.setInteriorMaterial(material);
@@ -550,12 +545,14 @@ public class StlGuiController {
                     Polygon obj = ((Polygon) o);
                     obj.setAttributes(pickedAttributes);
                     obj.setHighlightAttributes(pickedAttributes);
+                    shapes.remove(obj);
                     unDo.push(obj);
                     layer.removeRenderable(obj);
                     wwd.redrawNow();
                 }
             }
         });
+        return shapes;
     }
 
     public List<Polygon> getSelectedPolygons(List<Polygon> tiles) {
@@ -586,8 +583,6 @@ public class StlGuiController {
                         } else {
                             selected.add(polygon);
                             polygon.setAttributes(pickedAttributes);
-                            polygon.setHighlightAttributes(pickedAttributes);
-                            //System.out.println(selected);
                         }
                         wwd.redrawNow();
                     }
@@ -646,13 +641,7 @@ public class StlGuiController {
     }
 
     public List<Polygon> getPolygonList() {
-        List<Polygon> result = new ArrayList<>();
-        Iterable<Renderable> renderables = layer.getRenderables();
-        for (Renderable r : renderables) {
-            result.add((Polygon) r);
-        }
-
-        return result;
+        return polygonList;
     }
 
 }

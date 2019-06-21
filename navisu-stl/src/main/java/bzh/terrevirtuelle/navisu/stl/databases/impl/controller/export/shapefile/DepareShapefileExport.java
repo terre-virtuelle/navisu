@@ -92,9 +92,8 @@ public class DepareShapefileExport {
                 Logger.getLogger(DepareExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-        Color color = new Color((int) (Math.random() * 255),
-                (int) (Math.random() * 255), (int) (Math.random() * 255));
-        displayServices.displayPolygons(polyWWJ, layer, Material.GREEN, 1);
+        displayServices.displayPolygons(polyWWJ, layer, Material.GREEN);
+       
         return polyWWJ;
     }
 

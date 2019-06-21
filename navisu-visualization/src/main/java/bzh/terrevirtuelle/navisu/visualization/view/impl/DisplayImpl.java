@@ -599,7 +599,7 @@ public class DisplayImpl
 
     @Override
     public void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration) {
-    List<Polygon> result = new ArrayList<>();
+        List<Polygon> result = new ArrayList<>();
         paths.forEach((p) -> {
             Iterable<? extends Position> positions = p.getPositions();
             List<Position> tmpPos = new ArrayList<>();
@@ -615,7 +615,7 @@ public class DisplayImpl
         });
         layer.addRenderables(result);
         wwd.redrawNow();
-    
+
     }
 
     @Override
@@ -656,6 +656,16 @@ public class DisplayImpl
         });
 
         layer.addRenderables(result);
+        wwd.redrawNow();
+    }
+
+    @Override
+    public void displayPolygons(List<Polygon> poly, RenderableLayer layer, Material material) {
+        ShapeAttributes attrs0 = createAttributes(material);
+        for (Polygon p : poly) {
+            p.setAttributes(attrs0);
+        }
+        layer.addRenderables(poly);
         wwd.redrawNow();
     }
 

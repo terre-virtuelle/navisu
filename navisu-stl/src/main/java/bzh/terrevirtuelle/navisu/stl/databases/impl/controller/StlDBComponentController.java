@@ -911,9 +911,7 @@ public class StlDBComponentController
         });
         svgViewerButton.setOnMouseClicked((MouseEvent event) -> {
             // 900x600
-            JfxViewer jfxViewer = displayServices.getJfxViewer();
-            Shape shape = createStar();
-            jfxViewer.display(shape);
+
         });
 
         importShapefileButton.setOnMouseClicked((MouseEvent event) -> {
@@ -1403,20 +1401,27 @@ public class StlDBComponentController
                     double sideX = 800;
                     double sideY = 450;
                     Pair<Double, Double> scales = scaleCompute(latMin, lonMin, latMax, lonMax, sideY, sideY);  //sideY
-                    DepareExportToSVG depareExportToSVG = new DepareExportToSVG(geodesyServices,
-                            displayServices,
+                    DepareExportToSVG depareExportToSVG = new DepareExportToSVG(geodesyServices, displayServices,
                             shp,
                             filenameRoot,
-                            latMin, lonMin,
-                            sideX, sideY,
-                            scales.getX(), scales.getY(),
+                            latMin, lonMin, sideX, sideY, scales.getX(), scales.getY(),
                             s57Layer);
                     List<Polygon> polygonList = depareExportToSVG.export();
-                    stlGuiController.depareSelection(polygonList, s57Layer);
+                    List<Polygon> selectedPolygonList = stlGuiController.depareSelection(polygonList, s57Layer);
 
                     validSVGButton.setOnMouseClicked((MouseEvent event) -> {
-                        List<Polygon> selectedPolygonList = stlGuiController.getPolygonList();
+                        Map<Double, List<SVGPath3D>> svgMap = new HashMap<>();
                         List<SVGPath3D> shapeSVGList = depareExportToSVG.createSVGPath(selectedPolygonList);
+                        for (SVGPath3D svg : shapeSVGList) {
+                            double height = svg.getHeight();
+                            if (!svgMap.keySet().contains(height)) {
+                                List<SVGPath3D> l = new ArrayList<>();
+                                l.add(svg);
+                                svgMap.put(height, l);
+                            } else {
+                                svgMap.get(height).add(svg);
+                            }
+                        }
                         if (!shapeSVGList.isEmpty()) {
                             if (generateSvgCB.isSelected()) {
                                 Platform.runLater(() -> {
@@ -1426,7 +1431,6 @@ public class StlDBComponentController
                             }
                         }
                     });
-
                     LOGGER.log(Level.INFO, "Out export DEPARE in SVG on filename : {0}", filenameRoot);
                 }
             }
@@ -1513,8 +1517,8 @@ public class StlDBComponentController
                     lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
             List<Point3DGeo> pts = dem.getGrid();
             List<Point3DGeo> ptsHD = highDem.getGrid();
-            System.out.println("dem.size " + dem.size());
-            System.out.println("highDem.size " + highDem.size());
+            //  System.out.println("dem.size " + dem.size());
+            //  System.out.println("highDem.size " + highDem.size());
             Interval intervalLat;
             Interval intervalLon;
             for (Point3DGeo p : pts) {
