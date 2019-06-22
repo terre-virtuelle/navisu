@@ -189,19 +189,16 @@ int i = 1;
         originGroup.getChildren().removeAll(shapeList);
         shapeList = circularQueue.dequeue();
         if ((i / circularQueueSize) == 0) {
-            System.out.println(circularQueueSize +" "+i / circularQueueSize);
             Double drval1 = shapeList.get(0).getValues().get("drval1");
             Double drval2 = shapeList.get(0).getValues().get("drval2");
             drval1Label.setText(Double.toString(drval1));
             drval2Label.setText(Double.toString(drval2));
             i++;
-            System.out.println("i : "+i);
         } else {
             drval1Label.setText("All depths");
             drval2Label.setText("");
             i = 1;
         }
-
         originGroup.getChildren().addAll(shapeList);
     }
 
