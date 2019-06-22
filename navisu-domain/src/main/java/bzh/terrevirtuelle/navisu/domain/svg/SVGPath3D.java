@@ -5,7 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.domain.svg;
 
+import com.vividsolutions.jts.geom.Geometry;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.scene.shape.SVGPath;
 
@@ -17,17 +20,19 @@ import javafx.scene.shape.SVGPath;
 public class SVGPath3D
         extends SVGPath {
 
+    private List<SVGPath3D> svgOnTopList;
+    private Geometry geometry;
     private double height;
 
     private Map<String, Double> values;
 
     public SVGPath3D() {
-        values = new HashMap<>();
-        this.height = 0.0;
+        this(0.0);
     }
 
     public SVGPath3D(double height) {
         values = new HashMap<>();
+        svgOnTopList = new ArrayList<>();
         this.height = height;
     }
 
@@ -66,5 +71,23 @@ public class SVGPath3D
     public void setHeight(double height) {
         this.height = height;
     }
+
+    public List<SVGPath3D> getSvgOnTopList() {
+        return svgOnTopList;
+    }
+
+    public void setSvgOnTopList(List<SVGPath3D> svgOnTopList) {
+        this.svgOnTopList = svgOnTopList;
+    }
+
+    public Geometry getGeometry() {
+        return geometry;
+    }
+
+    public void setGeometry(Geometry geometry) {
+        this.geometry = geometry;
+    }
+
+    
 
 }

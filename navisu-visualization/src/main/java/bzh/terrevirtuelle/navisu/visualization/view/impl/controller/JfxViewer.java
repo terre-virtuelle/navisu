@@ -24,6 +24,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -91,7 +92,8 @@ public class JfxViewer
     protected CircularQueue<List<SVGPath3D>> circularQueue;
     protected int circularQueueSize = 0;
     protected Map<Double, List<SVGPath3D>> svgMap;
-int i = 1;
+    int i = 1;
+
     public JfxViewer(GuiAgentServices guiAgentServices) {
 
         this.guiAgentServices = guiAgentServices;
@@ -170,6 +172,7 @@ int i = 1;
         drval1Label.setText("All depths");
     }
 
+    @SuppressWarnings("unchecked")
     private CircularQueue<List<SVGPath3D>> sort(Map<Double, List<SVGPath3D>> svgMap) {
         List<Double> keyList = new ArrayList<>();
         keyList.addAll(svgMap.keySet());
@@ -184,7 +187,7 @@ int i = 1;
     }
 
     private void changeTop() {
-        
+
         circularQueue.enqueue(shapeList);
         originGroup.getChildren().removeAll(shapeList);
         shapeList = circularQueue.dequeue();

@@ -1401,7 +1401,7 @@ public class StlDBComponentController
                     double sideX = 800;
                     double sideY = 450;
                     Pair<Double, Double> scales = scaleCompute(latMin, lonMin, latMax, lonMax, sideY, sideY);  //sideY
-                    DepareExportToSVG depareExportToSVG = new DepareExportToSVG(geodesyServices, displayServices,
+                    DepareExportToSVG depareExportToSVG = new DepareExportToSVG(geodesyServices, displayServices,topologyServices,
                             shp,
                             filenameRoot,
                             latMin, lonMin, sideX, sideY, scales.getX(), scales.getY(),
