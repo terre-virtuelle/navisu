@@ -1422,11 +1422,11 @@ public class StlDBComponentController
                                 svgMap.get(height).add(svg);
                             }
                         }
-                        if (!shapeSVGList.isEmpty()) {
+                        if (!svgMap.keySet().isEmpty()) {
                             if (generateSvgCB.isSelected()) {
                                 Platform.runLater(() -> {
                                     JfxViewer jfxViewer = displayServices.getJfxViewer();
-                                    jfxViewer.display(shapeSVGList);
+                                    jfxViewer.display(svgMap);
                                 });
                             }
                         }
