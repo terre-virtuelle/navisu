@@ -125,7 +125,8 @@ public class DepareExportToSVG
             String height = Integer.toString((int) svg.getHeight());
             String path = "privateData" + SEP + "svg" + SEP + height + "_" + svg.getId() + ".svg";
             String content = "<!-- \n"
-                    + svg.getHeight() + "_" + svg.getId() + ".svg  \n"
+                    + svg.getHeight() + "_" + svg.getId() + ".svg  \n" 
+                    + "Produce by NaVisu, BBT project \n"
                     + "--> \n"
                     + "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
                     + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
