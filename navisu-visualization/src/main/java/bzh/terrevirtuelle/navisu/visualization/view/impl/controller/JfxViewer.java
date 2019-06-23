@@ -170,6 +170,11 @@ public class JfxViewer
         sort(svgMap);
         originGroup.getChildren().addAll(circularQueue.dequeue());
         drval1Label.setText("All depths");
+        for(List<SVGPath3D> l: svgMap.values()){
+            for(SVGPath3D s : l){
+                //System.out.println("s : "+ s.getSvgOnTopList().size());
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -192,8 +197,8 @@ public class JfxViewer
         originGroup.getChildren().removeAll(shapeList);
         shapeList = circularQueue.dequeue();
         if ((i / circularQueueSize) == 0) {
-            Double drval1 = shapeList.get(0).getValues().get("drval1");
-            Double drval2 = shapeList.get(0).getValues().get("drval2");
+            Double drval1 = (Double)shapeList.get(0).getValues().get("drval1");
+            Double drval2 = (Double)shapeList.get(0).getValues().get("drval2");
             drval1Label.setText(Double.toString(drval1));
             drval2Label.setText(Double.toString(drval2));
             i++;

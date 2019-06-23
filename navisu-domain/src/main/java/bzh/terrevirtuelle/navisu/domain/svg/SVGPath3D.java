@@ -24,7 +24,7 @@ public class SVGPath3D
     private Geometry geometry;
     private double height;
 
-    private Map<String, Double> values;
+    private Map<String, Object> values;
 
     public SVGPath3D() {
         this(0.0);
@@ -41,7 +41,7 @@ public class SVGPath3D
      *
      * @return the value of values
      */
-    public Map<String, Double> getValues() {
+    public Map<String, Object> getValues() {
         return values;
     }
 
@@ -50,7 +50,7 @@ public class SVGPath3D
      *
      * @param values new value of values
      */
-    public void setValues(Map<String, Double> values) {
+    public void setValues(Map<String, Object> values) {
         this.values = values;
     }
 

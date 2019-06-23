@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.shapefile.
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.TopologyException;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
@@ -18,10 +19,18 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 
 /**
@@ -31,10 +40,12 @@ import javafx.scene.paint.Color;
  */
 public class DepareExportToSVG
         extends DepareShapefileExport {
-    
+
+    protected static final String SEP = File.separator;
+
     protected GeodesyServices geodesyServices;
     protected TopologyServices topologyServices;
-    
+
     protected final String filenameRoot;
     protected double latMin;
     protected double lonMin;
@@ -47,6 +58,7 @@ public class DepareExportToSVG
     protected List<Path> pathList = new ArrayList<>();
     protected double maxMax = Double.MIN_VALUE;
     protected boolean first = true;
+    protected int id = 0;
 
     //Laser IMT 450x300;
     public DepareExportToSVG(GeodesyServices geodesyServices,
@@ -67,10 +79,10 @@ public class DepareExportToSVG
         this.sideY = sideY;
         this.scaleLat = scaleLat;
         this.scaleLon = scaleLon;
-        
+
         makeAttributes();
     }
-    
+
     public List<SVGPath3D> createSVGPath(List<Polygon> pathList) {
         List<SVGPath3D> result = new ArrayList<>();
         for (Polygon p : pathList) {
@@ -81,6 +93,9 @@ public class DepareExportToSVG
             svgPath3D.setStroke(Color.color(Math.random(), Math.random(), Math.random()));
             svgPath3D.setStrokeWidth(1);
             svgPath3D.setFill(null);
+            svgPath3D.setId(Integer.toString(id));
+            id++;
+            /* Insert self format JTS for test contain */
             svgPath3D = createJtsGeometry(p, svgPath3D);
             result.add(svgPath3D);
             Iterable<? extends LatLon> iPostions = p.getOuterBoundary();
@@ -93,16 +108,45 @@ public class DepareExportToSVG
             String content = createContent(scaledPosition);
             svgPath3D.setContent(content);
         }
-        
+
         return result;
     }
-    
+
+    public void write(Map<Double, List<SVGPath3D>> svgMap) {
+        List<SVGPath3D> shapeList = new ArrayList<>();
+        Collection<List<SVGPath3D>> collShapesList = svgMap.values();
+        collShapesList.forEach((l) -> {
+            shapeList.addAll(l);
+        });
+        for (SVGPath3D svg : shapeList) {
+            String svgContent = svg.getContent();
+            svgContent = svgContent.replace("z", "");
+            svgContent = svgContent.trim();
+            String height = Integer.toString((int) svg.getHeight());
+            String path = "privateData" + SEP + "svg" + SEP + height + "_" + svg.getId() + ".svg";
+            String content = "<!-- \n"
+                    + svg.getHeight() + "_" + svg.getId() + ".svg  \n"
+                    + "--> \n"
+                    + "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
+                    + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
+                    + "\n"
+                    + "    <path d=\"" + svgContent + "\"\n"
+                    + "style=\"stroke:#000000; fill:none; stroke-width: 1px;\"/> "
+                    + "</svg>";
+            try {
+                Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.CREATE);
+            } catch (IOException ex) {
+                Logger.getLogger(DepareExportToSVG.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     protected SVGPath3D createJtsGeometry(Polygon p, SVGPath3D svgPath3D) {
         Geometry geom = topologyServices.wwjPolygonToJtsGeometry(p);
         svgPath3D.setGeometry(geom);
         return svgPath3D;
     }
-    
+
     protected List<Position> scaling(List<Position> positions, double latMin, double lonMin, double sideY, double latScale, double lonScale) {
         List<Position> resultPos = new ArrayList<>();
         positions.forEach((position) -> {
@@ -117,10 +161,10 @@ public class DepareExportToSVG
         });
         return resultPos;
     }
-    
+
     protected String createContent(List<Position> scaledPosition) {
         String result = "";
-        
+
         result = "M"
                 + +(int) scaledPosition.get(0).getLatitude().getDegrees() + ","
                 + (int) scaledPosition.get(0).getLongitude().getDegrees() + " ";
@@ -133,15 +177,46 @@ public class DepareExportToSVG
         result += "z";
         return result;
     }
-    
+
     public Map<Double, List<SVGPath3D>> processOnTop(Map<Double, List<SVGPath3D>> svgMap) {
         List<Double> keyList = new ArrayList<>();
         keyList.addAll(svgMap.keySet());
         keyList.sort(Comparator.reverseOrder());
-        
-        for (int i = 0; i < keyList.size() - 1; i++) {
-            
+
+        for (int i = 0; i < keyList.size(); i++) {
+            for (SVGPath3D svg : svgMap.get(keyList.get(i))) {
+                for (int j = 0; j < keyList.size(); j++) {
+                    if (j != i) {
+                        for (SVGPath3D svg1 : svgMap.get(keyList.get(j))) {
+                            try {
+                                if (svg1.getGeometry().within(svg.getGeometry())) {
+                                    svg.getSvgOnTopList().add(svg1);
+                                }
+                            } catch (TopologyException e) {
+
+                            }
+                        }
+                    }
+                }
+            }
         }
+
+        for (int i = 0; i < keyList.size(); i++) {
+            System.out.println(keyList.get(i));
+            for (SVGPath3D svg : svgMap.get(keyList.get(i))) {
+                System.out.println(svg.getSvgOnTopList().size());
+            }
+            System.out.println("");
+        }
+
+        /*
+        for(double d : svgMap.keySet()){
+            for(SVGPath3D s : svgMap.get(d)){
+                System.out.println(s.getSvgOnTopList().size());
+            }
+        }
+         */
         return svgMap;
     }
+
 }

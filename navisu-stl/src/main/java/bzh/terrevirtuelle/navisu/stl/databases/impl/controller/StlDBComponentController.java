@@ -297,6 +297,7 @@ public class StlDBComponentController
     protected List<Point3DGeo[][]> grids = null;
     protected SurfaceImageLayer layerTif;
     protected static final String GROUP = "GeoTiff charts";
+    protected Map<Double, List<SVGPath3D>> svgMap;
     /* Common controls */
     @FXML
     public Group view;
@@ -1410,7 +1411,7 @@ public class StlDBComponentController
                     List<Polygon> selectedPolygonList = stlGuiController.depareSelection(polygonList, s57Layer);
 
                     validSVGButton.setOnMouseClicked((MouseEvent event) -> {
-                        Map<Double, List<SVGPath3D>> svgMap = new HashMap<>();
+                        svgMap = new HashMap<>();
                         List<SVGPath3D> shapeSVGList = depareExportToSVG.createSVGPath(selectedPolygonList);
                         for (SVGPath3D svg : shapeSVGList) {
                             double height = svg.getHeight();
@@ -1422,6 +1423,7 @@ public class StlDBComponentController
                                 svgMap.get(height).add(svg);
                             }
                         }
+                        svgMap = depareExportToSVG.processOnTop(svgMap);
                         if (!svgMap.keySet().isEmpty()) {
                             if (generateSvgCB.isSelected()) {
                                 Platform.runLater(() -> {
@@ -1430,6 +1432,7 @@ public class StlDBComponentController
                                 });
                             }
                         }
+                        depareExportToSVG.write(svgMap);
                     });
                     LOGGER.log(Level.INFO, "Out export DEPARE in SVG on filename : {0}", filenameRoot);
                 }

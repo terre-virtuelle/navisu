@@ -7,4 +7,6 @@
     <system systemId="http://www.opengis.net/kml/2.2" uri="schemas.opengis.net/kml/2.2.0/ogckml22.xsd"/>
     <system systemId="http://schemas.opengis.net/kml/2.2.0/atom-author-link.xsd" uri="schemas.opengis.net/kml/2.2.0/atom-author-link.xsd"/>
     <system systemId="http://docs.oasis-open.org/election/external/xAL.xsd" uri="docs.oasis-open.org/election/external/xAL.xsd"/>
+    <system systemId="http://www.w3.org/2000/svg" uri="www.w3.org/2000/svg.xml"/>
+    <system systemId="http://www.w3.org/1999/xlink" uri="www.w3.org/1999/xlink"/>
 </catalog>
