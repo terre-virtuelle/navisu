@@ -93,17 +93,6 @@ public class PathToSTL {
         return facet;
     }
 
-    public String exportSTL(List<Path> paths,
-            double latMin, double lonMin,
-            double latScale, double lonScale,
-            double verticalOffset) {
-
-        paths.forEach((p) -> {
-            result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
-        });
-        return result;
-    }
-
     public Vec3d toVec3d(Position position, double latMin, double lonMin, double latScale, double lonScale) {
 
         double elvScale = (latScale + lonScale) / 2;
@@ -120,4 +109,14 @@ public class PathToSTL {
         return new Vec3d(lonM, latM, elv);//retour en xyz
     }
 
+    public String exportSTL(List<Path> paths,
+            double latMin, double lonMin,
+            double latScale, double lonScale,
+            double verticalOffset) {
+
+        paths.forEach((p) -> {
+            result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
+        });
+        return result;
+    }
 }

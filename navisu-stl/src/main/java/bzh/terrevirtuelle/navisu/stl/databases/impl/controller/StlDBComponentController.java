@@ -121,6 +121,7 @@ import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
+import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.BuoyageExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
@@ -135,6 +136,7 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57Obj
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsShapefileExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.svg.DepareExportToSVG;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.wkt.DepareExportWKT;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.stl.util.impl.controller.SlConsEditorController;
 import bzh.terrevirtuelle.navisu.util.interval.Interval;
@@ -182,6 +184,7 @@ public class StlDBComponentController
     protected TopologyServices topologyServices;
     protected GeoViewServices geoViewServices;
     protected LayerTreeServices layerTreeServices;
+    protected SpeakerServices speakerServices;
 
     protected static final Logger LOGGER = Logger.getLogger(StlDBComponentController.class.getName());
     private final String NAVISU_HOME = System.getProperty("user.home") + "/.navisu";
@@ -194,6 +197,7 @@ public class StlDBComponentController
     protected static final String DEFAULT_KML_PATH = "privateData" + SEP + "kml" + SEP;
     protected static final String DEFAULT_STL_PATH = "privateData" + SEP + "stl" + SEP;
     protected static final String DEFAULT_SVG_PATH = "privateData" + SEP + "svg" + SEP;
+    protected static final String DEFAULT_WKT_PATH = "privateData" + SEP + "wkt" + SEP;
     protected static final String DEFAULT_ASC_PATH = "privateData" + SEP + "asc" + SEP;
     protected static final String USER_DIR = System.getProperty("user.dir");
     protected static final String IMAGE_DIR = USER_DIR + SEP + "privateData" + SEP + "tif";
@@ -378,6 +382,8 @@ public class StlDBComponentController
     @FXML
     public RadioButton depareRB;
     @FXML
+    public Button validSTLButton;
+    @FXML
     public ChoiceBox<String> tilesCountCB;
     @FXML
     public GridPane paneGP;
@@ -396,15 +402,13 @@ public class StlDBComponentController
     @FXML
     public CheckBox generateSvgCB;
     @FXML
+    public CheckBox generateWktCB;
+    @FXML
     public Button validSVGButton;
     @FXML
     public CheckBox depareVisuCB;
     @FXML
     public CheckBox generateKmlCB;
-    @FXML
-    public RadioButton solidRB;
-    @FXML
-    public RadioButton wireframeRB;
     @FXML
     public RadioButton mergeLitto3dRB;
     /*--------------------------------------Checkboxes ----*/
@@ -465,7 +469,6 @@ public class StlDBComponentController
 
     int j = 0;
     String resultStlFilename = null;
-    boolean solid;
 
     final ToggleGroup bathyGroup = new ToggleGroup();
     final ToggleGroup wsGroup = new ToggleGroup();
@@ -519,7 +522,8 @@ public class StlDBComponentController
             GeoViewServices geoViewServices,
             LayerTreeServices layerTreeServices,
             GdalServices gdalServices,
-            DriverManagerServices driverManagerServices) {
+            DriverManagerServices driverManagerServices,
+            SpeakerServices speakerServices) {
         super(keyCode, keyCombination);
 
         this.component = component;
@@ -543,6 +547,7 @@ public class StlDBComponentController
         this.layerTreeServices = layerTreeServices;
         this.gdalServices = gdalServices;
         this.driverManagerServices = driverManagerServices;
+        this.speakerServices = speakerServices;
 
         this.daeExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices);
         this.objExportToSTL = new ObjExportToSTL(geodesyServices, guiAgentServices, jtsServices,
@@ -799,16 +804,6 @@ public class StlDBComponentController
         elevationRB.setToggleGroup(altiGroup);
         elevationRB.setSelected(true);
 
-        solidRB.setToggleGroup(wsGroup);
-        wireframeRB.setToggleGroup(wsGroup);
-
-        wireframeRB.setOnAction((ActionEvent event) -> {
-            solid = false;
-        });
-        solidRB.setOnAction((ActionEvent event) -> {
-            solid = true;
-        });
-
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
         });
@@ -940,7 +935,6 @@ public class StlDBComponentController
                 scaleTF.setText(stlGuiController.initScale(lat0, lon0, lat1, lon1));
                 retrieveIn(objectsTF.getText(), lat0, lon0, lat1, lon1);
             } else {
-                System.out.println(lat0 + " " + lon0 + " " + lat1 + " " + lon1);
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Lat and Lon fields must be filled \n"
@@ -1021,7 +1015,6 @@ public class StlDBComponentController
                     grids = createGrids(grid, tileCount);
                      }
                      */
-                    filterGrid(grids, selectedPolygons);
                     if (grids != null) {
                         verticalExaggeration = Double.valueOf(elevationMagnificationTF.getText());
                         List<GridBox3D> gridBoxes = new ArrayList<>();
@@ -1039,7 +1032,7 @@ public class StlDBComponentController
                                 j = k % tileCount + 1;
                                 String filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
                                 kmlFileNames.add(filename);
-                                new GridBox3DExportKML(gb).exportWKML(filename, solid);
+                                new GridBox3DExportKML(gb).exportWKML(filename, false);
                                 LOGGER.info("Out export GridBox3D en KML");
                             });
                             k++;
@@ -1131,27 +1124,31 @@ public class StlDBComponentController
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
-
-                                    Shapefile shp_0 = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
+                                    if (depareVisuCB.isSelected()) {
+                                        Shapefile shp = new DepareDBLoader(databaseServices,
+                                                s57DatabaseTF.getText(), USER, PASSWD)
+                                                .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
+                                        new DepareView(bathymetryLayer, s57Layer, s57Layer, 10.0, 1.0, false)
+                                                .display(shp);
+                                    }
+                                    Shapefile shp = new DepareDBLoader(databaseServices,
+                                            s57DatabaseTF.getText(), USER, PASSWD)
                                             .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
-                                    new DepareView(s57Layer, s57Layer, s57Layer, 10.0, 1.0, false)
-                                            .display(shp_0);
-
-                                    Shapefile shp_1 = new DepareDBLoader(databaseServices, s57DatabaseTF.getText(), USER, PASSWD)
-                                            .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
-                                    new DepareExportToSTL(geodesyServices, jtsServices, displayServices, shp_1, gb, highestElevationBathy, s57Layer)
-                                            .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
-
-                                    //TODO STL and SVG whith tiles
+                                    DepareExportToSTL depareExportToSTL = new DepareExportToSTL(geodesyServices, jtsServices, displayServices,
+                                            shp, gb, highestElevationBathy, s57Layer);
+                                    List<Polygon> polygonList = depareExportToSTL.initExport();
+                                    displayServices.displayPolygons(polygonList, s57Layer, Material.GREEN);
+                                    List<Polygon> selectedPolygonList = stlGuiController.depareSelection(polygonList, s57Layer);
+                                  //  speakerServices.read("Supprimez les depth area non conformes");
                                     /*
-                                    if (generateSvgCB.isSelected()) {
-                                        Platform.runLater(() -> {
-                                            JfxViewer jfxViewer = displayServices.getJfxViewer();
-                                            // Shape shape = createStar();
-                                            jfxViewer.display();
+                                    String filename, List<Polygon> polygonList, double verticalExaggeration, 
+            double latScale, double lonScale, double verticalOffset
+                                    */
+                                    while (!validSTLButton.isPressed()) {
+                                        validSTLButton.setOnMouseClicked((MouseEvent event) -> {
+                                            depareExportToSTL.export(filename, polygonList, verticalExaggeration, latScale, lonScale, tileSideZ);
                                         });
                                     }
-                                     */
                                     LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
                                     k++;
                                 }
@@ -1175,7 +1172,6 @@ public class StlDBComponentController
                                     DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(b.getLatitude() - 2 * RETRIEVE_OFFSET,
                                             b.getLongitude() - 2 * RETRIEVE_OFFSET, b.getLatitude() + 2 * RETRIEVE_OFFSET, b.getLongitude() + 2 * RETRIEVE_OFFSET);
                                     b.setElevation(Double.toString(dem.getMaxElevation() * verticalExaggeration));
-                                    //  System.out.println("dem.getMaxElevation()*verticalExaggeration : " + dem.getMaxElevation()*verticalExaggeration);
                                 }
                                 new BuoyageView(s57Layer).display(buoyages, 1.0);
                                 if (generateKmlCB.isSelected()) {
@@ -1386,14 +1382,13 @@ public class StlDBComponentController
 
                 if (!generateStlCB.isSelected() && generateSvgCB.isSelected()) {
                     //DEPARE for Laser
-                    String filenameRoot = DEFAULT_SVG_PATH + outFileTF.getText();
-                    LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filenameRoot);
+                    LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", outFileTF.getText());
                     if (depareVisuCB.isSelected()) {
-                        Shapefile shp0 = new DepareDBLoader(databaseServices,
+                        Shapefile shp = new DepareDBLoader(databaseServices,
                                 s57DatabaseTF.getText(), USER, PASSWD)
                                 .retrieveIn(latMin, lonMin, latMax, lonMax);
                         new DepareView(bathymetryLayer, s57Layer, s57Layer, 10.0, 1.0, false)
-                                .display(shp0);
+                                .display(shp);
                     }
                     Shapefile shp = new DepareDBLoader(databaseServices,
                             s57DatabaseTF.getText(), USER, PASSWD)
@@ -1402,39 +1397,44 @@ public class StlDBComponentController
                     double sideX = 800;
                     double sideY = 450;
                     Pair<Double, Double> scales = scaleCompute(latMin, lonMin, latMax, lonMax, sideY, sideY);  //sideY
-                    DepareExportToSVG depareExportToSVG = new DepareExportToSVG(geodesyServices, displayServices,topologyServices,
+                    DepareExportToSVG depareExportToSVG = new DepareExportToSVG(geodesyServices, topologyServices,
                             shp,
-                            filenameRoot,
+                            DEFAULT_SVG_PATH, outFileTF.getText(),
                             latMin, lonMin, sideX, sideY, scales.getX(), scales.getY(),
                             s57Layer);
-                    List<Polygon> polygonList = depareExportToSVG.export();
+                    List<Polygon> polygonList = depareExportToSVG.initExport();
+                    displayServices.displayPolygons(polygonList, s57Layer, Material.GREEN);
                     List<Polygon> selectedPolygonList = stlGuiController.depareSelection(polygonList, s57Layer);
-
-                    validSVGButton.setOnMouseClicked((MouseEvent event) -> {
-                        svgMap = new HashMap<>();
-                        List<SVGPath3D> shapeSVGList = depareExportToSVG.createSVGPath(selectedPolygonList);
-                        for (SVGPath3D svg : shapeSVGList) {
-                            double height = svg.getHeight();
-                            if (!svgMap.keySet().contains(height)) {
-                                List<SVGPath3D> l = new ArrayList<>();
-                                l.add(svg);
-                                svgMap.put(height, l);
-                            } else {
-                                svgMap.get(height).add(svg);
+                    while (!validSVGButton.isPressed()) {
+                        validSVGButton.setOnMouseClicked((MouseEvent event) -> {
+                            svgMap = new HashMap<>();
+                            List<SVGPath3D> shapeSVGList = depareExportToSVG.createSVGPath(selectedPolygonList);
+                            for (SVGPath3D svg : shapeSVGList) {
+                                double height = svg.getHeight();
+                                if (!svgMap.keySet().contains(height)) {
+                                    List<SVGPath3D> l = new ArrayList<>();
+                                    l.add(svg);
+                                    svgMap.put(height, l);
+                                } else {
+                                    svgMap.get(height).add(svg);
+                                }
                             }
-                        }
-                        svgMap = depareExportToSVG.processOnTop(svgMap);
-                        if (!svgMap.keySet().isEmpty()) {
-                            if (generateSvgCB.isSelected()) {
-                                Platform.runLater(() -> {
-                                    JfxViewer jfxViewer = displayServices.getJfxViewer();
-                                    jfxViewer.display(svgMap);
-                                });
+                            svgMap = depareExportToSVG.processOnTop(svgMap);
+                            if (!svgMap.keySet().isEmpty()) {
+                                if (generateSvgCB.isSelected()) {
+                                    Platform.runLater(() -> {
+                                        JfxViewer jfxViewer = displayServices.getJfxViewer();
+                                        jfxViewer.display(svgMap);
+                                    });
+                                    depareExportToSVG.write(svgMap);
+                                }
+                                if (generateWktCB.isSelected()) {
+                                    new DepareExportWKT(DEFAULT_WKT_PATH, outFileTF.getText()).write(svgMap);
+                                }
                             }
-                        }
-                        depareExportToSVG.write(svgMap);
-                    });
-                    LOGGER.log(Level.INFO, "Out export DEPARE in SVG on filename : {0}", filenameRoot);
+                        });
+                    }
+                    LOGGER.log(Level.INFO, "Out export DEPARE in SVG on filename : {0}", outFileTF.getText());
                 }
             }
         }
@@ -1520,8 +1520,6 @@ public class StlDBComponentController
                     lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
             List<Point3DGeo> pts = dem.getGrid();
             List<Point3DGeo> ptsHD = highDem.getGrid();
-            //  System.out.println("dem.size " + dem.size());
-            //  System.out.println("highDem.size " + highDem.size());
             Interval intervalLat;
             Interval intervalLon;
             for (Point3DGeo p : pts) {
@@ -1861,19 +1859,6 @@ public class StlDBComponentController
         test.setFill(null);
         test.setOpacity(1.0);
         return test;
-    }
-
-    private List<Point3DGeo[][]> filterGrid(List<Point3DGeo[][]> grids, List<Polygon> selectedPolygons) {
-        List<Point3DGeo[][]> result = new ArrayList<>();
-        for (Point3DGeo[][] g : grids) {
-            // System.out.println("g : " + g[0][0].getLatitude() + " " + g[0][0].getLongitude()
-            //         + " " + g[g.length - 1][g[0].length - 1].getLatitude()
-            //         + " " + g[g.length - 1][g[0].length - 1].getLongitude());
-        }
-        // for (Polygon p : selectedPolygons) {
-        //     System.out.println("p : " + p.getBoundaries());
-        // }
-        return result;
     }
 
     @SuppressWarnings("unchecked")

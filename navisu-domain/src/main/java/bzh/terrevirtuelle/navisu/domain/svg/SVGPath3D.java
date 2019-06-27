@@ -23,7 +23,6 @@ public class SVGPath3D
     private List<SVGPath3D> svgOnTopList;
     private Geometry geometry;
     private double height;
-
     private Map<String, Object> values;
 
     public SVGPath3D() {

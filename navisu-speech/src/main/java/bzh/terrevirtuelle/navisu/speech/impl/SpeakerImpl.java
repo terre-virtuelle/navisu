@@ -7,10 +7,9 @@ package bzh.terrevirtuelle.navisu.speech.impl;
 
 import bzh.terrevirtuelle.navisu.speech.Speaker;
 import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
-import com.gtranslate.Audio;
-import java.io.InputStream;
-import java.util.stream.Stream;
+
 import org.capcaval.c3.component.ComponentState;
+import t2s.son.LecteurTexte;
 
 /* NaVisu
  *
@@ -20,69 +19,27 @@ import org.capcaval.c3.component.ComponentState;
 public class SpeakerImpl
         implements Speaker, SpeakerServices, ComponentState {
 
-    Audio audio;
-    InputStream sound = null;
-    String text;
-    String lang = null;
-    Stream<String> lines = null;
+    LecteurTexte reader;
 
     @Override
     public void componentInitiated() {
-        audio = Audio.getInstance();
+        reader = new LecteurTexte();
     }
 
     @Override
     public void read(String rep, String filename, String language) {
-/*
-        if (language == null) {
-            lang = Locale.getDefault().toString();
-        } else {
-            lang = language;
-        }
-        try {
-            lines = Files.lines(Paths.get(rep, filename));
-            text = lines.map(Object::toString).collect(Collectors.joining(""));
-        } catch (IOException ex) {
-            Logger.getLogger(SpeakerImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Executors.newSingleThreadExecutor().execute(() -> {
-            try {
-                sound = audio.getAudio(text, lang);
-                audio.play(sound);
-            } catch (IOException | JavaLayerException ex) {
-                // Logger.getLogger(SpeakerImpl.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("ex " + ex);
-            }
-        });
-        */
+
     }
 
     @Override
     public void read(String text) {
-/*
-        Executors.newSingleThreadExecutor().execute(() -> {
-            try {
-                sound = audio.getAudio(text, Locale.getDefault().toString());
-                audio.play(sound);
-            } catch (IOException | JavaLayerException ex) {
-                Logger.getLogger(SpeakerImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        */
+        reader.setTexte(text);
+        reader.playAll();
     }
 
     @Override
     public void read(String text, String language) {
-/*
-        Executors.newSingleThreadExecutor().execute(() -> {
-            try {
-                sound = audio.getAudio(text, "Language." + language);
-                audio.play(sound);
-            } catch (IOException | JavaLayerException ex) {
-                Logger.getLogger(SpeakerImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        */
+
     }
 
     @Override

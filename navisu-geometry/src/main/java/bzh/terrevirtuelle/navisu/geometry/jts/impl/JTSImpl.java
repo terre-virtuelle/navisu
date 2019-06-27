@@ -150,10 +150,14 @@ public class JTSImpl
         Geometry geom;
         for (Path p : faces) {
             geom = getPolygonFromPath(p);
+            try{
             if (geometry.contains(geom)) {
                 result.add(p);
 
             } 
+            }catch(Exception e){
+                
+            }
             /*else {
                 Geometry intersect = geometry.intersection(geom);
                 if (!intersect.isEmpty()) {

@@ -24,9 +24,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -47,6 +49,7 @@ public class DepareExportToSVG
     protected TopologyServices topologyServices;
 
     protected final String filenameRoot;
+    protected final String filename;
     protected double latMin;
     protected double lonMin;
     protected final double scaleLat;
@@ -62,25 +65,24 @@ public class DepareExportToSVG
 
     //Laser IMT 450x300;
     public DepareExportToSVG(GeodesyServices geodesyServices,
-            DisplayServices displayServices,
             TopologyServices topologyServices,
-            Shapefile shapefile, String filenameRoot,
+            Shapefile shapefile,
+            String filenameRoot, String filename,
             double latMin, double lonMin,
             double sideX, double sideY,
             double scaleLat, double scaleLon,
             RenderableLayer layer) {
-        super(displayServices, shapefile, layer);
+        super(shapefile, layer);
         this.geodesyServices = geodesyServices;
         this.topologyServices = topologyServices;
         this.filenameRoot = filenameRoot;
+        this.filename = filename;
         this.latMin = latMin;
         this.lonMin = lonMin;
         this.sideX = sideX;
         this.sideY = sideY;
         this.scaleLat = scaleLat;
         this.scaleLon = scaleLon;
-
-        makeAttributes();
     }
 
     public List<SVGPath3D> createSVGPath(List<Polygon> pathList) {
@@ -118,27 +120,54 @@ public class DepareExportToSVG
         collShapesList.forEach((l) -> {
             shapeList.addAll(l);
         });
+        
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
+        String dateStr = formater.format(new Date());
+
         for (SVGPath3D svg : shapeList) {
             String svgContent = svg.getContent();
             svgContent = svgContent.replace("z", "");
             svgContent = svgContent.trim();
             String height = Integer.toString((int) svg.getHeight());
-            String path = "privateData" + SEP + "svg" + SEP + height + "_" + svg.getId() + ".svg";
+            String path = filenameRoot + SEP + filename + "_" + height + "_" + svg.getId() + ".svg";
             String content = "<!-- \n"
-                    + svg.getHeight() + "_" + svg.getId() + ".svg  \n" 
-                    + "Produce by NaVisu, BBT project \n"
+                    + filename + "_" + svg.getHeight() + "_" + svg.getId() + ".svg  \n"
+                    + "Created with NaVisu, BBT project (http://www.navisu.org/) \n"
+                    + dateStr +"\n"
                     + "--> \n"
                     + "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
                     + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
                     + "\n"
                     + "    <path d=\"" + svgContent + "\"\n"
-                    + "style=\"stroke:#000000; fill:none; stroke-width: 1px;\"/> "
+                    + "style=\"stroke:#000000; fill:none; stroke-width: 1px;\"/> \n"
                     + "</svg>";
             try {
                 Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.CREATE);
             } catch (IOException ex) {
                 Logger.getLogger(DepareExportToSVG.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        String svgContentAll = "<!-- \n"
+                + filename + "_all" + ".svg  \n"
+                + "Created with NaVisu, BBT project (http://www.navisu.org/) \n"
+                 + dateStr +"\n"
+                + "--> \n"
+                + "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
+                + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
+
+        for (SVGPath3D svg : shapeList) {
+            String svgContent = svg.getContent();
+            svgContent = svgContent.replace("z", "");
+            svgContent = svgContent.trim();
+            svgContentAll += "\n    <path d=\"" + svgContent + "\"\n"
+                    + "style=\"stroke:#000000; fill:none; stroke-width: 1px;\"/>";
+        }
+        svgContentAll += "</svg>";
+        String path = filenameRoot + SEP + filename + "_all" + ".svg";
+        try {
+            Files.write(Paths.get(path), svgContentAll.getBytes(), StandardOpenOption.CREATE);
+        } catch (IOException ex) {
+            Logger.getLogger(DepareExportToSVG.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -201,22 +230,6 @@ public class DepareExportToSVG
                 }
             }
         }
-
-        for (int i = 0; i < keyList.size(); i++) {
-            System.out.println(keyList.get(i));
-            for (SVGPath3D svg : svgMap.get(keyList.get(i))) {
-                System.out.println(svg.getSvgOnTopList().size());
-            }
-            System.out.println("");
-        }
-
-        /*
-        for(double d : svgMap.keySet()){
-            for(SVGPath3D s : svgMap.get(d)){
-                System.out.println(s.getSvgOnTopList().size());
-            }
-        }
-         */
         return svgMap;
     }
 

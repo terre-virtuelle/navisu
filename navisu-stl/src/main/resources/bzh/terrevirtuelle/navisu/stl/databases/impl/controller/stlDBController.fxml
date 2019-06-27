@@ -284,7 +284,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="327.0" prefWidth="579.0">
                                  <children>
-                                    <GridPane fx:id="paneGP1" alignment="CENTER" layoutX="-1.0" layoutY="23.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="570.0" styleClass="grid-pane-contour">
+                                    <GridPane fx:id="paneGP1" alignment="CENTER" layoutX="-3.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="570.0" styleClass="grid-pane-contour">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="80.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="5.0" minWidth="5.0" prefWidth="5.0" />
@@ -339,8 +339,8 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
-                                                <RadioButton fx:id="solidRB" mnemonicParsing="false" text="Solid" />
-                                                <RadioButton fx:id="wireframeRB" mnemonicParsing="false" selected="true" text="Wireframe" GridPane.columnIndex="1" />
+                                                <CheckBox fx:id="stlPreviewCB" mnemonicParsing="false" selected="true" text="STL Preview" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                                <CheckBox fx:id="depareVisuCB" mnemonicParsing="false" prefHeight="18.0" prefWidth="108.0" text="Depare visu." />
                                              </children>
                                           </GridPane>
                                           <Label text="Visualization" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
@@ -386,14 +386,16 @@
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <CheckBox fx:id="stlPreviewCB" mnemonicParsing="false" selected="true" text="STL Preview" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                                <Button fx:id="validSTLButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Valid" />
                                              </children>
                                           </GridPane>
+                                          <Label prefHeight="15.0" prefWidth="117.0" text="Validation Depth Area" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
                                        </children>
                                     </GridPane>
                                  </children>
@@ -413,6 +415,7 @@
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="5.0" prefWidth="5.0" />
                                        </columnConstraints>
                                        <rowConstraints>
@@ -424,13 +427,14 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <CheckBox fx:id="generateStlCB" mnemonicParsing="false" selected="true" text="Generate STL" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                          <CheckBox fx:id="generateKmlCB" mnemonicParsing="false" text="Generate KML" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                          <CheckBox mnemonicParsing="false" selected="true" text="GeoTIFF" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                          <CheckBox mnemonicParsing="false" text="ASCII" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                          <CheckBox fx:id="generateSvgCB" mnemonicParsing="false" prefHeight="18.0" prefWidth="106.0" text="Generate SVG" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <CheckBox fx:id="generateStlCB" mnemonicParsing="false" prefHeight="18.0" selected="true" text="STL" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                          <CheckBox fx:id="generateKmlCB" mnemonicParsing="false" text="KML" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                          <CheckBox mnemonicParsing="false" selected="true" text="GeoTIFF" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                          <CheckBox mnemonicParsing="false" text="ASCII" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                          <CheckBox fx:id="generateSvgCB" mnemonicParsing="false" prefHeight="18.0" text=" SVG" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                           <Button fx:id="validSVGButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Valid" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <CheckBox fx:id="depareVisuCB" mnemonicParsing="false" prefHeight="18.0" prefWidth="108.0" text="Depare visu." GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                          <Label prefHeight="15.0" prefWidth="92.0" text="Files generation" GridPane.columnIndex="3" />
+                                          <CheckBox fx:id="generateWktCB" mnemonicParsing="false" text="WKT" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane></children>
 						                                </AnchorPane>

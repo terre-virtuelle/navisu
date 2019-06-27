@@ -40,6 +40,7 @@ import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.gdal.GdalServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
+import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 
 /**
@@ -93,6 +94,8 @@ public class StlDBComponentImpl
     KmlComponentServices kmlComponentServices;
     @UsedService
     ObjComponentServices objComponentServices;
+    @UsedService
+    SpeakerServices speakerServices;
 
     protected final String COMPONENT_KEY_NAME_0 = "StlDbS57";
     protected String componentKeyName;
@@ -139,7 +142,8 @@ public class StlDBComponentImpl
                         geoViewServices,
                         layerTreeServices,
                         gdalServices,
-                        driverManagerServices);
+                        driverManagerServices,
+                        speakerServices);
                 controller.setVisible(true);
             }
         }

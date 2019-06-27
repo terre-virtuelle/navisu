@@ -6,7 +6,6 @@
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.shapefile;
 
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.DepareExportToSTL;
-import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
@@ -15,8 +14,6 @@ import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
@@ -34,7 +31,6 @@ import java.util.logging.Logger;
  */
 public class DepareShapefileExport {
 
-    protected DisplayServices displayServices;
     protected Shapefile shapefile;
     protected Set<Map.Entry<String, Object>> entries;
     protected double val1 = 0.0;
@@ -43,13 +39,12 @@ public class DepareShapefileExport {
     protected ShapeAttributes highlightAttributes;
     protected RenderableLayer layer;
 
-    public DepareShapefileExport(DisplayServices displayServices, Shapefile shapefile, RenderableLayer layer) {
-        this.displayServices = displayServices;
+    public DepareShapefileExport( Shapefile shapefile, RenderableLayer layer) {
         this.shapefile = shapefile;
         this.layer = layer;
     }
 
-    public List<Polygon> export() {
+    public List<Polygon> initExport() {
         List<Polygon> polyWWJ = new ArrayList<>();
 
         while (shapefile.hasNext()) {
@@ -91,23 +86,7 @@ public class DepareShapefileExport {
                 Logger.getLogger(DepareExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-        displayServices.displayPolygons(polyWWJ, layer, Material.GREEN);
-       
         return polyWWJ;
-    }
-
-    protected List<Position> createDepare(ShapefileRecord record) {
-
-        List<Position> result = new ArrayList<>();
-        SurfacePolygons shape = new SurfacePolygons(
-                Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
-                record.getCompoundPointBuffer());
-        Iterable<? extends LatLon> pos = shape.getLocations();
-
-        for (LatLon l : pos) {
-            result.add(new Position(l, 100.0));
-        }
-        return result;
     }
 
     public List<List<Position>> filter(List<Position> positions) {
@@ -139,13 +118,18 @@ public class DepareShapefileExport {
         return resultFiltered;
     }
 
-    protected final void makeAttributes() {
-        normalAttributes = new BasicShapeAttributes();
-        normalAttributes.setOutlineMaterial(Material.RED);
-        normalAttributes.setOutlineOpacity(1.0);
-        normalAttributes.setOutlineWidth(1);
-        normalAttributes.setDrawOutline(true);
-        normalAttributes.setDrawInterior(false);
+    protected List<Position> createDepare(ShapefileRecord record) {
 
+        List<Position> result = new ArrayList<>();
+        SurfacePolygons shape = new SurfacePolygons(
+                Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
+                record.getCompoundPointBuffer());
+        Iterable<? extends LatLon> pos = shape.getLocations();
+
+        for (LatLon l : pos) {
+            result.add(new Position(l, 100.0));
+        }
+        return result;
     }
+
 }
