@@ -21,6 +21,7 @@ public class CircularQueue<E> {
     private int rear;//rear position of Circular queue(new element enqueued at rear).
     private int front; //front position of Circular queue(element will be dequeued from front).      
 
+    @SuppressWarnings("unchecked")
     public CircularQueue(int maxSize) {
         this.maxSize = maxSize;
         circularQueueElements = (E[]) new Object[this.maxSize];
@@ -83,7 +84,7 @@ public class CircularQueue<E> {
 
     public static void main(String[] args) {
 
-        CircularQueue<Integer> circularQueue = new CircularQueue(8);
+        CircularQueue<Integer> circularQueue = new CircularQueue<>(8);
 
         circularQueue.enqueue(15);
         circularQueue.enqueue(16);
