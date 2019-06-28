@@ -193,6 +193,7 @@ public class StlDBComponentController
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     protected String CACHE_FILE_NAME = System.getProperty("user.home") + "/.navisu/caches/caches.properties";
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
+    protected static final String ALARM_SOUND_1 = "/data/sounds/openSea.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String DEFAULT_KML_PATH = "privateData" + SEP + "kml" + SEP;
     protected static final String DEFAULT_STL_PATH = "privateData" + SEP + "stl" + SEP;
@@ -891,7 +892,7 @@ public class StlDBComponentController
                     Double.valueOf(objXOffsetTF.getText()), Double.valueOf(objYOffsetTF.getText()),
                     terrainRB.isSelected());
             if (boundList != null) {
-                displayServices.displayPoints3DAsPath(boundList, 150, s57Layer, Material.YELLOW);
+              //  displayServices.displayPoints3DAsPath(boundList, 150, s57Layer, Material.YELLOW);
             }
         });
         slConsEditorButton.setOnMouseClicked((MouseEvent event) -> {
@@ -986,9 +987,11 @@ public class StlDBComponentController
                     // DEBUG
                     // autoBoundCB.setSelected(true);
                     // stlPreviewCB.setSelected(false);
+                    /*
                     if (autoBoundCB.isSelected()) {
-                        //   stlGuiController.displayGuiGridBM(s57Layer);
+                           stlGuiController.displayGuiGridBM(s57Layer);
                     }
+                    */
                     //ELEVATION AND TILES
                     if ((elevationRB.isSelected() && noBathyRB.isSelected())
                             || (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected()))) {
@@ -1005,16 +1008,23 @@ public class StlDBComponentController
                     if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {
                         grids = createElevationAndDepare(lat0, lon0, lat1, lon1);
                     }
-                    /*else {
+                    
+                    
+                    
+                    
+                    else {
                     Point3DGeo[][] grid = null;
                     if (autoBoundCB.isSelected()) {
-                        // stlGuiController.displayGuiGridBM(s57Layer);
+                         stlGuiController.displayGuiGridBM(s57Layer);
                     } else {
-                        grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, lowestElevation);
+                        grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, highestElevationBathy);
                     }
                     grids = createGrids(grid, tileCount);
                      }
-                     */
+                     
+                    
+                    
+                    
                     if (grids != null) {
                         verticalExaggeration = Double.valueOf(elevationMagnificationTF.getText());
                         List<GridBox3D> gridBoxes = new ArrayList<>();
@@ -1117,7 +1127,7 @@ public class StlDBComponentController
                         }
                         //DEPARE
                         k = 0;
-                        if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {
+                        if (depareRB.isSelected()) {
                             gridBoxes.forEach((gb) -> {
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
@@ -1127,26 +1137,31 @@ public class StlDBComponentController
                                     if (depareVisuCB.isSelected()) {
                                         Shapefile shp = new DepareDBLoader(databaseServices,
                                                 s57DatabaseTF.getText(), USER, PASSWD)
-                                                .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
+                                                .retrieveIn(gb.getLatMin() - RETRIEVE_OFFSET, gb.getLonMin() - RETRIEVE_OFFSET,
+                                                        gb.getLatMax() + RETRIEVE_OFFSET, gb.getLonMax() + RETRIEVE_OFFSET);
                                         new DepareView(bathymetryLayer, s57Layer, s57Layer, 10.0, 1.0, false)
                                                 .display(shp);
                                     }
                                     Shapefile shp = new DepareDBLoader(databaseServices,
                                             s57DatabaseTF.getText(), USER, PASSWD)
-                                            .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
+                                            .retrieveIn(gb.getLatMin() - RETRIEVE_OFFSET/2.0, gb.getLonMin() - RETRIEVE_OFFSET/2.0,
+                                                    gb.getLatMax() + RETRIEVE_OFFSET/2.0, gb.getLonMax() + RETRIEVE_OFFSET/2.0);
                                     DepareExportToSTL depareExportToSTL = new DepareExportToSTL(geodesyServices, jtsServices, displayServices,
                                             shp, gb, highestElevationBathy, s57Layer);
                                     List<Polygon> polygonList = depareExportToSTL.initExport();
                                     displayServices.displayPolygons(polygonList, s57Layer, Material.GREEN);
                                     List<Polygon> selectedPolygonList = stlGuiController.depareSelection(polygonList, s57Layer);
-                                  //  speakerServices.read("Supprimez les depth area non conformes");
-                                    /*
-                                    String filename, List<Polygon> polygonList, double verticalExaggeration, 
-            double latScale, double lonScale, double verticalOffset
-                                    */
+                                    // speakerServices.read("Supprimez les depth area non conformes");
+                                    instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND_1, "true", "1");
+
                                     while (!validSTLButton.isPressed()) {
                                         validSTLButton.setOnMouseClicked((MouseEvent event) -> {
                                             depareExportToSTL.export(filename, polygonList, verticalExaggeration, latScale, lonScale, tileSideZ);
+                                            try {
+                                                Thread.sleep(1000);
+                                            } catch (InterruptedException ex) {
+                                                Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                                            }
                                         });
                                     }
                                     LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
@@ -1169,8 +1184,11 @@ public class StlDBComponentController
                                                     g[g.length - 1][g[0].length - 1].getLongitude()));
                                 }
                                 for (Buoyage b : buoyages) {
-                                    DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(b.getLatitude() - 2 * RETRIEVE_OFFSET,
-                                            b.getLongitude() - 2 * RETRIEVE_OFFSET, b.getLatitude() + 2 * RETRIEVE_OFFSET, b.getLongitude() + 2 * RETRIEVE_OFFSET);
+                                    DEM dem = new DemDbLoader(elevationConnection, demDBServices)
+                                            .retrieveIn(b.getLatitude() - 2 * RETRIEVE_OFFSET,
+                                                    b.getLongitude() - 2 * RETRIEVE_OFFSET,
+                                                    b.getLatitude() + 2 * RETRIEVE_OFFSET,
+                                                    b.getLongitude() + 2 * RETRIEVE_OFFSET);
                                     b.setElevation(Double.toString(dem.getMaxElevation() * verticalExaggeration));
                                 }
                                 new BuoyageView(s57Layer).display(buoyages, 1.0);
@@ -1208,8 +1226,11 @@ public class StlDBComponentController
                                                 g[g.length - 1][g[0].length - 1].getLatitude(),
                                                 g[g.length - 1][g[0].length - 1].getLongitude()));
                                 for (Landmark l : landmarks) {
-                                    DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(l.getLatitude() - 2 * RETRIEVE_OFFSET,
-                                            l.getLongitude() - 2 * RETRIEVE_OFFSET, l.getLatitude() + 2 * RETRIEVE_OFFSET, l.getLongitude() + 2 * RETRIEVE_OFFSET);
+                                    DEM dem = new DemDbLoader(elevationConnection, demDBServices)
+                                            .retrieveIn(l.getLatitude() - 2 * RETRIEVE_OFFSET,
+                                                    l.getLongitude() - 2 * RETRIEVE_OFFSET,
+                                                    l.getLatitude() + 2 * RETRIEVE_OFFSET,
+                                                    l.getLongitude() + 2 * RETRIEVE_OFFSET);
                                     l.setElevation(Double.toString(dem.getMaxElevation() * verticalExaggeration));
                                 }
                                 new LandmarkView(s57Layer).display(landmarks);
@@ -1447,8 +1468,11 @@ public class StlDBComponentController
     @SuppressWarnings("unchecked")
     private List<Point3DGeo[][]> createBathymetryTab(double latMin, double lonMin, double latMax, double lonMax) {
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
-                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
+        DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices)
+                .retrieveIn(latMin - RETRIEVE_OFFSET,
+                        lonMin - RETRIEVE_OFFSET,
+                        latMax + RETRIEVE_OFFSET,
+                        lonMax + RETRIEVE_OFFSET);
         if (!dem.getGrid().isEmpty()) {
             highestElevationBathy = dem.getMaxElevation();
 
@@ -1512,8 +1536,11 @@ public class StlDBComponentController
     @SuppressWarnings("unchecked")
     private List<Point3DGeo[][]> createElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM dem = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
-                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
+        DEM dem = new DemDbLoader(elevationConnection, demDBServices)
+                .retrieveIn(latMin - RETRIEVE_OFFSET,
+                        lonMin - RETRIEVE_OFFSET,
+                        latMax + RETRIEVE_OFFSET,
+                        lonMax + RETRIEVE_OFFSET);
         if (mergeLitto3dRB.isSelected()) {//HIGH_ELEVATION_DB
             highlElevationConnection = databaseServices.connect(HIGH_ELEVATION_DB, HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
             DEM highDem = new DemDbLoader(highlElevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
@@ -1598,8 +1625,11 @@ public class StlDBComponentController
         Point3DGeo[][] gridBathy1 = null;
         Point3DGeo[][] gridTmpAlti = null;
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM demAlti = new DemDbLoader(elevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
-                lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
+        DEM demAlti = new DemDbLoader(elevationConnection, demDBServices)
+                .retrieveIn(latMin - RETRIEVE_OFFSET,
+                        lonMin - RETRIEVE_OFFSET,
+                        latMax + RETRIEVE_OFFSET,
+                        lonMax + RETRIEVE_OFFSET);
         if (!demAlti.getGrid().isEmpty()) {
             lowestElevationAlti = demAlti.getMinElevation();
             rasterInfoAlti = delaunayServices.toGridTiff(demAlti, "demAlti");
@@ -1610,8 +1640,11 @@ public class StlDBComponentController
 
         }
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        DEM demBathy = new BathyLoader(bathyConnection, bathymetryDBServices).retrieveIn(latMin - 10 * RETRIEVE_OFFSET,
-                lonMin - 10 * RETRIEVE_OFFSET, latMax + 10 * RETRIEVE_OFFSET, lonMax + 10 * RETRIEVE_OFFSET);
+        DEM demBathy = new BathyLoader(bathyConnection, bathymetryDBServices)
+                .retrieveIn(latMin - 10 * RETRIEVE_OFFSET,
+                        lonMin - 10 * RETRIEVE_OFFSET,
+                        latMax + 10 * RETRIEVE_OFFSET,
+                        lonMax + 10 * RETRIEVE_OFFSET);
 
         if (!demBathy.getGrid().isEmpty()) {
             highestElevationBathy = demBathy.getMaxElevation();
@@ -1847,18 +1880,6 @@ public class StlDBComponentController
 
     public Connection getConnection() {
         return s57Connection;
-    }
-
-    private SVGPath createStar() {
-        SVGPath test = new SVGPath();
-        test.setContent("M0,0 L800,0 800,450 0,450 0,0 z");
-        test.setStrokeLineJoin(StrokeLineJoin.ROUND);
-        test.setStrokeWidth(4);
-        test.setStroke(javafx.scene.paint.Color.RED);
-        //test.setFill(javafx.scene.paint.Color.GREEN);
-        test.setFill(null);
-        test.setOpacity(1.0);
-        return test;
     }
 
     @SuppressWarnings("unchecked")

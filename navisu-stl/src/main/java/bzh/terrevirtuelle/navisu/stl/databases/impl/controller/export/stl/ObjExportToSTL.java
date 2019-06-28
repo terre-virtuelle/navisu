@@ -187,16 +187,17 @@ public class ObjExportToSTL {
 
     private String toFacet(List<FaceVertex> fvs, double objXOffset, double objYOffset, boolean isTerrain) {
         String facet = "";
-        Vec3d[] mainFace = new Vec3d[3];
+        Vec3d[] mainFace = new Vec3d[fvs.size()];
         int i = 0;
         List<Point3DGeo> view = new ArrayList<>();
         // Main face
+       // System.out.println("fvs : " + );
         for (FaceVertex fv : fvs) {
             double x = (fv.getV().x + objXOffset + 3.8);//3.5
             double y = (fv.getV().y + objYOffset + .5);//1
             Point3DGeo pt = pro4JServices.convertLambert93ToWGS84(y, x);
             view.add(pt);
-            // displayServices.displayPoints3DAsPath(view, 150.0, layer, Material.GREEN);
+            displayServices.displayPoints3DAsPath(view, 150.0, layer, Material.GREEN);
             mainFace[i++] = new Vec3d(pt.getLongitude(), pt.getLatitude(), fv.getV().z); //z * 2
         }
 

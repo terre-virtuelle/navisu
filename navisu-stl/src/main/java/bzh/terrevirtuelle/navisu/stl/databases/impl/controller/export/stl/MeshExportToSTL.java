@@ -185,9 +185,9 @@ public class MeshExportToSTL {
         lonMin = g[0][0].getLongitude();
         List<Point3DGeo> bounds = new ArrayList<>();
         bounds.add(g[0][0]);
-        bounds.add(g[0][g[1].length - 1]);
-        bounds.add(g[g[0].length - 1][g[1].length - 1]);
-        bounds.add(g[g[0].length - 1][0]);
+        bounds.add(g[0][g[0].length - 1]);
+        bounds.add(g[g.length - 1][g[0].length - 1]);
+        bounds.add(g[g.length - 1][0]);
         bounds.add(g[0][0]);
         List<Point3DGeo> locInBound = new ArrayList<>();
         Set<Point3DGeo> locations = meshObjectsLocationMap.keySet();

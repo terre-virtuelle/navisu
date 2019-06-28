@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.speech.Speaker;
 import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 
 import org.capcaval.c3.component.ComponentState;
-import t2s.son.LecteurTexte;
 
 /* NaVisu
  *
@@ -19,11 +18,11 @@ import t2s.son.LecteurTexte;
 public class SpeakerImpl
         implements Speaker, SpeakerServices, ComponentState {
 
-    LecteurTexte reader;
+
 
     @Override
     public void componentInitiated() {
-        reader = new LecteurTexte();
+       
     }
 
     @Override
@@ -33,8 +32,7 @@ public class SpeakerImpl
 
     @Override
     public void read(String text) {
-        reader.setTexte(text);
-        reader.playAll();
+       
     }
 
     @Override
