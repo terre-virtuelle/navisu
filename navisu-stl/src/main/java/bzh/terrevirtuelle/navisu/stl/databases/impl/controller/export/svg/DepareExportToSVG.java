@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.domain.svg.SVGPath3D;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.shapefile.DepareShapefileExport;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
-import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.TopologyException;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
@@ -120,7 +119,7 @@ public class DepareExportToSVG
         collShapesList.forEach((l) -> {
             shapeList.addAll(l);
         });
-        
+
         SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
         String dateStr = formater.format(new Date());
 
@@ -133,14 +132,23 @@ public class DepareExportToSVG
             String content = "<!-- \n"
                     + filename + "_" + svg.getHeight() + "_" + svg.getId() + ".svg  \n"
                     + "Created with NaVisu, BBT project (http://www.navisu.org/) \n"
-                    + dateStr +"\n"
+                    + dateStr + "\n"
                     + "--> \n"
                     + "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
                     + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
                     + "\n"
                     + "    <path d=\"" + svgContent + "\"\n"
-                    + "style=\"stroke:#000000; fill:none; stroke-width: 1px;\"/> \n"
-                    + "</svg>";
+                    + "style=\"stroke:#000000; fill:none; stroke-width: 1px;\"/> \n";
+            for (SVGPath3D svg1 : svg.getSvgOnTopList()) {
+                String svgContent1 = svg1.getContent();
+                svgContent1 = svgContent1.replace("z", "");
+                svgContent1 = svgContent1.trim();
+                content += "    <path d=\"" + svgContent1 + "\"\n"
+                        + "style=\"stroke:#0000FF; fill:none; stroke-width: 1px; stroke-dasharray:1, 5"
+                      //  + " opacity:0.5 \"/> "
+                        + "/> \n";
+            }
+            content += "</svg>";
             try {
                 Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.CREATE);
             } catch (IOException ex) {
@@ -150,7 +158,7 @@ public class DepareExportToSVG
         String svgContentAll = "<!-- \n"
                 + filename + "_all" + ".svg  \n"
                 + "Created with NaVisu, BBT project (http://www.navisu.org/) \n"
-                 + dateStr +"\n"
+                + dateStr + "\n"
                 + "--> \n"
                 + "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
                 + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
@@ -219,7 +227,7 @@ public class DepareExportToSVG
                     if (j != i) {
                         for (SVGPath3D svg1 : svgMap.get(keyList.get(j))) {
                             try {
-                                if (svg1.getGeometry().within(svg.getGeometry())) {
+                                if (svg.getGeometry().contains(svg1.getGeometry())) {
                                     svg.getSvgOnTopList().add(svg1);
                                 }
                             } catch (TopologyException e) {
@@ -227,6 +235,16 @@ public class DepareExportToSVG
                             }
                         }
                     }
+                }
+            }
+        }
+
+        // Verif
+        for (int i = 0; i < keyList.size(); i++) {
+            for (SVGPath3D svg : svgMap.get(keyList.get(i))) {
+                System.out.println("svg : " + svg.getId());
+                for (SVGPath3D svg1 : svg.getSvgOnTopList()) {
+                    System.out.print(svg1.getId() + "  ");
                 }
             }
         }

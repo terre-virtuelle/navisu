@@ -892,7 +892,7 @@ public class StlDBComponentController
                     Double.valueOf(objXOffsetTF.getText()), Double.valueOf(objYOffsetTF.getText()),
                     terrainRB.isSelected());
             if (boundList != null) {
-              //  displayServices.displayPoints3DAsPath(boundList, 150, s57Layer, Material.YELLOW);
+                //  displayServices.displayPoints3DAsPath(boundList, 150, s57Layer, Material.YELLOW);
             }
         });
         slConsEditorButton.setOnMouseClicked((MouseEvent event) -> {
@@ -991,7 +991,7 @@ public class StlDBComponentController
                     if (autoBoundCB.isSelected()) {
                            stlGuiController.displayGuiGridBM(s57Layer);
                     }
-                    */
+                     */
                     //ELEVATION AND TILES
                     if ((elevationRB.isSelected() && noBathyRB.isSelected())
                             || (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected()))) {
@@ -1007,24 +1007,16 @@ public class StlDBComponentController
                     }
                     if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {
                         grids = createElevationAndDepare(lat0, lon0, lat1, lon1);
-                    }
-                    
-                    
-                    
-                    
-                    else {
-                    Point3DGeo[][] grid = null;
-                    if (autoBoundCB.isSelected()) {
-                         stlGuiController.displayGuiGridBM(s57Layer);
                     } else {
-                        grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, highestElevationBathy);
+                        Point3DGeo[][] grid = null;
+                        if (autoBoundCB.isSelected()) {
+                            stlGuiController.displayGuiGridBM(s57Layer);
+                        } else {
+                            grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, highestElevationBathy);
+                        }
+                        grids = createGrids(grid, tileCount);
                     }
-                    grids = createGrids(grid, tileCount);
-                     }
-                     
-                    
-                    
-                    
+
                     if (grids != null) {
                         verticalExaggeration = Double.valueOf(elevationMagnificationTF.getText());
                         List<GridBox3D> gridBoxes = new ArrayList<>();
@@ -1144,8 +1136,8 @@ public class StlDBComponentController
                                     }
                                     Shapefile shp = new DepareDBLoader(databaseServices,
                                             s57DatabaseTF.getText(), USER, PASSWD)
-                                            .retrieveIn(gb.getLatMin() - RETRIEVE_OFFSET/2.0, gb.getLonMin() - RETRIEVE_OFFSET/2.0,
-                                                    gb.getLatMax() + RETRIEVE_OFFSET/2.0, gb.getLonMax() + RETRIEVE_OFFSET/2.0);
+                                            .retrieveIn(gb.getLatMin() - RETRIEVE_OFFSET / 2.0, gb.getLonMin() - RETRIEVE_OFFSET / 2.0,
+                                                    gb.getLatMax() + RETRIEVE_OFFSET / 2.0, gb.getLonMax() + RETRIEVE_OFFSET / 2.0);
                                     DepareExportToSTL depareExportToSTL = new DepareExportToSTL(geodesyServices, jtsServices, displayServices,
                                             shp, gb, highestElevationBathy, s57Layer);
                                     List<Polygon> polygonList = depareExportToSTL.initExport();
@@ -1426,6 +1418,7 @@ public class StlDBComponentController
                     List<Polygon> polygonList = depareExportToSVG.initExport();
                     displayServices.displayPolygons(polygonList, s57Layer, Material.GREEN);
                     List<Polygon> selectedPolygonList = stlGuiController.depareSelection(polygonList, s57Layer);
+
                     while (!validSVGButton.isPressed()) {
                         validSVGButton.setOnMouseClicked((MouseEvent event) -> {
                             svgMap = new HashMap<>();
@@ -1440,6 +1433,21 @@ public class StlDBComponentController
                                     svgMap.get(height).add(svg);
                                 }
                             }
+                            if (selectedObjects.contains("BUOYAGE")) {
+                                Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
+                                
+                                    LOGGER.info("In export BUOYAGE en SVG");
+                                    buoyages.clear();
+                                    for (String b : buoyageKeySet) {
+                                        buoyages.addAll(new BuoyageDBLoader(topologyServices, s57Connection, b, topMarkMap, marsys)
+                                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
+                                    }
+                                    new BuoyageView(s57Layer).display(buoyages, 1.0);
+                                       // BuoyageExportToSTL buoyageExportSTL = new BuoyageExportToSTL(geodesyServices, g, filename, latScale, lonScale);
+                                       // buoyageExportSTL.export(buoyages, highestElevationBathy * verticalExaggeration, tileSideZ);
+                                        LOGGER.info("Out export BUOYAGE en SVG");
+                                }
+
                             svgMap = depareExportToSVG.processOnTop(svgMap);
                             if (!svgMap.keySet().isEmpty()) {
                                 if (generateSvgCB.isSelected()) {

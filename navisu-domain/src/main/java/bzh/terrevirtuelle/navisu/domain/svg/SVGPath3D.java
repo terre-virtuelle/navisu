@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.domain.svg;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import com.vividsolutions.jts.geom.Geometry;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ public class SVGPath3D
         extends SVGPath {
 
     private List<SVGPath3D> svgOnTopList;
+    private List<Buoyage> buoyageList;
     private Geometry geometry;
     private double height;
     private Map<String, Object> values;
@@ -86,7 +88,5 @@ public class SVGPath3D
     public void setGeometry(Geometry geometry) {
         this.geometry = geometry;
     }
-
-    
 
 }
