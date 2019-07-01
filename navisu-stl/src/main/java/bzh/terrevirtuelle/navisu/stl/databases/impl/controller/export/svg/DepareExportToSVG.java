@@ -5,11 +5,16 @@
  */
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.svg;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.svg.SVGPath3D;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.shapefile.DepareShapefileExport;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import bzh.terrevirtuelle.navisu.util.Pair;
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.TopologyException;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.geom.Angle;
@@ -137,17 +142,26 @@ public class DepareExportToSVG
                     + "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
                     + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
                     + "\n"
-                    + "    <path d=\"" + svgContent + "\"\n"
+                    + "<path d=\"" + svgContent + "\"\n"
                     + "style=\"stroke:#000000; fill:none; stroke-width: 1px;\"/> \n";
             for (SVGPath3D svg1 : svg.getSvgOnTopList()) {
                 String svgContent1 = svg1.getContent();
                 svgContent1 = svgContent1.replace("z", "");
                 svgContent1 = svgContent1.trim();
-                content += "    <path d=\"" + svgContent1 + "\"\n"
-                        + "style=\"stroke:#0000FF; fill:none; stroke-width: 1px; stroke-dasharray:1, 5"
-                      //  + " opacity:0.5 \"/> "
+                content += "<path d=\"" + svgContent1 + "\"\n"
+                        + "style=\"stroke:#0000FF; fill:none; stroke-width: 1px; stroke-dasharray:1, 5\""
+                        //  + " opacity:0.5 \"/> "
                         + "/> \n";
             }
+            for (Buoyage b : svg.getBuoyageList()) {
+                Pair<Double, Double> latLon = scaling(b.getLatitude(), b.getLongitude(),
+                        latMin, lonMin, sideY, scaleLat, scaleLon);
+                String svgContent2 = "<circle cx=\"" + latLon.getX() + "\" cy=\"" + latLon.getY() + "\" r=\"4\" \n"
+                        + " style=\"stroke:#FF0000; fill:none; stroke-width: 1px;\""
+                        + "/> \n";
+                content += svgContent2;
+            }
+
             content += "</svg>";
             try {
                 Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.CREATE);
@@ -155,28 +169,7 @@ public class DepareExportToSVG
                 Logger.getLogger(DepareExportToSVG.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        String svgContentAll = "<!-- \n"
-                + filename + "_all" + ".svg  \n"
-                + "Created with NaVisu, BBT project (http://www.navisu.org/) \n"
-                + dateStr + "\n"
-                + "--> \n"
-                + "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
-                + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
 
-        for (SVGPath3D svg : shapeList) {
-            String svgContent = svg.getContent();
-            svgContent = svgContent.replace("z", "");
-            svgContent = svgContent.trim();
-            svgContentAll += "\n    <path d=\"" + svgContent + "\"\n"
-                    + "style=\"stroke:#000000; fill:none; stroke-width: 1px;\"/>";
-        }
-        svgContentAll += "</svg>";
-        String path = filenameRoot + SEP + filename + "_all" + ".svg";
-        try {
-            Files.write(Paths.get(path), svgContentAll.getBytes(), StandardOpenOption.CREATE);
-        } catch (IOException ex) {
-            Logger.getLogger(DepareExportToSVG.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     protected SVGPath3D createJtsGeometry(Polygon p, SVGPath3D svgPath3D) {
@@ -185,7 +178,9 @@ public class DepareExportToSVG
         return svgPath3D;
     }
 
-    protected List<Position> scaling(List<Position> positions, double latMin, double lonMin, double sideY, double latScale, double lonScale) {
+    protected List<Position> scaling(List<Position> positions,
+            double latMin, double lonMin,
+            double sideY, double latScale, double lonScale) {
         List<Position> resultPos = new ArrayList<>();
         positions.forEach((position) -> {
             double lon = position.getLongitude().getDegrees();
@@ -200,8 +195,17 @@ public class DepareExportToSVG
         return resultPos;
     }
 
+    @SuppressWarnings("unchecked")
+    protected Pair<Double, Double> scaling(double lat, double lon, double latMin, double lonMin, double sideY, double latScale, double lonScale) {
+        double latM = geodesyServices.getDistanceM(latMin, lonMin, lat, lonMin);
+        double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
+        latM *= latScale;
+        lonM *= lonScale;
+        return new Pair(lonM, sideY - latM);
+    }
+
     protected String createContent(List<Position> scaledPosition) {
-        String result = "";
+        String result;
 
         result = "M"
                 + +(int) scaledPosition.get(0).getLatitude().getDegrees() + ","
@@ -238,17 +242,21 @@ public class DepareExportToSVG
                 }
             }
         }
-
-        // Verif
-        for (int i = 0; i < keyList.size(); i++) {
-            for (SVGPath3D svg : svgMap.get(keyList.get(i))) {
-                System.out.println("svg : " + svg.getId());
-                for (SVGPath3D svg1 : svg.getSvgOnTopList()) {
-                    System.out.print(svg1.getId() + "  ");
-                }
-            }
-        }
         return svgMap;
     }
 
+    public List<SVGPath3D> addBuoyage(List<SVGPath3D> shapeSVGList, List<Buoyage> buoyages) {
+        shapeSVGList.forEach((svg) -> {
+            buoyages.forEach((b) -> {
+                GeometryFactory geometryFactory = new GeometryFactory();
+                Coordinate coordinates = new Coordinate(b.getLongitude(), b.getLatitude());
+                Point point = geometryFactory.createPoint(coordinates);
+                if (svg.getGeometry().contains(point)) {
+                    svg.addBuoyage(b);
+                }
+            });
+        });
+
+        return shapeSVGList;
+    }
 }

@@ -974,16 +974,17 @@ public class StlDBComponentController
                 gridX = Double.parseDouble(gridSideXTF.getText());
                 gridY = Double.parseDouble(gridSideYTF.getText());
                 LOGGER.info("Début traitement : ");
-                if (generateStlCB.isSelected() && !generateSvgCB.isSelected()) {
-                    if (!selectedObjects.isEmpty()) {
-                        //Define TopMak for all buoyages, default is 0 : no topmark
-                        TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
-                        topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+                if (!selectedObjects.isEmpty()) {
+                    //Define TopMak for all buoyages, default is 0 : no topmark
+                    TopmarDBLoader topmarDbLoader = new TopmarDBLoader(s57Connection);
+                    topMarkMap = topmarDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
 
-                        //Define IALA system for all buoyages, default is 1
-                        MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
-                        marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
-                    }
+                    //Define IALA system for all buoyages, default is 1
+                    MnsysDBLoader mnsysDbLoader = new MnsysDBLoader(s57Connection);
+                    marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
+                }
+                if (generateStlCB.isSelected() && !generateSvgCB.isSelected()) {
+
                     // DEBUG
                     // autoBoundCB.setSelected(true);
                     // stlPreviewCB.setSelected(false);
@@ -1435,19 +1436,16 @@ public class StlDBComponentController
                             }
                             if (selectedObjects.contains("BUOYAGE")) {
                                 Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
-                                
-                                    LOGGER.info("In export BUOYAGE en SVG");
-                                    buoyages.clear();
-                                    for (String b : buoyageKeySet) {
-                                        buoyages.addAll(new BuoyageDBLoader(topologyServices, s57Connection, b, topMarkMap, marsys)
-                                                .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
-                                    }
-                                    new BuoyageView(s57Layer).display(buoyages, 1.0);
-                                       // BuoyageExportToSTL buoyageExportSTL = new BuoyageExportToSTL(geodesyServices, g, filename, latScale, lonScale);
-                                       // buoyageExportSTL.export(buoyages, highestElevationBathy * verticalExaggeration, tileSideZ);
-                                        LOGGER.info("Out export BUOYAGE en SVG");
+                                LOGGER.info("In export BUOYAGE en SVG");
+                                buoyages.clear();
+                                for (String b : buoyageKeySet) {
+                                    buoyages.addAll(new BuoyageDBLoader(topologyServices, s57Connection, b, topMarkMap, marsys)
+                                            .retrieveObjectsIn(latMin, lonMin, latMax, lonMax));
                                 }
-
+                                new BuoyageView(s57Layer).display(buoyages, 1.0);
+                                depareExportToSVG.addBuoyage(shapeSVGList, buoyages);
+                                LOGGER.info("Out export BUOYAGE en SVG");
+                            }
                             svgMap = depareExportToSVG.processOnTop(svgMap);
                             if (!svgMap.keySet().isEmpty()) {
                                 if (generateSvgCB.isSelected()) {

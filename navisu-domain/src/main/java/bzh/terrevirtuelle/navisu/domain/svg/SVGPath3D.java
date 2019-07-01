@@ -34,6 +34,7 @@ public class SVGPath3D
     public SVGPath3D(double height) {
         values = new HashMap<>();
         svgOnTopList = new ArrayList<>();
+        buoyageList = new ArrayList<>();
         this.height = height;
     }
 
@@ -53,6 +54,10 @@ public class SVGPath3D
      */
     public void setValues(Map<String, Object> values) {
         this.values = values;
+    }
+
+    public void addBuoyage(Buoyage buoyage) {
+        buoyageList.add(buoyage);
     }
 
     /**
@@ -87,6 +92,21 @@ public class SVGPath3D
 
     public void setGeometry(Geometry geometry) {
         this.geometry = geometry;
+    }
+
+    public List<Buoyage> getBuoyageList() {
+        return buoyageList;
+    }
+
+    public void setBuoyageList(List<Buoyage> buoyageList) {
+        this.buoyageList = buoyageList;
+    }
+
+    @Override
+    public String toString() {
+        return "SVGPath3D{" 
+                + super.toString()
+                + "svgOnTopList=" + svgOnTopList + ", buoyageList=" + buoyageList + ", geometry=" + geometry + ", height=" + height + ", values=" + values + '}';
     }
 
 }
