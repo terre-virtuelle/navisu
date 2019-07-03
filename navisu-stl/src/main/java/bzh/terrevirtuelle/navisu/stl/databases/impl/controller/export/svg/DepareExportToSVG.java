@@ -133,23 +133,106 @@ public class DepareExportToSVG
             svgContent = svgContent.replace("z", "");
             svgContent = svgContent.trim();
             String height = Integer.toString((int) svg.getHeight());
-            String path = filenameRoot + SEP + filename + "_" + height + "_" + svg.getId() + ".svg";
-            String content = "<!-- \n"
-                    + filename + "_" + svg.getHeight() + "_" + svg.getId() + ".svg  \n"
+            String path = filenameRoot + SEP + filename + "_" + height + "_" + svg.getId();
+            String ext = "";
+            if (svg.getSvgOnTopList().isEmpty()) {
+                ext = ".svg";
+            } else {
+                ext = "_.svg";
+            }
+            if (!svg.getBuoyageList().isEmpty()) {
+                ext = "-.svg";
+            }
+            if (!svg.getSvgOnTopList().isEmpty() && !svg.getBuoyageList().isEmpty()) {
+                ext = "+_.svg";
+            }
+            path += ext;
+            String comment = "<!-- \n"
+                    + filename + "_" + (int) svg.getHeight() + "_" + svg.getId() + ".svg  \n"
                     + "Created with NaVisu, BBT project (http://www.navisu.org/) \n"
-                    + dateStr + "\n"
-                    + "--> \n"
+                    + dateStr + "\n";
+            String others = "";
+            String buoyages = "";
+            String content = "--> \n"
                     + "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
                     + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
                     + "\n"
                     + "<path d=\"" + svgContent + "\"\n"
+                    + "style=\"stroke:#000000; fill:none; stroke-width: 1px;\"/> \n";
+
+            for (SVGPath3D svg1 : svg.getSvgOnTopList()) {
+                String svgContent1 = svg1.getContent();
+                svgContent1 = svgContent1.replace("z", "");
+                svgContent1 = svgContent1.trim();
+                content += "<path d=\"" + svgContent1 + "\"\n"
+                        + "style=\"stroke:#0000FF; stroke-width: 1px; stroke-dasharray:1, 5\""
+                        //  + " opacity:0.5 \"/> "
+                        + "/> \n";
+                height = Integer.toString((int) svg1.getHeight());
+                others += filename + "_" + height + "_" + svg1.getId() + ".svg \n";
+            }
+            for (Buoyage b : svg.getBuoyageList()) {
+                Pair<Double, Double> latLon = scaling(b.getLatitude(), b.getLongitude(),
+                        latMin, lonMin, sideY, scaleLat, scaleLon);
+                String svgContent2 = "<circle cx=\"" + latLon.getX() + "\" cy=\"" + latLon.getY() + "\" r=\"4\" \n"
+                        + " style=\"stroke:#FF0000;  stroke-width: 1px;\""
+                        + "/> \n";
+                content += svgContent2;
+
+                String label = b.getLabel();
+                label = label.replace("\n", ", ");
+                buoyages += label + "\n";
+            }
+
+            content += "</svg>";
+            comment += others;
+            comment += buoyages;
+            content = comment + content;
+            try {
+                Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.CREATE);
+            } catch (IOException ex) {
+                Logger.getLogger(DepareExportToSVG.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+        writeAll(svgMap);
+
+    }
+
+    public void writeAll(Map<Double, List<SVGPath3D>> svgMap) {
+        List<SVGPath3D> shapeList = new ArrayList<>();
+        Collection<List<SVGPath3D>> collShapesList = svgMap.values();
+        collShapesList.forEach((l) -> {
+            shapeList.addAll(l);
+        });
+
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
+        String dateStr = formater.format(new Date());
+        String path = filenameRoot + SEP + filename + "_" + "all.svg";
+        String content = "<!-- \n"
+                + filename + "_" + "all.svg  \n"
+                + "Created with NaVisu, BBT project (http://www.navisu.org/) \n"
+                + dateStr + "\n"
+                + "--> \n"
+                + "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
+                + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
+                + "\n";
+        try {
+            Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.CREATE);
+        } catch (IOException ex) {
+            Logger.getLogger(DepareExportToSVG.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        for (SVGPath3D svg : shapeList) {
+            String svgContent = svg.getContent();
+            svgContent = svgContent.replace("z", "");
+            svgContent = svgContent.trim();
+            content = "<path d=\"" + svgContent + "\"\n"
                     + "style=\"stroke:#000000; fill:none; stroke-width: 1px;\"/> \n";
             for (SVGPath3D svg1 : svg.getSvgOnTopList()) {
                 String svgContent1 = svg1.getContent();
                 svgContent1 = svgContent1.replace("z", "");
                 svgContent1 = svgContent1.trim();
                 content += "<path d=\"" + svgContent1 + "\"\n"
-                        + "style=\"stroke:#0000FF; fill:none; stroke-width: 1px; stroke-dasharray:1, 5\""
+                        + "style=\"stroke:#0000FF; fill:none; stroke-width: 1px; stroke-dasharray:1, 3\""
                         //  + " opacity:0.5 \"/> "
                         + "/> \n";
             }
@@ -161,15 +244,18 @@ public class DepareExportToSVG
                         + "/> \n";
                 content += svgContent2;
             }
-
-            content += "</svg>";
             try {
-                Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.CREATE);
+                Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.APPEND);
             } catch (IOException ex) {
-                Logger.getLogger(DepareExportToSVG.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DepareExportToSVG.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-
+        content = "\n </svg>";
+        try {
+            Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException ex) {
+            Logger.getLogger(DepareExportToSVG.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
     }
 
     protected SVGPath3D createJtsGeometry(Polygon p, SVGPath3D svgPath3D) {

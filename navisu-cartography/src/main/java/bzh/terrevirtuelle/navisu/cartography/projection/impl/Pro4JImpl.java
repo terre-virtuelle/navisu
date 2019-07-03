@@ -52,9 +52,9 @@ public class Pro4JImpl
     @Override
     public List<Point3DGeo> convertLambert93ToWGS84(List<Point3DGeo> pts) {
         List<Point3DGeo> result = new ArrayList<>();
-        for (Point3DGeo p : pts) {
+        pts.forEach((p) -> {
             result.add(convertLambert93ToWGS84(p));
-        }
+        });
         return result;
     }
 

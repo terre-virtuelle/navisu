@@ -435,6 +435,9 @@
                                           <Button fx:id="validSVGButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Valid" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                           <Label prefHeight="15.0" prefWidth="92.0" text="Files generation" GridPane.columnIndex="3" />
                                           <CheckBox fx:id="generateWktCB" mnemonicParsing="false" text="WKT" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                          <Label prefHeight="15.0" prefWidth="91.0" text="Laser sides X &amp; Y" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextField fx:id="svgSideXTF" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <TextField fx:id="svgSideYTF" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                        </children>
                                     </GridPane></children>
 						                                </AnchorPane>

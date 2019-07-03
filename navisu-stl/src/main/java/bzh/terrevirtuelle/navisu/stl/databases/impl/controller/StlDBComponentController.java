@@ -147,9 +147,7 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import java.io.InputStream;
 import java.util.logging.FileHandler;
-import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
-import javafx.scene.shape.StrokeLineJoin;
 import javafx.stage.FileChooser;
 import org.apache.commons.io.FileUtils;
 
@@ -366,6 +364,10 @@ public class StlDBComponentController
     public TextField tileSideYTF;
     @FXML
     public TextField tileSideZTF;
+    @FXML
+    public TextField svgSideXTF;
+    @FXML
+    public TextField svgSideYTF;
     @FXML
     public ChoiceBox<String> supportCB;
     @FXML
@@ -986,7 +988,7 @@ public class StlDBComponentController
                 if (generateStlCB.isSelected() && !generateSvgCB.isSelected()) {
 
                     // DEBUG
-                    // autoBoundCB.setSelected(true);
+                     autoBoundCB.setSelected(true);
                     // stlPreviewCB.setSelected(false);
                     /*
                     if (autoBoundCB.isSelected()) {
@@ -1009,6 +1011,7 @@ public class StlDBComponentController
                     if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {
                         grids = createElevationAndDepare(lat0, lon0, lat1, lon1);
                     } else {
+                        /*
                         Point3DGeo[][] grid = null;
                         if (autoBoundCB.isSelected()) {
                             stlGuiController.displayGuiGridBM(s57Layer);
@@ -1016,6 +1019,7 @@ public class StlDBComponentController
                             grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, highestElevationBathy);
                         }
                         grids = createGrids(grid, tileCount);
+                        */
                     }
 
                     if (grids != null) {
@@ -1454,6 +1458,7 @@ public class StlDBComponentController
                                         jfxViewer.display(svgMap);
                                     });
                                     depareExportToSVG.write(svgMap);
+                                    
                                 }
                                 if (generateWktCB.isSelected()) {
                                     new DepareExportWKT(DEFAULT_WKT_PATH, outFileTF.getText()).write(svgMap);
