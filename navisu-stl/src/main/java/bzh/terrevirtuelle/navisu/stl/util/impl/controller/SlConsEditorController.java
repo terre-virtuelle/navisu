@@ -309,7 +309,7 @@ public class SlConsEditorController
                 Logger.getLogger(SlConsEditorController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
             String out = USER_DIR + SEP + "privateData" + SEP + "shp" + SEP + slconsName + ".shp";
-            String command = "ogr2ogr -t_srs EPSG:4326 -f 'ESRI Shapefile' " + out + " " + in;
+            String command = "ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" " + out + " " + in;
             try {
                 Proc.BUILDER.create()
                         .setCmd(command)
