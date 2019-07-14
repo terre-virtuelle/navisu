@@ -237,7 +237,9 @@ public class ToolsComponentController
     private ObservableList<String> catalogCbData = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
     private ObservableList<String> countryCbData = FXCollections.observableArrayList("FR", "ALL", "CA", "DE", "KR", "NO", "PE",
             "PH", "PT", "RU", "TR", "US", "ZA");
-    private ObservableList<String> dbCbElevationData = FXCollections.observableArrayList("Choice DB", "IGN75m", "SRTM30m", "Litto3D5m", "Litto3D1m", "TestAltiDB");
+    private ObservableList<String> dbCbElevationData = FXCollections.observableArrayList("Choice DB", "IGN75m", "SRTM30m", 
+             "BrestMetropole5mDB","BrestMetropole1mDB","Finistere5mDB",
+            "Litto3D5m", "Litto3D1m", "TestAltiDB");
     private ObservableList<String> dbCbBathyData = FXCollections.observableArrayList("Choice DB", "BathyShomDB", "TestDB");
     private ObservableList<String> dbCbBeaconsData = FXCollections.observableArrayList("Choice DB", "BalisageMaritimeDB");
 
@@ -256,6 +258,11 @@ public class ToolsComponentController
     private final String ELEVATION_DB_NAME_2 = "TestAltiDB";
     private final String ELEVATION_DB_NAME_3 = "Litto3D5mDB";
     private final String ELEVATION_DB_NAME_4 = "Litto3D1mDB";
+    private final String ELEVATION_DB_NAME_5 = "BrestMetropole5mDB";
+    private final String ELEVATION_DB_NAME_6 = "BrestMetropole1mDB";
+    private final String ELEVATION_DB_NAME_7 = "Finistere5mDB";
+    
+    
     private final String ELEVATION_DB_ORG_DIR = "privateData" + SEP + "elevation";
     private final String BEACONS_DB_NAME_0 = "BalisageMaritimeDB";
     private String componentKeyName;
@@ -313,8 +320,6 @@ public class ToolsComponentController
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.lambertServices = lambertServices;
         this.rasterServices = rasterServices;
-        
-        
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
@@ -529,6 +534,36 @@ public class ToolsComponentController
                         }
                         elevationDbCB.getSelectionModel().select("Choice DB");
                     }
+                    if (newValue.equals("BrestMetropole5mDB")) {
+                        elevationDatabaseNameTF.setText(ELEVATION_DB_NAME_5);
+                        if (dem1mRB.isSelected()) {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Warning");
+                            alert.setHeaderText("1m Checkbox is selected, are you sure the DB is OK ? ");
+                            alert.show();
+                        }
+                        elevationDbCB.getSelectionModel().select("Choice DB");
+                    }
+                    if (newValue.equals("BrestMetropole1mDB")) {
+                        elevationDatabaseNameTF.setText(ELEVATION_DB_NAME_6);
+                        if (dem5mRB.isSelected()) {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Warning");
+                            alert.setHeaderText("5m Checkbox is selected, are you sure the DB is OK ? ");
+                            alert.show();
+                        }
+                        elevationDbCB.getSelectionModel().select("Choice DB");
+                    }
+                    if (newValue.equals("Finistere5mDB")) {
+                        elevationDatabaseNameTF.setText(ELEVATION_DB_NAME_7);
+                        if (dem1mRB.isSelected()) {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Warning");
+                            alert.setHeaderText("1m Checkbox is selected, are you sure the DB is OK ? ");
+                            alert.show();
+                        }
+                        elevationDbCB.getSelectionModel().select("Choice DB");
+                    }
                     if (newValue.equals("TestAltiDB")) {
                         elevationDatabaseNameTF.setText(ELEVATION_DB_NAME_2);
                         elevationDbCB.getSelectionModel().select("Choice DB");
@@ -556,20 +591,20 @@ public class ToolsComponentController
                         }
                     } else {
                         if (!elevationDataDirTF.getText().trim().equals("")) {
-                            if (lambert2Wgs84CB.isSelected()|| tiff2XyzCB.isSelected()) {
+                            if (lambert2Wgs84CB.isSelected() || tiff2XyzCB.isSelected()) {
                                 try {
                                     Path directory = Paths.get(elevationDataDirTF.getText());
                                     Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
                                         @Override
                                         public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
-                                            if ((path.toString().endsWith("asc") && path.toString().contains(mnt))
-                                                    ||(path.toString().endsWith("tif") && path.toString().contains("1arc")) ) {// || tiff2XyzCB.isSelected()
+                                            if ((path.toString().endsWith("asc")) //&& path.toString().contains(mnt))
+                                                    || (path.toString().endsWith("tif") && path.toString().contains("1arc"))) {// || tiff2XyzCB.isSelected()
                                                 String fileName = prepareCreateOrInsertFile(path.toString());
                                                 if (isCreate == false) {
                                                     isCreate = true;
-                                                   // bathymetryDBServices.create(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
+                                                     bathymetryDBServices.create(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
                                                 } else {
-                                                  //  bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
+                                                      bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
                                                 }
                                             }
 
@@ -582,6 +617,7 @@ public class ToolsComponentController
                             } else {
                                 try {
                                     Path directory = Paths.get(elevationDataDirTF.getText());
+                                    System.out.println("directory : " + directory);
                                     Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
                                         @Override
                                         public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
@@ -712,6 +748,7 @@ public class ToolsComponentController
         if (lambert2Wgs84CB.isSelected() && !tiff2XyzCB.isSelected()) {
             tiffFile = rasterServices.translateAscLambert93ToTif(in, USER_DIR + SEP + ELEVATION_DB_ORG_DIR);//EPSG d'origine 2154
             tiffFile = rasterServices.warpTifLambert93ToTifWGS84(USER_DIR + SEP + ELEVATION_DB_ORG_DIR + SEP + tiffFile, ELEVATION_DB_ORG_DIR);//EPSG 4326
+            System.out.println("tiffFile : " + tiffFile);
             if (geotifPreviewCB.isSelected()) {
                 geoTiffChartServices.openChart(ELEVATION_DB_ORG_DIR + SEP + tiffFile);
             }

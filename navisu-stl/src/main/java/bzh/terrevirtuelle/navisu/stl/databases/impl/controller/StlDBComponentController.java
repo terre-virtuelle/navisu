@@ -254,6 +254,8 @@ public class StlDBComponentController
     protected double tileSideX = DEFAULT_SIDE;
     protected double tileSideY = DEFAULT_SIDE;
     protected double tileSideZ = DEFAULT_BASE_HEIGHT;
+    protected double svgSideX = DEFAULT_SIDE;
+    protected double svgSideY = DEFAULT_SIDE;
     protected double DEFAULT_GRID = 30.0;
     protected double gridX = DEFAULT_GRID;
     protected double gridY = DEFAULT_GRID;
@@ -483,7 +485,9 @@ public class StlDBComponentController
             S57_DEFAULT_DATABASE_5, S57_DEFAULT_DATABASE_6,
             S57_DEFAULT_DATABASE_7);
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
-    protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("SRTM30mDB", "AltiV2_2-0_75mIgnDB");
+    protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("SRTM30mDB", 
+            "BrestMetropole5mDB","BrestMetropole1mDB","Finistere5mDB",
+            "AltiV2_2-0_75mIgnDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
     protected ObservableList<String> supportCbData = FXCollections.observableArrayList("With magnet", "Simple", "No support");
     protected final String HIGH_ELEVATION_DB = "Litto3D5mDB";
@@ -782,6 +786,41 @@ public class StlDBComponentController
             }
         });
         tileSideZ -= 0.1;
+        
+        svgSideXTF.setText(Double.toString(DEFAULT_SIDE));
+        svgSideXTF.setOnAction((ActionEvent event) -> {
+            try {
+                svgSideX = Double.parseDouble(svgSideXTF.getText());
+                svgSideXTF.setText(Double.toString(svgSideX));
+                svgSideY = tileSideX;
+                svgSideYTF.setText(Double.toString(svgSideX));
+            } catch (NumberFormatException e) {
+                svgSideX = DEFAULT_SIDE;
+                svgSideXTF.setText(Double.toString(svgSideX));
+                svgSideY = DEFAULT_SIDE;
+                svgSideYTF.setText(Double.toString(svgSideY));
+            }
+        });
+        svgSideYTF.setText(Double.toString(DEFAULT_SIDE));
+        svgSideYTF.setOnAction((ActionEvent event) -> {
+
+            try {
+                svgSideY = Double.parseDouble(tileSideYTF.getText());
+                svgSideYTF.setText(Double.toString(svgSideY));
+                svgSideX = svgSideY;
+                svgSideXTF.setText(Double.toString(svgSideY));
+            } catch (NumberFormatException e) {
+                svgSideY = DEFAULT_SIDE;
+                svgSideYTF.setText(Double.toString(svgSideY));
+                svgSideX = DEFAULT_SIDE;
+                svgSideYTF.setText(Double.toString(svgSideX));
+            }
+        });
+        
+        
+        
+        
+        
         elevationMagnificationTF.setText(Double.toString(DEFAULT_EXAGGERATION));
         elevationMagnificationTF.setOnAction((ActionEvent event) -> {
             try {
@@ -1072,7 +1111,7 @@ public class StlDBComponentController
                                     LOGGER.info("Out export exportBaseSTL in STL");
                                 }
                                 if (supportType.equals("No support")) {
-                                    tileSideZ = 0.0;
+                                    tileSideZ = 1.0;
                                     LOGGER.info("In export GridBox3D in STL");
                                     new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, 1.0);
                                     LOGGER.info("In export exportBaseSTL en STL");
@@ -1412,13 +1451,12 @@ public class StlDBComponentController
                             s57DatabaseTF.getText(), USER, PASSWD)
                             .retrieveIn(latMin, lonMin, latMax, lonMax);
 
-                    double sideX = 800;
-                    double sideY = 450;
-                    Pair<Double, Double> scales = scaleCompute(latMin, lonMin, latMax, lonMax, sideY, sideY);  //sideY
+                    
+                    Pair<Double, Double> scales = scaleCompute(latMin, lonMin, latMax, lonMax, svgSideY, svgSideY);  //sideY
                     DepareExportToSVG depareExportToSVG = new DepareExportToSVG(geodesyServices, topologyServices,
                             shp,
                             DEFAULT_SVG_PATH, outFileTF.getText(),
-                            latMin, lonMin, sideX, sideY, scales.getX(), scales.getY(),
+                            latMin, lonMin, svgSideY, svgSideY, scales.getX(), scales.getY(),
                             s57Layer);
                     List<Polygon> polygonList = depareExportToSVG.initExport();
                     displayServices.displayPolygons(polygonList, s57Layer, Material.GREEN);

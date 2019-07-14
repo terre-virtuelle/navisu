@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -195,7 +196,15 @@ public class DepareExportToSVG
             }
         }
         writeAll(svgMap);
-
+        Map<Double, List<SVGPath3D>> svgMapEstran = new HashMap<>();
+        List<SVGPath3D> listEstran = new ArrayList<>();
+        svgMapEstran.put(-9.0, listEstran);
+        for (SVGPath3D svg : shapeList) {
+            if (svg.getHeight() == -9.0) {
+                listEstran.add(svg);
+            }
+        }
+        writeDepares(svgMapEstran);
     }
 
     public void writeAll(Map<Double, List<SVGPath3D>> svgMap) {
@@ -244,6 +253,49 @@ public class DepareExportToSVG
                         + "/> \n";
                 content += svgContent2;
             }
+            try {
+                Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.APPEND);
+            } catch (IOException ex) {
+                Logger.getLogger(DepareExportToSVG.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+        content = "\n </svg>";
+        try {
+            Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException ex) {
+            Logger.getLogger(DepareExportToSVG.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+    }
+
+    public void writeDepares(Map<Double, List<SVGPath3D>> svgMap) {
+        List<SVGPath3D> shapeList = new ArrayList<>();
+        Collection<List<SVGPath3D>> collShapesList = svgMap.values();
+        collShapesList.forEach((l) -> {
+            shapeList.addAll(l);
+        });
+
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
+        String dateStr = formater.format(new Date());
+        String path = filenameRoot + SEP + filename + "_" + "dep.svg";
+        String content = "<!-- \n"
+                + filename + "_" + "dep.svg  \n"
+                + "Created with NaVisu, BBT project (http://www.navisu.org/) \n"
+                + dateStr + "\n"
+                + "--> \n"
+                + "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
+                + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
+                + "\n";
+        try {
+            Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.CREATE);
+        } catch (IOException ex) {
+            Logger.getLogger(DepareExportToSVG.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        for (SVGPath3D svg : shapeList) {
+            String svgContent = svg.getContent();
+            svgContent = svgContent.replace("z", "");
+            svgContent = svgContent.trim();
+            content = "<path d=\"" + svgContent + "\"\n"
+                    + "style=\"stroke:#000000; fill:none; stroke-width: 1px;\"/> \n";
             try {
                 Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.APPEND);
             } catch (IOException ex) {

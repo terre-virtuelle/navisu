@@ -8,11 +8,9 @@ package com.owens.oobjloader.app;
 // license.  (I generally don't care so I'll almost certainly say yes.)
 // In addition this code may also be used under the "unlicense" described
 // at http://unlicense.org/ .  See the file UNLICENSE in the repo.
-import java.util.ArrayList;
 import java.util.logging.Logger;
 import com.owens.oobjloader.builder.Build;
 import com.owens.oobjloader.builder.Face;
-import com.owens.oobjloader.builder.FaceVertex;
 import com.owens.oobjloader.parser.Parse;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
@@ -28,7 +26,9 @@ public class App {
      */
     public static void main(String[] args) {
 
-        String filename = "terrain.obj";
+        String filename = "65_101_facades_blanches.obj";
+      //  String filename = "65_101_toitures_blanches.obj";
+       // String filename = "65_101_complet_blanc.obj";
         log.log(INFO, "Parsing WaveFront OBJ file");
         Build builder = new Build();
         try {

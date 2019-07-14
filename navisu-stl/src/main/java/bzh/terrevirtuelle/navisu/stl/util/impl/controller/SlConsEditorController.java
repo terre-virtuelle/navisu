@@ -75,7 +75,8 @@ public class SlConsEditorController
     protected final String USER_DIR = System.getProperty("user.dir");
     protected final String SEP = File.separator;
 
-    private final String HISTOLITT = USER_DIR + SEP + "data" + SEP + "shapefile" + SEP + "histolitt" + SEP + "france.shp";
+  //  private final String HISTOLITT = USER_DIR + SEP + "data" + SEP + "shapefile" + SEP + "histolitt" + SEP + "france.shp";
+    private final String HISTOLITT = USER_DIR + SEP + "data" + SEP + "shapefile" + SEP + "camaret" + SEP + "tc_camaret.shp";
     private final String FXML = "slconseditor.fxml";
     protected String viewgroupstyle = "configuration.css";
     private MeasureTool measureTool;
@@ -87,7 +88,7 @@ public class SlConsEditorController
     private String author;
     private String version;
     private float elevation;
-    private final double MIN_DISTANCE = 0.1; // minimal distance between 2 Wp
+   // private final double MIN_DISTANCE = 0.1; // minimal distance between 2 Wp
     List<ShapefileRecord> records;
     protected boolean isCreated = false;
     private Polygon offset;
