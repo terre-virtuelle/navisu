@@ -485,8 +485,8 @@ public class StlDBComponentController
             S57_DEFAULT_DATABASE_5, S57_DEFAULT_DATABASE_6,
             S57_DEFAULT_DATABASE_7);
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
-    protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("SRTM30mDB", 
-            "BrestMetropole5mDB","BrestMetropole1mDB","Finistere5mDB",
+    protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("SRTM30mDB",
+            "BrestMetropole5mDB", "BrestMetropole1mDB", "Finistere5mDB",
             "AltiV2_2-0_75mIgnDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
     protected ObservableList<String> supportCbData = FXCollections.observableArrayList("With magnet", "Simple", "No support");
@@ -786,7 +786,7 @@ public class StlDBComponentController
             }
         });
         tileSideZ -= 0.1;
-        
+
         svgSideXTF.setText(Double.toString(DEFAULT_SIDE));
         svgSideXTF.setOnAction((ActionEvent event) -> {
             try {
@@ -816,11 +816,7 @@ public class StlDBComponentController
                 svgSideYTF.setText(Double.toString(svgSideX));
             }
         });
-        
-        
-        
-        
-        
+
         elevationMagnificationTF.setText(Double.toString(DEFAULT_EXAGGERATION));
         elevationMagnificationTF.setOnAction((ActionEvent event) -> {
             try {
@@ -929,12 +925,7 @@ public class StlDBComponentController
             daeExportToSTL.loadKmzAndSaveStlWgs84();
         });
         objButton.setOnMouseClicked((MouseEvent event) -> {
-            boundList = objExportToSTL.loadObj(s57Layer,
-                    Double.valueOf(objXOffsetTF.getText()), Double.valueOf(objYOffsetTF.getText()),
-                    terrainRB.isSelected());
-            if (boundList != null) {
-                //  displayServices.displayPoints3DAsPath(boundList, 150, s57Layer, Material.YELLOW);
-            }
+            objExportToSTL.loadObj(s57Layer, Double.valueOf(objXOffsetTF.getText()), Double.valueOf(objYOffsetTF.getText()));
         });
         slConsEditorButton.setOnMouseClicked((MouseEvent event) -> {
             SlConsEditorController stConsEditorController = new SlConsEditorController(
@@ -1027,7 +1018,7 @@ public class StlDBComponentController
                 if (generateStlCB.isSelected() && !generateSvgCB.isSelected()) {
 
                     // DEBUG
-                     autoBoundCB.setSelected(true);
+                    autoBoundCB.setSelected(true);
                     // stlPreviewCB.setSelected(false);
                     /*
                     if (autoBoundCB.isSelected()) {
@@ -1058,7 +1049,7 @@ public class StlDBComponentController
                             grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, highestElevationBathy);
                         }
                         grids = createGrids(grid, tileCount);
-                        */
+                         */
                     }
 
                     if (grids != null) {
@@ -1451,7 +1442,6 @@ public class StlDBComponentController
                             s57DatabaseTF.getText(), USER, PASSWD)
                             .retrieveIn(latMin, lonMin, latMax, lonMax);
 
-                    
                     Pair<Double, Double> scales = scaleCompute(latMin, lonMin, latMax, lonMax, svgSideY, svgSideY);  //sideY
                     DepareExportToSVG depareExportToSVG = new DepareExportToSVG(geodesyServices, topologyServices,
                             shp,
@@ -1496,7 +1486,7 @@ public class StlDBComponentController
                                         jfxViewer.display(svgMap);
                                     });
                                     depareExportToSVG.write(svgMap);
-                                    
+
                                 }
                                 if (generateWktCB.isSelected()) {
                                     new DepareExportWKT(DEFAULT_WKT_PATH, outFileTF.getText()).write(svgMap);

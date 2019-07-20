@@ -25,7 +25,7 @@ public class VertexGeometric {
         if (null == this) {
             return "null ";
         } else {
-            return x + " " + y + " " + z+"\n";
+            return x + " " + y + " " + z;
         }
     }
 }

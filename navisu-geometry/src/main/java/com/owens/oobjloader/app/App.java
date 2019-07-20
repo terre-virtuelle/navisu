@@ -41,10 +41,10 @@ public class App {
         System.out.println("faces : " + builder.faces.size());
         for(Face f : builder.faces){
            
-            System.out.println("vertices : " + f.getVertices());
-            f.calculateTriangleNormal();
-            System.out.println("normal : "+f.getFaceNormal());
-    
+          //  System.out.println("vertices : " + f.getVertices());
+          //  f.calculateTriangleNormal();
+          //  System.out.println("normal : "+f.getFaceNormal());
+            System.out.println("f : " + f);
         }
     }
 }

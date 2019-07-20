@@ -83,9 +83,12 @@ public class Face {
 
     @Override
     public String toString() {
-        String result = "\tvertices: " + vertices.size() + " :\n";
-        result = vertices.stream().map((f) -> " \t\t( " + f.toString() + " )\n").reduce(result, String::concat);
-
+        // String result = "\tvertices: " + vertices.size() + " :\n";
+        String result = "";
+        // result = vertices.stream().map((f) -> " ( " + f.toString() + " )").reduce(result, String::concat);
+        for (FaceVertex f : vertices) {
+            result = f.getV().x + " " + f.getV().y+" "+f.getV().z;
+        }
         return result;
     }
 

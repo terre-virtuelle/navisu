@@ -134,8 +134,13 @@ public class DisplayImpl
             pathPositions.add(Position.fromDegrees(p.getLatitude(), p.getLongitude(), height));
         }
         Path path = createPath(pathPositions, material);
-        layer.addRenderable(path);
-        wwd.redrawNow();
+        List<Path> l=new ArrayList<>();
+        l.add(path);
+        displayPolygonsFromPaths(l,layer,material);
+        
+       
+     //   layer.addRenderable(path);
+      //  wwd.redrawNow();
     }
 
     @Override
@@ -242,20 +247,6 @@ public class DisplayImpl
         for (int i = 0; i < latLength - 1; i++) {
             for (int j = 0; j < lonLength - 1; j++) {
                 positions = new ArrayList<>();
-                /*
-                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
-                        latLons[i][j].getLongitude(),
-                        latLons[i][j].getElevation() * verticalExaggeration));
-                positions.add(Position.fromDegrees(latLons[i][j + 1].getLatitude(),
-                        latLons[i][j + 1].getLongitude(),
-                        latLons[i][j + 1].getElevation() * verticalExaggeration));
-                positions.add(Position.fromDegrees(latLons[i + 1][j + 1].getLatitude(),
-                        latLons[i + 1][j + 1].getLongitude(),
-                        latLons[i + 1][j + 1].getElevation() * verticalExaggeration));
-                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
-                        latLons[i][j].getLongitude(),
-                        latLons[i][j].getElevation() * verticalExaggeration));
-                 */
                 positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
                         latLons[i][j].getLongitude(),
                         latLons[i][j].getElevation() * verticalExaggeration));
@@ -288,21 +279,7 @@ public class DisplayImpl
                         latLons[i][j].getLongitude(),
                         latLons[i][j].getElevation() * verticalExaggeration));
                 path = new Path(positions);
-                /*
-                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
-                        latLons[i][j].getLongitude(),
-                        latLons[i][j].getElevation() * verticalExaggeration));
-                positions.add(Position.fromDegrees(latLons[i + 1][j].getLatitude(),
-                        latLons[i + 1][j ].getLongitude(),
-                        latLons[i + 1][j ].getElevation() * verticalExaggeration));
-                positions.add(Position.fromDegrees(latLons[i + 1][j+1].getLatitude(),
-                        latLons[i + 1][j+1].getLongitude(),
-                        latLons[i + 1][j+1].getElevation() * verticalExaggeration));
-                positions.add(Position.fromDegrees(latLons[i][j].getLatitude(),
-                        latLons[i][j].getLongitude(),
-                        latLons[i][j].getElevation() * verticalExaggeration));
                 
-                 */
                 result.add(path);
             }
         }
@@ -515,7 +492,7 @@ public class DisplayImpl
 
     protected ShapeAttributes createAttributes(Material material) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();
-        normAttributes.setDrawInterior(false);
+        normAttributes.setDrawInterior(true);
         normAttributes.setDrawOutline(true);
         normAttributes.setInteriorMaterial(material);
         normAttributes.setOutlineMaterial(material);
