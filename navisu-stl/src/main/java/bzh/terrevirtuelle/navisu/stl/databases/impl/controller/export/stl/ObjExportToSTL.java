@@ -11,19 +11,21 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverMa
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.geometry.FaceGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
+import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
-import bzh.terrevirtuelle.navisu.geometry.objects3D.Vec3d;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.util.io.IO;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import com.owens.oobjloader.builder.Face;
 import com.owens.oobjloader.builder.FaceVertex;
-import com.owens.oobjloader.builder.VertexGeometric;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.util.WWUtil;
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -31,9 +33,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * @date @author Serge Morvan
@@ -52,10 +58,9 @@ public class ObjExportToSTL {
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected RenderableLayer layer;
     protected String content;
-    protected List<Face> faces = null;
+
     protected static final String ALARM_SOUND = "/data/sounds/openSea.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
-    // List<Point3D> points = new ArrayList<>();
 
     public ObjExportToSTL(GeodesyServices geodesyServices,
             GuiAgentServices guiAgentServices,
@@ -73,17 +78,17 @@ public class ObjExportToSTL {
         this.displayServices = displayServices;
     }
 
-    public List<Point3DGeo> loadObj(RenderableLayer layer, double objXOffset, double objYOffset) {
+    /*
+    public void loadObj(RenderableLayer layer, double objXOffset, double objYOffset) {
         this.layer = layer;
         File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl/obj", "Georeferenced STL files (*.obj)", "*.OBJ", "*.obj");
-        List< Point3DGeo> bounds = null;
-
+     
         if (file != null) {
             Path path = filter(file);
 
             List<VertexGeometric> verticesG = objComponentServices.getVerticesG(path.toString());
-          //  bounds = getBounds(verticesG, objXOffset, objYOffset, isTerrain);
-            content = "solid " + file.getName() + "  Bounds :  " + bounds + "\n";
+        
+            content = "solid " + file.getName() + "\n";
             guiAgentServices.getJobsManager().newJob("Load Obj objects", new Job() {
                 @Override
                 public void run(ProgressHandle progressHandle) {
@@ -103,9 +108,8 @@ public class ObjExportToSTL {
                 }
             });
         }
-        return bounds;
+        
     }
-
     private String toFacet(List<FaceVertex> fvs, double objXOffset, double objYOffset) {
         String facet = "";
         Vec3d[] mainFace = new Vec3d[fvs.size()];
@@ -121,7 +125,7 @@ public class ObjExportToSTL {
         }
 
         facet += facetToSTL(mainFace);
-        
+
         return facet;
     }
 
@@ -139,7 +143,7 @@ public class ObjExportToSTL {
             Point3DGeo p = new Point3DGeo(v.y, v.x, v.z);
             points.add(p);
         }
-        displayServices.displayPoints3DAsPath(points, 15.0, layer, Material.GREEN);
+        displayServices.displayPoints3DAsPolygon(points, 15.0, layer, Material.GREEN);
         String facet = "facet normal ";
         facet += normal.x + " " + normal.y + " " + normal.z + " \n";
         facet += "outer loop \n";
@@ -149,6 +153,74 @@ public class ObjExportToSTL {
         facet += "endloop \n";
         facet += "endfacet \n";
         return facet;
+    }
+     */
+    public void loadObj(RenderableLayer layer, double objXOffset, double objYOffset) {
+        this.layer = layer;
+        File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl/obj", "Georeferenced STL files (*.obj)", "*.OBJ", "*.obj");
+        List<FaceGeo> facesWgs84 = new ArrayList<>();
+        if (file != null) {
+            Path path = filter(file);
+            guiAgentServices.getJobsManager().newJob("Load Obj objects", new Job() {
+                @Override
+                public void run(ProgressHandle progressHandle) {
+                    List<Face> faces = objComponentServices.getFaces(path.toString());
+                    faces.stream().map((f) -> f.getVertices()).forEachOrdered((fvs) -> {
+                        facesWgs84.add(toFacet(fvs, objXOffset, objYOffset));
+                    });
+                    List<SolidGeo> solidWgs84 = agregate(facesWgs84);
+                    System.out.println(solidWgs84.size());
+                    for (SolidGeo s : solidWgs84) {
+                        displayServices.displaySolidGeoAsPolygon(s, 0.0, layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+                    }
+                    instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
+                }
+            });
+        }
+
+    }
+
+    private FaceGeo toFacet(List<FaceVertex> fvs, double objXOffset, double objYOffset) {
+        FaceGeo faceWgs84 = new FaceGeo("Wall");
+        for (FaceVertex fv : fvs) {
+            double x = (fv.getV().x + objXOffset);
+            double y = (fv.getV().y + objYOffset);
+            Point3DGeo ptWgs84 = pro4JServices.convertLambert93ToWGS84(y, x);
+            ptWgs84.setElevation(fv.getV().z);
+            faceWgs84.add(ptWgs84);
+        }
+        //   displayServices.displayFaceGeoAsPolygon(faceWgs84, 0.0, layer, Material.GREEN);
+        return faceWgs84;
+    }
+
+    /*
+    Sort faces by building
+     */
+    private List<SolidGeo> agregate(List<FaceGeo> faces) {
+        List<SolidGeo> result = new ArrayList<>();
+        int i = 0;
+        for (FaceGeo face : faces) {
+            if (!face.isTag()) {
+                SolidGeo solid = new SolidGeo(i++, "building");
+                result.add(solid);
+                List<Point3DGeo> vertices = face.getVertices();
+                for (Point3DGeo pt : vertices) {
+                    for (FaceGeo f : faces) {
+                        if (!f.isTag() && f.contains(pt)) {
+                            solid.add(f);
+                            f.setTag(true);
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private SolidGeo build(SolidGeo solid, FaceGeo face) {
+
+        return null;
     }
 
     private Path filter(File file) {

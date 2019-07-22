@@ -19,7 +19,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialP
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
-import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
+import bzh.terrevirtuelle.navisu.domain.geometry.Area;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.rss.NavigationalWarningsRSS;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import javax.xml.bind.annotation.XmlAccessType;

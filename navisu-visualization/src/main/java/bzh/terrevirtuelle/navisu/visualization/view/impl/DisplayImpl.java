@@ -12,7 +12,9 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_HOMONIM_BATHYMETRY_CLUT;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT;
+import bzh.terrevirtuelle.navisu.domain.geometry.FaceGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
+import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import bzh.terrevirtuelle.navisu.domain.lut.Clut;
 import bzh.terrevirtuelle.navisu.domain.raster.RasterInfo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
@@ -52,6 +54,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.input.KeyEvent;
@@ -134,13 +137,36 @@ public class DisplayImpl
             pathPositions.add(Position.fromDegrees(p.getLatitude(), p.getLongitude(), height));
         }
         Path path = createPath(pathPositions, material);
-        List<Path> l=new ArrayList<>();
+        List<Path> l = new ArrayList<>();
         l.add(path);
-        displayPolygonsFromPaths(l,layer,material);
-        
-       
-     //   layer.addRenderable(path);
-      //  wwd.redrawNow();
+        layer.addRenderable(path);
+        wwd.redrawNow();
+    }
+
+    @Override
+    public void displayPoints3DAsPolygon(List<Point3DGeo> points, double height, RenderableLayer layer, Material material) {
+        ArrayList<Position> positions = new ArrayList<>();
+        for (Point3DGeo p : points) {
+            positions.add(Position.fromDegrees(p.getLatitude(), p.getLongitude(), p.getElevation() + height));
+        }
+        Polygon polygon = new Polygon(positions);
+        ShapeAttributes shapeAttributes = createAttributes(material);
+        polygon.setAttributes(shapeAttributes);
+        layer.addRenderable(polygon);
+        wwd.redrawNow();
+    }
+
+    @Override
+    public void displayFaceGeoAsPolygon(FaceGeo face, double height, RenderableLayer layer, Material material) {
+        displayPoints3DAsPolygon(face.getVertices(), height, layer, material);
+    }
+
+    @Override
+    public void displaySolidGeoAsPolygon(SolidGeo solid, double height, RenderableLayer layer, Material material) {
+        List<FaceGeo> list = new ArrayList<>(solid.getFaces());
+        for (FaceGeo f : list) {
+            displayFaceGeoAsPolygon(f, height, layer, material);
+        }
     }
 
     @Override
@@ -279,7 +305,7 @@ public class DisplayImpl
                         latLons[i][j].getLongitude(),
                         latLons[i][j].getElevation() * verticalExaggeration));
                 path = new Path(positions);
-                
+
                 result.add(path);
             }
         }

@@ -25,7 +25,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Daymark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
-import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
+import bzh.terrevirtuelle.navisu.domain.geometry.Area;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Text;

@@ -6,9 +6,10 @@
 package bzh.terrevirtuelle.navisu.visualization.view;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.domain.geometry.FaceGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
+import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import bzh.terrevirtuelle.navisu.domain.raster.RasterInfo;
-import bzh.terrevirtuelle.navisu.domain.svg.SVGPath3D;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.controller.JfxViewer;
@@ -33,6 +34,12 @@ public interface DisplayServices
 
     void displayPoints3DAsPath(List<Point3DGeo> points, RenderableLayer layer);
 
+    void displayPoints3DAsPolygon(List<Point3DGeo> points, double height, RenderableLayer layer, Material material);
+
+    void displayFaceGeoAsPolygon(FaceGeo face, double height, RenderableLayer layer, Material material);
+
+    void displaySolidGeoAsPolygon(SolidGeo solid, double height, RenderableLayer layer, Material material);
+
     void displayPositionsAsPath(List<Position> points, RenderableLayer layer, Material material);
 
     void displayPoints3DAsPath(List<Point3DGeo> points, double height, RenderableLayer layer, Material material);
@@ -52,7 +59,7 @@ public interface DisplayServices
     void displayPaths(List<Path> points, RenderableLayer layer, Material material, double verticalExaggeration, double verticalOffset);
 
     void displayPolygons(List<Polygon> poly, RenderableLayer layer, Material material, double verticalExaggeration);
-    
+
     void displayPolygons(List<Polygon> poly, RenderableLayer layer, Material material);
 
     void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration);
