@@ -86,9 +86,10 @@ public class Face {
         // String result = "\tvertices: " + vertices.size() + " :\n";
         String result = "";
         // result = vertices.stream().map((f) -> " ( " + f.toString() + " )").reduce(result, String::concat);
-        for (FaceVertex f : vertices) {
-            result = f.getV().x + " " + f.getV().y+" "+f.getV().z;
-        }
+         result = vertices.stream().map((f) -> f.toString() + " , ").reduce(result, String::concat);
+      //  for (FaceVertex f : vertices) {
+       //     result = f.getV().x + " " + f.getV().y + " " + f.getV().z;
+       // }
         return result;
     }
 

@@ -164,4 +164,9 @@ public class FaceGeo {
         this.vertices = vertices;
     }
 
+    @Override
+    public String toString() {
+        return  vertices.toString() ;
+    }
+
 }
