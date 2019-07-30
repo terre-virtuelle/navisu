@@ -92,6 +92,15 @@ public class JTSImpl
     }
 
     @Override
+    public Point3DGeo toPoint3D(Point point) {
+        Coordinate[] c = point.getCoordinates();
+        if (c.length != 0) {
+            return new Point3DGeo(c[0].y, c[0].x, c[0].z);
+        }
+        return null;
+    }
+
+    @Override
     public Geometry getLineString(List<Point3DGeo> points) {
         List<Coordinate> coordinatesJTS = toListCoordinates(points);
         Coordinate[] coord = new Coordinate[coordinatesJTS.size()];
@@ -150,13 +159,13 @@ public class JTSImpl
         Geometry geom;
         for (Path p : faces) {
             geom = getPolygonFromPath(p);
-            try{
-            if (geometry.contains(geom)) {
-                result.add(p);
+            try {
+                if (geometry.contains(geom)) {
+                    result.add(p);
 
-            } 
-            }catch(Exception e){
-                
+                }
+            } catch (Exception e) {
+
             }
             /*else {
                 Geometry intersect = geometry.intersection(geom);
@@ -165,7 +174,7 @@ public class JTSImpl
                     System.out.println("intersect : " + intersect);
                 }
             }
-            */
+             */
 
         }
         return result;

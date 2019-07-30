@@ -48,6 +48,8 @@ public interface DisplayServices
 
     void displayPaths(List<Path> paths, double elevation, RenderableLayer layer, Material material);
 
+    void displayPath(Path path, double elevation, RenderableLayer layer, Material material);
+
     void displayPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration);
 
     void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material);

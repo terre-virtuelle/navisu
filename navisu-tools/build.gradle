@@ -4,6 +4,7 @@ dependencies {
     compile project(':navisu-cartography')
     compile project(':navisu-geo')
     compile project(':navisu-dem')
+    compile project(':navisu-stl')
     compile fileTree(dir: 'lib', include: '*.jar') 
 }
 jar {

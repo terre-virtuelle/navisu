@@ -5,10 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.domain.geometry;
 
+import com.vividsolutions.jts.geom.Geometry;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -21,9 +20,10 @@ public class SolidGeo {
     protected Set<FaceGeo> faces;
     protected int id;
     protected String name;
-    protected Map<String, String> properties;
     protected Point3DGeo centroid;
+    private Geometry geometry;
 
+   
     public SolidGeo() {
         this(0, "noname");
     }
@@ -32,7 +32,6 @@ public class SolidGeo {
         this.id = id;
         this.name = name;
         faces = new HashSet<>();
-        properties = new HashMap<>();
     }
 
     public SolidGeo(Set<FaceGeo> faces) {
@@ -47,7 +46,6 @@ public class SolidGeo {
         this.faces = faces;
         this.id = id;
         this.name = name;
-        properties = new HashMap<>();
     }
 
     public void add(FaceGeo face) {
@@ -76,24 +74,7 @@ public class SolidGeo {
         this.centroid = centroid;
     }
 
-    /**
-     * Get the value of properties
-     *
-     * @return the value of properties
-     */
-    public Map<String, String> getProperties() {
-        return properties;
-    }
-
-    /**
-     * Set the value of properties
-     *
-     * @param properties new value of properties
-     */
-    public void setProperties(Map<String, String> properties) {
-        this.properties = properties;
-    }
-
+    
     /**
      * Get the value of name
      *
@@ -146,6 +127,23 @@ public class SolidGeo {
      */
     public void setFaces(Set<FaceGeo> faces) {
         this.faces = faces;
+    }
+ /**
+     * Get the value of geometry
+     *
+     * @return the value of geometry
+     */
+    public Geometry getGeometry() {
+        return geometry;
+    }
+
+    /**
+     * Set the value of geometry
+     *
+     * @param geometry new value of geometry
+     */
+    public void setGeometry(Geometry geometry) {
+        this.geometry = geometry;
     }
 
 }

@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverMa
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
+import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
@@ -47,7 +48,13 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
+import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.paysBrest.ObjPaysbrestLoader;
+import gov.nasa.worldwind.render.Material;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -80,6 +87,11 @@ public class ToolsComponentController
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected LambertServices lambertServices;
     protected RasterServices rasterServices;
+
+    protected GeodesyServices geodesyServices;
+    protected JTSServices jtsServices;
+    protected Pro4JServices pro4JServices;
+    protected ObjComponentServices objComponentServices;
 
     private final String FXML = "toolsController.fxml";
 
@@ -171,7 +183,6 @@ public class ToolsComponentController
     @FXML
     public Button insertBathyButton;
 
-    // protected String bathyDataBaseName;
     protected String bathyData;
 
     /* Elevations controls */
@@ -221,7 +232,6 @@ public class ToolsComponentController
     public ChoiceBox<String> beaconsDbCB;
     @FXML
     public TextField beaconsDataTF;
-    ;
     @FXML
     public Button beaconsDataButton;
     @FXML
@@ -231,17 +241,34 @@ public class ToolsComponentController
     @FXML
     public Button insertBeaconsButton;
 
+    /*Buildings controls */
+    @FXML
+    public Tab buildingsTab;
+    @FXML
+    public ChoiceBox<String> buildingsDbCB;
+    @FXML
+    public TextField buildingsDataDirTF;
+    @FXML
+    public Button buildingsDataButton;
+    @FXML
+    public TextField buildingsDatabaseNameTF;
+    @FXML
+    public Button createBuildingsButton;
+    @FXML
+    public Button insertBuildingsButton;
+    protected String buildingsData;
     protected String elevationData;
     protected boolean isDataDir = false;
 
     private ObservableList<String> catalogCbData = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
     private ObservableList<String> countryCbData = FXCollections.observableArrayList("FR", "ALL", "CA", "DE", "KR", "NO", "PE",
             "PH", "PT", "RU", "TR", "US", "ZA");
-    private ObservableList<String> dbCbElevationData = FXCollections.observableArrayList("Choice DB", "IGN75m", "SRTM30m", 
-             "BrestMetropole5mDB","BrestMetropole1mDB","Finistere5mDB",
+    private ObservableList<String> dbCbElevationData = FXCollections.observableArrayList("Choice DB", "IGN75m", "SRTM30m",
+            "BrestMetropole5mDB", "BrestMetropole1mDB", "Finistere5mDB",
             "Litto3D5m", "Litto3D1m", "TestAltiDB");
     private ObservableList<String> dbCbBathyData = FXCollections.observableArrayList("Choice DB", "BathyShomDB", "TestDB");
     private ObservableList<String> dbCbBeaconsData = FXCollections.observableArrayList("Choice DB", "BalisageMaritimeDB");
+    private ObservableList<String> dbCbBuildingsData = FXCollections.observableArrayList("Choice DB", "BuildingsPaysbrestDB");
 
     final ToggleGroup mntGroup = new ToggleGroup();
     protected FileChooser fileChooser;
@@ -250,6 +277,7 @@ public class ToolsComponentController
     private final String COMPONENT_KEY_NAME_1 = "DbBathy";
     private final String COMPONENT_KEY_NAME_2 = "DbElevation";
     private final String COMPONENT_KEY_NAME_3 = "DbBeacons";
+    private final String COMPONENT_KEY_NAME_4 = "DbBuildings";
     private final String ENC_CATALOG_HOME = "data/charts/vector/s57/catalog/";
     private final String BATHY_DB_NAME_0 = "BathyShomDB";
     private final String BATHY_DB_NAME_1 = "TestDB";
@@ -261,8 +289,8 @@ public class ToolsComponentController
     private final String ELEVATION_DB_NAME_5 = "BrestMetropole5mDB";
     private final String ELEVATION_DB_NAME_6 = "BrestMetropole1mDB";
     private final String ELEVATION_DB_NAME_7 = "Finistere5mDB";
-    
-    
+    private final String BUILDINGS_DB_NAME_0 = "BuildingsPaysBrestDB";
+
     private final String ELEVATION_DB_ORG_DIR = "privateData" + SEP + "elevation";
     private final String BEACONS_DB_NAME_0 = "BalisageMaritimeDB";
     private String componentKeyName;
@@ -285,6 +313,10 @@ public class ToolsComponentController
      * @param instrumentDriverManagerServices
      * @param lambertServices
      * @param rasterServices
+     * @param geodesyServices
+     * @param jtsServices
+     * @param pro4JServices
+     * @param objComponentServices
      */
     @SuppressWarnings("unchecked")
     public ToolsComponentController(ToolsComponentImpl component, String componentKeyName,
@@ -297,7 +329,11 @@ public class ToolsComponentController
             DemDBServices demDBComponentServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
             LambertServices lambertServices,
-            RasterServices rasterServices) {
+            RasterServices rasterServices,
+            GeodesyServices geodesyServices,
+            JTSServices jtsServices,
+            Pro4JServices pro4JServices,
+            ObjComponentServices objComponentServices) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -320,7 +356,10 @@ public class ToolsComponentController
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.lambertServices = lambertServices;
         this.rasterServices = rasterServices;
-
+        this.geodesyServices = geodesyServices;
+        this.jtsServices = jtsServices;
+        this.pro4JServices = pro4JServices;
+        this.objComponentServices = objComponentServices;
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
 
@@ -346,6 +385,9 @@ public class ToolsComponentController
                 break;
             case COMPONENT_KEY_NAME_3:
                 databaseTabPane.getSelectionModel().select(beaconsTab);
+                break;
+            case COMPONENT_KEY_NAME_4:
+                databaseTabPane.getSelectionModel().select(buildingsTab);
                 break;
         }
 
@@ -602,9 +644,9 @@ public class ToolsComponentController
                                                 String fileName = prepareCreateOrInsertFile(path.toString());
                                                 if (isCreate == false) {
                                                     isCreate = true;
-                                                     bathymetryDBServices.create(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
+                                                    bathymetryDBServices.create(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
                                                 } else {
-                                                      bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
+                                                    bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
                                                 }
                                             }
 
@@ -662,7 +704,6 @@ public class ToolsComponentController
                                                 String fileName = prepareCreateOrInsertFile(path.toString());
                                                 bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
                                             }
-
                                             return FileVisitResult.CONTINUE;
                                         }
                                     });
@@ -690,6 +731,35 @@ public class ToolsComponentController
                 });
             }
         });
+        /* Buildings controls */
+
+        buildingsDatabaseNameTF.setText(BUILDINGS_DB_NAME_0);
+        buildingsDbCB.setItems(dbCbBathyData);
+        buildingsDbCB.getSelectionModel().select("Choice DB");
+        buildingsDbCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) -> {
+                    if (newValue.equals(BUILDINGS_DB_NAME_0)) {
+                        buildingsDatabaseNameTF.setText(BUILDINGS_DB_NAME_0);
+                        buildingsDbCB.getSelectionModel().select("Choice DB");
+                    }
+                });
+        createBuildingsButton.setOnMouseClicked((MouseEvent event) -> {
+            loadingBuildings(buildingsDataDirTF.getText(), buildingsDatabaseNameTF.getText());
+        });
+        insertBuildingsButton.setOnMouseClicked((MouseEvent event) -> {
+            String buildingsDBName = buildingsDatabaseNameTF.getText();
+            /*
+            buildingsData = buildingsDataTF.getText();
+            guiAgentServices.getJobsManager().newJob("Load DB : " + buildingsDBName, (progressHandle) -> {
+                bathymetryDBServices.connect(buildingsDBName, "localhost", "jdbc:postgresql://",
+                        "5432", "org.postgresql.Driver", "admin", "admin");
+                bathymetryDBServices.insert(buildingsData, "bathy");
+            });
+             */
+        });
+
         helpButton.setOnMouseClicked((MouseEvent event) -> {
             if (s57Tab.isSelected()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -740,6 +810,9 @@ public class ToolsComponentController
             isDataDir = true;
             openDir(elevationDataDirTF);
         });
+        buildingsDataButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(buildingsDataDirTF);
+        });
     }
 
     private String prepareCreateOrInsertFile(String in) {
@@ -760,6 +833,63 @@ public class ToolsComponentController
             }
             result = rasterServices.translateTif2XYZ(in, ELEVATION_DB_ORG_DIR);
         }
+        return result;
+    }
+
+    private List<SolidGeo> loadingBuildings(String buildingsDataDir, String buildingsDBName) {
+        List<SolidGeo> result = null;
+
+        /*
+        try {
+             Path directory = Paths.get(elevationDataDirTF.getText());
+              Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+             @Override
+                    public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
+                     if (path.toString().endsWith("asc") && (path.toString().contains(mnt))) {
+                          String fileName = prepareCreateOrInsertFile(path.toString());
+                          bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
+                      }
+                     return FileVisitResult.CONTINUE;
+               }
+           });
+           } catch (IOException ex) {
+                //Nothing if dir don't exist
+            }
+         */
+        guiAgentServices.getJobsManager().newJob("Load DB : " + buildingsDBName, (progressHandle) -> {
+            ObjPaysbrestLoader objPaysbrestLoader = new ObjPaysbrestLoader(geodesyServices, guiAgentServices,
+                    instrumentDriverManagerServices, jtsServices, pro4JServices, objComponentServices);
+            System.out.println("objPaysbrestLoader : " + objPaysbrestLoader);
+            bathymetryDBServices.connect(buildingsDBName, "localhost", "jdbc:postgresql://",
+                    "5432", "org.postgresql.Driver", "admin", "admin");
+            // bathymetryDBServices.create(buildingsData, "bathy");
+
+            try { 
+                Path directory = Paths.get(buildingsDataDir);
+                System.out.println("directory "+directory);
+                Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+                    @Override
+                    public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
+                        if (path.toString().endsWith("obj") && (path.toString().contains("FACADES_NON_TEXTURE"))) {
+                            // String fileName = prepareCreateOrInsertFile(path.toString());
+                            // bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
+                            List<SolidGeo> solidWgs84List = objPaysbrestLoader.loadObj(path, 145168, 6836820);
+                            Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
+                                Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
+                            int color = 0;
+                            // for (SolidGeo solid : solidWgs84List) {
+                            //  displayServices.displaySolidGeoAsPolygon(solid, 0.0, layer, materials[color++ % 8]);
+                            // }
+                            System.out.println("solidWgs84List : " + path.getFileName().toString()+" "+solidWgs84List.size());
+                        }
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+            } catch (IOException ex) {
+                //Nothing if dir don't exist
+            }
+
+        });
         return result;
     }
 

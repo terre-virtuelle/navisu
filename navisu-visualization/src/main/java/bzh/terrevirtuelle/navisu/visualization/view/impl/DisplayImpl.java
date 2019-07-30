@@ -581,6 +581,13 @@ public class DisplayImpl
     }
 
     @Override
+    public void displayPath(Path path, double elevation, RenderableLayer layer, Material material) {
+        List<Path> paths = new ArrayList<>();
+        paths.add(path);
+        displayPaths(paths, elevation, layer, material);
+    }
+
+    @Override
     public void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material) {
         List<Polygon> result = new ArrayList<>();
         paths.forEach((p) -> {

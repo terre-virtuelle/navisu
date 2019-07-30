@@ -67,12 +67,12 @@ public class ObjComponentImpl
     }
 
     @Override
-    public Point3DGeo toPoint3D(VertexGeometric vertexGeometric) {
+    public Point3DGeo toPoint3DGeo(VertexGeometric vertexGeometric) {
         return new Point3DGeo(vertexGeometric.x, vertexGeometric.y, vertexGeometric.z);
     }
 
     @Override
-    public List<Point3DGeo> toPoint3Ds(List<VertexGeometric> vertexGeometrics) {
+    public List<Point3DGeo> toPoint3DGeo(List<VertexGeometric> vertexGeometrics) {
         List<Point3DGeo> result = new ArrayList<>();
         vertexGeometrics.forEach((v) -> {
             result.add(new Point3DGeo(v.x, v.y, v.z));

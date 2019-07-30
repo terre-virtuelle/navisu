@@ -99,25 +99,6 @@ public class BathymetryDBController {
         this.LIMIT = limit;
         this.layer = layer;
         wwd = GeoWorldWindViewImpl.getWW();
-        /*
-        wwd.addPositionListener((PositionEvent event) -> {
-            Position pos = event.getPosition();
-
-            try {
-                if (pos != null && connection != null && !connection.isClosed() && pos.getAltitude() < 20.0) {
-                    //ystem.out.println("pos : "+pos.getLatitude().getDegrees()+" "+pos.getLongitude().getDegrees());
-                    points = retrieveIn("bathy",
-                            pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees(),
-                            pos.getLatitude().getDegrees() + 0.001, pos.getLongitude().getDegrees() + 0.001);
-
-                    //   System.out.println("points : "+pos.getLatitude().getDegrees()+" "+pos.getLongitude().getDegrees());
-                    // points = retrieveAround(pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees(),10);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(BathymetryDBController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
-        });
-         */
     }
 
     public static BathymetryDBController getInstance(BathymetryDBImpl component,
@@ -172,13 +153,38 @@ public class BathymetryDBController {
         });
     }
 
+    public void insert(String filename, String table, String query) {
+        try {
+            preparedStatement = connection.prepareStatement(query);
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+        }
+        guiAgentServices.getJobsManager().newJob("Insert", (progressHandle) -> {
+            points3df = readFromFile(filename);
+            insertData(points3df);
+            createIndex(table);
+        });
+    }
+
     public void create(String filename, String table) {
         guiAgentServices.getJobsManager().newJob("Create", (progressHandle) -> {
             String query = "DROP TABLE IF EXISTS  " + table + "; "
                     + "CREATE TABLE " + table + "("
                     + "gid SERIAL PRIMARY KEY,"
-                    + "coord GEOMETRY(POINT, 4326), "
+                    + "coord GEOMETRY(POINT, 4326), " //POINTZ, MULTIPOINTZ, GEOMETRYCOLLECTIONZ
                     + "elevation FLOAT); ";
+            try {
+                statement = connection.createStatement();
+                statement.executeUpdate(query);
+            } catch (SQLException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            }
+            work(filename, table);
+        });
+    }
+
+    public void create(String filename, String table, String query) {
+        guiAgentServices.getJobsManager().newJob("Create", (progressHandle) -> {
             try {
                 statement = connection.createStatement();
                 statement.executeUpdate(query);
@@ -344,19 +350,6 @@ public class BathymetryDBController {
                 geom = (PGgeometry) r0.getObject(1);
                 longitude = geom.getGeometry().getFirstPoint().getX();
                 latitude = geom.getGeometry().getFirstPoint().getY();
-                //System.out.println("geom " + geom.getGeometry());
-                //  System.out.println("r0 " + r0.getFloat(2));
-                /*
-                r1 = connection.createStatement().executeQuery(
-                        "SELECT ST_DISTANCE("
-                        + "ST_SetSRID(ST_MakePoint(" + longitude
-                        + ", " + latitude + "), 4326)::geography,"
-                        + "ST_SetSRID(ST_MakePoint(" + Double.toString(lon)
-                        + ", " + Double.toString(lat) + "), 4326)::geography"
-                        + ");");
-                 */
-                //points3d.add(new Point3D(latitude,latitude,r1.getFloat(1)));
-                // System.out.println("r1 : "+r1);
             }
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
@@ -495,7 +488,6 @@ public class BathymetryDBController {
         }
     }
 
-    
     private void alert() {
         if (first == true) {
             Platform.runLater(() -> {

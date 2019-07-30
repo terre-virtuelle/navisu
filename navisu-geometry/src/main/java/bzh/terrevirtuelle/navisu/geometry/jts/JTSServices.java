@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.geometry.jts;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.Point;
 import gov.nasa.worldwind.render.Path;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
@@ -20,6 +21,8 @@ public interface JTSServices
         extends ComponentService {
 
     List<Coordinate> toListCoordinates(List<Point3DGeo> pts);
+
+    Point3DGeo toPoint3D(Point point);
 
     List<Point3DGeo> toListPoint3D(Coordinate[] coord);
 

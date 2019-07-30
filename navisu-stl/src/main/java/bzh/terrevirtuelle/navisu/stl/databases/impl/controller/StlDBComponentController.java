@@ -925,7 +925,7 @@ public class StlDBComponentController
             daeExportToSTL.loadKmzAndSaveStlWgs84();
         });
         objButton.setOnMouseClicked((MouseEvent event) -> {
-            objExportToSTL.loadObj(s57Layer, Double.valueOf(objXOffsetTF.getText()), Double.valueOf(objYOffsetTF.getText()));
+           // objExportToSTL.loadObj(s57Layer, Double.valueOf(objXOffsetTF.getText()), Double.valueOf(objYOffsetTF.getText()));
         });
         slConsEditorButton.setOnMouseClicked((MouseEvent event) -> {
             SlConsEditorController stConsEditorController = new SlConsEditorController(

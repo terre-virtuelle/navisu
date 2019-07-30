@@ -21,8 +21,8 @@ public interface ObjComponentServices
 
     List<VertexGeometric> getVerticesG(String filename);
 
-    Point3DGeo toPoint3D(VertexGeometric vertexGeometric);
+    Point3DGeo toPoint3DGeo(VertexGeometric vertexGeometric);
 
-    List<Point3DGeo> toPoint3Ds(List<VertexGeometric> vertexGeometric);
+    List<Point3DGeo> toPoint3DGeo(List<VertexGeometric> vertexGeometric);
 
 }

@@ -6,7 +6,9 @@
 package bzh.terrevirtuelle.navisu.topology;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import bzh.terrevirtuelle.navisu.domain.geometry.FaceGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
+import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import com.vividsolutions.jts.geom.Geometry;
@@ -84,6 +86,18 @@ public interface TopologyServices
      * @return
      */
     String wwjLocationsToWKT(Iterable<? extends LatLon> locations);
+
+    String toWKT(Point3DGeo o);
+
+    Point3DGeo getPoint3DGeoFromWKT(String o);
+
+    String toWKT(FaceGeo o);
+
+    FaceGeo getFaceGeofromWKT(String o);
+
+    String toWKT(SolidGeo o);
+
+    SolidGeo getSolidGeofromWKT(String o);
 
     /**
      *

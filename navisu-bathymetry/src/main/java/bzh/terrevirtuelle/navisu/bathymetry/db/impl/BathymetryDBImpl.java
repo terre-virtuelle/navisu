@@ -120,6 +120,16 @@ public class BathymetryDBImpl
     }
 
     @Override
+    public void create(String filename, String table, String query) {
+        controller.create(filename, table, query);
+    }
+
+    @Override
+    public void insert(String filename, String table, String query) {
+        controller.insert(table, filename, query);
+    }
+
+    @Override
     public List<Point3Df> readFromFile(String filename) {
         return controller.readFromFile(filename);
     }
@@ -193,5 +203,4 @@ public class BathymetryDBImpl
         controller.writePointList(points, pathname, latLon);
     }
 
-   
 }

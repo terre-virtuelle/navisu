@@ -6,9 +6,7 @@
 package bzh.terrevirtuelle.navisu.domain.geometry;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -19,10 +17,8 @@ public class FaceGeo {
 
     protected List<Point3DGeo> vertices;
     protected int id;
-    protected SolidGeo solid;
     protected String name;
-    protected Map<String, String> properties;
-    protected boolean tag;
+
 
     public FaceGeo() {
         vertices = new ArrayList<>();
@@ -54,7 +50,6 @@ public class FaceGeo {
         this.vertices = vertices;
         this.id = id;
         this.name = name;
-        properties = new HashMap<>();
     }
 
     public void add(Point3DGeo pt) {
@@ -76,42 +71,7 @@ public class FaceGeo {
         return result;
     }
 
-    /**
-     * Get the value of tag
-     *
-     * @return the value of tag
-     */
-    public boolean isTag() {
-        return tag;
-    }
-
-    /**
-     * Set the value of tag
-     *
-     * @param tag new value of tag
-     */
-    public void setTag(boolean tag) {
-        this.tag = tag;
-    }
-
-    /**
-     * Get the value of properties
-     *
-     * @return the value of properties
-     */
-    public Map<String, String> getProperties() {
-        return properties;
-    }
-
-    /**
-     * Set the value of properties
-     *
-     * @param properties new value of properties
-     */
-    public void setProperties(Map<String, String> properties) {
-        this.properties = properties;
-    }
-
+   
     /**
      * Get the value of name
      *
@@ -130,14 +90,7 @@ public class FaceGeo {
         this.name = name;
     }
 
-    public SolidGeo getSolid() {
-        return solid;
-    }
-
-    public void setSolid(SolidGeo solid) {
-        this.solid = solid;
-    }
-
+  
     /**
      * Get the value of id
      *

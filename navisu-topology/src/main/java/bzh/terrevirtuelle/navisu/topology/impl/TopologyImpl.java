@@ -6,7 +6,9 @@
 package bzh.terrevirtuelle.navisu.topology.impl;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import bzh.terrevirtuelle.navisu.domain.geometry.FaceGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
+import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.topology.Topology;
@@ -519,6 +521,67 @@ public class TopologyImpl
             result += locList.get(i) + ",";
         }
         result += locList.get(locList.size() - 1) + "))";
+        return result;
+    }
+
+    /*
+    POINTZ(13.21 47.21 0.21)
+     */
+    @Override
+    public String toWKT(Point3DGeo o) {
+        String result = null;
+        if (o != null) {
+            result = "POINTZ(" + o.getLongitude() + " " + o.getLatitude() + " " + o.getElevation() + ")";
+        }
+        return result;
+    }
+
+    @Override
+    public Point3DGeo getPoint3DGeoFromWKT(String o) {
+        Point3DGeo result = null;
+
+        return result;
+    }
+
+    /*
+    MULTIPOINTZ(15.21 57.58 0.31, 15.81 57.12 0.33)
+     */
+    @Override
+    public String toWKT(FaceGeo o) {
+        String result = "MULTIPOINTZ(";
+        List<Point3DGeo> vertices = o.getVertices();
+        int size = vertices.size();
+        for (int i = 0; i < size - 1; i++) {
+            result += vertices.get(i).getLongitude() + " " + vertices.get(i).getLatitude() + " " + vertices.get(i).getElevation() + ", ";
+        }
+        result += vertices.get(size - 1).getLongitude() + " " + vertices.get(size - 1).getLatitude() + " " + vertices.get(size - 1).getElevation() + ")";
+        return result;
+    }
+
+    @Override
+    public FaceGeo getFaceGeofromWKT(String o) {
+        FaceGeo result = null;
+
+        return result;
+    }
+
+    /*
+    GEOMETRYCOLLECTIONZ(
+         MULTIPOINTZ(15.21 57.58 0.31, 15.81 57.12 0.33),
+         MULTIPOINTZ(15.21 57.58 0.31, 15.81 57.12 0.33)
+    ) 
+     */
+    @Override
+    public String toWKT(SolidGeo o) {
+        String result = "";
+
+        return result;
+    }
+
+    @Override
+    public SolidGeo getSolidGeofromWKT(String o) {
+        SolidGeo result = null;
+
         return result;
     }
 

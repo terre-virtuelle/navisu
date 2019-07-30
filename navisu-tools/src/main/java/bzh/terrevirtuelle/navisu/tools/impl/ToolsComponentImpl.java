@@ -4,6 +4,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
+import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
@@ -18,6 +19,9 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
+import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 
 /**
  * @author Serge Morvan
@@ -44,11 +48,20 @@ public class ToolsComponentImpl
     LambertServices lambertServices;
     @UsedService
     RasterServices rasterServices;
+    @UsedService
+    GeodesyServices geodesyServices;
+    @UsedService
+    JTSServices jtsServices;
+    @UsedService
+    Pro4JServices pro4JServices;
+    @UsedService
+    ObjComponentServices objComponentServices;
 
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
     private final String COMPONENT_KEY_NAME_1 = "DbBathy";
     private final String COMPONENT_KEY_NAME_2 = "DbElevation";
     private final String COMPONENT_KEY_NAME_3 = "DbBeacons";
+    private final String COMPONENT_KEY_NAME_4 = "DbBuildings";
     private String componentKeyName;
     ToolsComponentController controller;
 
@@ -67,13 +80,13 @@ public class ToolsComponentImpl
             if (cmd[0].equals(COMPONENT_KEY_NAME_0)
                     || cmd[0].equals(COMPONENT_KEY_NAME_1)
                     || cmd[0].equals(COMPONENT_KEY_NAME_2)
-                    || cmd[0].equals(COMPONENT_KEY_NAME_3)) {
+                    || cmd[0].equals(COMPONENT_KEY_NAME_3)
+                    || cmd[0].equals(COMPONENT_KEY_NAME_4)) {
                 controller = new ToolsComponentController(this, componentKeyName, KeyCode.T, KeyCombination.CONTROL_DOWN,
                         guiAgentServices, s57ChartComponentServices, geoTiffChartServices,
                         databaseServices, bathymetryDBServices, demDBComponentServices,
-                        instrumentDriverManagerServices,
-                        lambertServices,
-                        rasterServices);
+                        instrumentDriverManagerServices, lambertServices, rasterServices,
+                        geodesyServices, jtsServices, pro4JServices, objComponentServices);
                 controller.setVisible(true);
             }
         }
@@ -95,7 +108,8 @@ public class ToolsComponentImpl
         if (category.equals(COMPONENT_KEY_NAME_0)
                 || category.equals(COMPONENT_KEY_NAME_1)
                 || category.equals(COMPONENT_KEY_NAME_2)
-                || category.equals(COMPONENT_KEY_NAME_3)) {
+                || category.equals(COMPONENT_KEY_NAME_3)
+                || category.equals(COMPONENT_KEY_NAME_4)) {
             canOpen = true;
         }
         return canOpen;

@@ -27,6 +27,7 @@ public class App {
     public static void main(String[] args) {
 
         String filename = "65_101_facades_blanches.obj";
+    //  String filename = "/home/serge/Data/3DModels/BMO/obj/65_101_OBJ/65_101_BATI_TEXTURE/65_101_FACADES_TEXTURE/65_101_facades_texturees.obj";
       //  String filename = "65_101_toitures_blanches.obj";
        // String filename = "65_101_complet_blanc.obj";
         log.log(INFO, "Parsing WaveFront OBJ file");
