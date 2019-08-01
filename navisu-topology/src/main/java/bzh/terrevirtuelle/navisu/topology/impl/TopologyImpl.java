@@ -537,6 +537,15 @@ public class TopologyImpl
     }
 
     @Override
+    public String toWKT2D(Point3DGeo o) {
+        String result = null;
+        if (o != null) {
+            result = "POINT(" + o.getLongitude() + " " + o.getLatitude() + ")";
+        }
+        return result;
+    }
+
+    @Override
     public Point3DGeo getPoint3DGeoFromWKT(String o) {
         Point3DGeo result = null;
 
@@ -571,11 +580,30 @@ public class TopologyImpl
          MULTIPOINTZ(15.21 57.58 0.31, 15.81 57.12 0.33)
     ) 
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public String toWKT(SolidGeo o) {
-        String result = "";
-
-        return result;
+    public Pair<String, String> toWKT(SolidGeo o) {
+        String centroid = toWKT2D(o.getCentroid());
+        String faces = "GEOMETRYCOLLECTIONZ(";
+        List<FaceGeo> faceList = new ArrayList<>(o.getFaces());
+        for (int i = 0; i < faceList.size() - 1; i++) {
+            String multipoints = "MULTIPOINTZ(";
+            List<Point3DGeo> vertices = faceList.get(i).getVertices();
+            for (int j = 0; j < vertices.size() - 1; j++) {
+                multipoints += vertices.get(j).getLatitude() + " " + vertices.get(j).getLongitude() + " " + vertices.get(j).getElevation() + ",";
+            }
+            multipoints += vertices.get(vertices.size() - 1).getLatitude() + " " + vertices.get(vertices.size() - 1).getLongitude() + " " + vertices.get(vertices.size() - 1).getElevation() + "), ";
+            faces += multipoints;
+        }
+        faces += "MULTIPOINTZ(";
+        List<Point3DGeo> vertices = faceList.get(faceList.size() - 1).getVertices();
+        for (int j = 0; j < vertices.size() - 1; j++) {
+            faces += vertices.get(j).getLatitude() + " " + vertices.get(j).getLongitude() + " " + vertices.get(j).getElevation() + ", ";
+        }
+        faces += vertices.get(vertices.size() - 1).getLatitude() + " " + vertices.get(vertices.size() - 1).getLongitude() + " " + vertices.get(vertices.size() - 1).getElevation() + ")";
+        faces += faces;
+        faces += ")";
+        return new Pair(centroid, faces);
     }
 
     @Override

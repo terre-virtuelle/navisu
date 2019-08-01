@@ -3,6 +3,7 @@ package bzh.terrevirtuelle.navisu.tools.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
@@ -22,6 +23,8 @@ import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 
 /**
  * @author Serge Morvan
@@ -56,7 +59,13 @@ public class ToolsComponentImpl
     Pro4JServices pro4JServices;
     @UsedService
     ObjComponentServices objComponentServices;
-
+    @UsedService
+    DisplayServices displayServices;
+    @UsedService
+    LayersManagerServices layersManagerServices;
+    @UsedService
+    TopologyServices topologyServices;
+    
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
     private final String COMPONENT_KEY_NAME_1 = "DbBathy";
     private final String COMPONENT_KEY_NAME_2 = "DbElevation";
@@ -86,7 +95,9 @@ public class ToolsComponentImpl
                         guiAgentServices, s57ChartComponentServices, geoTiffChartServices,
                         databaseServices, bathymetryDBServices, demDBComponentServices,
                         instrumentDriverManagerServices, lambertServices, rasterServices,
-                        geodesyServices, jtsServices, pro4JServices, objComponentServices);
+                        geodesyServices, jtsServices, pro4JServices,
+                        objComponentServices, displayServices, 
+                        layersManagerServices, topologyServices);
                 controller.setVisible(true);
             }
         }

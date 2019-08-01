@@ -74,10 +74,7 @@ public class ObjPaysbrestLoader {
 
         List<FaceGeo> facesWgs84 = new ArrayList<>();
 
-        Path filetredPath = filter(path);
-     //   guiAgentServices.getJobsManager().newJob("Load Obj objects", new Job() {
-         //   @Override
-         //   public void run(ProgressHandle progressHandle) {
+        Path filetredPath = filter(path); 
                 List<Face> faces = objComponentServices.getFaces(filetredPath.toString());
                 faces.stream().map((f) -> f.getVertices()).forEachOrdered((fvs) -> {
                     facesWgs84.add(toFacet(fvs, objXOffset, objYOffset));
@@ -88,15 +85,7 @@ public class ObjPaysbrestLoader {
                 }
                 List<SolidGeo> solidWgs84List = agregate(facesWgs84);
                 solidGeoList = setTopologyProperties(solidWgs84List);
-                instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
-                //  Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
-                //      Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
-                //  for (SolidGeo solid : valid) {
-                //      displayServices.displaySolidGeoAsPolygon(solid, 0.0, layer, materials[color++ % 8]);
-                //  }
-        //    }
-      //  });
-
+                instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1"); 
         return solidGeoList;
     }
 

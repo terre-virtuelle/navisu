@@ -89,13 +89,15 @@ public interface TopologyServices
 
     String toWKT(Point3DGeo o);
 
+    String toWKT2D(Point3DGeo o);
+
     Point3DGeo getPoint3DGeoFromWKT(String o);
 
     String toWKT(FaceGeo o);
 
     FaceGeo getFaceGeofromWKT(String o);
 
-    String toWKT(SolidGeo o);
+    Pair<String, String> toWKT(SolidGeo o);
 
     SolidGeo getSolidGeofromWKT(String o);
 

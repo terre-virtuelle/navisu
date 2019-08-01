@@ -40,12 +40,20 @@ public class App {
             log.log(SEVERE, "Exception loading object!  e={0}", e);
         }
         System.out.println("faces : " + builder.faces.size());
+        
         for(Face f : builder.faces){
            
           //  System.out.println("vertices : " + f.getVertices());
           //  f.calculateTriangleNormal();
           //  System.out.println("normal : "+f.getFaceNormal());
+            
             System.out.println("f : " + f);
         }
+        System.out.println(builder.groups);
+        System.out.println("");
+                
+        System.out.println(builder.mapLib);
+        System.out.println("");
+        System.out.println(builder.materialLib);
     }
 }

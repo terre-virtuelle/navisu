@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.tools.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
@@ -54,6 +55,9 @@ import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.paysBrest.ObjPaysbrestLoader;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Material;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -78,6 +82,7 @@ public class ToolsComponentController
     protected static final String SEP = File.separator;
     private final ToolsComponentImpl component;
     protected static final Logger LOGGER = Logger.getLogger(ToolsComponentController.class.getName());
+
     protected GuiAgentServices guiAgentServices;
     protected S57ChartComponentServices s57ChartComponentServices;
     protected GeoTiffChartServices geoTiffChartServices;
@@ -92,6 +97,9 @@ public class ToolsComponentController
     protected JTSServices jtsServices;
     protected Pro4JServices pro4JServices;
     protected ObjComponentServices objComponentServices;
+    protected DisplayServices displayServices;
+    protected LayersManagerServices layersManagerServices;
+    protected TopologyServices topologyServices;
 
     private final String FXML = "toolsController.fxml";
 
@@ -256,6 +264,11 @@ public class ToolsComponentController
     public Button createBuildingsButton;
     @FXML
     public Button insertBuildingsButton;
+    @FXML
+    public RadioButton facadesRB;
+    @FXML
+    public RadioButton roofsRB;
+
     protected String buildingsData;
     protected String elevationData;
     protected boolean isDataDir = false;
@@ -271,6 +284,7 @@ public class ToolsComponentController
     private ObservableList<String> dbCbBuildingsData = FXCollections.observableArrayList("Choice DB", "BuildingsPaysbrestDB");
 
     final ToggleGroup mntGroup = new ToggleGroup();
+    final ToggleGroup buildingsGroup = new ToggleGroup();
     protected FileChooser fileChooser;
 
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
@@ -290,6 +304,8 @@ public class ToolsComponentController
     private final String ELEVATION_DB_NAME_6 = "BrestMetropole1mDB";
     private final String ELEVATION_DB_NAME_7 = "Finistere5mDB";
     private final String BUILDINGS_DB_NAME_0 = "BuildingsPaysBrestDB";
+    private final String GROUP_0 = "S57 charts";
+    protected static final String S57_LAYER = "S57";
 
     private final String ELEVATION_DB_ORG_DIR = "privateData" + SEP + "elevation";
     private final String BEACONS_DB_NAME_0 = "BalisageMaritimeDB";
@@ -297,6 +313,7 @@ public class ToolsComponentController
     private List<File> selectedFiles;
     protected String mnt = "MNT5m";
     protected boolean isCreate = false;
+    protected RenderableLayer s57Layer;
 
     /**
      *
@@ -317,6 +334,8 @@ public class ToolsComponentController
      * @param jtsServices
      * @param pro4JServices
      * @param objComponentServices
+     * @param displayServices
+     * @param layersManagerServices
      */
     @SuppressWarnings("unchecked")
     public ToolsComponentController(ToolsComponentImpl component, String componentKeyName,
@@ -333,7 +352,11 @@ public class ToolsComponentController
             GeodesyServices geodesyServices,
             JTSServices jtsServices,
             Pro4JServices pro4JServices,
-            ObjComponentServices objComponentServices) {
+            ObjComponentServices objComponentServices,
+            DisplayServices displayServices,
+            LayersManagerServices layersManagerServices,
+           TopologyServices topologyServices
+    ) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -360,8 +383,14 @@ public class ToolsComponentController
         this.jtsServices = jtsServices;
         this.pro4JServices = pro4JServices;
         this.objComponentServices = objComponentServices;
+        this.displayServices = displayServices;
+        this.layersManagerServices = layersManagerServices;
+        this.topologyServices = topologyServices;
+
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
+
+        s57Layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
 
     }
 
@@ -542,6 +571,10 @@ public class ToolsComponentController
         dem30mRB.setToggleGroup(mntGroup);
         dem5mRB.setToggleGroup(mntGroup);
         dem1mRB.setToggleGroup(mntGroup);
+
+        facadesRB.setToggleGroup(buildingsGroup);
+        roofsRB.setToggleGroup(buildingsGroup);
+
         elevationDbCB.setItems(dbCbElevationData);
         elevationDbCB.getSelectionModel().select("Choice DB");
         elevationDbCB.getSelectionModel()
@@ -838,24 +871,6 @@ public class ToolsComponentController
 
     private List<SolidGeo> loadingBuildings(String buildingsDataDir, String buildingsDBName) {
         List<SolidGeo> result = null;
-
-        /*
-        try {
-             Path directory = Paths.get(elevationDataDirTF.getText());
-              Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
-             @Override
-                    public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
-                     if (path.toString().endsWith("asc") && (path.toString().contains(mnt))) {
-                          String fileName = prepareCreateOrInsertFile(path.toString());
-                          bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
-                      }
-                     return FileVisitResult.CONTINUE;
-               }
-           });
-           } catch (IOException ex) {
-                //Nothing if dir don't exist
-            }
-         */
         guiAgentServices.getJobsManager().newJob("Load DB : " + buildingsDBName, (progressHandle) -> {
             ObjPaysbrestLoader objPaysbrestLoader = new ObjPaysbrestLoader(geodesyServices, guiAgentServices,
                     instrumentDriverManagerServices, jtsServices, pro4JServices, objComponentServices);
@@ -864,23 +879,30 @@ public class ToolsComponentController
                     "5432", "org.postgresql.Driver", "admin", "admin");
             // bathymetryDBServices.create(buildingsData, "bathy");
 
-            try { 
+            try {
                 Path directory = Paths.get(buildingsDataDir);
-                System.out.println("directory "+directory);
+                System.out.println("directory " + directory);
                 Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
                     @Override
                     public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
-                        if (path.toString().endsWith("obj") && (path.toString().contains("FACADES_NON_TEXTURE"))) {
+                        String type;
+                        if (facadesRB.isSelected()) {
+                            type = "FACADES_TEXTURE";
+                        } else {
+                            type = "TOITURES_TEXTURE";
+                        }
+                        if (path.toString().endsWith("obj") && (path.toString().contains(type))) {
                             // String fileName = prepareCreateOrInsertFile(path.toString());
                             // bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
                             List<SolidGeo> solidWgs84List = objPaysbrestLoader.loadObj(path, 145168, 6836820);
                             Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
                                 Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
                             int color = 0;
-                            // for (SolidGeo solid : solidWgs84List) {
-                            //  displayServices.displaySolidGeoAsPolygon(solid, 0.0, layer, materials[color++ % 8]);
-                            // }
-                            System.out.println("solidWgs84List : " + path.getFileName().toString()+" "+solidWgs84List.size());
+                            for (SolidGeo solid : solidWgs84List) {
+                                 // displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
+                                System.out.println(topologyServices.toWKT(solid));
+                            }
+                            System.out.println("solidWgs84List : " + path.getFileName().toString() + " " + solidWgs84List.size());
                         }
                         return FileVisitResult.CONTINUE;
                     }
