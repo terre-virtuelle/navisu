@@ -915,6 +915,8 @@ public class ToolsComponentController
                                 bathymetryDBServices.execute(query);
                             }
                             System.out.println("solidWgs84List : " + path.getFileName().toString() + " " + solidWgs84List.size());
+                            bathymetryDBServices.insert( table,  solidWgs84List);
+                        
                         }
                         return FileVisitResult.CONTINUE;
                     }

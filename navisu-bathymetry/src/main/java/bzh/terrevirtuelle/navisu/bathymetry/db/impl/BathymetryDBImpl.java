@@ -18,7 +18,9 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
+import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.nio.file.Path;
@@ -52,6 +54,8 @@ public class BathymetryDBImpl
     DatabaseServices databaseServices;
     @UsedService
     BathymetryEventProducerServices bathymetryEventProducerServices;
+    @UsedService
+    TopologyServices topologyServices;
 
     protected static final Logger LOGGER = Logger.getLogger(BathymetryDBImpl.class.getName());
     protected final String DB_NAME = "BathyShomDB";
@@ -80,7 +84,8 @@ public class BathymetryDBImpl
         layer = layersManagerServices.getLayer(GROUP, LAYER_NAME);
         //   layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         controller = BathymetryDBController.getInstance(this,
-                databaseServices, guiAgentServices, bathymetryEventProducerServices,
+                databaseServices, guiAgentServices,
+                bathymetryEventProducerServices, topologyServices,
                 LIMIT, layer);
 
     }
@@ -132,6 +137,11 @@ public class BathymetryDBImpl
     @Override
     public void execute(String query) {
         controller.execute(query);
+    }
+
+    @Override
+    public void insert(String table, List<SolidGeo> solids) {
+        controller.insert(table, solids);
     }
 
     @Override

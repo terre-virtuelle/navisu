@@ -14,8 +14,10 @@ import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
+import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Point_dt;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -56,6 +58,7 @@ public class BathymetryDBController {
     DatabaseServices databaseServices;
     GuiAgentServices guiAgentServices;
     BathymetryEventProducerServices bathymetryEventProducerServices;
+    TopologyServices topologyServices;
 
     protected WorldWindow wwd;
     final double LIMIT;
@@ -91,11 +94,13 @@ public class BathymetryDBController {
             DatabaseServices databaseServices,
             GuiAgentServices guiAgentServices,
             BathymetryEventProducerServices bathymetryEventProducerServices,
+            TopologyServices topologyServices,
             double limit, RenderableLayer layer) {
         this.component = component;
         this.databaseServices = databaseServices;
         this.guiAgentServices = guiAgentServices;
         this.bathymetryEventProducerServices = bathymetryEventProducerServices;
+        this.topologyServices = topologyServices;
         this.LIMIT = limit;
         this.layer = layer;
         wwd = GeoWorldWindViewImpl.getWW();
@@ -104,10 +109,12 @@ public class BathymetryDBController {
     public static BathymetryDBController getInstance(BathymetryDBImpl component,
             DatabaseServices databaseServices, GuiAgentServices guiAgentServices,
             BathymetryEventProducerServices bathymetryEventProducerServices,
+            TopologyServices topologyServices,
             double limit, RenderableLayer layer) {
         if (INSTANCE == null) {
             INSTANCE = new BathymetryDBController(component,
-                    databaseServices, guiAgentServices, bathymetryEventProducerServices,
+                    databaseServices, guiAgentServices,
+                    bathymetryEventProducerServices, topologyServices,
                     limit, layer);
         }
         return INSTANCE;
@@ -203,11 +210,42 @@ public class BathymetryDBController {
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
+
+        });
+    }
+
+    public void insert(String table, List<SolidGeo> solids) {
+        String sql = "INSERT INTO " + table + " (name, coord, geom) "
+                + "VALUES (?, "
+                + "ST_SetSRID(ST_MakePoint(?, ?), 4326), "
+                + "ST_GeometryFromText(?, 4326));";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
+        }
+        insertData(table, solids);
+    }
+
+    public void insertData(String table, List<SolidGeo> solids) {
+        solids.stream().forEach((s) -> {
+            System.out.println(topologyServices.toWKT(s).getY());
+            
+            try {
+                preparedStatement.setString(1, s.getName());
+                preparedStatement.setDouble(2, s.getCentroid().getLatitude());
+                preparedStatement.setDouble(3, s.getCentroid().getLongitude());
+                preparedStatement.setString(4, topologyServices.toWKT(s).getY());
+                System.out.println(preparedStatement.toString());
+                preparedStatement.executeUpdate();
+            } catch (SQLException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            }
+            
         });
     }
 
     public void work(String filename, String table) {
-        // System.out.println("work " + filename + " " + table);
         if (filename.endsWith(".glz") || filename.endsWith(".xyz")) {
             insertData(table, filename);
             createIndex(table);
@@ -296,12 +334,10 @@ public class BathymetryDBController {
     }
 
     public List<Point3DGeo> retrieveIn(String table, double latMin, double lonMin, double latMax, double lonMax) {
-        //  System.out.println("connection : " + connection);
         List<Point3DGeo> tmp1 = new ArrayList<>();
         PGgeometry geom;
         double depth;
         ResultSet r;
-        //  System.out.println("retrieveIn : " +table);
         if (connection != null) {
             try {
                 r = connection.createStatement().executeQuery(
@@ -311,22 +347,16 @@ public class BathymetryDBController {
                         + latMin + ", " + lonMin + ", "
                         + latMax + ", " + lonMax
                         + ", 4326); ");
-                // System.out.println("r : " + r);
                 while (r.next()) {
                     geom = (PGgeometry) r.getObject(2);
                     depth = r.getFloat(3);
-                    //  System.out.println("depth : " + depth);
                     if (depth >= MIN_DEPTH) {
                         Point3DGeo pt = new Point3DGeo(geom.getGeometry().getFirstPoint().getX(),
                                 geom.getGeometry().getFirstPoint().getY(),
                                 depth);
                         tmp1.add(pt);
-                        //  PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(geom.getGeometry().getFirstPoint().getX(), geom.getGeometry().getFirstPoint().getY(), 0));
-                        //  layer.addRenderable(placemark);
-                        //  wwd.redrawNow();
                     }
                 }
-
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }

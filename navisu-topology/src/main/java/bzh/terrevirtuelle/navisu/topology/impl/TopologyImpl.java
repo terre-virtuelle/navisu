@@ -601,7 +601,6 @@ public class TopologyImpl
             faces += vertices.get(j).getLatitude() + " " + vertices.get(j).getLongitude() + " " + vertices.get(j).getElevation() + ", ";
         }
         faces += vertices.get(vertices.size() - 1).getLatitude() + " " + vertices.get(vertices.size() - 1).getLongitude() + " " + vertices.get(vertices.size() - 1).getElevation() + ")";
-        faces += faces;
         faces += ")";
         return new Pair(centroid, faces);
     }

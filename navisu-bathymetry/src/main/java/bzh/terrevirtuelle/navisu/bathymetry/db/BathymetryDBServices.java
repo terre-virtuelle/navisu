@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.bathymetry.db;
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriver;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
+import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import bzh.terrevirtuelle.navisu.geometry.delaunay.triangulation.Triangle_dt;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -40,6 +41,8 @@ public interface BathymetryDBServices
     void insert(String filename, String table, String query);
 
     void execute(String query);
+
+    void insert(String table, List<SolidGeo> solids);
 
     List<Point3Df> readFromFile(String filename);
 
