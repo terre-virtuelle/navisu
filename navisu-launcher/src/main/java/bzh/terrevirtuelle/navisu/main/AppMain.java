@@ -160,6 +160,8 @@ import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.impl.LambertImpl;
+import bzh.terrevirtuelle.navisu.citygml.CityGMLServices;
+import bzh.terrevirtuelle.navisu.citygml.impl.CityGMLImpl;
 import bzh.terrevirtuelle.navisu.stl.charts.impl.StlChartComponentImpl;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.DisplayImpl;
@@ -263,6 +265,7 @@ public class AppMain extends Application {
                         BathySoundsImpl.class,
                         Bezier2DImpl.class,
                         CameraComponentImpl.class,
+                        CityGMLImpl.class,
                         ClocksImpl.class,
                         CompassImpl.class,
                         ConfigurationComponentImpl.class,
@@ -351,8 +354,8 @@ public class AppMain extends Application {
         Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
 
         CameraComponentServices cameraComponentServices = componentManager.getComponentService(CameraComponentServices.class);
+        CityGMLServices cityGMLServices = componentManager.getComponentService(CityGMLServices.class);
         ClocksServices clocksServices = componentManager.getComponentService(ClocksServices.class);
-
         CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
         ConfigurationComponentServices configurationComponentServices = componentManager.getComponentService(ConfigurationComponentServices.class);
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
@@ -378,11 +381,9 @@ public class AppMain extends Application {
         GpsPlotterWithRouteServices gpsPlotterWithRouteServices = componentManager.getComponentService(GpsPlotterWithRouteServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
 
-        GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
-        // ***************** size of screen *********************************************        
+        GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);       
         guiAgentServices.showGui(stage, 1080, 700);
-        //guiAgentServices.showGui(stage, 1500, 972);
-        //********************************************************************************
+       
 
         InstrumentTemplateServices instrumentTemplateServices = componentManager.getComponentService(InstrumentTemplateServices.class);
 
@@ -687,8 +688,7 @@ public class AppMain extends Application {
          */
         //Test new viewer services of STL
         // stlComponentServices.viewSTL("../privateData/stl/out.stl");
-        
-        
+
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");

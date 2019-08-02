@@ -1,0 +1,10 @@
+dependencies {
+    compile fileTree(dir: 'lib', include: '*.jar') 
+    compile project(':navisu-domain')
+    compile project(':navisu-core')
+    compile project(':navisu-app')
+    compile project(':navisu-util')
+}
+jar {
+    destinationDir project.file('../dest')
+}

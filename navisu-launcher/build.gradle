@@ -13,6 +13,7 @@ dependencies {
     compile project(':navisu-buildings')
     compile project(':navisu-cartography')
     compile project(':navisu-charts')
+    compile project(':navisu-citygml')
     compile project(':navisu-client')
     compile project(':navisu-core')
     compile project(':navisu-currents')

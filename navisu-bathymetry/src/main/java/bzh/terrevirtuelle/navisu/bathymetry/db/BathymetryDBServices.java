@@ -39,6 +39,8 @@ public interface BathymetryDBServices
 
     void insert(String filename, String table, String query);
 
+    void execute(String query);
+
     List<Point3Df> readFromFile(String filename);
 
     void createIndex(String table);

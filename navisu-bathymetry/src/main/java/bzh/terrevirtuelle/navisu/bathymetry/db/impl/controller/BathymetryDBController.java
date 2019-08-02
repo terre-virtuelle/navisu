@@ -195,6 +195,17 @@ public class BathymetryDBController {
         });
     }
 
+    public void execute(String query) {
+        guiAgentServices.getJobsManager().newJob("Create table", (progressHandle) -> {
+            try {
+                statement = connection.createStatement();
+                statement.executeUpdate(query);
+            } catch (SQLException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            }
+        });
+    }
+
     public void work(String filename, String table) {
         // System.out.println("work " + filename + " " + table);
         if (filename.endsWith(".glz") || filename.endsWith(".xyz")) {

@@ -360,8 +360,7 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <RadioButton fx:id="facadesRB" mnemonicParsing="false" selected="true" text="Facades" />
-                                                <RadioButton fx:id="roofsRB" mnemonicParsing="false" text="Roofs" GridPane.columnIndex="1" />
+                                                <RadioButton fx:id="previewBuildingsRB" mnemonicParsing="false" selected="true" text="Preview Buildings" />
                                              </children>
                                           </GridPane>
                                        </children>

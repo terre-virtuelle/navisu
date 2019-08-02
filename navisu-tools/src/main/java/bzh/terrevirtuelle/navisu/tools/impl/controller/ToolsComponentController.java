@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.tools.impl.controller;
 
+import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
@@ -265,9 +266,7 @@ public class ToolsComponentController
     @FXML
     public Button insertBuildingsButton;
     @FXML
-    public RadioButton facadesRB;
-    @FXML
-    public RadioButton roofsRB;
+    public RadioButton previewBuildingsRB;
 
     protected String buildingsData;
     protected String elevationData;
@@ -284,7 +283,7 @@ public class ToolsComponentController
     private ObservableList<String> dbCbBuildingsData = FXCollections.observableArrayList("Choice DB", "BuildingsPaysbrestDB");
 
     final ToggleGroup mntGroup = new ToggleGroup();
-    final ToggleGroup buildingsGroup = new ToggleGroup();
+
     protected FileChooser fileChooser;
 
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
@@ -314,6 +313,8 @@ public class ToolsComponentController
     protected String mnt = "MNT5m";
     protected boolean isCreate = false;
     protected RenderableLayer s57Layer;
+    boolean isTable0Created = false;
+    boolean isTable1Created = false;
 
     /**
      *
@@ -355,7 +356,7 @@ public class ToolsComponentController
             ObjComponentServices objComponentServices,
             DisplayServices displayServices,
             LayersManagerServices layersManagerServices,
-           TopologyServices topologyServices
+            TopologyServices topologyServices
     ) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
@@ -572,9 +573,6 @@ public class ToolsComponentController
         dem5mRB.setToggleGroup(mntGroup);
         dem1mRB.setToggleGroup(mntGroup);
 
-        facadesRB.setToggleGroup(buildingsGroup);
-        roofsRB.setToggleGroup(buildingsGroup);
-
         elevationDbCB.setItems(dbCbElevationData);
         elevationDbCB.getSelectionModel().select("Choice DB");
         elevationDbCB.getSelectionModel()
@@ -767,7 +765,7 @@ public class ToolsComponentController
         /* Buildings controls */
 
         buildingsDatabaseNameTF.setText(BUILDINGS_DB_NAME_0);
-        buildingsDbCB.setItems(dbCbBathyData);
+        buildingsDbCB.setItems(dbCbBuildingsData);
         buildingsDbCB.getSelectionModel().select("Choice DB");
         buildingsDbCB.getSelectionModel()
                 .selectedItemProperty()
@@ -783,14 +781,7 @@ public class ToolsComponentController
         });
         insertBuildingsButton.setOnMouseClicked((MouseEvent event) -> {
             String buildingsDBName = buildingsDatabaseNameTF.getText();
-            /*
-            buildingsData = buildingsDataTF.getText();
-            guiAgentServices.getJobsManager().newJob("Load DB : " + buildingsDBName, (progressHandle) -> {
-                bathymetryDBServices.connect(buildingsDBName, "localhost", "jdbc:postgresql://",
-                        "5432", "org.postgresql.Driver", "admin", "admin");
-                bathymetryDBServices.insert(buildingsData, "bathy");
-            });
-             */
+
         });
 
         helpButton.setOnMouseClicked((MouseEvent event) -> {
@@ -804,7 +795,6 @@ public class ToolsComponentController
                 alert.show();
             } else {
                 if (bathyTab.isSelected()) {
-
                 } else {
                     if (elevationsTab.isSelected()) {
 
@@ -871,13 +861,12 @@ public class ToolsComponentController
 
     private List<SolidGeo> loadingBuildings(String buildingsDataDir, String buildingsDBName) {
         List<SolidGeo> result = null;
-        guiAgentServices.getJobsManager().newJob("Load DB : " + buildingsDBName, (progressHandle) -> {
+        guiAgentServices.getJobsManager().newJob("Load DB : " + buildingsDBName, (ProgressHandle progressHandle) -> {
             ObjPaysbrestLoader objPaysbrestLoader = new ObjPaysbrestLoader(geodesyServices, guiAgentServices,
                     instrumentDriverManagerServices, jtsServices, pro4JServices, objComponentServices);
             System.out.println("objPaysbrestLoader : " + objPaysbrestLoader);
             bathymetryDBServices.connect(buildingsDBName, "localhost", "jdbc:postgresql://",
                     "5432", "org.postgresql.Driver", "admin", "admin");
-            // bathymetryDBServices.create(buildingsData, "bathy");
 
             try {
                 Path directory = Paths.get(buildingsDataDir);
@@ -885,22 +874,45 @@ public class ToolsComponentController
                 Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
                     @Override
                     public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
-                        String type;
-                        if (facadesRB.isSelected()) {
-                            type = "FACADES_TEXTURE";
-                        } else {
-                            type = "TOITURES_TEXTURE";
-                        }
-                        if (path.toString().endsWith("obj") && (path.toString().contains(type))) {
-                            // String fileName = prepareCreateOrInsertFile(path.toString());
-                            // bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
+                        String table;
+
+                        if (path.toString().endsWith("obj")
+                                && (path.toString().contains("FACADES_TEXTURE") || path.toString().contains("TOITURES_TEXTURE"))) {
+                            if (path.toString().contains("FACADES")) {
+                                table = "wall";
+                            } else {
+                                table = "roof";
+                            }
+                            LOGGER.log(Level.INFO, path.getFileName().toString());
                             List<SolidGeo> solidWgs84List = objPaysbrestLoader.loadObj(path, 145168, 6836820);
-                            Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
-                                Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
-                            int color = 0;
-                            for (SolidGeo solid : solidWgs84List) {
-                                 // displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
-                                System.out.println(topologyServices.toWKT(solid));
+
+                            if (previewBuildingsRB.isSelected()) {
+                                Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
+                                    Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
+                                int color = 0;
+                                for (SolidGeo solid : solidWgs84List) {
+                                    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
+                                    //   System.out.println(topologyServices.toWKT(solid));
+                                }
+                            }
+                            String query;
+                            if (!isTable0Created) {
+                                isTable0Created = true;
+                                query = "DROP TABLE IF EXISTS wall; \n"
+                                        + "CREATE TABLE wall (id SERIAL PRIMARY KEY, "
+                                        + "name TEXT, "
+                                        + "coord GEOMETRY(POINT, 4326), "
+                                        + "geom geometry(GEOMETRYCOLLECTIONZ,4326));";
+                                bathymetryDBServices.execute(query);
+                            }
+                            if (!isTable1Created) {
+                                isTable1Created = true;
+                                query = "DROP TABLE IF EXISTS roof; \n"
+                                        + "CREATE TABLE roof (id SERIAL PRIMARY KEY, "
+                                        + "name TEXT, "
+                                        + "coord GEOMETRY(POINT, 4326), "
+                                        + "geom GEOMETRY(GEOMETRYCOLLECTIONZ,4326));";
+                                bathymetryDBServices.execute(query);
                             }
                             System.out.println("solidWgs84List : " + path.getFileName().toString() + " " + solidWgs84List.size());
                         }

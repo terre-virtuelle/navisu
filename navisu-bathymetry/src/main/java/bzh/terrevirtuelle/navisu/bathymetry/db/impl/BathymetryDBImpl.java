@@ -130,6 +130,11 @@ public class BathymetryDBImpl
     }
 
     @Override
+    public void execute(String query) {
+        controller.execute(query);
+    }
+
+    @Override
     public List<Point3Df> readFromFile(String filename) {
         return controller.readFromFile(filename);
     }

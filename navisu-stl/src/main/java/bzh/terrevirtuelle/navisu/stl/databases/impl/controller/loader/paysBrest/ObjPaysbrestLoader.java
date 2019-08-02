@@ -74,18 +74,18 @@ public class ObjPaysbrestLoader {
 
         List<FaceGeo> facesWgs84 = new ArrayList<>();
 
-        Path filetredPath = filter(path); 
-                List<Face> faces = objComponentServices.getFaces(filetredPath.toString());
-                faces.stream().map((f) -> f.getVertices()).forEachOrdered((fvs) -> {
-                    facesWgs84.add(toFacet(fvs, objXOffset, objYOffset));
-                });
-                int index = 1;
-                for (FaceGeo f : facesWgs84) {
-                    f.setId(index++);
-                }
-                List<SolidGeo> solidWgs84List = agregate(facesWgs84);
-                solidGeoList = setTopologyProperties(solidWgs84List);
-                instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1"); 
+        Path filetredPath = filter(path);
+        List<Face> faces = objComponentServices.getFaces(filetredPath.toString());
+        faces.stream().map((f) -> f.getVertices()).forEachOrdered((fvs) -> {
+            facesWgs84.add(toFacet(fvs, objXOffset, objYOffset));
+        });
+        int index = 1;
+        for (FaceGeo f : facesWgs84) {
+            f.setId(index++);
+        }
+        List<SolidGeo> solidWgs84List = agregate(facesWgs84);
+        solidGeoList = setTopologyProperties(solidWgs84List);
+        instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
         return solidGeoList;
     }
 
@@ -193,7 +193,6 @@ public class ObjPaysbrestLoader {
         String tmp = null;
 
         try {
-            // tmp = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
             tmp = new String(Files.readAllBytes(path));
         } catch (IOException ex) {
             Logger.getLogger(ObjPaysbrestLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
