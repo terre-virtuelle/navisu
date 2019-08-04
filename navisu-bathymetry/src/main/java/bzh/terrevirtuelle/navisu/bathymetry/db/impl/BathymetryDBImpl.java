@@ -185,6 +185,16 @@ public class BathymetryDBImpl
     }
 
     @Override
+    public List<SolidGeo> retrieveInSolid(String table, double latMin, double lonMin, double latMax, double lonMax) {
+        return controller.retrieveInSolid(table, latMin, lonMin, latMax, lonMax);
+    }
+
+    @Override
+    public List<SolidGeo> retrieveInSolid(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax) {
+        return controller.retrieveInSolid(connection, table, latMin, lonMin, latMax, lonMax);
+    }
+
+    @Override
     public Point3DGeo[][] mergeData(Point3DGeo[][] orgData, List<Triangle_dt> triangles) {
         return controller.mergeData(orgData, triangles);
     }

@@ -864,7 +864,6 @@ public class ToolsComponentController
         guiAgentServices.getJobsManager().newJob("Load DB : " + buildingsDBName, (ProgressHandle progressHandle) -> {
             ObjPaysbrestLoader objPaysbrestLoader = new ObjPaysbrestLoader(geodesyServices, guiAgentServices,
                     instrumentDriverManagerServices, jtsServices, pro4JServices, objComponentServices);
-            System.out.println("objPaysbrestLoader : " + objPaysbrestLoader);
             bathymetryDBServices.connect(buildingsDBName, "localhost", "jdbc:postgresql://",
                     "5432", "org.postgresql.Driver", "admin", "admin");
 
@@ -892,7 +891,6 @@ public class ToolsComponentController
                                 int color = 0;
                                 for (SolidGeo solid : solidWgs84List) {
                                     displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
-                                    //   System.out.println(topologyServices.toWKT(solid));
                                 }
                             }
                             String query;
@@ -914,7 +912,7 @@ public class ToolsComponentController
                                         + "geom GEOMETRY(GEOMETRYCOLLECTIONZ,4326));";
                                 bathymetryDBServices.execute(query);
                             }
-                            System.out.println("solidWgs84List : " + path.getFileName().toString() + " " + solidWgs84List.size());
+                           
                             bathymetryDBServices.insert( table,  solidWgs84List);
                         
                         }

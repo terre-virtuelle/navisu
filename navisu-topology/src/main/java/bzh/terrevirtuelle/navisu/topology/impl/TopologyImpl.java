@@ -34,6 +34,7 @@ import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolylines;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -545,11 +546,24 @@ public class TopologyImpl
         return result;
     }
 
+    /*
+    POINT(15.21 57.58 0.31)
+     */
     @Override
     public Point3DGeo getPoint3DGeoFromWKT(String o) {
-        Point3DGeo result = null;
+        String tmp = o;
+        Point3DGeo result;
+        tmp = tmp.replace("POINT(", "");
+        tmp = tmp.replace(")", "");
+        String[] coord = tmp.split("\\s+");
 
-        return result;
+        double lon = Double.parseDouble(coord[0]);
+        double lat = Double.parseDouble(coord[1]);
+        double elv = 0.0;
+        if (coord.length == 3) {
+            elv = Double.parseDouble(coord[2]);
+        }
+        return new Point3DGeo(lat, lon, elv);
     }
 
     /*
@@ -567,19 +581,6 @@ public class TopologyImpl
         return result;
     }
 
-    @Override
-    public FaceGeo getFaceGeofromWKT(String o) {
-        FaceGeo result = null;
-
-        return result;
-    }
-
-    /*
-    GEOMETRYCOLLECTIONZ(
-         MULTIPOINTZ(15.21 57.58 0.31, 15.81 57.12 0.33),
-         MULTIPOINTZ(15.21 57.58 0.31, 15.81 57.12 0.33)
-    ) 
-     */
     @SuppressWarnings("unchecked")
     @Override
     public Pair<String, String> toWKT(SolidGeo o) {
@@ -590,26 +591,62 @@ public class TopologyImpl
             String multipoints = "MULTIPOINTZ(";
             List<Point3DGeo> vertices = faceList.get(i).getVertices();
             for (int j = 0; j < vertices.size() - 1; j++) {
-                multipoints += vertices.get(j).getLatitude() + " " + vertices.get(j).getLongitude() + " " + vertices.get(j).getElevation() + ",";
+                multipoints += vertices.get(j).getLongitude() + " " + vertices.get(j).getLatitude() + " " + vertices.get(j).getElevation() + ",";
             }
-            multipoints += vertices.get(vertices.size() - 1).getLatitude() + " " + vertices.get(vertices.size() - 1).getLongitude() + " " + vertices.get(vertices.size() - 1).getElevation() + "), ";
+            multipoints += vertices.get(vertices.size() - 1).getLongitude() + " " + vertices.get(vertices.size() - 1).getLatitude() + " " + vertices.get(vertices.size() - 1).getElevation() + "), ";
             faces += multipoints;
         }
         faces += "MULTIPOINTZ(";
         List<Point3DGeo> vertices = faceList.get(faceList.size() - 1).getVertices();
         for (int j = 0; j < vertices.size() - 1; j++) {
-            faces += vertices.get(j).getLatitude() + " " + vertices.get(j).getLongitude() + " " + vertices.get(j).getElevation() + ", ";
+            faces += vertices.get(j).getLongitude() + " " + vertices.get(j).getLatitude() + " " + vertices.get(j).getElevation() + ", ";
         }
-        faces += vertices.get(vertices.size() - 1).getLatitude() + " " + vertices.get(vertices.size() - 1).getLongitude() + " " + vertices.get(vertices.size() - 1).getElevation() + ")";
+        faces += vertices.get(vertices.size() - 1).getLongitude() + " " + vertices.get(vertices.size() - 1).getLatitude() + " " + vertices.get(vertices.size() - 1).getElevation() + ")";
         faces += ")";
         return new Pair(centroid, faces);
     }
 
+    /*
+    MULTIPOINTZ(15.21 57.58 0.31, 15.81 57.12 0.33)
+     */
+    @Override
+    public FaceGeo getFaceGeofromWKT(String o) {
+        List<Point3DGeo> pts = new ArrayList<>();
+        String tmp = o;
+        tmp = tmp.replace("MULTIPOINT(", "");
+        tmp = tmp.replace(")", "");
+        String[] tab = tmp.split(",");
+        for (String p : tab) {
+            String[] coord = p.split("\\s+");
+            double lon = Double.parseDouble(coord[0]);
+            double lat = Double.parseDouble(coord[1]);
+            double elv = Double.parseDouble(coord[2]);
+            pts.add(new Point3DGeo(lat, lon, elv));
+        }
+        return new FaceGeo(pts);
+    }
+
+    /*
+    GEOMETRYCOLLECTIONZ(
+         MULTIPOINTZ(15.21 57.58 0.31, 15.81 57.12 0.33),
+         MULTIPOINTZ(15.21 57.58 0.31, 15.81 57.12 0.33)
+    ) 
+     */
+    @SuppressWarnings("unchecked")
     @Override
     public SolidGeo getSolidGeofromWKT(String o) {
-        SolidGeo result = null;
-
-        return result;
+        //  System.out.println("o : "+ o);
+        List<FaceGeo> faces = new ArrayList<>();
+        String tmp = o;
+        tmp = tmp.replace("GEOMETRYCOLLECTION(", "");
+        tmp = tmp.replace("))", ")");
+        tmp = tmp.replace("),", ")),");
+        //  System.out.println("tmp : " +tmp);
+        String[] tab = tmp.split("\\),");
+        for (String f : tab) {
+            faces.add(getFaceGeofromWKT(f));
+        }
+        return new SolidGeo(new HashSet(faces));
     }
 
     @Override

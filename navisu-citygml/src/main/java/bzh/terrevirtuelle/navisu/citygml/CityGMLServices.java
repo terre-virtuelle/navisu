@@ -5,7 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.citygml;
 
+import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
+import java.util.List;
 import org.capcaval.c3.component.ComponentService;
+import org.citygml4j.model.citygml.building.Building;
 
 /**
  * @date 13 mars 2015
@@ -14,5 +17,8 @@ import org.capcaval.c3.component.ComponentService;
 public interface CityGMLServices
         extends ComponentService {
 
-    
+    Building importSolid(SolidGeo solid);
+
+    List<Building> importSolid(List<SolidGeo> solid);
+
 }

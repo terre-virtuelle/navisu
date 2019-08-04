@@ -146,4 +146,9 @@ public class SolidGeo {
         this.geometry = geometry;
     }
 
+    @Override
+    public String toString() {
+        return "SolidGeo{" + "faces=" + faces + ", id=" + id + ", name=" + name + ", centroid=" + centroid +  '}';
+    }
+
 }

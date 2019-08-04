@@ -114,6 +114,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemDbLoader;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import bzh.terrevirtuelle.navisu.domain.raster.RasterInfo;
 import bzh.terrevirtuelle.navisu.domain.svg.SVGPath3D;
 import bzh.terrevirtuelle.navisu.gdal.GdalServices;
@@ -125,6 +126,7 @@ import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.BuoyageExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.paysBrest.BuildingsExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.DaeExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.DepareExportToSTL;
@@ -289,6 +291,7 @@ public class StlDBComponentController
     protected Connection bathyConnection;
     protected Connection elevationConnection;
     protected Connection highlElevationConnection;
+    protected Connection buildingsConnection;
     protected DEM bathymetry;
     protected DEM elevation;
     protected double lowestElevationAlti = 0.0;
@@ -330,6 +333,12 @@ public class StlDBComponentController
     public TextField s57DatabaseTF;
     @FXML
     public TextField bathyDatabaseTF;
+    @FXML
+    public RadioButton buildingsRB;
+    @FXML
+    public ChoiceBox<String> buildingsDatabasesCB;
+    @FXML
+    public TextField buildingsDatabaseTF;
     @FXML
     public TextField objectsTF;
     @FXML
@@ -403,6 +412,8 @@ public class StlDBComponentController
     @FXML
     public CheckBox stlPreviewCB;
     @FXML
+    public CheckBox buildingsPreviewCB;
+    @FXML
     public CheckBox generateStlCB;
     @FXML
     public CheckBox generateSvgCB;
@@ -444,8 +455,6 @@ public class StlDBComponentController
     @FXML
     public CheckBox pontonCB;
     @FXML
-    public RadioButton terrainRB;
-    @FXML
     public CheckBox resareCB;
     @FXML
     public Button meshStlObjectButton;
@@ -453,13 +462,8 @@ public class StlDBComponentController
     public Button daeButton;
     @FXML
     public Button wktObjectButton;
-    @FXML
-    public Button objButton;
+
     /*-----------------------------Tools------*/
-    @FXML
-    public TextField objXOffsetTF;
-    @FXML
-    public TextField objYOffsetTF;
     @FXML
     public Button slConsEditorButton;
     @FXML
@@ -488,6 +492,7 @@ public class StlDBComponentController
     protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("SRTM30mDB",
             "BrestMetropole5mDB", "BrestMetropole1mDB", "Finistere5mDB",
             "AltiV2_2-0_75mIgnDB");
+    protected ObservableList<String> buildingsDbCbData = FXCollections.observableArrayList("BuildingsPaysBrestDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
     protected ObservableList<String> supportCbData = FXCollections.observableArrayList("With magnet", "Simple", "No support");
     protected final String HIGH_ELEVATION_DB = "Litto3D5mDB";
@@ -498,6 +503,7 @@ public class StlDBComponentController
     protected DaeExportToSTL daeExportToSTL;
     protected ObjExportToSTL objExportToSTL;
     protected MeshExportToSTL meshExportToSTL;
+    protected BuildingsExportToSTL buildingsExportToSTL;
     protected Shapefile shapefile;
     protected List<Pair<File, Double>> slConsShapefiles;
     protected double heightShapefile;
@@ -560,6 +566,7 @@ public class StlDBComponentController
         this.objExportToSTL = new ObjExportToSTL(geodesyServices, guiAgentServices, jtsServices,
                 objComponentServices, pro4JServices, displayServices, instrumentDriverManagerServices);
         this.meshExportToSTL = new MeshExportToSTL(geodesyServices, guiAgentServices, jtsServices);
+        this.buildingsExportToSTL = new BuildingsExportToSTL(bathymetryDBServices, geodesyServices);
 
         s57Layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
         bathymetryLayer = layersManagerServices.getLayer(GROUP_0, BATHYMETRY_LAYER);
@@ -700,6 +707,14 @@ public class StlDBComponentController
                 .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue)
                         -> elevationDatabaseTF.setText(elevationDatabasesCB.getValue())
                 );
+        buildingsDatabasesCB.setItems(buildingsDbCbData);
+        buildingsDatabasesCB.getSelectionModel().select("BuildingsPaysBrestDB");
+        buildingsDatabaseTF.setText("BuildingsPaysBrestDB");
+        buildingsDatabasesCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue)
+                        -> buildingsDatabaseTF.setText(buildingsDatabasesCB.getValue())
+                );
         tilesCountCB.setItems(tilesCbData);
         tilesCountCB.getSelectionModel().select("1x1");
         tilesCountTF.setText("1");
@@ -836,7 +851,6 @@ public class StlDBComponentController
         depareRB.setToggleGroup(bathyGroup);
 
         noAltiRB.setToggleGroup(terrainGroup);
-        terrainRB.setToggleGroup(terrainGroup);
 
         noAltiRB.setToggleGroup(altiGroup);
         elevationRB.setToggleGroup(altiGroup);
@@ -924,9 +938,7 @@ public class StlDBComponentController
         daeButton.setOnMouseClicked((MouseEvent event) -> {
             daeExportToSTL.loadKmzAndSaveStlWgs84();
         });
-        objButton.setOnMouseClicked((MouseEvent event) -> {
-           // objExportToSTL.loadObj(s57Layer, Double.valueOf(objXOffsetTF.getText()), Double.valueOf(objYOffsetTF.getText()));
-        });
+
         slConsEditorButton.setOnMouseClicked((MouseEvent event) -> {
             SlConsEditorController stConsEditorController = new SlConsEditorController(
                     guiAgentServices, layersManagerServices,
@@ -1273,6 +1285,31 @@ public class StlDBComponentController
                                 LOGGER.info("Out export LNDMRK en STL");
                             }
                         }
+                        // Buildings Pays Brest
+                        k = 0;
+                        //  if (boundList != null && !boundList.isEmpty()) {
+                        buildingsConnection = databaseServices.connect(buildingsDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
+
+                        for (Point3DGeo[][] g : grids) {
+                            i = k / tileCount + 1;
+                            j = k % tileCount + 1;
+                            //if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() )) {
+                           // System.out.println("OK");
+                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                            scaleCompute(g);
+                            List<SolidGeo> solids = buildingsExportToSTL.export(buildingsConnection, g, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
+                          if(buildingsPreviewCB.isSelected()){
+                            Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
+                                Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
+                            int color = 0;
+                            for (SolidGeo solid : solids) {
+                                displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
+                            }
+                          }
+//  }
+                            k++;
+                        }
+                        //  }
                         // DAE
                         k = 0;
                         if (boundList != null && !boundList.isEmpty()) {

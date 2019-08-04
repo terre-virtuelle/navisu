@@ -60,6 +60,10 @@ public interface BathymetryDBServices
 
     List<Point3DGeo> retrieveIn(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax);
 
+    List<SolidGeo> retrieveInSolid(String table, double latMin, double lonMin, double latMax, double lonMax);
+
+    List<SolidGeo> retrieveInSolid(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax);
+
     void writePointList(List<Point3DGeo> points, Path pathname, boolean latLon);
 
     Point3DGeo[][] mergeData(Point3DGeo[][] orgData, List<Triangle_dt> triangles);

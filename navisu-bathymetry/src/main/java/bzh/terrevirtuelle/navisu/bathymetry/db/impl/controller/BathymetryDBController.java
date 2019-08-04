@@ -225,23 +225,21 @@ public class BathymetryDBController {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         insertData(table, solids);
+        createIndex(table);
     }
 
     public void insertData(String table, List<SolidGeo> solids) {
         solids.stream().forEach((s) -> {
-            System.out.println(topologyServices.toWKT(s).getY());
-            
             try {
                 preparedStatement.setString(1, s.getName());
-                preparedStatement.setDouble(2, s.getCentroid().getLatitude());
-                preparedStatement.setDouble(3, s.getCentroid().getLongitude());
+                preparedStatement.setDouble(2, s.getCentroid().getLongitude());
+                preparedStatement.setDouble(3, s.getCentroid().getLatitude());
                 preparedStatement.setString(4, topologyServices.toWKT(s).getY());
-                System.out.println(preparedStatement.toString());
                 preparedStatement.executeUpdate();
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
-            
+
         });
     }
 
@@ -344,8 +342,8 @@ public class BathymetryDBController {
                         "SELECT *"
                         + " FROM " + table + "  "
                         + "WHERE coord @ ST_MakeEnvelope ("
-                        + latMin + ", " + lonMin + ", "
-                        + latMax + ", " + lonMax
+                        + lonMin + ", " + latMin + ", "
+                        + lonMax + ", " + latMax
                         + ", 4326); ");
                 while (r.next()) {
                     geom = (PGgeometry) r.getObject(2);
@@ -372,6 +370,50 @@ public class BathymetryDBController {
         List<Point3DGeo> tmp1 = retrieveIn(table, latMin, lonMin, latMax, lonMax);
         this.connection = tmp0;
         return tmp1;
+    }
+
+    public List<SolidGeo> retrieveInSolid(Connection connection, String table, double latMin, double lonMin, double latMax, double lonMax) {
+        Connection tmp0 = this.connection;
+        this.connection = connection;
+        List<SolidGeo> tmp1 = retrieveInSolid(table, latMin, lonMin, latMax, lonMax);
+        this.connection = tmp0;
+        return tmp1;
+    }
+
+    public List<SolidGeo> retrieveInSolid(String table, double latMin, double lonMin, double latMax, double lonMax) {
+        List<SolidGeo> result = new ArrayList<>();
+        PGgeometry geom;
+        PGgeometry centroid;
+        ResultSet r;
+        if (connection != null) {
+            try {
+                r = connection.createStatement().executeQuery(
+                        "SELECT *"
+                        + " FROM " + table + "  "
+                        + "WHERE coord @ ST_MakeEnvelope ("
+                        + lonMin + ", " + latMin + ", "
+                        + lonMax + ", " + latMax
+                        + ", 4326); ");
+                while (r.next()) {
+                    centroid = (PGgeometry) r.getObject(3);
+                    geom = (PGgeometry) r.getObject(4);
+                    String g = geom.toString();
+                    g = g.replace("SRID=4326;", "");
+                    SolidGeo solid = topologyServices.getSolidGeofromWKT(g);
+                    String c = centroid.toString();
+                    c = c.replace("SRID=4326;", "");
+                    solid.setCentroid(topologyServices.getPoint3DGeoFromWKT(c));
+                    solid.setId(r.getInt(1));
+                    solid.setName(r.getString(2));
+                    result.add(solid);
+                }
+            } catch (SQLException ex) {
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+            }
+        } else {
+            alert();
+        }
+        return result;
     }
 
     public final List<Point3DGeo> retrieveAround(double lat, double lon, double limit) {
