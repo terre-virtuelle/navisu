@@ -133,7 +133,6 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.Depare
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.GridBox3DExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.LandmarkExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.MeshExportToSTL;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.ObjExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsShapefileExportToSTL;
@@ -501,7 +500,6 @@ public class StlDBComponentController
 
     protected StlGuiController stlGuiController;
     protected DaeExportToSTL daeExportToSTL;
-    protected ObjExportToSTL objExportToSTL;
     protected MeshExportToSTL meshExportToSTL;
     protected BuildingsExportToSTL buildingsExportToSTL;
     protected Shapefile shapefile;
@@ -563,8 +561,6 @@ public class StlDBComponentController
         this.speakerServices = speakerServices;
 
         this.daeExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices);
-        this.objExportToSTL = new ObjExportToSTL(geodesyServices, guiAgentServices, jtsServices,
-                objComponentServices, pro4JServices, displayServices, instrumentDriverManagerServices);
         this.meshExportToSTL = new MeshExportToSTL(geodesyServices, guiAgentServices, jtsServices);
         this.buildingsExportToSTL = new BuildingsExportToSTL(bathymetryDBServices, geodesyServices);
 
@@ -1294,19 +1290,20 @@ public class StlDBComponentController
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
                             //if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() )) {
-                           // System.out.println("OK");
                             String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                             scaleCompute(g);
-                            List<SolidGeo> solids = buildingsExportToSTL.export(buildingsConnection, g, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
-                          if(buildingsPreviewCB.isSelected()){
-                            Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
-                                Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
-                            int color = 0;
-                            for (SolidGeo solid : solids) {
-                                displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
+                            List<SolidGeo> solids = buildingsExportToSTL.read(buildingsConnection, g);
+                            if (buildingsPreviewCB.isSelected()) {
+                                Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
+                                    Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
+                                int color = 0;
+                                for (SolidGeo solid : solids) {
+                                    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
+                                }
                             }
-                          }
-//  }
+                            System.out.println("tileSideZ : "+tileSideZ);
+                            System.out.println("lowestElevationAlti : "+lowestElevationAlti);
+                            buildingsExportToSTL.export(solids, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
                             k++;
                         }
                         //  }
