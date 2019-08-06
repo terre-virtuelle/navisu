@@ -584,7 +584,27 @@ public class TopologyImpl
     @SuppressWarnings("unchecked")
     @Override
     public Pair<String, String> toWKT(SolidGeo o) {
-        String centroid = toWKT2D(o.getCentroid());
+       
+       String groundFaces = "GEOMETRYCOLLECTIONZ(";
+        List<FaceGeo> groundFaceList = new ArrayList<>(o.getFaces());
+        for (int i = 0; i < groundFaceList.size() - 1; i++) {
+            String multipoints = "MULTIPOINTZ(";
+            List<Point3DGeo> groundVertices = groundFaceList.get(i).getVertices();
+            for (int j = 0; j < groundVertices.size() - 1; j++) {
+                multipoints += groundVertices.get(j).getLongitude() + " " + groundVertices.get(j).getLatitude() + " " + groundVertices.get(j).getElevation() + ",";
+            }
+            multipoints += groundVertices.get(groundVertices.size() - 1).getLongitude() + " " + groundVertices.get(groundVertices.size() - 1).getLatitude() + " " + groundVertices.get(groundVertices.size() - 1).getElevation() + "), ";
+            groundFaces += multipoints;
+        }
+        groundFaces += "MULTIPOINTZ(";
+        List<Point3DGeo> groundVertices = groundFaceList.get(groundFaceList.size() - 1).getVertices();
+        for (int j = 0; j < groundVertices.size() - 1; j++) {
+            groundFaces += groundVertices.get(j).getLongitude() + " " + groundVertices.get(j).getLatitude() + " " + groundVertices.get(j).getElevation() + ", ";
+        }
+        groundFaces += groundVertices.get(groundVertices.size() - 1).getLongitude() + " " + groundVertices.get(groundVertices.size() - 1).getLatitude() + " " + groundVertices.get(groundVertices.size() - 1).getElevation() + ")";
+        groundFaces += ")";
+        
+        
         String faces = "GEOMETRYCOLLECTIONZ(";
         List<FaceGeo> faceList = new ArrayList<>(o.getFaces());
         for (int i = 0; i < faceList.size() - 1; i++) {
@@ -603,7 +623,7 @@ public class TopologyImpl
         }
         faces += vertices.get(vertices.size() - 1).getLongitude() + " " + vertices.get(vertices.size() - 1).getLatitude() + " " + vertices.get(vertices.size() - 1).getElevation() + ")";
         faces += ")";
-        return new Pair(centroid, faces);
+        return new Pair(groundFaces, faces);
     }
 
     /*

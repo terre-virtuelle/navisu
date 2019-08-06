@@ -315,6 +315,8 @@ public class ToolsComponentController
     protected RenderableLayer s57Layer;
     boolean isTable0Created = false;
     boolean isTable1Created = false;
+    boolean isIndex0Created = false;
+    boolean isIndex1Created = false;
 
     /**
      *
@@ -900,6 +902,7 @@ public class ToolsComponentController
                                         + "CREATE TABLE wall (id SERIAL PRIMARY KEY, "
                                         + "name TEXT, "
                                         + "coord GEOMETRY(POINT, 4326), "
+                                        + "ground geometry(GEOMETRYCOLLECTIONZ,4326), "
                                         + "geom geometry(GEOMETRYCOLLECTIONZ,4326));";
                                 bathymetryDBServices.execute(query);
                             }
@@ -909,12 +912,21 @@ public class ToolsComponentController
                                         + "CREATE TABLE roof (id SERIAL PRIMARY KEY, "
                                         + "name TEXT, "
                                         + "coord GEOMETRY(POINT, 4326), "
+                                        + "ground geometry(GEOMETRYCOLLECTIONZ,4326), "
                                         + "geom GEOMETRY(GEOMETRYCOLLECTIONZ,4326));";
                                 bathymetryDBServices.execute(query);
                             }
-                           
-                            bathymetryDBServices.insert( table,  solidWgs84List);
-                        
+
+                            bathymetryDBServices.insert(table, solidWgs84List);
+
+                            if (!isIndex0Created) {
+                                isIndex0Created = true;
+                                bathymetryDBServices.createIndex("wall");
+                            }
+                            if (!isIndex1Created) {
+                                isIndex1Created = true;
+                                bathymetryDBServices.createIndex("roof");
+                            }
                         }
                         return FileVisitResult.CONTINUE;
                     }

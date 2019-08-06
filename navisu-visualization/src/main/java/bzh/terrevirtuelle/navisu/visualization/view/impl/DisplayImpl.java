@@ -670,6 +670,13 @@ public class DisplayImpl
     }
 
     @Override
+    public void displayPolygon(Polygon poly, RenderableLayer layer, Material material) {
+        List<Polygon> polygons = new ArrayList<>();
+        polygons.add(poly);
+        displayPolygons(polygons, layer, material);
+    }
+
+    @Override
     public void displayPolygons(List<Polygon> poly, RenderableLayer layer, Material material) {
         ShapeAttributes attrs0 = createAttributes(material);
         for (Polygon p : poly) {

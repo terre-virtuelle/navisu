@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.paysBrest;
+package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
@@ -48,6 +48,11 @@ public class BuildingsExportToSTL {
         solids.addAll(walls);
         solids.addAll(roofs);
 
+        //solids.get(0).
+        
+        
+        
+        
         return solids;
     }
 

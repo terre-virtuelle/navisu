@@ -75,8 +75,8 @@ public class SlConsEditorController
     protected final String USER_DIR = System.getProperty("user.dir");
     protected final String SEP = File.separator;
 
-  //  private final String HISTOLITT = USER_DIR + SEP + "data" + SEP + "shapefile" + SEP + "histolitt" + SEP + "france.shp";
-    private final String HISTOLITT = USER_DIR + SEP + "data" + SEP + "shapefile" + SEP + "camaret" + SEP + "tc_camaret.shp";
+    private final String HISTOLITT = USER_DIR + SEP + "data" + SEP + "shapefile" + SEP + "histolitt" + SEP + "france.shp";
+ //   private final String HISTOLITT = USER_DIR + SEP + "data" + SEP + "shapefile" + SEP + "camaret" + SEP + "tc_camaret.shp";
     private final String FXML = "slconseditor.fxml";
     protected String viewgroupstyle = "configuration.css";
     private MeasureTool measureTool;

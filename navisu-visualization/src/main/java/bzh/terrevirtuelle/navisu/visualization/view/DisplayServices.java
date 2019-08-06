@@ -64,6 +64,8 @@ public interface DisplayServices
 
     void displayPolygons(List<Polygon> poly, RenderableLayer layer, Material material);
 
+    void displayPolygon(Polygon poly, RenderableLayer layer, Material material);
+
     void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration);
 
     void displayPolygons(List<Polygon> points, RenderableLayer layer, Material material, double verticalExaggeration, double verticalOffset);

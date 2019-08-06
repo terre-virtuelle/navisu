@@ -126,7 +126,7 @@ import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.BuoyageExportKML;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.kml.GridBox3DExportKML;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.paysBrest.BuildingsExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuildingsExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.BuoyageExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.DaeExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.DepareExportToSTL;
@@ -144,6 +144,7 @@ import bzh.terrevirtuelle.navisu.util.interval.Interval;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.controller.JfxViewer;
 
 import com.google.common.collect.ImmutableMap;
+import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import java.io.InputStream;
@@ -1205,6 +1206,7 @@ public class StlDBComponentController
 
                             });
                         }
+                        //BUOYAGE
                         k = 0;
                         if (selectedObjects.contains("ALL") || selectedObjects.contains("BUOYAGE")) {
                             Set<String> buoyageKeySet = BUOYAGE.ATT.keySet();
@@ -1249,6 +1251,7 @@ public class StlDBComponentController
                                 k++;
                             }
                         }
+                        //LNDMRK
                         k = 0;
                         if (selectedObjects.contains("ALL") || selectedObjects.contains("LNDMRK")) {
                             landmarks.clear();
@@ -1299,10 +1302,17 @@ public class StlDBComponentController
                                 int color = 0;
                                 for (SolidGeo solid : solids) {
                                     displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
+                                    Geometry geom = solid.getGround();
+                                    if (geom != null) {
+                                        List<Polygon> pol = topologyServices.wktMultiPolygonToWwjPolygons(geom.toText());
+                                        System.out.println(geom.toText());
+                                        displayServices.displayPolygons(pol, s57Layer, Material.MAGENTA,100);
+                                    }
+
                                 }
                             }
-                            System.out.println("tileSideZ : "+tileSideZ);
-                            System.out.println("lowestElevationAlti : "+lowestElevationAlti);
+                            System.out.println("tileSideZ : " + tileSideZ);
+                            System.out.println("lowestElevationAlti : " + lowestElevationAlti);
                             buildingsExportToSTL.export(solids, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
                             k++;
                         }

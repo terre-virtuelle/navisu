@@ -25,7 +25,32 @@ public class CityGMLImpl
         Building result = null;
         return result;
     }
+/*
+    Building building = new Building();
 
+		Polygon ground = geom.createLinearPolygon(new double[] {0,0,0, 0,12,0, 6,12,0, 6,0,0}, 3);
+		Polygon wall_1 = geom.createLinearPolygon(new double[] {6,0,0, 6,12,0, 6,12,6, 6,0,6}, 3);
+		Polygon roof_1 = geom.createLinearPolygon(new double[] {6,0,6, 6,12,6, 3,12,9, 3,0,9}, 3);
+		ground.setId(gmlIdManager.generateUUID());
+		wall_1.setId(gmlIdManager.generateUUID());
+		roof_1.setId(gmlIdManager.generateUUID());
+		// lod2 solid
+		List<SurfaceProperty> surfaceMember = new ArrayList<>();
+		surfaceMember.add(new SurfaceProperty('#' + ground.getId()));
+		surfaceMember.add(new SurfaceProperty('#' + wall_1.getId()));
+		surfaceMember.add(new SurfaceProperty('#' + roof_1.getId()));
+		CompositeSurface compositeSurface = new CompositeSurface();
+		compositeSurface.setSurfaceMember(surfaceMember);		
+		Solid solid = new Solid();
+		solid.setExterior(new SurfaceProperty(compositeSurface));
+		building.setLod2Solid(new SolidProperty(solid));
+		// thematic boundary surfaces
+		List<BoundarySurfaceProperty> boundedBy = new ArrayList<>();
+		boundedBy.add(createBoundarySurface(CityGMLClass.BUILDING_GROUND_SURFACE, ground));
+		boundedBy.add(createBoundarySurface(CityGMLClass.BUILDING_WALL_SURFACE, wall_1));
+		boundedBy.add(createBoundarySurface(CityGMLClass.BUILDING_ROOF_SURFACE, roof_1));		
+		building.setBoundedBySurface(boundedBy);
+    */
     @Override
     public List<Building> importSolid(List<SolidGeo> solids) {
         List<Building> result = new ArrayList<>();

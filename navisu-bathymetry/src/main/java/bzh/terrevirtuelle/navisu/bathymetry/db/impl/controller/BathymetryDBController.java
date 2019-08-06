@@ -215,9 +215,10 @@ public class BathymetryDBController {
     }
 
     public void insert(String table, List<SolidGeo> solids) {
-        String sql = "INSERT INTO " + table + " (name, coord, geom) "
+        String sql = "INSERT INTO " + table + " (name, coord, ground, geom) "
                 + "VALUES (?, "
                 + "ST_SetSRID(ST_MakePoint(?, ?), 4326), "
+                + "ST_GeometryFromText(?, 4326), "
                 + "ST_GeometryFromText(?, 4326));";
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -225,7 +226,7 @@ public class BathymetryDBController {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         insertData(table, solids);
-        createIndex(table);
+        
     }
 
     public void insertData(String table, List<SolidGeo> solids) {
@@ -234,7 +235,8 @@ public class BathymetryDBController {
                 preparedStatement.setString(1, s.getName());
                 preparedStatement.setDouble(2, s.getCentroid().getLongitude());
                 preparedStatement.setDouble(3, s.getCentroid().getLatitude());
-                preparedStatement.setString(4, topologyServices.toWKT(s).getY());
+                preparedStatement.setString(4, topologyServices.toWKT(s).getX());
+                preparedStatement.setString(5, topologyServices.toWKT(s).getY());
                 preparedStatement.executeUpdate();
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);

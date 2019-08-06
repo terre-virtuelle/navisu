@@ -21,9 +21,14 @@ public class SolidGeo {
     protected int id;
     protected String name;
     protected Point3DGeo centroid;
-    private Geometry geometry;
+    protected Geometry geometry;
+    protected Geometry ground;
 
-   
+    /*
+     GeometryFactory fac = new GeometryFactory(new PrecisionModel(), srid);
+ LinearRing linear = new GeometryFactory().createLinearRing(coordinates);
+ Polygon poly = new Polygon(linear, null, fact);
+     */
     public SolidGeo() {
         this(0, "noname");
     }
@@ -74,7 +79,6 @@ public class SolidGeo {
         this.centroid = centroid;
     }
 
-    
     /**
      * Get the value of name
      *
@@ -128,7 +132,8 @@ public class SolidGeo {
     public void setFaces(Set<FaceGeo> faces) {
         this.faces = faces;
     }
- /**
+
+    /**
      * Get the value of geometry
      *
      * @return the value of geometry
@@ -146,9 +151,27 @@ public class SolidGeo {
         this.geometry = geometry;
     }
 
+    /**
+     * Get the value of ground
+     *
+     * @return the value of ground
+     */
+    public Geometry getGround() {
+        return ground;
+    }
+
+    /**
+     * Set the value of ground
+     *
+     * @param ground new value of ground
+     */
+    public void setGround(Geometry ground) {
+        this.ground = ground;
+    }
+
     @Override
     public String toString() {
-        return "SolidGeo{" + "faces=" + faces + ", id=" + id + ", name=" + name + ", centroid=" + centroid +  '}';
+        return "SolidGeo{" + "faces=" + faces + ", id=" + id + ", name=" + name + ", centroid=" + centroid + '}';
     }
 
 }
