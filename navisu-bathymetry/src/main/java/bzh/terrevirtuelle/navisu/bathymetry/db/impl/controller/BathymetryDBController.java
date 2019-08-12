@@ -240,7 +240,7 @@ public class BathymetryDBController {
         solids.stream().forEach((s) -> {
             try {
                 preparedStatement.setString(1, s.getName());
-                preparedStatement.setInt(2, s.getRoofId());
+                preparedStatement.setInt(2, s.getId());
                 preparedStatement.setDouble(3, s.getCentroid().getLongitude());
                 preparedStatement.setDouble(4, s.getCentroid().getLatitude());
                 preparedStatement.setString(5, s.getGround().toString());
@@ -428,18 +428,13 @@ public class BathymetryDBController {
                     ground = (PGgeometry) r.getObject(5);
                     g = ground.toString();
                     g = g.replace("SRID=4326;", "");
-                    
-                   // System.out.println("retrieve g : " + g);
+
+                    // System.out.println("retrieve g : " + g);
                     solid.setGround(topologyServices.wktPolygonFromString(g));
-                    
-                    
+
                     solid.setId(r.getInt(1));
                     solid.setName(r.getString(2));
-                    if (table.equals("wall")) {
-                        solid.setRoofId(r.getInt(3));
-                    } else {
-                        solid.setWallId(r.getInt(3));
-                    }
+
                     result.add(solid);
                 }
             } catch (SQLException ex) {

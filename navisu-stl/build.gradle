@@ -1,5 +1,6 @@
 dependencies {
     compile project(':navisu-charts')
+    compile project(':navisu-citygml')
     compile project(':navisu-dem')
     compile project(':navisu-gdal')
     compile project(':navisu-geometry')

@@ -21,4 +21,6 @@ public interface CityGMLServices
 
     List<Building> importSolid(List<SolidGeo> solid);
 
+    void write(List<Building> buildings);
+
 }

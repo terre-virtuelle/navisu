@@ -12,6 +12,7 @@ import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.citygml.CityGMLServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.Layer;
@@ -52,6 +53,8 @@ public class StlDBComponentImpl
 
     @UsedService
     BathymetryDBServices bathymetryDBServices;
+    @UsedService
+    CityGMLServices cityGMLServices;
     @UsedService
     DatabaseServices databaseServices;
     @UsedService
@@ -143,7 +146,8 @@ public class StlDBComponentImpl
                         layerTreeServices,
                         gdalServices,
                         driverManagerServices,
-                        speakerServices);
+                        speakerServices,
+                        cityGMLServices);
                 controller.setVisible(true);
             }
         }

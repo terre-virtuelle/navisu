@@ -21,16 +21,10 @@ public class SolidGeo {
     protected int id;
     protected String name;
     protected Point3DGeo centroid;
-    protected int roofId = 0;
-    protected int wallId = 0;
     protected Geometry geometry;
     protected Geometry ground;
+    protected SolidGeo roof;
 
-    /*
-     GeometryFactory fac = new GeometryFactory(new PrecisionModel(), srid);
- LinearRing linear = new GeometryFactory().createLinearRing(coordinates);
- Polygon poly = new Polygon(linear, null, fact);
-     */
     public SolidGeo() {
         this(0, "noname");
     }
@@ -55,21 +49,15 @@ public class SolidGeo {
         this.name = name;
     }
 
-    public int getWallId() {
-        return wallId;
+    public SolidGeo getRoof() {
+        return roof;
     }
 
-    public void setWallId(int wallId) {
-        this.wallId = wallId;
+    public void setRoof(SolidGeo roof) {
+        this.roof = roof;
     }
 
-    public int getRoofId() {
-        return roofId;
-    }
-
-    public void setRoofId(int roofId) {
-        this.roofId = roofId;
-    }
+   
 
     public void add(FaceGeo face) {
         faces.add(face);

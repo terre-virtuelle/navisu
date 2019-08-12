@@ -40,6 +40,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.LightDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.NavigationLineDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.RestrictedAreaDBLoader;
+import bzh.terrevirtuelle.navisu.citygml.CityGMLServices;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
@@ -144,7 +145,6 @@ import bzh.terrevirtuelle.navisu.util.interval.Interval;
 import bzh.terrevirtuelle.navisu.visualization.view.impl.controller.JfxViewer;
 
 import com.google.common.collect.ImmutableMap;
-import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import java.io.InputStream;
@@ -152,6 +152,7 @@ import java.util.logging.FileHandler;
 import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import org.apache.commons.io.FileUtils;
+import org.citygml4j.model.citygml.building.Building;
 
 /**
  * @author Serge Morvan
@@ -164,6 +165,7 @@ public class StlDBComponentController
     protected StlDBComponentImpl component;
 
     protected BathymetryDBServices bathymetryDBServices;
+    protected CityGMLServices cityGMLServices;
     protected DatabaseServices databaseServices;
     protected DelaunayServices delaunayServices;
     protected DemDBServices demDBServices;
@@ -535,7 +537,8 @@ public class StlDBComponentController
             LayerTreeServices layerTreeServices,
             GdalServices gdalServices,
             DriverManagerServices driverManagerServices,
-            SpeakerServices speakerServices) {
+            SpeakerServices speakerServices,
+            CityGMLServices cityGMLServices) {
         super(keyCode, keyCombination);
 
         this.component = component;
@@ -560,6 +563,7 @@ public class StlDBComponentController
         this.gdalServices = gdalServices;
         this.driverManagerServices = driverManagerServices;
         this.speakerServices = speakerServices;
+        this.cityGMLServices = cityGMLServices;
 
         this.daeExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices);
         this.meshExportToSTL = new MeshExportToSTL(geodesyServices, guiAgentServices, jtsServices);
@@ -1302,12 +1306,18 @@ public class StlDBComponentController
                                 int color = 0;
                                 for (SolidGeo solid : solids) {
                                     displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
+                                    //Test emprise au sol
+                                    /*
                                     Geometry geom = solid.getGround();
                                     if (geom != null) {
                                         Polygon pol = topologyServices.wktPolygonToWwjPolygon(geom, 100.0);
                                         displayServices.displayPolygon(pol, s57Layer, Material.MAGENTA);
                                     }
+                                     */
+
                                 }
+                                List<Building> buildings = cityGMLServices.importSolid(solids);
+                                cityGMLServices.write(buildings);
                             }
                             buildingsExportToSTL.export(solids, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
                             k++;
