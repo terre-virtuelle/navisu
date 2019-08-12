@@ -16,9 +16,10 @@ import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import com.owens.oobjloader.builder.Face;
 import com.owens.oobjloader.builder.FaceVertex;
+import com.vividsolutions.jts.algorithm.ConvexHull;
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.Polygon;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
@@ -153,7 +154,6 @@ public class ObjPaysbrestLoader {
                 l1.addAll(l2);
                 l2.clear();
             }
-
             List<FaceGeo> l3 = new ArrayList<>(faceSet);
             Collections.sort(l3, (FaceGeo solid2, FaceGeo solid1) -> solid2.getId() - solid1.getId());
             SolidGeo solid = new SolidGeo(solidIndex++, "building");
@@ -170,12 +170,11 @@ public class ObjPaysbrestLoader {
     protected List<SolidGeo> setTopologyProperties(List<SolidGeo> solidWgs84List) {
         List<SolidGeo> result = new ArrayList<>();
         for (SolidGeo solid : solidWgs84List) {
-            List<Point3DGeo> points = new ArrayList<>();
-            List<Position> positions = new ArrayList<>();
+
+            Set<Position> positions = new HashSet<>();
             Set<FaceGeo> faces = solid.getFaces();
             faces.forEach((f) -> {
                 List<Point3DGeo> pts = f.getVertices();
-                points.addAll(pts);
                 for (Point3DGeo p : pts) {
                     positions.add(new Position(Angle.fromDegrees(p.getLatitude()),
                             Angle.fromDegrees(p.getLongitude()), p.getElevation()));
@@ -184,36 +183,22 @@ public class ObjPaysbrestLoader {
             if (positions.size() > 2) {
                 gov.nasa.worldwind.render.Polygon polygonWWJ = new gov.nasa.worldwind.render.Polygon(positions);
                 Iterable<? extends LatLon> boundary = polygonWWJ.getOuterBoundary();
-                points.clear();
+                List<Point3DGeo> points = new ArrayList<>();
                 for (LatLon ll : boundary) {
                     points.add(new Point3DGeo(ll.getLatitude().getDegrees(), ll.getLongitude().getDegrees(), 0.0));
                 }
-              //  System.out.println("points : "+points);
                 Coordinate[] coordinates = jtsServices.toTabCoordinates(points);
                 GeometryFactory fact = new GeometryFactory();
-                LinearRing linear = new GeometryFactory().createLinearRing(coordinates);
-                Polygon ground = new Polygon(linear, null, fact);
-                Point3DGeo centroid = jtsServices.toPoint3D(ground.getCentroid());
-                result.add(solid);
-                solid.setGround(ground);
+                Polygon ground = fact.createPolygon(coordinates);
+                ConvexHull convex = new ConvexHull(ground);
+                Geometry convexHull = convex.getConvexHull();
+                Point3DGeo centroid = jtsServices.toPoint3D(convexHull.getCentroid());
+
+                solid.setGround(convexHull);
                 solid.setCentroid(centroid);
-              //  System.out.println("ground : " + solid.getGround().toText());
-            }
-            /*
-            faces.forEach((f) -> {
-                points.addAll(f.getVertices());
-            });
-            Coordinate[] coordinates = jtsServices.toTabCoordinates(points);
-            GeometryFactory geometryFactory=new GeometryFactory();
-            Geometry ground = geometryFactory.coordinates, new GeometryFactory());
-            Geometry geom = convexhull.getConvexHull();
-            if (geom.getArea() != 0) {
-                Point3DGeo centroid = jtsServices.toPoint3D(geom.getCentroid());
+
                 result.add(solid);
-                solid.setGround(geom);
-                solid.setCentroid(centroid);
             }
-             */
         }
         return result;
     }

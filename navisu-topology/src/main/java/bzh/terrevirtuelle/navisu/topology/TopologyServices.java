@@ -95,9 +95,9 @@ public interface TopologyServices
 
     String toWKT(FaceGeo o);
 
-    FaceGeo getFaceGeofromWKT(String o);
+    FaceGeo getFaceGeofromMulitipointWKT(String o);
 
-    Pair<String, String> toWKT(SolidGeo o);
+    String toWKT(SolidGeo o);
 
     SolidGeo getSolidGeofromWKT(String o);
 
@@ -114,6 +114,8 @@ public interface TopologyServices
      * @return
      */
     Polygon wktPolygonToWwjPolygon(String geometry);
+
+    Polygon wktPolygonToWwjPolygon(Geometry geometry, double height);
 
     LatLon wktMultiPointToWwjLatLon(String geometry);
 
@@ -156,6 +158,7 @@ public interface TopologyServices
      */
     List<Position> wktPolygonToPositions(String geometry);
 
+    Geometry wktPolygonFromString(String geometry);
     /**
      *
      * @param geometry

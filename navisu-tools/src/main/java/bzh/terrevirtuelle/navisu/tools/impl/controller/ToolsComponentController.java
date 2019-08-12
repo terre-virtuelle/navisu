@@ -900,10 +900,11 @@ public class ToolsComponentController
                                 isTable0Created = true;
                                 query = "DROP TABLE IF EXISTS wall; \n"
                                         + "CREATE TABLE wall (id SERIAL PRIMARY KEY, "
+                                        + "roofId INTEGER, "
                                         + "name TEXT, "
                                         + "coord GEOMETRY(POINT, 4326), "
-                                        + "ground geometry(GEOMETRYCOLLECTIONZ,4326), "
-                                        + "geom geometry(GEOMETRYCOLLECTIONZ,4326));";
+                                        + "ground GEOMETRY(POLYGON, 4326), "
+                                        + "geom GEOMETRY(GEOMETRYCOLLECTIONZ,4326));";
                                 bathymetryDBServices.execute(query);
                             }
                             if (!isTable1Created) {
@@ -911,8 +912,9 @@ public class ToolsComponentController
                                 query = "DROP TABLE IF EXISTS roof; \n"
                                         + "CREATE TABLE roof (id SERIAL PRIMARY KEY, "
                                         + "name TEXT, "
+                                        + "wallId INTEGER, "
                                         + "coord GEOMETRY(POINT, 4326), "
-                                        + "ground geometry(GEOMETRYCOLLECTIONZ,4326), "
+                                        + "ground GEOMETRY(POLYGON, 4326), "
                                         + "geom GEOMETRY(GEOMETRYCOLLECTIONZ,4326));";
                                 bathymetryDBServices.execute(query);
                             }

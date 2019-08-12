@@ -215,8 +215,15 @@ public class BathymetryDBController {
     }
 
     public void insert(String table, List<SolidGeo> solids) {
-        String sql = "INSERT INTO " + table + " (name, coord, ground, geom) "
+        String id = "";
+        if (table.equals("wall")) {
+            id = "roofId";
+        } else {
+            id = "wallId";
+        }
+        String sql = "INSERT INTO " + table + " (name, " + id + " , coord, ground, geom) "
                 + "VALUES (?, "
+                + "?, "
                 + "ST_SetSRID(ST_MakePoint(?, ?), 4326), "
                 + "ST_GeometryFromText(?, 4326), "
                 + "ST_GeometryFromText(?, 4326));";
@@ -226,17 +233,18 @@ public class BathymetryDBController {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         insertData(table, solids);
-        
+
     }
 
     public void insertData(String table, List<SolidGeo> solids) {
         solids.stream().forEach((s) -> {
             try {
                 preparedStatement.setString(1, s.getName());
-                preparedStatement.setDouble(2, s.getCentroid().getLongitude());
-                preparedStatement.setDouble(3, s.getCentroid().getLatitude());
-                preparedStatement.setString(4, topologyServices.toWKT(s).getX());
-                preparedStatement.setString(5, topologyServices.toWKT(s).getY());
+                preparedStatement.setInt(2, s.getRoofId());
+                preparedStatement.setDouble(3, s.getCentroid().getLongitude());
+                preparedStatement.setDouble(4, s.getCentroid().getLatitude());
+                preparedStatement.setString(5, s.getGround().toString());
+                preparedStatement.setString(6, topologyServices.toWKT(s));
                 preparedStatement.executeUpdate();
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
@@ -382,10 +390,20 @@ public class BathymetryDBController {
         return tmp1;
     }
 
+    /*
+     query = "DROP TABLE IF EXISTS roof; \n"
+                                        + "CREATE TABLE roof (id SERIAL PRIMARY KEY, "
+                                        + "name TEXT, "
+                                        + "wallId INTEGER, "
+                                        + "coord GEOMETRY(POINT, 4326), "
+                                        + "ground GEOMETRY(POLYGON,4326), "
+                                        + "geom GEOMETRY(GEOMETRYCOLLECTIONZ,4326));";
+     */
     public List<SolidGeo> retrieveInSolid(String table, double latMin, double lonMin, double latMax, double lonMax) {
         List<SolidGeo> result = new ArrayList<>();
         PGgeometry geom;
         PGgeometry centroid;
+        PGgeometry ground;
         ResultSet r;
         if (connection != null) {
             try {
@@ -397,16 +415,31 @@ public class BathymetryDBController {
                         + lonMax + ", " + latMax
                         + ", 4326); ");
                 while (r.next()) {
-                    centroid = (PGgeometry) r.getObject(3);
-                    geom = (PGgeometry) r.getObject(4);
+                    geom = (PGgeometry) r.getObject(6);
                     String g = geom.toString();
                     g = g.replace("SRID=4326;", "");
                     SolidGeo solid = topologyServices.getSolidGeofromWKT(g);
+
+                    centroid = (PGgeometry) r.getObject(4);
                     String c = centroid.toString();
                     c = c.replace("SRID=4326;", "");
                     solid.setCentroid(topologyServices.getPoint3DGeoFromWKT(c));
+
+                    ground = (PGgeometry) r.getObject(5);
+                    g = ground.toString();
+                    g = g.replace("SRID=4326;", "");
+                    
+                   // System.out.println("retrieve g : " + g);
+                    solid.setGround(topologyServices.wktPolygonFromString(g));
+                    
+                    
                     solid.setId(r.getInt(1));
                     solid.setName(r.getString(2));
+                    if (table.equals("wall")) {
+                        solid.setRoofId(r.getInt(3));
+                    } else {
+                        solid.setWallId(r.getInt(3));
+                    }
                     result.add(solid);
                 }
             } catch (SQLException ex) {

@@ -1304,15 +1304,11 @@ public class StlDBComponentController
                                     displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
                                     Geometry geom = solid.getGround();
                                     if (geom != null) {
-                                        List<Polygon> pol = topologyServices.wktMultiPolygonToWwjPolygons(geom.toText());
-                                        System.out.println(geom.toText());
-                                        displayServices.displayPolygons(pol, s57Layer, Material.MAGENTA,100);
+                                        Polygon pol = topologyServices.wktPolygonToWwjPolygon(geom, 100.0);
+                                        displayServices.displayPolygon(pol, s57Layer, Material.MAGENTA);
                                     }
-
                                 }
                             }
-                            System.out.println("tileSideZ : " + tileSideZ);
-                            System.out.println("lowestElevationAlti : " + lowestElevationAlti);
                             buildingsExportToSTL.export(solids, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
                             k++;
                         }

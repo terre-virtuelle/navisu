@@ -21,6 +21,8 @@ public class SolidGeo {
     protected int id;
     protected String name;
     protected Point3DGeo centroid;
+    protected int roofId = 0;
+    protected int wallId = 0;
     protected Geometry geometry;
     protected Geometry ground;
 
@@ -51,6 +53,22 @@ public class SolidGeo {
         this.faces = faces;
         this.id = id;
         this.name = name;
+    }
+
+    public int getWallId() {
+        return wallId;
+    }
+
+    public void setWallId(int wallId) {
+        this.wallId = wallId;
+    }
+
+    public int getRoofId() {
+        return roofId;
+    }
+
+    public void setRoofId(int roofId) {
+        this.roofId = roofId;
     }
 
     public void add(FaceGeo face) {
