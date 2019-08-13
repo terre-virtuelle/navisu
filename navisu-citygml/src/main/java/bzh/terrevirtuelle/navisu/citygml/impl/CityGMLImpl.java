@@ -59,13 +59,13 @@ public class CityGMLImpl
         implements CityGML, CityGMLServices, ComponentState {
 
     @Override
-    public Building importSolid(SolidGeo solid) {
+    public Building exportSolid(SolidGeo solid) {
         Building result = null;
         return result;
     }
 
     @Override
-    public List<Building> importSolid(List<SolidGeo> solids) {
+    public List<Building> exportSolid(List<SolidGeo> solids) {
         List<Building> result = new ArrayList<>();
         try {
             CityGMLContext ctx = CityGMLContext.getInstance();
@@ -82,15 +82,15 @@ public class CityGMLImpl
                 List<Polygon> roofs = new ArrayList<>();
 
                 //Ground
-                Geometry solidGround = g.getGround();
+                List<Point3DGeo> solidGround = g.getGround();
 
                 if (solidGround != null) {
-                    Coordinate[] coordinates = solidGround.getCoordinates();
-                    double[] coordTab = new double[coordinates.length * 3];
-                    for (int i = 0; i < coordinates.length; i++) {
-                        coordTab[i] = coordinates[i].x;
-                        coordTab[i + 1] = coordinates[i].y;
-                        coordTab[i + 2] = coordinates[i].z;
+                    
+                    double[] coordTab = new double[solidGround.size() * 3];
+                    for (int i = 0; i < solidGround.size(); i++) {
+                        coordTab[i] = solidGround.get(i).getLongitude();
+                        coordTab[i + 1] = solidGround.get(i).getLatitude();
+                        coordTab[i + 2] = solidGround.get(i).getElevation();
                     }
                     ground = geom.createLinearPolygon(coordTab, 3);
                     ground.setId(gmlIdManager.generateUUID());

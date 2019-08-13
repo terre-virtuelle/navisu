@@ -89,6 +89,8 @@ public interface TopologyServices
 
     String toWKT(Point3DGeo o);
 
+    String toWKT(List<Point3DGeo> o);
+
     String toWKT2D(Point3DGeo o);
 
     Point3DGeo getPoint3DGeoFromWKT(String o);
@@ -159,6 +161,7 @@ public interface TopologyServices
     List<Position> wktPolygonToPositions(String geometry);
 
     Geometry wktPolygonFromString(String geometry);
+
     /**
      *
      * @param geometry

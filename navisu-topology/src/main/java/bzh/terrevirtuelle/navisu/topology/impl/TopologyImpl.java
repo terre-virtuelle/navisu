@@ -452,7 +452,7 @@ public class TopologyImpl
 
     @Override
     public Polygon wktPolygonToWwjPolygon(Geometry geometry, double height) {
-       
+
         Coordinate[] coordinates = geometry.getCoordinates();
         List<Position> positions = new ArrayList<>();
         for (Coordinate c : coordinates) {
@@ -528,6 +528,19 @@ public class TopologyImpl
             result += locList.get(i) + ",";
         }
         result += locList.get(locList.size() - 1) + "))";
+        return result;
+    }
+
+    /*
+    POLYGON((-4.525918529669304 48.36554080812927,-
+     */
+    @Override
+    public String toWKT(List<Point3DGeo> o) {
+        String result = "POLYGONZ((";
+        for (int i = 0; i < o.size() - 1; i++) {
+            result += o.get(i).getLongitude() + " " + o.get(i).getLatitude() + " " + o.get(i).getElevation() + ", ";
+        }
+        result += o.get(o.size() - 1).getLongitude() + " " + o.get(o.size() - 1).getLatitude() + " " + o.get(o.size() - 1).getElevation() + "))";
         return result;
     }
 

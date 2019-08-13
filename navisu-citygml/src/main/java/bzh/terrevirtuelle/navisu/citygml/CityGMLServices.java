@@ -17,9 +17,9 @@ import org.citygml4j.model.citygml.building.Building;
 public interface CityGMLServices
         extends ComponentService {
 
-    Building importSolid(SolidGeo solid);
+    Building exportSolid(SolidGeo solid);
 
-    List<Building> importSolid(List<SolidGeo> solid);
+    List<Building> exportSolid(List<SolidGeo> solid);
 
     void write(List<Building> buildings);
 

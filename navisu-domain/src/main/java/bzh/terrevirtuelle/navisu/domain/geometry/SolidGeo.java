@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.domain.geometry;
 import com.vividsolutions.jts.geom.Geometry;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,8 +22,7 @@ public class SolidGeo {
     protected int id;
     protected String name;
     protected Point3DGeo centroid;
-    protected Geometry geometry;
-    protected Geometry ground;
+    protected List<Point3DGeo> ground;
     protected SolidGeo roof;
 
     public SolidGeo() {
@@ -56,8 +56,6 @@ public class SolidGeo {
     public void setRoof(SolidGeo roof) {
         this.roof = roof;
     }
-
-   
 
     public void add(FaceGeo face) {
         faces.add(face);
@@ -139,39 +137,13 @@ public class SolidGeo {
         this.faces = faces;
     }
 
-    /**
-     * Get the value of geometry
-     *
-     * @return the value of geometry
-     */
-    public Geometry getGeometry() {
-        return geometry;
-    }
 
-    /**
-     * Set the value of geometry
-     *
-     * @param geometry new value of geometry
-     */
-    public void setGeometry(Geometry geometry) {
-        this.geometry = geometry;
-    }
-
-    /**
-     * Get the value of ground
-     *
-     * @return the value of ground
-     */
-    public Geometry getGround() {
+    public List<Point3DGeo> getGround() {
         return ground;
     }
 
-    /**
-     * Set the value of ground
-     *
-     * @param ground new value of ground
-     */
-    public void setGround(Geometry ground) {
+   
+    public void setGround(List<Point3DGeo> ground) {    
         this.ground = ground;
     }
 

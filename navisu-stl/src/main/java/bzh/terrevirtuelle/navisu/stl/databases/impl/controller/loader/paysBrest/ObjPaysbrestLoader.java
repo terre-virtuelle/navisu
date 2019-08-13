@@ -182,19 +182,30 @@ public class ObjPaysbrestLoader {
             });
             if (positions.size() > 2) {
                 gov.nasa.worldwind.render.Polygon polygonWWJ = new gov.nasa.worldwind.render.Polygon(positions);
-                Iterable<? extends LatLon> boundary = polygonWWJ.getOuterBoundary();
+           
+                Iterable<? extends Position> boundary = polygonWWJ.outerBoundary();
                 List<Point3DGeo> points = new ArrayList<>();
-                for (LatLon ll : boundary) {
-                    points.add(new Point3DGeo(ll.getLatitude().getDegrees(), ll.getLongitude().getDegrees(), 0.0));
+                for (Position p : boundary) {
+                    points.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
                 }
                 Coordinate[] coordinates = jtsServices.toTabCoordinates(points);
+              /*  
+               for(Coordinate c : coordinates){
+                   System.out.println("c : " + c);
+               }
+*/
                 GeometryFactory fact = new GeometryFactory();
                 Polygon ground = fact.createPolygon(coordinates);
+                
+                
                 ConvexHull convex = new ConvexHull(ground);
                 Geometry convexHull = convex.getConvexHull();
+                
+               // System.out.println("convexHull : " + convexHull);
+                
                 Point3DGeo centroid = jtsServices.toPoint3D(convexHull.getCentroid());
 
-                solid.setGround(convexHull);
+                solid.setGround(points);
                 solid.setCentroid(centroid);
 
                 result.add(solid);

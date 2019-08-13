@@ -1316,7 +1316,7 @@ public class StlDBComponentController
                                      */
 
                                 }
-                                List<Building> buildings = cityGMLServices.importSolid(solids);
+                                List<Building> buildings = cityGMLServices.exportSolid(solids);
                                 cityGMLServices.write(buildings);
                             }
                             buildingsExportToSTL.export(solids, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);

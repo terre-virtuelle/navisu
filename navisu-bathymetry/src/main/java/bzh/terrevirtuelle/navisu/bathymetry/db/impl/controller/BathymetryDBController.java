@@ -243,7 +243,7 @@ public class BathymetryDBController {
                 preparedStatement.setInt(2, s.getId());
                 preparedStatement.setDouble(3, s.getCentroid().getLongitude());
                 preparedStatement.setDouble(4, s.getCentroid().getLatitude());
-                preparedStatement.setString(5, s.getGround().toString());
+                preparedStatement.setString(5, topologyServices.toWKT(s.getGround()));
                 preparedStatement.setString(6, topologyServices.toWKT(s));
                 preparedStatement.executeUpdate();
             } catch (SQLException ex) {
@@ -396,7 +396,7 @@ public class BathymetryDBController {
                                         + "name TEXT, "
                                         + "wallId INTEGER, "
                                         + "coord GEOMETRY(POINT, 4326), "
-                                        + "ground GEOMETRY(POLYGON,4326), "
+                                        + "ground GEOMETRY(POLYGONZ,4326), "
                                         + "geom GEOMETRY(GEOMETRYCOLLECTIONZ,4326));";
      */
     public List<SolidGeo> retrieveInSolid(String table, double latMin, double lonMin, double latMax, double lonMax) {
@@ -429,8 +429,8 @@ public class BathymetryDBController {
                     g = ground.toString();
                     g = g.replace("SRID=4326;", "");
 
-                    // System.out.println("retrieve g : " + g);
-                    solid.setGround(topologyServices.wktPolygonFromString(g));
+                    System.out.println("retrieve g : " + g);
+                    // solid.setGround(topologyServices.wktPolygonFromString(g));
 
                     solid.setId(r.getInt(1));
                     solid.setName(r.getString(2));
