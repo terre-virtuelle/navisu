@@ -160,6 +160,11 @@ public class BathymetryDBImpl
     }
 
     @Override
+    public void createIndex(String table, String index) {
+        controller.createIndex(table, index);
+    }
+
+    @Override
     public List<Point3DGeo> retrieveAll() {
         return controller.retrieveAll();
     }

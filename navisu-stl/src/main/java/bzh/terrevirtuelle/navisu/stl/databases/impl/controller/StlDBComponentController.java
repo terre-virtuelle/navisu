@@ -1305,16 +1305,7 @@ public class StlDBComponentController
                                     Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
                                 int color = 0;
                                 for (SolidGeo solid : solids) {
-                                    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
-                                    //Test emprise au sol
-                                    /*
-                                    Geometry geom = solid.getGround();
-                                    if (geom != null) {
-                                        Polygon pol = topologyServices.wktPolygonToWwjPolygon(geom, 100.0);
-                                        displayServices.displayPolygon(pol, s57Layer, Material.MAGENTA);
-                                    }
-                                     */
-
+                                    displayServices.displayBuildingGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);  
                                 }
                                 List<Building> buildings = cityGMLServices.exportSolid(solids);
                                 cityGMLServices.write(buildings);

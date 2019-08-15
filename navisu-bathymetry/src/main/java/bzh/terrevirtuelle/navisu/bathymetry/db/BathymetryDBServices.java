@@ -48,6 +48,8 @@ public interface BathymetryDBServices
 
     void createIndex(String table);
 
+    void createIndex(String table, String index);
+
     void insert(List<Point3Df> points);
 
     List<Point3DGeo> retrieveAll();

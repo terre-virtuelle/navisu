@@ -99,7 +99,15 @@ public interface TopologyServices
 
     FaceGeo getFaceGeofromMulitipointWKT(String o);
 
+    Set<FaceGeo> getFaceGeofromGeometryCollectionMulitipointWKT(String o);
+
     String toWKT(SolidGeo o);
+
+    String facesToWKT(List<FaceGeo> faceList);
+
+    boolean overlaps(List<Point3DGeo> a, List<Point3DGeo> b);
+
+    boolean within(Point3DGeo a, Geometry b);
 
     SolidGeo getSolidGeofromWKT(String o);
 
@@ -117,11 +125,17 @@ public interface TopologyServices
      */
     Polygon wktPolygonToWwjPolygon(String geometry);
 
+    Geometry wktPolygonZFromString(String geometry);
+
+    Geometry wktFromPoint(Point3DGeo point);
+
     Polygon wktPolygonToWwjPolygon(Geometry geometry, double height);
 
     LatLon wktMultiPointToWwjLatLon(String geometry);
 
     List<Point3DGeo> wktMultiPointZMToPoint3DList(String geometry);
+
+    List<Point3DGeo> wktPolygonToPoint3DList(String geometry);
 
     Point3DGeo wktPointZMToPoint3D(String geometry);
 

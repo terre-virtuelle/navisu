@@ -22,7 +22,6 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
 import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 
 import java.io.IOException;
@@ -43,7 +42,7 @@ import java.util.logging.Logger;
  * @date Jul 30, 2019
  */
 public class ObjPaysbrestLoader {
-
+    
     protected GeodesyServices geodesyServices;
     protected GuiAgentServices guiAgentServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
@@ -53,10 +52,10 @@ public class ObjPaysbrestLoader {
     protected static final String ALARM_SOUND = "/data/sounds/openSea.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected List<SolidGeo> solidGeoList;
-
+    
     public ObjPaysbrestLoader() {
     }
-
+    
     public ObjPaysbrestLoader(GeodesyServices geodesyServices, GuiAgentServices guiAgentServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
             JTSServices jtsServices, Pro4JServices pro4JServices,
@@ -68,11 +67,11 @@ public class ObjPaysbrestLoader {
         this.pro4JServices = pro4JServices;
         this.objComponentServices = objComponentServices;
     }
-
+    
     public List<SolidGeo> loadObj(Path path, double objXOffset, double objYOffset) {
-
+        
         List<FaceGeo> facesWgs84 = new ArrayList<>();
-
+        
         Path filetredPath = filter(path);
         List<Face> faces = objComponentServices.getFaces(filetredPath.toString());
         faces.stream().map((f) -> f.getVertices()).forEachOrdered((fvs) -> {
@@ -87,9 +86,9 @@ public class ObjPaysbrestLoader {
         instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
         return solidGeoList;
     }
-
+    
     private FaceGeo toFacet(List<FaceVertex> fvs, double objXOffset, double objYOffset) {
-        FaceGeo faceWgs84 = new FaceGeo("Wall");
+        FaceGeo faceWgs84 = new FaceGeo("Building");
         for (FaceVertex fv : fvs) {
             double x = (fv.getV().x + objXOffset);
             double y = (fv.getV().y + objYOffset);
@@ -113,7 +112,7 @@ public class ObjPaysbrestLoader {
         List<FaceGeo> l1 = new ArrayList<>();
         List<FaceGeo> l2 = new ArrayList<>();
         List<FaceGeo> l4 = new ArrayList<>();
-
+        
         while (faceIndex < faces.size()) {
             i = faceIndex;
             for (int j = 0; j < faces.get(i).getVertices().size(); j++) {
@@ -166,11 +165,11 @@ public class ObjPaysbrestLoader {
         }
         return result;
     }
-
+    
     protected List<SolidGeo> setTopologyProperties(List<SolidGeo> solidWgs84List) {
         List<SolidGeo> result = new ArrayList<>();
         for (SolidGeo solid : solidWgs84List) {
-
+            
             Set<Position> positions = new HashSet<>();
             Set<FaceGeo> faces = solid.getFaces();
             faces.forEach((f) -> {
@@ -182,47 +181,40 @@ public class ObjPaysbrestLoader {
             });
             if (positions.size() > 2) {
                 gov.nasa.worldwind.render.Polygon polygonWWJ = new gov.nasa.worldwind.render.Polygon(positions);
-           
+                
                 Iterable<? extends Position> boundary = polygonWWJ.outerBoundary();
                 List<Point3DGeo> points = new ArrayList<>();
                 for (Position p : boundary) {
                     points.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
                 }
                 Coordinate[] coordinates = jtsServices.toTabCoordinates(points);
-              /*  
-               for(Coordinate c : coordinates){
-                   System.out.println("c : " + c);
-               }
-*/
+                
                 GeometryFactory fact = new GeometryFactory();
                 Polygon ground = fact.createPolygon(coordinates);
                 
-                
                 ConvexHull convex = new ConvexHull(ground);
                 Geometry convexHull = convex.getConvexHull();
-                
-               // System.out.println("convexHull : " + convexHull);
-                
                 Point3DGeo centroid = jtsServices.toPoint3D(convexHull.getCentroid());
-
+                
+                solid.setGroundGeom(convexHull);
                 solid.setGround(points);
                 solid.setCentroid(centroid);
-
+                
                 result.add(solid);
             }
         }
         return result;
     }
-
+    
     private Path filter(Path path) {
         String tmp = null;
-
+        
         try {
             tmp = new String(Files.readAllBytes(path));
         } catch (IOException ex) {
             Logger.getLogger(ObjPaysbrestLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-
+        
         if (tmp != null) {
             //File from BMO contains \ folows whith carriage return ?
             tmp = tmp.replaceAll("\\\\[\\n\\r]", "");

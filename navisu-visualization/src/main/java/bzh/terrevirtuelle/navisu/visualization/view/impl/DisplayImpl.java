@@ -170,6 +170,18 @@ public class DisplayImpl
     }
 
     @Override
+    public void displayBuildingGeoAsPolygon(SolidGeo solid, double height, RenderableLayer layer, Material material) {
+        List<FaceGeo> faces = new ArrayList<>(solid.getFaces());
+        faces.forEach((f) -> {
+            displayFaceGeoAsPolygon(f, height, layer, material);
+        });
+        List<FaceGeo>  roof = new ArrayList<>(solid.getRoof());
+        roof.forEach((r) -> {
+            displayFaceGeoAsPolygon(r, height, layer, material);
+        });
+    }
+
+    @Override
     public void displayPositionsAsPath(List<Position> points, RenderableLayer layer, Material material) {
         Path path = createPath(points, material);
         layer.addRenderable(path);

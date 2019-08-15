@@ -77,22 +77,25 @@ public class BuildingCreator {
 		Polygon wall_4 = geom.createLinearPolygon(new double[] {6,12,0, 0,12,0, 0,12,6, 3,12,9, 6,12,6}, 3);
 		Polygon roof_1 = geom.createLinearPolygon(new double[] {6,0,6, 6,12,6, 3,12,9, 3,0,9}, 3);
 		Polygon roof_2 = geom.createLinearPolygon(new double[] {0,0,6, 3,0,9, 3,12,9, 0,12,6}, 3);
-
 		ground.setId(gmlIdManager.generateUUID());
+                
 		wall_1.setId(gmlIdManager.generateUUID());
 		wall_2.setId(gmlIdManager.generateUUID());
 		wall_3.setId(gmlIdManager.generateUUID());
 		wall_4.setId(gmlIdManager.generateUUID());
+                
 		roof_1.setId(gmlIdManager.generateUUID());
 		roof_2.setId(gmlIdManager.generateUUID());
 
 		// lod2 solid
 		List<SurfaceProperty> surfaceMember = new ArrayList<>();
 		surfaceMember.add(new SurfaceProperty('#' + ground.getId()));
+                
 		surfaceMember.add(new SurfaceProperty('#' + wall_1.getId()));
 		surfaceMember.add(new SurfaceProperty('#' + wall_2.getId()));
 		surfaceMember.add(new SurfaceProperty('#' + wall_3.getId()));
 		surfaceMember.add(new SurfaceProperty('#' + wall_4.getId()));
+                
 		surfaceMember.add(new SurfaceProperty('#' + roof_1.getId()));
 		surfaceMember.add(new SurfaceProperty('#' + roof_2.getId()));
 

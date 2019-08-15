@@ -40,6 +40,8 @@ public interface DisplayServices
 
     void displaySolidGeoAsPolygon(SolidGeo solid, double height, RenderableLayer layer, Material material);
 
+    void displayBuildingGeoAsPolygon(SolidGeo solid, double height, RenderableLayer layer, Material material);
+
     void displayPositionsAsPath(List<Position> points, RenderableLayer layer, Material material);
 
     void displayPoints3DAsPath(List<Point3DGeo> points, double height, RenderableLayer layer, Material material);

@@ -88,9 +88,9 @@ public class CityGMLImpl
                     
                     double[] coordTab = new double[solidGround.size() * 3];
                     for (int i = 0; i < solidGround.size(); i++) {
-                        coordTab[i] = solidGround.get(i).getLongitude();
-                        coordTab[i + 1] = solidGround.get(i).getLatitude();
-                        coordTab[i + 2] = solidGround.get(i).getElevation();
+                        coordTab[i*3] = solidGround.get(i).getLongitude();
+                        coordTab[i*3 + 1] = solidGround.get(i).getLatitude();
+                        coordTab[i*3 + 2] = solidGround.get(i).getElevation();
                     }
                     ground = geom.createLinearPolygon(coordTab, 3);
                     ground.setId(gmlIdManager.generateUUID());
@@ -102,15 +102,16 @@ public class CityGMLImpl
                     List<Point3DGeo> vertices = f.getVertices();
                     double[] coordTab = new double[vertices.size() * 3];
                     for (int i = 0; i < vertices.size(); i++) {
-                        coordTab[i] = vertices.get(i).getLongitude();
-                        coordTab[i + 1] = vertices.get(i).getLatitude();
-                        coordTab[i + 2] = vertices.get(i).getElevation();
+                        coordTab[i*3] = vertices.get(i).getLongitude();
+                        coordTab[i*3 + 1] = vertices.get(i).getLatitude();
+                        coordTab[i*3 + 2] = vertices.get(i).getElevation();
                     }
                     Polygon wall = geom.createLinearPolygon(coordTab, 3);
                     wall.setId(gmlIdManager.generateUUID());
                     walls.add(wall);
                 }
                 //Roof
+                /*
                 SolidGeo solidRoof = g.getRoof();
                 if (solidRoof != null) {
                     Set<FaceGeo> solidRoofFaces = solidRoof.getFaces();
@@ -118,15 +119,16 @@ public class CityGMLImpl
                         List<Point3DGeo> vertices = f.getVertices();
                         double[] coordTab = new double[vertices.size() * 3];
                         for (int i = 0; i < vertices.size(); i++) {
-                            coordTab[i] = vertices.get(i).getLongitude();
-                            coordTab[i + 1] = vertices.get(i).getLatitude();
-                            coordTab[i + 2] = vertices.get(i).getElevation();
+                            coordTab[i*3] = vertices.get(i).getLongitude();
+                            coordTab[i*3 + 1] = vertices.get(i).getLatitude();
+                            coordTab[i*3 + 2] = vertices.get(i).getElevation();
                         }
                         Polygon roof = geom.createLinearPolygon(coordTab, 3);
                         roof.setId(gmlIdManager.generateUUID());
                         roofs.add(roof);
                     }
                 }
+                */
                 if (ground != null) {
                     surfaceMember.add(new SurfaceProperty('#' + ground.getId()));
                 }
@@ -139,11 +141,12 @@ public class CityGMLImpl
 
                 CompositeSurface compositeSurface = new CompositeSurface();
                 compositeSurface.setSurfaceMember(surfaceMember);
+                
                 Solid solid = new Solid();
                 solid.setExterior(new SurfaceProperty(compositeSurface));
                 building.setLod2Solid(new SolidProperty(solid));
+                
                 List<BoundarySurfaceProperty> boundedBy = new ArrayList<>();
-
                 boundedBy.add(createBoundarySurface(org.citygml4j.model.citygml.CityGMLClass.BUILDING_GROUND_SURFACE, ground));
                 walls.forEach((p) -> {
                     boundedBy.add(createBoundarySurface(CityGMLClass.BUILDING_WALL_SURFACE, p));

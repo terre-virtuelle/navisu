@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Written by impexp-kml-collada-plugin, version "4.2.0" -->
+<!-- Chair of Geoinformatics, Technical University of Munich -->
+<kml xmlns:xal="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0" xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:gx="http://www.google.com/kml/ext/2.2">
+  <Document>
+    <name>out</name>
+    <open>true</open>
+    <LookAt>
+      <longitude>-4.528786688758695</longitude>
+      <latitude>48.36573310079071</latitude>
+      <altitude>0.0</altitude>
+      <heading>0.0</heading>
+      <tilt>60.0</tilt>
+      <range>970.0</range>
+    </LookAt>
+    <Folder>
+      <name>out_Tile_0_0</name>
+      <NetworkLink>
+        <name>Display as collada</name>
+        <Region>
+          <LatLonAltBox>
+            <north>48.36576033728635</north>
+            <south>48.36570586429507</south>
+            <east>-4.52875747562987</east>
+            <west>-4.52881590188752</west>
+          </LatLonAltBox>
+          <Lod>
+            <minLodPixels>0.0</minLodPixels>
+            <maxLodPixels>-1.0</maxLodPixels>
+          </Lod>
+        </Region>
+        <Link>
+          <href>Tiles/0/0/out_Tile_0_0_collada.kml</href>
+          <viewRefreshMode>onRegion</viewRefreshMode>
+          <viewFormat/>
+        </Link>
+      </NetworkLink>
+    </Folder>
+  </Document>
+</kml>

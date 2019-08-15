@@ -320,6 +320,29 @@ public class TopologyImpl
     }
 
     @Override
+    public List<Point3DGeo> wktPolygonToPoint3DList(String geometry) {
+        List<Point3DGeo> result = new ArrayList<>();
+        if (geometry.contains("POLYGON")) {
+            String tmp = geometry.replace("POLYGON((", "");
+            tmp = tmp.replace("))", "");
+            if (!tmp.contains("EMPTY")) {
+                String[] posTab = tmp.split(",");
+                if (posTab.length != 0) {
+                    for (int i = 0; i < posTab.length; i++) {
+                        try {
+                            String[] posTab0 = posTab[i].split("\\s+");
+                            result.add(new Point3DGeo(Double.valueOf(posTab0[1].trim()), Double.valueOf(posTab0[0].trim()), Double.valueOf(posTab0[2].trim())));
+                        } catch (NumberFormatException e) {
+
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
     public Point3DGeo wktPointZMToPoint3D(String geometry) {
         Point3DGeo result = null;
         if (geometry.contains("POINT ZM")) {
@@ -625,11 +648,82 @@ public class TopologyImpl
         return faces;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public String facesToWKT(List<FaceGeo> faceList) {
+        String faces = "GEOMETRYCOLLECTIONZ(";
+
+        for (int i = 0; i < faceList.size() - 1; i++) {
+            String multipoints = "MULTIPOINTZ(";
+            List<Point3DGeo> vertices = faceList.get(i).getVertices();
+            for (int j = 0; j < vertices.size() - 1; j++) {
+                multipoints += vertices.get(j).getLongitude() + " " + vertices.get(j).getLatitude() + " " + vertices.get(j).getElevation() + ",";
+            }
+            multipoints += vertices.get(vertices.size() - 1).getLongitude() + " " + vertices.get(vertices.size() - 1).getLatitude() + " " + vertices.get(vertices.size() - 1).getElevation() + "), ";
+            faces += multipoints;
+        }
+        faces += "MULTIPOINTZ(";
+        List<Point3DGeo> vertices = faceList.get(faceList.size() - 1).getVertices();
+        for (int j = 0; j < vertices.size() - 1; j++) {
+            faces += vertices.get(j).getLongitude() + " " + vertices.get(j).getLatitude() + " " + vertices.get(j).getElevation() + ", ";
+        }
+        faces += vertices.get(vertices.size() - 1).getLongitude() + " " + vertices.get(vertices.size() - 1).getLatitude() + " " + vertices.get(vertices.size() - 1).getElevation() + ")";
+        faces += ")";
+        return faces;
+    }
+
+    @Override
+    public boolean overlaps(List<Point3DGeo> a, List<Point3DGeo> b) {
+        String aWKT = toWKT(a);
+        String bWKT = toWKT(b);
+        Geometry aGeom = wktPolygonZFromString(aWKT);
+        Geometry bGeom = wktPolygonZFromString(bWKT);
+        return aGeom.overlaps(bGeom);
+    }
+
+    @Override
+    public boolean within(Point3DGeo a, Geometry b) {
+        Geometry aGeom = wktFromPoint(a);
+        return aGeom.within(b);
+    }
+
+    @Override
+    public Geometry wktPolygonZFromString(String geometry) {
+        String tmp = geometry;
+        tmp = tmp.replace("POLYGONZ((", "");
+        tmp = tmp.replace("))", "");
+        String[] tab = tmp.split(",");
+        List<Coordinate> coordinates = new ArrayList<>();
+        for (String p : tab) {
+            String[] coord = p.trim().split("\\s+");
+            double x = Double.parseDouble(coord[0]);
+            double y = Double.parseDouble(coord[1]);
+            coordinates.add(new Coordinate(x, y));
+        }
+        Coordinate[] coordTab = new Coordinate[coordinates.size()];
+        coordTab = coordinates.toArray(coordTab);
+        GeometryFactory geometryFactory = new GeometryFactory();
+        com.vividsolutions.jts.geom.Polygon polygon = geometryFactory.createPolygon(coordTab);
+        return polygon;
+    }
+
+    /*
+    POINT(15.21 57.58 0.31)
+     */
+    @Override
+    public Geometry wktFromPoint(Point3DGeo point) {
+        Coordinate coord = new Coordinate(point.getLongitude(), point.getLatitude(), 0);
+        GeometryFactory geometryFactory = new GeometryFactory();
+        Point pt = geometryFactory.createPoint(coord);
+        return pt;
+    }
+
     /*
     POLYGON ((-4.52951275353941 48.36533020505645, -4.529559569163751 48.36526236948451,-4.529549212092845 48.365242650170885, -4.52951275353941 48.36533020505645))
      */
     @Override
     public Geometry wktPolygonFromString(String geometry) {
+        System.out.println("geometry : " + geometry);
         String tmp = geometry;
         tmp = tmp.replace("POLYGON((", "");
         tmp = tmp.replace("))", "");
@@ -689,6 +783,21 @@ public class TopologyImpl
             faces.add(getFaceGeofromMulitipointWKT(f));
         }
         return new SolidGeo(new HashSet(faces));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Set<FaceGeo> getFaceGeofromGeometryCollectionMulitipointWKT(String o) {
+        List<FaceGeo> faces = new ArrayList<>();
+        String tmp = o;
+        tmp = tmp.replace("GEOMETRYCOLLECTION(", "");
+        tmp = tmp.replace("))", ")");
+        tmp = tmp.replace("),", ")),");
+        String[] tab = tmp.split("\\),");
+        for (String f : tab) {
+            faces.add(getFaceGeofromMulitipointWKT(f));
+        }
+        return new HashSet(faces);
     }
 
     @Override

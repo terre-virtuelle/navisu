@@ -65,6 +65,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
@@ -313,10 +314,12 @@ public class ToolsComponentController
     protected String mnt = "MNT5m";
     protected boolean isCreate = false;
     protected RenderableLayer s57Layer;
-    boolean isTable0Created = false;
-    boolean isTable1Created = false;
-    boolean isIndex0Created = false;
-    boolean isIndex1Created = false;
+    boolean isTableSolidCreated = false;
+    boolean isIndexSolidCreated = false;
+    int buildingCount = 0;
+    List<SolidGeo> buildingList = new ArrayList<>();
+    List<SolidGeo> solidWgs84List;
+    List<SolidGeo> roofWgs84List;
 
     /**
      *
@@ -862,8 +865,9 @@ public class ToolsComponentController
     }
 
     private List<SolidGeo> loadingBuildings(String buildingsDataDir, String buildingsDBName) {
-        List<SolidGeo> result = null;
+
         guiAgentServices.getJobsManager().newJob("Load DB : " + buildingsDBName, (ProgressHandle progressHandle) -> {
+
             ObjPaysbrestLoader objPaysbrestLoader = new ObjPaysbrestLoader(geodesyServices, guiAgentServices,
                     instrumentDriverManagerServices, jtsServices, pro4JServices, objComponentServices);
             bathymetryDBServices.connect(buildingsDBName, "localhost", "jdbc:postgresql://",
@@ -875,18 +879,12 @@ public class ToolsComponentController
                 Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
                     @Override
                     public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
-                        String table;
 
-                        if (path.toString().endsWith("obj")
-                                && (path.toString().contains("FACADES_TEXTURE") || path.toString().contains("TOITURES_TEXTURE"))) {
-                            if (path.toString().contains("FACADES")) {
-                                table = "wall";
-                            } else {
-                                table = "roof";
-                            }
+                        if (path.toString().endsWith("obj") && (path.toString().contains("FACADES_TEXTURE"))) {
+                            solidWgs84List = null;
                             LOGGER.log(Level.INFO, path.getFileName().toString());
-                            List<SolidGeo> solidWgs84List = objPaysbrestLoader.loadObj(path, 145168, 6836820);
-
+                            solidWgs84List = objPaysbrestLoader.loadObj(path, 145168, 6836820);
+                            System.out.println("solidWgs84List : " + solidWgs84List.size());
                             if (previewBuildingsRB.isSelected()) {
                                 Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
                                     Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
@@ -895,50 +893,68 @@ public class ToolsComponentController
                                     displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
                                 }
                             }
-                            String query;
-                            if (!isTable0Created) {
-                                isTable0Created = true;
-                                query = "DROP TABLE IF EXISTS wall; \n"
-                                        + "CREATE TABLE wall (id SERIAL PRIMARY KEY, "
-                                        + "roofId INTEGER, "
-                                        + "name TEXT, "
-                                        + "coord GEOMETRY(POINT, 4326), "
-                                        + "ground GEOMETRY(POLYGONZ, 4326), "
-                                        + "geom GEOMETRY(GEOMETRYCOLLECTIONZ,4326));";
-                                bathymetryDBServices.execute(query);
+                        }
+                        if (path.toString().endsWith("obj") && path.toString().contains("TOITURES_TEXTURE")) {
+                            roofWgs84List = null;
+                            LOGGER.log(Level.INFO, path.getFileName().toString());
+                            roofWgs84List = objPaysbrestLoader.loadObj(path, 145168, 6836820);
+                            System.out.println("roofWgs84List : " + roofWgs84List.size());
+                            if (previewBuildingsRB.isSelected()) {
+                                Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
+                                    Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
+                                int color = 0;
+                                for (SolidGeo solid : roofWgs84List) {
+                                    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
+                                }
                             }
-                            if (!isTable1Created) {
-                                isTable1Created = true;
-                                query = "DROP TABLE IF EXISTS roof; \n"
-                                        + "CREATE TABLE roof (id SERIAL PRIMARY KEY, "
-                                        + "name TEXT, "
-                                        + "wallId INTEGER, "
-                                        + "coord GEOMETRY(POINT, 4326), "
-                                        + "ground GEOMETRY(POLYGONZ, 4326), "
-                                        + "geom GEOMETRY(GEOMETRYCOLLECTIONZ,4326));";
-                                bathymetryDBServices.execute(query);
-                            }
-
-                            bathymetryDBServices.insert(table, solidWgs84List);
-
-                            if (!isIndex0Created) {
-                                isIndex0Created = true;
-                                bathymetryDBServices.createIndex("wall");
-                            }
-                            if (!isIndex1Created) {
-                                isIndex1Created = true;
-                                bathymetryDBServices.createIndex("roof");
+                            if (solidWgs84List != null && roofWgs84List != null) {
+                                for (SolidGeo s : solidWgs84List) {
+                                    for (SolidGeo r : roofWgs84List) {
+                                        if (topologyServices.within(r.getCentroid(), s.getGroundGeom())) {
+                                            buildingCount++;
+                                            s.setRoof(r.getFaces());
+                                            buildingList.add(s);
+                                        }
+                                    }
+                                }
                             }
                         }
+
                         return FileVisitResult.CONTINUE;
                     }
                 });
             } catch (IOException ex) {
                 //Nothing if dir don't exist
             }
-
+            System.out.println("buildingCount : " + buildingCount);
+            System.out.println("buildingList : " + buildingList.size());
+            
+            for (SolidGeo solid : buildingList) {
+                displayServices.displayBuildingGeoAsPolygon(solid, 10.0, s57Layer, Material.LIGHT_GRAY);
+            }
+            
+            String query;
+            if (!isTableSolidCreated) {
+                isTableSolidCreated = true;
+                query = "DROP TABLE IF EXISTS solid; \n"
+                        + "CREATE TABLE solid ("
+                        + "id SERIAL PRIMARY KEY, "
+                        + "solidId INTEGER, "
+                        + "name TEXT, "
+                        + "wallCentroid GEOMETRY(POINT, 4326), "
+                        + "wallGround GEOMETRY(POLYGONZ, 4326), "
+                        + "wallGeom GEOMETRY(GEOMETRYCOLLECTIONZ,4326), "
+                        + "roofGeom GEOMETRY(GEOMETRYCOLLECTIONZ,4326)"
+                        + ");";
+                bathymetryDBServices.execute(query);
+            }
+            bathymetryDBServices.insert("solid", buildingList);
+            if (!isIndexSolidCreated) {
+                isIndexSolidCreated = true;
+                bathymetryDBServices.createIndex("solid", "wallCentroid");
+            }
         });
-        return result;
+        return buildingList;
     }
 
     public void openFile(TextField tf) {

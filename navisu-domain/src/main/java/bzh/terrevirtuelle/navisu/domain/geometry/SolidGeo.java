@@ -18,12 +18,13 @@ import java.util.Set;
  */
 public class SolidGeo {
 
-    protected Set<FaceGeo> faces;
     protected int id;
     protected String name;
+    protected Set<FaceGeo> faces;
     protected Point3DGeo centroid;
     protected List<Point3DGeo> ground;
-    protected SolidGeo roof;
+    protected Geometry groundGeom;
+    protected Set<FaceGeo> roof;
 
     public SolidGeo() {
         this(0, "noname");
@@ -49,14 +50,23 @@ public class SolidGeo {
         this.name = name;
     }
 
-    public SolidGeo getRoof() {
+    public Geometry getGroundGeom() {
+        return groundGeom;
+    }
+
+    public void setGroundGeom(Geometry groundGeom) {
+        this.groundGeom = groundGeom;
+    }
+
+    public Set<FaceGeo> getRoof() {
         return roof;
     }
 
-    public void setRoof(SolidGeo roof) {
+    public void setRoof(Set<FaceGeo> roof) {
         this.roof = roof;
     }
 
+    
     public void add(FaceGeo face) {
         faces.add(face);
     }
@@ -137,19 +147,19 @@ public class SolidGeo {
         this.faces = faces;
     }
 
-
     public List<Point3DGeo> getGround() {
         return ground;
     }
 
-   
-    public void setGround(List<Point3DGeo> ground) {    
+    public void setGround(List<Point3DGeo> ground) {
         this.ground = ground;
     }
 
     @Override
     public String toString() {
-        return "SolidGeo{" + "faces=" + faces + ", id=" + id + ", name=" + name + ", centroid=" + centroid + '}';
+        return "SolidGeo{" + "id=" + id + ", name=" + name + ", faces=" + faces + ", centroid=" + centroid + ", ground=" + ground + ", roof=" + roof + '}';
     }
+
+    
 
 }
