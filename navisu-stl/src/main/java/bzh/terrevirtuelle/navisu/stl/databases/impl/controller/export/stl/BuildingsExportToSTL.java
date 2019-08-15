@@ -42,10 +42,8 @@ public class BuildingsExportToSTL {
         latMax = g[g.length - 1][g[0].length - 1].getLatitude();
         lonMax = g[g.length - 1][g[0].length - 1].getLongitude();
 
-      //  List<SolidGeo> solids = new ArrayList<>();
         List<SolidGeo> solids = bathymetryDBServices.retrieveInSolid(buildingsConnection, "solid", latMin, lonMin, latMax, lonMax);
-    //    solids.addAll(walls);
-
+        
         return solids;
     }
 
@@ -54,6 +52,9 @@ public class BuildingsExportToSTL {
         String building = "";
         for (SolidGeo s : solids) {
             building += faceGeoToSTL.exportSTL(new ArrayList(s.getFaces()), s.getName() + " " + s.getId(),
+                    latMin, lonMin, latScale, lonScale,
+                    tileSideZ, maxdepth);
+            building += faceGeoToSTL.exportSTL(new ArrayList(s.getRoof()), s.getName() + " " + s.getId(),
                     latMin, lonMin, latScale, lonScale,
                     tileSideZ, maxdepth);
         }

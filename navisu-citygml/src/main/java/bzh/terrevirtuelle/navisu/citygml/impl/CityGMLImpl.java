@@ -65,7 +65,7 @@ public class CityGMLImpl
     }
 
     @Override
-    public List<Building> exportSolid(List<SolidGeo> solids) {
+    public List<Building> exportToGML(List<SolidGeo> solids) {
         List<Building> result = new ArrayList<>();
         try {
             CityGMLContext ctx = CityGMLContext.getInstance();

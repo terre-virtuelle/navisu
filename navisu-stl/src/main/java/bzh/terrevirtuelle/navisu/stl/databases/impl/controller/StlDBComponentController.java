@@ -1307,7 +1307,7 @@ public class StlDBComponentController
                                 for (SolidGeo solid : solids) {
                                     displayServices.displayBuildingGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);  
                                 }
-                                List<Building> buildings = cityGMLServices.exportSolid(solids);
+                                List<Building> buildings = cityGMLServices.exportToGML(solids);
                                 cityGMLServices.write(buildings);
                             }
                             buildingsExportToSTL.export(solids, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);

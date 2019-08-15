@@ -19,7 +19,7 @@ public interface CityGMLServices
 
     Building exportSolid(SolidGeo solid);
 
-    List<Building> exportSolid(List<SolidGeo> solid);
+    List<Building> exportToGML(List<SolidGeo> solid);
 
     void write(List<Building> buildings);
 
