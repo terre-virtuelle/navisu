@@ -1,0 +1,63 @@
+format 221
+
+classcanvas 128002 class_ref 128770 // SolidGeo
+  classdiagramsettings member_max_width 0 end
+  hidden_operations
+    operation_ref 137218 // SolidGeo
+    operation_ref 137346 // SolidGeo
+    operation_ref 137474 // SolidGeo
+    operation_ref 137602 // SolidGeo
+    operation_ref 137730 // SolidGeo
+    operation_ref 137858 // getGroundGeom
+    operation_ref 137986 // setGroundGeom
+    operation_ref 138114 // getRoof
+    operation_ref 138242 // setRoof
+    operation_ref 138370 // add
+    operation_ref 138498 // addAll
+    operation_ref 138626 // getCentroid
+    operation_ref 138754 // setCentroid
+    operation_ref 138882 // getName
+    operation_ref 139010 // setName
+    operation_ref 139138 // getId
+    operation_ref 139266 // setId
+    operation_ref 139394 // getFaces
+    operation_ref 139522 // setFaces
+    operation_ref 139650 // getGround
+    operation_ref 139778 // setGround
+    operation_ref 139906 // toString
+  xyz 276 81 2000
+end
+classcanvas 128130 class_ref 128514 // Point3DGeo
+  classdiagramsettings member_max_width 0 end
+  xyz 121 299 3005
+end
+classcanvas 128514 class_ref 128386 // FaceGeo
+  classdiagramsettings member_max_width 0 end
+  xyz 527 321 3011
+end
+relationcanvas 128258 relation_ref 128514 // <unidirectional association>
+  from ref 128002 z 3006 to ref 128130
+  role_a_pos 273 269 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128386 relation_ref 128642 // <unidirectional association>
+  from ref 128002 z 3006 stereotype "<<List>>" xyz 221 245 3006 to ref 128130
+  role_a_pos 229 269 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 128130 // <unidirectional association>
+  from ref 128514 z 3012 stereotype "<<List>>" xyz 343.5 365 3012 to ref 128130
+  role_a_pos 227 337 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 128386 // <unidirectional association>
+  from ref 128002 z 3012 stereotype "<<Set>>" xyz 421.5 255.5 3012 to ref 128514
+  role_a_pos 481 308 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 128770 // <unidirectional association>
+  from ref 128002 z 3012 stereotype "<<Set>>" xyz 421.5 255.5 3012 to ref 128514
+  role_a_pos 488 325 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

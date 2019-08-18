@@ -1,0 +1,106 @@
+class Point3DGeo
+!!!134786.java!!!	Point3DGeo(in lat : double, in lon : double)
+        this.longitude = lon;
+        this.latitude = lat;
+!!!134914.java!!!	Point3DGeo(in lat : double, in lon : double, in elevation : double)
+        this.longitude = lon;
+        this.latitude = lat;
+        this.elevation = elevation;
+!!!135042.java!!!	Point3DGeo(in id : int, in lat : double, in lon : double)
+        this.id = id;
+        this.longitude = lon;
+        this.latitude = lat;
+!!!135170.java!!!	Point3DGeo(in id : int, in lat : double, in lon : double, in elevation : double)
+        this.id = id;
+        this.longitude = lon;
+        this.latitude = lat;
+        this.elevation = elevation;
+!!!135298.java!!!	getId() : long
+        return id;
+!!!135426.java!!!	setId(in id : int) : void
+        this.id = id;
+!!!135554.java!!!	getLongitude() : double
+        return longitude;
+!!!135682.java!!!	setLongitude(in lon : double) : void
+        this.longitude = lon;
+!!!135810.java!!!	getLatitude() : double
+        return latitude;
+!!!135938.java!!!	setLatitude(in lat : double) : void
+        this.latitude = lat;
+!!!136066.java!!!	getElevation() : double
+        return elevation;
+!!!136194.java!!!	setElevation(in elevation : double) : void
+        this.elevation = elevation;
+!!!136322.java!!!	copy(inout tableau : Point3DGeo [[][]]) : Point3DGeo
+        int nRows = tableau[0].length;
+        int nColumns = tableau[0].length;
+        Point3DGeo[][] newTab = new Point3DGeo[nRows][nColumns];
+        for (int i = 0; i < nRows; i++) {
+            for (int j = 0; j < nColumns; j++) {
+                newTab[i][j] = new Point3DGeo(tableau[i][j].getLatitude(),
+                        tableau[i][j].getLongitude(), tableau[i][j].getElevation());
+            }
+        }
+        return newTab;
+!!!136450.java!!!	toGrid(inout pts : List<Point3DGeo>, in rows : int, in cols : int) : Point3DGeo
+        Point3DGeo[][] result = new Point3DGeo[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = new Point3DGeo(pts.get(i + j).getLatitude(),
+                        pts.get(i + j).getLongitude(), pts.get(i + j).getElevation());
+            }
+        }
+        return result;
+!!!136578.java!!!	swapXY(inout pt : Point3DGeo) : Point3DGeo
+        return new Point3DGeo(pt.getLongitude(), pt.getLatitude(), pt.getElevation());
+!!!136706.java!!!	suppress(inout tableau : Point3DGeo [[][]], in index : int) : Point3DGeo
+        int nRows = tableau[0].length;
+        int nColumns = tableau[1].length;
+
+        if (index >= nRows || index >= nColumns) {
+            // Return exception ?
+            return new Point3DGeo[0][0];
+        }
+
+        Point3DGeo[][] newTab = new Point3DGeo[nRows - 1][nColumns - 1];
+        int newTabRow = 0;
+        int newTabCol = 0;
+
+        for (int i = 0; i < nRows; ++i) {
+            if (i != index) {
+                for (int j = 0; j < nColumns; ++j) {
+                    if (j != index) {
+                        newTab[newTabRow][newTabCol] = new Point3DGeo(tableau[i][j].getLatitude(),
+                                tableau[i][j].getLongitude(), tableau[i][j].getElevation());
+                        ++newTabCol;
+                    }
+                }
+                ++newTabRow;
+                newTabCol = 0;
+            }
+        }
+        return newTab;
+!!!136834.java!!!	toString() : String
+        // return "Point3D{" + "id=" + id + ", latitude=" + latitude + ", longitude=" + longitude + ", elevation=" + elevation + '}';
+        return latitude + " " + longitude + " " + elevation;
+!!!136962.java!!!	hashCode() : int
+        int hash = 5;
+        return hash;
+!!!137090.java!!!	equals(inout obj : Object) : boolean
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Point3DGeo other = (Point3DGeo) obj;
+        if (Double.doubleToLongBits(this.longitude) != Double.doubleToLongBits(other.longitude)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.latitude) != Double.doubleToLongBits(other.latitude)) {
+            return false;
+        }
+        return Double.doubleToLongBits(this.elevation) == Double.doubleToLongBits(other.elevation);

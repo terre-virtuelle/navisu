@@ -1,0 +1,49 @@
+class SolidGeo
+!!!137218.java!!!	SolidGeo()
+        this(0, "noname");
+!!!137346.java!!!	SolidGeo(in id : int, in name : String)
+        this.id = id;
+        this.name = name;
+        faces = new HashSet<>();
+!!!137474.java!!!	SolidGeo(inout faces : Set<FaceGeo>)
+        this(faces, 0);
+!!!137602.java!!!	SolidGeo(inout faces : Set<FaceGeo>, in id : int)
+        this(faces, id, "noname");
+!!!137730.java!!!	SolidGeo(inout faces : Set<FaceGeo>, in id : int, in name : String)
+        this.faces = faces;
+        this.id = id;
+        this.name = name;
+!!!137858.java!!!	getGroundGeom() : Geometry
+        return groundGeom;
+!!!137986.java!!!	setGroundGeom(inout groundGeom : Geometry) : void
+        this.groundGeom = groundGeom;
+!!!138114.java!!!	getRoof() : FaceGeo
+        return roof;
+!!!138242.java!!!	setRoof(inout roof : Set<FaceGeo>) : void
+        this.roof = roof;
+!!!138370.java!!!	add(inout face : FaceGeo) : void
+        faces.add(face);
+!!!138498.java!!!	addAll(inout faces : Collection<? extends FaceGeo>) : void
+        this.faces.addAll(faces);
+!!!138626.java!!!	getCentroid() : Point3DGeo
+        return centroid;
+!!!138754.java!!!	setCentroid(inout centroid : Point3DGeo) : void
+        this.centroid = centroid;
+!!!138882.java!!!	getName() : String
+        return name;
+!!!139010.java!!!	setName(in name : String) : void
+        this.name = name;
+!!!139138.java!!!	getId() : int
+        return id;
+!!!139266.java!!!	setId(in id : int) : void
+        this.id = id;
+!!!139394.java!!!	getFaces() : FaceGeo
+        return faces;
+!!!139522.java!!!	setFaces(inout faces : Set<FaceGeo>) : void
+        this.faces = faces;
+!!!139650.java!!!	getGround() : Point3DGeo
+        return ground;
+!!!139778.java!!!	setGround(inout ground : List<Point3DGeo>) : void
+        this.ground = ground;
+!!!139906.java!!!	toString() : String
+        return "SolidGeo{" + "id=" + id + ", name=" + name + ", faces=" + faces + ", centroid=" + centroid + ", ground=" + ground + ", roof=" + roof + '}';

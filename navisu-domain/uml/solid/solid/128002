@@ -1,0 +1,2030 @@
+format 221
+"geometry" // geometry
+  revision 1
+  modified_by 2 "serge"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  java_dir "/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/geometry/"
+  java_package "bzh.terrevirtuelle.navisu.domain.geometry"
+  classview 128002 "geometry"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    class 128002 "Area"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      java_annotation "@XmlRootElement
+@XmlType(name = \"area\", propOrder = {\"id\", \"name\",
+    \"description\", \"latitude\", \"longitude\", \"geometry\"})
+@XmlAccessorType(XmlAccessType.FIELD)
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author serge
+@date Feb 13, 2016
+
+"
+      classrelation 128002 // <realization>
+	relation 128002 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128002 // <realization>
+	  b parent class_ref 128130 // NavigationData
+      end
+
+      attribute 128002 "id"
+	private explicit_type "long"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128130 "latitude"
+	private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128258 "longitude"
+	private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128386 "geometry"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128514 "name"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128642 "description"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 128002 "Area"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128130 "Area"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "id" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128258 "Area"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "id" explicit_type "long"
+	  param in name "latitude" explicit_type "double"
+	  param in name "longitude" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128386 "Area"
+	public explicit_return_type ""
+	nparams 4
+	  param in name "id" explicit_type "long"
+	  param in name "latitude" explicit_type "double"
+	  param in name "longitude" explicit_type "double"
+	  param in name "geometry" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128514 "Area"
+	public explicit_return_type ""
+	nparams 5
+	  param in name "id" explicit_type "long"
+	  param in name "latitude" explicit_type "double"
+	  param in name "longitude" explicit_type "double"
+	  param in name "geometry" explicit_type "String"
+	  param in name "name" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128642 "Area"
+	public explicit_return_type ""
+	nparams 6
+	  param in name "id" explicit_type "long"
+	  param in name "latitude" explicit_type "double"
+	  param in name "longitude" explicit_type "double"
+	  param in name "geometry" explicit_type "String"
+	  param in name "name" explicit_type "String"
+	  param in name "description" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}, ${t5} ${p5}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128770 "getDescription"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of description
+
+@return the value of description
+"
+      end
+
+      operation 128898 "setDescription"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "description" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of description
+
+@param description new value of description
+"
+      end
+
+      operation 129026 "getName"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of name
+
+@return the value of name
+"
+      end
+
+      operation 129154 "setName"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "name" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of name
+
+@param name new value of name
+"
+      end
+
+      operation 129282 "getGeometry"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Get the value of geometry
+
+@return the value of geometry
+"
+      end
+
+      operation 129410 "setGeometry"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "geometry" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of geometry
+
+@param geometry new value of geometry
+"
+      end
+
+      operation 129538 "getId"
+	public explicit_return_type "long"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Get the value of id
+
+@return the value of id
+"
+      end
+
+      operation 129666 "setId"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "id" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of id
+
+@param id new value of id
+"
+      end
+
+      operation 129794 "getLongitude"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Get the value of longitude
+
+@return the value of longitude
+"
+      end
+
+      operation 129922 "setLongitude"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "longitude" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of longitude
+
+@param longitude new value of longitude
+"
+      end
+
+      operation 130050 "getLatitude"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Get the value of latitude
+
+@return the value of latitude
+"
+      end
+
+      operation 130178 "setLatitude"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "latitude" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of latitude
+
+@param latitude new value of latitude
+"
+      end
+
+      operation 130306 "getCentroid"
+	public explicit_return_type "Pair<Double, Double>"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressWarnings(\"unchecked\")
+"
+	
+	
+	
+      end
+    end
+
+    class 128258 "AreaBuilder"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author serge
+@date Feb 13, 2016
+
+"
+      attribute 128770 "id"
+	private explicit_type "long"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128898 "latitude"
+	private explicit_type "double"
+	init_value " 0.0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129026 "longitude"
+	private explicit_type "double"
+	init_value " 0.0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129154 "geometry"
+	private explicit_type "String"
+	init_value " \"\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129282 "name"
+	private explicit_type "String"
+	init_value " \"\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129410 "description"
+	private explicit_type "String"
+	init_value " \"\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 130434 "AreaBuilder"
+	private explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130562 "create"
+	class_operation public return_type class_ref 128258 // AreaBuilder
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130690 "build"
+	public return_type class_ref 128002 // Area
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130818 "id"
+	public return_type class_ref 128258 // AreaBuilder
+	nparams 1
+	  param in name "id" explicit_type "long"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130946 "latitude"
+	public return_type class_ref 128258 // AreaBuilder
+	nparams 1
+	  param in name "latitude" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131074 "longitude"
+	public return_type class_ref 128258 // AreaBuilder
+	nparams 1
+	  param in name "longitude" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131202 "geometry"
+	public return_type class_ref 128258 // AreaBuilder
+	nparams 1
+	  param in name "geometry" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131330 "name"
+	public return_type class_ref 128258 // AreaBuilder
+	nparams 1
+	  param in name "name" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131458 "description"
+	public return_type class_ref 128258 // AreaBuilder
+	nparams 1
+	  param in name "description" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 128386 "FaceGeo"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author serge
+@date Jul 22, 2019
+"
+      classrelation 128130 // vertices (<unidirectional association>)
+	relation 128130 --->
+	  stereotype "List"
+	  a role_name "vertices" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 128130 // vertices (<unidirectional association>)
+	  b parent class_ref 128514 // Point3DGeo
+      end
+
+      attribute 129538 "id"
+	protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129666 "name"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 131586 "FaceGeo"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131714 "FaceGeo"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "id" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131842 "FaceGeo"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "name" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131970 "FaceGeo"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "vertices" explicit_type "List<Point3DGeo>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132098 "FaceGeo"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "vertices" explicit_type "List<Point3DGeo>"
+	  param in name "id" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132226 "FaceGeo"
+	public explicit_return_type ""
+	nparams 3
+	  param inout name "vertices" explicit_type "List<Point3DGeo>"
+	  param in name "id" explicit_type "int"
+	  param in name "name" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132354 "add"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "pt" type class_ref 128514 // Point3DGeo
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132482 "remove"
+	public return_type class_ref 128514 // Point3DGeo
+	nparams 1
+	  param inout name "pt" type class_ref 128514 // Point3DGeo
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}List<${type}> ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132610 "contains"
+	public explicit_return_type "boolean"
+	nparams 1
+	  param inout name "pt" type class_ref 128514 // Point3DGeo
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132738 "getName"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of name
+
+@return the value of name
+"
+      end
+
+      operation 132866 "setName"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "name" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of name
+
+@param name new value of name
+"
+      end
+
+      operation 132994 "getId"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of id
+
+@return the value of id
+"
+      end
+
+      operation 133122 "setId"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "id" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of id
+
+@param id new value of id
+"
+      end
+
+      operation 133250 "getVertices"
+	public return_type class_ref 128514 // Point3DGeo
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}List<${type}> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133378 "setVertices"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "vertices" explicit_type "List<Point3DGeo>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133506 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 128514 "Point3DGeo"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      java_annotation "@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = \"point3d\", propOrder = {
+    \"latitude\",
+    \"longitude\",
+    \"elevation\",
+    \"id\"
+})
+@XmlRootElement
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "@date 15 mars 2015
+@author Serge Morvan
+"
+      classrelation 128258 // <realization>
+	relation 128258 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128258 // <realization>
+	  b parent class_ref 128130 // NavigationData
+      end
+
+      attribute 130178 "id"
+	private explicit_type "long"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130306 "longitude"
+	public explicit_type "double"
+	init_value " 0.0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130434 "latitude"
+	public explicit_type "double"
+	init_value " 0.0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130562 "elevation"
+	public explicit_type "double"
+	init_value " 0.0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 134658 "Point3DGeo"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 134786 "Point3DGeo"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "lat" explicit_type "double"
+	  param in name "lon" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 134914 "Point3DGeo"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "lat" explicit_type "double"
+	  param in name "lon" explicit_type "double"
+	  param in name "elevation" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 135042 "Point3DGeo"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "id" explicit_type "int"
+	  param in name "lat" explicit_type "double"
+	  param in name "lon" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 135170 "Point3DGeo"
+	public explicit_return_type ""
+	nparams 4
+	  param in name "id" explicit_type "int"
+	  param in name "lat" explicit_type "double"
+	  param in name "lon" explicit_type "double"
+	  param in name "elevation" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 135298 "getId"
+	public explicit_return_type "long"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Get the value of id
+
+@return the value of id
+"
+      end
+
+      operation 135426 "setId"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "id" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of id
+
+@param id new value of id
+"
+      end
+
+      operation 135554 "getLongitude"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 135682 "setLongitude"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "lon" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 135810 "getLatitude"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 135938 "setLatitude"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "lat" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136066 "getElevation"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136194 "setElevation"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "elevation" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136322 "copy"
+	class_operation public return_type class_ref 128514 // Point3DGeo
+	nparams 1
+	  param inout name "tableau" type class_ref 128514 // Point3DGeo
+	multiplicity "[][]"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type}[][] ${name}${(}${t0}[][] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136450 "toGrid"
+	class_operation public return_type class_ref 128514 // Point3DGeo
+	nparams 3
+	  param inout name "pts" explicit_type "List<Point3DGeo>"
+	  param in name "rows" explicit_type "int"
+	  param in name "cols" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type}[][] ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136578 "swapXY"
+	class_operation public return_type class_ref 128514 // Point3DGeo
+	nparams 1
+	  param inout name "pt" type class_ref 128514 // Point3DGeo
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136706 "suppress"
+	class_operation public return_type class_ref 128514 // Point3DGeo
+	nparams 2
+	  param inout name "tableau" type class_ref 128514 // Point3DGeo
+	multiplicity "[][]"
+	  param in name "index" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type}[][] ${name}${(}${t0}[][] ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 136834 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 136962 "hashCode"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 137090 "equals"
+	public explicit_return_type "boolean"
+	nparams 1
+	  param inout name "obj" explicit_type "Object"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 128642 "Point3Df"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "@date 12 mars 2015
+@author Serge Morvan
+"
+      attribute 129794 "lon"
+	public explicit_type "float"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129922 "lat"
+	public explicit_type "float"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130050 "elevation"
+	public explicit_type "float"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 133634 "Point3Df"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133762 "Point3Df"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "lat" explicit_type "float"
+	  param in name "lon" explicit_type "float"
+	  param in name "elevation" explicit_type "float"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 133890 "getElevation"
+	public explicit_return_type "float"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of elevation
+
+@return the value of elevation
+"
+      end
+
+      operation 134018 "setElevation"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "elevation" explicit_type "float"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of elevation
+
+@param elevation new value of elevation
+"
+      end
+
+      operation 134146 "getLat"
+	public explicit_return_type "float"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of lat
+
+@return the value of lat
+"
+      end
+
+      operation 134274 "setLat"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "lat" explicit_type "float"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of lat
+
+@param lat new value of lat
+"
+      end
+
+      operation 134402 "getLon"
+	public explicit_return_type "float"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of lon
+
+@return the value of lon
+"
+      end
+
+      operation 134530 "setLon"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "lon" explicit_type "float"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of lon
+
+@param lon new value of lon
+"
+      end
+    end
+
+    class 128770 "SolidGeo"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@author serge
+@date Jul 22, 2019
+"
+      attribute 130690 "id"
+	protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130818 "name"
+	protected explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 128386 // faces (<unidirectional association>)
+	relation 128386 --->
+	  stereotype "Set"
+	  a role_name "faces" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 128386 // faces (<unidirectional association>)
+	  b parent class_ref 128386 // FaceGeo
+      end
+
+      classrelation 128514 // centroid (<unidirectional association>)
+	relation 128514 --->
+	  a role_name "centroid" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128514 // centroid (<unidirectional association>)
+	  b parent class_ref 128514 // Point3DGeo
+      end
+
+      classrelation 128642 // ground (<unidirectional association>)
+	relation 128642 --->
+	  stereotype "List"
+	  a role_name "ground" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 128642 // ground (<unidirectional association>)
+	  b parent class_ref 128514 // Point3DGeo
+      end
+
+      attribute 130946 "groundGeom"
+	protected explicit_type "Geometry"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 128770 // roof (<unidirectional association>)
+	relation 128770 --->
+	  stereotype "Set"
+	  a role_name "roof" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 128770 // roof (<unidirectional association>)
+	  b parent class_ref 128386 // FaceGeo
+      end
+
+      operation 137218 "SolidGeo"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137346 "SolidGeo"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "id" explicit_type "int"
+	  param in name "name" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137474 "SolidGeo"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "faces" explicit_type "Set<FaceGeo>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137602 "SolidGeo"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "faces" explicit_type "Set<FaceGeo>"
+	  param in name "id" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137730 "SolidGeo"
+	public explicit_return_type ""
+	nparams 3
+	  param inout name "faces" explicit_type "Set<FaceGeo>"
+	  param in name "id" explicit_type "int"
+	  param in name "name" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137858 "getGroundGeom"
+	public explicit_return_type "Geometry"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 137986 "setGroundGeom"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "groundGeom" explicit_type "Geometry"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138114 "getRoof"
+	public return_type class_ref 128386 // FaceGeo
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}Set<${type}> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138242 "setRoof"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "roof" explicit_type "Set<FaceGeo>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138370 "add"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "face" type class_ref 128386 // FaceGeo
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138498 "addAll"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "faces" explicit_type "Collection<? extends FaceGeo>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 138626 "getCentroid"
+	public return_type class_ref 128514 // Point3DGeo
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of centroid
+
+@return the value of centroid
+"
+      end
+
+      operation 138754 "setCentroid"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "centroid" type class_ref 128514 // Point3DGeo
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of centroid
+
+@param centroid new value of centroid
+"
+      end
+
+      operation 138882 "getName"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of name
+
+@return the value of name
+"
+      end
+
+      operation 139010 "setName"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "name" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of name
+
+@param name new value of name
+"
+      end
+
+      operation 139138 "getId"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of id
+
+@return the value of id
+"
+      end
+
+      operation 139266 "setId"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "id" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of id
+
+@param id new value of id
+"
+      end
+
+      operation 139394 "getFaces"
+	public return_type class_ref 128386 // FaceGeo
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}Set<${type}> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of faces
+
+@return the value of faces
+"
+      end
+
+      operation 139522 "setFaces"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "faces" explicit_type "Set<FaceGeo>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of faces
+
+@param faces new value of faces
+"
+      end
+
+      operation 139650 "getGround"
+	public return_type class_ref 128514 // Point3DGeo
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}List<${type}> ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139778 "setGround"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "ground" explicit_type "List<Point3DGeo>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139906 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    classdiagram 128002 "solid"
+      classdiagramsettings hide_operations yes member_max_width 0 end
+      size A4
+    end
+  end
+
+  deploymentview 128002 "geometry"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 128002 "Area"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.util.Pair;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+${definition}"
+      associated_elems
+	class_ref 128002 // Area
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 128130 "AreaBuilder"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.geometry.Area;
+${definition}"
+      associated_elems
+	class_ref 128258 // AreaBuilder
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 128258 "FaceGeo"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.util.ArrayList;
+import java.util.List;
+${definition}"
+      associated_elems
+	class_ref 128386 // FaceGeo
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 128386 "Point3Df"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_elems
+	class_ref 128642 // Point3Df
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 128514 "Point3DGeo"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+${definition}"
+      associated_elems
+	class_ref 128514 // Point3DGeo
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+
+    artifact 128642 "SolidGeo"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import com.vividsolutions.jts.geom.Geometry;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+${definition}"
+      associated_elems
+	class_ref 128770 // SolidGeo
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+"
+    end
+  end
+end

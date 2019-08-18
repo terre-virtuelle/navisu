@@ -1,0 +1,12 @@
+window_sizes 1615 1026 378 1231 853 120
+cleanlooks_style
+diagrams
+  active  classdiagram_ref 128002 // solid
+    1231 853 140 A4 0 0
+end
+show_stereotypes
+selected class_ref 128386 // FaceGeo
+open
+  classview_ref 128002 // geometry
+end
+end

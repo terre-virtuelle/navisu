@@ -1,0 +1,51 @@
+class Area
+!!!128130.java!!!	Area(in id : long)
+        this.id = id;
+!!!128258.java!!!	Area(in id : long, in latitude : double, in longitude : double)
+        this.id = id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+!!!128386.java!!!	Area(in id : long, in latitude : double, in longitude : double, in geometry : String)
+        this.id = id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.geometry = geometry;
+!!!128514.java!!!	Area(in id : long, in latitude : double, in longitude : double, in geometry : String, in name : String)
+        this.id = id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.geometry = geometry;
+        this.name = name;
+!!!128642.java!!!	Area(in id : long, in latitude : double, in longitude : double, in geometry : String, in name : String, in description : String)
+        this.id = id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.geometry = geometry;
+        this.name = name;
+        this.description = description;
+!!!128770.java!!!	getDescription() : String
+        return description;
+!!!128898.java!!!	setDescription(in description : String) : void
+        this.description = description;
+!!!129026.java!!!	getName() : String
+        return name;
+!!!129154.java!!!	setName(in name : String) : void
+        this.name = name;
+!!!129282.java!!!	getGeometry() : String
+        return geometry;
+!!!129410.java!!!	setGeometry(in geometry : String) : void
+        this.geometry = geometry;
+!!!129538.java!!!	getId() : long
+        return id;
+!!!129666.java!!!	setId(in id : long) : void
+        this.id = id;
+!!!129794.java!!!	getLongitude() : double
+        return longitude;
+!!!129922.java!!!	setLongitude(in longitude : double) : void
+        this.longitude = longitude;
+!!!130050.java!!!	getLatitude() : double
+        return latitude;
+!!!130178.java!!!	setLatitude(in latitude : double) : void
+        this.latitude = latitude;
+!!!130306.java!!!	getCentroid() : Pair<Double, Double>
+        return new Pair(getLatitude(), getLongitude());

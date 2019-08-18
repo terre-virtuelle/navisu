@@ -1,0 +1,48 @@
+class FaceGeo
+!!!131586.java!!!	FaceGeo()
+        vertices = new ArrayList<>();
+        id = 0;
+        name = "name";
+!!!131714.java!!!	FaceGeo(in id : int)
+        vertices = new ArrayList<>();
+        this.id = id;
+        name = "name";
+!!!131842.java!!!	FaceGeo(in name : String)
+        vertices = new ArrayList<>();
+        this.id = 0;
+        this.name = name;
+!!!131970.java!!!	FaceGeo(inout vertices : List<Point3DGeo>)
+        this(vertices, 0, "noname");
+!!!132098.java!!!	FaceGeo(inout vertices : List<Point3DGeo>, in id : int)
+        this(vertices, id, "noname");
+!!!132226.java!!!	FaceGeo(inout vertices : List<Point3DGeo>, in id : int, in name : String)
+        this.vertices = vertices;
+        this.id = id;
+        this.name = name;
+!!!132354.java!!!	add(inout pt : Point3DGeo) : void
+        vertices.add(pt);
+!!!132482.java!!!	remove(inout pt : Point3DGeo) : Point3DGeo
+        vertices.remove(pt);
+        return vertices;
+!!!132610.java!!!	contains(inout pt : Point3DGeo) : boolean
+        boolean result = false;
+        for (Point3DGeo p : vertices) {
+            if (p.equals(pt)) {
+                result = true;
+            }
+        }
+        return result;
+!!!132738.java!!!	getName() : String
+        return name;
+!!!132866.java!!!	setName(in name : String) : void
+        this.name = name;
+!!!132994.java!!!	getId() : int
+        return id;
+!!!133122.java!!!	setId(in id : int) : void
+        this.id = id;
+!!!133250.java!!!	getVertices() : Point3DGeo
+        return vertices;
+!!!133378.java!!!	setVertices(inout vertices : List<Point3DGeo>) : void
+        this.vertices = vertices;
+!!!133506.java!!!	toString() : String
+        return  vertices.toString() ;

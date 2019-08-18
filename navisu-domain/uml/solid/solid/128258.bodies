@@ -1,0 +1,23 @@
+class AreaBuilder
+!!!130562.java!!!	create() : AreaBuilder
+        return new AreaBuilder();
+!!!130690.java!!!	build() : Area
+        return new Area(id, latitude, longitude, geometry, name, description);
+!!!130818.java!!!	id(in id : long) : AreaBuilder
+        this.id = id;
+        return this;
+!!!130946.java!!!	latitude(in latitude : double) : AreaBuilder
+        this.latitude = latitude;
+        return this;
+!!!131074.java!!!	longitude(in longitude : double) : AreaBuilder
+        this.longitude = longitude;
+        return this;
+!!!131202.java!!!	geometry(in geometry : String) : AreaBuilder
+        this.geometry = geometry;
+        return this;
+!!!131330.java!!!	name(in name : String) : AreaBuilder
+        this.name = name;
+        return this;
+!!!131458.java!!!	description(in description : String) : AreaBuilder
+        this.description = description;
+        return this;
