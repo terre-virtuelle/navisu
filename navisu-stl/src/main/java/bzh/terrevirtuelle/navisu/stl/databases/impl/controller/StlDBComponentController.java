@@ -1158,7 +1158,7 @@ public class StlDBComponentController
                                     for (Pair<Shapefile, Double> p : slConsShapefilesClipped) {
                                         new SLConsShapefileExportToSTL(geodesyServices, jtsServices, displayServices,
                                                 p.getX(), gb, p.getY(), s57Layer)
-                                                .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);
+                                                .export(filename, verticalExaggeration, latScale, lonScale, tileSideZ);//Tide
                                     }
                                     LOGGER.log(Level.INFO, "Out export SlConsShapefile in STL on filename : {0}", filename);
                                 }
@@ -1470,7 +1470,7 @@ public class StlDBComponentController
                 }
 
                 if (!generateStlCB.isSelected() && generateSvgCB.isSelected()) {
-                    //DEPARE for Laser
+                    //DEPARE for Laser CN
                     LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", outFileTF.getText());
                     if (depareVisuCB.isSelected()) {
                         Shapefile shp = new DepareDBLoader(databaseServices,

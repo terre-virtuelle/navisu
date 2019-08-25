@@ -50,11 +50,15 @@ public class BuildingsExportToSTL {
     @SuppressWarnings("unchecked")
     public void export(List<SolidGeo> solids, String filename, double latScale, double lonScale, double tileSideZ, double maxdepth) {
         String building = "";
+        System.out.println("solids : "+solids.size());
         for (SolidGeo s : solids) {
-            building += faceGeoToSTL.exportSTL(new ArrayList(s.getFaces()), s.getName() + " " + s.getId(),
+            Point3DGeo centroid = s.getCentroid();
+            double lat = centroid.getLatitude();
+            
+            building += faceGeoToSTL.exportSTL(new ArrayList(s.getFaces()), s.getName() + " " + centroid.getLatitude() + ", " +centroid.getLongitude(),
                     latMin, lonMin, latScale, lonScale,
                     tileSideZ, maxdepth);
-            building += faceGeoToSTL.exportSTL(new ArrayList(s.getRoof()), s.getName() + " " + s.getId(),
+            building += faceGeoToSTL.exportSTL(new ArrayList(s.getRoof()), s.getName() + " " + centroid.getLatitude() + ", " +centroid.getLongitude(),
                     latMin, lonMin, latScale, lonScale,
                     tileSideZ, maxdepth);
         }

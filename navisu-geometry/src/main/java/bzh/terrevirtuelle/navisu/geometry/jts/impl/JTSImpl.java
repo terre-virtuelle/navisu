@@ -22,12 +22,14 @@ import com.vividsolutions.jts.io.WKTReader;
 import com.vividsolutions.jts.operation.buffer.BufferOp;
 import com.vividsolutions.jts.triangulate.DelaunayTriangulationBuilder;
 import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -35,6 +37,10 @@ import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 import org.opensphere.geometry.algorithm.ConcaveHull;
+import org.poly2tri.Poly2Tri;
+import org.poly2tri.geometry.polygon.PolygonPoint;
+import org.poly2tri.triangulation.TriangulationPoint;
+import org.poly2tri.triangulation.delaunay.DelaunayTriangle;
 
 /**
  *
@@ -121,6 +127,16 @@ public class JTSImpl
         }
         Geometry geom = new GeometryFactory().createPolygon(coord);
         return geom;
+    }
+
+    @Override
+    public Geometry getBoundaries(Polygon polygon) {
+        List<LatLon> latLon = new ArrayList<>();
+        Iterable<? extends LatLon> bounds = polygon.getOuterBoundary();
+        for (LatLon l : bounds) {
+            latLon.add(l);
+        }
+        return null;
     }
 
     @Override
@@ -276,19 +292,65 @@ public class JTSImpl
         return result;
     }
 
+    /*
+    public void testTriangulationOfPolygonWithShortEdge()
+{
+    final Coordinate c0 = new Coordinate(46.51, -188.20);
+    final Coordinate c1 = new Coordinate(4.66, -141.67);
+    final Coordinate c2 = new Coordinate(4.66 + 1E-8, -141.67 + 1E-8);
+    final Coordinate c3 = new Coordinate(-6.48, -129.26);
+    final Coordinate c4 = new Coordinate(0, -200);
+
+    final ArrayList<Segment> segments = new ArrayList<>();
+    segments.add(new Segment(c0, c1));
+    segments.add(new Segment(c1, c2));
+    segments.add(new Segment(c2, c3));
+    segments.add(new Segment(c3, c4));
+    segments.add(new Segment(c4, c0));
+
+    final ArrayList vertices = new ArrayList<>();
+    for (final Segment segment : segments)
+    {
+        vertices.add(new ConstraintVertex(segment.getStart()));
+    }
+
+    final ConformingDelaunayTriangulator cdt = new ConformingDelaunayTriangulator(new ArrayList<>(), 1E-5);
+    cdt.setConstraints(segments, vertices);
+    cdt.formInitialDelaunay();
+    cdt.enforceConstraints();
+    final QuadEdgeSubdivision subdivision = cdt.getSubdivision();
+
+    final Collection subdivisionEdges = subdivision.getEdges();
+
+    Assert.assertEquals(subdivisionEdges.size(), 3);
+}
+     */
     @Override
     public List<Path> createDelaunayToPath(List<Point3DGeo> pts) {
-        Coordinate[] coordinateTab = toTabCoordinates(pts);
-        MultiPoint points = new GeometryFactory().createMultiPoint(coordinateTab);
-        ArrayList<Geometry> triangles = new ArrayList<>();
-        DelaunayTriangulationBuilder triator = new DelaunayTriangulationBuilder();
-        triator.setSites(points);
-        Geometry tris = triator.getTriangles(new GeometryFactory());
-        for (int i = 0; i < tris.getNumGeometries(); i++) {
-            triangles.add(tris.getGeometryN(i));
+        double elevation = pts.get(0).getElevation();
+        List<Path> result = new ArrayList<>();
+        List<PolygonPoint> polygonPoints = new ArrayList<>();
+
+        int i = 0;
+        for (Point3DGeo p : pts) {
+            polygonPoints.add(new PolygonPoint(p.getLatitude(), p.getLongitude(), i++));
         }
-        List<Path> paths = topologyServices.wktPolygonsToWwjPaths(triangles);
-        return paths;
+        org.poly2tri.geometry.polygon.Polygon polygon = new org.poly2tri.geometry.polygon.Polygon(polygonPoints);
+        Poly2Tri.triangulate(polygon);
+        // Gather triangles
+        List<DelaunayTriangle> triangles1 = polygon.getTriangles();
+        Iterator<DelaunayTriangle> it = triangles1.iterator();
+        while (it.hasNext()) {
+            DelaunayTriangle t = it.next();
+            TriangulationPoint[] tpTab = t.points;
+            List<Position> positions = new ArrayList<>();
+            for (int j = 0; j < tpTab.length; j++) {
+                positions.add(new Position(Angle.fromDegrees(tpTab[j].getX()), Angle.fromDegrees(tpTab[j].getY()), elevation));
+            }
+            positions.add(new Position(Angle.fromDegrees(tpTab[0].getX()), Angle.fromDegrees(tpTab[0].getY()), elevation));
+            result.add(new Path(positions));
+        }
+        return result;
     }
 
     @Override

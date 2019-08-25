@@ -10,7 +10,6 @@ import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
-import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.Position;
@@ -89,24 +88,19 @@ public class SLConsShapefileExportToSTL
     private List<Path> extrudePolygon(ShapefileRecord record, double height) {
 
         List<Path> pathList = new ArrayList<>();
-        List<Position> topListTmp = new ArrayList<>();
         List<Position> topList = new ArrayList<>();
+        // List<Position> topListTmp = new ArrayList<>();
         List<Position> bottomList = new ArrayList<>();
         for (int i = 0; i < record.getNumberOfParts(); i++) {
             VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
-
             Iterable<? extends Position> pos = buffer.getPositions();
+            //inverser la liste
             for (Position p : pos) {
-                topListTmp.add(new Position(p.getLatitude(), p.getLongitude(), height));
+                topList.add(new Position(p.getLatitude(), p.getLongitude(), height));
+                bottomList.add(new Position(p.getLatitude(), p.getLongitude(), 0.0));
             }
-            //Inversion du sens de lecture
-            for (int u = topListTmp.size() - 1; u >= 0; u--) {
-                topList.add(topListTmp.get(u));
-            }
-
-            for (int j = 0; j < topList.size(); j++) {
-                bottomList.add(new Position(topList.get(j).getLatitude(), topList.get(j).getLongitude(), 0.0));
-            }
+            //Collections.reverse(topList);
+            //Collections.reverse(bottomList);
             pathList = createPaths(topList, bottomList);
         }
         return pathList;
@@ -122,6 +116,7 @@ public class SLConsShapefileExportToSTL
             tmp0.add(bottomList.get(j + 1));
             tmp0.add(topList.get(j + 1));
             tmp0.add(bottomList.get(j));
+
             Path path0 = new Path(tmp0);
 
             tmp1.add(bottomList.get(j));
@@ -134,17 +129,19 @@ public class SLConsShapefileExportToSTL
             resultList.add(path1);
         }
         // Top face
-        List<Point3DGeo> pts = new ArrayList<>();
+        List<Point3DGeo> top = new ArrayList<>();
+        List<Point3DGeo> bottom = new ArrayList<>();
         topList.forEach((p) -> {
-            pts.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
+            Point3DGeo tmp0 = new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation());
+            top.add(tmp0);
+            Point3DGeo tmp1 = new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), 0.0);
+            bottom.add(tmp1);
         });
-        // displayServices.displayPositionsAsPath(topList, layer,Material.RED);
-        Geometry geometry = jtsServices.getPolygon(pts);
-        List<Path> paths_0 = jtsServices.createDelaunayToPath(pts);
-       // displayServices.displayPaths(paths_0, layer, Material.RED, 10);
-        List<Path> innerPaths = jtsServices.pathsInGeometry(geometry, paths_0);
-        resultList.addAll(innerPaths);
-        //   displayServices.displayPolygonsFromPaths(resultList, layer, Material.RED, 12);
+        List<Path> paths_0 = jtsServices.createDelaunayToPath(top);
+        resultList.addAll(paths_0);
+        paths_0 = jtsServices.createDelaunayToPath(bottom);
+        resultList.addAll(paths_0);
+        displayServices.displayPolygonsFromPaths(resultList, layer, Material.YELLOW, 0.5);
 
         return resultList;
     }

@@ -884,13 +884,13 @@ public class ToolsComponentController
                             solidWgs84List = null;
                             LOGGER.log(Level.INFO, path.getFileName().toString());
                             solidWgs84List = objPaysbrestLoader.loadObj(path, 145168, 6836820);
-                            System.out.println("solidWgs84List : " + solidWgs84List.size());
+                          //  System.out.println("solidWgs84List : " + solidWgs84List.size());
                             if (previewBuildingsRB.isSelected()) {
                                 Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
                                     Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
                                 int color = 0;
                                 for (SolidGeo solid : solidWgs84List) {
-                                    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
+                              //      displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
                                 }
                             }
                         }
@@ -904,7 +904,7 @@ public class ToolsComponentController
                                     Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
                                 int color = 0;
                                 for (SolidGeo solid : roofWgs84List) {
-                                    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
+                                 //   displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
                                 }
                             }
                             if (solidWgs84List != null && roofWgs84List != null) {
@@ -926,11 +926,11 @@ public class ToolsComponentController
             } catch (IOException ex) {
                 //Nothing if dir don't exist
             }
-            System.out.println("buildingCount : " + buildingCount);
-            System.out.println("buildingList : " + buildingList.size());
+          //  System.out.println("buildingCount : " + buildingCount);
+          //  System.out.println("buildingList : " + buildingList.size());
             
             for (SolidGeo solid : buildingList) {
-                displayServices.displayBuildingGeoAsPolygon(solid, 10.0, s57Layer, Material.LIGHT_GRAY);
+                displayServices.displayBuildingGeoAsPolygon(solid, 0.0, s57Layer, Material.LIGHT_GRAY);
             }
             
             String query;

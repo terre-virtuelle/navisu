@@ -10,6 +10,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.Polygon;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
@@ -33,6 +34,8 @@ public interface JTSServices
     Geometry getLineString(List<Point3DGeo> points);
 
     Geometry getPolygon(List<Point3DGeo> points);
+
+    Geometry getBoundaries(Polygon polygon);
 
     Geometry getPolygonFromPath(Path path);
 

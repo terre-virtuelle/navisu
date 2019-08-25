@@ -38,7 +38,6 @@ public class PathToSTL {
             double latMin, double lonMin,
             double latScale, double lonScale,
             double verticalOffset) {
-
         this.filename = filename;
         String[] head = filename.split("/");
         try {

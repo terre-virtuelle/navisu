@@ -175,7 +175,7 @@ public class DisplayImpl
         faces.forEach((f) -> {
             displayFaceGeoAsPolygon(f, height, layer, material);
         });
-        List<FaceGeo>  roof = new ArrayList<>(solid.getRoof());
+        List<FaceGeo> roof = new ArrayList<>(solid.getRoof());
         roof.forEach((r) -> {
             displayFaceGeoAsPolygon(r, height, layer, material);
         });
@@ -530,7 +530,7 @@ public class DisplayImpl
 
     protected ShapeAttributes createAttributes(Material material) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();
-        normAttributes.setDrawInterior(true);
+        normAttributes.setDrawInterior(false);
         normAttributes.setDrawOutline(true);
         normAttributes.setInteriorMaterial(material);
         normAttributes.setOutlineMaterial(material);
@@ -573,30 +573,19 @@ public class DisplayImpl
 
     @Override
     public void displayPaths(List<Path> paths, double elevation, RenderableLayer layer, Material material) {
-        ShapeAttributes attrs1 = createAttributes(material);
-        List<Path> result = new ArrayList<>();
         for (Path p : paths) {
-            Iterable<? extends Position> positions = p.getPositions();
-            List<Position> tmpPos = new ArrayList<>();
-            for (Position pp : positions) {
-                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), elevation));
-            }
-            result.add(new Path(tmpPos));
+            displayPath(p, elevation, layer, material);
         }
-        result.forEach((p) -> {
-            p.setAltitudeMode(WorldWind.ABSOLUTE);
-            p.setAttributes(attrs1);
-        });
-
-        layer.addRenderables(result);
-        wwd.redrawNow();
     }
 
     @Override
     public void displayPath(Path path, double elevation, RenderableLayer layer, Material material) {
-        List<Path> paths = new ArrayList<>();
-        paths.add(path);
-        displayPaths(paths, elevation, layer, material);
+        ShapeAttributes attrs1 = createAttributes(material);
+        path.setAttributes(attrs1);
+        path.setShowPositions(true);
+        path.setShowPositionsScale(3);
+        layer.addRenderable(path);
+        wwd.redrawNow();
     }
 
     @Override
@@ -619,6 +608,8 @@ public class DisplayImpl
         wwd.redrawNow();
     }
 
+    
+    
     @Override
     public void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration) {
         List<Polygon> result = new ArrayList<>();
@@ -631,7 +622,7 @@ public class DisplayImpl
             result.add(new Polygon(tmpPos));
         });
         result.forEach((p) -> {
-            attrs0 = createAttributes(new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+            attrs0 = createAttributes(material);
             p.setAltitudeMode(WorldWind.ABSOLUTE);
             p.setAttributes(attrs0);
         });
@@ -689,10 +680,26 @@ public class DisplayImpl
     }
 
     @Override
+    public void displayPolygon(Polygon poly, RenderableLayer layer, ShapeAttributes attr) {
+        List<Polygon> polygons = new ArrayList<>();
+        polygons.add(poly);
+        displayPolygons(polygons, layer, attr);
+    }
+
+    @Override
     public void displayPolygons(List<Polygon> poly, RenderableLayer layer, Material material) {
         ShapeAttributes attrs0 = createAttributes(material);
         for (Polygon p : poly) {
             p.setAttributes(attrs0);
+        }
+        layer.addRenderables(poly);
+        wwd.redrawNow();
+    }
+
+    @Override
+    public void displayPolygons(List<Polygon> poly, RenderableLayer layer, ShapeAttributes attr) {
+        for (Polygon p : poly) {
+            p.setAttributes(attr);
         }
         layer.addRenderables(poly);
         wwd.redrawNow();

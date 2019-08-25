@@ -19,6 +19,7 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.ShapeAttributes;
 import java.util.List;
 import java.util.Map;
 import org.capcaval.c3.component.ComponentService;
@@ -66,7 +67,11 @@ public interface DisplayServices
 
     void displayPolygons(List<Polygon> poly, RenderableLayer layer, Material material);
 
+    void displayPolygons(List<Polygon> poly, RenderableLayer layer, ShapeAttributes attr);
+
     void displayPolygon(Polygon poly, RenderableLayer layer, Material material);
+
+    void displayPolygon(Polygon poly, RenderableLayer layer, ShapeAttributes attr);
 
     void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration);
 
