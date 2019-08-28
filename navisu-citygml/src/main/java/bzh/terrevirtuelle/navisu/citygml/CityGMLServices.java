@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 import org.citygml4j.model.citygml.building.Building;
+import org.citygml4j.model.citygml.core.CityModel;
 
 /**
  * @date 13 mars 2015
@@ -20,6 +21,10 @@ public interface CityGMLServices
     Building exportSolid(SolidGeo solid);
 
     List<Building> exportToGML(List<SolidGeo> solid);
+
+    CityModel createCityModel(List<Building> buildings);
+
+    void write(CityModel cityModel, String name);
 
     void write(List<Building> buildings);
 

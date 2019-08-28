@@ -123,7 +123,7 @@ public class DisplayImpl
     public void displayPoints3DAsPath(List<Point3DGeo> points, RenderableLayer layer) {
         ArrayList<Position> pathPositions = new ArrayList<>();
         for (Point3DGeo p : points) {
-            pathPositions.add(Position.fromDegrees(p.getLatitude(), p.getLongitude(), p.getElevation() + 100));
+            pathPositions.add(Position.fromDegrees(p.getLatitude(), p.getLongitude(), p.getElevation()));
         }
         Path path = createPath(pathPositions, Material.YELLOW);
         layer.addRenderable(path);
@@ -530,7 +530,7 @@ public class DisplayImpl
 
     protected ShapeAttributes createAttributes(Material material) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();
-        normAttributes.setDrawInterior(false);
+        normAttributes.setDrawInterior(true);
         normAttributes.setDrawOutline(true);
         normAttributes.setInteriorMaterial(material);
         normAttributes.setOutlineMaterial(material);
@@ -582,8 +582,7 @@ public class DisplayImpl
     public void displayPath(Path path, double elevation, RenderableLayer layer, Material material) {
         ShapeAttributes attrs1 = createAttributes(material);
         path.setAttributes(attrs1);
-        path.setShowPositions(true);
-        path.setShowPositionsScale(3);
+        path.setAltitudeMode(WorldWind.ABSOLUTE);
         layer.addRenderable(path);
         wwd.redrawNow();
     }

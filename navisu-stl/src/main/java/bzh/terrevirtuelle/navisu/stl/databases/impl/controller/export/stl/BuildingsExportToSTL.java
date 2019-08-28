@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.FaceGeoToSTL;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +49,9 @@ public class BuildingsExportToSTL {
     @SuppressWarnings("unchecked")
     public void export(List<SolidGeo> solids, String filename, double latScale, double lonScale, double tileSideZ, double maxdepth) {
         String building = "";
-        System.out.println("solids : "+solids.size());
         for (SolidGeo s : solids) {
             Point3DGeo centroid = s.getCentroid();
             double lat = centroid.getLatitude();
-            
             building += faceGeoToSTL.exportSTL(new ArrayList(s.getFaces()), s.getName() + " " + centroid.getLatitude() + ", " +centroid.getLongitude(),
                     latMin, lonMin, latScale, lonScale,
                     tileSideZ, maxdepth);

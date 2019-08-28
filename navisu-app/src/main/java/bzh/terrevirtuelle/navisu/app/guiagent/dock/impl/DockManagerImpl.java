@@ -212,7 +212,7 @@ public class DockManagerImpl<TrackTool>
                 .centralImage("buildingsradialmenu150.png")
                 .createNode(0, "osm.png", 0, "vide.png", 0, "vide.png", (e) -> open())
                 .createNode(2, "osmb.png", 0, "web.png", 0, "config.png", (e) -> open("OSM_BUILDINGS"))
-                .createNode(1, "brestPays3D.png", 0, "vide.png", 0, "vide.png", (e) -> open())
+                .createNode(1, "objects.png", 0, "formats.png", 0, "obj2gml.png", (e) -> open())
                 .build();
         buildingsRadialMenu.setLayoutX((width / 2) - 10);
         buildingsRadialMenu.setLayoutY(height / 2);

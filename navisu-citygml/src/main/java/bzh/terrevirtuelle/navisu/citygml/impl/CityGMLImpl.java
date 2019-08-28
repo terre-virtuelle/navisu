@@ -83,55 +83,51 @@ public class CityGMLImpl
 
                 //Ground
                 List<Point3DGeo> solidGround = g.getGround();
-
                 if (solidGround != null) {
-                    
+
                     double[] coordTab = new double[solidGround.size() * 3];
                     for (int i = 0; i < solidGround.size(); i++) {
-                        coordTab[i*3] = solidGround.get(i).getLongitude();
-                        coordTab[i*3 + 1] = solidGround.get(i).getLatitude();
-                        coordTab[i*3 + 2] = solidGround.get(i).getElevation();
+                        coordTab[i * 3] = solidGround.get(i).getLongitude();
+                        coordTab[i * 3 + 1] = solidGround.get(i).getLatitude();
+                        coordTab[i * 3 + 2] = solidGround.get(i).getElevation();
                     }
                     ground = geom.createLinearPolygon(coordTab, 3);
                     ground.setId(gmlIdManager.generateUUID());
                 }
-                //Walls
 
+                //Walls
                 Set<FaceGeo> solidFaces = g.getFaces();
                 for (FaceGeo f : solidFaces) {
                     List<Point3DGeo> vertices = f.getVertices();
                     double[] coordTab = new double[vertices.size() * 3];
                     for (int i = 0; i < vertices.size(); i++) {
-                        coordTab[i*3] = vertices.get(i).getLongitude();
-                        coordTab[i*3 + 1] = vertices.get(i).getLatitude();
-                        coordTab[i*3 + 2] = vertices.get(i).getElevation();
+                        coordTab[i * 3] = vertices.get(i).getLongitude();
+                        coordTab[i * 3 + 1] = vertices.get(i).getLatitude();
+                        coordTab[i * 3 + 2] = vertices.get(i).getElevation();
                     }
                     Polygon wall = geom.createLinearPolygon(coordTab, 3);
                     wall.setId(gmlIdManager.generateUUID());
                     walls.add(wall);
                 }
                 //Roof
-                /*
-                SolidGeo solidRoof = g.getRoof();
-                if (solidRoof != null) {
-                    Set<FaceGeo> solidRoofFaces = solidRoof.getFaces();
-                    for (FaceGeo f : solidRoofFaces) {
-                        List<Point3DGeo> vertices = f.getVertices();
-                        double[] coordTab = new double[vertices.size() * 3];
-                        for (int i = 0; i < vertices.size(); i++) {
-                            coordTab[i*3] = vertices.get(i).getLongitude();
-                            coordTab[i*3 + 1] = vertices.get(i).getLatitude();
-                            coordTab[i*3 + 2] = vertices.get(i).getElevation();
-                        }
-                        Polygon roof = geom.createLinearPolygon(coordTab, 3);
-                        roof.setId(gmlIdManager.generateUUID());
-                        roofs.add(roof);
+                Set<FaceGeo> solidRoofFaces = g.getRoof();
+                for (FaceGeo f : solidRoofFaces) {
+                    List<Point3DGeo> vertices = f.getVertices();
+                    double[] coordTab = new double[vertices.size() * 3];
+                    for (int i = 0; i < vertices.size(); i++) {
+                        coordTab[i * 3] = vertices.get(i).getLongitude();
+                        coordTab[i * 3 + 1] = vertices.get(i).getLatitude();
+                        coordTab[i * 3 + 2] = vertices.get(i).getElevation();
                     }
+                    Polygon roof = geom.createLinearPolygon(coordTab, 3);
+                    roof.setId(gmlIdManager.generateUUID());
+                    roofs.add(roof);
                 }
-                */
+
                 if (ground != null) {
                     surfaceMember.add(new SurfaceProperty('#' + ground.getId()));
                 }
+
                 walls.forEach((w) -> {
                     surfaceMember.add(new SurfaceProperty('#' + w.getId()));
                 });
@@ -141,13 +137,15 @@ public class CityGMLImpl
 
                 CompositeSurface compositeSurface = new CompositeSurface();
                 compositeSurface.setSurfaceMember(surfaceMember);
-                
+
                 Solid solid = new Solid();
                 solid.setExterior(new SurfaceProperty(compositeSurface));
                 building.setLod2Solid(new SolidProperty(solid));
-                
+
                 List<BoundarySurfaceProperty> boundedBy = new ArrayList<>();
-                boundedBy.add(createBoundarySurface(org.citygml4j.model.citygml.CityGMLClass.BUILDING_GROUND_SURFACE, ground));
+                if (ground != null) {
+                    boundedBy.add(createBoundarySurface(org.citygml4j.model.citygml.CityGMLClass.BUILDING_GROUND_SURFACE, ground));
+                }
                 walls.forEach((p) -> {
                     boundedBy.add(createBoundarySurface(CityGMLClass.BUILDING_WALL_SURFACE, p));
                 });
@@ -157,28 +155,42 @@ public class CityGMLImpl
                 building.setBoundedBySurface(boundedBy);
                 result.add(building);
             }
-            /*
-            CityModel cityModel = new CityModel();
-		cityModel.setBoundedBy(building.calcBoundedBy(BoundingBoxOptions.defaults()));
-		cityModel.addCityObjectMember(new CityObjectMember(building));
 
-		System.out.println(df.format(new Date()) + "writing citygml4j object tree");
-		CityGMLOutputFactory out = builder.createCityGMLOutputFactory(CityGMLVersion.DEFAULT);
-		CityGMLWriter writer = out.createCityGMLWriter(new File("output/LOD2_Building_v200.gml"), "UTF-8");
-
-		writer.setPrefixes(CityGMLVersion.DEFAULT);
-		writer.setSchemaLocations(CityGMLVersion.DEFAULT);
-		writer.setIndentString("  ");
-		writer.write(cityModel);
-		writer.close();	
-		
-		System.out.println(df.format(new Date()) + "CityGML file LOD2_Building_v200.gml written");
-		System.out.println(df.format(new Date()) + "sample citygml4j application successfully finished");
-             */
         } catch (CityGMLBuilderException | DimensionMismatchException e) {
             System.out.println("Exception : " + e);
         }
         return result;
+    }
+
+    @Override
+    public CityModel createCityModel(List<Building> buildings) {
+        CityModel cityModel = new CityModel();
+        for (Building building : buildings) {
+            cityModel.setBoundedBy(building.calcBoundedBy(BoundingBoxOptions.defaults()));
+            cityModel.addCityObjectMember(new CityObjectMember(building));
+        }
+        return cityModel;
+    }
+
+    @Override
+    public void write(CityModel cityModel, String name) {
+        SimpleDateFormat df = new SimpleDateFormat("[HH:mm:ss] ");
+
+        CityGMLContext ctx = CityGMLContext.getInstance();
+        CityGMLBuilder builder;
+        CityGMLWriter writer;
+        try {
+            builder = ctx.createCityGMLBuilder();
+            CityGMLOutputFactory out = builder.createCityGMLOutputFactory(CityGMLVersion.DEFAULT);
+            writer = out.createCityGMLWriter(new File(name), "UTF-8");
+            writer.setPrefixes(CityGMLVersion.DEFAULT);
+            writer.setSchemaLocations(CityGMLVersion.DEFAULT);
+            writer.setIndentString("  ");
+            writer.write(cityModel);
+            writer.close();
+        } catch (CityGMLWriteException | CityGMLBuilderException ex) {
+            Logger.getLogger(CityGMLImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
     }
 
     @Override

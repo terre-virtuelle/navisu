@@ -153,6 +153,7 @@ import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import org.apache.commons.io.FileUtils;
 import org.citygml4j.model.citygml.building.Building;
+import org.citygml4j.model.citygml.core.CityModel;
 
 /**
  * @author Serge Morvan
@@ -1089,6 +1090,7 @@ public class StlDBComponentController
                         }
                         // stlComponentServices.exportRotateBaseSTL("data/stl/base/baseNewRotated.stl", "data/stl/base/baseNew.stl", 5.42);
                         //if (generateStlCB.isSelected()) {
+                        //Support
                         k = 0;
                         gridBoxes.forEach((gb) -> {
                             i = k / tileCount + 1;
@@ -1288,7 +1290,7 @@ public class StlDBComponentController
                                 LOGGER.info("Out export LNDMRK en STL");
                             }
                         }
-                        // Buildings Pays Brest
+                        // Buildings 
                         k = 0;
                         //  if (boundList != null && !boundList.isEmpty()) {
                         buildingsConnection = databaseServices.connect(buildingsDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
@@ -1305,10 +1307,11 @@ public class StlDBComponentController
                                     Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
                                 int color = 0;
                                 for (SolidGeo solid : solids) {
-                                    displayServices.displayBuildingGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);  
+                                    displayServices.displayBuildingGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
                                 }
                                 List<Building> buildings = cityGMLServices.exportToGML(solids);
-                                cityGMLServices.write(buildings);
+                                CityModel cityModel = cityGMLServices.createCityModel(buildings);
+                                cityGMLServices.write(cityModel, "privateData" + SEP + "glm" + SEP + "brest.gml");
                             }
                             buildingsExportToSTL.export(solids, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
                             k++;

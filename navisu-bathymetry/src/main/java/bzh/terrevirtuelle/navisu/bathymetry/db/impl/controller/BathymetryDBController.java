@@ -245,18 +245,7 @@ public class BathymetryDBController {
 
     }
 
-    /*
-    query = "DROP TABLE IF EXISTS solid; \n"
-                        + "CREATE TABLE solid ("
-                        + "id SERIAL PRIMARY KEY, "
-                        + "solidId INTEGER, "
-                        + "name TEXT, "
-                        + "wallCentroid GEOMETRY(POINT, 4326), "
-                        + "wallGround GEOMETRY(POLYGONZ, 4326), "
-                        + "wallGeom GEOMETRY(GEOMETRYCOLLECTIONZ,4326), "
-                        + "roofGeom GEOMETRY(GEOMETRYCOLLECTIONZ,4326)"
-                        + ");";
-     */
+   
     public void insertData(String table, List<SolidGeo> solids) {
         solids.stream().forEach((s) -> {
             try {

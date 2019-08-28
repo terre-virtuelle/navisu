@@ -14,6 +14,7 @@ import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
+import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import com.owens.oobjloader.builder.Face;
 import com.owens.oobjloader.builder.FaceVertex;
 import com.vividsolutions.jts.algorithm.ConvexHull;
@@ -21,8 +22,11 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
+import com.vividsolutions.jts.simplify.TopologyPreservingSimplifier;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.Material;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,7 +46,7 @@ import java.util.logging.Logger;
  * @date Jul 30, 2019
  */
 public class ObjPaysbrestLoader {
-    
+
     protected GeodesyServices geodesyServices;
     protected GuiAgentServices guiAgentServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
@@ -52,26 +56,34 @@ public class ObjPaysbrestLoader {
     protected static final String ALARM_SOUND = "/data/sounds/openSea.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected List<SolidGeo> solidGeoList;
-    
+
+    protected DisplayServices displayServices;
+    protected RenderableLayer layer;
+
     public ObjPaysbrestLoader() {
     }
-    
+
     public ObjPaysbrestLoader(GeodesyServices geodesyServices, GuiAgentServices guiAgentServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices,
             JTSServices jtsServices, Pro4JServices pro4JServices,
-            ObjComponentServices objComponentServices) {
+            ObjComponentServices objComponentServices,
+            DisplayServices displayServices,
+            RenderableLayer layer) {
         this.geodesyServices = geodesyServices;
         this.guiAgentServices = guiAgentServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         this.jtsServices = jtsServices;
         this.pro4JServices = pro4JServices;
         this.objComponentServices = objComponentServices;
+
+        this.displayServices = displayServices;
+        this.layer = layer;
     }
-    
+
     public List<SolidGeo> loadObj(Path path, double objXOffset, double objYOffset) {
-        
+
         List<FaceGeo> facesWgs84 = new ArrayList<>();
-        
+
         Path filetredPath = filter(path);
         List<Face> faces = objComponentServices.getFaces(filetredPath.toString());
         faces.stream().map((f) -> f.getVertices()).forEachOrdered((fvs) -> {
@@ -86,7 +98,7 @@ public class ObjPaysbrestLoader {
         instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
         return solidGeoList;
     }
-    
+
     private FaceGeo toFacet(List<FaceVertex> fvs, double objXOffset, double objYOffset) {
         FaceGeo faceWgs84 = new FaceGeo("Building");
         for (FaceVertex fv : fvs) {
@@ -112,7 +124,7 @@ public class ObjPaysbrestLoader {
         List<FaceGeo> l1 = new ArrayList<>();
         List<FaceGeo> l2 = new ArrayList<>();
         List<FaceGeo> l4 = new ArrayList<>();
-        
+
         while (faceIndex < faces.size()) {
             i = faceIndex;
             for (int j = 0; j < faces.get(i).getVertices().size(); j++) {
@@ -165,11 +177,10 @@ public class ObjPaysbrestLoader {
         }
         return result;
     }
-    
+
     protected List<SolidGeo> setTopologyProperties(List<SolidGeo> solidWgs84List) {
         List<SolidGeo> result = new ArrayList<>();
         for (SolidGeo solid : solidWgs84List) {
-            
             Set<Position> positions = new HashSet<>();
             Set<FaceGeo> faces = solid.getFaces();
             faces.forEach((f) -> {
@@ -181,48 +192,53 @@ public class ObjPaysbrestLoader {
             });
             if (positions.size() > 2) {
                 gov.nasa.worldwind.render.Polygon polygonWWJ = new gov.nasa.worldwind.render.Polygon(positions);
-                
+
                 Iterable<? extends Position> boundary = polygonWWJ.outerBoundary();
                 List<Point3DGeo> points = new ArrayList<>();
                 for (Position p : boundary) {
-                    points.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
+                   points.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));  
                 }
+
                 Coordinate[] coordinates = jtsServices.toTabCoordinates(points);
-                
                 GeometryFactory fact = new GeometryFactory();
                 Polygon ground = fact.createPolygon(coordinates);
-                
-                ConvexHull convex = new ConvexHull(ground);
+                Geometry geom = TopologyPreservingSimplifier.simplify(ground, 10);
+                ConvexHull convex = new ConvexHull(geom);
                 Geometry convexHull = convex.getConvexHull();
-                Point3DGeo centroid = jtsServices.toPoint3D(convexHull.getCentroid());
+                Geometry bound = geom.buffer(0.0);
+                Point3DGeo centroid = jtsServices.toPoint3D(bound.getCentroid());
+                gov.nasa.worldwind.render.Path path = jtsServices.getPathFromPolygon(bound);
                 
-                solid.setGroundGeom(convexHull);
+                solid.setGroundGeom(bound);
                 solid.setGround(points);
                 solid.setCentroid(centroid);
-                
                 result.add(solid);
             }
         }
         return result;
     }
-    
+
     private Path filter(Path path) {
         String tmp = null;
-        
+
         try {
             tmp = new String(Files.readAllBytes(path));
+
         } catch (IOException ex) {
-            Logger.getLogger(ObjPaysbrestLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(ObjPaysbrestLoader.class
+                    .getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        
+
         if (tmp != null) {
             //File from BMO contains \ folows whith carriage return ?
             tmp = tmp.replaceAll("\\\\[\\n\\r]", "");
             try {
                 Files.delete(path);
                 path = Files.write(path, tmp.getBytes(), StandardOpenOption.CREATE);
+
             } catch (IOException ex) {
-                Logger.getLogger(ObjPaysbrestLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                Logger.getLogger(ObjPaysbrestLoader.class
+                        .getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
         return path;

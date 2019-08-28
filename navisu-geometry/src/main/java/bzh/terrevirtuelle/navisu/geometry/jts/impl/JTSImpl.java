@@ -327,6 +327,7 @@ public class JTSImpl
      */
     @Override
     public List<Path> createDelaunayToPath(List<Point3DGeo> pts) {
+
         double elevation = pts.get(0).getElevation();
         List<Path> result = new ArrayList<>();
         List<PolygonPoint> polygonPoints = new ArrayList<>();
