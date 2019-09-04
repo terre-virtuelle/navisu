@@ -1,0 +1,49 @@
+class SolidGeo
+!!!139266.java!!!	SolidGeo()
+        this(0, "noname");
+!!!139394.java!!!	SolidGeo(in id : int, in name : String)
+        this.id = id;
+        this.name = name;
+        faces = new ArrayList<>();
+!!!139522.java!!!	SolidGeo(inout faces : List<FaceGeo>)
+        this(faces, 0);
+!!!139650.java!!!	SolidGeo(inout faces : List<FaceGeo>, in id : int)
+        this(faces, id, "noname");
+!!!139778.java!!!	SolidGeo(inout faces : List<FaceGeo>, in id : int, in name : String)
+        this.faces = faces;
+        this.id = id;
+        this.name = name;
+!!!139906.java!!!	getGroundGeom() : Geometry
+        return groundGeom;
+!!!140034.java!!!	setGroundGeom(inout groundGeom : Geometry) : void
+        this.groundGeom = groundGeom;
+!!!140162.java!!!	getRoof() : FaceGeo
+        return roof;
+!!!140290.java!!!	setRoof(inout roof : List<FaceGeo>) : void
+        this.roof = roof;
+!!!140418.java!!!	add(inout face : FaceGeo) : void
+        faces.add(face);
+!!!140546.java!!!	addAll(inout faces : Collection<? extends FaceGeo>) : void
+        this.faces.addAll(faces);
+!!!140674.java!!!	getCentroid() : Point3DGeo
+        return centroid;
+!!!140802.java!!!	setCentroid(inout centroid : Point3DGeo) : void
+        this.centroid = centroid;
+!!!140930.java!!!	getName() : String
+        return name;
+!!!141058.java!!!	setName(in name : String) : void
+        this.name = name;
+!!!141186.java!!!	getId() : int
+        return id;
+!!!141314.java!!!	setId(in id : int) : void
+        this.id = id;
+!!!141442.java!!!	getFaces() : FaceGeo
+        return faces;
+!!!141570.java!!!	setFaces(inout faces : List<FaceGeo>) : void
+        this.faces = faces;
+!!!141698.java!!!	getGround() : Point3DGeo
+        return ground;
+!!!141826.java!!!	setGround(inout ground : List<Point3DGeo>) : void
+        this.ground = ground;
+!!!141954.java!!!	toString() : String
+        return "SolidGeo{" + "id=" + id + ", name=" + name + ", faces=" + faces + ", centroid=" + centroid + ", ground=" + ground + ", roof=" + roof + '}';

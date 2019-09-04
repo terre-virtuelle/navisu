@@ -6,8 +6,8 @@
 package bzh.terrevirtuelle.navisu.domain.geometry;
 
 import com.vividsolutions.jts.geom.Geometry;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,11 +20,11 @@ public class SolidGeo {
 
     protected int id;
     protected String name;
-    protected Set<FaceGeo> faces;
+    protected List<FaceGeo> faces;
     protected Point3DGeo centroid;
     protected List<Point3DGeo> ground;
     protected Geometry groundGeom;
-    protected Set<FaceGeo> roof;
+    protected List<FaceGeo> roof;
 
     public SolidGeo() {
         this(0, "noname");
@@ -33,18 +33,18 @@ public class SolidGeo {
     public SolidGeo(int id, String name) {
         this.id = id;
         this.name = name;
-        faces = new HashSet<>();
+        faces = new ArrayList<>();
     }
 
-    public SolidGeo(Set<FaceGeo> faces) {
+    public SolidGeo(List<FaceGeo> faces) {
         this(faces, 0);
     }
 
-    public SolidGeo(Set<FaceGeo> faces, int id) {
+    public SolidGeo(List<FaceGeo> faces, int id) {
         this(faces, id, "noname");
     }
 
-    public SolidGeo(Set<FaceGeo> faces, int id, String name) {
+    public SolidGeo(List<FaceGeo> faces, int id, String name) {
         this.faces = faces;
         this.id = id;
         this.name = name;
@@ -58,11 +58,11 @@ public class SolidGeo {
         this.groundGeom = groundGeom;
     }
 
-    public Set<FaceGeo> getRoof() {
+    public List<FaceGeo> getRoof() {
         return roof;
     }
 
-    public void setRoof(Set<FaceGeo> roof) {
+    public void setRoof(List<FaceGeo> roof) {
         this.roof = roof;
     }
 
@@ -134,7 +134,7 @@ public class SolidGeo {
      *
      * @return the value of faces
      */
-    public Set<FaceGeo> getFaces() {
+    public List<FaceGeo> getFaces() {
         return faces;
     }
 
@@ -143,7 +143,7 @@ public class SolidGeo {
      *
      * @param faces new value of faces
      */
-    public void setFaces(Set<FaceGeo> faces) {
+    public void setFaces(List<FaceGeo> faces) {
         this.faces = faces;
     }
 

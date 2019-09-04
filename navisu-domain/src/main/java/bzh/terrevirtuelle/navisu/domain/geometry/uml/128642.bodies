@@ -1,33 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package bzh.terrevirtuelle.navisu.domain.geometry;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-/**
- *
- * @author serge
- * @date Jul 22, 2019
- */
-public class FaceGeo {
-
-    public EdgeGeo a;
-
-    public EdgeGeo b;
-
-    public EdgeGeo c;
-
-    private int id;
-
-    private String name;
-    private int index = 0;
-
-    public FaceGeo(List<Point3DGeo> pts) {
+class FaceGeo
+!!!132866.java!!!	FaceGeo(inout pts : List<Point3DGeo>)
         Point3DGeo pt0 = new Point3DGeo(pts.get(0));
         Point3DGeo pt1 = new Point3DGeo(pts.get(0));
         Point3DGeo pt2 = new Point3DGeo(pts.get(0));
@@ -37,29 +9,21 @@ public class FaceGeo {
         a.setY(pt1);
         c.setX(pt2);
         b.setY(pt2);
-    }
-
-    public FaceGeo() {
+!!!132994.java!!!	FaceGeo()
         a = new EdgeGeo();
         b = new EdgeGeo();
         c = new EdgeGeo();
-    }
-
-    public FaceGeo(int id) {
+!!!133122.java!!!	FaceGeo(in id : int)
         a = new EdgeGeo();
         b = new EdgeGeo();
         c = new EdgeGeo();
         this.id = id;
-    }
-
-    public FaceGeo(String name) {
+!!!133250.java!!!	FaceGeo(in name : String)
         a = new EdgeGeo();
         b = new EdgeGeo();
         c = new EdgeGeo();
         this.name = name;
-    }
-
-    public void add(Point3DGeo pt) {
+!!!133378.java!!!	add(inout pt : Point3DGeo) : void
         if (index == 0) {
             a.x = pt;
             c.y = pt;
@@ -79,117 +43,39 @@ public class FaceGeo {
         c = new EdgeGeo(c.x, c.y);
         index++;
         index %= 3;
-    }
-
-    /**
-     * Get the value of name
-     *
-     * @return the value of name
-     */
-    public String getName() {
+!!!133506.java!!!	getName() : String
         return name;
-    }
-
-    /**
-     * Set the value of name
-     *
-     * @param name new value of name
-     */
-    public void setName(String name) {
+!!!133634.java!!!	setName(in name : String) : void
         this.name = name;
-    }
-
-    /**
-     * Get the value of id
-     *
-     * @return the value of id
-     */
-    public int getId() {
+!!!133762.java!!!	getId() : int
         return id;
-    }
-
-    /**
-     * Set the value of id
-     *
-     * @param id new value of id
-     */
-    public void setId(int id) {
+!!!133890.java!!!	setId(in id : int) : void
         this.id = id;
-    }
-
-    /**
-     * Get the value of c
-     *
-     * @return the value of c
-     */
-    public EdgeGeo getC() {
+!!!134018.java!!!	getC() : EdgeGeo
         return c;
-    }
-
-    /**
-     * Set the value of c
-     *
-     * @param c new value of c
-     */
-    public void setC(EdgeGeo c) {
+!!!134146.java!!!	setC(inout c : EdgeGeo) : void
         this.c = c;
-    }
-
-    /**
-     * Get the value of b
-     *
-     * @return the value of b
-     */
-    public EdgeGeo getB() {
+!!!134274.java!!!	getB() : EdgeGeo
         return b;
-    }
-
-    /**
-     * Set the value of b
-     *
-     * @param b new value of b
-     */
-    public void setB(EdgeGeo b) {
+!!!134402.java!!!	setB(inout b : EdgeGeo) : void
         this.b = b;
-    }
-
-    /**
-     * Get the value of a
-     *
-     * @return the value of a
-     */
-    public EdgeGeo getA() {
+!!!134530.java!!!	getA() : EdgeGeo
         return a;
-    }
-
-    /**
-     * Set the value of a
-     *
-     * @param a new value of a
-     */
-    public void setA(EdgeGeo a) {
+!!!134658.java!!!	setA(inout a : EdgeGeo) : void
         this.a = a;
-    }
-
-    public List<Point3DGeo> getVertices() {
+!!!134786.java!!!	getVertices() : Point3DGeo
         List<Point3DGeo> result = new ArrayList<>();
         result.add(a.x);
         result.add(b.x);
         result.add(c.x);
         return result;
-    }
-
-    @Override
-    public int hashCode() {
+!!!134914.java!!!	hashCode() : int
         int hash = 7;
         hash = 71 * hash + Objects.hashCode(this.a);
         hash = 71 * hash + Objects.hashCode(this.b);
         hash = 71 * hash + Objects.hashCode(this.c);
         return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
+!!!135042.java!!!	equals(inout obj : Object) : boolean
         if (this == obj) {
             return true;
         }
@@ -210,28 +96,29 @@ public class FaceGeo {
             return false;
         }
         return true;
-    }
-
-    public boolean isAdjacent(FaceGeo obj) {
+!!!135170.java!!!	isAdjacent(inout obj : Object) : boolean
         if (this == obj) {
             return true;
         }
         if (obj == null) {
             return false;
         }
-        if (a.isAdjacent(obj.a) || a.isAdjacent(obj.b) || a.isAdjacent(obj.c)) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final FaceGeo other = (FaceGeo) obj;
+        if (a.isAdjacent(other.a) || a.isAdjacent(other.b) || a.isAdjacent(other.c)) {
             return true;
         }
-        if (b.isAdjacent(obj.a) || b.isAdjacent(obj.b)|| b.isAdjacent(obj.c)) {
+        if (b.isAdjacent(other.a) || b.isAdjacent(other.b)|| b.isAdjacent(other.c)) {
             return true;
         }
-        if (c.isAdjacent(obj.a)|| c.isAdjacent(obj.b)|| c.isAdjacent(obj.c)) {
+        if (c.isAdjacent(other.a)|| c.isAdjacent(other.b)|| c.isAdjacent(other.c)) {
             return true;
         }
-        return false;
-    }
 
-    public EdgeGeo getGround() {
+        return false;
+!!!135298.java!!!	getGround() : EdgeGeo
         EdgeGeo result = a;
         if (b.x.getElevation() < a.x.getElevation()
                 && b.y.getElevation() < a.y.getElevation()
@@ -252,11 +139,5 @@ public class FaceGeo {
             result = b;
         }
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return id +" a=" + a + ", b=" + b + ", c=" + c + '}';
-    }
-
-}
+!!!135426.java!!!	toString() : String
+        return "FaceGeo{" + "a=" + a + ", b=" + b + ", c=" + c + '}';

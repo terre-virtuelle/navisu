@@ -1,0 +1,82 @@
+format 221
+
+packagecanvas 128002 
+  package_ref 128002 // geometry
+   show_context_mode java_package  xyzwh 67 57 2000 626 506
+end
+classcanvas 128130 class_ref 128898 // SolidGeo
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 511 138 2005
+end
+classcanvas 128258 class_ref 128642 // FaceGeo
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 146 138 2011
+end
+classcanvas 128642 class_ref 128514 // Point3DGeo
+  classdiagramsettings member_max_width 0 end
+  xyz 512 398 2011
+end
+classcanvas 129026 class_ref 128386 // EdgeGeo
+  classdiagramsettings member_max_width 0 end
+  xyz 148 443 3005
+end
+relationcanvas 128386 relation_ref 128898 // <unidirectional association>
+  from ref 128130 z 2012 stereotype "<<List>>" xyz 338.5 164.5 2012 to ref 128258
+  role_a_pos 226 165 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 129282 // <unidirectional association>
+  decenter_begin 732
+  decenter_end 725
+  from ref 128130 z 2012 stereotype "<<List>>" xyz 336.5 218 2012 to ref 128258
+  role_a_pos 226 190 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 129026 // <unidirectional association>
+  decenter_begin 751
+  decenter_end 773
+  from ref 128130 z 2012 to ref 128642
+  role_a_pos 593 371 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 129154 // <unidirectional association>
+  decenter_begin 191
+  decenter_end 206
+  from ref 128130 z 2012 stereotype "<<List>>" xyz 480.5 292 2012 to ref 128642
+  role_a_pos 484 366 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 128130 // <unidirectional association>
+  decenter_begin 746
+  decenter_end 572
+  from ref 129026 z 3006 to ref 128642
+  role_a_pos 497 447 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 128258 // <unidirectional association>
+  decenter_begin 238
+  decenter_end 411
+  from ref 129026 z 3006 to ref 128642
+  role_a_pos 497 426 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 128386 // <unidirectional association>
+  from ref 128258 z 3006 to ref 129026
+  role_a_pos 193 414 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 128514 // <unidirectional association>
+  decenter_begin 813
+  decenter_end 792
+  from ref 128258 z 3006 to ref 129026
+  role_a_pos 216 414 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 128642 // <unidirectional association>
+  decenter_begin 186
+  decenter_end 181
+  from ref 128258 z 3006 to ref 129026
+  role_a_pos 169 414 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

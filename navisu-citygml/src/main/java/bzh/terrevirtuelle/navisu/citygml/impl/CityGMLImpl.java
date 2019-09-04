@@ -10,8 +10,6 @@ import bzh.terrevirtuelle.navisu.citygml.CityGMLServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.FaceGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -96,7 +94,7 @@ public class CityGMLImpl
                 }
 
                 //Walls
-                Set<FaceGeo> solidFaces = g.getFaces();
+                List<FaceGeo> solidFaces = g.getFaces();
                 for (FaceGeo f : solidFaces) {
                     List<Point3DGeo> vertices = f.getVertices();
                     double[] coordTab = new double[vertices.size() * 3];
@@ -110,7 +108,7 @@ public class CityGMLImpl
                     walls.add(wall);
                 }
                 //Roof
-                Set<FaceGeo> solidRoofFaces = g.getRoof();
+                List<FaceGeo> solidRoofFaces = g.getRoof();
                 for (FaceGeo f : solidRoofFaces) {
                     List<Point3DGeo> vertices = f.getVertices();
                     double[] coordTab = new double[vertices.size() * 3];

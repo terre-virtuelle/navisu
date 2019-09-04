@@ -1,0 +1,58 @@
+class EdgeGeo
+!!!131586.java!!!	EdgeGeo()
+        x = new Point3DGeo(0.0, 0.0, 0.0);
+        y = new Point3DGeo(0.0, 0.0, 0.0);
+!!!131714.java!!!	EdgeGeo(inout x : Point3DGeo, inout y : Point3DGeo)
+        this.x = x;
+        this.y = y;
+!!!131842.java!!!	getY() : Point3DGeo
+        return y;
+!!!131970.java!!!	setY(inout y : Point3DGeo) : void
+        this.y = y;
+!!!132098.java!!!	getX() : Point3DGeo
+        return x;
+!!!132226.java!!!	setX(inout x : Point3DGeo) : void
+        this.x = x;
+!!!132354.java!!!	hashCode() : int
+        int hash = 5;
+        hash = 37 * hash + Objects.hashCode(this.x);
+        hash = 37 * hash + Objects.hashCode(this.y);
+        return hash;
+!!!132482.java!!!	isAdjacent(inout obj : Object) : boolean
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EdgeGeo other = (EdgeGeo) obj;
+        if (this.x.equals(other.x) && this.y.equals(other.y)) {
+            return true;
+        }
+        if (this.x.equals(other.y) && this.y.equals(other.x)) {
+            return true;
+        }
+        return false;
+!!!132610.java!!!	equals(inout obj : Object) : boolean
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EdgeGeo other = (EdgeGeo) obj;
+        if (!Objects.equals(this.x, other.x)) {
+            return false;
+        }
+        if (!Objects.equals(this.y, other.y)) {
+            return false;
+        }
+        return true;
+!!!132738.java!!!	toString() : String
+        return "EdgeGeo{" + "x=" + x + ", y=" + y + '}';

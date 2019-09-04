@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.paysBrest
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
+import bzh.terrevirtuelle.navisu.domain.geometry.EdgeGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.FaceGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
@@ -89,11 +90,16 @@ public class ObjPaysbrestLoader {
         faces.stream().map((f) -> f.getVertices()).forEachOrdered((fvs) -> {
             facesWgs84.add(toFacet(fvs, objXOffset, objYOffset));
         });
+
         int index = 1;
         for (FaceGeo f : facesWgs84) {
             f.setId(index++);
+             System.out.println(f);
         }
         List<SolidGeo> solidWgs84List = agregate(facesWgs84);
+        System.out.println("solidWgs84List : " + solidWgs84List.size());
+        System.out.println("faces : " + solidWgs84List.get(0).getFaces().size());
+
         solidGeoList = setTopologyProperties(solidWgs84List);
         instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
         return solidGeoList;
@@ -101,6 +107,7 @@ public class ObjPaysbrestLoader {
 
     private FaceGeo toFacet(List<FaceVertex> fvs, double objXOffset, double objYOffset) {
         FaceGeo faceWgs84 = new FaceGeo("Building");
+
         for (FaceVertex fv : fvs) {
             double x = (fv.getV().x + objXOffset);
             double y = (fv.getV().y + objYOffset);
@@ -116,73 +123,54 @@ public class ObjPaysbrestLoader {
      */
     private List<SolidGeo> agregate(List<FaceGeo> faces) {
         List<SolidGeo> result = new ArrayList<>();
-        int solidIndex = 0;
         int faceIndex = 0;
-        int i;
-        Set<FaceGeo> faceSet = new HashSet<>();
-        faceSet.add(faces.get(faceIndex));
-        List<FaceGeo> l1 = new ArrayList<>();
-        List<FaceGeo> l2 = new ArrayList<>();
-        List<FaceGeo> l4 = new ArrayList<>();
+        int solidIndex = 0;
+        List<FaceGeo> faceSet = new ArrayList<>();
+        List<EdgeGeo> ground = new ArrayList<>();
+        FaceGeo startFace;
+        FaceGeo shuttle;
+        FaceGeo last;
+        int lock = 0;
+        for (int i = 0; i < faces.size(); i++) {
+            startFace = faces.get(0);
+            shuttle = faces.get(0);
+            last = faces.get(1);
+            for (int j = 0; j < faces.size(); j++) {
+                if (!shuttle.equals(last) && (shuttle.isAdjacent(startFace) || last.isAdjacent(shuttle))) {
+                 //   System.out.println(" last :   " + last.getId() + " shuttle : " + shuttle.getId());
+                    if (shuttle.isAdjacent(startFace)) {
+                        lock++;
+                    }
+                    if (!faceSet.contains(shuttle)) {
+                        faceSet.add(shuttle);
+                        ground.add(shuttle.getGround());
+                    }
+                    last = shuttle;
+                }
+                if (lock == 2 && shuttle.isAdjacent(startFace)) {
+                    SolidGeo s = new SolidGeo(faceSet);
+                    s.setId(solidIndex);
+                    //s.setGround(ground);
+                    result.add(s);
+                    // faceSet.clear();
+                }
 
-        while (faceIndex < faces.size()) {
-            i = faceIndex;
-            for (int j = 0; j < faces.get(i).getVertices().size(); j++) {
-                for (int u = 0; u < faces.size(); u++) {
-                    for (int v = 0; v < faces.get(u).getVertices().size(); v++) {
-                        if (faces.get(i).getVertices().get(j).equals(faces.get(u).getVertices().get(v))) {
-                            if (faceSet.add(faces.get(u)) == true) {
-                                l1.add(faces.get(u));
-                                l4.add(faces.get(u));
-                                faceIndex++;
-                            }
-                        }
-                    }
-                }
+                shuttle = faces.get(j);
             }
-            boolean OK = true;
-            int size;
-            while (OK == true) {
-                size = l1.size();
-                OK = false;
-                for (int k = 0; k < size; k++) {
-                    for (int j = 0; j < l1.get(k).getVertices().size(); j++) {
-                        for (int u = 0; u < faces.size(); u++) {
-                            for (int v = 0; v < faces.get(u).getVertices().size(); v++) {
-                                if (l1.get(k).getVertices().get(j).equals(faces.get(u).getVertices().get(v))) {
-                                    if (faceSet.add(faces.get(u)) == true) {
-                                        l2.add(faces.get(u));
-                                        l4.add(faces.get(u));
-                                        OK = true;
-                                        faceIndex++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                l1.clear();
-                l1.addAll(l2);
-                l2.clear();
-            }
-            List<FaceGeo> l3 = new ArrayList<>(faceSet);
-            Collections.sort(l3, (FaceGeo solid2, FaceGeo solid1) -> solid2.getId() - solid1.getId());
-            SolidGeo solid = new SolidGeo(solidIndex++, "building");
-            result.add(solid);
-            l4.forEach((f) -> {
-                solid.add(f);
-            });
-            l4.clear();
-            faceIndex++;
+        }
+        for (FaceGeo f : faceSet) {
+            System.out.println("faceSet  : " + f.getId());
         }
         return result;
+
     }
 
     protected List<SolidGeo> setTopologyProperties(List<SolidGeo> solidWgs84List) {
+
         List<SolidGeo> result = new ArrayList<>();
         for (SolidGeo solid : solidWgs84List) {
-            Set<Position> positions = new HashSet<>();
-            Set<FaceGeo> faces = solid.getFaces();
+            List<Position> positions = new ArrayList<>();
+            List<FaceGeo> faces = solid.getFaces();
             faces.forEach((f) -> {
                 List<Point3DGeo> pts = f.getVertices();
                 for (Point3DGeo p : pts) {
@@ -196,25 +184,23 @@ public class ObjPaysbrestLoader {
                 Iterable<? extends Position> boundary = polygonWWJ.outerBoundary();
                 List<Point3DGeo> points = new ArrayList<>();
                 for (Position p : boundary) {
-                   points.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));  
+                    points.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), 0.0));
                 }
 
                 Coordinate[] coordinates = jtsServices.toTabCoordinates(points);
                 GeometryFactory fact = new GeometryFactory();
                 Polygon ground = fact.createPolygon(coordinates);
-                Geometry geom = TopologyPreservingSimplifier.simplify(ground, 10);
-                ConvexHull convex = new ConvexHull(geom);
-                Geometry convexHull = convex.getConvexHull();
-                Geometry bound = geom.buffer(0.0);
-                Point3DGeo centroid = jtsServices.toPoint3D(bound.getCentroid());
-                gov.nasa.worldwind.render.Path path = jtsServices.getPathFromPolygon(bound);
-                
-                solid.setGroundGeom(bound);
+
+                Point3DGeo centroid = jtsServices.toPoint3D(ground.getCentroid());
+                gov.nasa.worldwind.render.Path path = jtsServices.getPathFromPolygon(ground);
+
+                solid.setGroundGeom(ground);
                 solid.setGround(points);
                 solid.setCentroid(centroid);
                 result.add(solid);
             }
         }
+
         return result;
     }
 

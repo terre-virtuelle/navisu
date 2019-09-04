@@ -1,0 +1,13 @@
+window_sizes 1514 897 378 1130 780 64
+cleanlooks_style
+diagrams
+  active  classdiagram_ref 128002 // uml_geometry
+    1130 780 140 A4 72 65
+end
+show_stereotypes
+selected class_ref 128386 // EdgeGeo
+open
+  classview_ref 128002 // geometry
+  classview_ref 128258 // uml_geometry
+end
+end

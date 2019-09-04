@@ -1,0 +1,17 @@
+class Point3Df
+!!!135682.java!!!	Point3Df(in lat : float, in lon : float, in elevation : float)
+        this.lon = lon;
+        this.lat = lat;
+        this.elevation = elevation;
+!!!135810.java!!!	getElevation() : float
+        return elevation;
+!!!135938.java!!!	setElevation(in elevation : float) : void
+        this.elevation = elevation;
+!!!136066.java!!!	getLat() : float
+        return lat;
+!!!136194.java!!!	setLat(in lat : float) : void
+        this.lat = lat;
+!!!136322.java!!!	getLon() : float
+        return lon;
+!!!136450.java!!!	setLon(in lon : float) : void
+        this.lon = lon;

@@ -782,12 +782,12 @@ public class TopologyImpl
         for (String f : tab) {
             faces.add(getFaceGeofromMulitipointWKT(f));
         }
-        return new SolidGeo(new HashSet(faces));
+        return new SolidGeo(faces);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Set<FaceGeo> getFaceGeofromGeometryCollectionMulitipointWKT(String o) {
+    public List<FaceGeo> getFaceGeofromGeometryCollectionMulitipointWKT(String o) {
         List<FaceGeo> faces = new ArrayList<>();
         String tmp = o;
         tmp = tmp.replace("GEOMETRYCOLLECTION(", "");
@@ -797,7 +797,7 @@ public class TopologyImpl
         for (String f : tab) {
             faces.add(getFaceGeofromMulitipointWKT(f));
         }
-        return new HashSet(faces);
+        return faces;
     }
 
     @Override

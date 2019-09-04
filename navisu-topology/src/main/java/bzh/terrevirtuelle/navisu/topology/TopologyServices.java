@@ -99,7 +99,7 @@ public interface TopologyServices
 
     FaceGeo getFaceGeofromMulitipointWKT(String o);
 
-    Set<FaceGeo> getFaceGeofromGeometryCollectionMulitipointWKT(String o);
+    List<FaceGeo> getFaceGeofromGeometryCollectionMulitipointWKT(String o);
 
     String toWKT(SolidGeo o);
 
