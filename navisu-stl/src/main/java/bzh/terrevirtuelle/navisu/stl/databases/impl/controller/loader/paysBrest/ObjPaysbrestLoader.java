@@ -40,8 +40,7 @@ import java.util.logging.Logger;
  * @date Jul 30, 2019
  */
 public class ObjPaysbrestLoader {
-
-    protected GeodesyServices geodesyServices;
+protected GeodesyServices geodesyServices;
     protected GuiAgentServices guiAgentServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected JTSServices jtsServices;
@@ -87,7 +86,8 @@ public class ObjPaysbrestLoader {
         int index = 1;
         for (FaceGeo f : facesWgs84) {
             f.setId(index++);
-            System.out.println(f);System.out.println("--");System.out.println(f.printInv());       }
+            //  System.out.println(f);
+        }
         List<SolidGeo> solidWgs84List = agregate(facesWgs84);
         System.out.println("solidWgs84List : " + solidWgs84List.size());
         System.out.println("faces : " + solidWgs84List.get(0).getFaces().size());
@@ -122,35 +122,30 @@ public class ObjPaysbrestLoader {
         FaceGeo startFace;
         FaceGeo shuttle;
         FaceGeo last;
-
-        for (int i = 0; i < faces.size(); i++) {
-            startFace = faces.get(0);
-            shuttle = faces.get(0);
-            last = faces.get(1);
-            faceSet.add(shuttle);
-            ground.add(shuttle.getGround());
+        int i = 0;
+        startFace = faces.get(0);
+        last = faces.get(0);
+        faceSet.add(startFace);
+        while (i < faces.size() - 1) {
             for (int j = 0; j < faces.size(); j++) {
-                if (!shuttle.equals(last) && (shuttle.isAdjacent(startFace) || last.isAdjacent(shuttle))) {
+                shuttle = faces.get(j);
+                if ((!shuttle.equals(last) && !shuttle.equals(startFace))
+                        && (shuttle.isAdjacent(startFace) || shuttle.isAdjacent(last))) {
+                    System.out.println("adj : " + last.getId() + "-" + shuttle.getId());
                     if (!faceSet.contains(shuttle)) {
                         faceSet.add(shuttle);
                         ground.add(shuttle.getGround());
                     }
                     last = shuttle;
-                    shuttle = faces.get(0);
-                } else {
-                    shuttle = faces.get(j);
+                    // j=1;
                 }
             }
+
         }
         SolidGeo s = new SolidGeo(faceSet);
         s.setId(solidIndex);
         //s.setGround(ground);
         result.add(s);
-        // faceSet.clear();
-
-        //for (FaceGeo f : faceSet) {
-       //     System.out.println("faceSet  : " + f.getId());
-       // }
         return result;
 
     }
@@ -219,4 +214,5 @@ public class ObjPaysbrestLoader {
         }
         return path;
     }
+   
 }

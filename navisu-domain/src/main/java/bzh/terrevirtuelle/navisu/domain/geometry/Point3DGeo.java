@@ -182,8 +182,7 @@ public class Point3DGeo
         return hash;
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Point3DGeo obj) {
         if (this == obj) {
             return true;
         }
@@ -193,13 +192,13 @@ public class Point3DGeo
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Point3DGeo other = (Point3DGeo) obj;
-        if (Double.doubleToLongBits(this.longitude) != Double.doubleToLongBits(other.longitude)) {
+
+        if (this.longitude != obj.longitude) {
             return false;
         }
-        if (Double.doubleToLongBits(this.latitude) != Double.doubleToLongBits(other.latitude)) {
+        if (this.latitude != obj.latitude) {
             return false;
         }
-        return Double.doubleToLongBits(this.elevation) == Double.doubleToLongBits(other.elevation);
+        return this.elevation == obj.elevation;
     }
 }
