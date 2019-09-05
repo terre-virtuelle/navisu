@@ -18,26 +18,19 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import com.owens.oobjloader.builder.Face;
 import com.owens.oobjloader.builder.FaceVertex;
-import com.vividsolutions.jts.algorithm.ConvexHull;
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
-import com.vividsolutions.jts.simplify.TopologyPreservingSimplifier;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.Material;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -94,8 +87,7 @@ public class ObjPaysbrestLoader {
         int index = 1;
         for (FaceGeo f : facesWgs84) {
             f.setId(index++);
-             System.out.println(f);
-        }
+            System.out.println(f);System.out.println("--");System.out.println(f.printInv());       }
         List<SolidGeo> solidWgs84List = agregate(facesWgs84);
         System.out.println("solidWgs84List : " + solidWgs84List.size());
         System.out.println("faces : " + solidWgs84List.get(0).getFaces().size());
@@ -130,37 +122,35 @@ public class ObjPaysbrestLoader {
         FaceGeo startFace;
         FaceGeo shuttle;
         FaceGeo last;
-        int lock = 0;
+
         for (int i = 0; i < faces.size(); i++) {
             startFace = faces.get(0);
             shuttle = faces.get(0);
             last = faces.get(1);
+            faceSet.add(shuttle);
+            ground.add(shuttle.getGround());
             for (int j = 0; j < faces.size(); j++) {
                 if (!shuttle.equals(last) && (shuttle.isAdjacent(startFace) || last.isAdjacent(shuttle))) {
-                 //   System.out.println(" last :   " + last.getId() + " shuttle : " + shuttle.getId());
-                    if (shuttle.isAdjacent(startFace)) {
-                        lock++;
-                    }
                     if (!faceSet.contains(shuttle)) {
                         faceSet.add(shuttle);
                         ground.add(shuttle.getGround());
                     }
                     last = shuttle;
+                    shuttle = faces.get(0);
+                } else {
+                    shuttle = faces.get(j);
                 }
-                if (lock == 2 && shuttle.isAdjacent(startFace)) {
-                    SolidGeo s = new SolidGeo(faceSet);
-                    s.setId(solidIndex);
-                    //s.setGround(ground);
-                    result.add(s);
-                    // faceSet.clear();
-                }
-
-                shuttle = faces.get(j);
             }
         }
-        for (FaceGeo f : faceSet) {
-            System.out.println("faceSet  : " + f.getId());
-        }
+        SolidGeo s = new SolidGeo(faceSet);
+        s.setId(solidIndex);
+        //s.setGround(ground);
+        result.add(s);
+        // faceSet.clear();
+
+        //for (FaceGeo f : faceSet) {
+       //     System.out.println("faceSet  : " + f.getId());
+       // }
         return result;
 
     }

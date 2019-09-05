@@ -256,7 +256,11 @@ public class FaceGeo {
 
     @Override
     public String toString() {
-        return id +" a=" + a + ", b=" + b + ", c=" + c + '}';
+       // return id +" a=" + a + ", b=" + b + ", c=" + c + '}';
+       return id +" " + a + "\n " + b + "\n " + c +"\n";
     }
-
+public String printInv() {
+       // return id +" a=" + a + ", b=" + b + ", c=" + c + '}';
+       return  a.printInv() + " " + b.printInv() + " " + c.printInv() ;
+    }
 }

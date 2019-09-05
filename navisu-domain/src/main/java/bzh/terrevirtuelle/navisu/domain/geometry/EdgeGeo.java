@@ -95,7 +95,7 @@ public class EdgeGeo {
         if (obj == null) {
             return false;
         }
-        
+
         if (!this.x.equals(obj.x)) {
             return false;
         }
@@ -107,7 +107,11 @@ public class EdgeGeo {
 
     @Override
     public String toString() {
-        return  "x=" + x + ", y=" + y ;
+        return "x=" + x + ", y=" + y;
+
     }
 
+    public String printInv() {
+        return "x=" + y + ", y=" + x + "\n"; //Permeutation pour controle lecture edge
+    }
 }
