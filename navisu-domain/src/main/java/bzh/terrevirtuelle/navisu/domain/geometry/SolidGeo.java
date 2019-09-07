@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -45,7 +46,7 @@ public class SolidGeo {
     }
 
     public SolidGeo(List<FaceGeo> faces, int id, String name) {
-        this.faces = faces;
+        this.faces = faces.stream().collect(Collectors.toList());
         this.id = id;
         this.name = name;
     }

@@ -85,20 +85,14 @@ public class ObjPaysbrestLoader {
             facesWgs84.add(toFacet(fvs, objXOffset, objYOffset));
         });
 
-        int index = 1;
-        for (FaceGeo f : facesWgs84) {
-            f.setId(index++);
-            //  System.out.println(f);
-        }
         List<SolidGeo> solidWgs84List = agregate(facesWgs84);
         System.out.println("solidWgs84List : " + solidWgs84List.size());
-        
 
-      //  solidGeoList = setTopologyProperties(solidWgs84List);
+        //  solidGeoList = setTopologyProperties(solidWgs84List);
         instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
-       // return solidGeoList;
-       
-       return solidWgs84List;
+        // return solidGeoList;
+
+        return solidWgs84List;
     }
 
     private FaceGeo toFacet(List<FaceVertex> fvs, double objXOffset, double objYOffset) {
@@ -118,9 +112,10 @@ public class ObjPaysbrestLoader {
     Agregate faces by building
      */
     private List<SolidGeo> agregate(List<FaceGeo> faces) {
-        System.out.println("faces : " +faces);
+        System.out.println("faces : " + faces);
         System.out.println("faces : " + faces.size());
-        List<SolidGeo> result = new ArrayList<>();
+        List<SolidGeo> solidList = new ArrayList<>();
+
         int faceIndex = 0;
         int solidIndex = 0;
         List<FaceGeo> faceSet = new ArrayList<>();
@@ -132,7 +127,7 @@ public class ObjPaysbrestLoader {
 
         while (faceIndex < faces.size()) {
             startFace = faces.get(faceIndex);
-            System.out.println("startFace : "+ startFace);
+            System.out.println("startFace : " + startFace);
             faceSet.clear();
             faceSet.add(startFace);
             shuttle = startFace;
@@ -153,17 +148,16 @@ public class ObjPaysbrestLoader {
                 System.out.println("adList : " + adList);
             }
             tmpList.clear();
-            faceIndex += faceSet.size()+1;
+            faceIndex += faceSet.size() + 1;
             System.out.println("faceSet : " + faceSet);
-            SolidGeo s = new SolidGeo(faceSet);
-            s.setId(solidIndex++);
-            System.out.println("s : "+s);
+            SolidGeo s = new SolidGeo(faceSet, solidIndex, "Building" + solidIndex);
+            solidIndex++;
+            System.out.println("sol : " + s);
             //s.setGround(ground);
-            result.add(s);
-            
+            solidList.add(s);
         }
-
-        return result;
+        System.out.println("result : " + solidList);
+        return solidList;
     }
 
     protected List<SolidGeo> setTopologyProperties(List<SolidGeo> solidWgs84List) {

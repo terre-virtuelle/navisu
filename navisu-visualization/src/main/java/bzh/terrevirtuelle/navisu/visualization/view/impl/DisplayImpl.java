@@ -161,11 +161,28 @@ public class DisplayImpl
         displayPoints3DAsPolygon(face.getVertices(), height, layer, material);
     }
 
+    public void displayPoints3DAsPolygon(List<Point3DGeo> points, String label, double height, RenderableLayer layer, Material material) {
+        ArrayList<Position> positions = new ArrayList<>();
+        for (Point3DGeo p : points) {
+            positions.add(Position.fromDegrees(p.getLatitude(), p.getLongitude(), p.getElevation() + height));
+        }
+        Polygon polygon = new Polygon(positions);
+        ShapeAttributes shapeAttributes = createAttributes(material);
+        polygon.setAttributes(shapeAttributes);
+        //polygon.set
+        layer.addRenderable(polygon);
+        wwd.redrawNow();
+    }
+
+    public void displayFaceGeoAsPolygon(FaceGeo face, String label, double height, RenderableLayer layer, Material material) {
+        displayPoints3DAsPolygon(face.getVertices(), height, layer, material);
+    }
+
     @Override
     public void displaySolidGeoAsPolygon(SolidGeo solid, double height, RenderableLayer layer, Material material) {
         List<FaceGeo> list = new ArrayList<>(solid.getFaces());
         for (FaceGeo f : list) {
-            displayFaceGeoAsPolygon(f, height, layer, material);
+            displayFaceGeoAsPolygon(f, "" + solid.getId(), height, layer, material);
         }
     }
 
@@ -607,8 +624,6 @@ public class DisplayImpl
         wwd.redrawNow();
     }
 
-    
-    
     @Override
     public void displayPolygonsFromPaths(List<Path> paths, RenderableLayer layer, Material material, double verticalExaggeration) {
         List<Polygon> result = new ArrayList<>();
