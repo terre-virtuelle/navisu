@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -40,7 +41,8 @@ import java.util.logging.Logger;
  * @date Jul 30, 2019
  */
 public class ObjPaysbrestLoader {
-protected GeodesyServices geodesyServices;
+
+    protected GeodesyServices geodesyServices;
     protected GuiAgentServices guiAgentServices;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected JTSServices jtsServices;
@@ -90,11 +92,13 @@ protected GeodesyServices geodesyServices;
         }
         List<SolidGeo> solidWgs84List = agregate(facesWgs84);
         System.out.println("solidWgs84List : " + solidWgs84List.size());
-        System.out.println("faces : " + solidWgs84List.get(0).getFaces().size());
+        
 
-        solidGeoList = setTopologyProperties(solidWgs84List);
+      //  solidGeoList = setTopologyProperties(solidWgs84List);
         instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
-        return solidGeoList;
+       // return solidGeoList;
+       
+       return solidWgs84List;
     }
 
     private FaceGeo toFacet(List<FaceVertex> fvs, double objXOffset, double objYOffset) {
@@ -114,40 +118,52 @@ protected GeodesyServices geodesyServices;
     Agregate faces by building
      */
     private List<SolidGeo> agregate(List<FaceGeo> faces) {
+        System.out.println("faces : " +faces);
+        System.out.println("faces : " + faces.size());
         List<SolidGeo> result = new ArrayList<>();
         int faceIndex = 0;
         int solidIndex = 0;
         List<FaceGeo> faceSet = new ArrayList<>();
+        List<FaceGeo> tmpList = new ArrayList<>();
+        List<FaceGeo> adList;
         List<EdgeGeo> ground = new ArrayList<>();
         FaceGeo startFace;
         FaceGeo shuttle;
-        FaceGeo last;
-        int i = 0;
-        startFace = faces.get(0);
-        last = faces.get(0);
-        faceSet.add(startFace);
-        while (i < faces.size() - 1) {
-            for (int j = 0; j < faces.size(); j++) {
-                shuttle = faces.get(j);
-                if ((!shuttle.equals(last) && !shuttle.equals(startFace))
-                        && (shuttle.isAdjacent(startFace) || shuttle.isAdjacent(last))) {
-                    System.out.println("adj : " + last.getId() + "-" + shuttle.getId());
-                    if (!faceSet.contains(shuttle)) {
-                        faceSet.add(shuttle);
-                        ground.add(shuttle.getGround());
-                    }
-                    last = shuttle;
-                    // j=1;
+
+        while (faceIndex < faces.size()) {
+            startFace = faces.get(faceIndex);
+            System.out.println("startFace : "+ startFace);
+            faceSet.clear();
+            faceSet.add(startFace);
+            shuttle = startFace;
+            adList = shuttle.getAdjacents(faces);
+            faceSet.addAll(adList);
+            while (!adList.isEmpty()) {
+                for (FaceGeo f : adList) {
+                    tmpList.addAll(f.getAdjacents(faces));
                 }
+                tmpList.removeAll(faceSet);
+                adList.clear();
+                adList = tmpList.stream().collect(Collectors.toList());
+                for (FaceGeo f : adList) {
+                    if (!faceSet.contains(f)) {
+                        faceSet.add(f);
+                    }
+                }
+                System.out.println("adList : " + adList);
             }
-
+            tmpList.clear();
+            faceIndex += faceSet.size()+1;
+            System.out.println("faceSet : " + faceSet);
+            SolidGeo s = new SolidGeo(faceSet);
+            s.setId(solidIndex++);
+            System.out.println("s : "+s);
+            //s.setGround(ground);
+            result.add(s);
+            
         }
-        SolidGeo s = new SolidGeo(faceSet);
-        s.setId(solidIndex);
-        //s.setGround(ground);
-        result.add(s);
-        return result;
 
+        return result;
     }
 
     protected List<SolidGeo> setTopologyProperties(List<SolidGeo> solidWgs84List) {
@@ -214,5 +230,5 @@ protected GeodesyServices geodesyServices;
         }
         return path;
     }
-   
+
 }

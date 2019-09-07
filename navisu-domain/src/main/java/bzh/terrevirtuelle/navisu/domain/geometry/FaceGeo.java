@@ -222,13 +222,48 @@ public class FaceGeo {
         if (a.isAdjacent(obj.a) || a.isAdjacent(obj.b) || a.isAdjacent(obj.c)) {
             return true;
         }
-        if (b.isAdjacent(obj.a) || b.isAdjacent(obj.b)|| b.isAdjacent(obj.c)) {
+        if (b.isAdjacent(obj.a) || b.isAdjacent(obj.b) || b.isAdjacent(obj.c)) {
             return true;
         }
-        if (c.isAdjacent(obj.a)|| c.isAdjacent(obj.b)|| c.isAdjacent(obj.c)) {
+        if (c.isAdjacent(obj.a) || c.isAdjacent(obj.b) || c.isAdjacent(obj.c)) {
             return true;
         }
         return false;
+    }
+
+    public List<FaceGeo> getAdjacents(List<FaceGeo> faces) {
+        List<FaceGeo> result = new ArrayList<>();
+        for (FaceGeo f : faces) {
+            if (!this.equals(f) && this.isAdjacent(f)) {
+                result.add(f);
+            }
+        }
+        return result;
+    }
+
+    public static List<FaceGeo> getAdjacents(FaceGeo face , List<FaceGeo> faces) {
+        List<FaceGeo> result = new ArrayList<>();
+        for (FaceGeo f : faces) {
+            if (!face.equals(f) && face.isAdjacent(f)) {
+                result.add(f);
+            }
+        }
+        return result;
+    }
+    public static List<FaceGeo> getAdjacents(List<FaceGeo> adList, List<FaceGeo> faces, List<FaceGeo> faceSet) {
+        // System.out.println(adList);
+        List<FaceGeo> l = null;
+        for (FaceGeo f : adList) {
+            l = f.getAdjacents(f, faces);
+            if (!faceSet.contains(f)) {
+                faceSet.add(f);
+            }
+        }
+        System.out.println("l : "+ l);
+        if (l.isEmpty()) {
+            return null;
+        }
+        return getAdjacents(l, faces, faceSet);
     }
 
     public EdgeGeo getGround() {
@@ -256,11 +291,13 @@ public class FaceGeo {
 
     @Override
     public String toString() {
-       // return id +" a=" + a + ", b=" + b + ", c=" + c + '}';
-       return id +" " + a + "\n " + b + "\n " + c +"\n";
+        // return id +" a=" + a + ", b=" + b + ", c=" + c + '}';
+       // return id + " " + a + "\n " + b + "\n " + c + "\n";
+      return id +" ";
     }
-public String printInv() {
-       // return id +" a=" + a + ", b=" + b + ", c=" + c + '}';
-       return  a.printInv() + " " + b.printInv() + " " + c.printInv() ;
+
+    public String printInv() {
+        // return id +" a=" + a + ", b=" + b + ", c=" + c + '}';
+        return a.printInv() + " " + b.printInv() + " " + c.printInv();
     }
 }
