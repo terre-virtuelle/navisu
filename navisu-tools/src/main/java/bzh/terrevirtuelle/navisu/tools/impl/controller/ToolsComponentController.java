@@ -324,8 +324,8 @@ public class ToolsComponentController
     boolean isIndexSolidCreated = false;
     int buildingCount = 0;
     List<SolidGeo> buildingList = new ArrayList<>();
-    List<SolidGeo> solidWgs84List= new ArrayList<>();
-    List<SolidGeo> roofWgs84List= new ArrayList<>();
+    List<SolidGeo> solidWgs84List = new ArrayList<>();
+    List<SolidGeo> roofWgs84List = new ArrayList<>();
 
     /**
      *
@@ -878,7 +878,7 @@ public class ToolsComponentController
                     instrumentDriverManagerServices, jtsServices, pro4JServices, objComponentServices, displayServices, s57Layer);
             bathymetryDBServices.connect(buildingsDBName, "localhost", "jdbc:postgresql://",
                     "5432", "org.postgresql.Driver", "admin", "admin");
-
+            LOGGER.log(Level.INFO, "loadingBuildings");
             try {
                 Path directory = Paths.get(buildingsDataDir);
                 System.out.println("directory " + directory);
@@ -891,15 +891,12 @@ public class ToolsComponentController
                             LOGGER.log(Level.INFO, path.getFileName().toString());
                             solidWgs84List = objPaysbrestLoader.loadObj(path, lonOffset, latOffset);
                             // DEBUG Wall and roof different color
-                            System.out.println("solidWgs84List : "+solidWgs84List);
                             if (previewBuildingsRB.isSelected()) {
                                 for (SolidGeo solid : solidWgs84List) {
-                                    System.out.println("solid : " + solid);
                                     displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
                                 }
                             }
                         }
-                        
                         if (path.toString().endsWith("obj") && path.toString().contains("TOITURES_TEXTURE")) {
                             roofWgs84List.clear();
                             LOGGER.log(Level.INFO, path.getFileName().toString());
@@ -907,33 +904,28 @@ public class ToolsComponentController
                             // DEBUG Wall and roof different color
                             if (previewBuildingsRB.isSelected()) {
                                 for (SolidGeo solid : roofWgs84List) {
-                                    System.out.println("s : " + solid.getFaces().size());
                                     displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
                                 }
                             }
                         }
-                            /*
-                            //Apparaiement
-                            if (solidWgs84List != null && roofWgs84List != null) {
-                                for (SolidGeo s : solidWgs84List) {
-                                    for (SolidGeo r : roofWgs84List) {
-                                        Point3DGeo rc = r.getCentroid();
-                                        Geometry sg = s.getGroundGeom();
-                                        Point3DGeo sc = s.getCentroid();
-                                        Geometry rg = r.getGroundGeom();
-                                        if (rc != null && sg != null && sc != null && rg != null) {
-                                            if (topologyServices.within(rc, sg)
-                                                    || topologyServices.within(sc, rg)) {
-                                                buildingCount++;
-                                                s.setRoof(r.getFaces());
-                                                buildingList.add(s);
-                                            }
+                        //Apparairage
+                        if (solidWgs84List != null && roofWgs84List != null) {
+                            for (SolidGeo s : solidWgs84List) {
+                                for (SolidGeo r : roofWgs84List) {
+                                    Point3DGeo rc = r.getCentroid();
+                                    Geometry sg = s.getGroundGeom();
+                                    Point3DGeo sc = s.getCentroid();
+                                    Geometry rg = r.getGroundGeom();
+                                    if (rc != null && sg != null && sc != null && rg != null) {
+                                        if (topologyServices.within(rc, sg) || topologyServices.within(sc, rg)) {
+                                            buildingCount++;
+                                            s.setRoof(r.getFaces());
+                                            buildingList.add(s);
                                         }
                                     }
                                 }
                             }
                         }
-*/
                         return FileVisitResult.CONTINUE;
                     }
                 });
@@ -942,9 +934,10 @@ public class ToolsComponentController
             }
             if (previewBuildingsRB.isSelected()) {
                 for (SolidGeo solid : buildingList) {
-                    //  displayServices.displayBuildingGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+                    displayServices.displayBuildingGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
                 }
             }
+            LOGGER.log(Level.INFO, "Insert Buildings");
             String query;
             if (!isTableSolidCreated) {
                 isTableSolidCreated = true;

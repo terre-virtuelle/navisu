@@ -28,6 +28,9 @@ public class FaceGeo {
     private int index = 0;
 
     public FaceGeo(List<Point3DGeo> pts) {
+        a = new EdgeGeo();
+        b = new EdgeGeo();
+        c = new EdgeGeo();
         Point3DGeo pt0 = new Point3DGeo(pts.get(0));
         Point3DGeo pt1 = new Point3DGeo(pts.get(0));
         Point3DGeo pt2 = new Point3DGeo(pts.get(0));
@@ -162,6 +165,14 @@ public class FaceGeo {
         return a;
     }
 
+    public List<EdgeGeo> getEdges() {
+        List<EdgeGeo> result = new ArrayList<>();
+        result.add(a);
+        result.add(b);
+        result.add(c);
+        return result;
+    }
+
     /**
      * Set the value of a
      *
@@ -241,7 +252,7 @@ public class FaceGeo {
         return result;
     }
 
-    public static List<FaceGeo> getAdjacents(FaceGeo face , List<FaceGeo> faces) {
+    public static List<FaceGeo> getAdjacents(FaceGeo face, List<FaceGeo> faces) {
         List<FaceGeo> result = new ArrayList<>();
         for (FaceGeo f : faces) {
             if (!face.equals(f) && face.isAdjacent(f)) {
@@ -250,6 +261,7 @@ public class FaceGeo {
         }
         return result;
     }
+
     public static List<FaceGeo> getAdjacents(List<FaceGeo> adList, List<FaceGeo> faces, List<FaceGeo> faceSet) {
         // System.out.println(adList);
         List<FaceGeo> l = null;
@@ -259,7 +271,7 @@ public class FaceGeo {
                 faceSet.add(f);
             }
         }
-        System.out.println("l : "+ l);
+        System.out.println("l : " + l);
         if (l.isEmpty()) {
             return null;
         }
@@ -292,8 +304,8 @@ public class FaceGeo {
     @Override
     public String toString() {
         // return id +" a=" + a + ", b=" + b + ", c=" + c + '}';
-       // return id + " " + a + "\n " + b + "\n " + c + "\n";
-      return id +" ";
+        // return id + " " + a + "\n " + b + "\n " + c + "\n";
+        return id + " ";
     }
 
     public String printInv() {
