@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentState;
@@ -80,6 +79,7 @@ public class CityGMLImpl
                 List<Polygon> roofs = new ArrayList<>();
 
                 //Ground
+                /*
                 List<Point3DGeo> solidGround = g.getGround();
                 if (solidGround != null) {
 
@@ -92,7 +92,7 @@ public class CityGMLImpl
                     ground = geom.createLinearPolygon(coordTab, 3);
                     ground.setId(gmlIdManager.generateUUID());
                 }
-
+*/
                 //Walls
                 List<FaceGeo> solidFaces = g.getFaces();
                 for (FaceGeo f : solidFaces) {

@@ -19,10 +19,9 @@ import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import com.owens.oobjloader.builder.Face;
 import com.owens.oobjloader.builder.FaceVertex;
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
-import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Material;
 
@@ -147,16 +146,13 @@ public class ObjPaysbrestLoader {
                         faceSet.add(f);
                     }
                 }
-                //  System.out.println("adList : " + adList);
             }
             tmpList.clear();
-            faceIndex += faceSet.size();//+1;
-            // System.out.println("faceSet : " + faceSet);
-            SolidGeo s = new SolidGeo(faceSet, solidIndex, "Building" + solidIndex);
+            faceIndex += faceSet.size();
+            SolidGeo s = new SolidGeo(faceSet, solidIndex, "Building_" + solidIndex);
             solidIndex++;
             solidList.add(s);
         }
-        // System.out.println("result : " + solidList);
         return solidList;
     }
 
@@ -164,41 +160,28 @@ public class ObjPaysbrestLoader {
 
         List<SolidGeo> result = new ArrayList<>();
         for (SolidGeo solid : solidWgs84List) {
-            List<Position> positions = new ArrayList<>();
+            List<Point3DGeo> pts = new ArrayList<>();
+            List<EdgeGeo> edges = new ArrayList<>();
             List<FaceGeo> faces = solid.getFaces();
             faces.forEach((f) -> {
-                List<Point3DGeo> pts = f.getVertices();
-                for (Point3DGeo p : pts) {
-                    positions.add(new Position(Angle.fromDegrees(p.getLatitude()),
-                            Angle.fromDegrees(p.getLongitude()), 0.0)); // p.getElevation()));
-                }
+                edges.add(f.getGround());
             });
-
-            if (positions.size() > 2) {
-                gov.nasa.worldwind.render.Polygon polygonWWJ = new gov.nasa.worldwind.render.Polygon(positions);
-               // displayServices.displayPolygon(polygonWWJ, layer, Material.RED);
-                
-                Iterable<? extends Position> boundary = polygonWWJ.outerBoundary();
-                List<Point3DGeo> points = new ArrayList<>();
-                for (Position p : boundary) {
-                    points.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), 0.0));
-                }
-
-                Coordinate[] coordinates = jtsServices.toTabCoordinates(points);
-                GeometryFactory fact = new GeometryFactory();
-                Polygon ground = fact.createPolygon(coordinates);
-
-                Point3DGeo centroid = jtsServices.toPoint3D(ground.getCentroid());
-                gov.nasa.worldwind.render.Path path = jtsServices.getPathFromPolygon(ground);
-
-                solid.setGroundGeom(ground);
-                solid.setGround(points);
-                solid.setCentroid(centroid);
-                result.add(solid);
-                 
+            for (int i = 0; i < edges.size(); i++) {
+                pts.add(edges.get(i).getX());
+                pts.add(edges.get(i).getY());
             }
-
+            pts.add(pts.get(0));
+            Coordinate[] coordinates = jtsServices.toTabCoordinates(pts);
+            Geometry convexHull = jtsServices.getConvexHull(coordinates, new GeometryFactory());
+            Point3DGeo centroid = jtsServices.toPoint3D(convexHull.getCentroid());
+            // gov.nasa.worldwind.render.Polygon polygon = jtsServices.getPolygonFromPolygon(convexHull);
+            // displayServices.displayPolygon(polygon, layer, Material.RED);
+            solid.setGroundGeom(convexHull);
+            solid.setGround(pts);
+            solid.setCentroid(centroid);
+            result.add(solid);
         }
+
         return result;
     }
 

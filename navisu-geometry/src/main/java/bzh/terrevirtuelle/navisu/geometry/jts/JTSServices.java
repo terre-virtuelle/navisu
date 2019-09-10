@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.geometry.jts;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
@@ -27,6 +28,8 @@ public interface JTSServices
 
     List<Point3DGeo> toListPoint3D(Coordinate[] coord);
 
+    Geometry getConvexHull(Coordinate[] pts, GeometryFactory geomFactory);
+
     Coordinate[] toTabCoordinates(List<Point3DGeo> pts);
 
     Geometry getConcaveHull(List<Point3DGeo> points, double threshold);
@@ -40,6 +43,8 @@ public interface JTSServices
     Geometry getPolygonFromPath(Path path);
 
     Path getPathFromPolygon(Geometry path);
+
+    Polygon getPolygonFromPolygon(Geometry path);
 
     List<Path> pathsInGeometry(Geometry geom, List<Path> faces);
 

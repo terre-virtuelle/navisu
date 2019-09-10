@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.citygml.CityGMLServices;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.tools.ToolsComponent;
 import bzh.terrevirtuelle.navisu.tools.ToolsComponentServices;
@@ -65,7 +66,9 @@ public class ToolsComponentImpl
     LayersManagerServices layersManagerServices;
     @UsedService
     TopologyServices topologyServices;
-    
+    @UsedService
+    CityGMLServices cityGMLServices;
+
     private final String COMPONENT_KEY_NAME_0 = "DbS57";
     private final String COMPONENT_KEY_NAME_1 = "DbBathy";
     private final String COMPONENT_KEY_NAME_2 = "DbElevation";
@@ -96,8 +99,9 @@ public class ToolsComponentImpl
                         databaseServices, bathymetryDBServices, demDBComponentServices,
                         instrumentDriverManagerServices, lambertServices, rasterServices,
                         geodesyServices, jtsServices, pro4JServices,
-                        objComponentServices, displayServices, 
-                        layersManagerServices, topologyServices);
+                        objComponentServices, displayServices,
+                        layersManagerServices, topologyServices,
+                        cityGMLServices);
                 controller.setVisible(true);
             }
         }

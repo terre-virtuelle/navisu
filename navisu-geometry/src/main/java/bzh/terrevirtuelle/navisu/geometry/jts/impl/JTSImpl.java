@@ -12,6 +12,7 @@ import bzh.terrevirtuelle.navisu.geometry.jts.JTS;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.topology.impl.TopologyImpl;
+import com.vividsolutions.jts.algorithm.ConvexHull;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -98,6 +99,11 @@ public class JTSImpl
     }
 
     @Override
+    public Geometry getConvexHull(Coordinate[] pts, GeometryFactory geomFactory) {
+        return new ConvexHull(pts, geomFactory).getConvexHull();
+    }
+
+    @Override
     public Point3DGeo toPoint3D(Point point) {
         Coordinate[] c = point.getCoordinates();
         if (c.length != 0) {
@@ -147,6 +153,16 @@ public class JTSImpl
             positions.add(new Position(Angle.fromDegrees(c.y), Angle.fromDegrees(c.x), 0.0));
         }
         return new Path(positions);
+    }
+
+    @Override
+    public Polygon getPolygonFromPolygon(Geometry geometry) {
+        Coordinate[] coords = geometry.getCoordinates();
+        List<Position> positions = new ArrayList<>();
+        for (Coordinate c : coords) {
+            positions.add(new Position(Angle.fromDegrees(c.y), Angle.fromDegrees(c.x), 100.0));
+        }
+        return new Polygon(positions);
     }
 
     @Override

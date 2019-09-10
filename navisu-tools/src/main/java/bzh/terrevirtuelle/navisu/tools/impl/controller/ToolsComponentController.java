@@ -15,6 +15,7 @@ import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.citygml.CityGMLServices;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -74,6 +75,8 @@ import java.util.List;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import org.citygml4j.model.citygml.building.Building;
+import org.citygml4j.model.citygml.core.CityModel;
 
 /**
  *
@@ -106,6 +109,7 @@ public class ToolsComponentController
     protected DisplayServices displayServices;
     protected LayersManagerServices layersManagerServices;
     protected TopologyServices topologyServices;
+    protected CityGMLServices cityGMLServices;
 
     private final String FXML = "toolsController.fxml";
 
@@ -367,7 +371,8 @@ public class ToolsComponentController
             ObjComponentServices objComponentServices,
             DisplayServices displayServices,
             LayersManagerServices layersManagerServices,
-            TopologyServices topologyServices
+            TopologyServices topologyServices,
+            CityGMLServices cityGMLServices
     ) {
         super(keyCode, keyCombination);
         this.componentKeyName = componentKeyName;
@@ -398,6 +403,7 @@ public class ToolsComponentController
         this.displayServices = displayServices;
         this.layersManagerServices = layersManagerServices;
         this.topologyServices = topologyServices;
+        this.cityGMLServices = cityGMLServices;
 
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
@@ -908,29 +914,31 @@ public class ToolsComponentController
                                 }
                             }
                         }
-                        //Apparairage
-                        if (solidWgs84List != null && roofWgs84List != null) {
-                            for (SolidGeo s : solidWgs84List) {
-                                for (SolidGeo r : roofWgs84List) {
-                                    Point3DGeo rc = r.getCentroid();
-                                    Geometry sg = s.getGroundGeom();
-                                    Point3DGeo sc = s.getCentroid();
-                                    Geometry rg = r.getGroundGeom();
-                                    if (rc != null && sg != null && sc != null && rg != null) {
-                                        if (topologyServices.within(rc, sg) || topologyServices.within(sc, rg)) {
-                                            buildingCount++;
-                                            s.setRoof(r.getFaces());
-                                            buildingList.add(s);
-                                        }
-                                    }
-                                }
-                            }
-                        }
                         return FileVisitResult.CONTINUE;
                     }
                 });
             } catch (IOException ex) {
                 //Nothing if dir don't exist
+            }
+            //Apparairage
+            if (solidWgs84List != null && roofWgs84List != null) {
+                for (SolidGeo s : solidWgs84List) {
+                    for (SolidGeo r : roofWgs84List) {
+                        Point3DGeo rc = r.getCentroid();
+                        Geometry sg = s.getGroundGeom();
+                        Point3DGeo sc = s.getCentroid();
+                        Geometry rg = r.getGroundGeom();
+                        if (rc != null && sg != null && sc != null && rg != null) {
+                            if (topologyServices.within(rc, sg) || topologyServices.within(sc, rg)) {
+                                buildingCount++;
+                                s.addRoof(r.getFaces());
+                                if (!buildingList.contains(s)) {
+                                    buildingList.add(s);
+                                }
+                            }
+                        }
+                    }
+                }
             }
             if (previewBuildingsRB.isSelected()) {
                 for (SolidGeo solid : buildingList) {
@@ -939,24 +947,29 @@ public class ToolsComponentController
             }
             LOGGER.log(Level.INFO, "Insert Buildings");
             String query;
-            if (!isTableSolidCreated) {
-                isTableSolidCreated = true;
-                query = "DROP TABLE IF EXISTS solid; \n"
-                        + "CREATE TABLE solid ("
-                        + "id SERIAL PRIMARY KEY, "
-                        + "solidId INTEGER, "
-                        + "name TEXT, "
-                        + "wallCentroid GEOMETRY(POINT, 4326), "
-                        + "wallGround GEOMETRY(POLYGONZ, 4326), "
-                        + "wallGeom GEOMETRY(GEOMETRYCOLLECTIONZ,4326), "
-                        + "roofGeom GEOMETRY(GEOMETRYCOLLECTIONZ,4326)"
-                        + ");";
-                bathymetryDBServices.execute(query);
-            }
-            bathymetryDBServices.insert("solid", buildingList);
-            if (!isIndexSolidCreated) {
-                isIndexSolidCreated = true;
-                bathymetryDBServices.createIndex("solid", "wallCentroid");
+            if (!buildingList.isEmpty()) {
+                if (!isTableSolidCreated) {
+                    isTableSolidCreated = true;
+                    query = "DROP TABLE IF EXISTS solid; \n"
+                            + "CREATE TABLE solid ("
+                            + "id SERIAL PRIMARY KEY, "
+                            + "solidId INTEGER, "
+                            + "name TEXT, "
+                            + "wallCentroid GEOMETRY(POINT, 4326), "
+                            + "wallGround GEOMETRY(POLYGONZ, 4326), "
+                            + "wallGeom GEOMETRY(GEOMETRYCOLLECTIONZ,4326), "
+                            + "roofGeom GEOMETRY(GEOMETRYCOLLECTIONZ,4326)"
+                            + ");";
+                    bathymetryDBServices.execute(query);
+                }
+                bathymetryDBServices.insert("solid", buildingList);
+                if (!isIndexSolidCreated) {
+                    isIndexSolidCreated = true;
+                    bathymetryDBServices.createIndex("solid", "wallCentroid");
+                }
+                List<Building> buildings = cityGMLServices.exportToGML(buildingList);
+                CityModel cityModel = cityGMLServices.createCityModel(buildings);
+                cityGMLServices.write(cityModel, "privateData" + SEP + "glm" + SEP + "brest.gml");
             }
         });
         return buildingList;

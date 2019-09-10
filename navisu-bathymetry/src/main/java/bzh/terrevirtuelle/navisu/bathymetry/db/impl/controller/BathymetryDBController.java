@@ -215,16 +215,23 @@ public class BathymetryDBController {
     }
 
     /*
+    protected int id;
+    protected String name;
+    protected List<FaceGeo> faces;
+    protected Point3DGeo centroid;
+    protected List<Point3DGeo> ground;
+    protected Polygon groundGeom;
+    protected List<FaceGeo> roof;
     query = "DROP TABLE IF EXISTS solid; \n"
-                                        + "CREATE TABLE solid ("
-                                        + "id SERIAL PRIMARY KEY, "
-                                        + "roofId INTEGER, "
-                                        + "name TEXT, "
-                                        + "wallCentroid GEOMETRY(POINT, 4326), "
-                                        + "wallGround GEOMETRY(POLYGONZ, 4326), "
-                                        + "wallGeom GEOMETRY(GEOMETRYCOLLECTIONZ,4326), "
-                                        + "roofGeom GEOMETRY(GEOMETRYCOLLECTIONZ,4326)"
-                                        + ");";
+                            + "CREATE TABLE solid ("
+                            + "id SERIAL PRIMARY KEY, "
+                            + "solidId INTEGER, "
+                            + "name TEXT, "
+                            + "wallCentroid GEOMETRY(POINT, 4326), "
+                            + "wallGround GEOMETRY(POLYGONZ, 4326), "
+                            + "wallGeom GEOMETRY(GEOMETRYCOLLECTIONZ,4326), "
+                            + "roofGeom GEOMETRY(GEOMETRYCOLLECTIONZ,4326)"
+                            + ");";
      */
     public void insert(String table, List<SolidGeo> solids) {
 
@@ -232,7 +239,7 @@ public class BathymetryDBController {
                 + "VALUES (?, "
                 + "?, "
                 + "ST_SetSRID(ST_MakePoint(?, ?), 4326), "
-                + "ST_GeometryFromText(?, 4326), "
+                + "ST_PolygonFromText(?, 4326), "
                 + "ST_GeometryFromText(?, 4326),"
                 + "ST_GeometryFromText(?, 4326)"
                 + ");";

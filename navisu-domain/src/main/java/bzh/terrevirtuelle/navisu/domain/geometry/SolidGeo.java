@@ -6,10 +6,10 @@
 package bzh.terrevirtuelle.navisu.domain.geometry;
 
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.Polygon;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -35,6 +35,7 @@ public class SolidGeo {
         this.id = id;
         this.name = name;
         faces = new ArrayList<>();
+        roof = new ArrayList<>();
     }
 
     public SolidGeo(List<FaceGeo> faces) {
@@ -49,6 +50,7 @@ public class SolidGeo {
         this.faces = faces.stream().collect(Collectors.toList());
         this.id = id;
         this.name = name;
+        roof = new ArrayList<>();
     }
 
     public Geometry getGroundGeom() {
@@ -64,16 +66,19 @@ public class SolidGeo {
     }
 
     public void setRoof(List<FaceGeo> roof) {
-        this.roof = roof;
+        this.roof = roof.stream().collect(Collectors.toList());
     }
 
-    
+    public void addRoof(List<FaceGeo> faces) {
+        roof.addAll(faces);
+    }
+
     public void add(FaceGeo face) {
         faces.add(face);
     }
 
     public void addAll(Collection<? extends FaceGeo> faces) {
-        this.faces.addAll(faces);
+        this.faces.addAll(faces.stream().collect(Collectors.toList()));
     }
 
     /**
@@ -160,7 +165,5 @@ public class SolidGeo {
     public String toString() {
         return "SolidGeo{" + "id=" + id + ", name=" + name + ", faces=" + faces + ", centroid=" + centroid + ", ground=" + ground + ", roof=" + roof + '}';
     }
-
-    
 
 }
