@@ -33,9 +33,11 @@ import org.citygml4j.model.citygml.building.RoofSurface;
 import org.citygml4j.model.citygml.building.WallSurface;
 import org.citygml4j.model.citygml.core.CityModel;
 import org.citygml4j.model.citygml.core.CityObjectMember;
+import org.citygml4j.model.gml.feature.BoundingShape;
 import org.citygml4j.model.gml.geometry.aggregates.MultiSurface;
 import org.citygml4j.model.gml.geometry.aggregates.MultiSurfaceProperty;
 import org.citygml4j.model.gml.geometry.complexes.CompositeSurface;
+import org.citygml4j.model.gml.geometry.primitives.Envelope;
 import org.citygml4j.model.gml.geometry.primitives.Polygon;
 import org.citygml4j.model.gml.geometry.primitives.Solid;
 import org.citygml4j.model.gml.geometry.primitives.SolidProperty;
@@ -78,21 +80,6 @@ public class CityGMLImpl
                 List<Polygon> walls = new ArrayList<>();
                 List<Polygon> roofs = new ArrayList<>();
 
-                //Ground
-                /*
-                List<Point3DGeo> solidGround = g.getGround();
-                if (solidGround != null) {
-
-                    double[] coordTab = new double[solidGround.size() * 3];
-                    for (int i = 0; i < solidGround.size(); i++) {
-                        coordTab[i * 3] = solidGround.get(i).getLongitude();
-                        coordTab[i * 3 + 1] = solidGround.get(i).getLatitude();
-                        coordTab[i * 3 + 2] = solidGround.get(i).getElevation();
-                    }
-                    ground = geom.createLinearPolygon(coordTab, 3);
-                    ground.setId(gmlIdManager.generateUUID());
-                }
-*/
                 //Walls
                 List<FaceGeo> solidFaces = g.getFaces();
                 for (FaceGeo f : solidFaces) {
@@ -153,7 +140,6 @@ public class CityGMLImpl
                 building.setBoundedBySurface(boundedBy);
                 result.add(building);
             }
-
         } catch (CityGMLBuilderException | DimensionMismatchException e) {
             System.out.println("Exception : " + e);
         }
@@ -164,7 +150,11 @@ public class CityGMLImpl
     public CityModel createCityModel(List<Building> buildings) {
         CityModel cityModel = new CityModel();
         for (Building building : buildings) {
-            cityModel.setBoundedBy(building.calcBoundedBy(BoundingBoxOptions.defaults()));
+            BoundingShape b = building.calcBoundedBy(BoundingBoxOptions.defaults());
+            Envelope envelope = b.getEnvelope();
+            envelope.setSrsName("urn:ogc:def:crs,crs:EPSG:4326");//:: OK for Qgis and FME; KO for cesium. 
+            envelope.setSrsDimension(3);
+            cityModel.setBoundedBy(b);
             cityModel.addCityObjectMember(new CityObjectMember(building));
         }
         return cityModel;
@@ -172,8 +162,6 @@ public class CityGMLImpl
 
     @Override
     public void write(CityModel cityModel, String name) {
-        SimpleDateFormat df = new SimpleDateFormat("[HH:mm:ss] ");
-
         CityGMLContext ctx = CityGMLContext.getInstance();
         CityGMLBuilder builder;
         CityGMLWriter writer;
@@ -191,34 +179,6 @@ public class CityGMLImpl
         }
     }
 
-    @Override
-    public void write(List<Building> buildings) {
-        SimpleDateFormat df = new SimpleDateFormat("[HH:mm:ss] ");
-
-        CityGMLContext ctx = CityGMLContext.getInstance();
-        CityGMLBuilder builder;
-        CityGMLWriter writer;
-        try {
-            builder = ctx.createCityGMLBuilder();
-            CityGMLOutputFactory out = builder.createCityGMLOutputFactory(CityGMLVersion.DEFAULT);
-            writer = out.createCityGMLWriter(new File("output/LOD2_Building_v200.gml"), "UTF-8");
-            writer.setPrefixes(CityGMLVersion.DEFAULT);
-            writer.setSchemaLocations(CityGMLVersion.DEFAULT);
-            writer.setIndentString("  ");
-
-            CityModel cityModel = new CityModel();
-            for (Building building : buildings) {
-                cityModel.setBoundedBy(building.calcBoundedBy(BoundingBoxOptions.defaults()));
-                cityModel.addCityObjectMember(new CityObjectMember(building));
-            }
-            writer.write(cityModel);
-            writer.close();
-        } catch (CityGMLWriteException | CityGMLBuilderException ex) {
-            Logger.getLogger(CityGMLImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-        System.out.println(df.format(new Date()) + "CityGML file LOD2_Building_v200.gml written");
-        System.out.println(df.format(new Date()) + "sample citygml4j application successfully finished");
-    }
 
     private BoundarySurfaceProperty createBoundarySurface(CityGMLClass type, Polygon geometry) {
         AbstractBoundarySurface boundarySurface = null;

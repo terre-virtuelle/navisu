@@ -26,6 +26,4 @@ public interface CityGMLServices
 
     void write(CityModel cityModel, String name);
 
-    void write(List<Building> buildings);
-
 }

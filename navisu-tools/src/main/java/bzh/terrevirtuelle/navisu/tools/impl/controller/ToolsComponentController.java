@@ -352,6 +352,8 @@ public class ToolsComponentController
      * @param objComponentServices
      * @param displayServices
      * @param layersManagerServices
+     * @param topologyServices
+     * @param cityGMLServices
      */
     @SuppressWarnings("unchecked")
     public ToolsComponentController(ToolsComponentImpl component, String componentKeyName,
@@ -967,9 +969,13 @@ public class ToolsComponentController
                     isIndexSolidCreated = true;
                     bathymetryDBServices.createIndex("solid", "wallCentroid");
                 }
+                LOGGER.log(Level.INFO, "Insert Buildings over");
+                LOGGER.log(Level.INFO, "Translate Buildings to CityGML format");
                 List<Building> buildings = cityGMLServices.exportToGML(buildingList);
                 CityModel cityModel = cityGMLServices.createCityModel(buildings);
                 cityGMLServices.write(cityModel, "privateData" + SEP + "glm" + SEP + "brest.gml");
+                LOGGER.log(Level.INFO, "Translate Buildings to CityGML format over");
+                instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             }
         });
         return buildingList;
