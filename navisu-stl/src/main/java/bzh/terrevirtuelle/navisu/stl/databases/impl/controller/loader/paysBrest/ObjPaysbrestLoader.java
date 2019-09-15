@@ -21,9 +21,7 @@ import com.owens.oobjloader.builder.FaceVertex;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Polygon;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.Material;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -172,11 +170,14 @@ public class ObjPaysbrestLoader {
             }
             pts.add(pts.get(0));
             Coordinate[] coordinates = jtsServices.toTabCoordinates(pts);
-            Geometry convexHull = jtsServices.getConvexHull(coordinates, new GeometryFactory());
-            Point3DGeo centroid = jtsServices.toPoint3D(convexHull.getCentroid());
+
+            //  Geometry footprint = jtsServices.getConvexHull(coordinates, new GeometryFactory());
+            Geometry footprint = jtsServices.getEnveloppe(coordinates, new GeometryFactory());
+            Point3DGeo centroid = jtsServices.toPoint3D(footprint.getCentroid());
+
             // gov.nasa.worldwind.render.Polygon polygon = jtsServices.getPolygonFromPolygon(convexHull);
             // displayServices.displayPolygon(polygon, layer, Material.RED);
-            solid.setGroundGeom(convexHull);
+            solid.setGroundGeom(footprint);
             solid.setGround(pts);
             solid.setCentroid(centroid);
             result.add(solid);

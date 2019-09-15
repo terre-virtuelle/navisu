@@ -152,7 +152,7 @@ public class CityGMLImpl
         for (Building building : buildings) {
             BoundingShape b = building.calcBoundedBy(BoundingBoxOptions.defaults());
             Envelope envelope = b.getEnvelope();
-            envelope.setSrsName("urn:ogc:def:crs,crs:EPSG:4326");//:: OK for Qgis and FME; KO for cesium. 
+            envelope.setSrsName("urn:ogc:def:crs,crs:EPSG:4326");//:: OK for QGis and FME; KO for cesium. 
             envelope.setSrsDimension(3);
             cityModel.setBoundedBy(b);
             cityModel.addCityObjectMember(new CityObjectMember(building));

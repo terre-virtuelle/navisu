@@ -1311,7 +1311,7 @@ public class StlDBComponentController
                                 }
                                 List<Building> buildings = cityGMLServices.exportToGML(solids);
                                 CityModel cityModel = cityGMLServices.createCityModel(buildings);
-                                cityGMLServices.write(cityModel, "privateData" + SEP + "glm" + SEP + "brest.gml");
+                                cityGMLServices.write(cityModel, "privateData" + SEP + "gml" + SEP + "brest.gml");
                             }
                             buildingsExportToSTL.export(solids, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
                             k++;

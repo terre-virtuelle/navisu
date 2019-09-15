@@ -17,6 +17,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.WKTReader;
@@ -101,6 +102,12 @@ public class JTSImpl
     @Override
     public Geometry getConvexHull(Coordinate[] pts, GeometryFactory geomFactory) {
         return new ConvexHull(pts, geomFactory).getConvexHull();
+    }
+
+    @Override
+    public Geometry getEnveloppe(Coordinate[] pts, GeometryFactory geometryFactory) {
+        LinearRing ring = geometryFactory.createLinearRing(pts);
+        return ring.getEnvelope();
     }
 
     @Override

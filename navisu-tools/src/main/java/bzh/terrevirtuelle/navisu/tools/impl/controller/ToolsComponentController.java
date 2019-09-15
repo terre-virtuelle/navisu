@@ -887,6 +887,8 @@ public class ToolsComponentController
             bathymetryDBServices.connect(buildingsDBName, "localhost", "jdbc:postgresql://",
                     "5432", "org.postgresql.Driver", "admin", "admin");
             LOGGER.log(Level.INFO, "loadingBuildings");
+            solidWgs84List.clear();
+            roofWgs84List.clear();
             try {
                 Path directory = Paths.get(buildingsDataDir);
                 System.out.println("directory " + directory);
@@ -895,9 +897,9 @@ public class ToolsComponentController
                     public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
 
                         if (path.toString().endsWith("obj") && (path.toString().contains("FACADES_TEXTURE"))) {
-                            solidWgs84List.clear();
+                           // solidWgs84List.clear();
                             LOGGER.log(Level.INFO, path.getFileName().toString());
-                            solidWgs84List = objPaysbrestLoader.loadObj(path, lonOffset, latOffset);
+                            solidWgs84List.addAll(objPaysbrestLoader.loadObj(path, lonOffset, latOffset));
                             // DEBUG Wall and roof different color
                             if (previewBuildingsRB.isSelected()) {
                                 for (SolidGeo solid : solidWgs84List) {
@@ -906,9 +908,9 @@ public class ToolsComponentController
                             }
                         }
                         if (path.toString().endsWith("obj") && path.toString().contains("TOITURES_TEXTURE")) {
-                            roofWgs84List.clear();
+                           // roofWgs84List.clear();
                             LOGGER.log(Level.INFO, path.getFileName().toString());
-                            roofWgs84List = objPaysbrestLoader.loadObj(path, lonOffset, latOffset);
+                            roofWgs84List.addAll(objPaysbrestLoader.loadObj(path, lonOffset, latOffset));
                             // DEBUG Wall and roof different color
                             if (previewBuildingsRB.isSelected()) {
                                 for (SolidGeo solid : roofWgs84List) {
@@ -973,7 +975,7 @@ public class ToolsComponentController
                 LOGGER.log(Level.INFO, "Translate Buildings to CityGML format");
                 List<Building> buildings = cityGMLServices.exportToGML(buildingList);
                 CityModel cityModel = cityGMLServices.createCityModel(buildings);
-                cityGMLServices.write(cityModel, "privateData" + SEP + "glm" + SEP + "brest.gml");
+                cityGMLServices.write(cityModel, "privateData" + SEP + "gml" + SEP + "brest.gml");
                 LOGGER.log(Level.INFO, "Translate Buildings to CityGML format over");
                 instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             }
