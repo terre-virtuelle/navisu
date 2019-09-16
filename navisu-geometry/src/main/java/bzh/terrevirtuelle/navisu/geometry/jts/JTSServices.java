@@ -30,7 +30,7 @@ public interface JTSServices
 
     Geometry getConvexHull(Coordinate[] pts, GeometryFactory geomFactory);
 
-    Geometry getEnveloppe(Coordinate[] pts, GeometryFactory geomFactory);
+    Geometry getEnvelope(Coordinate[] pts, GeometryFactory geomFactory);
 
     Coordinate[] toTabCoordinates(List<Point3DGeo> pts);
 

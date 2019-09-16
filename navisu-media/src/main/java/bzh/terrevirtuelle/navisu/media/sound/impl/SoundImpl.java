@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.media.sound.Sound;
 import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
+import com.sun.media.jfxmedia.MediaException;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import org.capcaval.c3.component.ComponentState;
@@ -35,16 +36,19 @@ public class SoundImpl implements Sound, SoundServices,
     public void open(String... config) {
         if (canOpen(config[0])) {
             guiAgentServices.getJobsManager().newJob("", (ProgressHandle progressHandle) -> {
-
-                media = new Media("file:///" + config[0]);
-                mediaPlayer = new MediaPlayer(media);
-                if (mediaPlayer != null) {
-                    if (config.length > 0) {
-                        mediaPlayer.setAutoPlay(Boolean.valueOf(config[1]));
+                try {
+                    media = new Media("file:///" + config[0]);
+                    mediaPlayer = new MediaPlayer(media);
+                    if (mediaPlayer != null) {
+                        if (config.length > 0) {
+                            mediaPlayer.setAutoPlay(Boolean.valueOf(config[1]));
+                        }
+                        if (config.length > 1) {
+                            mediaPlayer.setCycleCount(Integer.parseInt(config[2]));
+                        }
                     }
-                    if (config.length > 1) {
-                        mediaPlayer.setCycleCount(Integer.parseInt(config[2]));
-                    }
+                } catch (MediaException e) {
+                    System.out.println(e);
                 }
             });
         }

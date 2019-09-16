@@ -105,9 +105,13 @@ public class JTSImpl
     }
 
     @Override
-    public Geometry getEnveloppe(Coordinate[] pts, GeometryFactory geometryFactory) {
-        LinearRing ring = geometryFactory.createLinearRing(pts);
-        return ring.getEnvelope();
+    public Geometry getEnvelope(Coordinate[] pts, GeometryFactory geometryFactory) {
+        if (pts.length >= 4) {
+            MultiPoint footprint = geometryFactory.createMultiPoint(pts);
+            return footprint.getEnvelope();
+        } else {
+            return null;
+        }
     }
 
     @Override

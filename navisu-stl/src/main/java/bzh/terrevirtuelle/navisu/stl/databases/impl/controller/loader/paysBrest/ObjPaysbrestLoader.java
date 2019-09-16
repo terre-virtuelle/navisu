@@ -90,7 +90,7 @@ public class ObjPaysbrestLoader {
         System.out.println("solidWgs84List : " + solidWgs84List.size());
 
         solidGeoList = setTopologyProperties(solidWgs84List);
-        instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
+        //instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
         // return solidGeoList;
 
         return solidGeoList;
@@ -171,16 +171,18 @@ public class ObjPaysbrestLoader {
             pts.add(pts.get(0));
             Coordinate[] coordinates = jtsServices.toTabCoordinates(pts);
 
-            //  Geometry footprint = jtsServices.getConvexHull(coordinates, new GeometryFactory());
-            Geometry footprint = jtsServices.getEnveloppe(coordinates, new GeometryFactory());
-            Point3DGeo centroid = jtsServices.toPoint3D(footprint.getCentroid());
+            // Geometry footprint = jtsServices.getConvexHull(coordinates, new GeometryFactory());
+            Geometry footprint = jtsServices.getEnvelope(coordinates, new GeometryFactory());
+            if (footprint != null) {
+                Point3DGeo centroid = jtsServices.toPoint3D(footprint.getCentroid());
 
-            // gov.nasa.worldwind.render.Polygon polygon = jtsServices.getPolygonFromPolygon(convexHull);
-            // displayServices.displayPolygon(polygon, layer, Material.RED);
-            solid.setGroundGeom(footprint);
-            solid.setGround(pts);
-            solid.setCentroid(centroid);
-            result.add(solid);
+                // gov.nasa.worldwind.render.Polygon polygon = jtsServices.getPolygonFromPolygon(convexHull);
+                // displayServices.displayPolygon(polygon, layer, Material.RED);
+                solid.setGroundGeom(footprint);
+                solid.setGround(pts);
+                solid.setCentroid(centroid);
+                result.add(solid);
+            }
         }
 
         return result;
