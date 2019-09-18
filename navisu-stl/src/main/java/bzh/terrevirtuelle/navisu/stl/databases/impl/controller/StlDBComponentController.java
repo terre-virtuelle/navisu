@@ -1030,15 +1030,6 @@ public class StlDBComponentController
                     marsys = mnsysDbLoader.retrieveIn(latMin, lonMin, latMax, lonMax);
                 }
                 if (generateStlCB.isSelected() && !generateSvgCB.isSelected()) {
-
-                    // DEBUG
-                    autoBoundCB.setSelected(true);
-                    // stlPreviewCB.setSelected(false);
-                    /*
-                    if (autoBoundCB.isSelected()) {
-                           stlGuiController.displayGuiGridBM(s57Layer);
-                    }
-                     */
                     //ELEVATION AND TILES
                     if ((elevationRB.isSelected() && noBathyRB.isSelected())
                             || (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected()))) {
@@ -1054,16 +1045,6 @@ public class StlDBComponentController
                     }
                     if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {
                         grids = createElevationAndDepare(lat0, lon0, lat1, lon1);
-                    } else {
-                        /*
-                        Point3DGeo[][] grid = null;
-                        if (autoBoundCB.isSelected()) {
-                            stlGuiController.displayGuiGridBM(s57Layer);
-                        } else {
-                            grid = delaunayServices.toGridTab(latMin, lonMin, latMax, lonMax, gridY, gridX, highestElevationBathy);
-                        }
-                        grids = createGrids(grid, tileCount);
-                         */
                     }
 
                     if (grids != null) {
@@ -1088,8 +1069,6 @@ public class StlDBComponentController
                             });
                             k++;
                         }
-                        // stlComponentServices.exportRotateBaseSTL("data/stl/base/baseNewRotated.stl", "data/stl/base/baseNew.stl", 5.42);
-                        //if (generateStlCB.isSelected()) {
                         //Support
                         k = 0;
                         gridBoxes.forEach((gb) -> {
@@ -1102,7 +1081,6 @@ public class StlDBComponentController
                                 if (supportType.equals("With magnet")) {
                                     LOGGER.info("In export GridBox3D in STL");
                                     new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
-                                    LOGGER.info("In export exportBaseSTL en STL");
                                     LOGGER.info("Out export exportBaseSTL in STL");
                                     stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_" + i + "," + j + ".stl");
                                     LOGGER.info("Out export exportBaseSTL in STL");
@@ -1110,16 +1088,15 @@ public class StlDBComponentController
                                 if (supportType.equals("Simple")) {
                                     tileSideZ = 1.0;
                                     LOGGER.info("In export GridBox3D in STL");
-                                    new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, 1.0);
-                                    LOGGER.info("In export exportBaseSTL en STL");
+                                    new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                                     LOGGER.info("Out export exportBaseSTL in STL");
                                     stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_1mm.stl");
                                     LOGGER.info("Out export exportBaseSTL in STL");
                                 }
                                 if (supportType.equals("No support")) {
-                                    tileSideZ = 1.0;
+                                    tileSideZ = -1.0;
                                     LOGGER.info("In export GridBox3D in STL");
-                                    new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, 1.0);
+                                    new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                                     LOGGER.info("In export exportBaseSTL en STL");
                                 }
                             }
@@ -1193,7 +1170,6 @@ public class StlDBComponentController
                                     List<Polygon> polygonList = depareExportToSTL.initExport();
                                     displayServices.displayPolygons(polygonList, s57Layer, Material.GREEN);
                                     List<Polygon> selectedPolygonList = stlGuiController.depareSelection(polygonList, s57Layer);
-                                    // speakerServices.read("Supprimez les depth area non conformes");
                                     instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND_1, "true", "1");
 
                                     while (!validSTLButton.isPressed()) {
@@ -1209,7 +1185,6 @@ public class StlDBComponentController
                                     LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
                                     k++;
                                 }
-
                             });
                         }
                         //BUOYAGE
@@ -1292,31 +1267,27 @@ public class StlDBComponentController
                         }
                         // Buildings 
                         k = 0;
-                        //  if (boundList != null && !boundList.isEmpty()) {
                         buildingsConnection = databaseServices.connect(buildingsDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-
                         for (Point3DGeo[][] g : grids) {
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
-                            //if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() )) {
-                            String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
-                            scaleCompute(g);
-                            List<SolidGeo> solids = buildingsExportToSTL.read(buildingsConnection, g);
-                            if (buildingsPreviewCB.isSelected()) {
-                                Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
-                                    Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
-                                int color = 0;
-                                for (SolidGeo solid : solids) {
-                                    displayServices.displayBuildingGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
+                            if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
+                                String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                                scaleCompute(g);
+                                List<SolidGeo> solids = buildingsExportToSTL.read(buildingsConnection, g);
+                                buildingsExportToSTL.export(solids, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
+                                if (buildingsPreviewCB.isSelected()) {
+                                    Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
+                                        Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
+                                    int color = 0;
+                                    for (SolidGeo solid : solids) {
+                                        displayServices.displayBuildingGeoAsPolygon(solid, 0.0, s57Layer, materials[color++ % 8]);
+                                    }
                                 }
-                                List<Building> buildings = cityGMLServices.exportToGML(solids);
-                                CityModel cityModel = cityGMLServices.createCityModel(buildings);
-                                cityGMLServices.write(cityModel, "privateData" + SEP + "gml" + SEP + "brest.gml");
                             }
-                            buildingsExportToSTL.export(solids, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
                             k++;
+                            LOGGER.info("Out export Buildings en STL");
                         }
-                        //  }
                         // DAE
                         k = 0;
                         if (boundList != null && !boundList.isEmpty()) {

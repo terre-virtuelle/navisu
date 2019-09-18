@@ -660,7 +660,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button fx:id="tilesSelectionStartButton" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Start" />
+                              <Button fx:id="tilesSelectionStartButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Start" />
                            </children>
                         </GridPane>
                      </children>

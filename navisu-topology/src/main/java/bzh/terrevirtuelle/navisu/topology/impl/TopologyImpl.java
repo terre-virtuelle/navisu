@@ -723,7 +723,7 @@ public class TopologyImpl
      */
     @Override
     public Geometry wktPolygonFromString(String geometry) {
-        System.out.println("geometry : " + geometry);
+       // System.out.println("geometry : " + geometry);
         String tmp = geometry;
         tmp = tmp.replace("POLYGON((", "");
         tmp = tmp.replace("))", "");
@@ -759,7 +759,8 @@ public class TopologyImpl
             double elv = Double.parseDouble(coord[2]);
             pts.add(new Point3DGeo(lat, lon, elv));
         }
-        return new FaceGeo(pts);
+        FaceGeo f = new FaceGeo(pts);
+        return f;
     }
 
     /*
@@ -777,7 +778,6 @@ public class TopologyImpl
         tmp = tmp.replace("GEOMETRYCOLLECTION(", "");
         tmp = tmp.replace("))", ")");
         tmp = tmp.replace("),", ")),");
-        //  System.out.println("tmp : " +tmp);
         String[] tab = tmp.split("\\),");
         for (String f : tab) {
             faces.add(getFaceGeofromMulitipointWKT(f));

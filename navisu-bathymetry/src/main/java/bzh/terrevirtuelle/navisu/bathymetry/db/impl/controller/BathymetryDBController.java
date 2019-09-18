@@ -476,6 +476,7 @@ public class BathymetryDBController {
         } else {
             alert();
         }
+        
         return result;
     }
 

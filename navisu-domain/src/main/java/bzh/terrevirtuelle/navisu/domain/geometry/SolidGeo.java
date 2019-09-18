@@ -6,7 +6,6 @@
 package bzh.terrevirtuelle.navisu.domain.geometry;
 
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.Polygon;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

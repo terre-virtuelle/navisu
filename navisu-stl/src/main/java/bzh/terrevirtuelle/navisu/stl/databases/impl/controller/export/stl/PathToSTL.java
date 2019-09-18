@@ -56,8 +56,8 @@ public class PathToSTL {
     }
 
     public String toFacet(Path path,
-            double latMin, double lonMin, double latScale, double lonScale,
-            double verticalOffset) {
+            double latMin, double lonMin, double latScale, double lonScale, double verticalOffset) {
+
         String facet;
         Vec3d[] vec3d = new Vec3d[3];
         Vec3d normal;
@@ -77,19 +77,23 @@ public class PathToSTL {
         double z0 = vec3d[0].z + verticalOffset;
         double z1 = vec3d[1].z + verticalOffset;
         double z2 = vec3d[2].z + verticalOffset;
-        facet = "facet normal ";
-        facet += normal.x + " " + normal.y + " " + normal.z + " \n";
-        facet += "outer loop \n";
-        facet += "vertex " + vec3d[0].x + " " + vec3d[0].y + " " + z0 + " \n";
-        facet += "vertex " + vec3d[1].x + " " + vec3d[1].y + " " + z1 + " \n";
-        facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + z2 + " \n";
-        facet += "endloop \n";
-        facet += "endfacet \n";
-        if (facet.contains("NaN")) {
-            System.out.println("facet.contains(\"NaN\")" + edge1 + " " + edge2);
-            facet = "";
+        if (z0 == -1 && z1 == -1 && z2 == -1) {
+            return "";
+        } else {
+            facet = "facet normal ";
+            facet += normal.x + " " + normal.y + " " + normal.z + " \n";
+            facet += "outer loop \n";
+            facet += "vertex " + vec3d[0].x + " " + vec3d[0].y + " " + z0 + " \n";
+            facet += "vertex " + vec3d[1].x + " " + vec3d[1].y + " " + z1 + " \n";
+            facet += "vertex " + vec3d[2].x + " " + vec3d[2].y + " " + z2 + " \n";
+            facet += "endloop \n";
+            facet += "endfacet \n";
+            if (facet.contains("NaN")) {
+                System.out.println("facet.contains(\"NaN\")" + edge1 + " " + edge2);
+                facet = "";
+            }
+            return facet;
         }
-        return facet;
     }
 
     public Vec3d toVec3d(Position position, double latMin, double lonMin, double latScale, double lonScale) {

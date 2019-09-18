@@ -48,8 +48,6 @@ public class GridBox3DExportToSTL
         this.filename = filename;
         double latMin = gridBox.getGrid()[0][0].getLatitude();
         double lonMin = gridBox.getGrid()[0][0].getLongitude();
-        // PointPlacemark pointPlacemark=new PointPlacemark(Position.fromDegrees(latMin,lonMin,gridBox.getGrid()[0][0].getElevation()+verticalOffset)); 
-        // layer.addRenderable(pointPlacemark);
         String[] head = filename.split("/");
         try {
             result = "solid " + head[head.length - 1] + "\n";
@@ -57,7 +55,6 @@ public class GridBox3DExportToSTL
             //Path OK
             // displayServices.displayPaths(gridPaths, layer, Material.MAGENTA, verticalOffset);
             gridPaths.forEach((p) -> {
-
                 result += toFacet(p, latMin, lonMin, latScale, lonScale, verticalOffset);
             });
             result += "endsolid " + head[head.length - 1] + "\n";
