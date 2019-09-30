@@ -144,6 +144,8 @@ import com.google.common.collect.ImmutableMap;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.logging.FileHandler;
 import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
@@ -1276,9 +1278,16 @@ public class StlDBComponentController
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     LOGGER.info("In export Buildings en STL");
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                                    String filenamebuildings = DEFAULT_STL_PATH + outFileTF.getText() + "_buildings_"+ i + "," + j + ".stl";
+                                    try {
+                                        java.nio.file.Path path = Paths.get(filenamebuildings);
+                                        Files.write(path, "".getBytes(), StandardOpenOption.CREATE);
+                                    } catch (IOException ex) {
+                                        Logger.getLogger(GridBox3DExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                                    }
                                     scaleCompute(g);
                                     List<SolidGeo> solids = buildingsExportToSTL.read(buildingsConnection, g);
-                                    buildingsExportToSTL.export(solids, filename, latScale, lonScale, tileSideZ, lowestElevationAlti);
+                                    buildingsExportToSTL.export(solids, filenamebuildings, latScale, lonScale, tileSideZ, lowestElevationAlti);
                                     if (buildingsPreviewCB.isSelected()) {
                                         Material[] materials = {Material.GREEN, Material.BLUE, Material.YELLOW, Material.PINK,
                                             Material.CYAN, Material.MAGENTA, Material.ORANGE, Material.RED};
@@ -1572,7 +1581,7 @@ public class StlDBComponentController
             lon0 = realGrid[0][0].getLongitude();
             lat1 = realGrid[lines - 1][0].getLatitude();
             lon1 = realGrid[0][cols - 1].getLongitude();
-           
+
             //Elevation on the support 
             for (int ii = 0; ii < lines; ii++) {
                 for (int jj = 0; jj < cols; jj++) {
@@ -1901,20 +1910,19 @@ public class StlDBComponentController
 
         double realLatMax = grid[grid.length - 1][0].getLatitude();
         double realLonMax = grid[0][grid[0].length - 1].getLongitude();
-      //  System.out.println("realLatMin : " + realLatMin);
-      //  System.out.println("realLonMin : " + realLonMin);
-      //  System.out.println("realLatMax : " + realLatMax);
-      //  System.out.println("realLonMax : " + realLonMax);
+        //  System.out.println("realLatMin : " + realLatMin);
+        //  System.out.println("realLonMin : " + realLonMin);
+        //  System.out.println("realLatMax : " + realLatMax);
+        //  System.out.println("realLonMax : " + realLonMax);
 
         latRangeMetric = geodesyServices.getDistanceM(realLatMin, realLonMin, realLatMax, realLonMin);
-        lonRangeMetric = geodesyServices.getDistanceM(realLatMin, realLonMin, realLatMin, realLonMax);      
+        lonRangeMetric = geodesyServices.getDistanceM(realLatMin, realLonMin, realLatMin, realLonMax);
 
         latScale = tileSideY / latRangeMetric;
         lonScale = tileSideX / lonRangeMetric;
-        
-      //  System.out.println("latScaleChart : " + latRangeMetric / (tileSideY * tileCount));
-       // System.out.println("lonScaleChart : " + lonRangeMetric / (tileSideX * tileCount));
-        
+
+        //  System.out.println("latScaleChart : " + latRangeMetric / (tileSideY * tileCount));
+        // System.out.println("lonScaleChart : " + lonRangeMetric / (tileSideX * tileCount));
         Platform.runLater(() -> {
             rangeLatTF.setText(Integer.toString((int) latRangeMetric));
             rangeLonTF.setText(Integer.toString((int) lonRangeMetric));
