@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.geometry.jts;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import gov.nasa.worldwind.render.Path;
@@ -54,7 +55,11 @@ public interface JTSServices
 
     List<Point3DGeo> merge(List<Point3DGeo> pts0, List<Point3DGeo> pts1);
 
-    List<Path> createDelaunayToPath(List<Point3DGeo> pts);
+    List<Path> createConformingDelaunayToPath(List<Point3DGeo> pts);
+
+    List<Path> createDelaunayPoly2TriToPath(List<Point3DGeo> pts);
+
+    List<Path> createDelaunayEarClippingToPath(List<Point3DGeo> pts);
 
     List<Geometry> createDelaunay(List<Point3DGeo> pts);
 

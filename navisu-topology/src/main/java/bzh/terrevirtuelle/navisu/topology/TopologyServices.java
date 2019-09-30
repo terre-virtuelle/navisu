@@ -19,6 +19,7 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolylines;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import org.capcaval.c3.component.ComponentService;
@@ -125,6 +126,8 @@ public interface TopologyServices
      */
     Polygon wktPolygonToWwjPolygon(String geometry);
 
+    Path wktPolygonToWwjPath(String geometry);
+
     Geometry wktPolygonZFromString(String geometry);
 
     Geometry wktFromPoint(Point3DGeo point);
@@ -160,6 +163,8 @@ public interface TopologyServices
      */
     List<Polygon> wktMultiPolygonToWwjPolygons(String geometry);
 
+    List<Path> wktGeometryCollectionToWwjPaths(Geometry polygons);
+
     /**
      *
      * @param geometry
@@ -193,6 +198,8 @@ public interface TopologyServices
     List<Polygon> wktPolygonsToWwjPolygons(List<Geometry> polygons);
 
     List<Path> wktPolygonsToWwjPaths(List<Geometry> polygons);
+
+    List<Path> wktLinestringToWwjPaths(Collection lines);
 
     /*
     Filter on area of each polygon

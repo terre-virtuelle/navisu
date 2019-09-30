@@ -39,6 +39,7 @@ public class PathToSTL {
             double latScale, double lonScale,
             double verticalOffset) {
         this.filename = filename;
+        System.out.println("filename : " + filename);
         String[] head = filename.split("/");
         try {
             result = "solid " + solidname + "\n";
@@ -49,6 +50,7 @@ public class PathToSTL {
             result += "endsolid " + solidname + "\n";
             java.nio.file.Path path = Paths.get(filename);
             Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
+         // Files.write(path, result.getBytes(),  StandardOpenOption.CREATE);
         } catch (IOException ex) {
             Logger.getLogger(GridBox3DExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }

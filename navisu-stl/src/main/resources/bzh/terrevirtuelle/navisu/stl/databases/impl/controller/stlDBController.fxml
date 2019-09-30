@@ -340,9 +340,9 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
-                                                <CheckBox fx:id="stlPreviewCB" mnemonicParsing="false" selected="true" text="STL preview" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                                <CheckBox fx:id="stlPreviewCB" mnemonicParsing="false" text="STL preview" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                                                 <CheckBox fx:id="depareVisuCB" mnemonicParsing="false" prefHeight="18.0" prefWidth="108.0" text="Depare preview." />
-                                                <CheckBox fx:id="buildingsPreviewCB" mnemonicParsing="false" selected="true" text="Bat. preview" GridPane.columnIndex="1" />
+                                                <CheckBox fx:id="buildingsPreviewCB" mnemonicParsing="false" text="Bat. preview" GridPane.columnIndex="1" />
                                              </children>
                                           </GridPane>
                                           <Label text="Visualization" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
@@ -363,7 +363,7 @@
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <RadioButton fx:id="mergeLitto3dRB" mnemonicParsing="false" selected="true" text="Merge Litto3D" />
+                                                      <RadioButton fx:id="mergeLitto3dRB" mnemonicParsing="false" text="Merge Litto3D" />
                                                    </children>
                                                 </GridPane>
                                              </children>
@@ -407,7 +407,7 @@
                                             </rowConstraints>
                                           </GridPane>
                                           <ChoiceBox fx:id="buildingsDatabasesCB" prefHeight="25.0" prefWidth="153.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                                          <RadioButton fx:id="buildingsRB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="128.0" text="Buildings" GridPane.rowIndex="6" />
+                                          <RadioButton fx:id="buildingsRB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="128.0" text="Buildings database" GridPane.rowIndex="6" />
                                           <TextField fx:id="buildingsDatabaseTF" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                        </children>
                                     </GridPane>
@@ -521,7 +521,7 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Button fx:id="slConsEditorButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="284.0" text="SlCons Editor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Button fx:id="slConsEditorButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="284.0" text="SlCons Editor" GridPane.columnIndex="1" />
                                                 <Button fx:id="importShapefileButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Import Shapefile" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <GridPane GridPane.columnIndex="3" GridPane.rowIndex="2">
                                                   <columnConstraints>
@@ -650,7 +650,6 @@
                               <Insets bottom="10.0" />
                            </GridPane.margin>
                               </GridPane>
-                        <CheckBox fx:id="autoBoundCB" mnemonicParsing="false" text="From grid" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

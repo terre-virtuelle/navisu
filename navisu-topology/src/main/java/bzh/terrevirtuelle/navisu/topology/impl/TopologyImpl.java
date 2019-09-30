@@ -34,7 +34,7 @@ import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolylines;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -214,6 +214,58 @@ public class TopologyImpl
         return polygon;
     }
 
+    @Override
+    public Path wktPolygonToWwjPath(String geometry) {
+        List<Position> positions;
+        Path path = null;
+        positions = wktPolygonToPositions(geometry);
+        System.out.println("0 : " + positions.get(0) + "end : " + positions.get(positions.size() - 1));
+        path = new Path(positions);
+        return path;
+    }
+
+    @Override
+    public List<Path> wktLinestringToWwjPaths(Collection lines) {
+        List<Path> result = new ArrayList<>();
+        String lineString = lines.toString();
+        lineString = lineString.replace("[", "");
+        lineString = lineString.replace("]", "");
+        lineString = lineString.replace("),", "");
+        lineString = lineString.replace("\\(", "");
+        lineString = lineString.trim();
+        System.out.println("lineString : " + lineString);
+        String[] tab = lineString.split("LINESTRING");
+        System.out.println("tab : " + tab.length);
+        for (String s : tab) {
+
+            //s = s.trim();
+            s = s.replace("(", "");
+            s = s.trim();
+            s = s.replace(")", "");
+            //  System.out.println("s : " + s);
+
+            String[] tmp = s.split(",");
+            if (tmp.length > 1) {
+                // System.out.println("tmp : " + tmp.length);
+                String f = tmp[0].trim();
+                String[] ff = f.split("\\s+");
+                String l = tmp[1].trim();
+                String[] ll = l.split("\\s+");
+
+                result.add(new Path(
+                        new Position(Angle.fromDegrees(Double.valueOf(ff[1].trim())),
+                                Angle.fromDegrees(Double.valueOf(ff[0].trim())),
+                                0.0),
+                        new Position(Angle.fromDegrees(Double.valueOf(ll[1].trim())),
+                                Angle.fromDegrees(Double.valueOf(ll[0].trim())),
+                                0.0)));
+
+            }
+        }
+         System.out.println("result : "+ result.size());
+        return result;
+    }
+
     //MULTILINESTRING((-4.49067 48.37985,-4.49005 48.37938,-4.48888 48.3785))
     @Override
     public Polygon wktMultiLineToWwjPolygon(String geometry) {
@@ -227,7 +279,7 @@ public class TopologyImpl
                 try {
                     positions.add(new Position(Angle.fromDegrees(Double.valueOf(posTab1[1])),
                             Angle.fromDegrees(Double.valueOf(posTab1[0])), 0));
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
 
                 }
             }
@@ -410,6 +462,25 @@ public class TopologyImpl
             polygons.add(new Polygon(positions));
         }
         return polygons;
+    }
+
+    /*
+    GEOMETRYCOLLECTION (
+       POLYGON ((-4.50236274708401 48.37778085361472, -4.50236274708401 48.37778085361472)), 
+       POLYGON ((-4.501922 48.377567, -4.501922 48.377567, -4.501636 48.37753))
+    )
+     */
+    @Override
+    public List<Path> wktGeometryCollectionToWwjPaths(Geometry polygons) {
+        List<Path> result = new ArrayList<>();
+        String geomCollection = polygons.toString();
+        geomCollection = geomCollection.replace("GEOMETRYCOLLECTION (", "");
+        geomCollection = geomCollection.replace(")))", "))");
+        String[] tab = geomCollection.split(",");
+        for (String s : tab) {
+            result.add(wktPolygonToWwjPath(s));
+        }
+        return result;
     }
 
     @Override
@@ -723,7 +794,7 @@ public class TopologyImpl
      */
     @Override
     public Geometry wktPolygonFromString(String geometry) {
-       // System.out.println("geometry : " + geometry);
+        // System.out.println("geometry : " + geometry);
         String tmp = geometry;
         tmp = tmp.replace("POLYGON((", "");
         tmp = tmp.replace("))", "");

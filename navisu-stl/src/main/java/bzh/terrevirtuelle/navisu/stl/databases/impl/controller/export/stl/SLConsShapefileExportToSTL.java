@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
@@ -16,6 +17,7 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.util.VecBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ public class SLConsShapefileExportToSTL
     protected static final Logger LOGGER = Logger.getLogger(SLConsShapefileExportToSTL.class.getName());
 
     protected JTSServices jtsServices;
+    protected TopologyServices topologyServices;
     protected DisplayServices displayServices;
     protected RenderableLayer layer;
     protected Shapefile shapefile;
@@ -47,11 +50,13 @@ public class SLConsShapefileExportToSTL
     public SLConsShapefileExportToSTL(GeodesyServices geodesyServices,
             JTSServices jtsServices,
             DisplayServices displayServices,
+            TopologyServices topologyServices,
             Shapefile shapefile, GridBox3D gridBox3D, double heightSlCons,
             RenderableLayer layer) {
         super(geodesyServices);
         this.jtsServices = jtsServices;
         this.displayServices = displayServices;
+        this.topologyServices = topologyServices;
         this.shapefile = shapefile;
         this.gridBox3D = gridBox3D;
         this.heightSlCons = heightSlCons;
@@ -75,7 +80,6 @@ public class SLConsShapefileExportToSTL
                 Logger.getLogger(SLConsShapefileExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-
     }
 
     protected void createPolygon(ShapefileRecord record, double verticalExaggeration,
@@ -89,20 +93,22 @@ public class SLConsShapefileExportToSTL
 
         List<Path> pathList = new ArrayList<>();
         List<Position> topList = new ArrayList<>();
-        // List<Position> topListTmp = new ArrayList<>();
         List<Position> bottomList = new ArrayList<>();
+
         for (int i = 0; i < record.getNumberOfParts(); i++) {
+            topList.clear();
+            bottomList.clear();
             VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
             Iterable<? extends Position> pos = buffer.getPositions();
-            //inverser la liste
             for (Position p : pos) {
                 topList.add(new Position(p.getLatitude(), p.getLongitude(), height));
-                bottomList.add(new Position(p.getLatitude(), p.getLongitude(), 0.0));
+                bottomList.add(new Position(p.getLatitude(), p.getLongitude(), 1.0));
             }
-            //Collections.reverse(topList);
-            //Collections.reverse(bottomList);
+            Polygon boundary = new Polygon(topList);
+            displayServices.displayPolygon(boundary, layer, Material.YELLOW);
             pathList = createPaths(topList, bottomList);
         }
+
         return pathList;
     }
 
@@ -112,11 +118,11 @@ public class SLConsShapefileExportToSTL
         for (int j = 0; j < topList.size() - 1; j++) {
             List<Position> tmp0 = new ArrayList<>();
             List<Position> tmp1 = new ArrayList<>();
+
             tmp0.add(bottomList.get(j));
             tmp0.add(bottomList.get(j + 1));
             tmp0.add(topList.get(j + 1));
             tmp0.add(bottomList.get(j));
-
             Path path0 = new Path(tmp0);
 
             tmp1.add(bottomList.get(j));
@@ -137,12 +143,12 @@ public class SLConsShapefileExportToSTL
             Point3DGeo tmp1 = new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), 0.0);
             bottom.add(tmp1);
         });
-        List<Path> paths_0 = jtsServices.createDelaunayToPath(top);
+        List<Path> paths_0 = jtsServices.createDelaunayPoly2TriToPath(top);
         resultList.addAll(paths_0);
-        paths_0 = jtsServices.createDelaunayToPath(bottom);
-        resultList.addAll(paths_0);
-        displayServices.displayPolygonsFromPaths(resultList, layer, Material.YELLOW, 0.5);
+        List<Path> paths_1 = jtsServices.createDelaunayPoly2TriToPath(bottom);
+        resultList.addAll(paths_1);
 
+         displayServices.displayPaths(paths_0, layer, Material.YELLOW, 10.0);
         return resultList;
     }
 }

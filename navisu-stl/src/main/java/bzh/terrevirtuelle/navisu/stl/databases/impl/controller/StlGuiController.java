@@ -81,7 +81,7 @@ public class StlGuiController {
     protected double tileSideX;
     protected double tileSideY;
     protected double tileSideZ;
-    protected int tileCount;
+    protected int tileCount=1;
 
     protected GeodesyServices geodesyServices;
     protected DisplayServices displayServices;
@@ -236,6 +236,7 @@ public class StlGuiController {
             LON_MAX = Double.toString(lon1);
             OutputStream output;
             Properties properties = new Properties();
+         //   System.out.println("properties");
             try {
                 output = new FileOutputStream(CACHE_FILE_NAME);
                 properties.setProperty("LAT_MIN", LAT_MIN);

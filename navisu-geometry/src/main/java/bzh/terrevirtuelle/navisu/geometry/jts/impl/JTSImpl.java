@@ -17,12 +17,15 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.WKTReader;
 import com.vividsolutions.jts.operation.buffer.BufferOp;
+import com.vividsolutions.jts.triangulate.ConformingDelaunayTriangulator;
+import com.vividsolutions.jts.triangulate.ConstraintVertex;
 import com.vividsolutions.jts.triangulate.DelaunayTriangulationBuilder;
+import com.vividsolutions.jts.triangulate.Segment;
+import com.vividsolutions.jts.triangulate.quadedge.QuadEdgeSubdivision;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
@@ -30,12 +33,14 @@ import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mxb.jts.triangulate.EarClipper;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 import org.opensphere.geometry.algorithm.ConcaveHull;
@@ -352,20 +357,47 @@ public class JTSImpl
     Assert.assertEquals(subdivisionEdges.size(), 3);
 }
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public List<Path> createDelaunayToPath(List<Point3DGeo> pts) {
+    public List<Path> createConformingDelaunayToPath(List<Point3DGeo> pts) {
+        Coordinate[] coordinateTab = toTabCoordinates(pts);
+        ArrayList<Segment> segments = new ArrayList<>();
+        for (int i = 0; i < coordinateTab.length - 1; i++) {
+            segments.add(new Segment(coordinateTab[i], coordinateTab[i + 1]));
+        }
+        segments.add(new Segment(coordinateTab[coordinateTab.length - 1], coordinateTab[0]));
+        final ArrayList vertices = new ArrayList<>();
+        for (final Segment segment : segments) {
+            vertices.add(new ConstraintVertex(segment.getStart()));
+        }
+        ConformingDelaunayTriangulator cdt = new ConformingDelaunayTriangulator(new ArrayList<>(), 1E-5);
+        cdt.setConstraints(segments, vertices);
+        cdt.formInitialDelaunay();
+        cdt.enforceConstraints();
+        final QuadEdgeSubdivision subdivision = cdt.getSubdivision();
+
+        Collection subdivisionEdges = subdivision.getEdges();
+        //  System.out.println("subdivisionEdges : " + subdivisionEdges);
+
+        return topologyServices.wktLinestringToWwjPaths(subdivisionEdges);
+    }
+
+    @Override
+    public List<Path> createDelaunayPoly2TriToPath(List<Point3DGeo> pts) {
 
         double elevation = pts.get(0).getElevation();
         List<Path> result = new ArrayList<>();
         List<PolygonPoint> polygonPoints = new ArrayList<>();
-
-        int i = 0;
         for (Point3DGeo p : pts) {
-            polygonPoints.add(new PolygonPoint(p.getLatitude(), p.getLongitude(), i++));
+            polygonPoints.add(new PolygonPoint(p.getLatitude(), p.getLongitude(), 0));
         }
-        org.poly2tri.geometry.polygon.Polygon polygon = new org.poly2tri.geometry.polygon.Polygon(polygonPoints);
-        Poly2Tri.triangulate(polygon);
-        // Gather triangles
+        org.poly2tri.geometry.polygon.Polygon polygon = null;
+        try {
+            polygon = new org.poly2tri.geometry.polygon.Polygon(polygonPoints);
+            Poly2Tri.triangulate(polygon);
+        } catch (Exception e) {
+            System.out.println("e : " + e);
+        }
         List<DelaunayTriangle> triangles1 = polygon.getTriangles();
         Iterator<DelaunayTriangle> it = triangles1.iterator();
         while (it.hasNext()) {
@@ -378,6 +410,19 @@ public class JTSImpl
             positions.add(new Position(Angle.fromDegrees(tpTab[0].getX()), Angle.fromDegrees(tpTab[0].getY()), elevation));
             result.add(new Path(positions));
         }
+        return result;
+    }
+
+    @Override
+    public List<Path> createDelaunayEarClippingToPath(List<Point3DGeo> pts) {
+
+        Coordinate[] coordinateTab = toTabCoordinates(pts);
+
+        com.vividsolutions.jts.geom.Polygon poly = new GeometryFactory().createPolygon(coordinateTab);
+        EarClipper clipper = new EarClipper(poly);
+        Geometry ears = clipper.getResult();
+        List<Path> result = topologyServices.wktGeometryCollectionToWwjPaths(ears);
+        //  System.out.println(ears);
         return result;
     }
 
@@ -403,7 +448,7 @@ public class JTSImpl
                 data.add(pts[i][j]);
             }
         }
-        return createDelaunayToPath(data);
+        return createDelaunayPoly2TriToPath(data);
     }
 
     @Override

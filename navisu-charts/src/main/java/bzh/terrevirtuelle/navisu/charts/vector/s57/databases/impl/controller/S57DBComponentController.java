@@ -708,7 +708,7 @@ public class S57DBComponentController
                     points.add(s.getPoint3D());
                 }
 
-                List<Path> tri = jtsServices.createDelaunayToPath(points);
+                List<Path> tri = jtsServices.createDelaunayPoly2TriToPath(points);
                 // List<Triangle_dt> tri = delaunayServices.createDelaunay(points);
                 // List<Triangle_dt> tri2 = delaunayServices.filterLargeEdges(tri, 0.001);
                 // displayServices.displayDelaunay(tri2, 50, 10, Material.WHITE, bathymetryLayer);
