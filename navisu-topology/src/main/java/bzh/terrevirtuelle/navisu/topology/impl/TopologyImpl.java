@@ -577,9 +577,9 @@ public class TopologyImpl
         LineString line;
         List<Geometry> filter = new ArrayList<>();
         for (int i = 0; i < geoms.size(); i++) {
-            if (!((LineString) geoms.get(i)).isClosed() && geoms.get(i) != null) {
+         //   if (!((LineString) geoms.get(i)).isClosed() && geoms.get(i) != null) {
                 filter.add(geoms.get(i));
-            }
+          //  }
         }
         Geometry[] geomTab = new Geometry[filter.size()];
         for (int i = 0; i < filter.size(); i++) {

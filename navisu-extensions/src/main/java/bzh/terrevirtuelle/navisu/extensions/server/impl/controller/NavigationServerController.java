@@ -5,11 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.extensions.server.impl.controller;
 
-import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.extensions.commands.Command;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
