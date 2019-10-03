@@ -190,22 +190,20 @@ public class ObjPaysbrestLoader {
 
     private Path filter(Path path) {
         String tmp = null;
-
         try {
             tmp = new String(Files.readAllBytes(path));
-
         } catch (IOException ex) {
             Logger.getLogger(ObjPaysbrestLoader.class
                     .getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-
         if (tmp != null) {
             //File from BMO contains \ folows whith carriage return ?
             tmp = tmp.replaceAll("\\\\[\\n\\r]", "");
+            String [] tab=tmp.split("object");
+            System.out.println("tab : "+tab.length);
             try {
                 Files.delete(path);
                 path = Files.write(path, tmp.getBytes(), StandardOpenOption.CREATE);
-
             } catch (IOException ex) {
                 Logger.getLogger(ObjPaysbrestLoader.class
                         .getName()).log(Level.SEVERE, ex.toString(), ex);
@@ -213,5 +211,4 @@ public class ObjPaysbrestLoader {
         }
         return path;
     }
-
 }
