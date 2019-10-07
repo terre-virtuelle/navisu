@@ -547,7 +547,7 @@ public class DisplayImpl
 
     protected ShapeAttributes createAttributes(Material material) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();
-        normAttributes.setDrawInterior(false);
+        normAttributes.setDrawInterior(true);
         normAttributes.setDrawOutline(true);
         normAttributes.setInteriorMaterial(material);
         normAttributes.setOutlineMaterial(material);

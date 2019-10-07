@@ -8,15 +8,21 @@ package com.owens.oobjloader.parser;
 // license.  (I generally don't care so I'll almost certainly say yes.)
 // In addition this code may also be used under the "unlicense" described
 // at http://unlicense.org/ .  See the file UNLICENSE in the repo.
-
+import com.owens.oobjloader.builder.Face;
 import java.io.*;
 import java.io.IOException;
-import static java.util.logging.Level.INFO;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.logging.Level;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Level.WARNING;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Parse {
+
     private Logger log = Logger.getLogger(Parse.class.getName());
 
     // Tokens for parsing. 
@@ -63,79 +69,91 @@ public class Parse {
     BuilderInterface builder = null;
     File objFile = null;
 
-    public Parse(BuilderInterface builder, String filename) throws FileNotFoundException, IOException {
+    public Parse(BuilderInterface builder, String filename)
+            throws FileNotFoundException, IOException {
         this.builder = builder;
         builder.setObjFilename(filename);
         parseObjFile(filename);
-
         builder.doneParsingObj(filename);
     }
 
-    private void parseObjFile(String objFilename) throws FileNotFoundException, IOException {
+    private void parseObjFile(String objFilename) {
         int lineCount = 0;
         FileReader fileReader = null;
-        BufferedReader bufferedReader = null;
+        BufferedReader bufferedReader;
 
         objFile = new File(objFilename);
-        fileReader = new FileReader(objFile);
+        try {
+            fileReader = new FileReader(objFile);
+        } catch (FileNotFoundException ex) {
+            // Logger.getLogger(Parse.class.getName()).log(Level.SEVERE, null, ex);
+        }
         bufferedReader = new BufferedReader(fileReader);
 
         String line = null;
 
         while (true) {
-            line = bufferedReader.readLine();
-            if (null == line) {
-                break;
-            }
+            try {
+                line = bufferedReader.readLine();
+                if (null == line) {
+                    break;
+                }
 
-            line = line.trim();
+                line = line.trim();
 
-            if (line.length() == 0) {
-                continue;
-            }
+                if (line.length() == 0) {
+                    continue;
+                }
 
-            // NOTE: we don't check for the space after the char
-            // because sometimes it's not there - most notably in the
-            // grouupname, we seem to get a lot of times where we have
-            // "g\n", i.e. setting the group name to blank (or
-            // default?)
-            if (line.startsWith("#")) // comment
-            {
-                continue;
-            } else if (line.startsWith(OBJ_VERTEX_TEXTURE)) {
-                processVertexTexture(line);
-            } else if (line.startsWith(OBJ_VERTEX_NORMAL)) {
-                processVertexNormal(line);
-            } else if (line.startsWith(OBJ_VERTEX)) {
-                processVertex(line);
-            } else if (line.startsWith(OBJ_FACE)) {
-                processFace(line);
-            } else if (line.startsWith(OBJ_GROUP_NAME)) {
-                processGroupName(line);
-            } else if (line.startsWith(OBJ_OBJECT_NAME)) {
-                processObjectName(line);
-            } else if (line.startsWith(OBJ_SMOOTHING_GROUP)) {
-                processSmoothingGroup(line);
-            } else if (line.startsWith(OBJ_POINT)) {
-                processPoint(line);
-            } else if (line.startsWith(OBJ_LINE)) {
-                processLine(line);
-            } else if (line.startsWith(OBJ_MAPLIB)) {
-                processMapLib(line);
-            } else if (line.startsWith(OBJ_USEMAP)) {
-                processUseMap(line);
-            } else if (line.startsWith(OBJ_USEMTL)) {
-                processUseMaterial(line);
-            } else if (line.startsWith(OBJ_MTLLIB)) {
-                processMaterialLib(line);
-            } else {
-               // log.log(WARNING, "line {0} unknown line |{1}|", new Object[]{lineCount, line});
+                // NOTE: we don't check for the space after the char
+                // because sometimes it's not there - most notably in the
+                // grouupname, we seem to get a lot of times where we have
+                // "g\n", i.e. setting the group name to blank (or
+                // default?)
+                if (line.startsWith("#")) // comment
+                {
+                    continue;
+                } else if (line.startsWith(OBJ_VERTEX_TEXTURE)) {
+                    processVertexTexture(line);
+                } else if (line.startsWith(OBJ_VERTEX_NORMAL)) {
+                    processVertexNormal(line);
+                } else if (line.startsWith(OBJ_VERTEX)) {
+                    processVertex(line);
+                } else if (line.startsWith(OBJ_FACE)) {
+                    processFace(line);
+                } else if (line.startsWith(OBJ_GROUP_NAME)) {
+                    processGroupName(line);
+                } else if (line.startsWith(OBJ_OBJECT_NAME)) {
+                    processObjectName(line);
+                } else if (line.startsWith(OBJ_SMOOTHING_GROUP)) {
+                    processSmoothingGroup(line);
+                } else if (line.startsWith(OBJ_POINT)) {
+                    processPoint(line);
+                } else if (line.startsWith(OBJ_LINE)) {
+                    processLine(line);
+                } else if (line.startsWith(OBJ_MAPLIB)) {
+                    processMapLib(line);
+                } else if (line.startsWith(OBJ_USEMAP)) {
+                    processUseMap(line);
+                } else if (line.startsWith(OBJ_USEMTL)) {
+                    processUseMaterial(line);
+                } else if (line.startsWith(OBJ_MTLLIB)) {
+                    processMaterialLib(line);
+                } else {
+                    // log.log(WARNING, "line {0} unknown line |{1}|", new Object[]{lineCount, line});
+                }
+                lineCount++;
+            } catch (IOException ex) {
+                Logger.getLogger(Parse.class.getName()).log(Level.SEVERE, null, ex);
             }
-            lineCount++;
         }
-        bufferedReader.close();
+        try {
+            bufferedReader.close();
 
-       // log.log(INFO, "Loaded {0} lines", lineCount);
+            // log.log(INFO, "Loaded {0} lines", lineCount);
+        } catch (IOException ex) {
+            Logger.getLogger(Parse.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // @TODO: processVertex calls parseFloatList with params expecting
@@ -592,16 +610,17 @@ public class Parse {
     // > 
     // >     filename is the name of the library file that defines the
     // >     materials.  There is no default.
-    private void processMaterialLib(String line) throws FileNotFoundException, IOException {
+    private void processMaterialLib(String line) {
         String[] matlibnames = StringUtils.parseWhitespaceList(line.substring(OBJ_MTLLIB.length()).trim());
 
         if (null != matlibnames) {
             for (int loopi = 0; loopi < matlibnames.length; loopi++) {
                 try {
                     parseMtlFile(matlibnames[loopi]);
-                } catch (FileNotFoundException e) {
-                    log.log(SEVERE, "Can't find material file name='" + matlibnames[loopi] + "', e=" + e);
+                } catch (IOException ex) {
+                   // Logger.getLogger(Parse.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
             }
         }
     }
@@ -694,7 +713,7 @@ public class Parse {
         }
         bufferedReader.close();
 
-       // log.log(INFO, "Parse.parseMtlFile: Loaded " + lineCount + " lines");
+        // log.log(INFO, "Parse.parseMtlFile: Loaded " + lineCount + " lines");
     }
 
     private void processNewmtl(String line) {

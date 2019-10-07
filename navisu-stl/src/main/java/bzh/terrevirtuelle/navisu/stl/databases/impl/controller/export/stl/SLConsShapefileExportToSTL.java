@@ -148,7 +148,7 @@ public class SLConsShapefileExportToSTL
         List<Path> paths_1 = jtsServices.createDelaunayPoly2TriToPath(bottom);
         resultList.addAll(paths_1);
 
-         displayServices.displayPaths(paths_0, layer, Material.YELLOW, 10.0);
+        displayServices.displayPaths(paths_0, layer, Material.RED, 0.0);
         return resultList;
     }
 }

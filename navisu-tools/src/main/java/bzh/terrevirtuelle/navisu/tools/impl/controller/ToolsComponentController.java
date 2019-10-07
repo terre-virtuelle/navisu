@@ -900,30 +900,28 @@ public class ToolsComponentController
                             // solidWgs84List.clear();
                             LOGGER.log(Level.INFO, path.getFileName().toString());
                             List<SolidGeo> solidGeoList = objPaysbrestLoader.loadObj(path, lonOffset, latOffset);
-                            if (solidGeoList.size() >= 4) {
-                                solidWgs84List.addAll(solidGeoList);
-                            }
+                            solidWgs84List.addAll(solidGeoList);
                             // DEBUG Wall and roof different color
                             if (previewBuildingsRB.isSelected()) {
                                 for (SolidGeo solid : solidWgs84List) {
-                                    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+                                    //  displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
                                 }
                             }
                         }
+
                         if (path.toString().endsWith("obj") && path.toString().contains("TOITURES_TEXTURE")) {
                             // roofWgs84List.clear();
                             LOGGER.log(Level.INFO, path.getFileName().toString());
                             List<SolidGeo> solidGeoList = objPaysbrestLoader.loadObj(path, lonOffset, latOffset);
-                            if (solidGeoList.size() >= 4) {
-                                roofWgs84List.addAll(solidGeoList);
-                            }
+                            roofWgs84List.addAll(solidGeoList);
                             // DEBUG Wall and roof different color
                             if (previewBuildingsRB.isSelected()) {
                                 for (SolidGeo solid : roofWgs84List) {
-                                    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+                                    //  displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
                                 }
                             }
                         }
+
                         return FileVisitResult.CONTINUE;
                     }
                 });
@@ -934,6 +932,7 @@ public class ToolsComponentController
             if (solidWgs84List != null && roofWgs84List != null) {
                 for (SolidGeo s : solidWgs84List) {
                     for (SolidGeo r : roofWgs84List) {
+
                         Point3DGeo rc = r.getCentroid();
                         Geometry sg = s.getGroundGeom();
                         Point3DGeo sc = s.getCentroid();
@@ -955,6 +954,7 @@ public class ToolsComponentController
                     displayServices.displayBuildingGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
                 }
             }
+            
             LOGGER.log(Level.INFO, "Insert Buildings");
             String query;
             if (!buildingList.isEmpty()) {
@@ -985,6 +985,7 @@ public class ToolsComponentController
                 LOGGER.log(Level.INFO, "Translate Buildings to CityGML format over");
                 //  instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             }
+             
         });
         return buildingList;
     }

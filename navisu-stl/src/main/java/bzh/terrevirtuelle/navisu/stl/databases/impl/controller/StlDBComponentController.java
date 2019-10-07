@@ -1277,7 +1277,7 @@ public class StlDBComponentController
                                 j = k % tileCount + 1;
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     LOGGER.info("In export Buildings en STL");
-                                    String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                                  //  String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     String filenamebuildings = DEFAULT_STL_PATH + outFileTF.getText() + "_buildings_"+ i + "," + j + ".stl";
                                     try {
                                         java.nio.file.Path path = Paths.get(filenamebuildings);

@@ -236,6 +236,7 @@ public class AppMain extends Application {
         clearTmpDirs(USER_DIR + "/privateData/svg", "*", false);
         clearTmpDirs(USER_DIR + "/privateData/wkt", "*", false);
         clearTmpDirs(USER_DIR + "/privateData/shp", "*", false);
+        clearTmpDirs(USER_DIR + "/privateData/obj", "*", false);
 
         wwd = GeoWorldWindViewImpl.getWW();
 

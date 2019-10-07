@@ -18,19 +18,28 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import com.owens.oobjloader.builder.Face;
 import com.owens.oobjloader.builder.FaceVertex;
+import com.owens.oobjloader.parser.Parse;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import java.io.File;
 
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardOpenOption;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -48,6 +57,8 @@ public class ObjPaysbrestLoader {
     protected ObjComponentServices objComponentServices;
     protected static final String ALARM_SOUND = "/data/sounds/openSea.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
+    protected static final String SEP = File.separator;
+    protected static final String USER_DIR = System.getProperty("user.dir");
     protected List<SolidGeo> solidGeoList;
 
     protected DisplayServices displayServices;
@@ -74,26 +85,131 @@ public class ObjPaysbrestLoader {
     }
 
     public List<SolidGeo> loadObj(Path path, double objXOffset, double objYOffset) {
-
-        List<FaceGeo> facesWgs84 = new ArrayList<>();
-
+       // System.out.println("loadObj");
+        clearTmpDirs(USER_DIR + SEP + "privateData" + SEP + "obj", "*", false);
         Path filetredPath = filter(path);
-        List<Face> faces = objComponentServices.getFaces(filetredPath.toString());
-        faces.stream().map((f) -> f.getVertices()).forEachOrdered((fvs) -> {
-            facesWgs84.add(toFacet(fvs, objXOffset, objYOffset));
-        });
-        int index = 1;
-        for (FaceGeo f : facesWgs84) {
-            f.setId(index++);
+        String content = null;
+        try {
+            content = new String(Files.readAllBytes(filetredPath));
+        } catch (IOException ex) {
+            Logger.getLogger(Parse.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        List<SolidGeo> solidWgs84List = agregate(facesWgs84);
-        System.out.println("solidWgs84List : " + solidWgs84List.size());
+        List<SolidGeo> solidWgs84List = new ArrayList<>();
+        if (content != null) {
+            // Match material library
+            Pattern pMtllib = Pattern.compile("mtllib [a-zA-Z0-9_\\.]*");
+            String mtllib = "";
+            Matcher m;
+            m = pMtllib.matcher(content);
+            if (m.find()) {
+                mtllib = m.group();
+            }
+            // Split for each group
+            String[] tab = content.split("g object_[0-9]+");
+            String obj = "";
 
-        solidGeoList = setTopologyProperties(solidWgs84List);
-        //instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
-        // return solidGeoList;
+            //Count of vertices per object
+            Pattern pVertices = Pattern.compile("v ");
+            //  Matcher m2;
+            List<Integer> vCounts = new ArrayList<>();
+            int c = 0;
+            vCounts.add(c);
+            for (int i = 1; i < tab.length; i++) {
+                m = pVertices.matcher(tab[i]);
+                while (m.find()) {
+                    c++;
+                }
+                vCounts.add(c);
+            }
+            //Count of textures per object
+            Pattern pTexture = Pattern.compile("vt ");
+            //  Matcher m2;
+            List<Integer> vtCounts = new ArrayList<>();
+            c = 0;
+            vtCounts.add(c);
+            for (int i = 1; i < tab.length; i++) {
+                m = pTexture.matcher(tab[i]);
+                while (m.find()) {
+                    c++;
+                }
+                vtCounts.add(c);
+            }
+            //Count of textures per object
+            Pattern pNormal = Pattern.compile("vn ");
+            //  Matcher m2;
+            List<Integer> vnCounts = new ArrayList<>();
+            c = 0;
+            vnCounts.add(c);
+            for (int i = 1; i < tab.length; i++) {
+                m = pNormal.matcher(tab[i]);
+                while (m.find()) {
+                    c++;
+                }
+                vnCounts.add(c);
+            }
+            String[] groups = new String[tab.length - 1];
+            for (int i = 0; i < tab.length - 1; i++) {
+                groups[i] = "# NaVisu " + "\n";
+                groups[i] += "# Serge " + new Date() + "\n" + "\n";
+                groups[i] += mtllib + "\n";
+                int n = i + 1;
+                groups[i] += "g object_" + n;
+                groups[i] += tab[i + 1].split("f( [0-9]+/[0-9]+/[0-9]+)+")[0];
+            }
+            //Match faces and translate index of vertices
+            Pattern pFaces = Pattern.compile("f( [0-9]+/[0-9]+/[0-9]+)+");
+            Matcher m1;
+            String face = "";
 
-        return solidGeoList;
+            for (int i = 1; i < tab.length; i++) {
+                m1 = pFaces.matcher(tab[i]);
+                while (m1.find()) {
+                    face = m1.group();
+                    face = face.replace("f", "");
+                    String[] vertices = face.trim().split("\\s+");
+                    String[] vertex = new String[3];
+                    for (int j = 0; j < vertices.length; j++) {
+                        String[] vTab = vertices[j].split("/");
+                        int x = Integer.valueOf(vTab[0].trim()) - vCounts.get(i - 1);
+                        int y = Integer.valueOf(vTab[1].trim()) - vtCounts.get(i - 1);
+                        int z = Integer.valueOf(vTab[2].trim()) - vnCounts.get(i - 1);
+                        vertex[j] = x + "/" + y + "/" + z;
+                    }
+                    groups[i - 1] += "f " + vertex[0] + " " + vertex[1] + " " + vertex[2] + "\n";
+                }
+            }
+
+            String out = USER_DIR + SEP + "privateData" + SEP + "obj" + SEP + "out_";
+            //System.out.println(path);
+            for (int i = 0; i < groups.length; i++) {
+                try {
+                    int n = i + 1;
+                    Files.write(Paths.get(out + n + ".obj"), groups[i].getBytes(), StandardOpenOption.CREATE);
+                } catch (IOException ex) {
+                    Logger.getLogger(ObjPaysbrestLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                }
+            }
+
+            for (int i = 0; i < groups.length; i++) {
+                List<FaceGeo> facesWgs84 = new ArrayList<>();
+                int n = i + 1;
+                List<Face> faces = objComponentServices.getFaces(out + n + ".obj");
+                faces.stream().map((f) -> f.getVertices()).forEachOrdered((fvs) -> {
+                    facesWgs84.add(toFacet(fvs, objXOffset, objYOffset));
+                });
+                int index = 1;
+                for (FaceGeo f : facesWgs84) {
+                    f.setId(index++);
+                }
+                solidWgs84List.add(new SolidGeo(facesWgs84, i, "Building_" + i));
+            }
+
+            solidGeoList = setTopologyProperties(solidWgs84List);
+
+        }
+        //  System.out.println(solidWgs84List);
+
+        return solidWgs84List;
     }
 
     private FaceGeo toFacet(List<FaceVertex> fvs, double objXOffset, double objYOffset) {
@@ -107,51 +223,6 @@ public class ObjPaysbrestLoader {
             faceWgs84.add(ptWgs84);
         }
         return faceWgs84;
-    }
-
-    /*
-    Agregate faces by building
-     */
-    private List<SolidGeo> agregate(List<FaceGeo> faces) {
-        List<SolidGeo> solidList = new ArrayList<>();
-
-        int faceIndex = 0;
-        int solidIndex = 0;
-        List<FaceGeo> faceSet = new ArrayList<>();
-        List<FaceGeo> tmpList = new ArrayList<>();
-        List<FaceGeo> adList;
-        List<EdgeGeo> ground = new ArrayList<>();
-        FaceGeo startFace;
-        FaceGeo shuttle;
-
-        while (faceIndex < faces.size()) {
-            startFace = faces.get(faceIndex);
-            // System.out.println("startFace : " + startFace);
-            faceSet.clear();
-            faceSet.add(startFace);
-            shuttle = startFace;
-            adList = shuttle.getAdjacents(faces);
-            faceSet.addAll(adList);
-            while (!adList.isEmpty()) {
-                for (FaceGeo f : adList) {
-                    tmpList.addAll(f.getAdjacents(faces));
-                }
-                tmpList.removeAll(faceSet);
-                adList.clear();
-                adList = tmpList.stream().collect(Collectors.toList());
-                for (FaceGeo f : adList) {
-                    if (!faceSet.contains(f)) {
-                        faceSet.add(f);
-                    }
-                }
-            }
-            tmpList.clear();
-            faceIndex += faceSet.size();
-            SolidGeo s = new SolidGeo(faceSet, solidIndex, "Building_" + solidIndex);
-            solidIndex++;
-            solidList.add(s);
-        }
-        return solidList;
     }
 
     protected List<SolidGeo> setTopologyProperties(List<SolidGeo> solidWgs84List) {
@@ -199,8 +270,6 @@ public class ObjPaysbrestLoader {
         if (tmp != null) {
             //File from BMO contains \ folows whith carriage return ?
             tmp = tmp.replaceAll("\\\\[\\n\\r]", "");
-            String [] tab=tmp.split("object");
-            System.out.println("tab : "+tab.length);
             try {
                 Files.delete(path);
                 path = Files.write(path, tmp.getBytes(), StandardOpenOption.CREATE);
@@ -210,5 +279,35 @@ public class ObjPaysbrestLoader {
             }
         }
         return path;
+    }
+
+    private void clearTmpDirs(String dir, String extension, boolean rmDir) {
+        try {
+            Path directory = Paths.get(dir);
+
+            Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    if (file.toString().endsWith(extension)) {
+                        Files.delete(file);
+                    }
+                    if (extension.equals("*")) {
+                        Files.delete(file);
+                    }
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    if (rmDir == true) {
+                        Files.delete(dir);
+                    }
+                    return FileVisitResult.CONTINUE;
+                }
+
+            });
+        } catch (IOException ex) {
+            //Nothing if dir don't exist
+        }
     }
 }

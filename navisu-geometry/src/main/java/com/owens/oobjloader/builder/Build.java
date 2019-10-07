@@ -11,12 +11,14 @@ package com.owens.oobjloader.builder;
 import com.owens.oobjloader.parser.BuilderInterface;
 
 import java.util.*;
+import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
 
-public class Build implements BuilderInterface {
+public class Build 
+        implements BuilderInterface {
 
-    private Logger log = Logger.getLogger(Build.class.getName());
+    private static final Logger log = Logger.getLogger(Build.class.getName());
 
     public String objFilename = null;
     // these accumulate each type of vertex as they are parsed, so they can then be referenced via index.
@@ -30,20 +32,20 @@ public class Build implements BuilderInterface {
     HashMap<String, FaceVertex> faceVerticeMap = new HashMap<>();
     // Each face vertex as it is parsed, minus the redundant face vertices.  @TODO: Not used anywhere yet, maybe get rid of this.
     public ArrayList<FaceVertex> faceVerticeList = new ArrayList<>();
-    public ArrayList<Face> faces = new ArrayList<Face>();
-    public HashMap<Integer, ArrayList<Face>> smoothingGroups = new HashMap<Integer, ArrayList<Face>>();
+    public ArrayList<Face> faces = new ArrayList<>();
+    public HashMap<Integer, ArrayList<Face>> smoothingGroups = new HashMap<>();
     private int currentSmoothingGroupNumber = NO_SMOOTHING_GROUP;
     private ArrayList<Face> currentSmoothingGroup = null;
-    public HashMap<String, ArrayList<Face>> groups = new HashMap<String, ArrayList<Face>>();
-    private ArrayList<String> currentGroups = new ArrayList<String>();
-    private ArrayList<ArrayList<Face>> currentGroupFaceLists = new ArrayList<ArrayList<Face>>();
+    public HashMap<String, ArrayList<Face>> groups = new HashMap<>();
+    private final ArrayList<String> currentGroups = new ArrayList<>();
+    private final ArrayList<ArrayList<Face>> currentGroupFaceLists = new ArrayList<>();
     public String objectName = null;
     private Material currentMaterial = null;
     private Material currentMap = null;
-    public HashMap<String, Material> materialLib = new HashMap<String, Material>();
+    public HashMap<String, Material> materialLib = new HashMap<>();
     private Material currentMaterialBeingParsed = null;
-    public HashMap<String, Material> mapLib = new HashMap<String, Material>();
-    private Material currentMapBeingParsed = null;
+    public HashMap<String, Material> mapLib = new HashMap<>();
+    private final Material currentMapBeingParsed = null;
     public int faceTriCount = 0;
     public int faceQuadCount = 0;
     public int facePolyCount = 0;
@@ -92,7 +94,7 @@ public class Build implements BuilderInterface {
             // >     vertex numbers. Negative values indicate relative vertex numbers.
 
             FaceVertex fv = new FaceVertex();
-//            log.log(INFO,"Adding vertex g=" + vertexIndices[loopi] + " t=" + vertexIndices[loopi + 1] + " n=" + vertexIndices[loopi + 2]);
+         //  log.log(INFO,"Adding vertex g=" + vertexIndices[loopi] + " t=" + vertexIndices[loopi + 1] + " n=" + vertexIndices[loopi + 2]);
             int vertexIndex;
             vertexIndex = vertexIndices[loopi++];
             // Note that we can use negative references to denote vertices in manner relative to the current point in the file, i.e.
