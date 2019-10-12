@@ -41,7 +41,7 @@ public class NavigationServerImpl
 
     private final String KEY_NAME = "NavigationServer";
     private static final int PORT = 9090;
-    
+
     private NavigationServerController controller;
     protected static final Logger LOGGER = Logger.getLogger(NavigationServerImpl.class.getName());
 
@@ -52,14 +52,20 @@ public class NavigationServerImpl
 
     @Override
     public void init() {
-        controller = NavigationServerController.getInstance(navigationCmdComponentServices);
+        controller = NavigationServerController.getInstance(guiAgentServices,navigationCmdComponentServices);
         controller.init();
     }
 
     @Override
     public void init(int port) {
-        controller = NavigationServerController.getInstance(navigationCmdComponentServices);
+        controller = NavigationServerController.getInstance(guiAgentServices,navigationCmdComponentServices);
         controller.init(port);
+    }
+
+    @Override
+    public void initTcpServer(int port) {
+        controller = NavigationServerController.getInstance(guiAgentServices,navigationCmdComponentServices);
+        controller.initTcpServer(port);
     }
 
     @Override
@@ -83,7 +89,7 @@ public class NavigationServerImpl
 
     @Override
     public void off() {//TODO
-        
+
     }
 
     @Override

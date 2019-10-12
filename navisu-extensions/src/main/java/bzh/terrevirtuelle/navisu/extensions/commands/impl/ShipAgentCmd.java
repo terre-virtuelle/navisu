@@ -49,9 +49,10 @@ public class ShipAgentCmd
 
     @Override
     public NavigationDataSet doIt(NavigationData arg) {
+        System.out.println("arg : " + arg);
         Ship ship = (Ship) arg;
         navigationDataSet = new NavigationDataSet();
-        shipAgentServices.setPosition(ship.getLatitude(),ship.getLongitude());
+        shipAgentServices.setPosition(ship.getLatitude(), ship.getLongitude());
         shipAgentServices.setHeading(ship.getHeading());
         navigationDataSet.add(ship);
         return navigationDataSet;
@@ -59,7 +60,7 @@ public class ShipAgentCmd
 
     @Override
     public NavigationDataSet doIt(NavigationData arg0, String arg1) {
-        shipAgentServices.init((Ship)arg0, s57Layer, arg1);
+        shipAgentServices.init((Ship) arg0, s57Layer, arg1);
         return new NavigationDataSet();
     }
 }

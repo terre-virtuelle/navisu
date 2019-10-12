@@ -103,6 +103,7 @@ public class MeshExportToSTL {
                      solid 65_103_terrain.obj  Origin :  48.374021741300346 -4.530830948390423 0.0 
                      */
                     if (content.contains("Origin")) {
+                        System.out.println("Origin");
                         String[] contentTab = content.split("\n");
                         for (String s : contentTab) {
                             if (s.contains("solid") && !s.contains("endsolid")) {

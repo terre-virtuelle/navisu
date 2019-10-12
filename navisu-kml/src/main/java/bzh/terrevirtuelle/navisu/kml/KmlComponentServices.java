@@ -40,11 +40,13 @@ public interface KmlComponentServices
 
     void setPosition(double latitude, double longitude);
 
+    void setPosition(double latitude, double longitude, double elevation);
+
     void setScale(double x, double y, double z);
 
     void moveTo(Point3DGeo point);
 
     List<Placemark> getPlacemarkFromKmlCatalog(String catalog);
-    
-   String write(String filename, AbstractShape[] array, StandardOpenOption option) ;
+
+    String write(String filename, AbstractShape[] array, StandardOpenOption option);
 }

@@ -5,14 +5,22 @@
  */
 package bzh.terrevirtuelle.navisu.extensions.server.impl.controller;
 
+import bzh.terrevirtuelle.navisu.api.progress.Job;
+import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.extensions.commands.Command;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +42,7 @@ public class NavigationServerController {
     protected static final Logger LOGGER = Logger.getLogger(NavigationServerController.class.getName());
     private static NavigationServerController INSTANCE;
     private NavigationCmdComponentServices navigationCmdComponentServices;
+    protected GuiAgentServices guiAgentServices;
     private NavigationDataSet navigationDataSet;
 
     private Properties properties;
@@ -46,15 +55,18 @@ public class NavigationServerController {
     private int port;
     private Command command;
 
-    private NavigationServerController(NavigationCmdComponentServices navigationCmdComponentServices) {
+    private NavigationServerController(GuiAgentServices guiAgentServices,
+            NavigationCmdComponentServices navigationCmdComponentServices) {
+        this.guiAgentServices = guiAgentServices;
         this.navigationCmdComponentServices = navigationCmdComponentServices;
         initProperties();
     }
 
     public static NavigationServerController getInstance(
+            GuiAgentServices guiAgentServices,
             NavigationCmdComponentServices navigationCmdComponentServices) {
         if (INSTANCE == null) {
-            INSTANCE = new NavigationServerController(navigationCmdComponentServices);
+            INSTANCE = new NavigationServerController(guiAgentServices, navigationCmdComponentServices);
         }
         return INSTANCE;
     }
@@ -67,6 +79,36 @@ public class NavigationServerController {
     public void init(int port) {
         this.port = port;
         initServer();
+    }
+
+    public void initTcpServer(int port) {
+        this.port = port;
+        guiAgentServices.getJobsManager().newJob("Server is listening on port " + port, new Job() {
+
+            @Override
+            public void run(ProgressHandle progressHandle) {
+                try (ServerSocket serverSocket = new ServerSocket(port)) {
+
+                    System.out.println("Server is listening on port " + port);
+
+                    while (true) {
+                        Socket socket = serverSocket.accept();
+
+                        System.out.println("New client connected");
+                        InputStream input = socket.getInputStream();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                        String text;
+                        do {
+                            text = reader.readLine();
+                            System.out.println(text);
+                        } while (!text.equals("bye"));
+                    }
+                } catch (IOException ex) {
+                    System.out.println("Server exception: " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     private void initProperties() {
@@ -84,6 +126,7 @@ public class NavigationServerController {
             cmdVertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
                 if (ws.path().equals(START_CMD)) {
                     ws.dataHandler((Buffer data) -> {
+                        //System.out.println("data : " + data);
                         command = command(data.toString());
                         if (command != null) {
                             if (command.getNavigationData() != null && command.getArg() == null) {
@@ -100,7 +143,7 @@ public class NavigationServerController {
                                     String r = response(navigationDataSet);
                                     ws.writeTextFrame(r);
                                 } else {
-                                    ws.writeTextFrame("");
+                                    ws.writeTextFrame("ACK");
                                 }
                             }
                         } else {
@@ -108,6 +151,7 @@ public class NavigationServerController {
                         }
                     });
                 } else {
+                    // System.out.println("reject");
                     ws.reject();
                 }
             }).requestHandler((HttpServerRequest req) -> {

@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.server.impl;
+
+package bzh.terrevirtuelle.navisu.media.images;
+
+import org.capcaval.c3.component.Component;
 
 /**
  *
- * @author Serge
+ * @author serge
+ * @date Oct 9, 2019
  */
-public interface NetReader
-        extends Reader {
+public interface Image extends Component{
 
 }

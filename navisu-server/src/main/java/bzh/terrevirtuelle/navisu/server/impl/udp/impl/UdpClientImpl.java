@@ -6,16 +6,21 @@
 package bzh.terrevirtuelle.navisu.server.impl.udp.impl;
 
 import bzh.terrevirtuelle.navisu.server.impl.NetReader;
+import java.net.DatagramSocket;
+import org.vertx.java.core.Vertx;
 
 /**
  *
  * @author serge
  * @date Jun 9, 2017
  */
-public class UdpClientImpl implements NetReader {
+public class UdpClientImpl
+        implements NetReader {
+
+    private Vertx vertx;
 
     public UdpClientImpl() {
-        /*
+        /*      
         DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
 socket.listen(1234, "0.0.0.0", asyncResult -> {
   if (asyncResult.succeeded()) {
@@ -26,8 +31,9 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
     System.out.println("Listen failed" + asyncResult.cause());
   }
 });
+         
          */
-        
+     //   DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
     }
 
     @Override

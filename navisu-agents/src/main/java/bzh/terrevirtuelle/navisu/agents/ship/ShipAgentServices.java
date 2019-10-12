@@ -19,12 +19,11 @@ import org.capcaval.c3.component.ComponentService;
 public interface ShipAgentServices
         extends ComponentService {
 
-    void init(Ship ship,RenderableLayer layer, String filename);
+    void init(Ship ship, RenderableLayer layer, String filename);
 
     void moveTo(Point3DGeo point);
 
     //void loadShip3D(RenderableLayer layer, String filename);
-
     void setShip(Ship ship);
 
     Ship getShip();
@@ -42,6 +41,8 @@ public interface ShipAgentServices
     void setLongitude(double longitude);
 
     void setPosition(double latitude, double longitude);
+
+    void setPosition(double latitude, double longitude, double elevation);
 
     void setScale(double x, double y, double z);
 }

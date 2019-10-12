@@ -22,5 +22,7 @@ public interface NavigationServerServices
     public void init();
 
     public void init(int port);
+    
+    public void initTcpServer(int port);
 
 }

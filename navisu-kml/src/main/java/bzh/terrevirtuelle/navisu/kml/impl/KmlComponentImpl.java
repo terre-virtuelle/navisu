@@ -231,6 +231,7 @@ public class KmlComponentImpl
     @Override
     public void setHeading(double angle) {
         colladaRoot.setHeading(Angle.fromDegrees(angle));
+        wwd.redrawNow();
     }
 
     @Override
@@ -238,6 +239,7 @@ public class KmlComponentImpl
         colladaRoot.setPosition(new Position(Angle.fromDegrees(latitude),
                 Angle.fromDegrees(getLongitude()),
                 0.0));
+        wwd.redrawNow();
     }
 
     @Override
@@ -245,6 +247,7 @@ public class KmlComponentImpl
         colladaRoot.setPosition(new Position(Angle.fromDegrees(getLatitude()),
                 Angle.fromDegrees(longitude),
                 0.0));
+        wwd.redrawNow();
     }
 
     /**
@@ -257,6 +260,13 @@ public class KmlComponentImpl
         colladaRoot.setPosition(new Position(Angle.fromDegrees(latitude),
                 Angle.fromDegrees(longitude),
                 0.0));
+    }
+
+    @Override
+    public void setPosition(double latitude, double longitude, double elevation) {
+        colladaRoot.setPosition(new Position(Angle.fromDegrees(latitude),
+                Angle.fromDegrees(longitude),
+                elevation));
     }
 
     @Override

@@ -89,6 +89,11 @@ public class ShipAgentImpl
     }
 
     @Override
+    public void setPosition(double latitude, double longitude, double elevation) {
+        kmlComponentServices.setPosition(latitude, longitude, elevation);
+    }
+
+    @Override
     public void setScale(double x, double y, double z) {
         kmlComponentServices.setScale(x, y, z);
     }

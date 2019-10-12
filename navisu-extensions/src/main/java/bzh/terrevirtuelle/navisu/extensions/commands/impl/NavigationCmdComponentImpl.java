@@ -19,6 +19,7 @@ import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServi
 import bzh.terrevirtuelle.navisu.extensions.camera.impl.controller.CameraCmd;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmd;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
+import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +50,8 @@ public class NavigationCmdComponentImpl
     ShipAgentServices shipAgentServices;
     @UsedService
     TopologyServices topologyServices;
+    @UsedService
+    KmlComponentServices kmlComponentServices;
 
     private CameraCmd cameraCmd;
 
@@ -83,6 +86,7 @@ public class NavigationCmdComponentImpl
         navigationCmdMap.put("OwnerShipCmd", OwnerShipCmd.getInstance(gpsPlotterServices));
         navigationCmdMap.put("ShipAgentCmd", ShipAgentCmd.getInstance(shipAgentServices, layersManagerServices));
         navigationCmdMap.put("SoundingCmd", SoundingCmd.getInstance(bathymetryDBServices, topologyServices));
+        navigationCmdMap.put("ShipAgentBathymetryCmd", ShipAgentBathymetryCmd.getInstance(shipAgentServices, layersManagerServices,bathymetryDBServices, kmlComponentServices));
     }
 
     @Override

@@ -9,10 +9,14 @@ import bzh.terrevirtuelle.navisu.api.progress.Job;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.DEM;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
-import bzh.terrevirtuelle.navisu.stl.charts.impl.loader.dem.DemSrtmElevationLoader;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.Point3D;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemDbLoader;
 import bzh.terrevirtuelle.navisu.util.io.IO;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
@@ -25,6 +29,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.sql.Connection;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,15 +44,22 @@ public class DaeExportToSTL {
     private final GeodesyServices geodesyServices;
     private final GuiAgentServices guiAgentServices;
     protected JTSServices jtsServices;
-    protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
+    protected Connection elevationConnection;
+    protected DemDBServices demDBServices;
+    // protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected String CACHE_FILE_NAME = System.getProperty("user.home") + "/.navisu/caches/caches.properties";
     protected String OBJECT_DIR;
     protected Properties cacheProperties = new Properties();
+    protected double RETRIEVE_OFFSET = 30.0;
 
-    public DaeExportToSTL(GeodesyServices geodesyServices, GuiAgentServices guiAgentServices, JTSServices jtsServices) {
+    public DaeExportToSTL(GeodesyServices geodesyServices, GuiAgentServices guiAgentServices,
+            JTSServices jtsServices, DemDBServices demDBServices,
+            Connection elevationConnection) {
         this.guiAgentServices = guiAgentServices;
         this.geodesyServices = geodesyServices;//  elvScale = (latScale + lonScale) / 2;
         this.jtsServices = jtsServices;
+        this.demDBServices = demDBServices;
+        this.elevationConnection = elevationConnection;
 
         InputStream input = null;
         try {
@@ -63,11 +75,65 @@ public class DaeExportToSTL {
         }
     }
 
+    private Point3DGeo parseDocKmlFile(File file) {
+        System.out.println("parseDocKmlFile : " + file);
+        Point3DGeo point = null;
+        try {
+            String latString = "";
+            String lonString = "";
+            double latitude = 0.0;
+            double longitude = 0.0;
+            String latLonString = new String(Files.readAllBytes(Paths.get(file.getParent() + "/doc.kml")));
+
+            String[] latLonTab = latLonString.split("\n");
+            boolean match = false;
+            for (int i = 0; i < latLonTab.length; i++) {
+                if (latLonTab[i].contains("<Model>")) {
+                    while (!latLonTab[i].contains("<latitude>")) {
+                        i++;
+                    }
+                    latString = latLonTab[i];
+                    lonString = latLonTab[i + 1];
+                    match = true;
+                }
+            }
+            if (match == true) {
+                latString = latString.replace("<latitude>", "");
+                lonString = lonString.replace("<longitude>", "");
+                latString = latString.replace("</latitude>", "");
+                lonString = lonString.replace("</longitude>", "");
+                latitude = Double.parseDouble(latString);
+                longitude = Double.parseDouble(lonString);
+            }
+            /*
+            DEM demAlti = new DemDbLoader(elevationConnection, demDBServices)
+                    .retrieveIn(latitude - RETRIEVE_OFFSET,
+                            longitude - RETRIEVE_OFFSET,
+                            latitude + RETRIEVE_OFFSET,
+                            longitude + RETRIEVE_OFFSET);
+            System.out.println("demAlti.getMaxElevation() : " + demAlti.getMaxElevation());
+*/
+            //  point = new DemSrtmElevationLoader(geodesyServices).getElevation(latitude, longitude);
+          //  point = new Point3DGeo(latitude, longitude, demAlti.getMaxElevation());
+          point = new Point3DGeo(latitude, longitude, 0.0);
+        } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Le répertoire : \n "
+                    + file.getParent()
+                    + "\n du fichier : " + file.getName()
+                    + "  à charger, doit aussi comporter un fichier doc.kml "
+                    + "\n avec les coordonnées géographiques du repère.");
+            alert.show();
+        }
+        return point;
+    }
 
     public void loadKmzAndSaveStlWgs84() {
-        File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl", "Georeferenced STL files (*.stl)", "*.STL", "*.stl");
+        //File file = IO.fileChooser(guiAgentServices.getStage(), "data/stl", "Georeferenced STL files (*.stl)", "*.STL", "*.stl");
+        File file = IO.fileChooser(guiAgentServices.getStage(), OBJECT_DIR, "Georeferenced STL files (*.stl)", "*.STL", "*.kmz");
         Point3DGeo point = parseDocKmlFile(file);
-        // daeLocationObjectMap.put(new Point3D(point.getLatitude(), point.getLongitude(), point.getElevation()), file.getAbsolutePath());
+        //daeLocationObjectMap.put(new Point3D(point.getLatitude(), point.getLongitude(), point.getElevation()), file.getAbsolutePath());
         toGeographicWGS84CoordAndSave(file, point);
     }
 
@@ -126,6 +192,7 @@ public class DaeExportToSTL {
                             result += s + "\n";
                         }
                     }
+                    //   System.out.println("file.getParent() + \"/\" + daeWgs84Filename "+file.getParent() + "/" + daeWgs84Filename);
                     try {
                         if (new File(file.getParent() + "/" + daeWgs84Filename).exists()) {
                             Files.delete(Paths.get(file.getParent() + "/" + daeWgs84Filename));
@@ -139,47 +206,4 @@ public class DaeExportToSTL {
         });
     }
 
-    
-    private Point3DGeo parseDocKmlFile(File file) {
-        Point3DGeo point = null;
-        try {
-            String latString = "";
-            String lonString = "";
-            double latitude = 0.0;
-            double longitude = 0.0;
-            String latLonString = new String(Files.readAllBytes(Paths.get(file.getParent() + "/doc.kml")));
-
-            String[] latLonTab = latLonString.split("\n");
-            boolean match = false;
-            for (int i = 0; i < latLonTab.length; i++) {
-                if (latLonTab[i].contains("<Model>")) {
-                    while (!latLonTab[i].contains("<latitude>")) {
-                        i++;
-                    }
-                    latString = latLonTab[i];
-                    lonString = latLonTab[i + 1];
-                    match = true;
-                }
-            }
-            if (match == true) {
-                latString = latString.replace("<latitude>", "");
-                lonString = lonString.replace("<longitude>", "");
-                latString = latString.replace("</latitude>", "");
-                lonString = lonString.replace("</longitude>", "");
-                latitude = Double.parseDouble(latString);
-                longitude = Double.parseDouble(lonString);
-            }
-            point = new DemSrtmElevationLoader(geodesyServices).getElevation(latitude, longitude);
-        } catch (IOException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Le répertoire : \n "
-                    + file.getParent()
-                    + "\n du fichier : " + file.getName()
-                    + "  à charger, doit aussi comporter un fichier doc.kml "
-                    + "\n avec les coordonnées géographiques du repère.");
-            alert.show();
-        }
-        return point;
-    }
 }

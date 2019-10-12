@@ -562,7 +562,6 @@ public class StlDBComponentController
         this.speakerServices = speakerServices;
         this.cityGMLServices = cityGMLServices;
 
-        this.daeExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices);
         this.meshExportToSTL = new MeshExportToSTL(geodesyServices, guiAgentServices, jtsServices);
         this.buildingsExportToSTL = new BuildingsExportToSTL(bathymetryDBServices, geodesyServices);
 
@@ -934,6 +933,8 @@ public class StlDBComponentController
             System.out.println("work in progress");
         });
         daeButton.setOnMouseClicked((MouseEvent event) -> {
+            elevationConnection = databaseServices.connect("SRTM30mDB", HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
+            this.daeExportToSTL = new DaeExportToSTL(geodesyServices, guiAgentServices, jtsServices, demDBServices, elevationConnection);
             daeExportToSTL.loadKmzAndSaveStlWgs84();
         });
 
@@ -1277,8 +1278,8 @@ public class StlDBComponentController
                                 j = k % tileCount + 1;
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     LOGGER.info("In export Buildings en STL");
-                                  //  String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
-                                    String filenamebuildings = DEFAULT_STL_PATH + outFileTF.getText() + "_buildings_"+ i + "," + j + ".stl";
+                                    //  String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                                    String filenamebuildings = DEFAULT_STL_PATH + outFileTF.getText() + "_buildings_" + i + "," + j + ".stl";
                                     try {
                                         java.nio.file.Path path = Paths.get(filenamebuildings);
                                         Files.write(path, "".getBytes(), StandardOpenOption.CREATE);
@@ -1316,55 +1317,7 @@ public class StlDBComponentController
                                 k++;
                             }
                         }
-                        /*
-                        k = 0;
-                        if (selectedObjects.contains("ALL") || selectedObjects.contains("SLCONS")) {
-                            for (Point3DGeo[][] g : grids) {
-                                LOGGER.info("In export SLCONS en STL");
-                                objects.clear();
-                                i = k / tileCount + 1;
-                                j = k % tileCount + 1;
-                                if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
-                                    double latitudeMin = g[0][0].getLatitude();
-                                    double longitudeMin = g[0][0].getLongitude();
-                                    double latitudeMax = g[g.length - 1][g[0].length - 1].getLatitude();
-                                    double longitudeMax = g[g.length - 1][g[0].length - 1].getLongitude();
 
-                                    String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
-                                    scaleCompute(g);
-                                    objects = new ShorelineConstructionDBLoader(s57Connection)
-                                            .retrieveObjectsIn(latitudeMin, longitudeMin, latitudeMax, longitudeMax);
-                                    List<? extends Geo> clippedObjects = topologyServices.clip(objects, latitudeMin, longitudeMin, latitudeMax, longitudeMax);
-
-                                    SlConsView slConsView = new SlConsView(jtsServices, geodesyServices, s57Layer);
-                                    slConsView.display(clippedObjects);
-
-                                    SLConsExportToSTL slConsExportToSTL = new SLConsExportToSTL(jtsServices, geodesyServices,
-                                            filename,
-                                            latitudeMin, longitudeMin,
-                                            latScale, lonScale,
-                                            lowestElevationAlti + tileSideZ);
-                                    slConsExportToSTL.export(clippedObjects);
-
-                                    //TODO export KML
-                                    //filename = DEFAULT_KML_PATH + outFileTF.getText() + "_" + i + "," + j + ".kml";
-                                    //    new SlConsExportKML(topologyServices).export(filename, StandardOpenOption.APPEND, objects, 50.0);
-                                }
-                                k++;
-                            }
-                        }
-                        
-                        if (selectedObjects.contains("ALL") || selectedObjects.contains("PONTON")) {
-                            objects = new PontoonDBLoader(s57Connection)
-                                    .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
-                            new S57ObjectView("PONTON", topologyServices, s57Layer).display(objects);
-                            objects.forEach((g) -> {
-                                s57ObjectsExport = new S57ObjectsExportToSTL(topologyServices, stlComponentServices, jtsServices,
-                                        lat0, lon0, latScale, lonScale, tileSideZ);
-                                s57ObjectsExport.export(g);
-                            });
-                        }
-                         */
                         if (selectedObjects.contains("ALL") || selectedObjects.contains("ACHARE")) {
                             objects = new AnchorageAreaDBLoader(topologyServices, s57Connection)
                                     .retrieveObjectsIn(latMin, lonMin, latMax, lonMax);
@@ -1537,11 +1490,19 @@ public class StlDBComponentController
     @SuppressWarnings("unchecked")
     private List<Point3DGeo[][]> createBathymetryTab(double latMin, double lonMin, double latMax, double lonMax) {
         bathyConnection = databaseServices.connect(bathyDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
+        /*
         DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices)
                 .retrieveIn(latMin - RETRIEVE_OFFSET,
                         lonMin - RETRIEVE_OFFSET,
                         latMax + RETRIEVE_OFFSET,
                         lonMax + RETRIEVE_OFFSET);
+        */
+        //TODO create DB lon lat or lat lon, for all DB
+        DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices)
+                .retrieveIn(lonMin - RETRIEVE_OFFSET,
+                        latMin - RETRIEVE_OFFSET,
+                        lonMax + RETRIEVE_OFFSET,
+                        latMax + RETRIEVE_OFFSET);
         if (!dem.getGrid().isEmpty()) {
             highestElevationBathy = dem.getMaxElevation();
 

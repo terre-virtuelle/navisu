@@ -190,6 +190,8 @@ import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
 import bzh.terrevirtuelle.navisu.geo.raster.impl.RasterImpl;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.impl.ObjComponentImpl;
+import bzh.terrevirtuelle.navisu.media.images.ImageServices;
+import bzh.terrevirtuelle.navisu.media.images.impl.ImageImpl;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 
@@ -292,6 +294,7 @@ public class AppMain extends Application {
                         GpsPlotterImpl.class,
                         GpsPlotterWithRouteImpl.class,
                         GpxObjectImpl.class,
+                        ImageImpl.class,
                         InstrumentDriverManagerImpl.class,
                         InstrumentTemplateImpl.class,
                         JTSImpl.class,
@@ -382,10 +385,11 @@ public class AppMain extends Application {
         GpsPlotterWithRouteServices gpsPlotterWithRouteServices = componentManager.getComponentService(GpsPlotterWithRouteServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
 
-        GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);       
+        GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1080, 700);
-       
 
+        ImageServices imageServices = componentManager.getComponentService(ImageServices.class);
+        
         InstrumentTemplateServices instrumentTemplateServices = componentManager.getComponentService(InstrumentTemplateServices.class);
 
         JTSServices jtsServices = componentManager.getComponentService(JTSServices.class);
@@ -640,6 +644,7 @@ public class AppMain extends Application {
          */
         // Test Navigation  Communication with external client 
         navigationServerServices.init(9090);
+        navigationServerServices.initTcpServer(9091);
         // Start Leap Motion 
         // leapMotionComponentServices.on();
         // Test Gazeteer services
@@ -690,6 +695,10 @@ public class AppMain extends Application {
         //Test new viewer services of STL
         // stlComponentServices.viewSTL("../privateData/stl/out.stl");
 
+        //Test services Image
+      // imageServices.displayShelf("/home/serge/Data/developement/Carroussel/imgs/animals/");
+     
+        
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");

@@ -378,8 +378,8 @@ public class BathymetryDBController {
                         "SELECT *"
                         + " FROM " + table + "  "
                         + "WHERE coord @ ST_MakeEnvelope ("
-                        + lonMin + ", " + latMin + ", "
-                        + lonMax + ", " + latMax
+                        + latMin + ", " + lonMin + ", "
+                        + latMax + ", " + lonMax
                         + ", 4326); ");
                 while (r.next()) {
                     geom = (PGgeometry) r.getObject(2);
