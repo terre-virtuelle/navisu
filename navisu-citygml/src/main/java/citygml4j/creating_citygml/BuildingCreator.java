@@ -79,6 +79,9 @@ public class BuildingCreator {
 		Polygon roof_2 = geom.createLinearPolygon(new double[] {0,0,6, 3,0,9, 3,12,9, 0,12,6}, 3);
 		ground.setId(gmlIdManager.generateUUID());
                 
+               
+                
+                
 		wall_1.setId(gmlIdManager.generateUUID());
 		wall_2.setId(gmlIdManager.generateUUID());
 		wall_3.setId(gmlIdManager.generateUUID());

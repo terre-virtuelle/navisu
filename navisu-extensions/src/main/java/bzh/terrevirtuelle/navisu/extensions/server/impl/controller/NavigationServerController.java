@@ -5,12 +5,16 @@
  */
 package bzh.terrevirtuelle.navisu.extensions.server.impl.controller;
 
+import bzh.terrevirtuelle.navisu.agents.ship.ShipAgentServices;
 import bzh.terrevirtuelle.navisu.api.progress.Job;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.extensions.commands.Command;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
+import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -40,10 +44,17 @@ import org.vertx.java.core.http.ServerWebSocket;
 public class NavigationServerController {
 
     protected static final Logger LOGGER = Logger.getLogger(NavigationServerController.class.getName());
-    private static NavigationServerController INSTANCE;
-    private NavigationCmdComponentServices navigationCmdComponentServices;
+    protected static NavigationServerController INSTANCE;
+
+    protected NavigationTcpServerController navigationTcpServerController;
+
+    protected NavigationCmdComponentServices navigationCmdComponentServices;
+    protected LayersManagerServices layersManagerServices;
     protected GuiAgentServices guiAgentServices;
-    private NavigationDataSet navigationDataSet;
+    protected NavigationDataSet navigationDataSet;
+    protected ShipAgentServices shipAgentServices;
+    protected KmlComponentServices kmlComponentServices;
+    protected BathymetryDBServices bathymetryDBServices;
 
     private Properties properties;
     private final String PROPERTIES_NAME = "properties/navigation.properties";
@@ -55,18 +66,32 @@ public class NavigationServerController {
     private int port;
     private Command command;
 
-    private NavigationServerController(GuiAgentServices guiAgentServices,
-            NavigationCmdComponentServices navigationCmdComponentServices) {
+    private NavigationServerController(ShipAgentServices shipAgentServices,
+            LayersManagerServices layersManagerServices,
+            GuiAgentServices guiAgentServices,
+            NavigationCmdComponentServices navigationCmdComponentServices,
+            KmlComponentServices kmlComponentServices,
+            BathymetryDBServices bathymetryDBServices) {
+        this.shipAgentServices = shipAgentServices;
+        this.layersManagerServices = layersManagerServices;
         this.guiAgentServices = guiAgentServices;
         this.navigationCmdComponentServices = navigationCmdComponentServices;
+        this.bathymetryDBServices = bathymetryDBServices;
         initProperties();
     }
 
     public static NavigationServerController getInstance(
+            ShipAgentServices shipAgentServices,
+            LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
-            NavigationCmdComponentServices navigationCmdComponentServices) {
+            NavigationCmdComponentServices navigationCmdComponentServices,
+            KmlComponentServices kmlComponentServices,
+            BathymetryDBServices bathymetryDBServices) {
         if (INSTANCE == null) {
-            INSTANCE = new NavigationServerController(guiAgentServices, navigationCmdComponentServices);
+            INSTANCE = new NavigationServerController(shipAgentServices,
+                    layersManagerServices, guiAgentServices,
+                    navigationCmdComponentServices, kmlComponentServices,
+                    bathymetryDBServices);
         }
         return INSTANCE;
     }
@@ -83,25 +108,43 @@ public class NavigationServerController {
 
     public void initTcpServer(int port) {
         this.port = port;
-        guiAgentServices.getJobsManager().newJob("Server is listening on port " + port, new Job() {
+        navigationTcpServerController = new NavigationTcpServerController(shipAgentServices,
+                layersManagerServices,
+                bathymetryDBServices,
+                kmlComponentServices);
+        guiAgentServices.getJobsManager().newJob("", new Job() {
 
             @Override
             public void run(ProgressHandle progressHandle) {
                 try (ServerSocket serverSocket = new ServerSocket(port)) {
 
                     System.out.println("Server is listening on port " + port);
-
+                    char[] buffer = new char[50];
+                    char c;
                     while (true) {
                         Socket socket = serverSocket.accept();
-
                         System.out.println("New client connected");
                         InputStream input = socket.getInputStream();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-                        String text;
+                        String text = null;
                         do {
-                            text = reader.readLine();
-                            System.out.println(text);
-                        } while (!text.equals("bye"));
+                              reader.read(buffer);
+                            for (char b : buffer) {
+                                // convert byte to character
+                                c = (char) b;
+                                // prints character
+                                System.out.print(c);
+                            }
+
+                            //  System.out.println("text : "+ text);
+                            if (text != null) {
+                                String[] dataTab = text.trim().split(",");
+                                double lat = Double.valueOf(dataTab[0].trim());
+                                double lon = Double.valueOf(dataTab[1].trim());
+                                //  System.out.println(lat + " "+lon);
+                                navigationTcpServerController.doIt(lat, lon);
+                            }
+                        } while (true);
                     }
                 } catch (IOException ex) {
                     System.out.println("Server exception: " + ex.getMessage());

@@ -59,7 +59,7 @@ public class BathymetryCmd
         navigationDataSet = new NavigationDataSet();
 
         List<Point3DGeo> points = bathymetryDBServices.retrieveIn(bathyConnection, "bathy", lat, lon, lat + 0.0015, lon + 0.0015);
-        System.out.println("points : " + points);
+      //  System.out.println("points : " + points);
         points.forEach((p) -> {
             navigationDataSet.add(p);
         });
@@ -70,7 +70,7 @@ public class BathymetryCmd
     @Override
     public NavigationDataSet doIt(String arg) {
         bathyConnection = bathymetryDBServices.connect(arg, HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-        System.out.println("bathyConnection BathymetryCmd : " + bathyConnection);
+      //  System.out.println("bathyConnection BathymetryCmd : " + bathyConnection);
         navigationDataSet = new NavigationDataSet();
         return navigationDataSet;
     }

@@ -44,13 +44,15 @@ public class ShipAgentBathymetryCmd
         implements NavigationCmd {
 
     private static ShipAgentBathymetryCmd INSTANCE;
-
     protected KmlComponentServices kmlComponentServices;
-    private final ShipAgentServices shipAgentServices;
+    protected ShipAgentServices shipAgentServices;
+    protected BathymetryDBServices bathymetryDBServices;
+    protected LayersManagerServices layersManagerServices;
+
     protected static final String GROUP_0 = "S57 charts";
     protected static final String S57_LAYER = "S57Stl";
     protected static final String DB_NAME = "BathyShomDB";
-    protected static final String SHIP_NAME = "data/collada/drone.dae";
+    protected static final String SHIP_NAME = "data/collada/rov.dae"; //drone.dae
     protected RenderableLayer s57Layer;
     protected Ship ship;
     protected ArrayList<Position> pathPositions;
@@ -65,7 +67,6 @@ public class ShipAgentBathymetryCmd
     protected final String PASSWD = "admin";
     protected Connection bathyConnection;
     protected NavigationDataSet navigationDataSet;
-    protected final BathymetryDBServices bathymetryDBServices;
 
     public static ShipAgentBathymetryCmd getInstance(ShipAgentServices shipAgentServices,
             LayersManagerServices layersManagerServices,
@@ -83,6 +84,7 @@ public class ShipAgentBathymetryCmd
         this.bathymetryDBServices = bathymetryDBServices;
         this.kmlComponentServices = kmlComponentServices;
         this.shipAgentServices = shipAgentServices;
+        this.layersManagerServices=layersManagerServices;
         s57Layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
         bathyConnection = bathymetryDBServices.connect(DB_NAME, HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         ship = new Ship("Lithops", 48.36, -4.49, 10.0, 270.0);
@@ -91,7 +93,7 @@ public class ShipAgentBathymetryCmd
         shipAgentServices.setScale(0.5, 0.5, 0.5);
         pathPositions = new ArrayList<>();
         createAttributes();
-        
+
         path = new Path(pathPositions);
         path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
         path.setVisible(true);
@@ -125,6 +127,7 @@ public class ShipAgentBathymetryCmd
         wwd.redrawNow();
         return navigationDataSet;
     }
+
     protected void createAttributes() {
         attrs = new BasicShapeAttributes();
         attrs.setOutlineMaterial(Material.GREEN);

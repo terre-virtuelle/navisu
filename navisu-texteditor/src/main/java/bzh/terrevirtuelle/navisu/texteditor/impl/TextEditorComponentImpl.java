@@ -45,10 +45,11 @@ public class TextEditorComponentImpl
                 for (int page = 0; page < document.getNumberOfPages(); ++page) {
                     BufferedImage bim = pdfRenderer.renderImageWithDPI(page, 300, ImageType.RGB);
                     images.add(bim.getScaledInstance(width, height, Image.SCALE_AREA_AVERAGING));
+                    System.out.println(images);
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(TextEditorComponentImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TextEditorComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return images;
     }

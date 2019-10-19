@@ -32,7 +32,7 @@ public class PageFlipper extends Application {
                         image = new ImageView(new Image(getClass().getResource("images/image" + n + ".png").toURI().toString()));
                         images.add(image);
                     } catch (URISyntaxException ex) {
-                        Logger.getLogger(PageFlipper.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PageFlipper.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                     }
                 });
         for (int i = images.size() - 1; i >= 0; i--) {

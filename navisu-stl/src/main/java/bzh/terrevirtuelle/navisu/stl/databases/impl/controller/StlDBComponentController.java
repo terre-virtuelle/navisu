@@ -686,7 +686,7 @@ public class StlDBComponentController
                         allCB.setDisable(false);
                     }
                 });
-
+         
         bathyDatabasesCB.setItems(bathyDbCbData);
         bathyDatabasesCB.getSelectionModel().select("BathyShomDB");
         bathyDatabaseTF.setText("BathyShomDB");

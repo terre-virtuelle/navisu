@@ -38,6 +38,7 @@ dependencies {
     compile project(':navisu-system')
     compile project(':navisu-server')
     compile project(':navisu-stl')
+    compile project(':navisu-texteditor')
     compile project(':navisu-tools')
     compile project(':navisu-topology')
     compile project(':navisu-util')

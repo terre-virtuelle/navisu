@@ -194,6 +194,8 @@ import bzh.terrevirtuelle.navisu.media.images.ImageServices;
 import bzh.terrevirtuelle.navisu.media.images.impl.ImageImpl;
 import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
+import bzh.terrevirtuelle.navisu.texteditor.TextEditorComponentServices;
+import bzh.terrevirtuelle.navisu.texteditor.impl.TextEditorComponentImpl;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -334,6 +336,7 @@ public class AppMain extends Application {
                         S57GlobalCatalogImpl.class,
                         StlChartComponentImpl.class,
                         TestDBImpl.class,
+                        TextEditorComponentImpl.class,
                         ToolsComponentImpl.class,
                         TopologyImpl.class,
                         TransponderImpl.class,
@@ -439,6 +442,7 @@ public class AppMain extends Application {
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
 
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
+        TextEditorComponentServices textEditorComponentServices= componentManager.getComponentService(TextEditorComponentServices.class);
         TopologyServices topologyServices = componentManager.getComponentService(TopologyServices.class);
         ToolsComponentServices toolsComponentServices = componentManager.getComponentService(ToolsComponentServices.class);
         TransponderServices transponderServices = componentManager.getComponentService(TransponderServices.class);
@@ -643,8 +647,8 @@ public class AppMain extends Application {
          System.out.println(exif1);
          */
         // Test Navigation  Communication with external client 
-        navigationServerServices.init(9090);
-        navigationServerServices.initTcpServer(9091);
+     //   navigationServerServices.init(9090);
+      // navigationServerServices.initTcpServer(9091);
         // Start Leap Motion 
         // leapMotionComponentServices.on();
         // Test Gazeteer services
@@ -697,7 +701,10 @@ public class AppMain extends Application {
 
         //Test services Image
       // imageServices.displayShelf("/home/serge/Data/developement/Carroussel/imgs/animals/");
+     // imageServices.displayShelf("/home/serge/Data/navisu/hackathon/2019/images/Caroussel/Carre/");
      
+        //Test flipper text
+        //textEditorComponentServices.convertPDFFileToImages("data/pdf/histoireEpaves.pdf", 300, 200, "");
         
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
