@@ -489,7 +489,7 @@ public class StlDBComponentController
             S57_DEFAULT_DATABASE_7);
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
     protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("SRTM30mDB",
-            "BrestMetropole5mDB", "BrestMetropole1mDB", "Finistere5mDB",
+            "BrestMetropole5mDB", "BrestMetropole1mDB", "Finistere5mDB", "TestAltiDB",
             "AltiV2_2-0_75mIgnDB");
     protected ObservableList<String> buildingsDbCbData = FXCollections.observableArrayList("BuildingsPaysBrestDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
