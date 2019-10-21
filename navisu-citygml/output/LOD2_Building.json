@@ -1,0 +1,184 @@
+{
+ "type": "CityJSON",
+ "version": "1.0",
+ "metadata": {
+  "datasetTitle": "LOD2 building created with citygml4j",
+  "geographicalExtent": [
+   0.0,
+   0.0,
+   0.0,
+   6.0,
+   12.0,
+   9.0
+  ],
+  "presentLoDs": {
+   "2.0": 1
+  }
+ },
+ "CityObjects": {
+  "ID_test-building": {
+   "type": "Building",
+   "attributes": {
+    "creationDate": "2019-10-20",
+    "class": "residential building",
+    "noOfInhabitants": 5
+   },
+   "geometry": [
+    {
+     "type": "Solid",
+     "boundaries": [
+      [
+       [
+        [
+         0,
+         1,
+         2,
+         3
+        ]
+       ],
+       [
+        [
+         3,
+         2,
+         4,
+         5
+        ]
+       ],
+       [
+        [
+         0,
+         6,
+         7,
+         1
+        ]
+       ],
+       [
+        [
+         0,
+         3,
+         5,
+         8,
+         6
+        ]
+       ],
+       [
+        [
+         2,
+         1,
+         7,
+         9,
+         4
+        ]
+       ],
+       [
+        [
+         5,
+         4,
+         9,
+         8
+        ]
+       ],
+       [
+        [
+         6,
+         8,
+         9,
+         7
+        ]
+       ]
+      ]
+     ],
+     "semantics": {
+      "values": [
+       [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+       ]
+      ],
+      "surfaces": [
+       {
+        "type": "GroundSurface"
+       },
+       {
+        "type": "WallSurface"
+       },
+       {
+        "type": "WallSurface"
+       },
+       {
+        "type": "WallSurface"
+       },
+       {
+        "type": "WallSurface"
+       },
+       {
+        "type": "RoofSurface"
+       },
+       {
+        "type": "RoofSurface"
+       }
+      ]
+     },
+     "lod": 2
+    }
+   ]
+  }
+ },
+ "vertices": [
+  [
+   0.0,
+   0.0,
+   0.0
+  ],
+  [
+   0.0,
+   12.0,
+   0.0
+  ],
+  [
+   6.0,
+   12.0,
+   0.0
+  ],
+  [
+   6.0,
+   0.0,
+   0.0
+  ],
+  [
+   6.0,
+   12.0,
+   6.0
+  ],
+  [
+   6.0,
+   0.0,
+   6.0
+  ],
+  [
+   0.0,
+   0.0,
+   6.0
+  ],
+  [
+   0.0,
+   12.0,
+   6.0
+  ],
+  [
+   3.0,
+   0.0,
+   9.0
+  ],
+  [
+   3.0,
+   12.0,
+   9.0
+  ]
+ ]
+}

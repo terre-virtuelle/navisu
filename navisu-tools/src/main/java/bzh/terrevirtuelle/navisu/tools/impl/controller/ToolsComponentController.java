@@ -663,12 +663,6 @@ public class ToolsComponentController
                 });
 
         createElevationButton.setOnMouseClicked((MouseEvent event) -> {
-            if (dem5mRB.isSelected()) {
-                mnt = "MNT5m";
-            }
-            if (dem1mRB.isSelected()) {
-                mnt = "MNT1m";
-            }
             String elevationDBName = elevationDatabaseNameTF.getText();
             if (elevationDBName != null) {
                 bathymetryDBServices.connect(elevationDBName, "localhost", "jdbc:postgresql://",
@@ -689,8 +683,8 @@ public class ToolsComponentController
                                     Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
                                         @Override
                                         public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
-                                            if ((path.toString().endsWith("asc")) //&& path.toString().contains(mnt))
-                                                    || (path.toString().endsWith("tif") && path.toString().contains("1arc"))) {// || tiff2XyzCB.isSelected()
+                                            if ((path.toString().endsWith("asc"))
+                                                    || (path.toString().endsWith("tif") && path.toString().contains("1arc"))) {
                                                 String fileName = prepareCreateOrInsertFile(path.toString());
                                                 if (isCreate == false) {
                                                     isCreate = true;
@@ -727,6 +721,7 @@ public class ToolsComponentController
                     }
                 });
             }
+            LOGGER.info("Out create DB");
         });
 
         insertElevationButton.setOnMouseClicked((MouseEvent event) -> {
@@ -750,7 +745,8 @@ public class ToolsComponentController
                                     Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
                                         @Override
                                         public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
-                                            if (path.toString().endsWith("asc") && (path.toString().contains(mnt))) {
+                                            if ((path.toString().endsWith("asc"))
+                                                    || (path.toString().endsWith("tif") && path.toString().contains("1arc"))) {
                                                 String fileName = prepareCreateOrInsertFile(path.toString());
                                                 bathymetryDBServices.insert(ELEVATION_DB_ORG_DIR + SEP + fileName, "elevation");
                                             }
@@ -780,6 +776,7 @@ public class ToolsComponentController
                     }
                 });
             }
+            LOGGER.info("Out insert DB");
         });
         /* Buildings controls */
 
@@ -954,7 +951,7 @@ public class ToolsComponentController
                     displayServices.displayBuildingGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
                 }
             }
-            
+
             LOGGER.log(Level.INFO, "Insert Buildings");
             String query;
             if (!buildingList.isEmpty()) {
@@ -985,7 +982,7 @@ public class ToolsComponentController
                 LOGGER.log(Level.INFO, "Translate Buildings to CityGML format over");
                 //  instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             }
-             
+
         });
         return buildingList;
     }

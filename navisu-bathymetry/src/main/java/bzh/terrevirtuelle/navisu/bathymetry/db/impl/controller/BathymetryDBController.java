@@ -174,6 +174,7 @@ public class BathymetryDBController {
     }
 
     public void create(String filename, String table) {
+        System.out.println("create : "+filename+"  "+table);
         guiAgentServices.getJobsManager().newJob("Create", (progressHandle) -> {
             String query = "DROP TABLE IF EXISTS  " + table + "; "
                     + "CREATE TABLE " + table + "("
@@ -286,6 +287,7 @@ public class BathymetryDBController {
     }
 
     public final void insertData(String table, String filename) {
+        System.out.println("insert : "+filename+" "+table);
         String sql = "INSERT INTO " + table + " (coord, elevation) "
                 + "VALUES ( ST_SetSRID(ST_MakePoint(?, ?), 4326), ?);";
         try {
