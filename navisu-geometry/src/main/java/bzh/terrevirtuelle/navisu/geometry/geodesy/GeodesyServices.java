@@ -21,6 +21,8 @@ public interface GeodesyServices
 
     double getDistanceM(double latA, double lonA, double latB, double lonB);
 
+    String getDistancesXY(String latLonElvA, String latLonElvB);
+
     Position getPosition(Position posA, double bearing, double distance);
 
     Position getPosition(Position posA, double bearing, double distance, double elevation);

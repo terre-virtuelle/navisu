@@ -57,7 +57,7 @@ import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
-import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.paysBrest.ObjPaysbrestLoader;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.paysBrest.ObjPaysBrestLoader;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import com.vividsolutions.jts.geom.Geometry;
@@ -289,7 +289,7 @@ public class ToolsComponentController
             "Litto3D5m", "Litto3D1m", "TestAltiDB");
     private ObservableList<String> dbCbBathyData = FXCollections.observableArrayList("Choice DB", "BathyShomDB", "TestDB");
     private ObservableList<String> dbCbBeaconsData = FXCollections.observableArrayList("Choice DB", "BalisageMaritimeDB");
-    private ObservableList<String> dbCbBuildingsData = FXCollections.observableArrayList("Choice DB", "BuildingsPaysbrestDB");
+    private ObservableList<String> dbCbBuildingsData = FXCollections.observableArrayList("Choice DB", "BuildingsPaysbrestDB", "TestDB");
 
     final ToggleGroup mntGroup = new ToggleGroup();
 
@@ -302,7 +302,7 @@ public class ToolsComponentController
     private final String COMPONENT_KEY_NAME_4 = "DbBuildings";
     private final String ENC_CATALOG_HOME = "data/charts/vector/s57/catalog/";
     private final String BATHY_DB_NAME_0 = "BathyShomDB";
-    private final String BATHY_DB_NAME_1 = "TestDB";
+    private final String TEST_DB_NAME = "TestDB";
     private final String ELEVATION_DB_NAME_0 = "AltiV2_2-0_75mIgnDB";
     private final String ELEVATION_DB_NAME_1 = "SRTM30mDB";
     private final String ELEVATION_DB_NAME_2 = "TestAltiDB";
@@ -561,8 +561,8 @@ public class ToolsComponentController
                         bathyDatabaseNameTF.setText(BATHY_DB_NAME_0);
                         bathyDbCB.getSelectionModel().select("Choice DB");
                     } else {
-                        if (newValue.equals(BATHY_DB_NAME_1)) {
-                            bathyDatabaseNameTF.setText(BATHY_DB_NAME_1);
+                        if (newValue.equals(TEST_DB_NAME)) {
+                            bathyDatabaseNameTF.setText(TEST_DB_NAME);
                             bathyDbCB.getSelectionModel().select("Choice DB");
                         }
                     }
@@ -791,6 +791,10 @@ public class ToolsComponentController
                         buildingsDatabaseNameTF.setText(BUILDINGS_DB_NAME_0);
                         buildingsDbCB.getSelectionModel().select("Choice DB");
                     }
+                    if (newValue.equals(TEST_DB_NAME)) {
+                        buildingsDatabaseNameTF.setText(TEST_DB_NAME);
+                        buildingsDbCB.getSelectionModel().select("Choice DB");
+                    }
                 });
         createBuildingsButton.setOnMouseClicked((MouseEvent event) -> {
             loadingBuildings(buildingsDataDirTF.getText(), buildingsDatabaseNameTF.getText(), LON_OFFSET, LAT_OFFSET);
@@ -879,7 +883,7 @@ public class ToolsComponentController
 
         guiAgentServices.getJobsManager().newJob("Load DB : " + buildingsDBName, (ProgressHandle progressHandle) -> {
 
-            ObjPaysbrestLoader objPaysbrestLoader = new ObjPaysbrestLoader(geodesyServices, guiAgentServices,
+            ObjPaysBrestLoader objPaysbrestLoader = new ObjPaysBrestLoader(geodesyServices, guiAgentServices,
                     instrumentDriverManagerServices, jtsServices, pro4JServices, objComponentServices, displayServices, s57Layer);
             bathymetryDBServices.connect(buildingsDBName, "localhost", "jdbc:postgresql://",
                     "5432", "org.postgresql.Driver", "admin", "admin");
@@ -901,15 +905,29 @@ public class ToolsComponentController
                             // DEBUG Wall and roof different color
                             if (previewBuildingsRB.isSelected()) {
                                 for (SolidGeo solid : solidWgs84List) {
-                                    //  displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+                                      displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+                                  //    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(Color.RED));
                                 }
                             }
                         }
-
                         if (path.toString().endsWith("obj") && path.toString().contains("TOITURES_TEXTURE")) {
                             // roofWgs84List.clear();
                             LOGGER.log(Level.INFO, path.getFileName().toString());
                             List<SolidGeo> solidGeoList = objPaysbrestLoader.loadObj(path, lonOffset, latOffset);
+                            roofWgs84List.addAll(solidGeoList);
+                            // DEBUG Wall and roof different color
+                            if (previewBuildingsRB.isSelected()) {
+                                for (SolidGeo solid : roofWgs84List) {
+                                      displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+                                     // displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(Color.RED));
+                                }
+                            }
+                        }
+                        
+                        if (path.toString().endsWith("obj") && path.toString().contains("COMPLET_TEXTURE")) {
+                            // roofWgs84List.clear();
+                            LOGGER.log(Level.INFO, path.getFileName().toString());
+                            List<SolidGeo> solidGeoList = objPaysbrestLoader.loadObjBuilding(path, lonOffset, latOffset);
                             roofWgs84List.addAll(solidGeoList);
                             // DEBUG Wall and roof different color
                             if (previewBuildingsRB.isSelected()) {

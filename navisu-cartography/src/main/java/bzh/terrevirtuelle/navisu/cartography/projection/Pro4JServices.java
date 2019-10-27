@@ -17,12 +17,14 @@ public interface Pro4JServices
 
     Point3DGeo convertLambert93ToWGS84(double lat, double lon);
 
+    String convertLambert93ToWGS84(String xyz, double xOffset, double yOffset);
+
     Point3DGeo convertLambert93ToWGS84(Point3DGeo pt);
 
     List<Point3DGeo> convertLambert93ToWGS84(List<Point3DGeo> pt);
-    
+
     Point3DGeo convertCoordinates(String epsgSrc, String epsgdest, Point3DGeo pt);
 
     String convertObjLambert93ToObjWGS84(String filename);
-     
+
 }
