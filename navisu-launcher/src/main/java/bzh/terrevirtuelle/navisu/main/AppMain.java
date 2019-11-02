@@ -706,11 +706,11 @@ public class AppMain extends Application {
         //String inFilename, String outFilename, String suffix, String epsgSrc, String epsgdest)
         int LON_OFFSET = 145168;
         int LAT_OFFSET = 6836820;
-
+/*
         cityGMLServices.convertCoordinatesCityGMLFile(
              //   "privateData/gml/73_104_complet_texture.gml", "privateData/gml/73_104_complet_texture_wgs84.gml", "EPSG:2154", "EPSG:4326", LAT_OFFSET, LON_OFFSET);
                 "privateData/gml/73_104_terrain.gml", "privateData/gml/73_104_terrain_wgs84.gml", "EPSG:2154", "EPSG:4326", LAT_OFFSET, LON_OFFSET);
-
+*/
 // Stop Applicaton 
         stage.setOnCloseRequest(e
                 -> {
