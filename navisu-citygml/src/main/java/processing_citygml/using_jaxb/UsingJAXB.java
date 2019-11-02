@@ -66,7 +66,8 @@ public class UsingJAXB {
 		JAXBMarshaller jaxbMarshaller = builder.createJAXBMarshaller(CityGMLVersion.v1_0_0);
 
 		System.out.println(df.format(new Date()) + "unmarshalling CityGML file LOD2_Building_v100.gml to JAXB objects");
-		JAXBElement<?> cityModelElem = (JAXBElement<?>)unmarshaller.unmarshal(new File("datasets/LOD2_Building_v100.gml"));
+		//JAXBElement<?> cityModelElem = (JAXBElement<?>)unmarshaller.unmarshal(new File("datasets/LOD2_Building_v100.gml"));
+                JAXBElement<?> cityModelElem = (JAXBElement<?>)unmarshaller.unmarshal(new File("datasets/76_95_complet_texture.gml"));
 
 		System.out.println(df.format(new Date()) + "iterating through JAXB object tree searching for boundary surfaces");
 		if (cityModelElem != null && cityModelElem.getValue() instanceof CityModelType) {

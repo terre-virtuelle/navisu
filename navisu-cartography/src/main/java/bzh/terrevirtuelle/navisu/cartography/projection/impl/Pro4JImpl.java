@@ -102,7 +102,7 @@ public class Pro4JImpl
         ProjCoordinate dstCoord = new ProjCoordinate();
 
         transform.transform(srcCoord, dstCoord);
-        return new Point3DGeo(dstCoord.y, dstCoord.x, 0.0);
+        return new Point3DGeo(dstCoord.y, dstCoord.x, pt.getElevation());
     }
 
     @Override

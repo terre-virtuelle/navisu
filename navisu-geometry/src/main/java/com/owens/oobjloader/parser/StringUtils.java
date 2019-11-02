@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 
 public class StringUtils {
     private static Logger log = Logger.getLogger(StringUtils.class.getName());
-
     // ----------------------------------------------------------------------
     // String parsing stuff
     // ----------------------------------------------------------------------
@@ -61,7 +60,6 @@ public class StringUtils {
         if (list.equals("")) {
             return null;
         }
-
         float[] returnArray = new float[numFloats];
         int returnArrayCount = 0;
 

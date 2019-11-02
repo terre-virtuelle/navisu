@@ -906,7 +906,7 @@ public class ToolsComponentController
                             if (previewBuildingsRB.isSelected()) {
                                 for (SolidGeo solid : solidWgs84List) {
                                       displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
-                                  //    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(Color.RED));
+                                      displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(Color.RED));
                                 }
                             }
                         }
@@ -919,7 +919,7 @@ public class ToolsComponentController
                             if (previewBuildingsRB.isSelected()) {
                                 for (SolidGeo solid : roofWgs84List) {
                                       displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
-                                     // displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(Color.RED));
+                                      displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(Color.RED));
                                 }
                             }
                         }
@@ -932,7 +932,7 @@ public class ToolsComponentController
                             // DEBUG Wall and roof different color
                             if (previewBuildingsRB.isSelected()) {
                                 for (SolidGeo solid : roofWgs84List) {
-                                    //  displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+                                      displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
                                 }
                             }
                         }
@@ -966,7 +966,7 @@ public class ToolsComponentController
             }
             if (previewBuildingsRB.isSelected()) {
                 for (SolidGeo solid : buildingList) {
-                    displayServices.displayBuildingGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+                    displayServices.displayBuildingGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.RED)));
                 }
             }
 

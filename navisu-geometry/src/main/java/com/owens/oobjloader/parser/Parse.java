@@ -8,18 +8,12 @@ package com.owens.oobjloader.parser;
 // license.  (I generally don't care so I'll almost certainly say yes.)
 // In addition this code may also be used under the "unlicense" described
 // at http://unlicense.org/ .  See the file UNLICENSE in the repo.
-import com.owens.oobjloader.builder.Face;
 import java.io.*;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.logging.Level;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Level.WARNING;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Parse {
 

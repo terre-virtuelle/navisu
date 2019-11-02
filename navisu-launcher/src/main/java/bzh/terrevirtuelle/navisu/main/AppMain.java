@@ -392,7 +392,7 @@ public class AppMain extends Application {
         guiAgentServices.showGui(stage, 1080, 700);
 
         ImageServices imageServices = componentManager.getComponentService(ImageServices.class);
-        
+
         InstrumentTemplateServices instrumentTemplateServices = componentManager.getComponentService(InstrumentTemplateServices.class);
 
         JTSServices jtsServices = componentManager.getComponentService(JTSServices.class);
@@ -442,7 +442,7 @@ public class AppMain extends Application {
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
 
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
-        TextEditorComponentServices textEditorComponentServices= componentManager.getComponentService(TextEditorComponentServices.class);
+        TextEditorComponentServices textEditorComponentServices = componentManager.getComponentService(TextEditorComponentServices.class);
         TopologyServices topologyServices = componentManager.getComponentService(TopologyServices.class);
         ToolsComponentServices toolsComponentServices = componentManager.getComponentService(ToolsComponentServices.class);
         TransponderServices transponderServices = componentManager.getComponentService(TransponderServices.class);
@@ -590,7 +590,6 @@ public class AppMain extends Application {
          = bezier2DServices.vectorTangentCompute(bezSi, 0.01, 0.5,  headings);
          bezier2DServices.toKML2("data/kml/", "testTgBezier.kml", vectorTg, "5014F0FF", "2");
          System.out.println(headings);*/
-
  /* Test CPA zone et reconnaissance de trajectoire */
         // dataServerServices.openFile("data/ais/ais.txt");  //AIS
         /* Test cibles AIS en direct */
@@ -647,8 +646,8 @@ public class AppMain extends Application {
          System.out.println(exif1);
          */
         // Test Navigation  Communication with external client 
-     //   navigationServerServices.init(9090);
-      // navigationServerServices.initTcpServer(9091);
+        //   navigationServerServices.init(9090);
+        // navigationServerServices.initTcpServer(9091);
         // Start Leap Motion 
         // leapMotionComponentServices.on();
         // Test Gazeteer services
@@ -698,16 +697,23 @@ public class AppMain extends Application {
          */
         //Test new viewer services of STL
         // stlComponentServices.viewSTL("../privateData/stl/out.stl");
-
         //Test services Image
-      // imageServices.displayShelf("/home/serge/Data/developement/Carroussel/imgs/animals/");
-     // imageServices.displayShelf("/home/serge/Data/navisu/hackathon/2019/images/Caroussel/Carre/");
-     
+        // imageServices.displayShelf("/home/serge/Data/developement/Carroussel/imgs/animals/");
+        // imageServices.displayShelf("/home/serge/Data/navisu/hackathon/2019/images/Caroussel/Carre/");
         //Test flipper text
         //textEditorComponentServices.convertPDFFileToImages("data/pdf/histoireEpaves.pdf", 300, 200, "");
-        
+        //Test CityGMLServices
+        //String inFilename, String outFilename, String suffix, String epsgSrc, String epsgdest)
+        int LON_OFFSET = 145168;
+        int LAT_OFFSET = 6836820;
+
+        cityGMLServices.convertCoordinatesCityGMLFile(
+             //   "privateData/gml/73_104_complet_texture.gml", "privateData/gml/73_104_complet_texture_wgs84.gml", "EPSG:2154", "EPSG:4326", LAT_OFFSET, LON_OFFSET);
+                "privateData/gml/73_104_terrain.gml", "privateData/gml/73_104_terrain_wgs84.gml", "EPSG:2154", "EPSG:4326", LAT_OFFSET, LON_OFFSET);
+
 // Stop Applicaton 
-        stage.setOnCloseRequest(e -> {
+        stage.setOnCloseRequest(e
+                -> {
             LOGGER.info("Stop Application.........");
             LOGGER.info("Databases closed");
             databaseServices.close();
@@ -715,7 +721,8 @@ public class AppMain extends Application {
             ComponentManager.componentManager.stopApplication();
             LOGGER.info("System exit");
             System.exit(0);
-        });
+        }
+        );
     }
 
     public static void main(String[] args) throws Exception {

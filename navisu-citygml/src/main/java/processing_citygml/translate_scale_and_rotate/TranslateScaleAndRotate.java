@@ -56,7 +56,8 @@ public class TranslateScaleAndRotate {
 
 		System.out.println(df.format(new Date()) + "reading CityGML file LOD2_Building_v100.gml");
 		CityGMLInputFactory in = builder.createCityGMLInputFactory();
-		CityGMLReader reader = in.createCityGMLReader(new File("datasets/LOD2_Building_v100.gml"));
+		//CityGMLReader reader = in.createCityGMLReader(new File("datasets/LOD2_Building_v100.gml"));
+                CityGMLReader reader = in.createCityGMLReader(new File("datasets/76_95_complet_texture.gml"));
 
 		CityModel cityModel = (CityModel)reader.nextFeature();
 		Building building = (Building)cityModel.getCityObjectMember().get(0).getCityObject();

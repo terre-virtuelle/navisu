@@ -18,14 +18,50 @@ import org.citygml4j.model.citygml.core.CityModel;
 public interface CityGMLServices
         extends ComponentService {
 
+    /**
+     *
+     * @param solid
+     * @return
+     */
     Building exportSolid(SolidGeo solid);
 
+    /**
+     *
+     * @param solid
+     * @return
+     */
     List<Building> exportToGML(List<SolidGeo> solid);
 
+    /**
+     *
+     * @param buildings
+     * @return
+     */
     CityModel createCityModel(List<Building> buildings);
 
-    
+    /**
+     *
+     * @param inFilename
+     * @param outFilename
+     * @param epsgSrc  example for Lambert93 : "EPSG:2154"
+     * @param epsgdest example for WGS84 : "EPSG:4326"
+     */
+    void convertCoordinatesCityGMLFile(String inFilename, String outFilename,  String epsgSrc, String epsgdest, double latOffset, double lonOffset);
 
+    /**
+     *
+     * @param inDirname
+     * @param outDirname
+     * @param epsgSrc
+     * @param epsgdest
+     */
+    void convertCoordinatesCityGMLDir(String inDirname, String outDirname,  String epsgSrc, String epsgdest,double latOffset, double lonOffset);
+
+    /**
+     *
+     * @param cityModel
+     * @param name
+     */
     void write(CityModel cityModel, String name);
 
 }

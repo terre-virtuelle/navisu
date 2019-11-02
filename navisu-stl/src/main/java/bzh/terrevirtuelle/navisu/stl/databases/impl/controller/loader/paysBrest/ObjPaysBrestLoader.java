@@ -26,7 +26,6 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import java.io.File;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,7 +40,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -349,7 +347,7 @@ public class ObjPaysBrestLoader {
                         + mtllib + "\n"
                         + groups[j] + groups[j + 1];
             }
-
+            /*
             String orig = null;
             String local;
             boolean first = true;
@@ -368,8 +366,8 @@ public class ObjPaysBrestLoader {
                 }
                 first = true;
             }
-
-            /*
+             */
+ /*
             
              */
             String filename = filetredPath.getFileName().toString();
@@ -445,44 +443,19 @@ public class ObjPaysBrestLoader {
             Logger.getLogger(ObjPaysBrestLoader.class
                     .getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        /*
-        vn -0.7327529191970825 -0.6804947853088379 
-         -9.342400062450906e-07
-         */
-        //original
-        /*
-        vn -0.7223719358444214 -0.6915047764778137 4.174486821284518e-05
-vn -0.7223647832870483 -0.6915122270584106 
- -2.984555180773896e-07
-vn -0.7223665714263916 -0.6915103197097778 0
-vn -0.7223639488220215 -0.6915130615234375 7.695177828281885e-08
-vn -0.7223630547523499 -0.6915140151977539 
- -2.984554896556801e-07
-vn -0.7223827838897705 -0.6914933919906616 
- -9.911829010889051e-07
-         */
+        tmp = tmp.replace("\\", "");
 
- /*
-        vn -0.7223647832870483 -0.6915122270584106 
-vn -0.7223647832870483 -0.6915122270584106  -2.984555180773896e-07vn -0.7223665714263916 -0.6915103197097778 0
-vn -0.7223639488220215 -0.6915130615234375 7.695177828281885e-08
-vn -0.7223630547523499 -0.6915140151977539 
-vn -0.7223630547523499 -0.6915140151977539  -2.984554896556801e-07vn -0.7223827838897705 -0.6914933919906616 
-vn -0.7223827838897705 -0.6914933919906616  -9.911829010889051e-07vn -0.7223780751228333 -0.6914982795715332 0
-         */
         String content = "";
         String[] tab = tmp.split("\n");
+
         for (int i = 0; i < tab.length; i++) {
             String[] t = tab[i].trim().split("\\s+");
-            if (!t[0].trim().equals("") && t.length < 2) {
-                String tmp0 = tab[i - 1].replaceAll("\r", "");
-                String tmp1 = tab[i].replaceAll("\r", "");
-                String tmp2 = "\n" + tmp0 + tmp1;
+            if (!t[0].trim().equals("") && t[0].trim().equals("vn") && t.length == 3) {
+                String tmp0 = tab[i].replaceAll("\r", "");
+                String tmp1 = tab[++i].replaceAll("\r", "");
+                String tmp2 = tmp0 + tmp1;
                 tmp2 = tmp2.replaceAll("\r", "");
-             //   if (tab[i - 1].contains("vn")) {
-             //      tmp2 += "\n" + tmp2;
-              //  }
-                content += tmp2;
+                content += tmp2 + "\n";
             } else {
                 content += tab[i];
             }
@@ -491,8 +464,7 @@ vn -0.7223827838897705 -0.6914933919906616  -9.911829010889051e-07vn -0.72237807
             Files.delete(path);
             path = Files.write(path, content.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException ex) {
-            Logger.getLogger(ObjPaysBrestLoader.class
-                    .getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(ObjPaysBrestLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return path;
     }
