@@ -263,17 +263,16 @@ public class DemDBComponentController {
         if (connection != null) {
             try {
                 r = connection.createStatement().executeQuery(
-                        "SELECT *"
+                        "SELECT * "
                         + "FROM " + table + " "
                         + "WHERE coord @ ST_MakeEnvelope ("
                         + latMin + ", " + lonMin + ", "
                         + latMax + ", " + lonMax
                         + ", 4326) ");
-                // System.out.println("r : " + r);
                 while (r.next()) {
                     geom = (PGgeometry) r.getObject(2);
                     depth = r.getFloat(3);
-                    //  System.out.println("depth : " + depth);
+                    System.out.println("depth : " + depth);
                     if (depth >= MIN_DEPTH) {
                         Point3DGeo pt = new Point3DGeo(geom.getGeometry().getFirstPoint().getX(),
                                 geom.getGeometry().getFirstPoint().getY(),

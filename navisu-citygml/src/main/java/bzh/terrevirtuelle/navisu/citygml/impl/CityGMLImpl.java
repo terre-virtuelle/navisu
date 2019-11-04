@@ -5,13 +5,19 @@
  */
 package bzh.terrevirtuelle.navisu.citygml.impl;
 
+import bzh.terrevirtuelle.navisu.api.progress.Job;
+import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.cartography.projection.Pro4JServices;
 import bzh.terrevirtuelle.navisu.citygml.CityGML;
 import bzh.terrevirtuelle.navisu.citygml.CityGMLServices;
+import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.geometry.FaceGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import java.io.File;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,12 +47,14 @@ import org.citygml4j.model.gml.feature.BoundingShape;
 import org.citygml4j.model.gml.geometry.aggregates.MultiSurface;
 import org.citygml4j.model.gml.geometry.aggregates.MultiSurfaceProperty;
 import org.citygml4j.model.gml.geometry.complexes.CompositeSurface;
+import org.citygml4j.model.gml.geometry.primitives.DirectPositionList;
 import org.citygml4j.model.gml.geometry.primitives.Envelope;
 import org.citygml4j.model.gml.geometry.primitives.LinearRing;
 import org.citygml4j.model.gml.geometry.primitives.Polygon;
 import org.citygml4j.model.gml.geometry.primitives.Solid;
 import org.citygml4j.model.gml.geometry.primitives.SolidProperty;
 import org.citygml4j.model.gml.geometry.primitives.SurfaceProperty;
+import org.citygml4j.model.gml.geometry.primitives.Triangle;
 import org.citygml4j.model.module.citygml.CityGMLVersion;
 import org.citygml4j.model.module.citygml.CoreModule;
 import org.citygml4j.util.bbox.BoundingBoxOptions;
@@ -69,6 +77,25 @@ public class CityGMLImpl
 
     @UsedService
     Pro4JServices pro4JServices;
+    @UsedService
+    BathymetryDBServices bathymetryDBServices;
+    @UsedService
+    DatabaseServices databaseServices;
+    @UsedService
+    GuiAgentServices guiAgentServices;
+
+    protected final String HOST = "localhost";
+    protected final String PROTOCOL = "jdbc:postgresql://";
+    protected final String PORT = "5432";
+    protected final String DRIVER = "org.postgresql.Driver";
+    protected final String USER = "admin";
+    protected final String PASSWD = "admin";
+    protected final String DATA_BASE_NAME = "BrestMetropole5mDB";
+    protected Connection elevationConnection;
+    protected static final double RETRIEVE_OFFSET = 0.00004;//5.0m
+    protected List<Point3DGeo> pts;
+    protected TINRelief tinRelief;
+    protected double height = 0;
 
     @Override
     public Building exportSolid(SolidGeo solid) {
@@ -193,91 +220,130 @@ public class CityGMLImpl
     }
 
     @Override
-    public void convertCoordinatesCityGMLFile(String inFilename, String outFilename, String epsgSrc, String epsgdest, double latOffset, double lonOffset) {
-        try {
-            CityGMLContext ctx = CityGMLContext.getInstance();
-            CityGMLBuilder builder;
-            builder = ctx.createCityGMLBuilder();
-            CityGMLInputFactory in = builder.createCityGMLInputFactory();
-            CityGMLReader reader = in.createCityGMLReader(new File(inFilename));
-            CityModel cityModel = (CityModel) reader.nextFeature();
-            reader.close();
+    public void convertCoordinatesCityGMLFile(String inFilename, String outFilename,
+            String epsgSrc, String epsgdest,
+            double latOffset, double lonOffset, String zOffsetDbName) {
 
-            List<CityObjectMember> l = cityModel.getCityObjectMember();
-            for (CityObjectMember com : l) {
-                System.out.println(com.getCityObject());
-            }
+        elevationConnection = databaseServices.connect(DATA_BASE_NAME, HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
+        guiAgentServices.getJobsManager().newJob("Load ", new Job() {
 
-            System.out.println(cityModel.getBoundedBy().getEnvelope().getLowerCorner().getValue());
-            System.out.println(cityModel.getBoundedBy().getEnvelope().getUpperCorner().getValue());
-            System.out.println(cityModel.getBoundedBy().getEnvelope().getSrsName());
-            System.out.println(cityModel.getDescription().getValue());
+            @Override
+            public void run(ProgressHandle progressHandle) {
+                try {
 
-            FeatureWalker walker = new FeatureWalker() {
-                @Override
-                public void visit(AbstractBoundarySurface boundarySurface) {
+                    CityGMLContext ctx = CityGMLContext.getInstance();
+                    CityGMLBuilder builder;
+                    builder = ctx.createCityGMLBuilder();
+                    CityGMLInputFactory in = builder.createCityGMLInputFactory();
+                    CityGMLReader reader = in.createCityGMLReader(new File(inFilename));
+                    CityModel cityModel = (CityModel) reader.nextFeature();
+                    reader.close();
 
-                    MultiSurface multiSurface = boundarySurface.getLod2MultiSurface().getMultiSurface();
-                    List<SurfaceProperty> surfaceProperty = multiSurface.getSurfaceMember();
-                    for (SurfaceProperty sp : surfaceProperty) {
-                        // System.out.println(((LinearRing) ((Polygon) sp.getObject()).getExterior().getRing()).getPosList().getValue());
-                        List<Double> posList = ((LinearRing) ((Polygon) sp.getObject()).getExterior().getRing()).getPosList().getValue();
-                        List<Double> posListProj = new ArrayList<>();
-                        for (int i = 0; i < posList.size(); i += 3) {
-                            Point3DGeo pt = pro4JServices.convertCoordinates(epsgSrc, epsgdest, new Point3DGeo(posList.get(i + 1) + latOffset, posList.get(i) + lonOffset, posList.get(i + 2)));
-                            posListProj.add(pt.getLongitude());
-                            posListProj.add(pt.getLatitude());
-                            posListProj.add(pt.getElevation());
+                    List<CityObjectMember> l = cityModel.getCityObjectMember();
+
+                    System.out.println(cityModel.getBoundedBy().getEnvelope().getLowerCorner().getValue());
+                    System.out.println(cityModel.getBoundedBy().getEnvelope().getUpperCorner().getValue());
+                    System.out.println(cityModel.getBoundedBy().getEnvelope().getSrsName());
+                    System.out.println(cityModel.getDescription().getValue());
+                    System.out.println("Buildings : " + l.size());
+
+                    FeatureWalker walker = new FeatureWalker() {
+                        @Override
+                        public void visit(AbstractBoundarySurface boundarySurface) {
+
+                            MultiSurface multiSurface = boundarySurface.getLod2MultiSurface().getMultiSurface();
+                            List<SurfaceProperty> surfaceProperty = multiSurface.getSurfaceMember();
+                            for (SurfaceProperty sp : surfaceProperty) {
+                                List<Double> posList = ((LinearRing) ((Polygon) sp.getObject()).getExterior().getRing()).getPosList().getValue();
+                                List<Double> posListProj = new ArrayList<>();
+                                for (int i = 0; i < posList.size(); i += 3) {
+                                    Point3DGeo pt = pro4JServices.convertCoordinates(epsgSrc, epsgdest, new Point3DGeo(posList.get(i + 1) + latOffset, posList.get(i) + lonOffset, posList.get(i + 2)));
+                                    posListProj.add(pt.getLongitude());
+                                    posListProj.add(pt.getLatitude());
+
+                                    pts = bathymetryDBServices.retrieveIn(elevationConnection, "\"public\".elevation",
+                                            pt.getLatitude() - RETRIEVE_OFFSET, pt.getLongitude() - RETRIEVE_OFFSET,
+                                            pt.getLatitude() + RETRIEVE_OFFSET, pt.getLongitude() + RETRIEVE_OFFSET);
+                                    if (!pts.isEmpty()) {
+                                        height = pts.get(0).getElevation();
+                                    }
+                                    posListProj.add(pt.getElevation() - height);
+                                }
+                                ((LinearRing) ((Polygon) sp.getObject()).getExterior().getRing()).getPosList().setValue(posListProj);
+                            }
+                            super.visit(boundarySurface);
                         }
-                        ((LinearRing) ((Polygon) sp.getObject()).getExterior().getRing()).getPosList().setValue(posListProj);
-                    }
-                    super.visit(boundarySurface);
+                    };
+
+                    cityModel.accept(walker);
+
+                    List<Point3DGeo> pts = new ArrayList<>();
+                    List<Double> posListProj = new ArrayList<>();
+
+                    FeatureWalker walker1 = new FeatureWalker() {
+                        @Override
+                        public void visit(ReliefFeature reliefFeature) {
+
+                            List<ReliefComponentProperty> l2 = reliefFeature.getReliefComponent();
+                            for (ReliefComponentProperty rcp : l2) {
+                                tinRelief = ((TINRelief) rcp.getReliefComponent());
+                                List<Triangle> triangles = tinRelief.getTin().getGeometry().getTrianglePatches().getTriangle();
+
+                                for (Triangle t : triangles) {
+                                    pts.clear();
+                                    posListProj.clear();
+                                    DirectPositionList directPositionList = ((LinearRing) t.getExterior().getRing()).getPosList();
+                                    List<Double> posList = directPositionList.getValue();
+                                    for (int i = 0; i < posList.size(); i += 3) {
+                                        pts.add(pro4JServices.convertCoordinates(epsgSrc, epsgdest, new Point3DGeo(posList.get(i + 1) + latOffset, posList.get(i) + lonOffset, posList.get(i + 2))));
+                                    }
+                                    for (int i = 0; i < pts.size(); i++) {
+                                        posListProj.add(pts.get(i).getLongitude());
+                                        posListProj.add(pts.get(i).getLatitude());
+                                        posListProj.add(pts.get(i).getElevation());
+                                    }
+                                    directPositionList.setValue(new ArrayList<>(posListProj));
+                                }
+                            }
+                            BoundingShape boundingShape = tinRelief.calcBoundedBy(BoundingBoxOptions.defaults());
+                            tinRelief.getBoundedBy().getEnvelope().setLowerCorner(boundingShape.getEnvelope().getLowerCorner());
+                            tinRelief.getBoundedBy().getEnvelope().setUpperCorner(boundingShape.getEnvelope().getUpperCorner());
+                            super.visit(reliefFeature);
+                        }
+                    };
+                    cityModel.accept(walker1);
+
+                    cityModel.getBoundedBy().getEnvelope().setSrsName(epsgdest);
+                    cityModel.getBoundedBy().getEnvelope().setLowerCorner(cityModel.calcBoundedBy(BoundingBoxOptions.defaults()).getEnvelope().getLowerCorner());
+                    cityModel.getBoundedBy().getEnvelope().setUpperCorner(cityModel.calcBoundedBy(BoundingBoxOptions.defaults()).getEnvelope().getUpperCorner());
+                    cityModel.getDescription().setValue("Exported by NaVisu software - http://www.terrevirtuelle.org - " + new Date());
+
+                    System.out.println(cityModel.getBoundedBy().getEnvelope().getLowerCorner().getValue());
+                    System.out.println(cityModel.getBoundedBy().getEnvelope().getUpperCorner().getValue());
+                    System.out.println(cityModel.getBoundedBy().getEnvelope().getSrsName());
+                    System.out.println(cityModel.getDescription().getValue());
+
+                    CityGMLOutputFactory out = builder.createCityGMLOutputFactory(CityGMLVersion.v2_0_0);
+                    CityGMLWriter writer;
+                    writer = out.createCityGMLWriter(new File(outFilename));
+                    writer.setPrefixes(CityGMLVersion.v2_0_0);
+                    writer.setDefaultNamespace(CoreModule.v2_0_0);
+                    writer.setSchemaLocations(CityGMLVersion.v2_0_0);
+                    writer.setIndentString("  ");
+                    writer.write(cityModel);
+                    writer.close();
+
+                } catch (CityGMLBuilderException | CityGMLReadException | CityGMLWriteException ex) {
+                    Logger.getLogger(CityGMLImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                 }
-            };
-
-            cityModel.accept(walker);
-
-            FeatureWalker walker1 = new FeatureWalker() {
-                @Override
-                public void visit(ReliefFeature reliefFeature) {
-
-                    List<ReliefComponentProperty> l2 = reliefFeature.getReliefComponent();
-                    for (ReliefComponentProperty rcp : l2) {
-                        System.out.println(((LinearRing) ((TINRelief) rcp.getReliefComponent()).getTin().getGeometry().getTrianglePatches().getTriangle().get(0).getExterior().getRing()).getPosList().getValue());
-                    }
-                    super.visit(reliefFeature);
-                }
-            };
-            cityModel.accept(walker1);
-
-            cityModel.getBoundedBy().getEnvelope().setSrsName(epsgdest);
-            cityModel.getBoundedBy().getEnvelope().setLowerCorner(cityModel.calcBoundedBy(BoundingBoxOptions.defaults()).getEnvelope().getLowerCorner());
-            cityModel.getBoundedBy().getEnvelope().setUpperCorner(cityModel.calcBoundedBy(BoundingBoxOptions.defaults()).getEnvelope().getUpperCorner());
-            cityModel.getDescription().setValue("Exported by NaVisu software - http://www.terrevirtuelle.org - " + new Date());
-
-            System.out.println(cityModel.getBoundedBy().getEnvelope().getLowerCorner().getValue());
-            System.out.println(cityModel.getBoundedBy().getEnvelope().getUpperCorner().getValue());
-            System.out.println(cityModel.getBoundedBy().getEnvelope().getSrsName());
-            System.out.println(cityModel.getDescription().getValue());
-
-            CityGMLOutputFactory out = builder.createCityGMLOutputFactory(CityGMLVersion.v2_0_0);
-            CityGMLWriter writer;
-            writer = out.createCityGMLWriter(new File(outFilename));
-            writer.setPrefixes(CityGMLVersion.v2_0_0);
-            writer.setDefaultNamespace(CoreModule.v2_0_0);
-            writer.setSchemaLocations(CityGMLVersion.v2_0_0);
-            writer.setIndentString("  ");
-            writer.write(cityModel);
-            writer.close();
-
-        } catch (CityGMLBuilderException | CityGMLReadException | CityGMLWriteException ex) {
-            // catch (CityGMLBuilderException | CityGMLReadException ex) {
-            Logger.getLogger(CityGMLImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            }
+        });
     }
 
     @Override
-    public void convertCoordinatesCityGMLDir(String inDirname, String outDirname, String epsgSrc, String epsgdest, double latOffset, double lonOffset) {
+    public void convertCoordinatesCityGMLDir(String inDirname, String outDirname,
+            String epsgSrc, String epsgdest,
+            double latOffset, double lonOffset, String zOffsetDbName) {
 
     }
 

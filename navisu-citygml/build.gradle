@@ -5,6 +5,7 @@ dependencies {
     compile project(':navisu-app')
     compile project(':navisu-util')
     compile project(':navisu-cartography')
+     compile project(':navisu-bathymetry')
 }
 jar {
     destinationDir project.file('../dest')

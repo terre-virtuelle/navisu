@@ -53,7 +53,8 @@ public class CityGML_v040_Reader {
         in.setProperty(CityGMLInputFactory.SUPPORT_CITYGML_VERSION_0_4_0, true);
 
         //CityGMLReader reader = in.createCityGMLReader(new File("datasets/LOD3_Building_v040.gml"));
-        CityGMLReader reader = in.createCityGMLReader(new File("/home/serge/Data/3DModels/BMO/gml/76_95_GML/76_95_BATI_TEXTURE/76_95_COMPLET_TEXTURE/76_95_complet_texture.gml"));
+      //  CityGMLReader reader = in.createCityGMLReader(new File("/home/serge/Data/3DModels/BMO/gml/76_95_GML/76_95_BATI_TEXTURE/76_95_COMPLET_TEXTURE/76_95_complet_texture.gml"));
+       CityGMLReader reader = in.createCityGMLReader(new File( "datasets/73_104_terrain_wgs84.gml"));
         CityModel cityModel = (CityModel) reader.nextFeature();
 
         List<CityObjectMember> cityObjectMembers = cityModel.getCityObjectMember();

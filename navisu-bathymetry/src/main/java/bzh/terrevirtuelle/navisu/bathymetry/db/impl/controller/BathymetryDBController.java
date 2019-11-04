@@ -174,7 +174,7 @@ public class BathymetryDBController {
     }
 
     public void create(String filename, String table) {
-        System.out.println("create : "+filename+"  "+table);
+        System.out.println("create : " + filename + "  " + table);
         guiAgentServices.getJobsManager().newJob("Create", (progressHandle) -> {
             String query = "DROP TABLE IF EXISTS  " + table + "; "
                     + "CREATE TABLE " + table + "("
@@ -253,7 +253,6 @@ public class BathymetryDBController {
 
     }
 
-   
     public void insertData(String table, List<SolidGeo> solids) {
         solids.stream().forEach((s) -> {
             try {
@@ -287,7 +286,7 @@ public class BathymetryDBController {
     }
 
     public final void insertData(String table, String filename) {
-        System.out.println("insert : "+filename+" "+table);
+        System.out.println("insert : " + filename + " " + table);
         String sql = "INSERT INTO " + table + " (coord, elevation) "
                 + "VALUES ( ST_SetSRID(ST_MakePoint(?, ?), 4326), ?);";
         try {
@@ -374,17 +373,19 @@ public class BathymetryDBController {
         PGgeometry geom;
         double depth;
         ResultSet r;
+        String query = "";
         if (connection != null) {
             try {
-                r = connection.createStatement().executeQuery(
-                        "SELECT *"
-                        + " FROM " + table + "  "
-                        + "WHERE coord @ ST_MakeEnvelope ("
+                query = "SELECT *  FROM " + table + " WHERE coord @ ST_MakeEnvelope ("
                         + latMin + ", " + lonMin + ", "
                         + latMax + ", " + lonMax
-                        + ", 4326); ");
+                        + ", 4326); ";
+             //   System.out.println(query);
+                r = connection.createStatement().executeQuery(query);
+               
                 while (r.next()) {
                     geom = (PGgeometry) r.getObject(2);
+                    
                     depth = r.getFloat(3);
                     if (depth >= MIN_DEPTH) {
                         Point3DGeo pt = new Point3DGeo(geom.getGeometry().getFirstPoint().getX(),
@@ -464,12 +465,12 @@ public class BathymetryDBController {
                     g = ground.toString();
                     g = g.replace("SRID=4326;", "");
                     solid.setGround(topologyServices.wktPolygonToPoint3DList(g));
-                    
+
                     roof = (PGgeometry) r.getObject(7);
                     g = roof.toString();
                     g = g.replace("SRID=4326;", "");
                     solid.setRoof(topologyServices.getFaceGeofromGeometryCollectionMulitipointWKT(g));
-                    
+
                     result.add(solid);
                 }
             } catch (SQLException ex) {
@@ -478,7 +479,7 @@ public class BathymetryDBController {
         } else {
             alert();
         }
-        
+
         return result;
     }
 

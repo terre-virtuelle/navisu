@@ -46,7 +46,7 @@ public interface CityGMLServices
      * @param epsgSrc  example for Lambert93 : "EPSG:2154"
      * @param epsgdest example for WGS84 : "EPSG:4326"
      */
-    void convertCoordinatesCityGMLFile(String inFilename, String outFilename,  String epsgSrc, String epsgdest, double latOffset, double lonOffset);
+    void convertCoordinatesCityGMLFile(String inFilename, String outFilename,  String epsgSrc, String epsgdest, double latOffset, double lonOffset, String zOffsetDbName);
 
     /**
      *
@@ -55,7 +55,7 @@ public interface CityGMLServices
      * @param epsgSrc
      * @param epsgdest
      */
-    void convertCoordinatesCityGMLDir(String inDirname, String outDirname,  String epsgSrc, String epsgdest,double latOffset, double lonOffset);
+    void convertCoordinatesCityGMLDir(String inDirname, String outDirname,  String epsgSrc, String epsgdest,double latOffset, double lonOffset, String zOffsetDbName);
 
     /**
      *

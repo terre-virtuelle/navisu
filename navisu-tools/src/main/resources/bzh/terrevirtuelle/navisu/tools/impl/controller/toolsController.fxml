@@ -369,6 +369,71 @@
                               </AnchorPane>
                           </content>
                         </Tab>
+                        <Tab fx:id="buildingsTab1" text="CityGML">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <GridPane prefHeight="436.0" prefWidth="531.0" styleClass="tab-conteneur">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="140.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="1.0" prefWidth="214.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="80.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <children>
+                                          <Label prefHeight="15.0" prefWidth="153.0" text="Buildings repertory" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Label text="Buildings database name" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <TextField fx:id="buildingsDataDirTF1" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <TextField fx:id="buildingsDatabaseNameTF1" editable="false" text="BrestMetropole5mDB" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                          <Button fx:id="buildingsDataButton1" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <GridPane GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                          </GridPane>
+                                          <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="153.0" text="    Buildings files" GridPane.rowIndex="1" />
+                                          <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <Button mnemonicParsing="false" prefWidth="100.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <Button mnemonicParsing="false" prefWidth="100.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                          <TextField GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <Label prefHeight="10.0" prefWidth="100.0" text="Suffix" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <Label prefWidth="100.0" text="EPSG src" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <Label prefHeight="15.0" prefWidth="100.0" text="EPSG dest" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <Label prefHeight="15.0" prefWidth="108.0" text="Latitude offset" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                          <Label prefHeight="15.0" prefWidth="94.0" text="Longitude offset" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                          <TextField text="EPSG:2154" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                          <TextField text="EPSG:4254" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                          <TextField text="6836820" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                                          <TextField text="145168" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
                             </tabs>
                         </TabPane>
                         <GridPane maxHeight="50.0" maxWidth="600.0" prefHeight="27.0" prefWidth="533.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2">
@@ -386,12 +451,12 @@
                                 <Button fx:id="helpButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Help" GridPane.columnIndex="4" />
                             </children>
                         </GridPane>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="Data and Databases" textAlignment="CENTER" wrappingWidth="502.50146484375" GridPane.columnIndex="1" />
                     </children>
                 </GridPane>
             </children>
         </Pane>
         <Pane layoutX="10.0" layoutY="10.0" prefHeight="45.0" prefWidth="45.0" styleClass="logo" />
-        <Text layoutX="141.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="Databases" textAlignment="CENTER" wrappingWidth="248.50146484375" />
         <Button fx:id="quit" layoutX="500.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
     </children>
 </fx:root>
