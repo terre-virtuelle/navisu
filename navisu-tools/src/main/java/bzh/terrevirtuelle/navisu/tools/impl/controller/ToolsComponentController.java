@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.tools.impl.controller;
 
+import bzh.terrevirtuelle.navisu.api.progress.Job;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
@@ -119,6 +120,10 @@ public class ToolsComponentController
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String USER_DIR = System.getProperty("user.dir");
 
+    private final String HOST = "localhost";
+    private final String PROTOCOL = "jdbc:postgresql://";
+    private final String PORT = "5432";
+    private final String DRIVER = "org.postgresql.Driver";
     private final String USER = "admin";
     private final String PASSWD = "admin";
     protected Properties properties;
@@ -277,6 +282,32 @@ public class ToolsComponentController
     @FXML
     public RadioButton previewBuildingsRB;
 
+    //Controls projection Building CityGML
+    @FXML
+    public TextField buildingFileTF;
+    @FXML
+    public TextField keywordTF;
+    @FXML
+    public TextField suffixTF;
+    @FXML
+    public TextField buildingDatabaseNameTF;
+    @FXML
+    public TextField srcEpsgTF;
+    @FXML
+    public TextField destEpsgTF;
+    @FXML
+    public TextField latOffsetTF;
+    @FXML
+    public TextField lonOffsetTF;
+    @FXML
+    public Button startButton;
+    @FXML
+    public Button browseBuildingFileButton;
+    @FXML
+    public Button browseBuildingDirButton;
+    @FXML
+    public ChoiceBox<String> buildingDatabaseCB;
+
     protected String buildingsData;
     protected String elevationData;
     protected boolean isDataDir = false;
@@ -290,6 +321,7 @@ public class ToolsComponentController
     private ObservableList<String> dbCbBathyData = FXCollections.observableArrayList("Choice DB", "BathyShomDB", "TestDB");
     private ObservableList<String> dbCbBeaconsData = FXCollections.observableArrayList("Choice DB", "BalisageMaritimeDB");
     private ObservableList<String> dbCbBuildingsData = FXCollections.observableArrayList("Choice DB", "BuildingsPaysbrestDB", "TestDB");
+    private ObservableList<String> dbCbBuildingsCityGMLData = FXCollections.observableArrayList("Choice DB", "BrestMetropole5mDB", "TestDB");
 
     final ToggleGroup mntGroup = new ToggleGroup();
 
@@ -314,7 +346,7 @@ public class ToolsComponentController
     private final String BUILDINGS_DB_NAME_0 = "BuildingsPaysBrestDB";
     private final String GROUP_0 = "S57 charts";
     protected static final String S57_LAYER = "S57";
-    protected final int LON_OFFSET = 145168;
+    protected final int LON_OFFSET = 145168;//exact value
     protected final int LAT_OFFSET = 6836820;
 
     private final String ELEVATION_DB_ORG_DIR = "privateData" + SEP + "elevation";
@@ -326,7 +358,10 @@ public class ToolsComponentController
     protected RenderableLayer s57Layer;
     boolean isTableSolidCreated = false;
     boolean isIndexSolidCreated = false;
-    int buildingCount = 0;
+    protected int buildingCount = 0;
+    protected String buildingsDBName;
+    protected String inFilename;
+    protected String outFilename;
     List<SolidGeo> buildingList = new ArrayList<>();
     List<SolidGeo> solidWgs84List = new ArrayList<>();
     List<SolidGeo> roofWgs84List = new ArrayList<>();
@@ -779,7 +814,6 @@ public class ToolsComponentController
             LOGGER.info("Out insert DB");
         });
         /* Buildings controls */
-
         buildingsDatabaseNameTF.setText(BUILDINGS_DB_NAME_0);
         buildingsDbCB.setItems(dbCbBuildingsData);
         buildingsDbCB.getSelectionModel().select("Choice DB");
@@ -800,10 +834,38 @@ public class ToolsComponentController
             loadingBuildings(buildingsDataDirTF.getText(), buildingsDatabaseNameTF.getText(), LON_OFFSET, LAT_OFFSET);
         });
         insertBuildingsButton.setOnMouseClicked((MouseEvent event) -> {
-            String buildingsDBName = buildingsDatabaseNameTF.getText();
+            buildingsDBName = buildingsDatabaseNameTF.getText();
 
         });
+        /*
+          CityGML buildings controls 
+         */
+        buildingDatabaseNameTF.setText(ELEVATION_DB_NAME_5);
+        buildingDatabaseCB.setItems(dbCbBuildingsCityGMLData);
+        buildingDatabaseCB.getSelectionModel().select("Choice DB");
+        buildingDatabaseCB.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) -> {
+                    if (newValue.equals(BUILDINGS_DB_NAME_0)) {
+                        buildingDatabaseNameTF.setText(BUILDINGS_DB_NAME_0);
+                        buildingDatabaseCB.getSelectionModel().select("Choice DB");
+                    }
+                    if (newValue.equals(TEST_DB_NAME)) {
+                        buildingDatabaseNameTF.setText(TEST_DB_NAME);
+                        buildingDatabaseCB.getSelectionModel().select("Choice DB");
+                    }
+                });
+        startButton.setOnMouseClicked((MouseEvent event) -> {
+            convertCoordinatesCityGMLFile(buildingFileTF.getText(),
+                    suffixTF.getText(), keywordTF.getText(),
+                    srcEpsgTF.getText(), destEpsgTF.getText(),
+                    Integer.parseInt(latOffsetTF.getText()),
+                    Integer.parseInt(lonOffsetTF.getText()),
+                    buildingDatabaseNameTF.getText(),
+                    HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
 
+        });
         helpButton.setOnMouseClicked((MouseEvent event) -> {
             if (s57Tab.isSelected()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -856,6 +918,12 @@ public class ToolsComponentController
         buildingsDataButton.setOnMouseClicked((MouseEvent event) -> {
             openDir(buildingsDataDirTF);
         });
+        browseBuildingFileButton.setOnMouseClicked((MouseEvent event) -> {
+            openFile(buildingFileTF);
+        });
+        browseBuildingDirButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(buildingFileTF);
+        });
     }
 
     private String prepareCreateOrInsertFile(String in) {
@@ -905,8 +973,8 @@ public class ToolsComponentController
                             // DEBUG Wall and roof different color
                             if (previewBuildingsRB.isSelected()) {
                                 for (SolidGeo solid : solidWgs84List) {
-                                      displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
-                                      displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(Color.RED));
+                                    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+                                    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(Color.RED));
                                 }
                             }
                         }
@@ -918,12 +986,12 @@ public class ToolsComponentController
                             // DEBUG Wall and roof different color
                             if (previewBuildingsRB.isSelected()) {
                                 for (SolidGeo solid : roofWgs84List) {
-                                      displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
-                                      displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(Color.RED));
+                                    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+                                    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(Color.RED));
                                 }
                             }
                         }
-                        
+
                         if (path.toString().endsWith("obj") && path.toString().contains("COMPLET_TEXTURE")) {
                             // roofWgs84List.clear();
                             LOGGER.log(Level.INFO, path.getFileName().toString());
@@ -932,7 +1000,7 @@ public class ToolsComponentController
                             // DEBUG Wall and roof different color
                             if (previewBuildingsRB.isSelected()) {
                                 for (SolidGeo solid : roofWgs84List) {
-                                      displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
+                                    displayServices.displaySolidGeoAsPolygon(solid, 0.0, s57Layer, new Material(WWUtil.makeRandomColor(Color.LIGHT_GRAY)));
                                 }
                             }
                         }
@@ -1003,6 +1071,65 @@ public class ToolsComponentController
 
         });
         return buildingList;
+    }
+
+    /*
+    Out dir is the in dir
+     */
+    private void convertCoordinatesCityGMLFile(String in, String suffix, String keyword,
+            String epsgSrc, String epsgDest,
+            double latOffset, double lonOffset,
+            String zOffsetDbName,
+            String host, String protocol, String port, String driver, String user, String passwd) {
+        File file = new File(in);
+        guiAgentServices.getJobsManager().newJob("Load buildings", new Job() {
+
+            @Override
+            public void run(ProgressHandle progressHandle) {
+                if (file.isFile()) {
+                    inFilename = in.replace(".gml", "");
+                    outFilename = inFilename + suffix + ".gml";
+                    inFilename += ".gml";
+                    LOGGER.log(Level.INFO, "Translate coordinates from :  start", file.getName());
+                    cityGMLServices.convertCoordinatesCityGMLFile(inFilename,
+                            outFilename,
+                            epsgSrc, epsgDest,
+                            latOffset, lonOffset,
+                            zOffsetDbName,
+                            host, protocol, port, driver, user, passwd);
+                    LOGGER.log(Level.INFO, "Translate coordinates from :  over", file.getName());
+                } else {
+                    if (file.isDirectory()) {
+                        try {
+                            Path directory = Paths.get(in);
+                            Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+
+                                @Override
+                                public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
+                                    if (path.toString().endsWith("gml") && path.toString().contains("COMPLET_TEXTURE")) {
+                                        inFilename = path.toString().replace(".gml", "");
+                                        outFilename = inFilename + suffix + ".gml";
+                                        inFilename += ".gml";
+                                        LOGGER.log(Level.INFO, "Translate coordinates from :  start", path.getFileName());
+                                        cityGMLServices.convertCoordinatesCityGMLFile(inFilename,
+                                                outFilename,
+                                                epsgSrc, epsgDest,
+                                                latOffset, lonOffset,
+                                                zOffsetDbName,
+                                                host, protocol, port, driver, user, passwd);
+                                        LOGGER.log(Level.INFO, "Translate coordinates from :  over", path.getFileName());
+                                        //System.out.println(inFilename + " " + outFilename);
+                                    }
+                                    return FileVisitResult.CONTINUE;
+                                }
+                            });
+                        } catch (IOException ex) {
+                            //Nothing if dir don't exist
+                        }
+                    }
+                }
+            }
+        });
     }
 
     public void openFile(TextField tf) {

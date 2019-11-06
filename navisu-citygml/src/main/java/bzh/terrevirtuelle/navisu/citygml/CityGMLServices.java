@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.citygml;
 
 import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
+import java.sql.Connection;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 import org.citygml4j.model.citygml.building.Building;
@@ -45,18 +46,20 @@ public interface CityGMLServices
      * @param outFilename
      * @param epsgSrc  example for Lambert93 : "EPSG:2154"
      * @param epsgdest example for WGS84 : "EPSG:4326"
+     * @param latOffset
+     * @param lonOffset
+     * @param zOffsetDbName
+     * @param host
+     * @param protocol
+     * @param port
+     * @param driver
+     * @param user
+     * @param passwd
      */
-    void convertCoordinatesCityGMLFile(String inFilename, String outFilename,  String epsgSrc, String epsgdest, double latOffset, double lonOffset, String zOffsetDbName);
-
-    /**
-     *
-     * @param inDirname
-     * @param outDirname
-     * @param epsgSrc
-     * @param epsgdest
-     */
-    void convertCoordinatesCityGMLDir(String inDirname, String outDirname,  String epsgSrc, String epsgdest,double latOffset, double lonOffset, String zOffsetDbName);
-
+    void convertCoordinatesCityGMLFile(String inFilename, String outFilename,  
+            String epsgSrc, String epsgdest, double latOffset, double lonOffset, 
+            String zOffsetDbName, String host,String protocol,String port,String driver,String user, String passwd);
+    
     /**
      *
      * @param cityModel

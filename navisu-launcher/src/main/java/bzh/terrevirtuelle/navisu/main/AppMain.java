@@ -206,6 +206,13 @@ import bzh.terrevirtuelle.navisu.texteditor.impl.TextEditorComponentImpl;
  */
 public class AppMain extends Application {
 
+    private final String HOST = "localhost";
+    private final String PROTOCOL = "jdbc:postgresql://";
+    private final String PORT = "5432";
+    private final String DRIVER = "org.postgresql.Driver";
+    private final String USER = "admin";
+    private final String PASSWD = "admin";
+
     private static final Logger LOGGER = Logger.getLogger(AppMain.class.getName());
     private final String DATA_S57_CATALOG_1 = "data/charts/vector/s57/catalog/ENC_NP1.kml";
     private final String DATA_S57_CATALOG_2 = "data/charts/vector/s57/catalog/ENC_NP2.kml";
@@ -703,15 +710,16 @@ public class AppMain extends Application {
         // imageServices.displayShelf("/home/serge/Data/navisu/hackathon/2019/images/Caroussel/Carre/");
         //Test flipper text
         //textEditorComponentServices.convertPDFFileToImages("data/pdf/histoireEpaves.pdf", 300, 200, "");
+      
         //Test CityGMLServices
-        //String inFilename, String outFilename, String suffix, String epsgSrc, String epsgdest)
         int LON_OFFSET = 145170; //145168;  // East correction for Bing imagery
         int LAT_OFFSET = 6836814;//6836820; //South correction for Bing imagery
-
-      //  cityGMLServices.convertCoordinatesCityGMLFile(
-      //         "privateData/gml/73_104_complet_texture.gml", "privateData/gml/73_104_complet_texture_wgs84.gml", "EPSG:2154", "EPSG:4326", LAT_OFFSET, LON_OFFSET, "BrestMetropole5mDB");
-              //  "privateData/gml/73_104_terrain.gml", "privateData/gml/73_104_terrain_wgs84.gml", "EPSG:2154", "EPSG:4326", LAT_OFFSET, LON_OFFSET);
-
+/*
+        cityGMLServices.convertCoordinatesCityGMLFile(
+                "privateData/gml/76_110_complet_texture.gml", "privateData/gml/76_110_complet_texture_wgs84.gml", "EPSG:2154", "EPSG:4326",
+                LAT_OFFSET, LON_OFFSET,
+                "BrestMetropole5mDB", HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
+*/
 // Stop Applicaton 
         stage.setOnCloseRequest(e
                 -> {
