@@ -41,7 +41,34 @@ public abstract class ResultSetDBLoader {
                     put("M_NSYS", "SELECT geom, marsys "
                             + " FROM m_nsys "
                             + " WHERE geom && ST_MakeEnvelope");
-                    put("ACHARE", "rcid, objnam, catach, restrn");
+                    put("ACHARE", "gid, objnam, catach, restrn");
+                    put("BCNCAR", "gid, objnam, bcnshp, colour, colour, catcam");//Pb sur les fichiers balisage du Shom
+                    put("BCNLAT", "gid, objnam, bcnshp, colour, colour, catlam");
+                    put("BCNISD", "gid, objnam, bcnshp, colour, colour");
+                    put("BCNSAW", "gid, objnam, bcnshp, colour, colour");
+                    put("BCNSPP", "gid, objnam, bcnshp, colour, colour");
+                    put("BCNISD", "gid, objnam, bcnshp, colour, colour");
+                    put("BOYCAR", "gid, objnam, boyshp, colour, colour, catcam");
+                    put("BOYINB", "gid, objnam, boyshp, colour, colour");
+                    put("BOYISD", "gid, objnam, boyshp, colour, colour");
+                    put("BOYLAT", "gid, objnam, boyshp, colour, colour, catlam");
+                    put("BOYSAW", "gid, objnam, boyshp, colour, colour");
+                    put("BOYSPP", "gid, objnam, boyshp, colour, colour, catspm");
+                    put("DAYMAR", "gid, objnam, colour, colour, catspm");
+                    put("COALNE", "gid, elevat");
+                    put("DEPARE", "gid, drval1, drval2");
+                    put("DEPCNT", "gid, valdco");
+                    put("DOCARE", "gid, objnam, inform, ninfom");
+                    put("DRGARE", "gid, objnam, inform, ninfom, drval1, drval2");
+                    put("LIGHTS", "gid, colour, sectr1, sectr2, valnmr ");
+                    put("LNDMRK", "gid, objnam, functn, colour, colour, catlmk");
+                    put("MORFAC", "gid, objnam, boyshp, colour, colour, catmor");
+                    put("NAVLNE", "gid, orient");
+                    put("PONTON", "gid");
+                    put("RESARE", "gid, catrea, objnam, restrn, inform, ninfom");
+                    put("SLCONS", "gid");
+                    put("WRECKS", "gid, objnam, catwrk");
+                    /*
                     put("BCNCAR", "rcid, objnam, bcnshp, colour, colpat, catcam");
                     put("BCNLAT", "rcid, objnam, bcnshp, colour, colpat, catlam");
                     put("BCNISD", "rcid, objnam, bcnshp, colour, colpat, status");
@@ -68,6 +95,7 @@ public abstract class ResultSetDBLoader {
                     put("RESARE", "rcid, catrea, objnam, restrn, inform, ninfom");
                     put("SLCONS", "rcid");
                     put("WRECKS", "rcid, objnam, catwrk");
+*/
                 }
             ;
 

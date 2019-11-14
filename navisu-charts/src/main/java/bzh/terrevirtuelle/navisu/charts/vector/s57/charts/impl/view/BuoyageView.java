@@ -103,6 +103,7 @@ public class BuoyageView {
                             + buoyage.getMarsys() + ".png";
                 }
             }
+            System.out.println("imageAddress : " + imageAddress);
             buoyage.setImageAddress(imageAddress);
             attrs = new PointPlacemarkAttributes();
             attrs.setImageAddress(imageAddress);

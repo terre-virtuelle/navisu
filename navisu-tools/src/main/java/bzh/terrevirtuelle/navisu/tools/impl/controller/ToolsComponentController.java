@@ -346,8 +346,8 @@ public class ToolsComponentController
     private final String BUILDINGS_DB_NAME_0 = "BuildingsPaysBrestDB";
     private final String GROUP_0 = "S57 charts";
     protected static final String S57_LAYER = "S57";
-    protected final int LON_OFFSET = 145168;//exact value
-    protected final int LAT_OFFSET = 6836820;
+    protected final int LON_OFFSET = 145168;//exact value for decal : 145170
+    protected final int LAT_OFFSET = 6836820; //6836814
 
     private final String ELEVATION_DB_ORG_DIR = "privateData" + SEP + "elevation";
     private final String BEACONS_DB_NAME_0 = "BalisageMaritimeDB";
@@ -552,7 +552,6 @@ public class ToolsComponentController
             }
             guiAgentServices.getJobsManager().newJob("Load DB : " + beaconsDatabaseName, (progressHandle) -> {
                 String shpDir = beaconsDataTF.getText();
-                System.out.println("shpDir : " + shpDir);
                 String sqlDir = databaseServices.shapeFileToSql(psqlPath, shpDir, "4326");
                 databaseServices.sqlToSpatialDB(beaconsDatabaseName, USER, PASSWD, sqlDir, psqlTF.getText() + "/psql");
                 instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");

@@ -194,7 +194,7 @@ public class DatabaseImpl
 
     @Override
     public void dropAll(String schema) {
-        
+
         try {
             statement.execute("DROP SCHEMA " + schema + " CASCADE;");
             statement.execute("CREATE SCHEMA " + schema + ";");
@@ -268,7 +268,7 @@ public class DatabaseImpl
 
     @Override
     public String shapeFileToSql(String path, String shpDir, String epsg) {
-      //  System.out.println("shapeFileToSql : " + shpDir);
+        //  System.out.println("shapeFileToSql : " + shpDir);
         userDirPath = System.getProperty("user.dir");
         try {
             Files.createDirectory(Paths.get(userDirPath + SEP + "data" + SEP + "sql" + SEP));
@@ -297,7 +297,8 @@ public class DatabaseImpl
         } catch (IOException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-
+        //  System.out.println("tableSet : " + tableSet);
+      //  System.out.println("userDirPath : " + userDirPath);
         //Option -p, put shp2pgsql in create mode, only create table
         //The refPathList contains the set of all tables.
         Stream<Path> filePathStream = refPathList.stream();
@@ -305,11 +306,14 @@ public class DatabaseImpl
             if (Files.isRegularFile(filePath)) {
                 String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
                 if (nameTab[1].equals("shp")) {
+                   // System.out.println("filePath.toString() : " + filePath.toString());
+                   // System.out.println(userDirPath + SEP + "data" + SEP + "sql" + SEP + nameTab[0] + ".sql");
                     try {
                         Proc.BUILDER.create()
                                 .setCmd(cmd)
-                                .addArg("-p -I -s " + epsg)
-                                .addArg(userDirPath + "/" + filePath)
+                                .addArg("-p -I -s " + epsg )
+                              //  .addArg(userDirPath + "/" + filePath)
+                                .addArg(filePath.toString())
                                 .addArg(nameTab[0])
                                 .setOut(new FileOutputStream(userDirPath + SEP + "data" + SEP + "sql" + SEP + nameTab[0] + ".sql", true))
                                 .setErr(System.err)
@@ -337,10 +341,10 @@ public class DatabaseImpl
                             }
                             try (Stream<String> lines = Files.lines(filePath)) {
                                 String content = new String(Files.readAllBytes(filePath));
-                                content = content.replaceAll("POINT", "geometry");
                                 content = content.replaceAll("MULTIPOINT", "geometry");
                                 content = content.replaceAll("MULTILINESTRING", "geometry");
                                 content = content.replaceAll("MULTIPOLYGON", "geometry");
+                                content = content.replaceAll("POINT", "geometry");
                                 Files.write(filePath, content.getBytes());
                             }
                         } catch (IOException ex) {
@@ -364,7 +368,7 @@ public class DatabaseImpl
                             Proc.BUILDER.create()
                                     .setCmd(cmd)
                                     .addArg("-a -I -s " + epsg)
-                                    .addArg(userDirPath + SEP + filePath)
+                                    .addArg(filePath.toString())
                                     .addArg(nameTab[0])
                                     .setOut(new FileOutputStream(userDirPath + SEP + "data" + SEP + "sql" + SEP + nameTab[0] + ".sql", true))
                                     .setErr(System.err)
@@ -397,11 +401,12 @@ public class DatabaseImpl
                 if (Files.isRegularFile(filePath)) {
                     String[] nameTab = filePath.getFileName().toString().split(Pattern.quote("."));
                     if (nameTab[1].equals("sql")) {
+                       // System.out.println("userDirPath + SEP + filePath : " + userDirPath + SEP + filePath);
                         try {
                             Proc.BUILDER.create()
                                     .setCmd(cmd)
                                     .addArg("-U admin -h localhost -d " + databaseName + " ").addArg("-f ")
-                                    .addArg(userDirPath + SEP + filePath)
+                                    .addArg(filePath.toString())
                                     .setOut(loadFileLog)
                                     .exec(environment);
                         } catch (IOException | InterruptedException ex) {

@@ -71,7 +71,7 @@ public class BuoyageExportToSTL {
                 } else if (acronym.equals("MORFAC")) {
                     result = result.concat(insertedFile(latM, lonM, elevation, "MORFAC.stl"));
                 } else if (acronym.equals("BCNISD")) {
-                    result = result.concat(insertedFile(latM, lonM, elevation, "DANGER.stl"));
+                    result = result.concat(insertedFile(latM, lonM, elevation, "BCNISD.stl"));
                 } else if (acronym.equals("BOYSPP") || acronym.equals("BCNSPP")) {
                     result = result.concat(insertedFile(latM, lonM, elevation, "SPP.stl"));
                 }

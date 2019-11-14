@@ -70,7 +70,9 @@ public class TopmarDBLoader {
                             geom.getGeometry().getFirstPoint().getX()), tm);
                 }
             } catch (SQLException ex) {
-                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+               // topMarksMap=null;
+               // LOGGER.log(Level.SEVERE, ex.toString(), ex);
+               LOGGER.log(Level.INFO, "TOPMARK not define",ex );
             }
         } else {
             Platform.runLater(() -> {

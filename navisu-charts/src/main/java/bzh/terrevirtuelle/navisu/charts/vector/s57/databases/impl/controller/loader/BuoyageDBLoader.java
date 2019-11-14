@@ -74,12 +74,15 @@ public class BuoyageDBLoader
                         buoyage.setLatitude(lat);
                         buoyage.setLongitude(lon);
 
-                        buoyage.setId(Long.parseLong(resultSet.getString("rcid")));
-
+                        //  buoyage.setId(Long.parseLong(resultSet.getString("rcid")));
                         buoyage.setMarsys(marsys);
-
-                        String topMark = topMarkMap.get(new Pair(lat, lon));
-                        if (topMark == null) {
+                        String topMark;
+                        if (topMarkMap != null) {
+                            topMark = topMarkMap.get(new Pair(lat, lon));
+                            if (topMark == null) {
+                                topMark = "0";
+                            }
+                        } else {
                             topMark = "0";
                         }
                         buoyage.setTopMark(topMark);
@@ -104,24 +107,36 @@ public class BuoyageDBLoader
                             col = tmp;
                         }
                         buoyage.setColour(col);
-
-                        tmp = resultSet.getString("colpat");
                         String colPat = "0";
+                        try {
+                            tmp = resultSet.getString("colpat");
+                        } catch (SQLException ex) {
+
+                        }
                         if (tmp != null) {
                             colPat = tmp;
                         }
                         buoyage.setColourPattern(colPat);
+                        String cat = "0";
+                        try {
+                            cat = resultSet.getString(7);
+                            if (cat == null) {
+                                cat = "0";
+                            }
+                        } catch (SQLException ex) {
 
-                        String cat = resultSet.getString(7);
-                        if (cat == null) {
-                            cat = "0";
                         }
                         buoyage.setCategoryOfMark(cat);
 
                         if (acronym.equals("DAYMAR")) {
-                            String natcon = resultSet.getString("natcon");
-                            if (natcon == null) {
-                                natcon = "0";
+                            String natcon = "0";
+                            try {
+                                natcon = resultSet.getString("natcon");
+                                if (natcon == null) {
+                                    natcon = "0";
+                                }
+                            } catch (SQLException ex) {
+
                             }
                             buoyage.setNatureOfConstruction(natcon);
                         }

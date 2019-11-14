@@ -423,8 +423,8 @@
                                           <Label prefHeight="15.0" prefWidth="94.0" text="Longitude offset" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                                           <TextField fx:id="srcEpsgTF" alignment="CENTER_RIGHT" text="EPSG:2154" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                           <TextField fx:id="destEpsgTF" alignment="CENTER_RIGHT" text="EPSG:4326" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                                          <TextField fx:id="latOffsetTF" alignment="CENTER_RIGHT" text="6836814" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                                          <TextField fx:id="lonOffsetTF" alignment="CENTER_RIGHT" text="145170" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                                          <TextField fx:id="latOffsetTF" alignment="CENTER_RIGHT" text="6836820" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                                          <TextField fx:id="lonOffsetTF" alignment="CENTER_RIGHT" text="145168" GridPane.columnIndex="2" GridPane.rowIndex="9" />
                                           <Label prefWidth="100.0" text="Key word" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <TextField fx:id="keywordTF" alignment="CENTER_RIGHT" text="COMPLET_TEXTURE" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                           <Button fx:id="startButton" mnemonicParsing="false" prefWidth="100.0" text="Start" GridPane.columnIndex="3" GridPane.rowIndex="12" />

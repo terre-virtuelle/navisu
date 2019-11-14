@@ -6,16 +6,12 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.ResultSetDBLoader.S57_REQUEST_MAP;
-import bzh.terrevirtuelle.navisu.util.Pair;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
-import org.postgis.PGgeometry;
 
 /**
  *
@@ -76,7 +72,9 @@ public class MnsysDBLoader {
                     }
                 }
             } catch (SQLException ex) {
-                LOGGER.log(Level.SEVERE, ex.toString(), ex);
+               // LOGGER.log(Level.SEVERE, ex.toString(), ex);
+              // LOGGER.log(Level.INFO, "M_NSYS not define",ex );
+               marsys="1";
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
