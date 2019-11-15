@@ -35,7 +35,7 @@ public class BuoyageView {
     protected double lat;
     protected double lon;
     protected String label;
-    protected boolean dev = false;
+    protected boolean dev = true;
 
     public BuoyageView() {
     }
@@ -103,7 +103,7 @@ public class BuoyageView {
                             + buoyage.getMarsys() + ".png";
                 }
             }
-            System.out.println("imageAddress : " + imageAddress);
+            System.out.println("imageAddress : " + imageAddress +" " + buoyage.getObjectName());
             buoyage.setImageAddress(imageAddress);
             attrs = new PointPlacemarkAttributes();
             attrs.setImageAddress(imageAddress);

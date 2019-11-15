@@ -49,6 +49,15 @@ public class BuoyageDBLoader
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(BuoyageDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+        String urlDB = null;
+        try {
+            urlDB = connection.getMetaData().getURL();
+        } catch (SQLException ex) {
+            Logger.getLogger(BuoyageDBLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String[] urlTab = urlDB.split("/");
+        dbName = urlTab[urlTab.length - 1];
+        //  System.out.println("dbName : " + dbName);
     }
 
     @SuppressWarnings("unchecked")
@@ -100,7 +109,6 @@ public class BuoyageDBLoader
                             shp = tmp;
                         }
                         buoyage.setShape(shp);
-
                         tmp = resultSet.getString("colour");
                         String col = "0";
                         if (tmp != null) {
@@ -116,7 +124,11 @@ public class BuoyageDBLoader
                         if (tmp != null) {
                             colPat = tmp;
                         }
-                        buoyage.setColourPattern(colPat);
+                        if (dbName.equals(SPECIAL_DB_NAME)) {
+                            buoyage.setColourPattern("0");
+                        } else {
+                            buoyage.setColourPattern(colPat);
+                        }
                         String cat = "0";
                         try {
                             cat = resultSet.getString(7);

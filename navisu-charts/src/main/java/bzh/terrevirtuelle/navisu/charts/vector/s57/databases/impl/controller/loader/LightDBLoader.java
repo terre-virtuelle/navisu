@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import gov.nasa.worldwind.geom.LatLon;
@@ -28,6 +27,14 @@ public class LightDBLoader
     public LightDBLoader(TopologyServices topologyServices, Connection connection, String marsys) {
         super(connection, "LIGHTS");
         this.topologyServices = topologyServices;
+        String urlDB = null;
+        try {
+            urlDB = connection.getMetaData().getURL();
+        } catch (SQLException ex) {
+            Logger.getLogger(BuoyageDBLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String[] urlTab = urlDB.split("/");
+        dbName = urlTab[urlTab.length - 1];
     }
 
     @SuppressWarnings("unchecked")

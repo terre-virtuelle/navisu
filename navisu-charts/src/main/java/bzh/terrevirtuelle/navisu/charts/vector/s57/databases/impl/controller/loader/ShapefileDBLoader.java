@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.lo
 
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.MnsysDBLoader.LOGGER;
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.ResultSetDBLoader.S57_REQUEST_MAP;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.ResultSetDBLoader.SPECIAL_S57_REQUEST_MAP;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.util.Logging;
@@ -35,6 +36,7 @@ public class ShapefileDBLoader {
     protected double lat;
     protected double lon;
     protected boolean clip;
+    protected String SPECIAL_DB_NAME = "BalisageMaritimeDB";
 
     public ShapefileDBLoader(DatabaseServices databaseServices,
             String databaseName, String user, String passwd, boolean clip) {
@@ -64,7 +66,11 @@ public class ShapefileDBLoader {
 
         if (connection != null) {
             try {
-                request = S57_REQUEST_MAP.get(acronym);
+                if (databaseName.equals("SPECIAL_DB_NAME")) {
+                    request = SPECIAL_S57_REQUEST_MAP.get(acronym);
+                } else {
+                    request = S57_REQUEST_MAP.get(acronym);
+                }
                 request += "(" + lonMin + ", " + latMin + ", "
                         + lonMax + ", " + latMax + ", "
                         + "4326);";

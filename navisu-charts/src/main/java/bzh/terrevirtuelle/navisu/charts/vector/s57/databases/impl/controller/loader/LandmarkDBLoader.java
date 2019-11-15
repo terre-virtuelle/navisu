@@ -30,6 +30,14 @@ public class LandmarkDBLoader
         super(connection, "LNDMRK");
         this.topologyServices = topologyServices;
         this.marsys = marsys;
+        String urlDB = null;
+        try {
+            urlDB = connection.getMetaData().getURL();
+        } catch (SQLException ex) {
+            Logger.getLogger(BuoyageDBLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String[] urlTab = urlDB.split("/");
+        dbName = urlTab[urlTab.length - 1];
     }
 
     @SuppressWarnings("unchecked")

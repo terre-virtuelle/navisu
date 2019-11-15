@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
 import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.ResultSetDBLoader.S57_REQUEST_MAP;
+import static bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.ResultSetDBLoader.SPECIAL_S57_REQUEST_MAP;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,6 +22,8 @@ public class MnsysDBLoader {
 
     protected static final Logger LOGGER = Logger.getLogger(MnsysDBLoader.class.getName());
     protected Connection connection;
+    protected String dbName = null;
+    protected String SPECIAL_DB_NAME = "BalisageMaritimeDB";
 
     public MnsysDBLoader(Connection connection) {
         this.connection = connection;
@@ -32,10 +35,23 @@ public class MnsysDBLoader {
         String request;
         String marsys = "";
         boolean first = true;
+        String urlDB = null;
+
         if (connection != null) {
             try {
+                urlDB = connection.getMetaData().getURL();
+            } catch (SQLException ex) {
+                Logger.getLogger(BuoyageDBLoader.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String[] urlTab = urlDB.split("/");
+            dbName = urlTab[urlTab.length - 1];
+            try {
                 while (true) {
-                    request = S57_REQUEST_MAP.get("M_NSYS");
+                    if (dbName.equals("SPECIAL_DB_NAME")) {
+                        request = SPECIAL_S57_REQUEST_MAP.get("M_NSYS");
+                    } else {
+                        request = S57_REQUEST_MAP.get("M_NSYS");
+                    }
                     request += "(" + lonMin + ", " + latMin + ", "
                             + lonMax + ", " + latMax + ", "
                             + "4326);";
@@ -46,7 +62,7 @@ public class MnsysDBLoader {
                             break;
                         }
                     }
-                   
+
                     if (latMin <= 0) {
                         latMin -= 0.01;
                     } else {
@@ -72,9 +88,9 @@ public class MnsysDBLoader {
                     }
                 }
             } catch (SQLException ex) {
-               // LOGGER.log(Level.SEVERE, ex.toString(), ex);
-              // LOGGER.log(Level.INFO, "M_NSYS not define",ex );
-               marsys="1";
+                // LOGGER.log(Level.SEVERE, ex.toString(), ex);
+                // LOGGER.log(Level.INFO, "M_NSYS not define",ex );
+                marsys = "1";
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
