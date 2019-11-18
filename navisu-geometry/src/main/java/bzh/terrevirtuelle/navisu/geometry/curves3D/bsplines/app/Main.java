@@ -5,13 +5,11 @@ package bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.app;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author serge
  */
-
-import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.BSpline;
+import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.impl.BSpline;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.Point3D;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,8 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Main
+        extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -37,16 +36,17 @@ public class Main extends Application {
         stage.setHeight(400);
 
         Point3D[] points = new Point3D[]{
-            new Point3D(0, 0, 0), 
+            new Point3D(0, 0, 0),
             new Point3D(1.0, 1.0, 0.0),
-            new Point3D(3.0, 2.0, 0), 
+            new Point3D(3.0, 2.0, 0),
             new Point3D(4.0, 1.0, 0),
             new Point3D(5.0, -1.0, 0)
         };
         double[] knots = new double[]{0.0, 0.0, 0.0, 1.0, 2, 3.0, 3.0, 3.0};
         double[] w = new double[]{1.0, 1.0, 1.0, 1.0, 1.0};
+
         BSpline n = new BSpline(points, knots, w, 2);
-        
+
         double inc = .001;
         Point3D p = new Point3D(0, 0, 0);
         Point3D stop = new Point3D(5.0, -1.0, 0);

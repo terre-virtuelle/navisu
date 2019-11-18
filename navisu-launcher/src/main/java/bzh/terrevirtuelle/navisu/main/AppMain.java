@@ -1,7 +1,6 @@
 package bzh.terrevirtuelle.navisu.main;
 
 import bzh.terrevirtuelle.navisu.agents.ship.impl.ShipAgentImpl;
-import bzh.terrevirtuelle.navisu.api.progress.Job;
 import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.impl.DirectoryDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManagerServices;
@@ -189,6 +188,10 @@ import bzh.terrevirtuelle.navisu.gdal.GdalServices;
 import bzh.terrevirtuelle.navisu.gdal.impl.GdalImpl;
 import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
 import bzh.terrevirtuelle.navisu.geo.raster.impl.RasterImpl;
+import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.BSplineComponentServices;
+import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.impl.BSpline;
+import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.impl.BSplineComponentImpl;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.impl.ObjComponentImpl;
 import bzh.terrevirtuelle.navisu.media.images.ImageServices;
@@ -277,6 +280,7 @@ public class AppMain extends Application {
                         BathymetryLocalCatalogImpl.class,
                         BathySoundsImpl.class,
                         Bezier2DImpl.class,
+                        BSplineComponentImpl.class,
                         CameraComponentImpl.class,
                         CityGMLImpl.class,
                         ClocksImpl.class,
@@ -367,6 +371,7 @@ public class AppMain extends Application {
         BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
         BathySoundsServices bathySoundsServices = componentManager.getComponentService(BathySoundsServices.class);
         Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
+        BSplineComponentServices bSplineComponentServices = componentManager.getComponentService(BSplineComponentServices.class);
 
         CameraComponentServices cameraComponentServices = componentManager.getComponentService(CameraComponentServices.class);
         CityGMLServices cityGMLServices = componentManager.getComponentService(CityGMLServices.class);
@@ -710,17 +715,32 @@ public class AppMain extends Application {
         // imageServices.displayShelf("/home/serge/Data/navisu/hackathon/2019/images/Caroussel/Carre/");
         //Test flipper text
         //textEditorComponentServices.convertPDFFileToImages("data/pdf/histoireEpaves.pdf", 300, 200, "");
-      
         //Test CityGMLServices
+          /*
         int LON_OFFSET = 145170; //145168;  // East correction for Bing imagery
         int LAT_OFFSET = 6836814;//6836820; //South correction for Bing imagery
-/*
+      
         cityGMLServices.convertCoordinatesCityGMLFile(
                 "privateData/gml/76_110_complet_texture.gml", "privateData/gml/76_110_complet_texture_wgs84.gml", "EPSG:2154", "EPSG:4326",
                 LAT_OFFSET, LON_OFFSET,
                 "BrestMetropole5mDB", HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-*/
-// Stop Applicaton 
+         */
+        //Test BSpline
+        /*
+        Point3D[] points = new Point3D[]{
+            new Point3D(0, 0, 0),
+            new Point3D(1.0, 1.0, 0.0),
+            new Point3D(3.0, 2.0, 0),
+            new Point3D(4.0, 1.0, 0),
+            new Point3D(5.0, -1.0, 0)
+        };
+        double[] knots = new double[]{0.0, 0.0, 0.0, 1.0, 2, 3.0, 3.0, 3.0};
+        double[] w = new double[]{1.0, 1.0, 1.0, 1.0, 1.0};
+        BSpline bSpline = bSplineComponentServices.create(points, knots, w, 2);
+        bSplineComponentServices.compute(bSpline, 0.001);
+        */
+
+        // Stop Applicaton 
         stage.setOnCloseRequest(e
                 -> {
             LOGGER.info("Stop Application.........");

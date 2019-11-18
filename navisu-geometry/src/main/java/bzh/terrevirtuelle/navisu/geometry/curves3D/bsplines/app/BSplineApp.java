@@ -5,7 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.app;
 
-import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.BSpline;
+import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.impl.BSpline;
+import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.impl.BSplineComponentImpl;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.Point3D;
 
 /**
