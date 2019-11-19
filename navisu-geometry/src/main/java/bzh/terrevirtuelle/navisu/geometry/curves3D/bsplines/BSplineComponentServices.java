@@ -19,5 +19,9 @@ public interface BSplineComponentServices
 
     BSpline create(Point3D[] controlPoints, double[] knots, double[] weights, int degree);
 
+    BSpline create(List<Point3D> controlPoints, double[] knots, double[] weights, int degree);
+
     List<Point3D> compute(BSpline bSpline, double inc);
+
+    Point3D getPointAt(BSpline bSpline, int i, double u);
 }

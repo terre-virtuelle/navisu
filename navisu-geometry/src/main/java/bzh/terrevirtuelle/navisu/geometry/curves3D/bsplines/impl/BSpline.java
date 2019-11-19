@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.impl;
 
 import bzh.terrevirtuelle.navisu.geometry.objects3D.Point3D;
+import java.util.List;
 
 /**
  *
@@ -23,6 +24,27 @@ public class BSpline {
     public BSpline(Point3D[] controlPoints, double[] knots, double[] weights, int degree) {
         this.controlPoints = controlPoints;
 
+        this.knots = knots;
+        this.weights = weights;
+        this.degree = degree;
+
+        //some init stuff
+        if (this.weights.length == 0) {
+            this.weights = new double[this.controlPoints.length];
+        }
+
+        for (int i = 0; i < weights.length; i++) {
+            if (weights[i] == 0.0) {
+                weights[i] = 1.0;
+            }
+        }
+    }
+
+    public BSpline(List<Point3D> controlPoints, double[] knots, double[] weights, int degree) {
+        this.controlPoints = new Point3D[controlPoints.size()];
+        for (int i = 0; i < controlPoints.size(); i++) {
+            this.controlPoints[i] = controlPoints.get(i);
+        }
         this.knots = knots;
         this.weights = weights;
         this.degree = degree;
@@ -155,5 +177,4 @@ public class BSpline {
         this.closed = closed;
     }
 
-    
 }

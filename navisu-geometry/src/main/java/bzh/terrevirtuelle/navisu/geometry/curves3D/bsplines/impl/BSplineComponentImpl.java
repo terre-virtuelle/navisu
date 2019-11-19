@@ -32,18 +32,36 @@ public class BSplineComponentImpl
     }
 
     @Override
+    public BSpline create(List<Point3D> controlPoints, double[] knots, double[] weights, int degree) {
+        BSpline bSpline = new BSpline(controlPoints, knots, weights, degree);
+        return bSpline;
+    }
+
+    @Override
     public List<Point3D> compute(BSpline bSpline, double inc) {
-        Point3D p = new Point3D(0, 0, 0);
-        Point3D stop = new Point3D(5.0, -1.0, 0);
+        Point3D[] controlPoints = bSpline.getControlPoints();
+        Point3D p = controlPoints[0];
+        Point3D stop = controlPoints[controlPoints.length - 1];
         double x = 0.0;
         List<Point3D> pts = new ArrayList<>();
-        while (!p.equals(stop)) {
-            p = bSpline.getPointAt(x);
-            System.out.println(p);
-            pts.add(p);
-            x += inc;
+        if (inc != 0.0) {
+            while (!p.equals(stop)) {
+                p = bSpline.getPointAt(x);
+                // System.out.println(p);
+                pts.add(p);
+                x += inc;
+            }
         }
         return pts;
+    }
+
+    @Override
+    public Point3D getPointAt(BSpline bSpline, int i, double u) {
+        Point3D result = null;
+        if (bSpline != null) {
+            result = bSpline.getPointAt(i, u);
+        }
+        return result;
     }
 
     @Override

@@ -5,6 +5,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
@@ -17,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="viewpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="450.0" styleClass="background-pane" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="510.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="450.0" />
@@ -229,6 +230,24 @@
                   </GridPane>
                </children>
             </Group>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="96.0" layoutX="227.0" layoutY="375.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="195.0" />
+            <GridPane layoutX="235.0" layoutY="387.0" prefHeight="72.0" prefWidth="181.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="20.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="20.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <CheckBox fx:id="simpleEditorCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="150.0" selected="true" text="Simple editor" />
+                  <CheckBox fx:id="gpxExportCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="150.0" selected="true" text="GPX export" GridPane.rowIndex="1" />
+                  <CheckBox fx:id="kmlExportCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefWidth="150.0" selected="true" text="KML export" GridPane.rowIndex="2" />
+                  <CheckBox fx:id="nmeaExportCB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefWidth="150.0" selected="true" text="NMEA export" GridPane.rowIndex="3" />
+               </children>
+            </GridPane>
               </children>
           </Group>
     </children>

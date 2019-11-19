@@ -184,6 +184,7 @@ import bzh.terrevirtuelle.navisu.stl.charts.StlChartComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.StlDBComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.gdal.GdalServices;
 import bzh.terrevirtuelle.navisu.gdal.impl.GdalImpl;
 import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
@@ -200,6 +201,7 @@ import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.texteditor.TextEditorComponentServices;
 import bzh.terrevirtuelle.navisu.texteditor.impl.TextEditorComponentImpl;
+import java.util.List;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -716,7 +718,7 @@ public class AppMain extends Application {
         //Test flipper text
         //textEditorComponentServices.convertPDFFileToImages("data/pdf/histoireEpaves.pdf", 300, 200, "");
         //Test CityGMLServices
-          /*
+        /*
         int LON_OFFSET = 145170; //145168;  // East correction for Bing imagery
         int LAT_OFFSET = 6836814;//6836820; //South correction for Bing imagery
       
@@ -737,9 +739,12 @@ public class AppMain extends Application {
         double[] knots = new double[]{0.0, 0.0, 0.0, 1.0, 2, 3.0, 3.0, 3.0};
         double[] w = new double[]{1.0, 1.0, 1.0, 1.0, 1.0};
         BSpline bSpline = bSplineComponentServices.create(points, knots, w, 2);
-        bSplineComponentServices.compute(bSpline, 0.001);
+        List<Point3D> pts = bSplineComponentServices.compute(bSpline, 0.001);
+        System.out.println(pts);
+        List<Point3DGeo> ptsGeo = Point3D.convert(pts);
+        System.out.println(ptsGeo);
         */
-
+        
         // Stop Applicaton 
         stage.setOnCloseRequest(e
                 -> {

@@ -6,6 +6,8 @@
 package bzh.terrevirtuelle.navisu.geometry.objects3D;
 
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -93,10 +95,9 @@ public class Point3D {
         return hash;
     }
 
-    
     @Override
     public String toString() {
-        return "v " + x + " " + y + " " + z + "";
+        return x + " " + y + " " + z + "";
     }
 
     @Override
@@ -121,7 +122,15 @@ public class Point3D {
         return false;
     }
 
-    Point3DGeo convert(Point3D p) {
+    static public Point3DGeo convert(Point3D p) {
         return new Point3DGeo(p.getY(), p.getX(), p.getZ());
+    }
+
+    static public List<Point3DGeo> convert(List<Point3D> pts) {
+        List<Point3DGeo> result = new ArrayList<>();
+        for (Point3D p : pts) {
+            result.add(new Point3DGeo(p.getY(), p.getX(), p.getZ()));
+        }
+        return result;
     }
 }

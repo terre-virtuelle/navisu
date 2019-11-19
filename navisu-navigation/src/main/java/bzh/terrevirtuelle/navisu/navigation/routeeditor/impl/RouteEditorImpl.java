@@ -19,6 +19,8 @@ import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.BSplineComponentServices;
+import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 
 /**
  * NaVisu
@@ -35,6 +37,11 @@ public class RouteEditorImpl
     S57ChartComponentServices s57ChartServices;
     @UsedService
     private LayersManagerServices layersManagerServices;
+    @UsedService
+    private BSplineComponentServices bsplineComponentServices;
+    @UsedService
+    private DisplayServices displayServices;
+
     private final String KEY_NAME = "RouteEditor";
     private final String LAYER_NAME = "Highway";
     private final String GROUP_NAME = "Navigation";
@@ -48,7 +55,7 @@ public class RouteEditorImpl
     @Override
     public void on(String... files) {
         routeEditorController = new RouteEditorController(this,
-                layersManagerServices ,
+                layersManagerServices, bsplineComponentServices, displayServices,
                 KeyCode.M, KeyCombination.CONTROL_DOWN);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, routeEditorController);
         guiAgentServices.getRoot().getChildren().add(routeEditorController);

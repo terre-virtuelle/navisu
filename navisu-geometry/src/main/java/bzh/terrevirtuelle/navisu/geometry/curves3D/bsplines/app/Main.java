@@ -34,7 +34,7 @@ public class Main
         stage.setTitle("BSpline Sample");
         stage.setWidth(600);
         stage.setHeight(400);
-
+        /*
         Point3D[] points = new Point3D[]{
             new Point3D(0, 0, 0),
             new Point3D(1.0, 1.0, 0.0),
@@ -42,23 +42,46 @@ public class Main
             new Point3D(4.0, 1.0, 0),
             new Point3D(5.0, -1.0, 0)
         };
-        double[] knots = new double[]{0.0, 0.0, 0.0, 1.0, 2, 3.0, 3.0, 3.0};
-        double[] w = new double[]{1.0, 1.0, 1.0, 1.0, 1.0};
+         */
 
-        BSpline n = new BSpline(points, knots, w, 2);
+        int deg = 2;
+        List<Point3D> points = new ArrayList<>();
+        points.add(new Point3D(0, 0, 0));
+        points.add(new Point3D(1.0, 1.0, 0.0));
+        points.add(new Point3D(3.0, 2.0, 0));
+        points.add(new Point3D(4.0, 1.0, 0));
+        points.add(new Point3D(5.0, -1.0, 0));
+        
+        double[] knots = new double[points.size() + deg + 1];
+        int n = points.size(); //5
+        knots[0] = 0.0;
+        knots[1] = 0.0;
+        knots[deg] = 0.0; // deg // 2
+        knots[deg + 1] = 1.0;
+        knots[deg + 2] = 2.0;
+        knots[deg + 3] = 3.0; // n 
+        knots[deg + 4] = 3.0;
+        knots[deg + 5] = 3.0;  // n + deg 
 
+        double[] w = new double[points.size()];
+        for (int i = 0; i < w.length; i++) {
+            w[i] = 1.0;
+        }
+
+        BSpline bSpline = new BSpline(points, knots, w, deg);
+
+        // Visualization
         double inc = .001;
         Point3D p = new Point3D(0, 0, 0);
         Point3D stop = new Point3D(5.0, -1.0, 0);
         double x = 0.0;
         List<Point3D> pts = new ArrayList<>();
         while (!p.equals(stop)) {
-            p = n.getPointAt(x);
+            p = bSpline.getPointAt(x);
             System.out.println(p);
             pts.add(p);
             x += inc;
         }
-
         Path path = new Path();
         path.getElements().add(new MoveTo(0.0f, 0.0f));
         path.getElements().add(new LineTo(100.0f, 100.0f));
@@ -66,16 +89,16 @@ public class Main
         path.getElements().add(new LineTo(400f, 100.0f));
         path.getElements().add(new LineTo(500.0f, -100.0f));
 
-        Path bSpline = new Path();
-        bSpline.getElements().add(new MoveTo(0.0f, 0.0f));
+        Path pathB = new Path();
+        pathB.getElements().add(new MoveTo(0.0f, 0.0f));
         pts.stream().map((pt3D) -> {
             return pt3D;
         }).forEachOrdered((pt3D) -> {
-            bSpline.getElements().add(new LineTo(pt3D.getX() * 100, pt3D.getY() * 100));
+            pathB.getElements().add(new LineTo(pt3D.getX() * 100, pt3D.getY() * 100));
         });
 
         ((Group) scene.getRoot()).getChildren().add(path);
-        ((Group) scene.getRoot()).getChildren().add(bSpline);
+        ((Group) scene.getRoot()).getChildren().add(pathB);
 
         stage.setScene(scene);
         stage.show();

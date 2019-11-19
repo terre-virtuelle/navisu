@@ -86,6 +86,10 @@ import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
+import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.BSplineComponentServices;
+import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.impl.BSpline;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.Point3D;
+import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
 import javafx.scene.Group;
@@ -98,7 +102,14 @@ import javafx.scene.Group;
  */
 public class RouteEditorController
         extends Widget2DController {
-private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+
+    private final S57ChartComponentServices s57ChartComponentServices;
+    private final GuiAgentServices guiAgentServices;
+    private final LayersManagerServices layersManagerServices;
+    private final BSplineComponentServices bsplineComponentServices;
+    private final DisplayServices displayServices;
+
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private final RouteEditorImpl instrument;
     private final String FXML = "routeeditor.fxml";
     protected String viewgroupstyle = "routeeditor.css";
@@ -149,11 +160,11 @@ private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.
     private final DateTimeFormatter kmlTimeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss");
     private final WorldWindow wwd;
     private RouteDataEditorController routeDataEditorController;
-    private final S57ChartComponentServices s57ChartComponentServices;
-    private final GuiAgentServices guiAgentServices;
-    private final LayersManagerServices layersManagerServices;
-    private RenderableLayer profileLayer;
+    private RenderableLayer layer;
     private GeodeticCurve geoCurve;
+    protected static final String GROUP_0 = "S57 charts";
+    protected static final String S57_LAYER = "S57Stl";
+
     @FXML
     public Group view;
     @FXML
@@ -206,13 +217,25 @@ private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.
     public TextField distPoText;
     @FXML
     public TextField distOffsetText;
+    @FXML
+    public CheckBox simpleEditorCB;
+    @FXML
+    public CheckBox gpxExportCB;
+    @FXML
+    public CheckBox kmlExportCB;
+    @FXML
+    public CheckBox nmeaExportCB;
 
     public RouteEditorController(RouteEditorImpl instrument,
             LayersManagerServices layersManagerServices,
+            BSplineComponentServices bsplineComponentServices,
+            DisplayServices displayServices,
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
 
         super(keyCode, keyCombination);
         this.layersManagerServices = layersManagerServices;
+        this.bsplineComponentServices = bsplineComponentServices;
+        this.displayServices = displayServices;
         this.instrument = instrument;
         this.s57ChartComponentServices = instrument.getS57ChartServices();
         this.guiAgentServices = instrument.getGuiAgentServices();
@@ -221,7 +244,7 @@ private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.
         geoCalc = new GeodeticCalculator();
         bufferDistance = OFFSET_BUFFER_DISTANCE;
         highwayDistance = HIGHWAY_BUFFER_DISTANCE;
-
+        layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
         /*
         // OK pour toutes les layers
         List<Layer> layers = wwd.getModel().getLayers();
@@ -309,16 +332,29 @@ private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.
         });
         endButton.setOnMouseClicked((MouseEvent event) -> {
             filter();
+            positions = smooth(positions);
+            displayServices.displayPositionsAsPath(positions, layer, Material.YELLOW);
+            
             measureTool.setArmed(false);
-            bufferFromJTS();
-            showBuffer();
+            if (!simpleEditorCB.isSelected()) {
+                bufferFromJTS();
+                showBuffer();
+            }
             fillGpx();
             fillGpxBoundaries();
             //  fillGpxHighway();
-            exportGpx();
-            exportKML();
-            exportNmea();
-            exportNavigationDataset();
+            if (gpxExportCB.isSelected()) {
+                exportGpx();
+            }
+            if (kmlExportCB.isSelected()) {
+                exportKML();
+            }
+            if (nmeaExportCB.isSelected()) {
+                exportNmea();
+            }
+            if (!simpleEditorCB.isSelected()) {
+                exportNavigationDataset();
+            }
         });
 
         snapshotButton.setOnMouseClicked((MouseEvent event) -> {
@@ -503,10 +539,52 @@ private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.
             }
         }
     }
+    // Take positions and smooth by BSpline
+
+    private List<Position> smooth(List<Position> pos) {
+        List<Position> result = new ArrayList<>();
+        List<Point3D> points = new ArrayList<>();
+        int deg = 2;
+        int n = pos.size();
+        System.out.println("n = " + n);
+        for (Position p : pos) {
+            points.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), 50.0));
+        }
+        double[] knots = new double[points.size() + deg + 1];
+        knots[0] = 0.0;
+        knots[1] = 0.0;
+        int j = 0;
+        for (int i = 2; i <= n; i++) {
+            knots[i] = i - deg;
+            j = i - deg;
+        }
+        knots[n + 1] = j;
+        knots[n + 2] = j;
+        for (int i = 0; i < knots.length; i++) {
+            System.out.print(knots[i] + "  ");
+        }
+        System.out.println("");
+        double[] w = new double[points.size()];
+        for (int i = 0; i < w.length; i++) {
+            w[i] = 1.0;
+        }
+        for (int i = 0; i < w.length; i++) {
+            System.out.print(w[i] + " ");
+        }
+        System.out.println("");
+        BSpline bSpline = bsplineComponentServices.create(points, knots, w, deg);
+        List<Point3D> resultPoints = bsplineComponentServices.compute(bSpline, 0.1);
+        for (Point3D p : resultPoints) {
+            result.add(new Position(Angle.fromDegrees(p.getX()), Angle.fromDegrees(p.getY()), p.getZ()));
+        }
+        System.out.println("result : " + result.size());
+        return result;
+    }
 
     private void fillGpx() {
         size = positions.size();
-        for (int i = 0; i < size; i++) {
+        TrackSegment ts = new TrackSegment();
+        for (int i = 0; i < size - 1; i++) {
             Position pos = positions.get(i);
             Waypoint wp = WaypointBuilder.create()
                     .latitude(pos.getLatitude().getDegrees())
@@ -515,14 +593,13 @@ private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.
                     .speed(speed)
                     .build();
             if (i < size - 1) {
-                TrackSegment ts = new TrackSegment();
                 trackSegments.add(ts);
                 track.getTrkseg().add(ts);
                 ts.getTrkpt().add(wp);
             }
             if (i >= 1) {
                 track.getTrkseg().get(i - 1).getTrkpt().add(wp);
-                track.getTrkseg().get(i - 1).getTrkpt().get(0).setCourse((float) getAzimuth(measureTool.getPositions().get(i), measureTool.getPositions().get(i + 1)));
+                track.getTrkseg().get(i - 1).getTrkpt().get(0).setCourse((float) getAzimuth(positions.get(i), positions.get(i + 1)));
             }
         }
     }
@@ -560,7 +637,7 @@ private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.
 
             bufferOp = new BufferOp(geom);
             bufferOp.setEndCapStyle(BufferParameters.CAP_FLAT);
-         
+
             bufferOp.setQuadrantSegments(1);
 
             highwayBuffer = bufferOp.getResultGeometry(highwayDistance);
