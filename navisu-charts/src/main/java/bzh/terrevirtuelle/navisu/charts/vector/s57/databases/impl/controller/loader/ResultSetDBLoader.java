@@ -100,6 +100,7 @@ public abstract class ResultSetDBLoader {
             put("PONTON", "rcid");
             put("RESARE", "rcid, catrea, objnam, restrn, inform, ninfom");
             put("SLCONS", "rcid");
+            put("UWTROC", "rcid, natsur, valsou");
             put("WRECKS", "rcid, objnam, catwrk");
         }
     ;
@@ -118,7 +119,7 @@ public abstract class ResultSetDBLoader {
 
     @SuppressWarnings("unchecked")
     public ResultSet retrieveResultSetIn(double latMin, double lonMin, double latMax, double lonMax) {
-       // System.out.println("dbName : " + dbName);
+        // System.out.println("dbName : " + dbName);
         if (connection != null) {
             try {
                 request = "SELECT ST_AsText(ST_ClipByBox2D(geom, ST_MakeEnvelope";

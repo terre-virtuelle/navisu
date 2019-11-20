@@ -37,6 +37,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.LightDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.NavigationLineDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.RestrictedAreaDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.UnderwaterAwashRockDBLoader;
 import bzh.terrevirtuelle.navisu.citygml.CityGMLServices;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
@@ -112,6 +113,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemDbLoader;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.UnderwaterAwashRock;
 import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import bzh.terrevirtuelle.navisu.domain.raster.RasterInfo;
 import bzh.terrevirtuelle.navisu.domain.svg.SVGPath3D;
@@ -286,6 +288,7 @@ public class StlDBComponentController
     protected List<DepthContour> depthContours = new ArrayList<>();
     protected List<Buoyage> buoyages = new ArrayList<>();
     protected List<Landmark> landmarks = new ArrayList<>();
+    protected List<UnderwaterAwashRock> underwaterAwashRocks = new ArrayList<>();
     protected Connection s57Connection;
     protected Connection bathyConnection;
     protected Connection elevationConnection;
@@ -455,6 +458,8 @@ public class StlDBComponentController
     public CheckBox pontonCB;
     @FXML
     public CheckBox resareCB;
+    @FXML
+    public CheckBox uwtrocCB;
     @FXML
     public Button meshStlObjectButton;
     @FXML
@@ -637,6 +642,7 @@ public class StlDBComponentController
                 .put("SLCONS", slconsCB)
                 .put("PONTON", pontonCB)
                 .put("RESARE", resareCB)
+                .put("UWTROC", uwtrocCB)
                 .build();
         stlGuiController = new StlGuiController(this,
                 geodesyServices, displayServices,
@@ -672,6 +678,7 @@ public class StlDBComponentController
                         slconsCB.setDisable(true);
                         pontonCB.setDisable(true);
                         resareCB.setDisable(true);
+                        uwtrocCB.setDisable(true);
                         allCB.setDisable(true);
                     } else {
                         achareCB.setDisable(false);
@@ -683,10 +690,11 @@ public class StlDBComponentController
                         slconsCB.setDisable(false);
                         pontonCB.setDisable(false);
                         resareCB.setDisable(false);
+                        uwtrocCB.setDisable(false);
                         allCB.setDisable(false);
                     }
                 });
-         
+
         bathyDatabasesCB.setItems(bathyDbCbData);
         bathyDatabasesCB.getSelectionModel().select("BathyShomDB");
         bathyDatabaseTF.setText("BathyShomDB");
@@ -1269,6 +1277,65 @@ public class StlDBComponentController
                                 LOGGER.info("Out export LNDMRK en STL");
                             }
                         }
+                        //UWTROC
+                        k = 0;
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("UWTROC")) {
+                            for (Point3DGeo[][] g : grids) {
+                                LOGGER.info("In export UWTROC en STL");
+                                underwaterAwashRocks.clear();
+                                underwaterAwashRocks.addAll(new UnderwaterAwashRockDBLoader(s57Connection)
+                                        .retrieveObjectsIn(g[0][0].getLatitude(),
+                                                g[0][0].getLongitude(),
+                                                g[g.length - 1][g[0].length - 1].getLatitude(),
+                                                g[g.length - 1][g[0].length - 1].getLongitude()));
+                                int uw = 0;
+                                for (UnderwaterAwashRock u : underwaterAwashRocks) {
+                                    if (u.getNatureOfSurface() != null && u.getValueOfSounding() != null) {
+                                        System.out.println(u);
+                                        uw++;
+                                    }
+                                }
+                                System.out.println("uw : " + uw);
+                                /*  
+                                new LandmarkView(s57Layer).display(landmarks);
+                                i = k / tileCount + 1;
+                                j = k % tileCount + 1;
+                                if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
+                                    String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                                    scaleCompute(g);
+                                    new LandmarkExportToSTL(geodesyServices, g, filename, latScale, lonScale)
+                                            .export(landmarks, verticalExaggeration * highestElevationBathy, tileSideZ);
+                                }
+                                 */
+                                k++;
+                                LOGGER.info("Out export UWTROC en STL");
+                            }
+
+                            /*
+                            for (Point3DGeo[][] g : grids) {
+                                LOGGER.info("In export LNDMRK en STL");
+                                landmarks.clear();
+                                landmarks.addAll(new LandmarkDBLoader(topologyServices, s57Connection, marsys)
+                                        .retrieveObjectsIn(g[0][0].getLatitude(),
+                                                g[0][0].getLongitude(),
+                                                g[g.length - 1][g[0].length - 1].getLatitude(),
+                                                g[g.length - 1][g[0].length - 1].getLongitude()));
+                                
+                                new LandmarkView(s57Layer).display(landmarks);
+                                i = k / tileCount + 1;
+                                j = k % tileCount + 1;
+                                if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
+                                    String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
+                                    scaleCompute(g);
+                                    new LandmarkExportToSTL(geodesyServices, g, filename, latScale, lonScale)
+                                            .export(landmarks, verticalExaggeration * highestElevationBathy, tileSideZ);
+                                }
+                                k++;
+                                LOGGER.info("Out export LNDMRK en STL");
+                            }
+                             */
+                        }
+
                         // Buildings 
                         if (buildingsRB.isSelected()) {
                             k = 0;
@@ -1496,7 +1563,7 @@ public class StlDBComponentController
                         lonMin - RETRIEVE_OFFSET,
                         latMax + RETRIEVE_OFFSET,
                         lonMax + RETRIEVE_OFFSET);
-        */
+         */
         //TODO create DB lon lat or lat lon, for all DB
         DEM dem = new BathyLoader(bathyConnection, bathymetryDBServices)
                 .retrieveIn(lonMin - RETRIEVE_OFFSET,

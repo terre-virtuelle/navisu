@@ -235,6 +235,7 @@
                                                 <CheckBox fx:id="slconsCB" layoutX="10.0" layoutY="23.0" mnemonicParsing="false" text="SLCONS" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                 <CheckBox disable="true" layoutX="10.0" layoutY="23.0" mnemonicParsing="false" text="LIGHT" visible="false" GridPane.rowIndex="3" />
                                                 <CheckBox fx:id="allCB" layoutX="10.0" layoutY="23.0" mnemonicParsing="false" text="ALL" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                                <CheckBox fx:id="uwtrocCB" mnemonicParsing="false" text="UWTROC" GridPane.rowIndex="3" />
                                              </children>
                                           </GridPane>
                                           <GridPane maxWidth="400.0" prefHeight="28.0" prefWidth="300.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
