@@ -178,6 +178,8 @@ public interface TopologyServices
      * @return
      */
     List<Position> wktPolygonToPositions(String geometry);
+    
+    Position wktMultiPointToPosition(String geometry);
 
     Geometry wktPolygonFromString(String geometry);
 

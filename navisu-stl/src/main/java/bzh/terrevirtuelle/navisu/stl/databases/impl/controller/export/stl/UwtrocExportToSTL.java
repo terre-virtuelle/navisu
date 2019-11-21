@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.UnderwaterAwashRock;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE_INV;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
@@ -23,7 +24,7 @@ import java.util.logging.Logger;
  *
  * @author serge
  */
-public class BuoyageExportToSTL {
+public class UwtrocExportToSTL {
 
     protected String stlFilename;
     protected GeodesyServices geodesyServices;
@@ -39,7 +40,7 @@ public class BuoyageExportToSTL {
     protected double lonScale;
     protected double elevationScale;
 
-    public BuoyageExportToSTL(GeodesyServices geodesyServices, Point3DGeo[][] gb,
+    public UwtrocExportToSTL(GeodesyServices geodesyServices, Point3DGeo[][] gb,
             String stlFilename,
             double latScale, double lonScale) {
         this.stlFilename = stlFilename;
@@ -51,30 +52,20 @@ public class BuoyageExportToSTL {
         elevationScale = (latScale + lonScale) / 2.0;
     }
 
-    public void export(List<Buoyage> buoyages, double elevation, double verticalOffet) {
+    public void export(List<UnderwaterAwashRock> buoyages, double elevation, double verticalOffet) {
         String result = "";
         elevation *= elevationScale;
         elevation += verticalOffet;
         try {
-            for (Buoyage buoyage : buoyages) {
-                acronym = BUOYAGE_INV.ATT.get(buoyage.getClass().getSimpleName());
+            for (UnderwaterAwashRock buoyage : buoyages) {
+                acronym = "UWTROC";
                 lat = buoyage.getLatitude();
                 lon = buoyage.getLongitude();
                 double latM = geodesyServices.getDistanceM(latMin, lonMin, lat, lonMin);
                 double lonM = geodesyServices.getDistanceM(latMin, lonMin, latMin, lon);
                 latM *= latScale;
                 lonM *= lonScale;
-                if (acronym.equals("BCNCAR") || acronym.equals("BOYCAR")) {
-                    result = result.concat(insertedFile(latM, lonM, elevation, "BCNCAR_" + buoyage.getCategoryOfMark() + ".stl"));
-                } else if (acronym.equals("BCNLAT") || acronym.equals("BOYLAT")) {
-                    result = result.concat(insertedFile(latM, lonM, elevation, "BCNLAT_" + buoyage.getCategoryOfMark() + ".stl"));
-                } else if (acronym.equals("MORFAC")) {
-                    result = result.concat(insertedFile(latM, lonM, elevation, "MORFAC.stl"));
-                } else if (acronym.equals("BCNISD")) {
-                    result = result.concat(insertedFile(latM, lonM, elevation, "BCNISD.stl"));
-                } else if (acronym.equals("BOYSPP") || acronym.equals("BCNSPP")) {
-                    result = result.concat(insertedFile(latM, lonM, elevation, "SPP.stl"));
-                }
+                result = result.concat(insertedFile(latM, lonM, elevation, "UWTROC.stl"));
             }
             Path path = Paths.get(stlFilename);
             Files.write(path, result.getBytes(), StandardOpenOption.APPEND);
@@ -83,16 +74,16 @@ public class BuoyageExportToSTL {
         }
     }
 
-    public String insertedFile(double latitude, double longitude, double elevation, String buoyFilename) {
-       //System.out.println("buoyFilename : " + buoyFilename);
-        String buoyName = "data/stl/" + buoyFilename;
+    public String insertedFile(double latitude, double longitude, double elevation, String objectFilename) {
+        //System.out.println("buoyFilename : " + buoyFilename);
+        String objectName = "data/stl/" + objectFilename;
         String buoy = "";
         String result = "";
         try {
-            buoy = new String(Files.readAllBytes(Paths.get(buoyName)));
+            buoy = new String(Files.readAllBytes(Paths.get(objectName)));
             result = new TransformSTL().transform(buoy, latitude, longitude, elevation);
         } catch (IOException ex) {
-            Logger.getLogger(BuoyageExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(UwtrocExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return result;
     }

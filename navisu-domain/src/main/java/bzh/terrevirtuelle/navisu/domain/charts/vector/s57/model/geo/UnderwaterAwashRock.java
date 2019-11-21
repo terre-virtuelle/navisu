@@ -1,11 +1,13 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import java.io.Serializable;
 
-public class UnderwaterAwashRock 
-        extends Geo
+public class UnderwaterAwashRock
+        extends Location
         implements Serializable {
+
+    protected String label;
+    protected String imageAddress;
 
     public UnderwaterAwashRock(Long id) {
         this.id = id;
@@ -164,9 +166,25 @@ public class UnderwaterAwashRock
         this.objectNameInNationalLanguage = value;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getImageAddress() {
+        return imageAddress;
+    }
+
+    public void setImageAddress(String imageAddress) {
+        this.imageAddress = imageAddress;
+    }
+
     @Override
     public String toString() {
-        return "UnderwaterAwashRock{" + "natureOfSurface=" + natureOfSurface + ", valueOfSounding=" + valueOfSounding + '}';
+        return "UnderwaterAwashRock{" + "geom=" + geom + ", natureOfSurface=" + natureOfSurface + ", valueOfSounding=" + valueOfSounding + '}';
     }
 
 }

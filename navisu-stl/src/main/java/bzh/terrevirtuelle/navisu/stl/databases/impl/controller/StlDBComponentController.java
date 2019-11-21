@@ -30,6 +30,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LandmarkView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57ObjectView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.UnderwaterAwashRockView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.AnchorageAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DockAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DredgedAreaDBLoader;
@@ -135,6 +136,7 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.Landma
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.MeshExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsShapefileExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.UwtrocExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.svg.DepareExportToSVG;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.wkt.DepareExportWKT;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
@@ -1283,30 +1285,23 @@ public class StlDBComponentController
                             for (Point3DGeo[][] g : grids) {
                                 LOGGER.info("In export UWTROC en STL");
                                 underwaterAwashRocks.clear();
-                                underwaterAwashRocks.addAll(new UnderwaterAwashRockDBLoader(s57Connection)
+                                underwaterAwashRocks.addAll(new UnderwaterAwashRockDBLoader(topologyServices, s57Connection)
                                         .retrieveObjectsIn(g[0][0].getLatitude(),
                                                 g[0][0].getLongitude(),
                                                 g[g.length - 1][g[0].length - 1].getLatitude(),
                                                 g[g.length - 1][g[0].length - 1].getLongitude()));
-                                int uw = 0;
-                                for (UnderwaterAwashRock u : underwaterAwashRocks) {
-                                    if (u.getNatureOfSurface() != null && u.getValueOfSounding() != null) {
-                                        System.out.println(u);
-                                        uw++;
-                                    }
-                                }
-                                System.out.println("uw : " + uw);
-                                /*  
-                                new LandmarkView(s57Layer).display(landmarks);
+  
+                                new UnderwaterAwashRockView(s57Layer).display(underwaterAwashRocks);
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
+                                
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     scaleCompute(g);
-                                    new LandmarkExportToSTL(geodesyServices, g, filename, latScale, lonScale)
-                                            .export(landmarks, verticalExaggeration * highestElevationBathy, tileSideZ);
+                                    new UwtrocExportToSTL(geodesyServices, g, filename, latScale, lonScale)
+                                            .export(underwaterAwashRocks, verticalExaggeration * highestElevationBathy, tileSideZ);
                                 }
-                                 */
+                                 
                                 k++;
                                 LOGGER.info("Out export UWTROC en STL");
                             }

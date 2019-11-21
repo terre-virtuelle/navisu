@@ -6,6 +6,8 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.UnderwaterAwashRock;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
+import gov.nasa.worldwind.geom.Position;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,10 +22,12 @@ import java.util.logging.Logger;
 public class UnderwaterAwashRockDBLoader
         extends ResultSetDBLoader {
 
-    List<UnderwaterAwashRock> underwaterAwashRocks;
+    protected TopologyServices topologyServices;
+    protected List<UnderwaterAwashRock> underwaterAwashRocks;
 
-    public UnderwaterAwashRockDBLoader(Connection connection) {
+    public UnderwaterAwashRockDBLoader(TopologyServices topologyServices, Connection connection) {
         super(connection, "UWTROC");
+        this.topologyServices = topologyServices;
     }
 
     @Override
@@ -38,15 +42,17 @@ public class UnderwaterAwashRockDBLoader
             while (resultSet.next()) {
                 object = new UnderwaterAwashRock();
                 geom = resultSet.getString("geom");
-                if (geom != null) {
+                if (geom != null && !geom.equals("MULTIPOINT EMPTY")) {
                     object.setGeom(geom);
+                    Position position = topologyServices.wktMultiPointToPosition(geom);
+                    object.setLatitude(position.getLatitude().getDegrees());
+                    object.setLongitude(position.getLongitude().getDegrees());
+                    natureOfurface = resultSet.getString("natsur");
+                    object.setNatureOfSurface(natureOfurface);
+                    valueOfSounding = resultSet.getString("valsou");
+                    object.setValueOfSounding(valueOfSounding);
+                    underwaterAwashRocks.add(object);
                 }
-                natureOfurface = resultSet.getString("natsur");
-                object.setNatureOfSurface(natureOfurface);
-                valueOfSounding = resultSet.getString("valsou");
-                object.setValueOfSounding(valueOfSounding);
-
-                underwaterAwashRocks.add(object);
             }
         } catch (SQLException ex) {
             Logger.getLogger(UnderwaterAwashRockDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);

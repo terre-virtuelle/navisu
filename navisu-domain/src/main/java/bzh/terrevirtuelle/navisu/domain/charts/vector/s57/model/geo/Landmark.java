@@ -7,7 +7,8 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "lndmrk")
-public class Landmark extends Buoyage
+public class Landmark 
+        extends Buoyage
         implements Serializable {
 
     public Landmark(Long id) {

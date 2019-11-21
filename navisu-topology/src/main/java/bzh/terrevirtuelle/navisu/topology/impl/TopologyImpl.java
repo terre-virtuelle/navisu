@@ -262,7 +262,7 @@ public class TopologyImpl
 
             }
         }
-         System.out.println("result : "+ result.size());
+        System.out.println("result : " + result.size());
         return result;
     }
 
@@ -542,6 +542,22 @@ public class TopologyImpl
             }
         }
         return positions;
+    }
+
+    @Override
+    public Position wktMultiPointToPosition(String geometry) {
+        Position result = null;
+        if (!geometry.contains("EMPTY")) {
+        //MULTIPOINT(-4.478 48.37314)
+            String tmp = geometry;
+            tmp = tmp.replace("MULTIPOINT(", "");
+            tmp = tmp.replace(")", "");
+            String[] tab = tmp.trim().split(" ");
+            double lat = Double.parseDouble(tab[1]);
+            double lon = Double.parseDouble(tab[0]);
+            result = new Position(Angle.fromDegrees(lat), Angle.fromDegrees(lon), 0.0);
+        }
+        return result;
     }
 
     @Override
