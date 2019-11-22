@@ -135,14 +135,16 @@ public abstract class ResultSetDBLoader {
                 } else {
                     tmp = S57_REQUEST_MAP.get(acronym);
                 }
-                if (!tmp.trim().equals("")) {
-                    request += ", " + tmp;
+                if (tmp != null) {
+                    if (!tmp.trim().equals("")) {
+                        request += ", " + tmp;
+                    }
+                    request += " FROM " + acronym.toLowerCase() + " ;";
+                    // System.out.println(request);
+                    resultSet = connection
+                            .createStatement()
+                            .executeQuery(request);
                 }
-                request += " FROM " + acronym.toLowerCase() + " ;";
-               // System.out.println(request);
-                resultSet = connection
-                        .createStatement()
-                        .executeQuery(request);
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }

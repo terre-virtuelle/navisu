@@ -548,9 +548,25 @@ public class TopologyImpl
     public Position wktMultiPointToPosition(String geometry) {
         Position result = null;
         if (!geometry.contains("EMPTY")) {
-        //MULTIPOINT(-4.478 48.37314)
+            //MULTIPOINT(-4.478 48.37314)
             String tmp = geometry;
             tmp = tmp.replace("MULTIPOINT(", "");
+            tmp = tmp.replace(")", "");
+            String[] tab = tmp.trim().split(" ");
+            double lat = Double.parseDouble(tab[1]);
+            double lon = Double.parseDouble(tab[0]);
+            result = new Position(Angle.fromDegrees(lat), Angle.fromDegrees(lon), 0.0);
+        }
+        return result;
+    }
+
+    @Override
+    public Position wktPointToPosition(String geometry) {
+        Position result = null;
+        if (!geometry.contains("EMPTY")) {
+            //POINT(-4.478 48.37314)
+            String tmp = geometry;
+            tmp = tmp.replace("POINT(", "");
             tmp = tmp.replace(")", "");
             String[] tab = tmp.trim().split(" ");
             double lat = Double.parseDouble(tab[1]);

@@ -42,9 +42,16 @@ public class UnderwaterAwashRockDBLoader
             while (resultSet.next()) {
                 object = new UnderwaterAwashRock();
                 geom = resultSet.getString("geom");
-                if (geom != null && !geom.equals("MULTIPOINT EMPTY")) {
+                if (geom != null && !(geom.equals("MULTIPOINT EMPTY") || geom.equals("POINT EMPTY"))) {
                     object.setGeom(geom);
-                    Position position = topologyServices.wktMultiPointToPosition(geom);
+                    Position position = null;
+                    if (geom.contains("MULTIPOINT")) {
+                        position = topologyServices.wktMultiPointToPosition(geom);
+                    } else {
+                        if (geom.contains("POINT")) {
+                            position = topologyServices.wktPointToPosition(geom);
+                        }
+                    }
                     object.setLatitude(position.getLatitude().getDegrees());
                     object.setLongitude(position.getLongitude().getDegrees());
                     natureOfurface = resultSet.getString("natsur");
