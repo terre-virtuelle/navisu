@@ -1175,7 +1175,7 @@ public class ToolsComponentController
 
             @Override
             public void run(ProgressHandle progressHandle) {
-                String command = "mv " + inDir + "; \n"
+                String command = "cd " + inDir + "; \n"
                         + "for file in *.wld;\n"
                         + "do echo processing : $file;\n"
                         + " w=`basename $file .wld`;\n"
@@ -1188,16 +1188,16 @@ public class ToolsComponentController
                         + "done;\n"
                         + "for image in *.tif;\n"
                         + "do echo processing : $image\n"
-                        + "i=`basename $image .tif`;\n"
-                        + "gdalwarp -dstalpha -s_srs EPSG:2154 -t_srs EPSG:4326 $image out.tif;\n"
-                        + "gdal_translate -of PNG out.tif $i.png;\n"
-                        + "rm *.tif *.xml;\n"
+                        + "j=`basename $image .tif`;\n"
+                        + "gdalwarp -dstalpha -s_srs EPSG:2154 -t_srs EPSG:4326 $image $j.tif;\n"
+                        + "gdal_translate -of PNG $j.tif $j.png;\n"
                         + "done;\n"
                         + "for image in *.png;\n"
                         + "do echo processing : $image\n"
-                        + " i=`basename $image .png`;\n"
-                        + "gdalinfo $image > $i.info;\n"
-                        + "done";
+                        + " k=`basename $image .png`;\n"
+                        + "gdalinfo $image > $k.info;\n"
+                        + "done;"
+                        + "rm *.tif *.xml;\n";
                 try {
                     Proc.BUILDER.create()
                             .setCmd(command)
@@ -1223,6 +1223,7 @@ public class ToolsComponentController
                     Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                 }
                 String result = parse(file.getName(), content, outDir);
+                System.out.println(result);
             }
         }
     }
@@ -1236,9 +1237,11 @@ public class ToolsComponentController
     oceanopolisphoto.brightness = 1.0;
      */
     private String parse(String filename, String content, String outDir) {
+        String imagename = filename;
+        imagename = imagename.replace(".info", ".png");
         String image = "image" + imagesCount;
         String result = "var " + image + " layers.addImageryProvider(new Cesium.SingleTileImageryProvider({ \n"
-                + " url: '" + outDir + SEP + filename + "', \n"
+                + " url: '" + outDir + SEP + imagename + "', \n"
                 + "rectangle: Cesium.Rectangle.fromDegrees(";
         /*
 Upper Left  (  -4.5454811,  48.3670348) (  4d32'43.73"W, 48d22' 1.33"N)
@@ -1250,16 +1253,17 @@ Upper Right (  -4.5307548,  48.3670348) (  4d31'50.72"W, 48d22' 1.33"N) --------
         String[] tab = content.split("\n");
         for (int i = 0; i < tab.length; i++) {
             if (tab[i].contains("Lower Left")) {
-                String tmp = tab[i].replace("Upper Left", "");
+                String tmp = tab[i].replace("Lower Left", "");
+                //  System.out.println("tmp : "+tmp);
                 tmp = tmp.replace("(", "");
-                String[] tmpTab = tmp.split(")");
-                result += tmpTab[0].trim();
+                String[] tmpTab = tmp.split("\\)");
+                result += tmpTab[0].trim()+",";
             }
             if (tab[i].contains("Upper Right")) {
                 String tmp = tab[i].replace("Upper Right", "");
                 tmp = tmp.replace("(", "");
-                String[] tmpTab = tmp.split(")");
-                result += tmpTab[0].trim() + "\n";
+                String[] tmpTab = tmp.split("\\)");
+                result += tmpTab[0].trim() + ")\n";
             }
         }
         result += " })); \n";
