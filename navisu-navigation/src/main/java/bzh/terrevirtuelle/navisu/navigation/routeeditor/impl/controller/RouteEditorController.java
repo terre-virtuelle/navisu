@@ -215,6 +215,8 @@ public class RouteEditorController
     public TextField speedText;
     @FXML
     public TextField distPoText;
+     @FXML
+    public TextField heightText;
     @FXML
     public TextField distOffsetText;
     @FXML
@@ -546,7 +548,7 @@ public class RouteEditorController
         List<Point3D> points = new ArrayList<>();
         int deg = 2;
         int n = pos.size();
-        System.out.println("n = " + n);
+     //   System.out.println("n = " + n);
         for (Position p : pos) {
             points.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), 50.0));
         }
@@ -563,7 +565,7 @@ public class RouteEditorController
         for (int i = 0; i < knots.length; i++) {
             System.out.print(knots[i] + "  ");
         }
-        System.out.println("");
+      //  System.out.println("");
         double[] w = new double[points.size()];
         for (int i = 0; i < w.length; i++) {
             w[i] = 1.0;
@@ -571,13 +573,13 @@ public class RouteEditorController
         for (int i = 0; i < w.length; i++) {
             System.out.print(w[i] + " ");
         }
-        System.out.println("");
+      //  System.out.println("");
         BSpline bSpline = bsplineComponentServices.create(points, knots, w, deg);
         List<Point3D> resultPoints = bsplineComponentServices.compute(bSpline, 0.1);
         for (Point3D p : resultPoints) {
             result.add(new Position(Angle.fromDegrees(p.getX()), Angle.fromDegrees(p.getY()), p.getZ()));
         }
-        System.out.println("result : " + result.size());
+      //  System.out.println("result : " + result.size());
         return result;
     }
 

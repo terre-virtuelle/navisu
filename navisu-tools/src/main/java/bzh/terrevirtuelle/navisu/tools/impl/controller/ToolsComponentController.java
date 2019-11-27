@@ -17,6 +17,7 @@ import bzh.terrevirtuelle.navisu.cartography.projection.lambert.LambertServices;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.citygml.CityGMLServices;
+import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.tools.impl.ToolsComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -61,6 +62,7 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.paysBrest.ObjPaysBrestLoader;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
+import com.owens.oobjloader.parser.Parse;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Material;
@@ -307,6 +309,17 @@ public class ToolsComponentController
     public Button browseBuildingDirButton;
     @FXML
     public ChoiceBox<String> buildingDatabaseCB;
+    //Controls projection images for Cesium
+    @FXML
+    public TextField imagesDirTF;
+    @FXML
+    public Button browseImagesDirButton;
+    @FXML
+    public TextField imagesSubdirTF;
+    @FXML
+    public Button browseImagesSubdirTF;
+    @FXML
+    public Button startImagesButton;
 
     protected String buildingsData;
     protected String elevationData;
@@ -359,6 +372,7 @@ public class ToolsComponentController
     boolean isTableSolidCreated = false;
     boolean isIndexSolidCreated = false;
     protected int buildingCount = 0;
+    protected int imagesCount = 0;
     protected String buildingsDBName;
     protected String inFilename;
     protected String outFilename;
@@ -865,6 +879,25 @@ public class ToolsComponentController
                     HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
 
         });
+        /*
+        Cesium images projection
+         */
+        startImagesButton.setOnMouseClicked((MouseEvent event) -> {
+            if (imagesDirTF.getText() != null && imagesSubdirTF.getText() != null) {
+                projectionImagesForCesium(imagesDirTF.getText(), imagesSubdirTF.getText());
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Options");
+                alert.setHeaderText("Données utilisateur");
+                Text s = new Text("    Les champs directory et subdirectory sont obligatoires");
+                s.setWrappingWidth(650);
+                alert.getDialogPane().setContent(s);
+                alert.show();
+            }
+        });
+        /*
+        Help
+         */
         helpButton.setOnMouseClicked((MouseEvent event) -> {
             if (s57Tab.isSelected()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -922,6 +955,9 @@ public class ToolsComponentController
         });
         browseBuildingDirButton.setOnMouseClicked((MouseEvent event) -> {
             openDir(buildingFileTF);
+        });
+        browseImagesDirButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(imagesDirTF);
         });
     }
 
@@ -1129,6 +1165,107 @@ public class ToolsComponentController
                 }
             }
         });
+    }
+
+    /*
+    Cesium
+     */
+    private void projectionImagesForCesium(String inDir, String outDir) {
+        guiAgentServices.getJobsManager().newJob("Projection images for Cesium", new Job() {
+
+            @Override
+            public void run(ProgressHandle progressHandle) {
+                String command = "mv " + inDir + "; \n"
+                        + "for file in *.wld;\n"
+                        + "do echo processing : $file;\n"
+                        + " w=`basename $file .wld`;\n"
+                        + "mv $file $w.jgw;\n"
+                        + "done;\n"
+                        + "for image in *.jpg;\n"
+                        + "do echo processing : $image\n"
+                        + "i=`basename $image .jpg`;\n"
+                        + "gdal_translate $image $i.tif;\n"
+                        + "done;\n"
+                        + "for image in *.tif;\n"
+                        + "do echo processing : $image\n"
+                        + "i=`basename $image .tif`;\n"
+                        + "gdalwarp -dstalpha -s_srs EPSG:2154 -t_srs EPSG:4326 $image out.tif;\n"
+                        + "gdal_translate -of PNG out.tif $i.png;\n"
+                        + "rm *.tif *.xml;\n"
+                        + "done;\n"
+                        + "for image in *.png;\n"
+                        + "do echo processing : $image\n"
+                        + " i=`basename $image .png`;\n"
+                        + "gdalinfo $image > $i.info;\n"
+                        + "done";
+                try {
+                    Proc.BUILDER.create()
+                            .setCmd(command)
+                            .execSh();
+                } catch (IOException | InterruptedException ex) {
+                    Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                }
+                parseAndCreate(inDir, outDir);
+            }
+        });
+    }
+
+    private void parseAndCreate(String inDir, String outDir) {
+        File dir = new File(inDir);
+        File[] filesList = dir.listFiles();
+        for (File file : filesList) {
+            if (file.isFile() && file.getName().endsWith("info")) {
+                Path path = file.toPath();
+                String content = null;
+                try {
+                    content = new String(Files.readAllBytes(path));
+                } catch (IOException ex) {
+                    Logger.getLogger(ToolsComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                }
+                String result = parse(file.getName(), content, outDir);
+            }
+        }
+    }
+
+    /*
+         var oceanopolisphoto = layers.addImageryProvider(new Cesium.SingleTileImageryProvider({
+        url: 'images/out_wgs84.png',
+        rectangle: Cesium.Rectangle.fromDegrees( -4.4404866,  48.3917550,  -4.4257691,  48.3917550)
+    }));
+    oceanopolisphoto.alpha = 1;
+    oceanopolisphoto.brightness = 1.0;
+     */
+    private String parse(String filename, String content, String outDir) {
+        String image = "image" + imagesCount;
+        String result = "var " + image + " layers.addImageryProvider(new Cesium.SingleTileImageryProvider({ \n"
+                + " url: '" + outDir + SEP + filename + "', \n"
+                + "rectangle: Cesium.Rectangle.fromDegrees(";
+        /*
+Upper Left  (  -4.5454811,  48.3670348) (  4d32'43.73"W, 48d22' 1.33"N)
+Lower Left  (  -4.5454811,  48.3572213) (  4d32'43.73"W, 48d21'26.00"N) ------------
+Upper Right (  -4.5307548,  48.3670348) (  4d31'50.72"W, 48d22' 1.33"N) ------------
+
+         */
+
+        String[] tab = content.split("\n");
+        for (int i = 0; i < tab.length; i++) {
+            if (tab[i].contains("Lower Left")) {
+                String tmp = tab[i].replace("Upper Left", "");
+                tmp = tmp.replace("(", "");
+                String[] tmpTab = tmp.split(")");
+                result += tmpTab[0].trim();
+            }
+            if (tab[i].contains("Upper Right")) {
+                String tmp = tab[i].replace("Upper Right", "");
+                tmp = tmp.replace("(", "");
+                String[] tmpTab = tmp.split(")");
+                result += tmpTab[0].trim() + "\n";
+            }
+        }
+        result += " })); \n";
+        result += image + ".alpha = 1; \n";
+        result += image + "brightness = 1.0; \n";
+        return result;
     }
 
     public void openFile(TextField tf) {

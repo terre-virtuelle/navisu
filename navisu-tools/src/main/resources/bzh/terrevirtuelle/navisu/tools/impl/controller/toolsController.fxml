@@ -102,7 +102,7 @@
                                         </AnchorPane>
                                     </content>
                                 </Tab>
-                                <Tab fx:id="bathyTab" text="Bathymetry DB">
+                                <Tab fx:id="bathyTab" text="Bathy DB">
                                     <content>
                                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
                                             <children>
@@ -437,6 +437,57 @@
                                  </children>
                               </AnchorPane>
                            </content>
+                        </Tab>
+                        <Tab text="Cesium">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <GridPane prefHeight="436.0" prefWidth="531.0" styleClass="tab-conteneur">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="140.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="1.0" prefWidth="214.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="80.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <children>
+                                          <GridPane GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                          </GridPane>
+                                          <TextField fx:id="imagesDirTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <Button fx:id="browseImagesDirButton" mnemonicParsing="false" prefWidth="100.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <Button fx:id="startImagesButton" mnemonicParsing="false" prefWidth="100.0" text="Start" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+                                          <Label prefHeight="15.0" prefWidth="156.0" text="   Images subdirectory" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="imagesSubdirTF" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <Label prefHeight="15.0" prefWidth="135.0" text="   Images directory" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
                         </Tab>
                             </tabs>
                         </TabPane>

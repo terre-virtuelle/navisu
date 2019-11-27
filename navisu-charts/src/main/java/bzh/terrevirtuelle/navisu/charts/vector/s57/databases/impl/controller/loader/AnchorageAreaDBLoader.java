@@ -31,28 +31,30 @@ public class AnchorageAreaDBLoader
     public List<? extends Geo> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
         objects = new ArrayList<>();
         String geom = "";
-       
+
         resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
         AnchorageArea object;
-        try {
-            while (resultSet.next()) {
-                object = new AnchorageArea();
-                geom = resultSet.getString("geom");
-                if (geom != null) {
-                    object.setGeom(geom);
-                    object.setCategoryOfAnchorage(resultSet.getString("catach"));
-                    object.setObjectName(resultSet.getString("objnam"));
-                    object.setRestriction(resultSet.getString("restrn"));
-                    object.setId(resultSet.getInt("rcid"));
-                    object.getLabels().put("ACHARE","AnchorageArea");
-                    object.getLabels().put("catach",resultSet.getString("catach"));
-                    object.getLabels().put("objnam",resultSet.getString("objnam"));
-                    object.getLabels().put("restrn",resultSet.getString("restrn"));
-                    objects.add(object);
+        if (resultSet != null) {
+            try {
+                while (resultSet.next()) {
+                    object = new AnchorageArea();
+                    geom = resultSet.getString("geom");
+                    if (geom != null) {
+                        object.setGeom(geom);
+                        object.setCategoryOfAnchorage(resultSet.getString("catach"));
+                        object.setObjectName(resultSet.getString("objnam"));
+                        object.setRestriction(resultSet.getString("restrn"));
+                        object.setId(resultSet.getInt("rcid"));
+                        object.getLabels().put("ACHARE", "AnchorageArea");
+                        object.getLabels().put("catach", resultSet.getString("catach"));
+                        object.getLabels().put("objnam", resultSet.getString("objnam"));
+                        object.getLabels().put("restrn", resultSet.getString("restrn"));
+                        objects.add(object);
+                    }
                 }
+            } catch (SQLException ex) {
+                Logger.getLogger(AnchorageAreaDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(AnchorageAreaDBLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return objects;
     }
