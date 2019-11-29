@@ -898,6 +898,7 @@ public class ToolsComponentController
                 alert.show();
             }
         });
+        
         /*
         Help
          */
