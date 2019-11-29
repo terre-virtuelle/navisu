@@ -1177,27 +1177,30 @@ public class ToolsComponentController
             public void run(ProgressHandle progressHandle) {
                 String command = "cd " + inDir + "; \n"
                         + "for file in *.wld;\n"
-                        + "do echo processing : $file;\n"
+                        + "do echo processing : $file wld to jgw\n"
                         + " w=`basename $file .wld`;\n"
                         + "mv $file $w.jgw;\n"
                         + "done;\n"
                         + "for image in *.jpg;\n"
-                        + "do echo processing : $image\n"
+                        + "do echo processing : $image jpg to tif\n"
                         + "i=`basename $image .jpg`;\n"
                         + "gdal_translate $image $i.tif;\n"
                         + "done;\n"
                         + "for image in *.tif;\n"
-                        + "do echo processing : $image\n"
-                        + "j=`basename $image .tif`;\n"
-                        + "gdalwarp -dstalpha -s_srs EPSG:2154 -t_srs EPSG:4326 $image $j.tif;\n"
-                        + "gdal_translate -of PNG $j.tif $j.png;\n"
+                        + "do echo processing : $image Lambert93 to WGS84\n"
+                        + "i=`basename $image .tif`;\n"
+                        + "gdalwarp -dstalpha -s_srs EPSG:2154 -t_srs EPSG:4326 $image out.tif;\n"
+                        + "gdal_translate -of PNG out.tif $i.png;\n"
+                        + "rm out.tif;\n"
                         + "done;\n"
                         + "for image in *.png;\n"
-                        + "do echo processing : $image\n"
-                        + " k=`basename $image .png`;\n"
-                        + "gdalinfo $image > $k.info;\n"
-                        + "done;"
-                        + "rm *.tif *.xml;\n";
+                        + "do echo processing : $image gdalinfo\n"
+                        + " i=`basename $image .png`;\n"
+                        + "gdalinfo $image > $i.info;\n"
+                        + "done;\n"
+                        + "echo delete xml and tif files\n"
+                        + "rm *.xml;\n"
+                        + "rm *.tif";
                 try {
                     Proc.BUILDER.create()
                             .setCmd(command)
@@ -1257,7 +1260,7 @@ Upper Right (  -4.5307548,  48.3670348) (  4d31'50.72"W, 48d22' 1.33"N) --------
                 //  System.out.println("tmp : "+tmp);
                 tmp = tmp.replace("(", "");
                 String[] tmpTab = tmp.split("\\)");
-                result += tmpTab[0].trim()+",";
+                result += tmpTab[0].trim() + ",";
             }
             if (tab[i].contains("Upper Right")) {
                 String tmp = tab[i].replace("Upper Right", "");
@@ -1269,6 +1272,7 @@ Upper Right (  -4.5307548,  48.3670348) (  4d31'50.72"W, 48d22' 1.33"N) --------
         result += " })); \n";
         result += image + ".alpha = 1; \n";
         result += image + "brightness = 1.0; \n";
+        imagesCount++;
         return result;
     }
 
