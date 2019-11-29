@@ -320,6 +320,8 @@ public class ToolsComponentController
     public Button browseImagesSubdirTF;
     @FXML
     public Button startImagesButton;
+    @FXML
+    public TextField initImagesCounterTF;
 
     protected String buildingsData;
     protected String elevationData;
@@ -359,8 +361,8 @@ public class ToolsComponentController
     private final String BUILDINGS_DB_NAME_0 = "BuildingsPaysBrestDB";
     private final String GROUP_0 = "S57 charts";
     protected static final String S57_LAYER = "S57";
-    protected final int LON_OFFSET = 145168;//exact value for decal : 145170
-    protected final int LAT_OFFSET = 6836820; //6836814
+    protected final int LON_OFFSET = 145168;
+    protected final int LAT_OFFSET = 6836820;
 
     private final String ELEVATION_DB_ORG_DIR = "privateData" + SEP + "elevation";
     private final String BEACONS_DB_NAME_0 = "BalisageMaritimeDB";
@@ -372,7 +374,7 @@ public class ToolsComponentController
     boolean isTableSolidCreated = false;
     boolean isIndexSolidCreated = false;
     protected int buildingCount = 0;
-    protected int imagesCount = 0;
+    protected int imagesCount;
     protected String buildingsDBName;
     protected String inFilename;
     protected String outFilename;
@@ -883,6 +885,7 @@ public class ToolsComponentController
         Cesium images projection
          */
         startImagesButton.setOnMouseClicked((MouseEvent event) -> {
+            imagesCount = Integer.valueOf(initImagesCounterTF.getText());
             if (imagesDirTF.getText() != null && imagesSubdirTF.getText() != null) {
                 projectionImagesForCesium(imagesDirTF.getText(), imagesSubdirTF.getText());
             } else {
