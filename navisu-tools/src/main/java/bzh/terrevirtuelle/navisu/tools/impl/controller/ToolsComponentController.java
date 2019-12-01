@@ -1202,8 +1202,7 @@ public class ToolsComponentController
                         + " i=`basename $image .png`;\n"
                         + "gdalinfo $image > $i.info;\n"
                         + "done;\n"
-                        + "echo delete xml and tif files\n"
-                        + "rm *.xml;\n"
+                        + "echo delete  tif files\n"
                         + "rm *.tif";
                 try {
                     Proc.BUILDER.create()
