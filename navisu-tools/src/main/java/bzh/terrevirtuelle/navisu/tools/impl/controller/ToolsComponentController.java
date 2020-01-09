@@ -334,7 +334,7 @@ public class ToolsComponentController
             "BrestMetropole5mDB", "BrestMetropole1mDB", "Finistere5mDB",
             "Litto3D5m", "Litto3D1m", "TestAltiDB");
     private ObservableList<String> dbCbBathyData = FXCollections.observableArrayList("Choice DB", "BathyShomDB", "TestDB");
-    private ObservableList<String> dbCbBeaconsData = FXCollections.observableArrayList("Choice DB", "BalisageMaritimeDB");
+    private ObservableList<String> dbCbBeaconsData = FXCollections.observableArrayList("Choice DB", "BalisageMaritimeDB", "TestDB");
     private ObservableList<String> dbCbBuildingsData = FXCollections.observableArrayList("Choice DB", "BuildingsPaysbrestDB", "TestDB");
     private ObservableList<String> dbCbBuildingsCityGMLData = FXCollections.observableArrayList("Choice DB", "BrestMetropole5mDB", "TestDB");
 
@@ -365,7 +365,7 @@ public class ToolsComponentController
     protected final int LAT_OFFSET = 6836820;
 
     private final String ELEVATION_DB_ORG_DIR = "privateData" + SEP + "elevation";
-    private final String BEACONS_DB_NAME_0 = "BalisageMaritimeDB";
+   // private final String BEACONS_DB_NAME_0 = "BalisageMaritimeDB";
     private String componentKeyName;
     private List<File> selectedFiles;
     protected String mnt = "MNT5m";
@@ -1202,7 +1202,8 @@ public class ToolsComponentController
                         + " i=`basename $image .png`;\n"
                         + "gdalinfo $image > $i.info;\n"
                         + "done;\n"
-                        + "echo delete  tif files\n"
+                        + "echo delete tif files\n"
+                       // + "rm *.xml;\n"
                         + "rm *.tif";
                 try {
                     Proc.BUILDER.create()
