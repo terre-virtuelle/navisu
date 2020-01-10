@@ -113,7 +113,7 @@ public class SingleAREA_ShapefileLoader
         for (LatLon l : latLon) {
             label += l.getLatitude().getDegrees() + " " + l.getLongitude().getDegrees() + "\n";
         }
-        shape.setValue(AVKey.DISPLAY_NAME, label);
+     //   shape.setValue(AVKey.DISPLAY_NAME, label);
 
         ShapeAttributes highlightAttributes = new BasicShapeAttributes(attrs);
         highlightAttributes.setOutlineOpacity(1);
