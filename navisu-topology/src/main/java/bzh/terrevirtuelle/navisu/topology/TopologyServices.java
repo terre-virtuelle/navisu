@@ -88,6 +88,14 @@ public interface TopologyServices
      */
     Geometry wwjPolygonToJtsGeometry(Polygon polygon);
 
+    Geometry wwjPathToJtsGeometry(Path path);
+
+    Pair<Double, Double> jtsGetCentroid(Geometry geom);
+    
+    List<Pair<Double, Double>> jtsGetCentroids(List<Geometry> geom);
+
+    List<Geometry> wwjPathsToJtsGeometry(List<Path> paths);
+
     /**
      *
      * @param locations

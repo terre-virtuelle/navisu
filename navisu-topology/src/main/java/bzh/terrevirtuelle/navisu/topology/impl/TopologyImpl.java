@@ -31,7 +31,6 @@ import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
-import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolylines;
 import java.util.ArrayList;
@@ -189,6 +188,77 @@ public class TopologyImpl
         geometry += listLatLon.get(size - 1).longitude.degrees + " " + listLatLon.get(size - 1).latitude.degrees;
         geometry += ")";
         return geometry;
+    }
+
+    @Override
+    public Geometry wwjPolygonToJtsGeometry(Polygon polygon) {
+        Iterable<? extends LatLon> latLon = polygon.getOuterBoundary();
+        List<Position> positionList = new ArrayList<>();
+        for (LatLon l : latLon) {
+            positionList.add(new Position(l, 20.0));
+        }
+        Coordinate[] coordinates = new Coordinate[positionList.size()];
+        for (int i = 0; i < positionList.size(); i++) {
+            coordinates[i] = new Coordinate(positionList.get(i).getLongitude().getDegrees(),
+                    positionList.get(i).getLatitude().getDegrees());
+        }
+        return new GeometryFactory().createPolygon(coordinates);
+    }
+
+    @Override
+    public Geometry wwjPathToJtsGeometry(Path path) {
+        Iterable<? extends Position> positions = path.getPositions();
+        List<Position> positionList = new ArrayList<>();
+        for (Position p : positions) {
+            positionList.add(p);
+        }
+        Coordinate[] coordinates = new Coordinate[positionList.size()];
+        for (int i = 0; i < positionList.size(); i++) {
+            coordinates[i] = new Coordinate(positionList.get(i).getLongitude().getDegrees(),
+                    positionList.get(i).getLatitude().getDegrees());
+        }
+        return new GeometryFactory().createPolygon(coordinates);
+    }
+
+    @Override
+    public List<Geometry> wwjPathsToJtsGeometry(List<Path> paths) {
+        List<Geometry> result = new ArrayList<>();
+        for (Path path : paths) {
+            result.add(wwjPathToJtsGeometry(path));
+        }
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Pair<Double, Double> jtsGetCentroid(Geometry geom) {
+        Pair<Double, Double> location = null;
+        Centroid centroid;
+        if (geom != null) {
+            centroid = new Centroid(geom);
+            Coordinate coord = centroid.getCentroid();
+            location = new Pair(coord.y, coord.x);
+        }
+        return location;
+    }
+
+    @Override
+    public List<Pair<Double, Double>> jtsGetCentroids(List<Geometry> geometries) {
+        List<Pair<Double, Double>> result = new ArrayList<>();
+        for (Geometry g : geometries) {
+            result.add(jtsGetCentroid(g));
+        }
+        return result;
+    }
+
+    @Override
+    public LineString wwjPositions2JtsGeometry(List<Position> positionList) {
+        Coordinate[] coordinates = new Coordinate[positionList.size()];
+        for (int i = 0; i < positionList.size(); i++) {
+            coordinates[i] = new Coordinate(positionList.get(i).getLongitude().getDegrees(),
+                    positionList.get(i).getLatitude().getDegrees());
+        }
+        return new GeometryFactory().createLineString(coordinates);
     }
 
     @SuppressWarnings("unchecked")
@@ -491,31 +561,6 @@ public class TopologyImpl
             result.add(wktPolygonToWwjPath(s));
         }
         return result;
-    }
-
-    @Override
-    public Geometry wwjPolygonToJtsGeometry(Polygon polygon) {
-        Iterable<? extends LatLon> latLon = polygon.getOuterBoundary();
-        List<Position> positionList = new ArrayList<>();
-        for (LatLon l : latLon) {
-            positionList.add(new Position(l, 20.0));
-        }
-        Coordinate[] coordinates = new Coordinate[positionList.size()];
-        for (int i = 0; i < positionList.size(); i++) {
-            coordinates[i] = new Coordinate(positionList.get(i).getLongitude().getDegrees(),
-                    positionList.get(i).getLatitude().getDegrees());
-        }
-        return new GeometryFactory().createPolygon(coordinates);
-    }
-
-    @Override
-    public LineString wwjPositions2JtsGeometry(List<Position> positionList) {
-        Coordinate[] coordinates = new Coordinate[positionList.size()];
-        for (int i = 0; i < positionList.size(); i++) {
-            coordinates[i] = new Coordinate(positionList.get(i).getLongitude().getDegrees(),
-                    positionList.get(i).getLatitude().getDegrees());
-        }
-        return new GeometryFactory().createLineString(coordinates);
     }
 
     @Override

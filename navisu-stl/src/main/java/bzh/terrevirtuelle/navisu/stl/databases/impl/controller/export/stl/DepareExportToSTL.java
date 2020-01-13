@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
+import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
@@ -152,15 +153,80 @@ public class DepareExportToSTL
     }
 
     public void exportGround(List<SurfacePolygons> shapes, double distance, double elevation) {
-        List<Geometry> polygonsWKT = createGrounds(shapes);
+        // List<Geometry> polygonsWKT = createGrounds(shapes);
         /* Display DEBUG */
-      //  displayPolygons(polygonsWKT);
-        List<List<Point3DGeo>> points = createPoints(polygonsWKT, distance, elevation);
+        //  displayPolygons(polygonsWKT);
+        // List<List<Point3DGeo>> points = createPoints(polygonsWKT, distance, elevation);
         List<List<Point3DGeo>> boundaries = createBoundaries(shapes);
-      //  List<List<Point3DGeo>> all = mergePoints(boundaries, points);
-      //  displayPointList(points);
+        //  List<List<Point3DGeo>> all = mergePoints(boundaries, points);
+        //  displayPointList(points);
         List<List<Path>> p = createTIN(boundaries);
-        displayPaths(p);
+
+        // displayPaths(p, Material.RED);
+        List<List<Path>> p2 = createTIN2(p, 8.0);
+        List<List<Path>> p3 = createTIN2(p2, 8.0);
+       // displayPaths(p3, Material.GREEN);
+        displayPolygons(p3, layer, Material.GREEN);
+    }
+
+    /* Create triangles from triangles path */
+    public List<List<Path>> createTIN2(List<List<Path>> paths, double elevation) {
+        List<List<Path>> result = new ArrayList<>();
+        List< List<Pair<Double, Double>>> centroids = new ArrayList<>();
+        List<Geometry> geometries;
+        for (List<Path> pathList : paths) {
+            geometries = topologyServices.wwjPathsToJtsGeometry(pathList);
+            centroids.add(topologyServices.jtsGetCentroids(geometries));
+        }
+
+        for (int i = 0; i < paths.size(); i++) {
+            List<Path> tmp = new ArrayList<>();
+            for (int j = 0; j < paths.get(i).size(); j++) {
+                if (topologyServices.wwjPathToJtsGeometry(paths.get(i).get(j)).getArea() >= 1E-7) {
+                    List<Position> positionList = new ArrayList<>();
+                    Iterable<? extends Position> vertices = paths.get(i).get(j).getPositions();
+                    for (Position pos : vertices) {
+                        positionList.add(pos);
+                    }
+                    double hight = Math.random() * elevation;
+
+                    List<Position> posTab0 = new ArrayList<>();
+                    posTab0.add(positionList.get(0));
+                    posTab0.add(positionList.get(1));
+                    posTab0.add(new Position(Angle.fromDegrees(centroids.get(i).get(j).getX()),
+                            Angle.fromDegrees(centroids.get(i).get(j).getY()), hight));
+                    posTab0.add(positionList.get(0));
+                    tmp.add(new Path(posTab0));
+
+                    List<Position> posTab1 = new ArrayList<>();
+                    posTab1.add(positionList.get(1));
+                    posTab1.add(positionList.get(2));
+                    posTab1.add(new Position(Angle.fromDegrees(centroids.get(i).get(j).getX()),
+                            Angle.fromDegrees(centroids.get(i).get(j).getY()), hight));
+                    posTab1.add(positionList.get(1));
+                    tmp.add(new Path(posTab1));
+
+                    List<Position> posTab2 = new ArrayList<>();
+                    posTab2.add(positionList.get(2));
+                    posTab2.add(positionList.get(0));
+                    posTab2.add(new Position(Angle.fromDegrees(centroids.get(i).get(j).getX()),
+                            Angle.fromDegrees(centroids.get(i).get(j).getY()), hight));
+                    posTab2.add(positionList.get(2));
+                    tmp.add(new Path(posTab2));
+                } else {
+                    tmp.add(paths.get(i).get(j));
+                }
+            }
+            result.add(tmp);
+        }
+/*
+        for (int i = 0; i < result.size(); i++) {
+            for (Path p : result.get(i)) {
+                System.out.println(topologyServices.wwjPathToJtsGeometry(p).getArea());
+            }
+        }
+*/
+        return result;
     }
 
     public List<List<Path>> createTIN(List<List<Point3DGeo>> tops) {
@@ -208,7 +274,7 @@ public class DepareExportToSTL
         for (Geometry p : polygonsWKT) {
             envelopesWKT.add(p.getEnvelope());
         }
-       // displayPolygons(envelopesWKT);
+        // displayPolygons(envelopesWKT);
         double distLat = 0.0;
         double distLon = 0.0;
         int line;
@@ -240,7 +306,7 @@ public class DepareExportToSTL
                 }
                 lat += 0.0000089993 * distance;
             }
-          //  displayPoints(tmp);
+            //  displayPoints(tmp);
             result.add(tmp);
             shape++;
         }
@@ -294,9 +360,32 @@ public class DepareExportToSTL
         }
         displayServices.displayPolygons(polygons, layer, Material.RED, 0.05);
     }
-     protected void displayPaths(List<List<Path>> paths) {
-         for(List<Path> p : paths){
-             displayServices.displayPaths(p, layer, Material.RED, 1.0, 10);
-         }
-     }
+
+    protected void displayPolygons(List<List<Path>> paths, RenderableLayer layer, Material material) {
+        for (List<Path> p : paths) {
+            displayServices.displayPolygonsFromPaths(p, layer, material);
+        }
+    }
+
+    protected List<Polygon> paths2Polygons(List<Path> paths) {
+        List<Polygon> result = new ArrayList<>();
+        for (Path p : paths) {
+            result.add(new Polygon(p.getPositions()));
+        }
+        return result;
+    }
+
+    protected List<List<Polygon>> pathsList2PolygonsList(List<List<Path>> paths) {
+        List<List<Polygon>> result = new ArrayList<>();
+        for (List<Path> p : paths) {
+            result.add(paths2Polygons(p));
+        }
+        return result;
+    }
+
+    protected void displayPaths(List<List<Path>> paths, Material material) {
+        for (List<Path> p : paths) {
+            displayServices.displayPaths(p, layer, material, 1.0, 10);
+        }
+    }
 }

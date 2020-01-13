@@ -547,7 +547,7 @@ public class DisplayImpl
 
     protected ShapeAttributes createAttributes(Material material) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();
-        normAttributes.setDrawInterior(false);
+        normAttributes.setDrawInterior(true);
         normAttributes.setDrawOutline(true);
         normAttributes.setInteriorMaterial(material);
         normAttributes.setOutlineMaterial(material);
@@ -611,7 +611,7 @@ public class DisplayImpl
             Iterable<? extends Position> positions = p.getPositions();
             List<Position> tmpPos = new ArrayList<>();
             for (Position pp : positions) {
-                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), pp.getElevation()));
+                tmpPos.add(new Position(pp.getLatitude(), pp.getLongitude(), pp.getElevation()+10));
             }
             result.add(new Polygon(tmpPos));
         });
