@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.shapefile.DepareShapefileExport;
+import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import com.vividsolutions.jts.geom.Geometry;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
@@ -17,7 +18,9 @@ import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.SurfacePolygons;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +41,8 @@ public class DepareExportToSTL
     protected String filename;
     protected JTSServices jtsServices;
     protected DisplayServices displayServices;
-    protected RenderableLayer layer;
-    protected Shapefile shapefile;
+    protected TopologyServices topologyServices;
+
     protected GridBox3D gridBox3D;
     protected List<Path> paths;
     protected String facets;
@@ -47,17 +50,18 @@ public class DepareExportToSTL
     protected double lonMin;
     protected double highestElevationBathy;
 
-    protected Set<Map.Entry<String, Object>> entries;
-
+    //  protected Set<Map.Entry<String, Object>> entries;
     public DepareExportToSTL(GeodesyServices geodesyServices,
             JTSServices jtsServices,
             DisplayServices displayServices,
+            TopologyServices topologyServices,
             Shapefile shapefile, GridBox3D gridBox3D, double highestElevationBathy,
             RenderableLayer layer) {
         super(shapefile, layer);
         pathToSTL = new PathToSTL(geodesyServices);
         this.jtsServices = jtsServices;
         this.displayServices = displayServices;
+        this.topologyServices = topologyServices;
         this.shapefile = shapefile;
         this.gridBox3D = gridBox3D;
         this.layer = layer;
@@ -66,7 +70,7 @@ public class DepareExportToSTL
         this.highestElevationBathy = highestElevationBathy;
     }
 
-    public void export(String filename, List<Polygon> polygonList, double verticalExaggeration, 
+    public void export(String filename, List<Polygon> polygonList, double verticalExaggeration,
             double latScale, double lonScale, double verticalOffset) {
         this.filename = filename;
         createPolygon(polygonList, verticalExaggeration, latScale, lonScale, verticalOffset);
@@ -93,7 +97,7 @@ public class DepareExportToSTL
         List<Path> pathList;
         List<Position> topList = posList;
         List<Position> bottomList = new ArrayList<>();
-        for (int i=0; i < topList.size(); i++) {
+        for (int i = 0; i < topList.size(); i++) {
             bottomList.add(new Position(topList.get(i).getLatitude(), topList.get(i).getLongitude(), 0.0));
         }
         pathList = createPaths(topList, bottomList);
@@ -132,5 +136,27 @@ public class DepareExportToSTL
 
         resultList.addAll(innerPaths);
         return resultList;
+    }
+
+    public void exportGround(List<SurfacePolygons> shapes, double altitude) {
+        createGround(shapes, altitude);
+
+    }
+
+    public void createGround(List<SurfacePolygons> shapes, double altitude) {
+        for (SurfacePolygons sp : shapes) {
+            double val = (Double) sp.getValue("drval1");
+            if (val == altitude) {
+                Iterable<? extends Position> i = sp.getBuffer().getPositions();
+                for (Position p : i) {
+                    PointPlacemark pp = new PointPlacemark(Position.fromDegrees(p.latitude.getDegrees(), p.longitude.getDegrees(), 10));
+                    layer.addRenderable(pp);
+                }
+            }
+        }
+
+    }
+    public void createDEM(){
+        
     }
 }

@@ -152,6 +152,8 @@ public class DEPARE_Stl_ShapefileWriter
                         }
                         ep.setHeight(val1);
                         //   layer.addRenderable(ep);
+                    }else{
+                        System.out.println("val1 : "+ val1+" val2 : "+val2);
                     }
                 } else {
                     ep.setOuterBoundary(record.getCompoundPointBuffer().getLocations());

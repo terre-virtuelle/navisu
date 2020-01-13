@@ -44,6 +44,13 @@ public interface TopologyServices
      * @param positions
      * @return
      */
+    String wwjPositionsToPolygonWkt(Iterable<? extends Position> positions);
+
+    /**
+     *
+     * @param positions
+     * @return
+     */
     String wwjLatLonsToPolygonWkt(List<LatLon> positions);
 
     /**

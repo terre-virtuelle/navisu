@@ -147,6 +147,7 @@ import bzh.terrevirtuelle.navisu.visualization.view.impl.controller.JfxViewer;
 import com.google.common.collect.ImmutableMap;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
+import gov.nasa.worldwind.render.SurfacePolygons;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
@@ -1167,14 +1168,22 @@ public class StlDBComponentController
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
-                                    if (depareVisuCB.isSelected()) {
-                                        Shapefile shp = new DepareDBLoader(databaseServices,
-                                                s57DatabaseTF.getText(), USER, PASSWD)
-                                                .retrieveIn(gb.getLatMin() - RETRIEVE_OFFSET, gb.getLonMin() - RETRIEVE_OFFSET,
-                                                        gb.getLatMax() + RETRIEVE_OFFSET, gb.getLonMax() + RETRIEVE_OFFSET);
-                                        new DepareView(bathymetryLayer, s57Layer, s57Layer, 10.0, 1.0, false)
-                                                .display(shp);
-                                    }
+                                    //  if (depareVisuCB.isSelected()) {
+                                    Shapefile shp = new DepareDBLoader(databaseServices,
+                                            s57DatabaseTF.getText(), USER, PASSWD)
+                                            .retrieveIn(gb.getLatMin() - RETRIEVE_OFFSET, gb.getLonMin() - RETRIEVE_OFFSET,
+                                                    gb.getLatMax() + RETRIEVE_OFFSET, gb.getLonMax() + RETRIEVE_OFFSET);
+                                    DepareView depareView = new DepareView(bathymetryLayer, s57Layer, s57Layer, 10.0, 1.0, false);
+                                    List<SurfacePolygons> shapes = depareView.display(shp);
+                                    DepareExportToSTL depareExportToSTL = new DepareExportToSTL(geodesyServices, jtsServices, displayServices,topologyServices,
+                                            shp, gb, highestElevationBathy, s57Layer);
+                                    depareExportToSTL.exportGround(shapes, -9);
+                                   
+                                    
+
+                                    // }
+                                    //Pb sur la selection des Shape, a revoir
+                                    /*
                                     Shapefile shp = new DepareDBLoader(databaseServices,
                                             s57DatabaseTF.getText(), USER, PASSWD)
                                             .retrieveIn(gb.getLatMin() - RETRIEVE_OFFSET / 2.0, gb.getLonMin() - RETRIEVE_OFFSET / 2.0,
@@ -1196,6 +1205,7 @@ public class StlDBComponentController
                                             }
                                         });
                                     }
+                                     */
                                     LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
                                     k++;
                                 }
@@ -1290,18 +1300,18 @@ public class StlDBComponentController
                                                 g[0][0].getLongitude(),
                                                 g[g.length - 1][g[0].length - 1].getLatitude(),
                                                 g[g.length - 1][g[0].length - 1].getLongitude()));
-  
+
                                 new UnderwaterAwashRockView(s57Layer).display(underwaterAwashRocks);
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                                
+
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     scaleCompute(g);
                                     new UwtrocExportToSTL(geodesyServices, g, filename, latScale, lonScale)
                                             .export(underwaterAwashRocks, verticalExaggeration * highestElevationBathy, tileSideZ);
                                 }
-                                 
+
                                 k++;
                                 LOGGER.info("Out export UWTROC en STL");
                             }

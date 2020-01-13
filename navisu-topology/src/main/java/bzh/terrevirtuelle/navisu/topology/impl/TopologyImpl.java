@@ -31,6 +31,7 @@ import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolylines;
 import java.util.ArrayList;
@@ -73,6 +74,15 @@ public class TopologyImpl
         }
         geometry += positions.get(l - 1).getLongitude().getDegrees() + " " + positions.get(l - 1).getLatitude().getDegrees() + "))";
         return geometry;
+    }
+
+    @Override
+    public String wwjPositionsToPolygonWkt(Iterable<? extends Position> positions) {
+        List< Position> result = new ArrayList<>();
+        for (Position p : positions) {
+            result.add(p);
+        }
+        return wwjPositionsToPolygonWkt(result);
     }
 
     @Override

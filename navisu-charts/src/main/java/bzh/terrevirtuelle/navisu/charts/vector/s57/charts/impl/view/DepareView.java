@@ -10,6 +10,7 @@ import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.SurfacePolygons;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,25 +44,27 @@ public class DepareView
         new File("cmd").mkdir();
     }
 
-    public void display(Shapefile shp) {
+    public List<SurfacePolygons> display(Shapefile shp) {
+        List<SurfacePolygons>  result = new ArrayList<>();
         while (shp.hasNext()) {
             try {
                 //Create classical chart
                 record = shp.nextRecord();
-                createSurfacePolygons(record, layer, isCreateElevation, false);
+                result.add(createSurfacePolygons(record, layer, isCreateElevation, false));
             } catch (Exception ex) {
                 Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
         shp.close();
-      
         wwd.redrawNow();
-
+        return result;
     }
+//public SurfacePolygons getSurfacePolygons()
 
-    protected void createSurfacePolygons(ShapefileRecord record,
+    public SurfacePolygons createSurfacePolygons(ShapefileRecord record,
             RenderableLayer layer,
             boolean isHeight, boolean simp) {
+        SurfacePolygons result = null;
         if (record != null) {
             if (record.getAttributes() != null) {
                 //Calculate depth max
@@ -73,7 +76,9 @@ public class DepareView
                     color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val1);
                 });
             }
-            createPolygon(layer, record, isHeight, magnify, maxHeight);
+            result = createPolygon(layer, record, isHeight, magnify, maxHeight);
         }
+        return result;
     }
+
 }

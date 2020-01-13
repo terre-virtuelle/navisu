@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
-import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolyline;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -17,6 +16,7 @@ import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.ExtrudedPolygon;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
 import gov.nasa.worldwind.util.VecBuffer;
@@ -43,7 +43,7 @@ public abstract class ShapefilePolygonView
 
     }
 
-    protected void createPolygon(RenderableLayer layer, ShapefileRecord record,
+    protected SurfacePolygons createPolygon(RenderableLayer layer, ShapefileRecord record,
             boolean isHeight, double magnify, double maxHeight) {
         //   System.out.println("createPolygon");
         this.record = record;
@@ -63,20 +63,37 @@ public abstract class ShapefilePolygonView
                 entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
                     if (e.getKey().equalsIgnoreCase("drval1")) {
                         val1 = (Double) e.getValue();
+
                     }
                     color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val1);
                     if (e.getKey().equalsIgnoreCase("drval2")) {
                         val2 = (Double) e.getValue();
+
                     }
                 });
             }
+
             surface(layer, record);
             shape.setValue("drval1", val1);
             shape.setValue("drval2", val2);
             shape.setValue(AVKey.DISPLAY_NAME,
                     "[" + Double.toString(val1) + ", " + Double.toString(val2) + "]");
+            if (val1 == -9.0) {
+                generateGround(shape, val1, layer);
+            }
             setPolygonAttributes(color);
 
+        }
+        return shape;
+    }
+
+    public void generateGround(SurfacePolygons shape, double val1, RenderableLayer layer) {
+
+        Iterable<? extends Position> i = shape.getBuffer().getPositions();
+
+        for (Position p : i) {
+            PointPlacemark pp = new PointPlacemark(Position.fromDegrees(p.latitude.getDegrees(), p.longitude.getDegrees(), 10));
+            layer.addRenderable(pp);
         }
     }
 
@@ -138,19 +155,18 @@ public abstract class ShapefilePolygonView
     }
 
     private void surface(RenderableLayer layer, ShapefileRecord record) {
-        
+
         shape = new SurfacePolygons(
                 Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
                 record.getCompoundPointBuffer());
         shape.setWindingRule(AVKey.CLOCKWISE);
         shape.setPolygonRingGroups(new int[]{0});
-        
-        
+
         /*
         shape=  new SurfacePolygons(
                 Sector.fromDegrees(((ShapefileRecordPolyline) record).getBoundingRectangle()),
                 record.getCompoundPointBuffer());
-       */
+         */
         layer.addRenderable(shape);
     }
 
@@ -177,4 +193,5 @@ public abstract class ShapefilePolygonView
         sideAttrs.setInteriorMaterial(new Material(color));
         ep.setSideAttributes(sideAttrs);
     }
+
 }
