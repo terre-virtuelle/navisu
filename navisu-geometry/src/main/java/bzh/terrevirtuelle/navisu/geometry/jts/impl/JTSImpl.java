@@ -384,31 +384,33 @@ public class JTSImpl
 
     @Override
     public List<Path> createDelaunayPoly2TriToPath(List<Point3DGeo> pts) {
-
-        double elevation = pts.get(0).getElevation();
         List<Path> result = new ArrayList<>();
-        List<PolygonPoint> polygonPoints = new ArrayList<>();
-        for (Point3DGeo p : pts) {
-            polygonPoints.add(new PolygonPoint(p.getLatitude(), p.getLongitude(), 0));
-        }
-        org.poly2tri.geometry.polygon.Polygon polygon = null;
-        try {
-            polygon = new org.poly2tri.geometry.polygon.Polygon(polygonPoints);
-            Poly2Tri.triangulate(polygon);
-        } catch (Exception e) {
-            System.out.println("e : " + e);
-        }
-        List<DelaunayTriangle> triangles1 = polygon.getTriangles();
-        Iterator<DelaunayTriangle> it = triangles1.iterator();
-        while (it.hasNext()) {
-            DelaunayTriangle t = it.next();
-            TriangulationPoint[] tpTab = t.points;
-            List<Position> positions = new ArrayList<>();
-            for (int j = 0; j < tpTab.length; j++) {
-                positions.add(new Position(Angle.fromDegrees(tpTab[j].getX()), Angle.fromDegrees(tpTab[j].getY()), elevation));
+        if (pts.size() > 2) {
+            double elevation = pts.get(0).getElevation();
+
+            List<PolygonPoint> polygonPoints = new ArrayList<>();
+            for (Point3DGeo p : pts) {
+                polygonPoints.add(new PolygonPoint(p.getLatitude(), p.getLongitude(), 0));
             }
-            positions.add(new Position(Angle.fromDegrees(tpTab[0].getX()), Angle.fromDegrees(tpTab[0].getY()), elevation));
-            result.add(new Path(positions));
+            org.poly2tri.geometry.polygon.Polygon polygon = null;
+            try {
+                polygon = new org.poly2tri.geometry.polygon.Polygon(polygonPoints);
+                Poly2Tri.triangulate(polygon);
+            } catch (Exception e) {
+                System.out.println("e : " + e);
+            }
+            List<DelaunayTriangle> triangles1 = polygon.getTriangles();
+            Iterator<DelaunayTriangle> it = triangles1.iterator();
+            while (it.hasNext()) {
+                DelaunayTriangle t = it.next();
+                TriangulationPoint[] tpTab = t.points;
+                List<Position> positions = new ArrayList<>();
+                for (int j = 0; j < tpTab.length; j++) {
+                    positions.add(new Position(Angle.fromDegrees(tpTab[j].getX()), Angle.fromDegrees(tpTab[j].getY()), elevation));
+                }
+                positions.add(new Position(Angle.fromDegrees(tpTab[0].getX()), Angle.fromDegrees(tpTab[0].getY()), elevation));
+                result.add(new Path(positions));
+            }
         }
         return result;
     }

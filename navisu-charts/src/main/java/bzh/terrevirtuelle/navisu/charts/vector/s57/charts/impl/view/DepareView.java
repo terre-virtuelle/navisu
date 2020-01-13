@@ -45,7 +45,7 @@ public class DepareView
     }
 
     public List<SurfacePolygons> display(Shapefile shp) {
-        List<SurfacePolygons>  result = new ArrayList<>();
+        List<SurfacePolygons> result = new ArrayList<>();
         while (shp.hasNext()) {
             try {
                 //Create classical chart
@@ -59,7 +59,21 @@ public class DepareView
         wwd.redrawNow();
         return result;
     }
-//public SurfacePolygons getSurfacePolygons()
+
+    public List<SurfacePolygons> getSurfacePolygons(Shapefile shp) {
+        List<SurfacePolygons> result = new ArrayList<>();
+        while (shp.hasNext()) {
+            try {
+                //Create classical chart
+                record = shp.nextRecord();
+                result.add(createSurfacePolygons(record, layer, isCreateElevation, false));
+            } catch (Exception ex) {
+                Logger.getLogger(DepareView.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+        shp.close();
+        return result;
+    }
 
     public SurfacePolygons createSurfacePolygons(ShapefileRecord record,
             RenderableLayer layer,
@@ -81,4 +95,5 @@ public class DepareView
         return result;
     }
 
+    
 }

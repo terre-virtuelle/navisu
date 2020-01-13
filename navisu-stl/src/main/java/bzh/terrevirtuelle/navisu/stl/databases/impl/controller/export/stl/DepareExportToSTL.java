@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
 import bzh.terrevirtuelle.navisu.geometry.jts.JTSServices;
@@ -12,19 +13,28 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.GridBox3D;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.shapefile.DepareShapefileExport;
 import bzh.terrevirtuelle.navisu.topology.TopologyServices;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
+import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
+import gov.nasa.worldwind.render.markers.BasicMarkerAttributes;
+import gov.nasa.worldwind.render.markers.BasicMarkerShape;
+import gov.nasa.worldwind.render.markers.MarkerAttributes;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -42,7 +52,9 @@ public class DepareExportToSTL
     protected JTSServices jtsServices;
     protected DisplayServices displayServices;
     protected TopologyServices topologyServices;
+    protected GeodesyServices geodesyServices;
 
+    protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected GridBox3D gridBox3D;
     protected List<Path> paths;
     protected String facets;
@@ -59,6 +71,7 @@ public class DepareExportToSTL
             RenderableLayer layer) {
         super(shapefile, layer);
         pathToSTL = new PathToSTL(geodesyServices);
+        this.geodesyServices = geodesyServices;
         this.jtsServices = jtsServices;
         this.displayServices = displayServices;
         this.topologyServices = topologyServices;
@@ -138,25 +151,152 @@ public class DepareExportToSTL
         return resultList;
     }
 
-    public void exportGround(List<SurfacePolygons> shapes, double altitude) {
-        createGround(shapes, altitude);
-
+    public void exportGround(List<SurfacePolygons> shapes, double distance, double elevation) {
+        List<Geometry> polygonsWKT = createGrounds(shapes);
+        /* Display DEBUG */
+      //  displayPolygons(polygonsWKT);
+        List<List<Point3DGeo>> points = createPoints(polygonsWKT, distance, elevation);
+        List<List<Point3DGeo>> boundaries = createBoundaries(shapes);
+      //  List<List<Point3DGeo>> all = mergePoints(boundaries, points);
+      //  displayPointList(points);
+        List<List<Path>> p = createTIN(boundaries);
+        displayPaths(p);
     }
 
-    public void createGround(List<SurfacePolygons> shapes, double altitude) {
+    public List<List<Path>> createTIN(List<List<Point3DGeo>> tops) {
+        List<List<Path>> result = new ArrayList<>();
+        for (List<Point3DGeo> sp : tops) {
+            List<Path> tmp = jtsServices.createDelaunayPoly2TriToPath(sp);
+            result.add(tmp);
+        }
+        return result;
+    }
+
+    public List<Geometry> createGrounds(List<SurfacePolygons> shapes) {
+        List<Geometry> polygonsWKT = new ArrayList<>();
         for (SurfacePolygons sp : shapes) {
             double val = (Double) sp.getValue("drval1");
-            if (val == altitude) {
-                Iterable<? extends Position> i = sp.getBuffer().getPositions();
-                for (Position p : i) {
-                    PointPlacemark pp = new PointPlacemark(Position.fromDegrees(p.latitude.getDegrees(), p.longitude.getDegrees(), 10));
-                    layer.addRenderable(pp);
-                }
+            if (val == -9) {
+                Iterable<? extends Position> pos = sp.getBuffer().getPositions();
+                Polygon polygon = new Polygon(pos);
+                polygonsWKT.add(topologyServices.wwjPolygonToJtsGeometry(polygon));
             }
         }
+        return polygonsWKT;
+    }
 
+    public List<List<Point3DGeo>> createBoundaries(List<SurfacePolygons> shapes) {
+        List<List<Point3DGeo>> result = new ArrayList<>();
+        for (SurfacePolygons sp : shapes) {
+            List<Point3DGeo> tmp = new ArrayList<>();
+            double val = (Double) sp.getValue("drval1");
+            if (val == -9) {
+                Iterable<? extends Position> pos = sp.getBuffer().getPositions();
+                for (Position p : pos) {
+                    tmp.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
+                }
+                result.add(tmp);
+            }
+
+        }
+        return result;
     }
-    public void createDEM(){
-        
+
+    protected List<List<Point3DGeo>> createPoints(List<Geometry> polygonsWKT, double distance, double elevation) {
+        List<Geometry> envelopesWKT = new ArrayList<>();
+        List<List<Point3DGeo>> result = new ArrayList<>();
+        for (Geometry p : polygonsWKT) {
+            envelopesWKT.add(p.getEnvelope());
+        }
+       // displayPolygons(envelopesWKT);
+        double distLat = 0.0;
+        double distLon = 0.0;
+        int line;
+        int col;
+        int shape = 0;
+        for (Geometry g : envelopesWKT) {
+            List<Point3DGeo> tmp = new ArrayList<>();
+            Coordinate[] coordinates = g.getCoordinates();
+
+            distLat = geodesyServices.getDistanceM(new Position(Angle.fromDegrees(coordinates[0].y), Angle.fromDegrees(coordinates[0].x), 0.0),
+                    new Position(Angle.fromDegrees(coordinates[1].y), Angle.fromDegrees(coordinates[1].x), 0.0));
+            distLon = geodesyServices.getDistanceM(new Position(Angle.fromDegrees(coordinates[0].y), Angle.fromDegrees(coordinates[0].x), 0.0),
+                    new Position(Angle.fromDegrees(coordinates[2].y), Angle.fromDegrees(coordinates[2].x), 0.0));
+            System.out.println("distLat : " + distLat + " distLon : " + distLon);
+            System.out.println("");
+            line = (int) (distLat / distance);
+            col = (int) (distLon / distance);
+            System.out.println("line : " + line + " col : " + col);
+            double lat = coordinates[0].y;
+            double lon = coordinates[0].x;
+            GeometryFactory geomFactory = new GeometryFactory();
+            for (int i = 0; i < line; i++) {
+                for (int j = 0; j < col; j++) {
+                    Coordinate coord = new Coordinate(lon + j * 0.0000089993 * distance, lat);
+                    Point point = geomFactory.createPoint(coord);
+                    if (polygonsWKT.get(shape).contains(point)) {
+                        tmp.add(new Point3DGeo(lat, lon + j * 0.0000089993 * distance, Math.random() * elevation));
+                    }
+                }
+                lat += 0.0000089993 * distance;
+            }
+          //  displayPoints(tmp);
+            result.add(tmp);
+            shape++;
+        }
+        return result;
     }
+
+    public List<List<Point3DGeo>> mergePoints(List<List<Point3DGeo>> boundaries, List<List<Point3DGeo>> points) {
+        List<List<Point3DGeo>> result = new ArrayList<>();
+        for (int i = 0; i < boundaries.size(); i++) {
+            List<Point3DGeo> tmp = new ArrayList<>();
+            tmp.addAll(boundaries.get(i));
+            tmp.addAll(points.get(i));
+            result.add(tmp);
+        }
+        return result;
+    }
+
+    protected ShapeAttributes createAttributes(Material material) {
+        ShapeAttributes normAttributes = new BasicShapeAttributes();
+        normAttributes.setDrawInterior(false);
+        normAttributes.setDrawOutline(true);
+        normAttributes.setInteriorMaterial(material);
+        normAttributes.setOutlineMaterial(material);
+        return normAttributes;
+    }
+    private MarkerAttributes[] attrs = new BasicMarkerAttributes[]{
+        new BasicMarkerAttributes(Material.YELLOW, BasicMarkerShape.SPHERE, 1d, 1d, 1d),};
+
+    protected void displayPoints(List<Point3DGeo> points) {
+        List<PointPlacemark> pointPlacemarks = new ArrayList<>();
+        for (Point3DGeo p : points) {
+            PointPlacemark pointPlacemark = new PointPlacemark(Position.fromDegrees(p.getLatitude(), p.getLongitude(), p.getElevation()));
+            pointPlacemarks.add(pointPlacemark);
+        }
+        layer.addRenderables(pointPlacemarks);
+        wwd.redrawNow();
+    }
+
+    protected void displayPointList(List<List<Point3DGeo>> points) {
+        for (List<Point3DGeo> list : points) {
+            displayPoints(list);
+        }
+    }
+
+    protected void displayPolygons(List<Geometry> polygonsWKT) {
+        List<Polygon> polygons = new ArrayList<>();
+        for (Geometry p : polygonsWKT) {
+            Polygon polygon = jtsServices.getPolygonFromPolygon(p);
+            polygons.add(polygon);
+
+        }
+        displayServices.displayPolygons(polygons, layer, Material.RED, 0.05);
+    }
+     protected void displayPaths(List<List<Path>> paths) {
+         for(List<Path> p : paths){
+             displayServices.displayPaths(p, layer, Material.RED, 1.0, 10);
+         }
+     }
 }

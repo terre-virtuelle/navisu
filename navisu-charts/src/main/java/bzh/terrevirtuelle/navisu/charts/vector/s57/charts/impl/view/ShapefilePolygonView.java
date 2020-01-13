@@ -78,9 +78,6 @@ public abstract class ShapefilePolygonView
             shape.setValue("drval2", val2);
             shape.setValue(AVKey.DISPLAY_NAME,
                     "[" + Double.toString(val1) + ", " + Double.toString(val2) + "]");
-            if (val1 == -9.0) {
-                generateGround(shape, val1, layer);
-            }
             setPolygonAttributes(color);
 
         }
@@ -167,7 +164,7 @@ public abstract class ShapefilePolygonView
                 Sector.fromDegrees(((ShapefileRecordPolyline) record).getBoundingRectangle()),
                 record.getCompoundPointBuffer());
          */
-        layer.addRenderable(shape);
+       layer.addRenderable(shape);
     }
 
     protected void setPolygonAttributes(Color col) {

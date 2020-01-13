@@ -1174,11 +1174,10 @@ public class StlDBComponentController
                                             .retrieveIn(gb.getLatMin() - RETRIEVE_OFFSET, gb.getLonMin() - RETRIEVE_OFFSET,
                                                     gb.getLatMax() + RETRIEVE_OFFSET, gb.getLonMax() + RETRIEVE_OFFSET);
                                     DepareView depareView = new DepareView(bathymetryLayer, s57Layer, s57Layer, 10.0, 1.0, false);
-                                    List<SurfacePolygons> shapes = depareView.display(shp);
+                                    List<SurfacePolygons> shapes = depareView.getSurfacePolygons(shp);
                                     DepareExportToSTL depareExportToSTL = new DepareExportToSTL(geodesyServices, jtsServices, displayServices,topologyServices,
                                             shp, gb, highestElevationBathy, s57Layer);
-                                    depareExportToSTL.exportGround(shapes, -9);
-                                   
+                                    depareExportToSTL.exportGround(shapes, 20.0, 10.0);
                                     
 
                                     // }
