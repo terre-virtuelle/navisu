@@ -184,15 +184,12 @@ import bzh.terrevirtuelle.navisu.stl.charts.StlChartComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.StlDBComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.gdal.GdalServices;
 import bzh.terrevirtuelle.navisu.gdal.impl.GdalImpl;
 import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
 import bzh.terrevirtuelle.navisu.geo.raster.impl.RasterImpl;
 import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.BSplineComponentServices;
-import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.impl.BSpline;
 import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.impl.BSplineComponentImpl;
-import bzh.terrevirtuelle.navisu.geometry.objects3D.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.ObjComponentServices;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.impl.ObjComponentImpl;
 import bzh.terrevirtuelle.navisu.media.images.ImageServices;
@@ -201,7 +198,6 @@ import bzh.terrevirtuelle.navisu.stl.StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
 import bzh.terrevirtuelle.navisu.texteditor.TextEditorComponentServices;
 import bzh.terrevirtuelle.navisu.texteditor.impl.TextEditorComponentImpl;
-import java.util.List;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -529,7 +525,6 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(weatherComponentServices.getDriver());
 
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
-        //   webDriverServices.init("http://sextant.ifremer.fr/geonetwork/srv/fre/csw?SERVICE=CSW&REQUEST=GetCapabilities&VERSION=2.0.2");
         webDriverServices.registerNewDriver(wmsServices.getDriver());
 
         //Loading S57 catalog
@@ -540,7 +535,8 @@ public class AppMain extends Application {
                 DATA_S57_CATALOG_5,
                 DATA_S57_CATALOG_6);
 
-        wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 50000));//BREST altitude : 50km
+        wwd.getView().setEyePosition(Position.fromDegrees(48.3706, -4.4810, 4000));//BREST altitude : 4km
+       // wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 50000));//BREST altitude : 50km
         //wwd.getView().setEyePosition(Position.fromDegrees(46.2993011411917,5.950320647729987, 120000));//GENEVE
         /*
         // Get the current elevation model.

@@ -64,7 +64,6 @@ public class DepareView
         List<SurfacePolygons> result = new ArrayList<>();
         while (shp.hasNext()) {
             try {
-                //Create classical chart
                 record = shp.nextRecord();
                 result.add(createSurfacePolygons(record, layer, isCreateElevation, false));
             } catch (Exception ex) {
@@ -94,6 +93,4 @@ public class DepareView
         }
         return result;
     }
-
-    
 }

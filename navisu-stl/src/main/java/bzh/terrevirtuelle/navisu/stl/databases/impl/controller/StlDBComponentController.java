@@ -1165,6 +1165,7 @@ public class StlDBComponentController
                             gridBoxes.forEach((gb) -> {
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
+                               
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
@@ -1177,7 +1178,7 @@ public class StlDBComponentController
                                     List<SurfacePolygons> shapes = depareView.getSurfacePolygons(shp);
                                     DepareExportToSTL depareExportToSTL = new DepareExportToSTL(geodesyServices, jtsServices, displayServices,topologyServices,
                                             shp, gb, highestElevationBathy, s57Layer);
-                                    depareExportToSTL.exportGround(shapes, 20.0, 10.0);
+                                    depareExportToSTL.exportGround(filename, shapes, 1E-8, 8.0, latScale, lonScale, tileSideZ);
                                     
 
                                     // }

@@ -63,12 +63,10 @@ public abstract class ShapefilePolygonView
                 entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
                     if (e.getKey().equalsIgnoreCase("drval1")) {
                         val1 = (Double) e.getValue();
-
                     }
                     color = SHOM_LOW_BATHYMETRY_CLUT.getColor(val1);
                     if (e.getKey().equalsIgnoreCase("drval2")) {
                         val2 = (Double) e.getValue();
-
                     }
                 });
             }
@@ -79,7 +77,6 @@ public abstract class ShapefilePolygonView
             shape.setValue(AVKey.DISPLAY_NAME,
                     "[" + Double.toString(val1) + ", " + Double.toString(val2) + "]");
             setPolygonAttributes(color);
-
         }
         return shape;
     }
@@ -151,20 +148,46 @@ public abstract class ShapefilePolygonView
         }
     }
 
-    private void surface(RenderableLayer layer, ShapefileRecord record) {
-
+    private void surface(RenderableLayer layer, ShapefileRecord shapefileRecord) {
+        
         shape = new SurfacePolygons(
-                Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
-                record.getCompoundPointBuffer());
+                Sector.fromDegrees(((ShapefileRecordPolygon) shapefileRecord).getBoundingRectangle()),
+                shapefileRecord.getCompoundPointBuffer());
         shape.setWindingRule(AVKey.CLOCKWISE);
         shape.setPolygonRingGroups(new int[]{0});
 
-        /*
+        /* 
         shape=  new SurfacePolygons(
-                Sector.fromDegrees(((ShapefileRecordPolyline) record).getBoundingRectangle()),
+                Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
                 record.getCompoundPointBuffer());
          */
-       layer.addRenderable(shape);
+        layer.addRenderable(shape);
+    }
+
+    private void surfaceWithNoHole(RenderableLayer layer, ShapefileRecord shapefileRecord) {
+        System.out.println(shapefileRecord.getCompoundPointBuffer().size());
+        for (int i = 0; i < shapefileRecord.getCompoundPointBuffer().size(); i++) {
+            Iterable<? extends Position> pos = shapefileRecord.getCompoundPointBuffer().subBuffer(i).getPositions();
+            List<Position> posList = new ArrayList<>();
+            for (Position p : pos) {
+                posList.add(p);
+            }
+            System.out.println(posList.size());
+        }
+        System.out.println("");
+        // shapefileRecord.getShapeFile().
+        shape = new SurfacePolygons(
+                Sector.fromDegrees(((ShapefileRecordPolygon) shapefileRecord).getBoundingRectangle()),
+                shapefileRecord.getCompoundPointBuffer());
+        shape.setWindingRule(AVKey.CLOCKWISE);
+        shape.setPolygonRingGroups(new int[]{0});
+
+        /* 
+        shape=  new SurfacePolygons(
+                Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
+                record.getCompoundPointBuffer());
+         */
+        layer.addRenderable(shape);
     }
 
     protected void setPolygonAttributes(Color col) {

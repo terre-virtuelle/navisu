@@ -37,6 +37,7 @@ import gov.nasa.worldwind.render.markers.MarkerAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -63,7 +64,6 @@ public class DepareExportToSTL
     protected double lonMin;
     protected double highestElevationBathy;
 
-    //  protected Set<Map.Entry<String, Object>> entries;
     public DepareExportToSTL(GeodesyServices geodesyServices,
             JTSServices jtsServices,
             DisplayServices displayServices,
@@ -88,6 +88,128 @@ public class DepareExportToSTL
             double latScale, double lonScale, double verticalOffset) {
         this.filename = filename;
         createPolygon(polygonList, verticalExaggeration, latScale, lonScale, verticalOffset);
+    }
+
+    public void exportGround(String filename, List<SurfacePolygons> shapes, double threshold, double elevation,
+            double latScale, double lonScale, double verticalOffset) {
+        
+        List<List<Point3DGeo>> boundaries = createBoundaries(shapes);
+      
+        for (List<Point3DGeo> l : boundaries) {
+            displayServices.displayPoints3D(l, layer);
+            displayServices.displayPoints3DAsPolygon(l, 10.0, layer, Material.MAGENTA);
+        }
+         
+        List<List<Path>> support = createTIN(boundaries);
+        displayPaths(support, Material.RED);
+
+        List<List<Path>> p = createTIN(boundaries);
+
+        List<List<Path>> pp = createTIN2(p, 0.0, threshold);
+        while (minArea(pp, threshold) == true) {
+            pp = createTIN2(pp, elevation, threshold);
+        }
+        for (int i = 0; i < pp.size(); i++) {
+            pp.get(i).addAll(support.get(i));
+        }
+        for (List<Path> l : pp) {
+            pathToSTL.exportSTL(l, filename, "Estran surface", latMin, lonMin, latScale, lonScale, verticalOffset);
+        }
+        displayPolygons(pp, layer, Material.GREEN);
+
+    }
+
+    /* Create triangles from triangles path */
+    public List<List<Path>> createTIN2(List<List<Path>> paths, double elevation, double treshold) {
+        List<List<Path>> result = new ArrayList<>();
+        List< List<Pair<Double, Double>>> centroids = new ArrayList<>();
+        List<Geometry> geometries;
+        for (List<Path> pathList : paths) {
+            geometries = topologyServices.wwjPathsToJtsGeometry(pathList);
+            centroids.add(topologyServices.jtsGetCentroids(geometries));
+        }
+
+        for (int i = 0; i < paths.size(); i++) {
+            List<Path> tmp = new ArrayList<>();
+            for (int j = 0; j < paths.get(i).size(); j++) {
+                if (topologyServices.wwjPathToJtsGeometry(paths.get(i).get(j)).getArea() >= treshold) {
+                    List<Position> positionList = new ArrayList<>();
+                    Iterable<? extends Position> vertices = paths.get(i).get(j).getPositions();
+                    for (Position pos : vertices) {
+                        positionList.add(pos);
+                    }
+                    double hight = Math.random() * elevation;
+
+                    List<Position> posTab0 = new ArrayList<>();
+                    posTab0.add(positionList.get(0));
+                    posTab0.add(positionList.get(1));
+                    posTab0.add(new Position(Angle.fromDegrees(centroids.get(i).get(j).getX()),
+                            Angle.fromDegrees(centroids.get(i).get(j).getY()), hight));
+                    posTab0.add(positionList.get(0));
+                    tmp.add(new Path(posTab0));
+
+                    List<Position> posTab1 = new ArrayList<>();
+                    posTab1.add(positionList.get(1));
+                    posTab1.add(positionList.get(2));
+                    posTab1.add(new Position(Angle.fromDegrees(centroids.get(i).get(j).getX()),
+                            Angle.fromDegrees(centroids.get(i).get(j).getY()), hight));
+                    posTab1.add(positionList.get(1));
+                    tmp.add(new Path(posTab1));
+
+                    List<Position> posTab2 = new ArrayList<>();
+                    posTab2.add(positionList.get(2));
+                    posTab2.add(positionList.get(0));
+                    posTab2.add(new Position(Angle.fromDegrees(centroids.get(i).get(j).getX()),
+                            Angle.fromDegrees(centroids.get(i).get(j).getY()), hight));
+                    posTab2.add(positionList.get(2));
+                    tmp.add(new Path(posTab2));
+                } else {
+                    tmp.add(paths.get(i).get(j));
+                }
+            }
+            result.add(tmp);
+        }
+        return result;
+    }
+
+    public List<List<Path>> createTIN(List<List<Point3DGeo>> base) {
+        List<List<Path>> result = new ArrayList<>();
+        for (List<Point3DGeo> sp : base) {
+            List<Path> tmp = jtsServices.createDelaunayPoly2TriToPath(sp);
+            result.add(tmp);
+        }
+        return result;
+    }
+
+    public List<Geometry> createGrounds(List<SurfacePolygons> shapes) {
+        List<Geometry> polygonsWKT = new ArrayList<>();
+        for (SurfacePolygons sp : shapes) {
+            double val = (Double) sp.getValue("drval1");
+            if (val < 0.0) {
+                Iterable<? extends Position> pos = sp.getBuffer().getPositions();
+                Polygon polygon = new Polygon(pos);
+                polygonsWKT.add(topologyServices.wwjPolygonToJtsGeometry(polygon));
+            }
+        }
+        return polygonsWKT;
+    }
+
+    public List<List<Point3DGeo>> createBoundaries(List<SurfacePolygons> shapes) {
+        List<List<Point3DGeo>> result = new ArrayList<>();
+        for (SurfacePolygons sp : shapes) {
+            List<Point3DGeo> tmp = new ArrayList<>();
+            double val = (Double) sp.getValue("drval1");
+            if (val < 0.0) {
+                
+                Iterable<? extends Position> pos = sp.getBuffer().getPositions();
+                for (Position p : pos) {
+                    tmp.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
+                }
+                result.add(tmp);
+            }
+
+        }
+        return result;
     }
 
     protected void createPolygon(List<Polygon> polygonList, double verticalExaggeration,
@@ -150,122 +272,6 @@ public class DepareExportToSTL
 
         resultList.addAll(innerPaths);
         return resultList;
-    }
-
-    public void exportGround(List<SurfacePolygons> shapes, double distance, double elevation) {
-        // List<Geometry> polygonsWKT = createGrounds(shapes);
-        /* Display DEBUG */
-        //  displayPolygons(polygonsWKT);
-        // List<List<Point3DGeo>> points = createPoints(polygonsWKT, distance, elevation);
-        List<List<Point3DGeo>> boundaries = createBoundaries(shapes);
-        //  List<List<Point3DGeo>> all = mergePoints(boundaries, points);
-        //  displayPointList(points);
-        List<List<Path>> p = createTIN(boundaries);
-
-        // displayPaths(p, Material.RED);
-        List<List<Path>> p2 = createTIN2(p, 8.0);
-        List<List<Path>> p3 = createTIN2(p2, 8.0);
-       // displayPaths(p3, Material.GREEN);
-        displayPolygons(p3, layer, Material.GREEN);
-    }
-
-    /* Create triangles from triangles path */
-    public List<List<Path>> createTIN2(List<List<Path>> paths, double elevation) {
-        List<List<Path>> result = new ArrayList<>();
-        List< List<Pair<Double, Double>>> centroids = new ArrayList<>();
-        List<Geometry> geometries;
-        for (List<Path> pathList : paths) {
-            geometries = topologyServices.wwjPathsToJtsGeometry(pathList);
-            centroids.add(topologyServices.jtsGetCentroids(geometries));
-        }
-
-        for (int i = 0; i < paths.size(); i++) {
-            List<Path> tmp = new ArrayList<>();
-            for (int j = 0; j < paths.get(i).size(); j++) {
-                if (topologyServices.wwjPathToJtsGeometry(paths.get(i).get(j)).getArea() >= 1E-7) {
-                    List<Position> positionList = new ArrayList<>();
-                    Iterable<? extends Position> vertices = paths.get(i).get(j).getPositions();
-                    for (Position pos : vertices) {
-                        positionList.add(pos);
-                    }
-                    double hight = Math.random() * elevation;
-
-                    List<Position> posTab0 = new ArrayList<>();
-                    posTab0.add(positionList.get(0));
-                    posTab0.add(positionList.get(1));
-                    posTab0.add(new Position(Angle.fromDegrees(centroids.get(i).get(j).getX()),
-                            Angle.fromDegrees(centroids.get(i).get(j).getY()), hight));
-                    posTab0.add(positionList.get(0));
-                    tmp.add(new Path(posTab0));
-
-                    List<Position> posTab1 = new ArrayList<>();
-                    posTab1.add(positionList.get(1));
-                    posTab1.add(positionList.get(2));
-                    posTab1.add(new Position(Angle.fromDegrees(centroids.get(i).get(j).getX()),
-                            Angle.fromDegrees(centroids.get(i).get(j).getY()), hight));
-                    posTab1.add(positionList.get(1));
-                    tmp.add(new Path(posTab1));
-
-                    List<Position> posTab2 = new ArrayList<>();
-                    posTab2.add(positionList.get(2));
-                    posTab2.add(positionList.get(0));
-                    posTab2.add(new Position(Angle.fromDegrees(centroids.get(i).get(j).getX()),
-                            Angle.fromDegrees(centroids.get(i).get(j).getY()), hight));
-                    posTab2.add(positionList.get(2));
-                    tmp.add(new Path(posTab2));
-                } else {
-                    tmp.add(paths.get(i).get(j));
-                }
-            }
-            result.add(tmp);
-        }
-/*
-        for (int i = 0; i < result.size(); i++) {
-            for (Path p : result.get(i)) {
-                System.out.println(topologyServices.wwjPathToJtsGeometry(p).getArea());
-            }
-        }
-*/
-        return result;
-    }
-
-    public List<List<Path>> createTIN(List<List<Point3DGeo>> tops) {
-        List<List<Path>> result = new ArrayList<>();
-        for (List<Point3DGeo> sp : tops) {
-            List<Path> tmp = jtsServices.createDelaunayPoly2TriToPath(sp);
-            result.add(tmp);
-        }
-        return result;
-    }
-
-    public List<Geometry> createGrounds(List<SurfacePolygons> shapes) {
-        List<Geometry> polygonsWKT = new ArrayList<>();
-        for (SurfacePolygons sp : shapes) {
-            double val = (Double) sp.getValue("drval1");
-            if (val == -9) {
-                Iterable<? extends Position> pos = sp.getBuffer().getPositions();
-                Polygon polygon = new Polygon(pos);
-                polygonsWKT.add(topologyServices.wwjPolygonToJtsGeometry(polygon));
-            }
-        }
-        return polygonsWKT;
-    }
-
-    public List<List<Point3DGeo>> createBoundaries(List<SurfacePolygons> shapes) {
-        List<List<Point3DGeo>> result = new ArrayList<>();
-        for (SurfacePolygons sp : shapes) {
-            List<Point3DGeo> tmp = new ArrayList<>();
-            double val = (Double) sp.getValue("drval1");
-            if (val == -9) {
-                Iterable<? extends Position> pos = sp.getBuffer().getPositions();
-                for (Position p : pos) {
-                    tmp.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
-                }
-                result.add(tmp);
-            }
-
-        }
-        return result;
     }
 
     protected List<List<Point3DGeo>> createPoints(List<Geometry> polygonsWKT, double distance, double elevation) {
@@ -386,6 +392,24 @@ public class DepareExportToSTL
     protected void displayPaths(List<List<Path>> paths, Material material) {
         for (List<Path> p : paths) {
             displayServices.displayPaths(p, layer, material, 1.0, 10);
+        }
+    }
+
+    protected boolean minArea(List<List<Path>> paths, double threshold) {
+        double maxArea = Double.MIN_VALUE;
+        double area = 0.0;
+        for (int i = 0; i < paths.size(); i++) {
+            for (Path p : paths.get(i)) {
+                area = topologyServices.wwjPathToJtsGeometry(p).getArea();
+                if (area > maxArea) {
+                    maxArea = area;
+                }
+            }
+        }
+        if (maxArea >= threshold) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
