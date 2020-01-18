@@ -5,7 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
@@ -19,10 +21,14 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -36,6 +42,7 @@ import gov.nasa.worldwind.render.markers.BasicMarkerShape;
 import gov.nasa.worldwind.render.markers.MarkerAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -63,6 +70,8 @@ public class DepareExportToSTL
     protected double latMin;
     protected double lonMin;
     protected double highestElevationBathy;
+    protected ShapefileRecord shapefileRecord = null;
+    protected List<List<Point3DGeo>> result = new ArrayList<>();
 
     public DepareExportToSTL(GeodesyServices geodesyServices,
             JTSServices jtsServices,
@@ -90,28 +99,29 @@ public class DepareExportToSTL
         createPolygon(polygonList, verticalExaggeration, latScale, lonScale, verticalOffset);
     }
 
-    public void exportGround(String filename, List<SurfacePolygons> shapes, double threshold, double elevation,
+    public void exportGround(String filename, double threshold, double elevation,
             double latScale, double lonScale, double verticalOffset) {
-        
-        List<List<Point3DGeo>> boundaries = createBoundaries(shapes);
-      
+
+        List<List<Point3DGeo>> boundaries = extractShapefileHoles(shapefile);
+        /*
         for (List<Point3DGeo> l : boundaries) {
             displayServices.displayPoints3D(l, layer);
             displayServices.displayPoints3DAsPolygon(l, 10.0, layer, Material.MAGENTA);
         }
-         
-        List<List<Path>> support = createTIN(boundaries);
-        displayPaths(support, Material.RED);
+         */
+      //  List<List<Path>> support = createTIN(boundaries);
+        //     displayPaths(support, Material.RED);
 
         List<List<Path>> p = createTIN(boundaries);
+//displayPolygons(p, layer, Material.GREEN);
 
         List<List<Path>> pp = createTIN2(p, 0.0, threshold);
         while (minArea(pp, threshold) == true) {
             pp = createTIN2(pp, elevation, threshold);
         }
-        for (int i = 0; i < pp.size(); i++) {
-            pp.get(i).addAll(support.get(i));
-        }
+     //   for (int i = 0; i < pp.size(); i++) {
+      //      pp.get(i).addAll(support.get(i));
+    //    }
         for (List<Path> l : pp) {
             pathToSTL.exportSTL(l, filename, "Estran surface", latMin, lonMin, latScale, lonScale, verticalOffset);
         }
@@ -200,7 +210,7 @@ public class DepareExportToSTL
             List<Point3DGeo> tmp = new ArrayList<>();
             double val = (Double) sp.getValue("drval1");
             if (val < 0.0) {
-                
+
                 Iterable<? extends Position> pos = sp.getBuffer().getPositions();
                 for (Position p : pos) {
                     tmp.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
@@ -208,6 +218,44 @@ public class DepareExportToSTL
                 result.add(tmp);
             }
 
+        }
+        return result;
+    }
+
+    public List<List<Point3DGeo>> extractShapefileHoles(Shapefile shapefile) {
+        result = new ArrayList<>();
+        while (shapefile.hasNext()) {
+            try {
+                shapefileRecord = shapefile.nextRecord();
+                entries = shapefileRecord.getAttributes().getEntries();
+                entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
+                    if (e.getKey().equalsIgnoreCase("drval1")) {
+                        double val1 = (Double) e.getValue();
+                        if (val1 < 0.0) {
+                            List<List<Point3DGeo>> ptsList = new ArrayList<>();
+                            for (int i = 0; i < shapefileRecord.getCompoundPointBuffer().size(); i++) {
+                                Iterable<? extends Position> pos = shapefileRecord.getCompoundPointBuffer().subBuffer(i).getPositions();
+                                List<Point3DGeo> posList = new ArrayList<>();
+                                for (Position p : pos) {
+                                    posList.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
+                                }
+                                ptsList.add(posList);
+                            }
+                            double max = Integer.MIN_VALUE;
+                            int j = 0;
+                            for (int i = 0; i < ptsList.size(); i++) {
+                                if (ptsList.get(i).size() > max) {
+                                    max = ptsList.get(i).size();
+                                    j = i;
+                                }
+                            }
+                            result.add(ptsList.get(j));
+                        }
+                    }
+                });
+            } catch (Exception ex) {
+                Logger.getLogger(DepareExportToSTL.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
         }
         return result;
     }

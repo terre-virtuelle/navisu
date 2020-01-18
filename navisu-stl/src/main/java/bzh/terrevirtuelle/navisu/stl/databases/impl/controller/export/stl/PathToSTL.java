@@ -39,7 +39,6 @@ public class PathToSTL {
             double latScale, double lonScale,
             double verticalOffset) {
         this.filename = filename;
-        System.out.println("filename : " + filename);
         String[] head = filename.split("/");
         try {
             result = "solid " + solidname + "\n";

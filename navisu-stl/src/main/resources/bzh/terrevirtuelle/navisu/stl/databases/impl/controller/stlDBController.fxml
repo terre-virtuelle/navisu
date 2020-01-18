@@ -236,6 +236,7 @@
                                                 <CheckBox disable="true" layoutX="10.0" layoutY="23.0" mnemonicParsing="false" text="LIGHT" visible="false" GridPane.rowIndex="3" />
                                                 <CheckBox fx:id="allCB" layoutX="10.0" layoutY="23.0" mnemonicParsing="false" text="ALL" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                                 <CheckBox fx:id="uwtrocCB" mnemonicParsing="false" text="UWTROC" GridPane.rowIndex="3" />
+                                                <CheckBox fx:id="wrecksCB" mnemonicParsing="false" text="WRECKS" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                              </children>
                                           </GridPane>
                                           <GridPane maxWidth="400.0" prefHeight="28.0" prefWidth="300.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
@@ -304,6 +305,7 @@
                                           <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <opaqueInsets>
                                           <Insets />
@@ -321,7 +323,6 @@
                                              </rowConstraints>
                                              <children>
                                                 <RadioButton fx:id="bathyRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="114.0" text="Database DEM" GridPane.columnIndex="1" />
-                                                <RadioButton fx:id="depareRB" mnemonicParsing="false" text="DEPARE" GridPane.columnIndex="2" />
                                                 <RadioButton fx:id="noBathyRB" mnemonicParsing="false" selected="true" text="NoBathy" />
                                              </children>
                                           </GridPane>
@@ -331,7 +332,7 @@
                                           <Label text="Elevation database" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                           <TextField fx:id="elevationDatabaseTF" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                           <ChoiceBox fx:id="elevationDatabasesCB" prefHeight="25.0" prefWidth="162.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                          <GridPane GridPane.columnIndex="2" GridPane.rowIndex="7">
+                                          <GridPane GridPane.columnIndex="2" GridPane.rowIndex="9">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -346,7 +347,7 @@
                                                 <CheckBox fx:id="buildingsPreviewCB" mnemonicParsing="false" text="Bat. preview" GridPane.columnIndex="1" />
                                              </children>
                                           </GridPane>
-                                          <Label text="Visualization" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+                                          <Label text="Visualization" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
                                           <GridPane GridPane.columnIndex="2" GridPane.rowIndex="5">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -364,7 +365,7 @@
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <RadioButton fx:id="mergeLitto3dRB" mnemonicParsing="false" text="Merge Litto3D" />
+                                                      <RadioButton fx:id="mergeLitto3dRB" mnemonicParsing="false" text="Merge " />
                                                    </children>
                                                 </GridPane>
                                              </children>
@@ -388,28 +389,31 @@
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                          </GridPane>
+                                          <ChoiceBox fx:id="buildingsDatabasesCB" prefHeight="25.0" prefWidth="153.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                                          <RadioButton fx:id="buildingsRB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="128.0" text="Buildings database" GridPane.rowIndex="8" />
+                                          <TextField fx:id="buildingsDatabaseTF" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                                          <Label text="Tide" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                                          <Label text="Litto3D" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                                          <GridPane GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Button fx:id="validSTLButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Valid" />
+                                                <Label text="Tidal range" GridPane.columnIndex="1" />
+                                                <RadioButton fx:id="lowTideRB" mnemonicParsing="false" text="Low" />
+                                                <TextField fx:id="tidalRangeTF" text="6.0" GridPane.columnIndex="2" />
                                              </children>
                                           </GridPane>
-                                          <Label prefHeight="15.0" prefWidth="117.0" text="Validation Depth Area" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
-                                          <GridPane GridPane.columnIndex="2" GridPane.rowIndex="6">
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                          </GridPane>
-                                          <ChoiceBox fx:id="buildingsDatabasesCB" prefHeight="25.0" prefWidth="153.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                                          <RadioButton fx:id="buildingsRB" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="128.0" text="Buildings database" GridPane.rowIndex="6" />
-                                          <TextField fx:id="buildingsDatabaseTF" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                        </children>
                                     </GridPane>
                                  </children>

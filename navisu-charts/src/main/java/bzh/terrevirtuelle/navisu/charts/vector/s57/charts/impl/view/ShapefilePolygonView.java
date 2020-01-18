@@ -164,31 +164,7 @@ public abstract class ShapefilePolygonView
         layer.addRenderable(shape);
     }
 
-    private void surfaceWithNoHole(RenderableLayer layer, ShapefileRecord shapefileRecord) {
-        System.out.println(shapefileRecord.getCompoundPointBuffer().size());
-        for (int i = 0; i < shapefileRecord.getCompoundPointBuffer().size(); i++) {
-            Iterable<? extends Position> pos = shapefileRecord.getCompoundPointBuffer().subBuffer(i).getPositions();
-            List<Position> posList = new ArrayList<>();
-            for (Position p : pos) {
-                posList.add(p);
-            }
-            System.out.println(posList.size());
-        }
-        System.out.println("");
-        // shapefileRecord.getShapeFile().
-        shape = new SurfacePolygons(
-                Sector.fromDegrees(((ShapefileRecordPolygon) shapefileRecord).getBoundingRectangle()),
-                shapefileRecord.getCompoundPointBuffer());
-        shape.setWindingRule(AVKey.CLOCKWISE);
-        shape.setPolygonRingGroups(new int[]{0});
-
-        /* 
-        shape=  new SurfacePolygons(
-                Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
-                record.getCompoundPointBuffer());
-         */
-        layer.addRenderable(shape);
-    }
+    
 
     protected void setPolygonAttributes(Color col) {
         ShapeAttributes normAttributes = new BasicShapeAttributes();

@@ -399,8 +399,6 @@ public class StlDBComponentController
     @FXML
     public RadioButton noBathyRB;
     @FXML
-    public RadioButton depareRB;
-    @FXML
     public Button validSTLButton;
     @FXML
     public ChoiceBox<String> tilesCountCB;
@@ -412,6 +410,8 @@ public class StlDBComponentController
     public ChoiceBox<String> elevationDatabasesCB;
     @FXML
     public RadioButton elevationRB;
+    @FXML
+    public RadioButton tidelowRB;
     @FXML
     public RadioButton noAltiRB;
     @FXML
@@ -463,6 +463,8 @@ public class StlDBComponentController
     public CheckBox resareCB;
     @FXML
     public CheckBox uwtrocCB;
+    @FXML
+    public CheckBox wrecksCB;
     @FXML
     public Button meshStlObjectButton;
     @FXML
@@ -856,8 +858,7 @@ public class StlDBComponentController
 
         bathyRB.setToggleGroup(bathyGroup);
         noBathyRB.setToggleGroup(bathyGroup);
-        depareRB.setToggleGroup(bathyGroup);
-
+        
         noAltiRB.setToggleGroup(terrainGroup);
 
         noAltiRB.setToggleGroup(altiGroup);
@@ -1044,7 +1045,7 @@ public class StlDBComponentController
                 if (generateStlCB.isSelected() && !generateSvgCB.isSelected()) {
                     //ELEVATION AND TILES
                     if ((elevationRB.isSelected() && noBathyRB.isSelected())
-                            || (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected()))) {
+                            || (elevationRB.isSelected() && (selectedObjects.contains("ALL")))) {
                         grids = createElevationTab(lat0, lon0, lat1, lon1);
                     }
                     //BATHY AND TILES
@@ -1055,7 +1056,7 @@ public class StlDBComponentController
                         grids = createBathymetryAndElevationTab(lat0, lon0, lat1, lon1);
 
                     }
-                    if (elevationRB.isSelected() && (selectedObjects.contains("ALL") || depareRB.isSelected())) {
+                    if (elevationRB.isSelected() && (selectedObjects.contains("ALL"))) {
                         grids = createElevationAndDepare(lat0, lon0, lat1, lon1);
                     }
 
@@ -1084,6 +1085,7 @@ public class StlDBComponentController
                         //Support
                         k = 0;
                         gridBoxes.forEach((gb) -> {
+
                             i = k / tileCount + 1;
                             j = k % tileCount + 1;
                             if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
@@ -1159,53 +1161,31 @@ public class StlDBComponentController
                                 k++;
                             });
                         }
-                        //DEPARE
+                        //LOW TIDE
                         k = 0;
-                        if (depareRB.isSelected()) {
+                        if (tidelowRB.isSelected()) {
                             gridBoxes.forEach((gb) -> {
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-                               
+
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
-                                    //  if (depareVisuCB.isSelected()) {
+                                    /*
                                     Shapefile shp = new DepareDBLoader(databaseServices,
                                             s57DatabaseTF.getText(), USER, PASSWD)
                                             .retrieveIn(gb.getLatMin() - RETRIEVE_OFFSET, gb.getLonMin() - RETRIEVE_OFFSET,
                                                     gb.getLatMax() + RETRIEVE_OFFSET, gb.getLonMax() + RETRIEVE_OFFSET);
-                                    DepareView depareView = new DepareView(bathymetryLayer, s57Layer, s57Layer, 10.0, 1.0, false);
-                                    List<SurfacePolygons> shapes = depareView.getSurfacePolygons(shp);
-                                    DepareExportToSTL depareExportToSTL = new DepareExportToSTL(geodesyServices, jtsServices, displayServices,topologyServices,
-                                            shp, gb, highestElevationBathy, s57Layer);
-                                    depareExportToSTL.exportGround(filename, shapes, 1E-8, 8.0, latScale, lonScale, tileSideZ);
-                                    
-
-                                    // }
-                                    //Pb sur la selection des Shape, a revoir
-                                    /*
+                                     */
                                     Shapefile shp = new DepareDBLoader(databaseServices,
                                             s57DatabaseTF.getText(), USER, PASSWD)
-                                            .retrieveIn(gb.getLatMin() - RETRIEVE_OFFSET / 2.0, gb.getLonMin() - RETRIEVE_OFFSET / 2.0,
-                                                    gb.getLatMax() + RETRIEVE_OFFSET / 2.0, gb.getLonMax() + RETRIEVE_OFFSET / 2.0);
-                                    DepareExportToSTL depareExportToSTL = new DepareExportToSTL(geodesyServices, jtsServices, displayServices,
-                                            shp, gb, highestElevationBathy, s57Layer);
-                                    List<Polygon> polygonList = depareExportToSTL.initExport();
-                                    displayServices.displayPolygons(polygonList, s57Layer, Material.GREEN);
-                                    List<Polygon> selectedPolygonList = stlGuiController.depareSelection(polygonList, s57Layer);
-                                    instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND_1, "true", "1");
+                                            .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
 
-                                    while (!validSTLButton.isPressed()) {
-                                        validSTLButton.setOnMouseClicked((MouseEvent event) -> {
-                                            depareExportToSTL.export(filename, polygonList, verticalExaggeration, latScale, lonScale, tileSideZ);
-                                            try {
-                                                Thread.sleep(1000);
-                                            } catch (InterruptedException ex) {
-                                                Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-                                            }
-                                        });
-                                    }
-                                     */
+                                    DepareExportToSTL depareExportToSTL = new DepareExportToSTL(geodesyServices, jtsServices, displayServices, topologyServices,
+                                            shp, gb, highestElevationBathy, s57Layer);
+
+                                    depareExportToSTL.exportGround(filename, 1E-8, 6.0, latScale, lonScale, tileSideZ + 0.15);
+
                                     LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
                                     k++;
                                 }
@@ -1300,47 +1280,43 @@ public class StlDBComponentController
                                                 g[0][0].getLongitude(),
                                                 g[g.length - 1][g[0].length - 1].getLatitude(),
                                                 g[g.length - 1][g[0].length - 1].getLongitude()));
-
                                 new UnderwaterAwashRockView(s57Layer).display(underwaterAwashRocks);
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     scaleCompute(g);
                                     new UwtrocExportToSTL(geodesyServices, g, filename, latScale, lonScale)
                                             .export(underwaterAwashRocks, verticalExaggeration * highestElevationBathy, tileSideZ);
                                 }
-
                                 k++;
                                 LOGGER.info("Out export UWTROC en STL");
                             }
-
-                            /*
+                        }
+                        //WRECK
+                        k = 0;
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("WRECK")) {
                             for (Point3DGeo[][] g : grids) {
-                                LOGGER.info("In export LNDMRK en STL");
-                                landmarks.clear();
-                                landmarks.addAll(new LandmarkDBLoader(topologyServices, s57Connection, marsys)
+                                LOGGER.info("In export WRECK en STL");
+                                underwaterAwashRocks.clear();
+                                underwaterAwashRocks.addAll(new UnderwaterAwashRockDBLoader(topologyServices, s57Connection)
                                         .retrieveObjectsIn(g[0][0].getLatitude(),
                                                 g[0][0].getLongitude(),
                                                 g[g.length - 1][g[0].length - 1].getLatitude(),
                                                 g[g.length - 1][g[0].length - 1].getLongitude()));
-                                
-                                new LandmarkView(s57Layer).display(landmarks);
+                                new UnderwaterAwashRockView(s57Layer).display(underwaterAwashRocks);
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     scaleCompute(g);
-                                    new LandmarkExportToSTL(geodesyServices, g, filename, latScale, lonScale)
-                                            .export(landmarks, verticalExaggeration * highestElevationBathy, tileSideZ);
+                                    new UwtrocExportToSTL(geodesyServices, g, filename, latScale, lonScale)
+                                            .export(underwaterAwashRocks, verticalExaggeration * highestElevationBathy, tileSideZ);
                                 }
                                 k++;
-                                LOGGER.info("Out export LNDMRK en STL");
+                                LOGGER.info("Out export WRECK en STL");
                             }
-                             */
                         }
-
                         // Buildings 
                         if (buildingsRB.isSelected()) {
                             k = 0;
@@ -1671,6 +1647,8 @@ public class StlDBComponentController
         }
         if (!dem.getGrid().isEmpty()) {
             lowestElevationAlti = dem.getMinElevation();
+            lowestElevationAlti += 6.0;
+            System.out.println("lowestElevationAlti : " + lowestElevationAlti);
 
             RasterInfo rasterInfo = delaunayServices.toGridTiff(dem, "demAlti");
             displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
