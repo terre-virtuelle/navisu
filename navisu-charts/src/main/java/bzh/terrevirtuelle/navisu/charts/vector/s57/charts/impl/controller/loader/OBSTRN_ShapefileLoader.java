@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Obstruction;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Wreck;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Wrecks;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.Position;
@@ -31,7 +31,7 @@ public class OBSTRN_ShapefileLoader
         extends LayerShapefileLoader {
 
     ShapefileRecord record;
-    private final List<Wreck> obstructions;
+    private final List<Wrecks> obstructions;
     private Set<Map.Entry<String, Object>> entries;
     private Obstruction obstruction;
 

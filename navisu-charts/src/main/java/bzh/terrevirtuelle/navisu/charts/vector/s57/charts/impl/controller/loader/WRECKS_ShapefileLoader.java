@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loade
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.CATWRK;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.EXPSOU;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.QUASOU;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Wreck;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Wrecks;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.Position;
@@ -30,9 +30,9 @@ public class WRECKS_ShapefileLoader
         extends LayerShapefileLoader {
 
     ShapefileRecord record;
-    private final List<Wreck> wrecks;
+    private final List<Wrecks> wrecks;
     private Set<Map.Entry<String, Object>> entries;
-    private Wreck wreck;
+    private Wrecks wreck;
 
     public WRECKS_ShapefileLoader() {
         wrecks = new ArrayList<>();
@@ -45,7 +45,7 @@ public class WRECKS_ShapefileLoader
         SurfaceText surfaceText = null;
         this.record = record;
         entries = record.getAttributes().getEntries();
-        wreck = new Wreck();
+        wreck = new Wrecks();
         wreck.setLatitude(latDegrees);
         wreck.setLongitude(lonDegrees);
         entries.stream().forEach((e) -> {
@@ -153,7 +153,7 @@ public class WRECKS_ShapefileLoader
         return surfaceText;
     }
 
-    public List<Wreck> getWrecks() {
+    public List<Wrecks> getWrecks() {
         return wrecks;
     }
 

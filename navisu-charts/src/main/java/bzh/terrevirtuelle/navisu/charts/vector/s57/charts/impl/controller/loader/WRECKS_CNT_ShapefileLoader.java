@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Wreck;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Wrecks;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
@@ -30,7 +30,7 @@ public class WRECKS_CNT_ShapefileLoader
         extends LayerShapefileLoader {
 
     ShapefileRecord record;
-    private final List<Wreck> objects;
+    private final List<Wrecks> objects;
     private Set<Map.Entry<String, Object>> entries;
 
     SurfaceIcon surfaceIcon = null;

@@ -68,6 +68,7 @@ public abstract class ResultSetDBLoader {
             put("PONTON", "gid");
             put("RESARE", "gid, catrea, objnam, restrn, inform, ninfom");
             put("SLCONS", "gid");
+            put("UWTROC", "rcid, natsur, valsou");
             put("WRECKS", "gid, objnam, catwrk");
         }
     ;

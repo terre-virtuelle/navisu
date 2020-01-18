@@ -3,16 +3,16 @@ package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 import java.io.Serializable;
 
 
-public class Wreck extends Location
+public class Wrecks extends Location
 implements Serializable
 {
 
-	public Wreck(Long id)
+	public Wrecks(Long id)
 	{
 		this.id=id;
 	}
 
-	public Wreck(){}
+	public Wrecks(){}
 
 	private String categoryOfWreck;
 

@@ -5,9 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.DepareView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.geometry.geodesy.GeodesyServices;
@@ -21,14 +19,11 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
-import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -44,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -103,30 +97,15 @@ public class DepareExportToSTL
             double latScale, double lonScale, double verticalOffset) {
 
         List<List<Point3DGeo>> boundaries = extractShapefileHoles(shapefile);
-        /*
-        for (List<Point3DGeo> l : boundaries) {
-            displayServices.displayPoints3D(l, layer);
-            displayServices.displayPoints3DAsPolygon(l, 10.0, layer, Material.MAGENTA);
-        }
-         */
-      //  List<List<Path>> support = createTIN(boundaries);
-        //     displayPaths(support, Material.RED);
-
         List<List<Path>> p = createTIN(boundaries);
-//displayPolygons(p, layer, Material.GREEN);
-
         List<List<Path>> pp = createTIN2(p, 0.0, threshold);
         while (minArea(pp, threshold) == true) {
             pp = createTIN2(pp, elevation, threshold);
         }
-     //   for (int i = 0; i < pp.size(); i++) {
-      //      pp.get(i).addAll(support.get(i));
-    //    }
         for (List<Path> l : pp) {
             pathToSTL.exportSTL(l, filename, "Estran surface", latMin, lonMin, latScale, lonScale, verticalOffset);
         }
         displayPolygons(pp, layer, Material.GREEN);
-
     }
 
     /* Create triangles from triangles path */
@@ -138,7 +117,6 @@ public class DepareExportToSTL
             geometries = topologyServices.wwjPathsToJtsGeometry(pathList);
             centroids.add(topologyServices.jtsGetCentroids(geometries));
         }
-
         for (int i = 0; i < paths.size(); i++) {
             List<Path> tmp = new ArrayList<>();
             for (int j = 0; j < paths.get(i).size(); j++) {
@@ -210,14 +188,12 @@ public class DepareExportToSTL
             List<Point3DGeo> tmp = new ArrayList<>();
             double val = (Double) sp.getValue("drval1");
             if (val < 0.0) {
-
                 Iterable<? extends Position> pos = sp.getBuffer().getPositions();
                 for (Position p : pos) {
                     tmp.add(new Point3DGeo(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), p.getElevation()));
                 }
                 result.add(tmp);
             }
-
         }
         return result;
     }
@@ -342,11 +318,8 @@ public class DepareExportToSTL
                     new Position(Angle.fromDegrees(coordinates[1].y), Angle.fromDegrees(coordinates[1].x), 0.0));
             distLon = geodesyServices.getDistanceM(new Position(Angle.fromDegrees(coordinates[0].y), Angle.fromDegrees(coordinates[0].x), 0.0),
                     new Position(Angle.fromDegrees(coordinates[2].y), Angle.fromDegrees(coordinates[2].x), 0.0));
-            System.out.println("distLat : " + distLat + " distLon : " + distLon);
-            System.out.println("");
             line = (int) (distLat / distance);
             col = (int) (distLon / distance);
-            System.out.println("line : " + line + " col : " + col);
             double lat = coordinates[0].y;
             double lon = coordinates[0].x;
             GeometryFactory geomFactory = new GeometryFactory();

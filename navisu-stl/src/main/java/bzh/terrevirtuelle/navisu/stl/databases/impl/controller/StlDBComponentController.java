@@ -31,6 +31,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LandmarkView
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57ObjectView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.UnderwaterAwashRockView;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.WrecksView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.AnchorageAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DockAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.DredgedAreaDBLoader;
@@ -39,6 +40,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.NavigationLineDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.RestrictedAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.UnderwaterAwashRockDBLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.WrecksLoader;
 import bzh.terrevirtuelle.navisu.citygml.CityGMLServices;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
@@ -115,6 +117,7 @@ import javafx.scene.text.Text;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.loader.dem.DemDbLoader;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.UnderwaterAwashRock;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Wrecks;
 import bzh.terrevirtuelle.navisu.domain.geometry.SolidGeo;
 import bzh.terrevirtuelle.navisu.domain.raster.RasterInfo;
 import bzh.terrevirtuelle.navisu.domain.svg.SVGPath3D;
@@ -137,6 +140,7 @@ import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.MeshEx
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.S57ObjectsExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.SLConsShapefileExportToSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.UwtrocExportToSTL;
+import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.stl.WrecksExportSTL;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.svg.DepareExportToSVG;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.controller.export.wkt.DepareExportWKT;
 import bzh.terrevirtuelle.navisu.stl.impl.StlComponentImpl;
@@ -147,7 +151,6 @@ import bzh.terrevirtuelle.navisu.visualization.view.impl.controller.JfxViewer;
 import com.google.common.collect.ImmutableMap;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
-import gov.nasa.worldwind.render.SurfacePolygons;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
@@ -292,6 +295,7 @@ public class StlDBComponentController
     protected List<Buoyage> buoyages = new ArrayList<>();
     protected List<Landmark> landmarks = new ArrayList<>();
     protected List<UnderwaterAwashRock> underwaterAwashRocks = new ArrayList<>();
+    protected List<Wrecks> wrecks = new ArrayList<>();
     protected Connection s57Connection;
     protected Connection bathyConnection;
     protected Connection elevationConnection;
@@ -411,7 +415,9 @@ public class StlDBComponentController
     @FXML
     public RadioButton elevationRB;
     @FXML
-    public RadioButton tidelowRB;
+    public RadioButton lowTideRB;
+    @FXML
+    public TextField tidalRangeTF;
     @FXML
     public RadioButton noAltiRB;
     @FXML
@@ -648,6 +654,7 @@ public class StlDBComponentController
                 .put("PONTON", pontonCB)
                 .put("RESARE", resareCB)
                 .put("UWTROC", uwtrocCB)
+                .put("WRECKS", wrecksCB)
                 .build();
         stlGuiController = new StlGuiController(this,
                 geodesyServices, displayServices,
@@ -684,6 +691,7 @@ public class StlDBComponentController
                         pontonCB.setDisable(true);
                         resareCB.setDisable(true);
                         uwtrocCB.setDisable(true);
+                        wrecksCB.setDisable(true);
                         allCB.setDisable(true);
                     } else {
                         achareCB.setDisable(false);
@@ -696,6 +704,7 @@ public class StlDBComponentController
                         pontonCB.setDisable(false);
                         resareCB.setDisable(false);
                         uwtrocCB.setDisable(false);
+                        wrecksCB.setDisable(false);
                         allCB.setDisable(false);
                     }
                 });
@@ -858,7 +867,7 @@ public class StlDBComponentController
 
         bathyRB.setToggleGroup(bathyGroup);
         noBathyRB.setToggleGroup(bathyGroup);
-        
+
         noAltiRB.setToggleGroup(terrainGroup);
 
         noAltiRB.setToggleGroup(altiGroup);
@@ -1149,7 +1158,6 @@ public class StlDBComponentController
                                             slConsShapefilesClipped.add(new Pair(shp, h));
                                         }
                                     }
-                                    //  System.out.println("slConsShapefilesClipped : " + slConsShapefilesClipped.size());
                                     for (Pair<Shapefile, Double> p : slConsShapefilesClipped) {
                                         //  System.out.println("p.getX() : " +p.getX());
                                         new SLConsShapefileExportToSTL(geodesyServices, jtsServices, displayServices, topologyServices,
@@ -1163,29 +1171,19 @@ public class StlDBComponentController
                         }
                         //LOW TIDE
                         k = 0;
-                        if (tidelowRB.isSelected()) {
+                        if (lowTideRB.isSelected()) {
                             gridBoxes.forEach((gb) -> {
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
-
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     LOGGER.log(Level.INFO, "In export DEPARE in STL on filename : {0}", filename);
-                                    /*
-                                    Shapefile shp = new DepareDBLoader(databaseServices,
-                                            s57DatabaseTF.getText(), USER, PASSWD)
-                                            .retrieveIn(gb.getLatMin() - RETRIEVE_OFFSET, gb.getLonMin() - RETRIEVE_OFFSET,
-                                                    gb.getLatMax() + RETRIEVE_OFFSET, gb.getLonMax() + RETRIEVE_OFFSET);
-                                     */
                                     Shapefile shp = new DepareDBLoader(databaseServices,
                                             s57DatabaseTF.getText(), USER, PASSWD)
                                             .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
-
                                     DepareExportToSTL depareExportToSTL = new DepareExportToSTL(geodesyServices, jtsServices, displayServices, topologyServices,
                                             shp, gb, highestElevationBathy, s57Layer);
-
                                     depareExportToSTL.exportGround(filename, 1E-8, 6.0, latScale, lonScale, tileSideZ + 0.15);
-
                                     LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
                                     k++;
                                 }
@@ -1293,28 +1291,28 @@ public class StlDBComponentController
                                 LOGGER.info("Out export UWTROC en STL");
                             }
                         }
-                        //WRECK
+                        //WRECKS
                         k = 0;
-                        if (selectedObjects.contains("ALL") || selectedObjects.contains("WRECK")) {
+                        if (selectedObjects.contains("ALL") || selectedObjects.contains("WRECKS")) {
                             for (Point3DGeo[][] g : grids) {
-                                LOGGER.info("In export WRECK en STL");
-                                underwaterAwashRocks.clear();
-                                underwaterAwashRocks.addAll(new UnderwaterAwashRockDBLoader(topologyServices, s57Connection)
+                                LOGGER.info("In export WRECKS en STL");
+                                wrecks.clear();
+                                wrecks.addAll(new WrecksLoader(topologyServices, s57Connection)
                                         .retrieveObjectsIn(g[0][0].getLatitude(),
                                                 g[0][0].getLongitude(),
                                                 g[g.length - 1][g[0].length - 1].getLatitude(),
                                                 g[g.length - 1][g[0].length - 1].getLongitude()));
-                                new UnderwaterAwashRockView(s57Layer).display(underwaterAwashRocks);
+                                new WrecksView(s57Layer).display(wrecks);
                                 i = k / tileCount + 1;
                                 j = k % tileCount + 1;
                                 if (selectedPolygonIndexList.isEmpty() || (!selectedPolygonIndexList.isEmpty() && selectedPolygonIndexList.contains(new Pair(i, j)))) {
                                     String filename = DEFAULT_STL_PATH + outFileTF.getText() + "_" + i + "," + j + ".stl";
                                     scaleCompute(g);
-                                    new UwtrocExportToSTL(geodesyServices, g, filename, latScale, lonScale)
-                                            .export(underwaterAwashRocks, verticalExaggeration * highestElevationBathy, tileSideZ);
+                                    new WrecksExportSTL(geodesyServices, g, filename, latScale, lonScale)
+                                            .export(wrecks, verticalExaggeration * highestElevationBathy, tileSideZ);
                                 }
                                 k++;
-                                LOGGER.info("Out export WRECK en STL");
+                                LOGGER.info("Out export WRECKS en STL");
                             }
                         }
                         // Buildings 
@@ -1647,9 +1645,9 @@ public class StlDBComponentController
         }
         if (!dem.getGrid().isEmpty()) {
             lowestElevationAlti = dem.getMinElevation();
-            lowestElevationAlti += 6.0;
-            System.out.println("lowestElevationAlti : " + lowestElevationAlti);
-
+            if (lowTideRB.isSelected()) {
+                lowestElevationAlti += Double.valueOf(tidalRangeTF.getText());
+            }
             RasterInfo rasterInfo = delaunayServices.toGridTiff(dem, "demAlti");
             displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
             Point3DGeo[][] gridTmp = delaunayServices.rasterToGridTab(rasterInfo);
