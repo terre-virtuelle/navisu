@@ -6,6 +6,24 @@ import java.io.Serializable;
 public class Wrecks extends Location
 implements Serializable
 {
+    protected String label;
+    protected String imageAddress;
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getImageAddress() {
+        return imageAddress;
+    }
+
+    public void setImageAddress(String imageAddress) {
+        this.imageAddress = imageAddress;
+    }
 
 	public Wrecks(Long id)
 	{
@@ -253,6 +271,13 @@ implements Serializable
 	{
 		this.objectNameInNationalLanguage= value;
 	}
+
+    @Override
+    public String toString() {
+        String toString=super.toString();
+        return "Wrecks{" + "label=" + label +
+                toString +", categoryOfWreck=" + categoryOfWreck + ", waterLevelEffect=" + waterLevelEffect + '}';
+    }
 
 
 }

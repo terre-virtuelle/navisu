@@ -98,10 +98,14 @@ public class DepareExportToSTL
 
         List<List<Point3DGeo>> boundaries = extractShapefileHoles(shapefile);
         List<List<Path>> p = createTIN(boundaries);
-        List<List<Path>> pp = createTIN2(p, 0.0, threshold);
+        for (List<Path> l : p) {
+            pathToSTL.exportSTL(l, filename, "Estran bottom", latMin, lonMin, latScale, lonScale, verticalOffset);
+        }
+        List<List<Path>> pp = createTIN2(p, verticalOffset, threshold);
         while (minArea(pp, threshold) == true) {
             pp = createTIN2(pp, elevation, threshold);
         }
+
         for (List<Path> l : pp) {
             pathToSTL.exportSTL(l, filename, "Estran surface", latMin, lonMin, latScale, lonScale, verticalOffset);
         }
@@ -124,7 +128,7 @@ public class DepareExportToSTL
                     List<Position> positionList = new ArrayList<>();
                     Iterable<? extends Position> vertices = paths.get(i).get(j).getPositions();
                     for (Position pos : vertices) {
-                        positionList.add(pos);
+                        positionList.add(new Position(pos.getLatitude(), pos.getLongitude(), 0.0));
                     }
                     double hight = Math.random() * elevation;
 

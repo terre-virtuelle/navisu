@@ -40,7 +40,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loa
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.NavigationLineDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.RestrictedAreaDBLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.UnderwaterAwashRockDBLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.WrecksLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.databases.impl.controller.loader.WrecksDBLoader;
 import bzh.terrevirtuelle.navisu.citygml.CityGMLServices;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
@@ -819,7 +819,7 @@ public class StlDBComponentController
                 tileSideZTF.setText(Double.toString(tileSideZ));
             }
         });
-        tileSideZ -= 0.1;
+      //  tileSideZ -= 0.1;
 
         svgSideXTF.setText(Double.toString(DEFAULT_SIDE));
         svgSideXTF.setOnAction((ActionEvent event) -> {
@@ -1117,7 +1117,7 @@ public class StlDBComponentController
                                     LOGGER.info("Out export exportBaseSTL in STL");
                                 }
                                 if (supportType.equals("No support")) {
-                                    tileSideZ = -1.0;
+                                    tileSideZ = 0.0;
                                     LOGGER.info("In export GridBox3D in STL");
                                     new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
                                     LOGGER.info("Out export GridBox3D en STL");
@@ -1183,7 +1183,8 @@ public class StlDBComponentController
                                             .retrieveIn(gb.getLatMin(), gb.getLonMin(), gb.getLatMax(), gb.getLonMax());
                                     DepareExportToSTL depareExportToSTL = new DepareExportToSTL(geodesyServices, jtsServices, displayServices, topologyServices,
                                             shp, gb, highestElevationBathy, s57Layer);
-                                    depareExportToSTL.exportGround(filename, 1E-8, 6.0, latScale, lonScale, tileSideZ + 0.15);
+                                    System.out.println("tileSideZ : " + tileSideZ);
+                                    depareExportToSTL.exportGround(filename, 1E-8, 6.0, latScale, lonScale, tileSideZ);
                                     LOGGER.log(Level.INFO, "Out export DEPARE in STL on filename : {0}", filename);
                                     k++;
                                 }
@@ -1297,7 +1298,7 @@ public class StlDBComponentController
                             for (Point3DGeo[][] g : grids) {
                                 LOGGER.info("In export WRECKS en STL");
                                 wrecks.clear();
-                                wrecks.addAll(new WrecksLoader(topologyServices, s57Connection)
+                                wrecks.addAll(new WrecksDBLoader(topologyServices, s57Connection)
                                         .retrieveObjectsIn(g[0][0].getLatitude(),
                                                 g[0][0].getLongitude(),
                                                 g[g.length - 1][g[0].length - 1].getLatitude(),

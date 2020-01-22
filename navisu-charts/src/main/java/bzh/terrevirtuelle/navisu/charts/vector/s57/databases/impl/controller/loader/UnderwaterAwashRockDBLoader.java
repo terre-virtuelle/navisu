@@ -33,14 +33,15 @@ public class UnderwaterAwashRockDBLoader
     @Override
     public List<UnderwaterAwashRock> retrieveObjectsIn(double latMin, double lonMin, double latMax, double lonMax) {
         underwaterAwashRocks = new ArrayList<>();
-        String geom = "";
-        String valueOfSounding = "";
-        String natureOfurface = "";
+        
+        
+        
         resultSet = retrieveResultSetIn(latMin, lonMin, latMax, lonMax);
         UnderwaterAwashRock object;
         try {
             while (resultSet.next()) {
                 object = new UnderwaterAwashRock();
+                String geom = "";
                 geom = resultSet.getString("geom");
                 if (geom != null && !(geom.equals("MULTIPOINT EMPTY") || geom.equals("POINT EMPTY"))) {
                     object.setGeom(geom);
@@ -52,12 +53,18 @@ public class UnderwaterAwashRockDBLoader
                             position = topologyServices.wktPointToPosition(geom);
                         }
                     }
-                    object.setLatitude(position.getLatitude().getDegrees());
-                    object.setLongitude(position.getLongitude().getDegrees());
+                    if (position != null) {
+                        object.setLatitude(position.getLatitude().getDegrees());
+                        object.setLongitude(position.getLongitude().getDegrees());
+                    }
+                    String natureOfurface = "";
                     natureOfurface = resultSet.getString("natsur");
                     object.setNatureOfSurface(natureOfurface);
+                    
+                    String valueOfSounding = "";
                     valueOfSounding = resultSet.getString("valsou");
                     object.setValueOfSounding(valueOfSounding);
+                    
                     underwaterAwashRocks.add(object);
                 }
             }

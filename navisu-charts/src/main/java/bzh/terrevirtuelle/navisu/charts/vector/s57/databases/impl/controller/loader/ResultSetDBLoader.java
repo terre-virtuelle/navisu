@@ -68,8 +68,8 @@ public abstract class ResultSetDBLoader {
             put("PONTON", "gid");
             put("RESARE", "gid, catrea, objnam, restrn, inform, ninfom");
             put("SLCONS", "gid");
-            put("UWTROC", "rcid, natsur, valsou");
-            put("WRECKS", "gid, objnam, catwrk");
+            put("UWTROC", "gid, natsur, valsou");
+            put("WRECKS", "gid, objnam, catwrk, watlev, expsou, quasou, valsou");
         }
     ;
     }  
@@ -102,7 +102,7 @@ public abstract class ResultSetDBLoader {
             put("RESARE", "rcid, catrea, objnam, restrn, inform, ninfom");
             put("SLCONS", "rcid");
             put("UWTROC", "rcid, natsur, valsou");
-            put("WRECKS", "rcid, objnam, catwrk");
+            put("WRECKS", "rcid, objnam, catwrk, watlev, expsou, quasou, valsou");
         }
     ;
 

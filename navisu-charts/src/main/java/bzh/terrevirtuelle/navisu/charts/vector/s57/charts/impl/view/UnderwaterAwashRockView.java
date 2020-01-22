@@ -64,18 +64,17 @@ public class UnderwaterAwashRockView {
             placemark = new PointPlacemark(Position.fromDegrees(lat, lon, 0.0));
             placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
             label = object.getClass().getSimpleName() + "\n"
-                    + natureOfSurface
-                    + valueOfSounding
                     + "Lat : " + new Float(lat).toString() + "\n"
-                    + "Lon : " + new Float(lon).toString();
-            // object.setLabel(label);
+                    + "Lon : " + new Float(lon).toString() + "\n"
+                    + "NATSUR : " + natureOfSurface + "\n"
+                    + "VALSOU : " + valueOfSounding + "\n";
             placemark.setValue(AVKey.DISPLAY_NAME, label);
 
             String imageAddress = "";
-            if (acronym.equals("LNDMRK")) {
-                imageAddress = "img/wreck/"
+            if (acronym.equals("UWTROC")) {
+                imageAddress = "img/wrecks/"
                         + acronym
-                        + "04.png";
+                        + ".png";
             }
             object.setImageAddress(imageAddress);
 
