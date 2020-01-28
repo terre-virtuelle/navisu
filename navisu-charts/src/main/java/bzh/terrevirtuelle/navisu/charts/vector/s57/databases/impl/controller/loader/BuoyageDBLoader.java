@@ -83,7 +83,6 @@ public class BuoyageDBLoader
                         buoyage.setLatitude(lat);
                         buoyage.setLongitude(lon);
 
-                        //  buoyage.setId(Long.parseLong(resultSet.getString("rcid")));
                         buoyage.setMarsys(marsys);
                         String topMark;
                         if (topMarkMap != null) {

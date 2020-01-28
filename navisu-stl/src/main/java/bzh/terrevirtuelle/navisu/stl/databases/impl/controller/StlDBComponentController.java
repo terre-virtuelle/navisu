@@ -259,7 +259,7 @@ public class StlDBComponentController
     protected ShapeAttributes highlightAttributes;
 
     protected double DEFAULT_SIDE = 180.0;
-    protected double DEFAULT_BASE_HEIGHT = 4.0;
+    protected double DEFAULT_BASE_HEIGHT = 3.99;
     protected double tileSideX = DEFAULT_SIDE;
     protected double tileSideY = DEFAULT_SIDE;
     protected double tileSideZ = DEFAULT_BASE_HEIGHT;
@@ -759,11 +759,21 @@ public class StlDBComponentController
             try {
                 gridX = Double.parseDouble(gridSideXTF.getText());
                 gridSideXTF.setText(Double.toString(gridX));
-                gridSideXTF.setText(Double.toString(gridX));
+                gridSideYTF.setText(Double.toString(gridX));
             } catch (NumberFormatException e) {
-                gridX = DEFAULT_SIDE;
+                gridX = DEFAULT_GRID;
                 gridSideXTF.setText(Double.toString(gridX));
-                gridX = DEFAULT_SIDE;
+                gridY = DEFAULT_GRID;
+                gridSideXTF.setText(Double.toString(gridX));
+            }
+            if (gridX < DEFAULT_GRID) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Range is too small, min = " + DEFAULT_GRID + " m");
+                alert.show();
+                gridX = DEFAULT_GRID;
+                gridSideXTF.setText(Double.toString(gridX));
+                gridY = DEFAULT_GRID;
                 gridSideXTF.setText(Double.toString(gridX));
             }
         });
@@ -772,12 +782,22 @@ public class StlDBComponentController
             try {
                 gridY = Double.parseDouble(gridSideYTF.getText());
                 gridSideYTF.setText(Double.toString(gridY));
-                gridSideYTF.setText(Double.toString(gridY));
+                gridSideXTF.setText(Double.toString(gridY));
             } catch (NumberFormatException e) {
-                gridY = DEFAULT_SIDE;
+                gridY = DEFAULT_GRID;
                 gridSideYTF.setText(Double.toString(gridY));
-                gridY = DEFAULT_SIDE;
-                gridSideYTF.setText(Double.toString(gridY));
+                gridX = DEFAULT_GRID;
+                gridSideXTF.setText(Double.toString(gridX));
+            }
+            if (gridY < DEFAULT_GRID) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Range is too small, min = " + DEFAULT_GRID + " m");
+                alert.show();
+                gridX = DEFAULT_GRID;
+                gridSideXTF.setText(Double.toString(gridX));
+                gridY = DEFAULT_GRID;
+                gridSideXTF.setText(Double.toString(gridX));
             }
         });
         tileSideXTF.setText(Double.toString(DEFAULT_SIDE));
@@ -819,7 +839,6 @@ public class StlDBComponentController
                 tileSideZTF.setText(Double.toString(tileSideZ));
             }
         });
-      //  tileSideZ -= 0.1;
 
         svgSideXTF.setText(Double.toString(DEFAULT_SIDE));
         svgSideXTF.setOnAction((ActionEvent event) -> {
@@ -1055,7 +1074,7 @@ public class StlDBComponentController
                     //ELEVATION AND TILES
                     if ((elevationRB.isSelected() && noBathyRB.isSelected())
                             || (elevationRB.isSelected() && (selectedObjects.contains("ALL")))) {
-                        grids = createElevationTab(lat0, lon0, lat1, lon1);
+                        grids = createElevationTab(lat0, lon0, lat1, lon1, gridX, gridY);
                     }
                     //BATHY AND TILES
                     if (bathyRB.isSelected() && noAltiRB.isSelected()) {
@@ -1104,23 +1123,26 @@ public class StlDBComponentController
                                 if (supportType.equals("With magnet")) {
                                     LOGGER.info("In export GridBox3D in STL");
                                     new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
-                                    LOGGER.info("Out export exportBaseSTL in STL");
+                                    LOGGER.info("Out export GridBox3D in STL");
+                                    LOGGER.info("In export exportBaseSTL in STL");
                                     stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_" + i + "," + j + ".stl");
                                     LOGGER.info("Out export exportBaseSTL in STL");
                                 }
                                 if (supportType.equals("Simple")) {
-                                    tileSideZ = 1.0;
+                                    tileSideZ = 0.99;
                                     LOGGER.info("In export GridBox3D in STL");
                                     new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
-                                    LOGGER.info("Out export exportBaseSTL in STL");
+                                    LOGGER.info("Out export GridBox3D in STL");
+                                    LOGGER.info("In export exportBaseSTL in STL");
                                     stlComponentServices.exportBaseSTL(filename, "data/stl/base/support_1mm.stl");
                                     LOGGER.info("Out export exportBaseSTL in STL");
                                 }
                                 if (supportType.equals("No support")) {
-                                    tileSideZ = 0.0;
+                                    tileSideZ = 0.01;
                                     LOGGER.info("In export GridBox3D in STL");
                                     new GridBox3DExportToSTL(geodesyServices, displayServices, s57Layer, gb).exportSTL(filename, latScale, lonScale, tileSideZ);
-                                    LOGGER.info("Out export GridBox3D en STL");
+                                    LOGGER.info("Out export GridBox3D in STL");
+                                    LOGGER.info("In/Out export exportBaseSTL in STL with No support");
                                 }
                             }
                             k++;
@@ -1611,13 +1633,14 @@ public class StlDBComponentController
     }
 
     @SuppressWarnings("unchecked")
-    private List<Point3DGeo[][]> createElevationTab(double latMin, double lonMin, double latMax, double lonMax) {
+    private List<Point3DGeo[][]> createElevationTab(double latMin, double lonMin, double latMax, double lonMax, double gridX, double gridY) {
         elevationConnection = databaseServices.connect(elevationDatabaseTF.getText(), HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
         DEM dem = new DemDbLoader(elevationConnection, demDBServices)
                 .retrieveIn(latMin - RETRIEVE_OFFSET,
                         lonMin - RETRIEVE_OFFSET,
                         latMax + RETRIEVE_OFFSET,
                         lonMax + RETRIEVE_OFFSET);
+
         if (mergeLitto3dRB.isSelected()) {//HIGH_ELEVATION_DB
             highlElevationConnection = databaseServices.connect(HIGH_ELEVATION_DB, HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
             DEM highDem = new DemDbLoader(highlElevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
@@ -1652,20 +1675,43 @@ public class StlDBComponentController
             RasterInfo rasterInfo = delaunayServices.toGridTiff(dem, "demAlti");
             displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
             Point3DGeo[][] gridTmp = delaunayServices.rasterToGridTab(rasterInfo);
-
-            //Transformation en tableau lat croissantes
             int gridTmpLines = gridTmp.length;
             int gridTmpCols = gridTmp[0].length;
+            //Transformation en tableau lat croissantes
             Point3DGeo[][] grid = new Point3DGeo[gridTmpLines][gridTmpCols];
             for (int ii = 0; ii < gridTmpLines; ii++) {
                 System.arraycopy(gridTmp[gridTmpLines - ii - 1], 0, grid[ii], 0, gridTmpCols);
             }
+
+            int incY = (int) Math.floor(gridY / 30.0);
+            int incX = (int) Math.floor(gridX / 30.0);
+            /*
+            int linesF = (gridTmpLines / incY) - 1;
+            int colsF = (gridTmpCols / incX) - 1;
+             */
+            int linesF = (gridTmpLines / incY);
+            int colsF = (gridTmpCols / incX);
+
+            Point3DGeo[][] gridF = new Point3DGeo[linesF][colsF];
+            int u = 0;
+            int v = 0;
+            for (int i = 0; i < gridTmpLines; i += incY) {
+                v = 0;
+                for (int j = 0; j < gridTmpCols; j += incX) {
+                    if ((u < linesF) && (v < colsF)) {
+                        gridF[u][v] = grid[i][j];
+                        v++;
+                    }
+                }
+                u++;
+            }
+
             //Update for modulo
-            int lines = tileCount * (grid.length / tileCount);
-            int cols = tileCount * (grid[0].length / tileCount);
+            int lines = tileCount * (linesF / tileCount);
+            int cols = tileCount * (colsF / tileCount);
             Point3DGeo[][] realGrid = new Point3DGeo[lines][cols];
             for (int ii = 0; ii < lines; ii++) {
-                System.arraycopy(grid[ii], 0, realGrid[ii], 0, cols);
+                System.arraycopy(gridF[ii], 0, realGrid[ii], 0, cols);
             }
 
             //Update Org
@@ -1673,7 +1719,6 @@ public class StlDBComponentController
             lon0 = realGrid[0][0].getLongitude();
             lat1 = realGrid[lines - 1][0].getLatitude();
             lon1 = realGrid[0][cols - 1].getLongitude();
-            // System.out.println("lat0 : "+lat0+" "+lon0+" "+lat1+" "+lon1);
             //Elevation on the support 
             for (int ii = 0; ii < lines; ii++) {
                 for (int jj = 0; jj < cols; jj++) {
