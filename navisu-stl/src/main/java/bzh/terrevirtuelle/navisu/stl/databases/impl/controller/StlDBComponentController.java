@@ -219,7 +219,7 @@ public class StlDBComponentController
 
     private final String S57_DEFAULT_DATABASE_1 = "s57NP1DB";
     private final String S57_DEFAULT_DATABASE_2 = "s57NP2DB";
-    private final String S57_DEFAULT_DATABASE_3 = "s57NP53B";
+    private final String S57_DEFAULT_DATABASE_3 = "s57NP3DB";
     private final String S57_DEFAULT_DATABASE_4 = "s57NP4DB";
     private final String S57_DEFAULT_DATABASE_5 = "s57NP5DB";
     private final String S57_DEFAULT_DATABASE_6 = "s57NP6DB";
@@ -1598,6 +1598,37 @@ public class StlDBComponentController
             for (int ii = 0; ii < gridTmpLines; ii++) {
                 System.arraycopy(gridTmp[gridTmpLines - ii - 1], 0, grid1[ii], 0, gridTmpCols);
             }
+            
+            /*
+            int incY = (int) Math.floor(gridY / 30.0);
+            int incX = (int) Math.floor(gridX / 30.0);
+            
+            int linesF = (gridTmpLines / incY);
+            int colsF = (gridTmpCols / incX);
+
+            Point3DGeo[][] gridF = new Point3DGeo[linesF][colsF];
+            int u = 0;
+            int v = 0;
+            for (int i = 0; i < gridTmpLines; i += incY) {
+                v = 0;
+                for (int j = 0; j < gridTmpCols; j += incX) {
+                    if ((u < linesF) && (v < colsF)) {
+                        gridF[u][v] = grid[i][j];
+                        v++;
+                    }
+                }
+                u++;
+            }
+
+            //Update for modulo
+            int lines = tileCount * (linesF / tileCount);
+            int cols = tileCount * (colsF / tileCount);
+            Point3DGeo[][] realGrid = new Point3DGeo[lines][cols];
+            for (int ii = 0; ii < lines; ii++) {
+                System.arraycopy(gridF[ii], 0, realGrid[ii], 0, cols);
+            }
+            */
+
             //Mise a modulo
             int lines = tileCount * (grid1.length / tileCount);
             int cols = tileCount * (grid1[0].length / tileCount);
@@ -1677,6 +1708,7 @@ public class StlDBComponentController
             Point3DGeo[][] gridTmp = delaunayServices.rasterToGridTab(rasterInfo);
             int gridTmpLines = gridTmp.length;
             int gridTmpCols = gridTmp[0].length;
+            
             //Transformation en tableau lat croissantes
             Point3DGeo[][] grid = new Point3DGeo[gridTmpLines][gridTmpCols];
             for (int ii = 0; ii < gridTmpLines; ii++) {
@@ -1685,10 +1717,7 @@ public class StlDBComponentController
 
             int incY = (int) Math.floor(gridY / 30.0);
             int incX = (int) Math.floor(gridX / 30.0);
-            /*
-            int linesF = (gridTmpLines / incY) - 1;
-            int colsF = (gridTmpCols / incX) - 1;
-             */
+            
             int linesF = (gridTmpLines / incY);
             int colsF = (gridTmpCols / incX);
 
