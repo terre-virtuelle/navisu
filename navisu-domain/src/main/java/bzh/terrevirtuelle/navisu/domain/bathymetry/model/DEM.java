@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.domain.bathymetry.model;
 
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3DGeo;
+import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,6 +81,29 @@ public class DEM {
 
     public int size() {
         return grid.size();
+    }
+
+     @SuppressWarnings("unchecked")
+    public Pair<Integer, Integer> getDimensions() {
+        List<Point3DGeo> points = getGrid();
+        if (points != null) {
+            int size = points.size();
+            int col = 1;
+            int line = 1;
+            double lat = points.get(0).getLatitude();
+
+            //Count of line and columns
+            int u = 0;
+            while (points.get(u).getLatitude() == lat) {
+                u++;
+                line++;
+            }
+            line--;
+            col = size / line;
+            return new Pair(line, col);
+        } else {
+            return null;
+        }
     }
 
     @Override

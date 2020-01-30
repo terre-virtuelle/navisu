@@ -1598,7 +1598,7 @@ public class StlDBComponentController
             for (int ii = 0; ii < gridTmpLines; ii++) {
                 System.arraycopy(gridTmp[gridTmpLines - ii - 1], 0, grid1[ii], 0, gridTmpCols);
             }
-            
+
             /*
             int incY = (int) Math.floor(gridY / 30.0);
             int incX = (int) Math.floor(gridX / 30.0);
@@ -1627,8 +1627,7 @@ public class StlDBComponentController
             for (int ii = 0; ii < lines; ii++) {
                 System.arraycopy(gridF[ii], 0, realGrid[ii], 0, cols);
             }
-            */
-
+             */
             //Mise a modulo
             int lines = tileCount * (grid1.length / tileCount);
             int cols = tileCount * (grid1[0].length / tileCount);
@@ -1649,9 +1648,7 @@ public class StlDBComponentController
                     realGrid[ii][jj].setElevation(highestElevationBathy - realGrid[ii][jj].getElevation());
                 }
             }
-
             return createGrids(realGrid, tileCount);
-
         } else {
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -1694,7 +1691,6 @@ public class StlDBComponentController
                         }
                         break;
                     }
-
                 }
             }
         }
@@ -1703,38 +1699,98 @@ public class StlDBComponentController
             if (lowTideRB.isSelected()) {
                 lowestElevationAlti += Double.valueOf(tidalRangeTF.getText());
             }
-            RasterInfo rasterInfo = delaunayServices.toGridTiff(dem, "demAlti");
+            //  System.out.println("dem : "+ dem.getDimensions().getY()+" "+dem.getDimensions().getX());
+            List<Point3DGeo> pts = dem.getGrid();
+            int incY = (int) Math.floor(gridY / 30.0);
+            int incX = (int) Math.floor(gridX / 30.0);
+            
+            int linesOrig=dem.getDimensions().getY();
+            int colOrig = dem.getDimensions().getX();
+
+            int linesF =  linesOrig/ incY;
+            int colsF = colOrig/ incX;
+            
+            Point3DGeo[][] ptsTab = new Point3DGeo[linesF][colsF];
+            
+            //Sampling
+            Point3DGeo[][] gridF = new Point3DGeo[linesF][colsF];
+            int u = 0;
+            int v;
+            for (int ii = 0; ii < linesOrig; ii += incY) {
+                v = 0;
+                for (int jj = 0; jj < colOrig; jj += incX) {
+                    if ((u < linesF) && (v < colsF)) {
+                        gridF[u][v] = pts.get(ii+jj);
+                        v++;
+                    }
+                }
+                u++;
+            }
+            
+            for(int a = 0; a < linesF; a++){
+                for(int b= 0; b < colsF; b++){
+                    System.out.print( gridF[a][b] + "  ");
+                    
+            }
+                System.out.println("");
+            }
+            
+            
+            
+            
+
+            RasterInfo rasterInfo = delaunayServices.toGridTiff(gridF, "demAlti");
+            System.out.println("rasterInfo : " + rasterInfo.getLine() + " " + rasterInfo.getCol());
             displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
             Point3DGeo[][] gridTmp = delaunayServices.rasterToGridTab(rasterInfo);
             int gridTmpLines = gridTmp.length;
             int gridTmpCols = gridTmp[0].length;
-            
+            System.out.println("gridTmpLines : " + gridTmpLines);
+            System.out.println("gridTmpCols : " + gridTmpCols);
             //Transformation en tableau lat croissantes
             Point3DGeo[][] grid = new Point3DGeo[gridTmpLines][gridTmpCols];
             for (int ii = 0; ii < gridTmpLines; ii++) {
                 System.arraycopy(gridTmp[gridTmpLines - ii - 1], 0, grid[ii], 0, gridTmpCols);
             }
 
+            
+
+            /*           
+            RasterInfo rasterInfo = delaunayServices.toGridTiff(dem, "demAlti");
+            System.out.println("rasterInfo : " + rasterInfo.getLine()+" "+rasterInfo.getCol());
+            displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
+            Point3DGeo[][] gridTmp = delaunayServices.rasterToGridTab(rasterInfo);
+            int gridTmpLines = gridTmp.length;
+            int gridTmpCols = gridTmp[0].length;
+            System.out.println("gridTmpLines : "+ gridTmpLines);
+            System.out.println("gridTmpCols : " + gridTmpCols);
+            //Transformation en tableau lat croissantes
+            Point3DGeo[][] grid = new Point3DGeo[gridTmpLines][gridTmpCols];
+            for (int ii = 0; ii < gridTmpLines; ii++) {
+                System.arraycopy(gridTmp[gridTmpLines - ii - 1], 0, grid[ii], 0, gridTmpCols);
+            }
+
+            //Sampling
             int incY = (int) Math.floor(gridY / 30.0);
             int incX = (int) Math.floor(gridX / 30.0);
-            
+
             int linesF = (gridTmpLines / incY);
             int colsF = (gridTmpCols / incX);
 
             Point3DGeo[][] gridF = new Point3DGeo[linesF][colsF];
             int u = 0;
-            int v = 0;
-            for (int i = 0; i < gridTmpLines; i += incY) {
+            int v;
+            for (int ii = 0; ii < gridTmpLines; ii += incY) {
                 v = 0;
-                for (int j = 0; j < gridTmpCols; j += incX) {
+                for (int jj = 0; jj < gridTmpCols; jj += incX) {
                     if ((u < linesF) && (v < colsF)) {
-                        gridF[u][v] = grid[i][j];
+                        gridF[u][v] = grid[ii][jj];
                         v++;
                     }
                 }
                 u++;
             }
-
+             */
             //Update for modulo
             int lines = tileCount * (linesF / tileCount);
             int cols = tileCount * (colsF / tileCount);
