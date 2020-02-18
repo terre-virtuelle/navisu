@@ -81,7 +81,7 @@ public class StlGuiController {
     protected double tileSideX;
     protected double tileSideY;
     protected double tileSideZ;
-    protected int tileCount=1;
+    protected int tileCount = 1;
 
     protected GeodesyServices geodesyServices;
     protected DisplayServices displayServices;
@@ -226,28 +226,8 @@ public class StlGuiController {
             }
             event.consume();
             dialog.close();
-            latMinLabel.setText(Double.toString(lat0));
-            lonMinLabel.setText(Double.toString(lon0));
-            latMaxLabel.setText(Double.toString(lat1));
-            lonMaxLabel.setText(Double.toString(lon1));
-            LAT_MIN = Double.toString(lat0);
-            LON_MIN = Double.toString(lon0);
-            LAT_MAX = Double.toString(lat1);
-            LON_MAX = Double.toString(lon1);
-            OutputStream output;
-            Properties properties = new Properties();
-         //   System.out.println("properties");
-            try {
-                output = new FileOutputStream(CACHE_FILE_NAME);
-                properties.setProperty("LAT_MIN", LAT_MIN);
-                properties.setProperty("LON_MIN", LON_MIN);
-                properties.setProperty("LAT_MAX", LAT_MAX);
-                properties.setProperty("LON_MAX", LON_MAX);
-                properties.store(output, null);
-                output.close();
-            } catch (IOException ex) {
-                Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
+            saveProperties(lat0, lon0, lat1, lon1);
+            
             selectedPolygons.addAll(createAndDisplayTiles(layer, Material.RED, 100, lat0, lon0, lat1, lon1, tileCount, tileCount));
             stlDBComponentController.setLat0(lat0);
             stlDBComponentController.setLon0(lon0);
@@ -259,6 +239,30 @@ public class StlGuiController {
         dialog.showAndWait();
         selectedPolygons.addAll(createAndDisplayTiles(layer, Material.RED, 100, lat0, lon0, lat1, lon1, tileCount, tileCount));
 
+    }
+
+    public void saveProperties(double lat0, double lon0, double lat1, double lon1) {
+        latMinLabel.setText(Double.toString(lat0));
+        lonMinLabel.setText(Double.toString(lon0));
+        latMaxLabel.setText(Double.toString(lat1));
+        lonMaxLabel.setText(Double.toString(lon1));
+        LAT_MIN = Double.toString(lat0);
+        LON_MIN = Double.toString(lon0);
+        LAT_MAX = Double.toString(lat1);
+        LON_MAX = Double.toString(lon1);
+        OutputStream output;
+        Properties properties = new Properties();
+        try {
+            output = new FileOutputStream(CACHE_FILE_NAME);
+            properties.setProperty("LAT_MIN", LAT_MIN);
+            properties.setProperty("LON_MIN", LON_MIN);
+            properties.setProperty("LAT_MAX", LAT_MAX);
+            properties.setProperty("LON_MAX", LON_MAX);
+            properties.store(output, null);
+            output.close();
+        } catch (IOException ex) {
+            Logger.getLogger(StlDBComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
     }
 
     public String initScale(double latMin, double lonMin,

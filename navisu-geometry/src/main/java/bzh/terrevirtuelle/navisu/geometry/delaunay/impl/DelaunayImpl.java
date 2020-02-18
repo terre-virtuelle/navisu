@@ -316,13 +316,13 @@ public class DelaunayImpl
     @Override
     public RasterInfo toGridTiff(Point3DGeo[][] dem, String name) {
 
-        int col = dem.length;
-        int line = dem[0].length;
+        int line = dem.length;
+        int col = dem[0].length;
 
         StringWriter content = new StringWriter();
 
-        for (int i = 0; i < col; i++) {
-            for (int j = 0; j < line; j++) {
+        for (int i = 0; i < line; i++) {
+            for (int j = 0; j < col; j++) {
                 content.append(dem[i][j].getLongitude() + "," + dem[i][j].getLatitude() + "," + dem[i][j].getElevation() + "\n");
             }
         }
@@ -348,9 +348,9 @@ public class DelaunayImpl
 //--config GDAL_NUM_THREADS ALL_CPUS
 
         double latMin = dem[0][0].getLatitude();
-        double latMax = dem[col - 1][0].getLatitude();
+        double latMax = dem[0][col-1].getLatitude();
         double lonMin = dem[0][0].getLongitude();
-        double lonMax = dem[0][line - 1].getLongitude();
+        double lonMax = dem[line-1][0].getLongitude();
         String command = "gdal_grid -a nearest "
                 + " -a_srs EPSG:4326"
                 + " -txe " + lonMin + " " + lonMax + " -tye  " + latMin + " " + latMax

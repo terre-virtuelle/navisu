@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
+import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.impl.WorldWindGeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_HOMONIM_BATHYMETRY_CLUT;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_LOW_BATHYMETRY_CLUT;
@@ -54,7 +55,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.input.KeyEvent;
@@ -263,7 +263,8 @@ public class DisplayImpl
     @SuppressWarnings("unchecked")
     @Override
     public void displayRasterInfo(RasterInfo rasterInfo, GeoViewServices geoViewServices, String GROUP) {
-
+        System.out.println("rasterInfo : " + rasterInfo);
+        System.out.println("image : " +rasterInfo.getImageDir() + SEP + rasterInfo.getDemColorRelief());
         SurfaceImageLayer layerTif = new SurfaceImageLayer();
         layerTif.setOpacity(1);
         layerTif.setPickEnabled(false);

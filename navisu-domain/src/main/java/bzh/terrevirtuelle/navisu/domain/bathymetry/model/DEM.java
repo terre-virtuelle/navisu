@@ -20,8 +20,8 @@ public class DEM {
 
     private List<Point3DGeo> grid;
 
-    private double maxElevation;
-    private double minElevation;
+    private double maxElevation = 0.0;
+    private double minElevation = Double.MAX_VALUE;
 
     public DEM() {
         grid = new ArrayList<>();
@@ -29,6 +29,14 @@ public class DEM {
 
     public DEM(List<Point3DGeo> grid) {
         this.grid = grid;
+        grid.stream().filter((p) -> (p.getElevation() > maxElevation)).forEachOrdered((p) -> {
+            maxElevation = p.getElevation();
+        });
+        grid.stream().filter((p) -> (p.getElevation() < minElevation)).forEachOrdered((p) -> {
+            minElevation = p.getElevation();
+        });
+        setMaxElevation(maxElevation);
+        setMinElevation(minElevation);
     }
 
     public double getMinElevation() {
@@ -83,7 +91,7 @@ public class DEM {
         return grid.size();
     }
 
-     @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public Pair<Integer, Integer> getDimensions() {
         List<Point3DGeo> points = getGrid();
         if (points != null) {

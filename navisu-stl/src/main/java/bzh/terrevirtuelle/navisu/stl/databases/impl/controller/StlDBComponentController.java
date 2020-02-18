@@ -507,6 +507,15 @@ public class StlDBComponentController
     protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("SRTM30mDB",
             "BrestMetropole5mDB", "BrestMetropole1mDB", "Finistere5mDB", "TestAltiDB",
             "AltiV2_2-0_75mIgnDB");
+    protected Map<String, Double> elevationDbMap = new HashMap<String, Double>() {
+        {
+            put("SRTM30mDB", 30.0);
+            put("BrestMetropole5mDB", 5.0);
+            put("BrestMetropole1mDB", 1.0);
+            put("Finistere5mDB", 5.0);
+
+        }
+    };
     protected ObservableList<String> buildingsDbCbData = FXCollections.observableArrayList("BuildingsPaysBrestDB");
     protected ObservableList<String> tilesCbData = FXCollections.observableArrayList("1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10");
     protected ObservableList<String> supportCbData = FXCollections.observableArrayList("With magnet", "Simple", "No support");
@@ -766,6 +775,7 @@ public class StlDBComponentController
                 gridY = DEFAULT_GRID;
                 gridSideXTF.setText(Double.toString(gridX));
             }
+            /*
             if (gridX < DEFAULT_GRID) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -776,6 +786,7 @@ public class StlDBComponentController
                 gridY = DEFAULT_GRID;
                 gridSideXTF.setText(Double.toString(gridX));
             }
+            */
         });
         gridSideYTF.setText(Double.toString(DEFAULT_GRID));
         gridSideYTF.setOnAction((ActionEvent event) -> {
@@ -789,6 +800,7 @@ public class StlDBComponentController
                 gridX = DEFAULT_GRID;
                 gridSideXTF.setText(Double.toString(gridX));
             }
+            /*
             if (gridY < DEFAULT_GRID) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -799,6 +811,7 @@ public class StlDBComponentController
                 gridY = DEFAULT_GRID;
                 gridSideXTF.setText(Double.toString(gridX));
             }
+            */
         });
         tileSideXTF.setText(Double.toString(DEFAULT_SIDE));
         tileSideXTF.setOnAction((ActionEvent event) -> {
@@ -959,6 +972,7 @@ public class StlDBComponentController
                 selectedPolygons.addAll(selected);
             }
             tilesSelectionStartButton.setDisable(false);
+            stlGuiController.saveProperties(lat0, lon0, lat1, lon1);
         });
         tilesSelectionStartButton.setOnMouseClicked((MouseEvent event) -> {
             realSelectedPolygons = stlGuiController.getSelectedPolygons(selectedPolygons);
@@ -1599,35 +1613,6 @@ public class StlDBComponentController
                 System.arraycopy(gridTmp[gridTmpLines - ii - 1], 0, grid1[ii], 0, gridTmpCols);
             }
 
-            /*
-            int incY = (int) Math.floor(gridY / 30.0);
-            int incX = (int) Math.floor(gridX / 30.0);
-            
-            int linesF = (gridTmpLines / incY);
-            int colsF = (gridTmpCols / incX);
-
-            Point3DGeo[][] gridF = new Point3DGeo[linesF][colsF];
-            int u = 0;
-            int v = 0;
-            for (int i = 0; i < gridTmpLines; i += incY) {
-                v = 0;
-                for (int j = 0; j < gridTmpCols; j += incX) {
-                    if ((u < linesF) && (v < colsF)) {
-                        gridF[u][v] = grid[i][j];
-                        v++;
-                    }
-                }
-                u++;
-            }
-
-            //Update for modulo
-            int lines = tileCount * (linesF / tileCount);
-            int cols = tileCount * (colsF / tileCount);
-            Point3DGeo[][] realGrid = new Point3DGeo[lines][cols];
-            for (int ii = 0; ii < lines; ii++) {
-                System.arraycopy(gridF[ii], 0, realGrid[ii], 0, cols);
-            }
-             */
             //Mise a modulo
             int lines = tileCount * (grid1.length / tileCount);
             int cols = tileCount * (grid1[0].length / tileCount);
@@ -1668,135 +1653,66 @@ public class StlDBComponentController
                         lonMin - RETRIEVE_OFFSET,
                         latMax + RETRIEVE_OFFSET,
                         lonMax + RETRIEVE_OFFSET);
-
-        if (mergeLitto3dRB.isSelected()) {//HIGH_ELEVATION_DB
-            highlElevationConnection = databaseServices.connect(HIGH_ELEVATION_DB, HOST, PROTOCOL, PORT, DRIVER, USER, PASSWD);
-            DEM highDem = new DemDbLoader(highlElevationConnection, demDBServices).retrieveIn(latMin - RETRIEVE_OFFSET,
-                    lonMin - RETRIEVE_OFFSET, latMax + RETRIEVE_OFFSET, lonMax + RETRIEVE_OFFSET);
-            List<Point3DGeo> pts = dem.getGrid();
-            List<Point3DGeo> ptsHD = highDem.getGrid();
-            Interval intervalLat;
-            Interval intervalLon;
-            for (Point3DGeo p : pts) {
-                intervalLat = new Interval((p.getLatitude() - INTERVAL_MAX), p.getLatitude() + INTERVAL_MAX);
-                intervalLon = new Interval((p.getLongitude() - INTERVAL_MAX), p.getLongitude() + INTERVAL_MAX);
-                for (Point3DGeo p1 : ptsHD) {
-                    if (intervalLat.contains(p1.getLatitude()) && intervalLon.contains(p1.getLongitude())) {
-                        if (p1.getElevation() != -99999) {
-                            if (p1.getElevation() >= 0.0) {
-                                p.setElevation(p1.getElevation());
-                            } else {
-                                p.setElevation(0.0);
-                            }
-                        }
-                        break;
-                    }
-                }
-            }
-        }
+        double step = elevationDbMap.get(elevationDatabaseTF.getText());
+        System.out.println("step : " + step);
         if (!dem.getGrid().isEmpty()) {
             lowestElevationAlti = dem.getMinElevation();
             if (lowTideRB.isSelected()) {
                 lowestElevationAlti += Double.valueOf(tidalRangeTF.getText());
             }
-            //  System.out.println("dem : "+ dem.getDimensions().getY()+" "+dem.getDimensions().getX());
             List<Point3DGeo> pts = dem.getGrid();
-            int incY = (int) Math.floor(gridY / 30.0);
-            int incX = (int) Math.floor(gridX / 30.0);
-            
-            int linesOrig=dem.getDimensions().getY();
+
+            int incY = (int) Math.floor(gridY / step);
+            int incX = (int) Math.floor(gridX / step);
+            int linesOrig = dem.getDimensions().getY();
             int colOrig = dem.getDimensions().getX();
+            System.out.println("linesOrig : " + linesOrig +"  colOrig : " + colOrig);
+            int linesF = linesOrig / incY;
+            int colsF = colOrig / incX;
 
-            int linesF =  linesOrig/ incY;
-            int colsF = colOrig/ incX;
-            
-            Point3DGeo[][] ptsTab = new Point3DGeo[linesF][colsF];
-            
             //Sampling
+            List<Point3DGeo> demFList = new ArrayList<>();
             Point3DGeo[][] gridF = new Point3DGeo[linesF][colsF];
             int u = 0;
-            int v;
-            for (int ii = 0; ii < linesOrig; ii += incY) {
+            int v = 0;
+            int w = 0;
+
+            for (int i = 0; i < linesOrig; i += incY) {
                 v = 0;
-                for (int jj = 0; jj < colOrig; jj += incX) {
+                for (int j = 0; j < colOrig; j += incX) {
                     if ((u < linesF) && (v < colsF)) {
-                        gridF[u][v] = pts.get(ii+jj);
+                        gridF[u][v] = pts.get((i * colOrig) + j);
                         v++;
                     }
                 }
                 u++;
             }
-            
-            for(int a = 0; a < linesF; a++){
-                for(int b= 0; b < colsF; b++){
-                    System.out.print( gridF[a][b] + "  ");
-                    
+            for (int i = 0; i < linesF; i++) {
+                for (int j = 0; j < colsF; j++) {
+                    demFList.add(gridF[i][j]);
+                }
             }
-                System.out.println("");
-            }
-            
-            
-            
-            
-
-            RasterInfo rasterInfo = delaunayServices.toGridTiff(gridF, "demAlti");
-            System.out.println("rasterInfo : " + rasterInfo.getLine() + " " + rasterInfo.getCol());
+            DEM demF = new DEM(demFList);
+            RasterInfo rasterInfo = delaunayServices.toGridTiff(demF, "demAlti");
             displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
             Point3DGeo[][] gridTmp = delaunayServices.rasterToGridTab(rasterInfo);
             int gridTmpLines = gridTmp.length;
             int gridTmpCols = gridTmp[0].length;
-            System.out.println("gridTmpLines : " + gridTmpLines);
-            System.out.println("gridTmpCols : " + gridTmpCols);
+            System.out.println("linesF : " + gridTmpLines);
+            System.out.println("colsF : " + gridTmpCols);
+
             //Transformation en tableau lat croissantes
             Point3DGeo[][] grid = new Point3DGeo[gridTmpLines][gridTmpCols];
             for (int ii = 0; ii < gridTmpLines; ii++) {
                 System.arraycopy(gridTmp[gridTmpLines - ii - 1], 0, grid[ii], 0, gridTmpCols);
             }
 
-            
-
-            /*           
-            RasterInfo rasterInfo = delaunayServices.toGridTiff(dem, "demAlti");
-            System.out.println("rasterInfo : " + rasterInfo.getLine()+" "+rasterInfo.getCol());
-            displayServices.displayRasterInfo(rasterInfo, geoViewServices, GROUP);
-            Point3DGeo[][] gridTmp = delaunayServices.rasterToGridTab(rasterInfo);
-            int gridTmpLines = gridTmp.length;
-            int gridTmpCols = gridTmp[0].length;
-            System.out.println("gridTmpLines : "+ gridTmpLines);
-            System.out.println("gridTmpCols : " + gridTmpCols);
-            //Transformation en tableau lat croissantes
-            Point3DGeo[][] grid = new Point3DGeo[gridTmpLines][gridTmpCols];
-            for (int ii = 0; ii < gridTmpLines; ii++) {
-                System.arraycopy(gridTmp[gridTmpLines - ii - 1], 0, grid[ii], 0, gridTmpCols);
-            }
-
-            //Sampling
-            int incY = (int) Math.floor(gridY / 30.0);
-            int incX = (int) Math.floor(gridX / 30.0);
-
-            int linesF = (gridTmpLines / incY);
-            int colsF = (gridTmpCols / incX);
-
-            Point3DGeo[][] gridF = new Point3DGeo[linesF][colsF];
-            int u = 0;
-            int v;
-            for (int ii = 0; ii < gridTmpLines; ii += incY) {
-                v = 0;
-                for (int jj = 0; jj < gridTmpCols; jj += incX) {
-                    if ((u < linesF) && (v < colsF)) {
-                        gridF[u][v] = grid[ii][jj];
-                        v++;
-                    }
-                }
-                u++;
-            }
-             */
             //Update for modulo
-            int lines = tileCount * (linesF / tileCount);
-            int cols = tileCount * (colsF / tileCount);
+            int lines = tileCount * (grid.length / tileCount);
+            int cols = tileCount * (grid[0].length / tileCount);
             Point3DGeo[][] realGrid = new Point3DGeo[lines][cols];
             for (int ii = 0; ii < lines; ii++) {
-                System.arraycopy(gridF[ii], 0, realGrid[ii], 0, cols);
+                System.arraycopy(grid[ii], 0, realGrid[ii], 0, cols);
             }
 
             //Update Org
@@ -1804,6 +1720,7 @@ public class StlDBComponentController
             lon0 = realGrid[0][0].getLongitude();
             lat1 = realGrid[lines - 1][0].getLatitude();
             lon1 = realGrid[0][cols - 1].getLongitude();
+            
             //Elevation on the support 
             for (int ii = 0; ii < lines; ii++) {
                 for (int jj = 0; jj < cols; jj++) {
