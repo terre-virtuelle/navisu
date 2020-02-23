@@ -1664,8 +1664,10 @@ public class StlDBComponentController
 
             int incY = (int) Math.floor(gridY / step);
             int incX = (int) Math.floor(gridX / step);
+            
             int linesOrig = dem.getDimensions().getY();
             int colOrig = dem.getDimensions().getX();
+            
             System.out.println("linesOrig : " + linesOrig +"  colOrig : " + colOrig);
             int linesF = linesOrig / incY;
             int colsF = colOrig / incX;

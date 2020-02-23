@@ -93,6 +93,7 @@ public class DEM {
 
     @SuppressWarnings("unchecked")
     public Pair<Integer, Integer> getDimensions() {
+        final double THRESHOLD = .00015;
         List<Point3DGeo> points = getGrid();
         if (points != null) {
             int size = points.size();
@@ -102,9 +103,13 @@ public class DEM {
 
             //Count of line and columns
             int u = 0;
-            while (points.get(u).getLatitude() == lat) {
-                u++;
-                line++;
+            while (true) {
+                if (Math.abs(points.get(u).getLatitude() - lat) < THRESHOLD) {
+                    u++;
+                    line++;
+                } else {
+                    break;
+                }
             }
             line--;
             col = size / line;

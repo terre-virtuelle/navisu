@@ -733,7 +733,7 @@ public class ToolsComponentController
                                         @Override
                                         public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
                                             if ((path.toString().endsWith("asc"))
-                                                    || (path.toString().endsWith("tif") && path.toString().contains("1arc"))) {
+                                                    || (path.toString().endsWith("tif") /*&& path.toString().contains("1arc")*/)) {
                                                 String fileName = prepareCreateOrInsertFile(path.toString());
                                                 if (isCreate == false) {
                                                     isCreate = true;

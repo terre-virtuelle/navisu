@@ -31,6 +31,7 @@ public class DemDbLoader {
 
     public DEM retrieveIn(double latMin, double lonMin, double latMax, double lonMax) {
         points = demDBServices.retrieveIn(connection, "elevation", latMin, lonMin, latMax, lonMax);
+       //System.out.println("latMin : " + latMin +" lonMin : " +lonMin+" latMax : " + latMax +"  lonMax : " + lonMax);
         points.stream().filter((p) -> (p.getElevation() > maxElevation)).forEachOrdered((p) -> {
             maxElevation = p.getElevation();
         });

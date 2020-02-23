@@ -68,7 +68,7 @@ public class DemDBComponentController {
     NumberFormat nf4 = new DecimalFormat("0.0000");
     NumberFormat nf1 = new DecimalFormat("0.0");
     int i = 0;
-    double MIN_DEPTH = 0.0;
+    double MIN_DEPTH = -99.0;
     double distA;
     double distB;
     double distC;
@@ -259,7 +259,6 @@ public class DemDBComponentController {
         PGgeometry geom;
         double depth;
         ResultSet r;
-
         if (connection != null) {
             try {
                 r = connection.createStatement().executeQuery(
