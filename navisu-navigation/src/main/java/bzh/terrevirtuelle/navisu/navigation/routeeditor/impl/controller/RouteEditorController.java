@@ -89,6 +89,7 @@ import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
 import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.BSplineComponentServices;
 import bzh.terrevirtuelle.navisu.geometry.curves3D.bsplines.impl.BSpline;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.Point3D;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.export.NMEAExport;
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
@@ -164,6 +165,7 @@ public class RouteEditorController
     private GeodeticCurve geoCurve;
     protected static final String GROUP_0 = "S57 charts";
     protected static final String S57_LAYER = "S57Stl";
+    protected NMEAExport nmeaExport;
 
     @FXML
     public Group view;
@@ -215,7 +217,7 @@ public class RouteEditorController
     public TextField speedText;
     @FXML
     public TextField distPoText;
-     @FXML
+    @FXML
     public TextField heightText;
     @FXML
     public TextField distOffsetText;
@@ -247,19 +249,8 @@ public class RouteEditorController
         bufferDistance = OFFSET_BUFFER_DISTANCE;
         highwayDistance = HIGHWAY_BUFFER_DISTANCE;
         layer = layersManagerServices.getLayer(GROUP_0, S57_LAYER);
-        /*
-        // OK pour toutes les layers
-        List<Layer> layers = wwd.getModel().getLayers();
-        for(Layer l : layers){
-            System.out.println(l.getName());
-        }
-         */
- /*
-        // Add terrain profile layer
-        profile.setEventSource(GeoWorldWindViewImpl.getWW());
-        profile.setFollow(TerrainProfileLayer.FOLLOW_PATH);
-        profile.setShowProfileLine(false);
-         */
+        nmeaExport = new NMEAExport(geoCurve, geoCalc, reference);
+
         load(FXML);
         initPanel();
         setTranslateX(280.0);
@@ -336,7 +327,6 @@ public class RouteEditorController
             filter();
             positions = smooth(positions);
             displayServices.displayPositionsAsPath(positions, layer, Material.YELLOW);
-            
             measureTool.setArmed(false);
             if (!simpleEditorCB.isSelected()) {
                 bufferFromJTS();
@@ -352,7 +342,7 @@ public class RouteEditorController
                 exportKML();
             }
             if (nmeaExportCB.isSelected()) {
-                exportNmea();
+                nmeaExport.export(positions, speed, routeName);
             }
             if (!simpleEditorCB.isSelected()) {
                 exportNavigationDataset();
@@ -548,7 +538,7 @@ public class RouteEditorController
         List<Point3D> points = new ArrayList<>();
         int deg = 2;
         int n = pos.size();
-     //   System.out.println("n = " + n);
+           System.out.println("n = " + n);
         for (Position p : pos) {
             points.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), 50.0));
         }
@@ -565,7 +555,7 @@ public class RouteEditorController
         for (int i = 0; i < knots.length; i++) {
             System.out.print(knots[i] + "  ");
         }
-      //  System.out.println("");
+        //  System.out.println("");
         double[] w = new double[points.size()];
         for (int i = 0; i < w.length; i++) {
             w[i] = 1.0;
@@ -573,13 +563,13 @@ public class RouteEditorController
         for (int i = 0; i < w.length; i++) {
             System.out.print(w[i] + " ");
         }
-      //  System.out.println("");
+        //  System.out.println("");
         BSpline bSpline = bsplineComponentServices.create(points, knots, w, deg);
         List<Point3D> resultPoints = bsplineComponentServices.compute(bSpline, 0.1);
         for (Point3D p : resultPoints) {
             result.add(new Position(Angle.fromDegrees(p.getX()), Angle.fromDegrees(p.getY()), p.getZ()));
         }
-      //  System.out.println("result : " + result.size());
+        //  System.out.println("result : " + result.size());
         return result;
     }
 
@@ -755,102 +745,6 @@ public class RouteEditorController
         }
     }
 
-    private void exportNmea() {
-        List<GlobalCoordinates> globalCoordinates = new ArrayList<>();
-        List<String> nmeaSentences = new ArrayList<>();
-        GlobalCoordinates start;
-        GlobalCoordinates end;
-        String we;
-        String ns;
-        String sentence;
-        double latitude;
-        double longitude;
-        String strLatitude;
-        String strLongitude;
-        double minLatitude;
-        double minLongitude;
-        int degLatitude;
-        int degLongitude;
-        int si = positions.size() - 1;
-        for (int k = 0; k < si; k++) {
-            globalCoordinates.clear();
-            Position startPos = positions.get(k);
-            start = new GlobalCoordinates(startPos.getLatitude().getDegrees(), startPos.getLongitude().getDegrees());
-            Position endPos = positions.get(k + 1);
-            end = new GlobalCoordinates(endPos.getLatitude().getDegrees(), endPos.getLongitude().getDegrees());
-
-            geoCurve = geoCalc.calculateGeodeticCurve(reference, start, end);
-            double ellipseMeters = geoCurve.getEllipsoidalDistance();
-            double i = 2 * ellipseMeters / speed;
-
-            i = 1 / i;
-            i *= 5000;
-            for (double j = 0; j < ellipseMeters; j += i) {
-                globalCoordinates.add(geoCalc.calculateEndingGlobalCoordinates(reference, start, geoCurve.getAzimuth(), j));
-            }
-            for (GlobalCoordinates gc : globalCoordinates) {
-                latitude = gc.getLatitude();
-                longitude = gc.getLongitude();
-                LocalTime localTime = LocalTime.now(Clock.systemUTC());
-                LocalDate localDate = LocalDate.now(Clock.systemUTC());
-
-                we = longitude > 0 ? "E" : "W";
-                ns = latitude > 0 ? "N" : "S";
-                if (we.equals("W")) {
-                    longitude = -longitude;
-                }
-                if (ns.equals("S")) {
-                    latitude = -latitude;
-                }
-                degLatitude = (int) latitude;
-                degLongitude = (int) longitude;
-                minLatitude = latitude - degLatitude;
-                minLongitude = longitude - degLongitude;
-                minLatitude *= 60;
-                minLongitude *= 60;
-                strLatitude = Integer.toString(degLatitude) + String.format(Locale.US, "%.4f", minLatitude);
-                strLongitude = Integer.toString(degLongitude) + String.format(Locale.US, "%.4f", minLongitude);
-                sentence = "$GPRMC,"
-                        + localTime.format(timeFormatter) + ","
-                        + "A,"
-                        + strLatitude + ","
-                        + ns + ","
-                        + strLongitude + ","
-                        + we + ","
-                        + String.format(Locale.US, "%.2f", speed) + ","
-                        + String.format(Locale.US, "%.2f", geoCurve.getAzimuth()) + ","
-                        + localDate.format(dateFormatter) + ",,"
-                        + "*";
-                nmeaSentences.add(sentence + getChecksum(sentence));
-            }
-        }
-        Path path = Paths.get("privateData/nmea/" + routeName + ".nmea");
-        try {
-            Files.write(path, nmeaSentences, Charset.defaultCharset());
-        } catch (IOException ex) {
-            Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private String getChecksum(String in) {
-        int checksum = 0;
-        if (in.startsWith("$")) {
-            in = in.substring(1, in.length());
-        }
-
-        int end = in.indexOf('*');
-        if (end == -1) {
-            end = in.length();
-        }
-        for (int i = 0; i < end; i++) {
-            checksum = checksum ^ in.charAt(i);
-        }
-        String hex = Integer.toHexString(checksum);
-        if (hex.length() == 1) {
-            hex = "0" + hex;
-        }
-        return hex.toUpperCase();
-    }
 
     private void exportKML() {
         if (positions != null) {
