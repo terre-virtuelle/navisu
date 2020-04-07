@@ -12,6 +12,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -73,7 +74,7 @@ public class NMEAExport {
         int degLongitude;
         int si = positions.size() - 1;
         int minute = 0;
-        int second=0;
+        int second = 0;
         LocalDateTime localDateTime = LocalDateTime.now();
         LocalDate localDate = LocalDate.now(Clock.systemUTC());
         for (int k = 0; k < si; k++) {
@@ -115,7 +116,7 @@ public class NMEAExport {
                 strLatitude = Integer.toString(degLatitude) + String.format(Locale.US, "%.4f", minLatitude);
                 strLongitude = Integer.toString(degLongitude) + String.format(Locale.US, "%.4f", minLongitude);
                 String t = localDateTime.plusMinutes(minute).plusSeconds(second).format(timeFormatter) + ",";
-               // System.out.println("t : " + t);
+                // System.out.println("t : " + t);
                 //  speed *= Math.random();
                 sentence = "$GPRMC,"
                         + t
@@ -129,7 +130,8 @@ public class NMEAExport {
                         + localDate.format(dateFormatter) + ",,"
                         + "*";
                 nmeaSentences.add(sentence + getChecksum(sentence));
-                minute += 1;second+=1;
+                minute += 1;
+                second += 1;
             }
 
         }
@@ -140,6 +142,89 @@ public class NMEAExport {
             Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
 
+    }
+
+    public void simpleExport(List<Position> positions, float speed, String routeName) {
+        List<GlobalCoordinates> globalCoordinates = new ArrayList<>();
+        List<String> nmeaSentences = new ArrayList<>();
+        GlobalCoordinates start;
+        GlobalCoordinates end;
+        String we;
+        String ns;
+        String sentence;
+        double latitude;
+        double longitude;
+        String strLatitude;
+        String strLongitude;
+        String strLatitudeMin;
+        String strLongitudeMin;
+        double minLatitude;
+        double minLongitude;
+        int degLatitude;
+        int degLongitude;
+        int si = positions.size() - 1;
+        int minute = 0;
+        int second = 0;
+        double azimuth = 0;
+        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDate localDate = LocalDate.now(Clock.systemUTC());
+        for (int k = 0; k < positions.size(); k++) {
+            latitude = positions.get(k).getLatitude().getDegrees();
+            longitude = positions.get(k).getLongitude().getDegrees();
+            if (k < positions.size() - 2) {
+                globalCoordinates.clear();
+                Position startPos = positions.get(k);
+                start = new GlobalCoordinates(startPos.getLatitude().getDegrees(), startPos.getLongitude().getDegrees());
+                Position endPos = positions.get(k + 1);
+                end = new GlobalCoordinates(endPos.getLatitude().getDegrees(), endPos.getLongitude().getDegrees());
+
+                geoCurve = geoCalc.calculateGeodeticCurve(reference, start, end);
+                azimuth = geoCurve.getAzimuth();
+            }
+            we = longitude > 0 ? "E" : "W";
+            ns = latitude > 0 ? "N" : "S";
+            if (we.equals("W")) {
+                longitude = -longitude;
+            }
+            if (ns.equals("S")) {
+                latitude = -latitude;
+            }
+          
+            degLatitude = (int) latitude;
+            degLongitude = (int) longitude;
+            minLatitude = latitude - degLatitude;
+            minLongitude = longitude - degLongitude;
+            minLatitude *= 60;
+            minLongitude *= 60;
+
+            DecimalFormat formatter = new java.text.DecimalFormat("00.##");
+            strLatitudeMin = formatter.format(minLatitude);
+            strLongitudeMin = formatter.format(minLongitude);
+
+            strLatitude = Integer.toString(degLatitude) + strLatitudeMin;
+            strLongitude = Integer.toString(degLongitude) + strLongitudeMin;;
+            String t = localDateTime.plusMinutes(minute).plusSeconds(second).format(timeFormatter) + ",";
+            sentence = "$GPRMC,"
+                    + t
+                    + "A,"
+                    + strLatitude + ","
+                    + ns + ","
+                    + strLongitude + ","
+                    + we + ","
+                    + String.format(Locale.US, "%.2f", speed) + ","
+                    + String.format(Locale.US, "%.2f", azimuth) + ","
+                    + localDate.format(dateFormatter) + ",,"
+                    + "*";
+            nmeaSentences.add(sentence + getChecksum(sentence));
+            minute += 1;
+            second += 1;
+        }
+        Path path = Paths.get(DATA_DIR + routeName + ".nmea");
+        try {
+            Files.write(path, nmeaSentences, Charset.defaultCharset());
+        } catch (IOException ex) {
+            Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
     }
 
     private String getChecksum(String in) {
