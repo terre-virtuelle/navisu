@@ -68,6 +68,8 @@ public class NMEAExport {
         double longitude;
         String strLatitude;
         String strLongitude;
+        String strLatitudeMin;
+        String strLongitudeMin;
         double minLatitude;
         double minLongitude;
         int degLatitude;
@@ -113,11 +115,13 @@ public class NMEAExport {
                 minLongitude = longitude - degLongitude;
                 minLatitude *= 60;
                 minLongitude *= 60;
-                strLatitude = Integer.toString(degLatitude) + String.format(Locale.US, "%.4f", minLatitude);
-                strLongitude = Integer.toString(degLongitude) + String.format(Locale.US, "%.4f", minLongitude);
+                DecimalFormat formatter = new java.text.DecimalFormat("00.##");
+                strLatitudeMin = formatter.format(minLatitude);
+                strLongitudeMin = formatter.format(minLongitude);
+
+                strLatitude = Integer.toString(degLatitude) + strLatitudeMin;
+                strLongitude = Integer.toString(degLongitude) + strLongitudeMin;
                 String t = localDateTime.plusMinutes(minute).plusSeconds(second).format(timeFormatter) + ",";
-                // System.out.println("t : " + t);
-                //  speed *= Math.random();
                 sentence = "$GPRMC,"
                         + t
                         + "A,"
@@ -189,7 +193,7 @@ public class NMEAExport {
             if (ns.equals("S")) {
                 latitude = -latitude;
             }
-          
+
             degLatitude = (int) latitude;
             degLongitude = (int) longitude;
             minLatitude = latitude - degLatitude;
@@ -202,7 +206,7 @@ public class NMEAExport {
             strLongitudeMin = formatter.format(minLongitude);
 
             strLatitude = Integer.toString(degLatitude) + strLatitudeMin;
-            strLongitude = Integer.toString(degLongitude) + strLongitudeMin;;
+            strLongitude = Integer.toString(degLongitude) + strLongitudeMin;
             String t = localDateTime.plusMinutes(minute).plusSeconds(second).format(timeFormatter) + ",";
             sentence = "$GPRMC,"
                     + t
