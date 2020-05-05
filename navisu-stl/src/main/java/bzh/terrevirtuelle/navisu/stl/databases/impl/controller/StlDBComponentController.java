@@ -504,12 +504,13 @@ public class StlDBComponentController
             S57_DEFAULT_DATABASE_5, S57_DEFAULT_DATABASE_6,
             S57_DEFAULT_DATABASE_7);
     protected ObservableList<String> bathyDbCbData = FXCollections.observableArrayList("BathyShomDB");
-    protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("SRTM30mDB",
+    protected ObservableList<String> elevationDbCbData = FXCollections.observableArrayList("SRTM30mDB", "NasaDemDB",
             "BrestMetropole5mDB", "BrestMetropole1mDB", "Finistere5mDB", "TestAltiDB",
             "AltiV2_2-0_75mIgnDB");
     protected Map<String, Double> elevationDbMap = new HashMap<String, Double>() {
         {
             put("SRTM30mDB", 30.0);
+            put("NasaDemDB", 30.0);
             put("BrestMetropole5mDB", 5.0);
             put("BrestMetropole1mDB", 1.0);
             put("Finistere5mDB", 5.0);
@@ -786,7 +787,7 @@ public class StlDBComponentController
                 gridY = DEFAULT_GRID;
                 gridSideXTF.setText(Double.toString(gridX));
             }
-            */
+             */
         });
         gridSideYTF.setText(Double.toString(DEFAULT_GRID));
         gridSideYTF.setOnAction((ActionEvent event) -> {
@@ -811,7 +812,7 @@ public class StlDBComponentController
                 gridY = DEFAULT_GRID;
                 gridSideXTF.setText(Double.toString(gridX));
             }
-            */
+             */
         });
         tileSideXTF.setText(Double.toString(DEFAULT_SIDE));
         tileSideXTF.setOnAction((ActionEvent event) -> {
@@ -1664,11 +1665,11 @@ public class StlDBComponentController
 
             int incY = (int) Math.floor(gridY / step);
             int incX = (int) Math.floor(gridX / step);
-            
+
             int linesOrig = dem.getDimensions().getY();
             int colOrig = dem.getDimensions().getX();
-            
-            System.out.println("linesOrig : " + linesOrig +"  colOrig : " + colOrig);
+
+            System.out.println("linesOrig : " + linesOrig + "  colOrig : " + colOrig);
             int linesF = linesOrig / incY;
             int colsF = colOrig / incX;
 
@@ -1722,7 +1723,7 @@ public class StlDBComponentController
             lon0 = realGrid[0][0].getLongitude();
             lat1 = realGrid[lines - 1][0].getLatitude();
             lon1 = realGrid[0][cols - 1].getLongitude();
-            
+
             //Elevation on the support 
             for (int ii = 0; ii < lines; ii++) {
                 for (int jj = 0; jj < cols; jj++) {

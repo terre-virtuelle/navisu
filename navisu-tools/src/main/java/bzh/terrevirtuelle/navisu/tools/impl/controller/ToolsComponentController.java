@@ -329,7 +329,7 @@ public class ToolsComponentController
     private ObservableList<String> catalogCbData = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
     private ObservableList<String> countryCbData = FXCollections.observableArrayList("FR", "ALL", "CA", "DE", "KR", "NO", "PE",
             "PH", "PT", "RU", "TR", "US", "ZA");
-    private ObservableList<String> dbCbElevationData = FXCollections.observableArrayList("Choice DB", "IGN75m", "SRTM30m",
+    private ObservableList<String> dbCbElevationData = FXCollections.observableArrayList("Choice DB", "IGN75m", "SRTM30m", "NasaDemDB",
             "BrestMetropole5mDB", "BrestMetropole1mDB", "Finistere5mDB",
             "Litto3D5m", "Litto3D1m", "TestAltiDB");
     private ObservableList<String> dbCbBathyData = FXCollections.observableArrayList("Choice DB", "BathyShomDB", "TestDB");
@@ -357,6 +357,7 @@ public class ToolsComponentController
     private final String ELEVATION_DB_NAME_5 = "BrestMetropole5mDB";
     private final String ELEVATION_DB_NAME_6 = "BrestMetropole1mDB";
     private final String ELEVATION_DB_NAME_7 = "Finistere5mDB";
+    private final String ELEVATION_DB_NAME_8 = "NasaDemDB";
     private final String BUILDINGS_DB_NAME_0 = "BuildingsPaysBrestDB";
     private final String GROUP_0 = "S57 charts";
     protected static final String S57_LAYER = "S57";
@@ -703,6 +704,10 @@ public class ToolsComponentController
                             alert.setHeaderText("1m Checkbox is selected, are you sure the DB is OK ? ");
                             alert.show();
                         }
+                        elevationDbCB.getSelectionModel().select("Choice DB");
+                    }
+                    if (newValue.equals("NasaDemDB")) {
+                        elevationDatabaseNameTF.setText(ELEVATION_DB_NAME_8);
                         elevationDbCB.getSelectionModel().select("Choice DB");
                     }
                     if (newValue.equals("TestAltiDB")) {
