@@ -116,8 +116,9 @@ public class ToolsComponentController
     private final String FXML = "toolsController.fxml";
 
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
-    protected static final String ALARM_SOUND = SEP + "data" + SEP + "sounds" + SEP + "pling.wav";
-
+   // protected static final String ALARM_SOUND = SEP + "data" + SEP + "sounds" + SEP + "pling.wav";
+    protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
+    
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String USER_DIR = System.getProperty("user.dir");
 
