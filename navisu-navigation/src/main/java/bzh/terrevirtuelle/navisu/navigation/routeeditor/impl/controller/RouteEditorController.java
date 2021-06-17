@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller;
 
+import bzh.terrevirtuelle.navisu.api.client.ApiRestClientServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
@@ -57,7 +58,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
@@ -93,6 +93,9 @@ import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.export.N
 import bzh.terrevirtuelle.navisu.visualization.view.DisplayServices;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import javafx.scene.Group;
 
 /**
@@ -109,6 +112,7 @@ public class RouteEditorController
     private final LayersManagerServices layersManagerServices;
     private final BSplineComponentServices bsplineComponentServices;
     private final DisplayServices displayServices;
+    private final ApiRestClientServices apiRestClientServices;
 
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private final RouteEditorImpl instrument;
@@ -167,6 +171,21 @@ public class RouteEditorController
     protected static final String S57_LAYER = "S57Stl";
     protected NMEAExport nmeaExport;
 
+    protected String REQUEST_TYPE = "PUT";
+  //  protected String HOST = "localhost";
+  //  protected String PORT = "3003";
+    
+    protected String HOST = "93.90.200.21";
+    protected String PORT = "3003";
+    
+    
+    protected String PATH = "control";
+  //  protected String CMD = "flyTo"; //OK 1/4/21
+    protected String CMD = "moveTo";
+    protected String ORIGIN = "SMAUG";
+  //  protected String TARGET = "camera";//OK 1/4/21
+ protected String TARGET = "ship"; //OK 27/4/21
+    
     @FXML
     public Group view;
     @FXML
@@ -234,12 +253,15 @@ public class RouteEditorController
             LayersManagerServices layersManagerServices,
             BSplineComponentServices bsplineComponentServices,
             DisplayServices displayServices,
+            ApiRestClientServices apiRestClientServices,
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
 
         super(keyCode, keyCombination);
         this.layersManagerServices = layersManagerServices;
         this.bsplineComponentServices = bsplineComponentServices;
         this.displayServices = displayServices;
+        this.apiRestClientServices = apiRestClientServices;
+        this.apiRestClientServices.init(REQUEST_TYPE, HOST, PORT, PATH, CMD, ORIGIN, TARGET);
         this.instrument = instrument;
         this.s57ChartComponentServices = instrument.getS57ChartServices();
         this.guiAgentServices = instrument.getGuiAgentServices();
@@ -254,6 +276,7 @@ public class RouteEditorController
         load(FXML);
         initPanel();
         setTranslateX(280.0);
+
     }
 
     final void load(String fxml) {
@@ -325,8 +348,9 @@ public class RouteEditorController
         });
         endButton.setOnMouseClicked((MouseEvent event) -> {
             filter();
-         //   positions = smooth(positions);
+            // positions = smooth(positions);
             displayServices.displayPositionsAsPath(positions, layer, Material.YELLOW);
+
             measureTool.setArmed(false);
             if (!simpleEditorCB.isSelected()) {
                 bufferFromJTS();
@@ -342,7 +366,7 @@ public class RouteEditorController
                 exportKML();
             }
             if (nmeaExportCB.isSelected()) {
-               // nmeaExport.export(positions, speed, routeName); //TODO, fix bug on NMEA generation
+                // nmeaExport.export(positions, speed, routeName); //TODO, fix bug on NMEA generation
                 nmeaExport.simpleExport(positions, speed, routeName);
             }
             if (!simpleEditorCB.isSelected()) {
@@ -501,6 +525,12 @@ public class RouteEditorController
         Position pos = measureTool.getPositions().get(length - 1);
         String las = String.format("Lat %7.4f\u00B0", pos.getLatitude().getDegrees());
         String los = String.format("Lon %7.4f\u00B0", pos.getLongitude().getDegrees());
+        System.out.println(las + " " + los);
+        //Date conforme ISO 8601 Zoulou
+        String date = ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT);
+        apiRestClientServices.setParameters("&latitude=" + pos.getLatitude().getDegrees() + "&longitude=" + pos.getLongitude().getDegrees() + "&altitude=" + 0.0
+                + "&heading=" + 511 + "&pitch=" + -90.0 + "&roll=" + "0.0" + "&timestamp=" + date);
+        apiRestClientServices.sendRequest();
         Platform.runLater(() -> {
             namesText.setText(las + "  " + los + "\n");
             if (length > 1) {
@@ -539,7 +569,7 @@ public class RouteEditorController
         List<Point3D> points = new ArrayList<>();
         int deg = 2;
         int n = pos.size();
-     //   System.out.println("n = " + n);
+        //   System.out.println("n = " + n);
         for (Position p : pos) {
             points.add(new Point3D(p.getLatitude().getDegrees(), p.getLongitude().getDegrees(), 50.0));
         }
@@ -556,7 +586,7 @@ public class RouteEditorController
         for (int i = 0; i < knots.length; i++) {
             System.out.print(knots[i] + "  ");
         }
-      //  System.out.println("");
+        //  System.out.println("");
         double[] w = new double[points.size()];
         for (int i = 0; i < w.length; i++) {
             w[i] = 1.0;
@@ -564,13 +594,13 @@ public class RouteEditorController
         for (int i = 0; i < w.length; i++) {
             System.out.print(w[i] + " ");
         }
-      //  System.out.println("");
+        //  System.out.println("");
         BSpline bSpline = bsplineComponentServices.create(points, knots, w, deg);
         List<Point3D> resultPoints = bsplineComponentServices.compute(bSpline, 0.1);
         for (Point3D p : resultPoints) {
             result.add(new Position(Angle.fromDegrees(p.getX()), Angle.fromDegrees(p.getY()), p.getZ()));
         }
-      //  System.out.println("result : " + result.size());
+        //  System.out.println("result : " + result.size());
         return result;
     }
 
@@ -865,4 +895,5 @@ public class RouteEditorController
         waypointB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
         return geoCalc.calculateGeodeticCurve(reference, waypointA, waypointB).getAzimuth();
     }
+
 }

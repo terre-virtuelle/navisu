@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl;
 
+import bzh.terrevirtuelle.navisu.api.client.ApiRestClientServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
@@ -41,6 +42,8 @@ public class RouteEditorImpl
     private BSplineComponentServices bsplineComponentServices;
     @UsedService
     private DisplayServices displayServices;
+    @UsedService
+    private ApiRestClientServices apiRestClientServices;
 
     private final String KEY_NAME = "RouteEditor";
     private final String LAYER_NAME = "Highway";
@@ -55,7 +58,7 @@ public class RouteEditorImpl
     @Override
     public void on(String... files) {
         routeEditorController = new RouteEditorController(this,
-                layersManagerServices, bsplineComponentServices, displayServices,
+                layersManagerServices, bsplineComponentServices, displayServices, apiRestClientServices,
                 KeyCode.M, KeyCombination.CONTROL_DOWN);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, routeEditorController);
         guiAgentServices.getRoot().getChildren().add(routeEditorController);

@@ -259,7 +259,7 @@ public class StlDBComponentController
     protected ShapeAttributes highlightAttributes;
 
     protected double DEFAULT_SIDE = 180.0;
-    protected double DEFAULT_BASE_HEIGHT = 3.99;
+    protected double DEFAULT_BASE_HEIGHT = 3.99;//4.5;//3.99;
     protected double tileSideX = DEFAULT_SIDE;
     protected double tileSideY = DEFAULT_SIDE;
     protected double tileSideZ = DEFAULT_BASE_HEIGHT;

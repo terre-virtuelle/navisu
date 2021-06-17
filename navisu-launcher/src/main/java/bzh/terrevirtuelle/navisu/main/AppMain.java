@@ -184,6 +184,8 @@ import bzh.terrevirtuelle.navisu.stl.charts.StlChartComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.StlDBComponentServices;
 import bzh.terrevirtuelle.navisu.stl.databases.impl.StlDBComponentImpl;
 import bzh.terrevirtuelle.navisu.dem.db.DemDBServices;
+import bzh.terrevirtuelle.navisu.api.client.ApiRestClientServices;
+import bzh.terrevirtuelle.navisu.api.client.impl.ApiRestClientImpl;
 import bzh.terrevirtuelle.navisu.gdal.GdalServices;
 import bzh.terrevirtuelle.navisu.gdal.impl.GdalImpl;
 import bzh.terrevirtuelle.navisu.geo.raster.RasterServices;
@@ -271,6 +273,7 @@ public class AppMain extends Application {
                         AisLoggerImpl.class,
                         AisPlotterImpl.class,
                         AisRadarImpl.class,
+                        ApiRestClientImpl.class,
                         ArchitectureComponentImpl.class,
                         BathymetryDBImpl.class,
                         BathymetryEventProducerImpl.class,
@@ -361,6 +364,7 @@ public class AppMain extends Application {
         AisLoggerServices aisLoggerServices = componentManager.getComponentService(AisLoggerServices.class);
         AisPlotterServices aisPlotterServices = componentManager.getComponentService(AisPlotterServices.class);
         AisRadarServices aisRadarServices = componentManager.getComponentService(AisRadarServices.class);
+        ApiRestClientServices apiRestClientServices= componentManager.getComponentService(ApiRestClientServices.class);
         ArchitectureComponentServices architectureComponentServices = componentManager.getComponentService(ArchitectureComponentServices.class);
 
         BathymetryServices bathymetryServices = componentManager.getComponentService(BathymetryServices.class);
@@ -483,6 +487,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver((Driver) meteoNetCdfServices.getDriver());
         driverServices.registerNewDriver(sedimentologyServices.getDriver());
         driverServices.registerNewDriver(shapefileObjectServices.getDriver());
+        
 
         driverServices.registerNewDriver(s57GlobalCatalogServices.getDriver());
         driverServices.registerNewDriver(filesServices.getDriver());
@@ -492,6 +497,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(apiRestClientServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(architectureComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(bathySoundsServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(cameraComponentServices.getDriver());
